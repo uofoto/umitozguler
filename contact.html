@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İletişim | Ümit Özgüler</title>
+    
+    <meta property="og:title" content="İletişim | Ümit Özgüler">
+    <meta property="og:description" content="Projeleriniz için benimle iletişime geçin.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
     <script>
@@ -16,14 +20,18 @@
             }
         }
     </script>
+    <style>
+        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+    </style>
 </head>
-<body class="bg-brand-black text-white font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-brand-black text-white font-sans antialiased flex flex-col min-h-screen page-animate">
 
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
-                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
                 <div class="hidden md:flex space-x-12">
                     <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
@@ -52,28 +60,13 @@
                 <h1 class="text-4xl font-bold text-white mb-4">İletişim</h1>
                 <p class="text-white font-medium opacity-90">Proje ve iş birlikleri için bana ulaşın.</p>
             </div>
-
             <form action="mailto:uozguler@gmail.com" method="post" enctype="text/plain" class="space-y-12">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div>
-                        <label class="block text-xs uppercase tracking-widest text-white font-bold mb-2">Adınız Soyadınız</label>
-                        <input type="text" name="Ad" required class="w-full bg-transparent border-b-2 border-white text-white px-2 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder-white/50" placeholder="Ümit Özgüler">
-                    </div>
-                    <div>
-                        <label class="block text-xs uppercase tracking-widest text-white font-bold mb-2">E-posta Adresiniz</label>
-                        <input type="email" name="Email" required class="w-full bg-transparent border-b-2 border-white text-white px-2 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder-white/50" placeholder="umit@example.com">
-                    </div>
+                    <div><label class="block text-xs uppercase tracking-widest text-white font-bold mb-2">Adınız Soyadınız</label><input type="text" name="Ad" required class="w-full bg-transparent border-b-2 border-white text-white px-2 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder-white/50" placeholder="Ümit Özgüler"></div>
+                    <div><label class="block text-xs uppercase tracking-widest text-white font-bold mb-2">E-posta Adresiniz</label><input type="email" name="Email" required class="w-full bg-transparent border-b-2 border-white text-white px-2 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder-white/50" placeholder="umit@example.com"></div>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-widest text-white font-bold mb-2">Mesajınız</label>
-                    <textarea name="Mesaj" rows="4" required class="w-full bg-transparent border-b-2 border-white text-white px-2 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder-white/50" placeholder="Buraya yazın..."></textarea>
-                </div>
-                
-                <div class="text-center">
-                    <button type="submit" class="border-2 border-white px-16 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white hover:bg-white hover:text-black transition-all duration-500">
-                        Mesajı Gönder
-                    </button>
-                </div>
+                <div><label class="block text-xs uppercase tracking-widest text-white font-bold mb-2">Mesajınız</label><textarea name="Mesaj" rows="4" required class="w-full bg-transparent border-b-2 border-white text-white px-2 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder-white/50" placeholder="Buraya yazın..."></textarea></div>
+                <div class="text-center"><button type="submit" class="border-2 border-white px-16 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white hover:bg-white hover:text-black transition-all duration-500">Mesajı Gönder</button></div>
             </form>
         </div>
     </section>
@@ -86,10 +79,7 @@
     </footer>
 
     <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
     </script>
-
 </body>
 </html>
