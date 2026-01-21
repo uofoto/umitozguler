@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolyo | Ümit Özgüler</title>
     
-    <meta property="og:title" content="Portfolyo | Ümit Özgüler">
-    <meta property="og:description" content="Koleksiyonlar: Doğa, Siyah Beyaz ve Portre.">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
     <script>
@@ -46,9 +43,6 @@
                 <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
                 <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
         </div>
     </nav>
 
@@ -64,27 +58,70 @@
     <section class="pb-24 px-6"><div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div></section>
 
     <div id="lightbox" class="fixed inset-0 z-[60] bg-black/98 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50 p-2">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
         <div class="max-w-5xl w-full flex flex-col items-center">
-            <img id="lightbox-img" src="" class="max-h-[75vh] shadow-2xl mb-8 border border-white/5">
+            <img id="lightbox-img" src="" class="max-h-[70vh] shadow-2xl mb-8 border border-white/5">
             <div class="text-center max-w-3xl px-4">
                 <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.5em] text-[10px] mb-4 font-bold"></h4>
-                <p id="photo-quote" class="text-white text-xl md:text-2xl italic font-extralight leading-relaxed tracking-wide"></p>
+                <p id="photo-quote" class="text-white text-lg md:text-xl italic font-extralight leading-relaxed tracking-wide min-h-[3rem]"></p>
                 <div class="w-12 h-[1px] bg-brand-gold/30 mx-auto mt-8"></div>
             </div>
         </div>
     </div>
 
     <script>
-        const config = [
-            { start: 1, end: 12, category: 'bw', label: 'Leke ve Gölge', quote: "Dünya renklerden ibaret değildir; gerçeklik, ışığın karanlıkla kurduğu o kusursuz dengede gizlidir." },
-            { start: 13, end: 24, category: 'nature', label: 'Yeryüzü Şiiri', quote: "Doğa, insanın kendini bulmak için kaybolması gereken tek labirenttir. Sessizliği dinle, o her şeyi anlatır." },
-            { start: 25, end: 36, category: 'portrait', label: 'Ruhun Aynası', quote: "Bir portre, sadece bir yüzün kopyası değil; iki ruhun, fotoğrafçı ve öznenin o andaki sessiz anlaşmasıdır." }
-        ];
+        const photoData = {
+            // Siyah Beyaz (1-12)
+            1: "Işığın bittiği yerde hikaye başlar.",
+            2: "Siyah ve beyaz, renklerin gürültüsünü susturan bir sessizliktir.",
+            3: "Gölge, gerçeğin en sadık yoldaşıdır.",
+            4: "Zamanın renklerini soyup çıkardığınızda geriye sadece ruh kalır.",
+            5: "Grinin tonları arasında kaybolan bir hakikat.",
+            6: "Kontrast, hayatın sert ve yumuşak yüzüdür.",
+            7: "Bir fotoğraf, binlerce rengin anlatamadığı sessizliği haykırır.",
+            8: "Gözlerin görmediğini gölgeler fısıldar.",
+            9: "Sadelik, karmaşanın en yüksek formudur.",
+            10: "Işık, karanlığın içindeki gizli mimardır.",
+            11: "Her leke bir iz, her gölge bir hatıradır.",
+            12: "Dünyayı siyah beyaz görmek, onu kalple hissetmektir.",
+            
+            // Doğa (13-24)
+            13: "Doğa, Tanrı'nın görünür kılındığı bir sanattır.",
+            14: "Yeryüzü, üzerine şiirler yazılan dev bir tuvaldir.",
+            15: "Sessizliği dinle; ormanda her ağaç bir şey anlatır.",
+            16: "Dağların heybeti, insanın küçüklüğünü hatırlatan bir aynadır.",
+            17: "Su akar, yolunu ve ruhunu bulur.",
+            18: "Bir yaprağın düşüşünde koca bir mevsim gizlidir.",
+            19: "Toprak, en büyük sabır ve en derin hafızadır.",
+            20: "Gökyüzü, sınırların sadece zihnimizde olduğunu kanıtlar.",
+            21: "Doğa asla acele etmez, ama her şeyi vaktinde tamamlar.",
+            22: "Vahşi olan, özgür olandır.",
+            23: "Işığın ağaç dalları arasındaki dansı, evrenin ritmidir.",
+            24: "Her gün doğumu, dünyanın yeniden yazılan ilk cümlesidir.",
+
+            // Portre (25-36)
+            25: "Bir yüz, okunmayı bekleyen en derin kitaptır.",
+            26: "Gözler, kelimelerin bittiği yerde konuşmaya başlar.",
+            27: "Her kırışıklık, yaşanmış bir hikayenin imzasıdır.",
+            28: "Ruhun aynası, bir bakışın derinliğinde saklıdır.",
+            29: "Portre, bir insanın dünyaya bıraktığı sessiz izdir.",
+            30: "Yabancı bir yüzde tanıdık bir duygu bulmaktır fotoğraf.",
+            31: "Maskelerin ardındaki gerçeği yakalamak sanattır.",
+            32: "Gülümseme geçer, ama bakıştaki anlam kalıcıdır.",
+            33: "İnsan, kendi hikayesinin hem yazarı hem de başrolüdür.",
+            34: "Bir anlık duruş, koca bir ömrün özetidir.",
+            35: "Yüzümüz, iç dünyamızın dışarıya sızan ışığıdır.",
+            36: "Her insan, keşfedilmemiş bir kıtadır."
+        };
 
         const galleryContainer = document.getElementById('gallery-container');
+        const config = [
+            { start: 1, end: 12, category: 'bw', label: 'Leke ve Gölge' },
+            { start: 13, end: 24, category: 'nature', label: 'Yeryüzü Şiiri' },
+            { start: 25, end: 36, category: 'portrait', label: 'Ruhun Aynası' }
+        ];
 
         config.forEach(group => {
             for (let i = group.start; i <= group.end; i++) {
@@ -92,7 +129,7 @@
                 item.className = `masonry-item group cursor-zoom-in ${group.category !== 'bw' ? 'hidden-item' : ''}`;
                 item.dataset.category = group.category;
                 item.dataset.label = group.label;
-                item.dataset.quote = group.quote;
+                item.dataset.id = i;
                 item.onclick = () => openLightbox(item);
                 item.innerHTML = `<div class="overflow-hidden bg-brand-dark"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
                 galleryContainer.appendChild(item);
@@ -101,9 +138,10 @@
 
         function openLightbox(el) {
             const lb = document.getElementById('lightbox');
+            const photoId = el.dataset.id;
             document.getElementById('lightbox-img').src = el.querySelector('img').src;
             document.getElementById('photo-label').innerText = el.dataset.label;
-            document.getElementById('photo-quote').innerText = el.dataset.quote;
+            document.getElementById('photo-quote').innerText = photoData[photoId] || "";
             
             lb.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
