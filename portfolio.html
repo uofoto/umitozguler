@@ -21,115 +21,109 @@
         }
     </script>
     <style>
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .page-animate { animation: fadeIn 1s ease-in forwards; }
+        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+        .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .masonry-grid { column-count: 1; column-gap: 1.5rem; }
         @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
         .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; transition: all 0.5s ease; }
         .hidden-item { display: none; }
         .filter-btn.active { color: #c5a059; border-bottom: 1px solid #c5a059; }
-        
-        /* Görsel yüklenirken yumuşak geçiş efekti */
-        img { transition: opacity 0.5s ease-in-out; }
-        img[loading="lazy"] { opacity: 0; }
-        img.loaded { opacity: 1; }
+        img { transition: opacity 0.8s ease; }
+        .loaded { opacity: 1 !important; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-center h-24">
-                <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
-                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-                </a>
-                <div class="hidden md:flex space-x-12">
-                    <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
-                    <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
-                    <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
-                    <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
+                <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+            </a>
+            <div class="hidden md:flex space-x-12">
+                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
+                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
+                <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
+                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
             </div>
-        </div>
-        <div class="hidden md:hidden bg-brand-dark border-t border-white/5 absolute w-full shadow-2xl" id="mobile-menu">
-            <div class="px-6 py-8 space-y-6 text-center flex flex-col">
-                <a href="index.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Ana Sayfa</a>
-                <a href="about.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-sm uppercase tracking-widest text-brand-gold">Portfolyo</a>
-                <a href="contact.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">İletişim</a>
-            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
         </div>
     </nav>
 
-    <section class="pt-40 pb-12">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
-            <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 inline-block mx-auto">
-                <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">Siyah Beyaz</button>
-                <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
-                <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portrait', this)">Portre</button>
-            </div>
+    <section class="pt-40 pb-12 text-center">
+        <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
+        <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 inline-block mx-auto">
+            <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">Siyah Beyaz</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portrait', this)">Portre</button>
         </div>
     </section>
 
-    <section class="pb-24">
-        <div class="max-w-[1600px] mx-auto px-6">
-            <div class="masonry-grid" id="gallery-container"></div>
-        </div>
-    </section>
+    <section class="pb-24 px-6"><div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div></section>
 
-    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/98 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold p-2">
+    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/98 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] shadow-2xl">
+        <div class="max-w-5xl w-full flex flex-col items-center">
+            <img id="lightbox-img" src="" class="max-h-[75vh] shadow-2xl mb-8 border border-white/5">
+            <div class="text-center max-w-3xl px-4">
+                <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.5em] text-[10px] mb-4 font-bold"></h4>
+                <p id="photo-quote" class="text-white text-xl md:text-2xl italic font-extralight leading-relaxed tracking-wide"></p>
+                <div class="w-12 h-[1px] bg-brand-gold/30 mx-auto mt-8"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const galleryContainer = document.getElementById('gallery-container');
-        // 36 görsel webp formatında
         const config = [
-            { start: 1, end: 12, category: 'bw' },
-            { start: 13, end: 24, category: 'nature' },
-            { start: 25, end: 36, category: 'portrait' }
+            { start: 1, end: 12, category: 'bw', label: 'Leke ve Gölge', quote: "Dünya renklerden ibaret değildir; gerçeklik, ışığın karanlıkla kurduğu o kusursuz dengede gizlidir." },
+            { start: 13, end: 24, category: 'nature', label: 'Yeryüzü Şiiri', quote: "Doğa, insanın kendini bulmak için kaybolması gereken tek labirenttir. Sessizliği dinle, o her şeyi anlatır." },
+            { start: 25, end: 36, category: 'portrait', label: 'Ruhun Aynası', quote: "Bir portre, sadece bir yüzün kopyası değil; iki ruhun, fotoğrafçı ve öznenin o andaki sessiz anlaşmasıdır." }
         ];
+
+        const galleryContainer = document.getElementById('gallery-container');
 
         config.forEach(group => {
             for (let i = group.start; i <= group.end; i++) {
                 const item = document.createElement('div');
-                item.className = `masonry-item group relative cursor-zoom-in ${group.category !== 'bw' ? 'hidden-item' : ''}`;
-                item.setAttribute('data-category', group.category);
-                item.setAttribute('onclick', 'openLightbox(this)');
-                
-                // Native Lazy Loading eklendi: loading="lazy"
-                item.innerHTML = `
-                    <div class="overflow-hidden bg-brand-dark">
-                        <img src="img/${i}.webp" 
-                             loading="lazy" 
-                             onload="this.classList.add('loaded')"
-                             class="w-full grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
-                    </div>
-                `;
+                item.className = `masonry-item group cursor-zoom-in ${group.category !== 'bw' ? 'hidden-item' : ''}`;
+                item.dataset.category = group.category;
+                item.dataset.label = group.label;
+                item.dataset.quote = group.quote;
+                item.onclick = () => openLightbox(item);
+                item.innerHTML = `<div class="overflow-hidden bg-brand-dark"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
                 galleryContainer.appendChild(item);
             }
         });
 
+        function openLightbox(el) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = el.querySelector('img').src;
+            document.getElementById('photo-label').innerText = el.dataset.label;
+            document.getElementById('photo-quote').innerText = el.dataset.quote;
+            
+            lb.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+            setTimeout(() => lb.classList.remove('opacity-0'), 10);
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('opacity-0');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => lb.classList.add('hidden'), 300);
+        }
+
         function filterGallery(cat, el) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
             el.classList.add('active', 'text-white');
-            document.querySelectorAll('.masonry-item').forEach(item => {
-                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item');
-            });
+            document.querySelectorAll('.masonry-item').forEach(item => 
+                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item')
+            );
         }
-
-        const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightbox-img');
-        function openLightbox(el) { lbImg.src = el.querySelector('img').src; lb.classList.remove('hidden'); setTimeout(() => lb.classList.remove('opacity-0'), 10); }
-        function closeLightbox() { lb.classList.add('opacity-0'); setTimeout(() => lb.classList.add('hidden'), 300); }
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
     </script>
 </body>
 </html>
