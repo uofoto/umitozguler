@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ümit Özgüler | Fine Art Photography</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        'brand-black': '#050505', 
+                        'brand-gold': '#c5a059',
+                        'brand-orange': '#ff8c00' /* Özel Turuncu */
+                    },
+                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes shineFade {
+            0% { opacity: 0; filter: brightness(0.5) blur(5px); transform: scale(0.95); }
+            100% { opacity: 1; filter: brightness(1) blur(0); transform: scale(1); }
+        }
+        .animate-shine { animation: shineFade 2.5s ease-out forwards; }
+        body { overflow-x: hidden; }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-brand-black/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-24">
+                <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
+                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-10">
+                    <a href="index.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold border-b border-brand-gold pb-1">Ana Sayfa</a>
+                    <a href="about.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Hakkımda</a>
+                    <a href="portfolio.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                    <a href="contact.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-brand-black border-t border-white/5 absolute w-full shadow-2xl" id="mobile-menu">
+            <div class="px-6 py-10 space-y-8 text-center flex flex-col">
+                <a href="index.html" class="text-xs uppercase tracking-widest text-brand-gold">Ana Sayfa</a>
+                <a href="about.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">Hakkımda</a>
+                <a href="portfolio.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">Portfolyo</a>
+                <a href="contact.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="img/13.webp" alt="Hero" class="w-full h-full object-cover opacity-80">
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4">
+            <p class="text-brand-orange text-[11px] font-bold uppercase tracking-[0.5em] mb-4 drop-shadow-lg">Fine Art Photography</p>
+            <h1 class="animate-shine text-5xl md:text-8xl font-bold text-white mb-10 leading-tight tracking-tighter drop-shadow-2xl">
+                Zamanı Durdur.
+            </h1>
+            <a href="portfolio.html" class="inline-block border border-white/50 bg-black/10 backdrop-blur-sm px-12 py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-700">
+                Koleksiyonu Keşfet
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-12 mb-10">
+                <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>
+                <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>
+            </div>
+            <p class="text-gray-700 text-[9px] tracking-[0.4em] uppercase">&copy; 2026 Ümit Özgüler</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
