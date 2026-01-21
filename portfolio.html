@@ -6,7 +6,7 @@
     <title>Portfolyo | Ümit Özgüler</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -28,92 +28,127 @@
         .filter-btn.active { color: #c5a059; border-bottom: 1px solid #c5a059; }
         img { transition: opacity 0.8s ease; }
         .loaded { opacity: 1 !important; }
+        #mobile-menu { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; }
+        
+        /* Glassmorphism Efekti */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
+    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
-            <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
+            <a href="index.html" class="text-2xl tracking-widest text-white transition-colors z-50">
                 <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
             </a>
+
             <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
-                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
+                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Hakkımda</a>
                 <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
-                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
+                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
             </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none z-50">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-24 left-0 w-full bg-brand-black/98 border-b border-white/10 p-6 flex flex-col space-y-6 text-center shadow-2xl">
+            <a href="index.html" class="text-sm font-medium uppercase tracking-[0.2em] hover:text-brand-gold">Ana Sayfa</a>
+            <a href="about.html" class="text-sm font-medium uppercase tracking-[0.2em] hover:text-brand-gold">Hakkımda</a>
+            <a href="portfolio.html" class="text-sm font-medium uppercase tracking-[0.2em] text-brand-gold">Portfolyo</a>
+            <a href="contact.html" class="text-sm font-medium uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>
         </div>
     </nav>
 
     <section class="pt-40 pb-12 text-center">
         <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
-        <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 inline-block mx-auto">
+        <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 inline-block mx-auto px-4">
             <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">Siyah Beyaz</button>
             <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
             <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portrait', this)">Portre</button>
         </div>
     </section>
 
-    <section class="pb-24 px-6"><div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div></section>
+    <section class="pb-24 px-6">
+        <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
+    </section>
 
-    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/98 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50 p-2">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <div id="lightbox" class="fixed inset-0 z-[60] bg-brand-black/95 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300 backdrop-blur-md">
+        
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50 p-2 bg-black/20 rounded-full backdrop-blur-md border border-white/10 transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-        <div class="max-w-5xl w-full flex flex-col items-center">
-            <img id="lightbox-img" src="" class="max-h-[70vh] shadow-2xl mb-8 border border-white/5">
-            <div class="text-center max-w-3xl px-4">
-                <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.5em] text-[10px] mb-4 font-bold"></h4>
-                <p id="photo-quote" class="text-white text-lg md:text-xl italic font-extralight leading-relaxed tracking-wide min-h-[3rem]"></p>
-                <div class="w-12 h-[1px] bg-brand-gold/30 mx-auto mt-8"></div>
+
+        <div class="max-w-5xl w-full flex flex-col items-center relative">
+            
+            <img id="lightbox-img" src="" class="max-h-[55vh] md:max-h-[60vh] shadow-[0_20px_60px_rgba(0,0,0,0.8)] mb-8 border border-white/5 rounded-sm">
+            
+            <div class="w-full max-w-2xl px-4">
+                <div class="glass-box rounded-xl p-8 text-center transform transition-all hover:border-white/20">
+                    <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.4em] text-[10px] mb-4 font-bold opacity-90"></h4>
+                    
+                    <p id="photo-quote" class="text-gray-100 text-lg md:text-xl font-normal leading-relaxed tracking-wide min-h-[3rem] font-sans antialiased"></p>
+                    
+                    <div class="w-12 h-[2px] bg-brand-gold/50 mx-auto mt-6"></div>
+                </div>
             </div>
+
         </div>
     </div>
 
     <script>
         const photoData = {
             // Siyah Beyaz (1-12)
-            1: "Işığın bittiği yerde hikaye başlar.",
-            2: "Siyah ve beyaz, renklerin gürültüsünü susturan bir sessizliktir.",
-            3: "Gölge, gerçeğin en sadık yoldaşıdır.",
-            4: "Zamanın renklerini soyup çıkardığınızda geriye sadece ruh kalır.",
-            5: "Grinin tonları arasında kaybolan bir hakikat.",
-            6: "Kontrast, hayatın sert ve yumuşak yüzüdür.",
-            7: "Bir fotoğraf, binlerce rengin anlatamadığı sessizliği haykırır.",
-            8: "Gözlerin görmediğini gölgeler fısıldar.",
-            9: "Sadelik, karmaşanın en yüksek formudur.",
-            10: "Işık, karanlığın içindeki gizli mimardır.",
-            11: "Her leke bir iz, her gölge bir hatıradır.",
-            12: "Dünyayı siyah beyaz görmek, onu kalple hissetmektir.",
+            1: "Sokağı süpürüyor sanırsın ama o aslında zihnindeki eskileri temizliyordur. Taş aynı taş, yük aynı yük; sadece gün değişiyor.",
+            2: "Kar yağınca sesler kesilir, insan kendi içiyle baş başa kalır. O beyazlıkta yürümek, biraz da hatıralara yürümektir.",
+            3: "Birbirini anlamak için dile gerek yok. Bazen bir bakış, dünyadaki bütün sözlüklerden daha fazlasını anlatır.",
+            4: "Bizim buraların yolu yokuştur, yükü ağırdır. Ama o yokuşu çıkmadan da manzaranın kıymetini bilemezsin.",
+            5: "Şehir kalabalık, herkes bir yere yetişiyor ama kimse kimseye değmiyor. Gölgelerimiz bile bizden daha samimi.",
+            6: "Karanlığın ortasında o ışık huzmesi... Alın teri dökülen yerde, ışık her zaman daha güzel parlar.",
+            7: "Karanlıktan korkmamak lazım. İnsan asıl rengini, ışıklar sönüp kendisiyle kalınca belli eder.",
+            8: "Buna sis deyip geçme, bu torak dumanıdır. Odun kömüre dönerken, o dumanın içinde asıl yanan ekmek kavgasıdır.",
+            9: "Sonunu görmediğin yola girmek cesaret ister. Bu köprü sadece karşıya değil, bilmediğimiz bir hikayeye götürüyor insanı.",
+            10: "Şehir ne kadar gürültü yaparsa yapsın, dağların o vakur sessizliği her zaman galip gelir.",
+            11: "Mevsim döner, sürü yürür. Bu dağların kanunu bu; insan da hayvan da o büyük döngüye ayak uydurur.",
+            12: "Bizim çocukluğumuzun en pahalı oyuncağıydı bu. Peşinden koşarken dünyalar bizim olurdu, yoksulluk falan aklımıza gelmezdi.",
             
             // Doğa (13-24)
-            13: "Doğa, Tanrı'nın görünür kılındığı bir sanattır.",
-            14: "Yeryüzü, üzerine şiirler yazılan dev bir tuvaldir.",
-            15: "Sessizliği dinle; ormanda her ağaç bir şey anlatır.",
-            16: "Dağların heybeti, insanın küçüklüğünü hatırlatan bir aynadır.",
-            17: "Su akar, yolunu ve ruhunu bulur.",
-            18: "Bir yaprağın düşüşünde koca bir mevsim gizlidir.",
-            19: "Toprak, en büyük sabır ve en derin hafızadır.",
-            20: "Gökyüzü, sınırların sadece zihnimizde olduğunu kanıtlar.",
-            21: "Doğa asla acele etmez, ama her şeyi vaktinde tamamlar.",
-            22: "Vahşi olan, özgür olandır.",
-            23: "Işığın ağaç dalları arasındaki dansı, evrenin ritmidir.",
-            24: "Her gün doğumu, dünyanın yeniden yazılan ilk cümlesidir.",
+            13: "Suya bakınca sadece aksini görmezsin, akıp giden zamanı görürsün. Tutamazsın, akar gider.",
+            14: "Şu vadiye bakınca insan ne kadar küçük olduğunu anlıyor. Coğrafya kaderdir derler ya, işte o kaderin en dik hali burası.",
+            15: "Kısacık ömre ne çok güzellik sığdırmış. Bazen durup incelemek lazım, hayat o detaylarda saklı.",
+            16: "Başını kaldırıp şu dağlara baktığında, dertlerinin ne kadar ufak kaldığını fark ediyorsun.",
+            17: "Yolun sonu nereye çıkar bilinmez ama yeşilin içinde kaybolmak, yolu bitirmekten daha güzel.",
+            18: "O dağın asıl sahibi onlar. Biz misafiriz, onlar ev sahibi. Durup bize bakışları da ondan.",
+            19: "Ufuk çizgisine bak, dağ dağ üstüne... Her katmanda ayrı bir hikaye, ayrı bir yaşanmışlık saklı.",
+            20: "Günün en güzel veda ettiği an. Güneş suya değdi mi, içindeki telaş da durulur.",
+            21: "Mavinin ortasında, dünyanın bütün ağırlığına inat uçan o kanat... Özgürlük dedikleri bu olsa gerek.",
+            22: "Dağın yamacına iliştirilmiş bir hayat. Ne doğayla savaşıyor ne de boyun eğiyor; onunla yaşamayı öğrenmiş.",
+            23: "Rüzgar esti mi boyun bükerler ama kırılmazlar. Zarif dururlar ama kökleri sağlamdır.",
+            24: "Kara kışa inat açan çiçeğe saygı duyacaksın. O beyazın içinden çıkmak her babayiğidin harcı değil.",
 
             // Portre (25-36)
-            25: "Bir yüz, okunmayı bekleyen en derin kitaptır.",
-            26: "Gözler, kelimelerin bittiği yerde konuşmaya başlar.",
-            27: "Her kırışıklık, yaşanmış bir hikayenin imzasıdır.",
-            28: "Ruhun aynası, bir bakışın derinliğinde saklıdır.",
-            29: "Portre, bir insanın dünyaya bıraktığı sessiz izdir.",
-            30: "Yabancı bir yüzde tanıdık bir duygu bulmaktır fotoğraf.",
-            31: "Maskelerin ardındaki gerçeği yakalamak sanattır.",
-            32: "Gülümseme geçer, ama bakıştaki anlam kalıcıdır.",
-            33: "İnsan, kendi hikayesinin hem yazarı hem de başrolüdür.",
-            34: "Bir anlık duruş, koca bir ömrün özetidir.",
-            35: "Yüzümüz, iç dünyamızın dışarıya sızan ışığıdır.",
-            36: "Her insan, keşfedilmemiş bir kıtadır."
+            25: "Pencere önleri beklemek içindir. Gideni beklersin, haberi beklersin, bazen de sadece geçip giden hayatı izlersin.",
+            26: "Şehrin sisi dumanı arasında kaybolan hayatlar... Herkes bir gölge gibi, bir görünüp bir kayboluyor.",
+            27: "O küçücük ellerin sıkı sıkı tuttuğu ekmek... Hayatın gerçeği o lokmada gizli işte.",
+            28: "Öyle bir oturmuş ki, sanırsın sırtında dünyanın yükü var. Çocuk deyip geçme, bazen bizden çok şey taşırlar.",
+            29: "Saçları gibi aklı da karışık, ruhu da asi. Kalıba sığmaz, rüzgar nereden eserse oraya.",
+            30: "Duvarın arkasından ürkek ürkek bakıyor ama merakı korkusundan büyük. Hayatı o delikten tanımaya çalışıyor.",
+            31: "Derin bir nefes çekip dumanı savururken, aslında yorgunluğunu da üflüyor havaya. Bir molalık teselli.",
+            32: "Sakalına ak düşmüş, bakışları dalgın... Kim bilir aklından hangi eski defterleri geçiriyor.",
+            33: "Camın arkasından bakarken sanki yılları süzüyor. O bakışta tecrübe var, yaşanmışlık var.",
+            34: "Yüzündeki her çizginin bir adı, bir hatırası var. Okumasını bilene o yüz bir kitap gibidir.",
+            35: "Günün hayhuyu bitip de karanlık çökünce, insan en çok kendine sığınır.",
+            36: "Dışarısı ne kadar soğuk olursa olsun, birbirine tutunan eller varsa orası sıcacıktır."
         };
 
         const galleryContainer = document.getElementById('gallery-container');
@@ -131,10 +166,14 @@
                 item.dataset.label = group.label;
                 item.dataset.id = i;
                 item.onclick = () => openLightbox(item);
-                item.innerHTML = `<div class="overflow-hidden bg-brand-dark"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
+                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')" onerror="this.style.display='none'"></div>`;
                 galleryContainer.appendChild(item);
             }
         });
+
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
 
         function openLightbox(el) {
             const lb = document.getElementById('lightbox');
@@ -142,7 +181,6 @@
             document.getElementById('lightbox-img').src = el.querySelector('img').src;
             document.getElementById('photo-label').innerText = el.dataset.label;
             document.getElementById('photo-quote').innerText = photoData[photoId] || "";
-            
             lb.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
             setTimeout(() => lb.classList.remove('opacity-0'), 10);
