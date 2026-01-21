@@ -6,8 +6,7 @@
     <title>Portfolyo | Ümit Özgüler</title>
     
     <meta property="og:title" content="Portfolyo | Ümit Özgüler">
-    <meta property="og:description" content="Koleksiyonlar: Doğa, B/W ve Portre.">
-    <meta property="og:image" content="https://umitozguler.com.tr/img/13.webp">
+    <meta property="og:description" content="Koleksiyonlar: Doğa, Siyah Beyaz ve Portre.">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
@@ -22,14 +21,19 @@
         }
     </script>
     <style>
-        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .page-animate { animation: fadeIn 1s ease-in forwards; }
         .masonry-grid { column-count: 1; column-gap: 1.5rem; }
         @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
         .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; transition: all 0.5s ease; }
         .hidden-item { display: none; }
         .filter-btn.active { color: #c5a059; border-bottom: 1px solid #c5a059; }
+        
+        /* Görsel yüklenirken yumuşak geçiş efekti */
+        img { transition: opacity 0.5s ease-in-out; }
+        img[loading="lazy"] { opacity: 0; }
+        img.loaded { opacity: 1; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -38,7 +42,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
-                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
                 <div class="hidden md:flex space-x-12">
                     <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
@@ -51,7 +55,7 @@
                 </button>
             </div>
         </div>
-        <div class="hidden md:hidden bg-brand-dark border-t border-white/5 absolute w-full" id="mobile-menu">
+        <div class="hidden md:hidden bg-brand-dark border-t border-white/5 absolute w-full shadow-2xl" id="mobile-menu">
             <div class="px-6 py-8 space-y-6 text-center flex flex-col">
                 <a href="index.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Ana Sayfa</a>
                 <a href="about.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Hakkımda</a>
@@ -65,8 +69,8 @@
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
             <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 inline-block mx-auto">
-                <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
-                <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">B/W</button>
+                <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">Siyah Beyaz</button>
+                <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
                 <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portrait', this)">Portre</button>
             </div>
         </div>
@@ -87,15 +91,29 @@
 
     <script>
         const galleryContainer = document.getElementById('gallery-container');
-        const config = [{ start: 1, end: 12, category: 'bw' },{ start: 13, end: 24, category: 'nature' },{ start: 25, end: 36, category: 'portrait' }];
+        // 36 görsel webp formatında
+        const config = [
+            { start: 1, end: 12, category: 'bw' },
+            { start: 13, end: 24, category: 'nature' },
+            { start: 25, end: 36, category: 'portrait' }
+        ];
 
         config.forEach(group => {
             for (let i = group.start; i <= group.end; i++) {
                 const item = document.createElement('div');
-                item.className = `masonry-item group relative cursor-zoom-in ${group.category !== 'nature' ? 'hidden-item' : ''}`;
+                item.className = `masonry-item group relative cursor-zoom-in ${group.category !== 'bw' ? 'hidden-item' : ''}`;
                 item.setAttribute('data-category', group.category);
                 item.setAttribute('onclick', 'openLightbox(this)');
-                item.innerHTML = `<div class="overflow-hidden bg-brand-dark"><img src="img/${i}.webp" loading="lazy" class="w-full grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"></div>`;
+                
+                // Native Lazy Loading eklendi: loading="lazy"
+                item.innerHTML = `
+                    <div class="overflow-hidden bg-brand-dark">
+                        <img src="img/${i}.webp" 
+                             loading="lazy" 
+                             onload="this.classList.add('loaded')"
+                             class="w-full grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                `;
                 galleryContainer.appendChild(item);
             }
         });
