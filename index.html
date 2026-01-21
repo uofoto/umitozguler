@@ -4,23 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ümit Özgüler | Fine Art Photography</title>
+    
+    <meta property="og:title" content="Ümit Özgüler | Fine Art Photography">
+    <meta property="og:description" content="Işık, gölge ve ruhun buluştuğu fotoğraf kareleri.">
+    <meta property="og:image" content="https://umitozguler.com.tr/img/13.webp">
+    <meta property="og:url" content="https://umitozguler.com.tr">
+    <meta name="twitter:card" content="summary_large_image">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 
-                        'brand-black': '#050505', 
-                        'brand-gold': '#c5a059',
-                        'brand-orange': '#ff8c00' /* Özel Turuncu */
-                    },
+                    colors: { 'brand-black': '#050505', 'brand-gold': '#c5a059', 'brand-orange': '#ff8c00' },
                     fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-animate { animation: fadeInPage 1.2s ease-out forwards; }
+        
         @keyframes shineFade {
             0% { opacity: 0; filter: brightness(0.5) blur(5px); transform: scale(0.95); }
             100% { opacity: 1; filter: brightness(1) blur(0); transform: scale(1); }
@@ -29,13 +38,13 @@
         body { overflow-x: hidden; }
     </style>
 </head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
     <nav class="fixed w-full z-50 bg-brand-black/80 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
-                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
                 
                 <div class="hidden md:flex space-x-10">
@@ -46,9 +55,7 @@
                 </div>
 
                 <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
@@ -79,14 +86,12 @@
         </div>
     </section>
 
-    <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="flex justify-center space-x-12 mb-10">
-                <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>
-                <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>
-            </div>
-            <p class="text-gray-700 text-[9px] tracking-[0.4em] uppercase">&copy; 2026 Ümit Özgüler</p>
+    <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center">
+        <div class="flex justify-center space-x-12 mb-10">
+            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>
+            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>
         </div>
+        <p class="text-gray-700 text-[9px] tracking-[0.4em] uppercase">&copy; 2026 Ümit Özgüler</p>
     </footer>
 
     <script>
