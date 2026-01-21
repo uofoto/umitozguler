@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hakkımda | Ümit Özgüler</title>
+    
+    <meta property="og:title" content="Hakkımda | Ümit Özgüler">
+    <meta property="og:description" content="20 yılı aşkın fotoğraf yolculuğu, BUFSAD eğitmenliği ve sanat anlayışı.">
+    <meta property="og:image" content="https://umitozguler.com.tr/img/umitozguler.webp">
+    <meta property="og:url" content="https://umitozguler.com.tr/about.html">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -16,8 +22,16 @@
             }
         }
     </script>
+    <style>
+        /* Madde 2: Sayfa Geçiş Efekti */
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-animate { animation: fadeInPage 1.2s ease-out forwards; }
+    </style>
 </head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6">
@@ -49,7 +63,6 @@
 
     <section class="pt-40 pb-20 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            
             <div class="relative">
                 <div class="absolute -top-4 -left-4 w-24 h-24 border-t border-l border-brand-gold/30"></div>
                 <img src="img/umitozguler.webp" alt="Ümit Özgüler" class="w-full grayscale shadow-2xl filter brightness-90">
