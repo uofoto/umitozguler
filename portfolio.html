@@ -21,7 +21,7 @@
         @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         
-        /* Masonry Grid */
+        /* Masonry Grid Ayarları - Asla Bozulmadı */
         .masonry-grid { column-count: 1; column-gap: 1.5rem; }
         @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
@@ -32,7 +32,6 @@
         img { transition: opacity 0.8s ease; }
         .loaded { opacity: 1 !important; }
 
-        /* Glassmorphism Efekti */
         .glass-box {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
@@ -40,8 +39,6 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
-
-        /* Navigasyon Okları İçin Hover Efekti */
         .nav-arrow:hover { background: rgba(197, 160, 89, 0.2); transform: scale(1.1); }
     </style>
 </head>
@@ -52,32 +49,28 @@
             <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
                 <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
             </a>
-
             <div class="hidden md:flex space-x-12">
                 <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Ana Sayfa</a>
                 <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Hakkımda</a>
                 <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
                 <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
             </div>
-
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none transition-transform duration-300">
-                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none">
+                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 z-40 bg-brand-black/98 hidden flex flex-col items-center justify-center space-y-8 backdrop-blur-xl transition-opacity duration-300 opacity-0">
-        <a href="index.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-        <a href="about.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Hakkımda</a>
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-brand-black/98 hidden flex flex-col items-center justify-center space-y-8 backdrop-blur-xl opacity-0 transition-opacity duration-300">
+        <a href="index.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Ana Sayfa</a>
+        <a href="about.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Hakkımda</a>
         <a href="portfolio.html" class="text-xl font-bold uppercase tracking-[0.3em] text-brand-gold">Portfolyo</a>
-        <a href="contact.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
+        <a href="contact.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">İletişim</a>
     </div>
 
     <section class="pt-40 pb-12 text-center">
         <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
-        <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 inline-block mx-auto px-4">
+        <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 px-4">
             <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">Siyah Beyaz</button>
             <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
             <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portrait', this)">Portre</button>
@@ -89,26 +82,21 @@
     </section>
 
     <div id="lightbox" class="fixed inset-0 z-[60] bg-brand-black/98 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300 backdrop-blur-md">
-        
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50 p-2 bg-black/20 rounded-full backdrop-blur-md border border-white/10 transition-colors">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-50 p-2 bg-black/20 rounded-full border border-white/10 transition-colors">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-
-        <button onclick="changePhoto(-1)" class="nav-arrow absolute left-2 md:left-8 top-1/2 transform -translate-y-1/2 text-white p-3 rounded-full border border-white/10 transition-all z-50 bg-black/30 backdrop-blur-sm">
+        <button onclick="changePhoto(-1)" class="nav-arrow absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white p-3 rounded-full border border-white/10 bg-black/30 z-50 transition-all">
             <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
         </button>
-
-        <button onclick="changePhoto(1)" class="nav-arrow absolute right-2 md:right-8 top-1/2 transform -translate-y-1/2 text-white p-3 rounded-full border border-white/10 transition-all z-50 bg-black/30 backdrop-blur-sm">
+        <button onclick="changePhoto(1)" class="nav-arrow absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white p-3 rounded-full border border-white/10 bg-black/30 z-50 transition-all">
             <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
         </button>
-
         <div class="max-w-5xl w-full flex flex-col items-center relative">
-            <img id="lightbox-img" src="" class="max-h-[55vh] md:max-h-[60vh] shadow-[0_20px_60px_rgba(0,0,0,0.8)] mb-8 border border-white/5 rounded-sm select-none">
-            
+            <img id="lightbox-img" src="" class="max-h-[55vh] md:max-h-[60vh] shadow-2xl mb-8 border border-white/5 rounded-sm select-none">
             <div class="w-full max-w-2xl px-4">
-                <div class="glass-box rounded-xl p-8 text-center transform transition-all hover:border-white/20">
+                <div class="glass-box rounded-xl p-8 text-center">
                     <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.4em] text-[10px] mb-4 font-bold opacity-90"></h4>
-                    <p id="photo-quote" class="text-gray-100 text-lg md:text-xl font-normal leading-relaxed tracking-wide min-h-[3rem] font-sans antialiased"></p>
+                    <p id="photo-quote" class="text-gray-100 text-lg md:text-xl font-normal leading-relaxed tracking-wide min-h-[3rem] antialiased"></p>
                     <div class="w-12 h-[2px] bg-brand-gold/50 mx-auto mt-6"></div>
                 </div>
             </div>
@@ -116,52 +104,48 @@
     </div>
 
     <script>
-        // Ümit Hoca'nın Dünyası (Güncellenmiş)
         const photoData = {
-            // Siyah Beyaz (1-12)
-            1: "Sokağı süpürüyor sanırsın ama o aslında zihnindeki eskileri temizliyordur. Taş aynı taş, yük aynı yük; sadece gün değişiyor.",
-            2: "Kar yağınca sesler kesilir, insan kendi içiyle baş başa kalır. O beyazlıkta yürümek, biraz da hatıralara yürümektir.",
-            3: "Birbirini anlamak için dile gerek yok. Bazen bir bakış, dünyadaki bütün sözlüklerden daha fazlasını anlatır.",
-            
-            // 4. Fotoğraf GÜNCELLENDİ: Yoksulluk ve Mücadele
-            4: "O yokuşu tırmananların sırtındaki sadece yük değil, yoksulluğun o görünmez ağırlığıdır. Yol biter ama o yük bitmez.",
-            
-            5: "Şehir kalabalık, herkes bir yere yetişiyor ama kimse kimseye değmiyor. Gölgelerimiz bile bizden daha samimi.",
-            6: "Karanlığın ortasında o ışık huzmesi... Alın teri dökülen yerde, ışık her zaman daha güzel parlar.",
-            7: "Karanlıktan korkmamak lazım. İnsan asıl rengini, ışıklar sönüp kendisiyle kalınca belli eder.",
-            8: "Buna sis deyip geçme, bu torak dumanıdır. Odun kömüre dönerken, o dumanın içinde asıl yanan ekmek kavgasıdır.",
-            9: "Sonunu görmediğin yola girmek cesaret ister. Bu köprü sadece karşıya değil, bilmediğimiz bir hikayeye götürüyor insanı.",
-            10: "Şehir ne kadar gürültü yaparsa yapsın, dağların o vakur sessizliği her zaman galip gelir.",
-            11: "Mevsim döner, sürü yürür. Bu dağların kanunu bu; insan da hayvan da o büyük döngüye ayak uydurur.",
-            12: "Bizim çocukluğumuzun en pahalı oyuncağıydı bu. Peşinden koşarken dünyalar bizim olurdu, yoksulluk falan aklımıza gelmezdi.",
-            
-            // Doğa (13-24)
-            13: "Suya bakınca sadece aksini görmezsin, akıp giden zamanı görürsün. Tutamazsın, akar gider.",
-            14: "Şu vadiye bakınca insan ne kadar küçük olduğunu anlıyor. Coğrafya kaderdir derler ya, işte o kaderin en dik hali burası.",
-            15: "Kısacık ömre ne çok güzellik sığdırmış. Bazen durup incelemek lazım, hayat o detaylarda saklı.",
-            16: "Başını kaldırıp şu dağlara baktığında, dertlerinin ne kadar ufak kaldığını fark ediyorsun.",
-            17: "Yolun sonu nereye çıkar bilinmez ama yeşilin içinde kaybolmak, yolu bitirmekten daha güzel.",
-            18: "O dağın asıl sahibi onlar. Biz misafiriz, onlar ev sahibi. Durup bize bakışları da ondan.",
-            19: "Ufuk çizgisine bak, dağ dağ üstüne... Her katmanda ayrı bir hikaye, ayrı bir yaşanmışlık saklı.",
-            20: "Günün en güzel veda ettiği an. Güneş suya değdi mi, içindeki telaş da durulur.",
-            21: "Mavinin ortasında, dünyanın bütün ağırlığına inat uçan o kanat... Özgürlük dedikleri bu olsa gerek.",
-            22: "Dağın yamacına iliştirilmiş bir hayat. Ne doğayla savaşıyor ne de boyun eğiyor; onunla yaşamayı öğrenmiş.",
-            23: "Rüzgar esti mi boyun bükerler ama kırılmazlar. Zarif dururlar ama kökleri sağlamdır.",
-            24: "Kara kışa inat açan çiçeğe saygı duyacaksın. O beyazın içinden çıkmak her babayiğidin harcı değil.",
+            // --- SİYAH BEYAZ (1-12) ---
+            1: "Taş sokakların arasında ağır ağır dolaşan sessizlik, geçmişten bugüne uzanan görünmez bir hat gibi yerini korur.",
+            2: "Karın içinde yürüyen insan, soğuğun değil, kendi iç sesinin ağırlığını taşır.",
+            3: "Bir çocukla bir hayvanın karşılaşmasında, dünya kısa bir an için daha sade, daha dürüst bir hâl alır.",
+            4: "Yokuş yukarı ilerleyen adımlar, hayatın aceleye gelmeyen tarafını sessizce öğretir.",
+            5: "Aynı yolda yürüyen kalabalıklar, birbirine yaklaşmadan akan ayrı hayatlar gibidir.",
+            6: "Karanlıkta sürdürülen emek, görünmeden var olmayı kabul etmiş bir sabır taşır.",
+            7: "Işığın değdiği yerde insan geri çekilir, anlam yavaşça öne çıkar.",
+            8: "Kömürücü dumanının içinde beliren siluet, emeğin bedenle birlikte havaya karıştığı ağır bir zamanı taşır.",
+            9: "Köprü sisin içine uzanırken, insan bilmediği bir yere yürümeyi de öğrenir.",
+            10: "Yukarıdan bakılan şehir, birbirine dokunmadan akan hayatların ortak suskunluğudur.",
+            11: "Dağların eteğinde sürdürülen emek, toprağa bırakılmış uzun bir yaşam cümlesi gibidir.",
+            12: "Oyunun peşinden koşan çocuk, zamanın henüz ağırlık kazanmadığı bir dünyayı hatırlatır.",
 
-            // Portre (25-36)
-            25: "Pencere önleri beklemek içindir. Gideni beklersin, haberi beklersin, bazen de sadece geçip giden hayatı izlersin.",
-            26: "Şehrin sisi dumanı arasında kaybolan hayatlar... Herkes bir gölge gibi, bir görünüp bir kayboluyor.",
-            27: "O küçücük ellerin sıkı sıkı tuttuğu ekmek... Hayatın gerçeği o lokmada gizli işte.",
-            28: "Öyle bir oturmuş ki, sanırsın sırtında dünyanın yükü var. Çocuk deyip geçme, bazen bizden çok şey taşırlar.",
-            29: "Saçları gibi aklı da karışık, ruhu da asi. Kalıba sığmaz, rüzgar nereden eserse oraya.",
-            30: "Duvarın arkasından ürkek ürkek bakıyor ama merakı korkusundan büyük. Hayatı o delikten tanımaya çalışıyor.",
-            31: "Derin bir nefes çekip dumanı savururken, aslında yorgunluğunu da üflüyor havaya. Bir molalık teselli.",
-            32: "Sakalına ak düşmüş, bakışları dalgın... Kim bilir aklından hangi eski defterleri geçiriyor.",
-            33: "Camın arkasından bakarken sanki yılları süzüyor. O bakışta tecrübe var, yaşanmışlık var.",
-            34: "Yüzündeki her çizginin bir adı, bir hatırası var. Okumasını bilene o yüz bir kitap gibidir.",
-            35: "Günün hayhuyu bitip de karanlık çökünce, insan en çok kendine sığınır.",
-            36: "Dışarısı ne kadar soğuk olursa olsun, birbirine tutunan eller varsa orası sıcacıktır."
+            // --- DOĞA (13-24) ---
+            13: "Şelalenin suyu, durmadan anlatılan eski bir hikâye gibi kendi yolunu bulur.",
+            14: "Vadinin üzerine çöken bulutlar, gökyüzünün yeryüzüne eğildiği anları fısıldar.",
+            15: "Bir çiçeğe konan kelebek, hayatın hafifliğini ve geçiciliğini birlikte taşır.",
+            16: "Gün batarken uzayan gölgeler, zamanın acele etmeden çekilişidir.",
+            17: "Yeşilin içinde uzanan yollar, insanı durarak yürümeye davet eder.",
+            18: "Ufka karşı duran bir canlı, doğanın sessiz ama derin duruşunu taşır.",
+            19: "Sislerin ardında kalan dağlar, her şeyin hemen görünmek zorunda olmadığını hatırlatır.",
+            20: "Güneş suya dokunduğunda, gün kendi içine kapanır.",
+            21: "İnce kanatlara işlenmiş desenler, yaratılışın sabırlı dokunuşlarını saklar.",
+            22: "Yeşilin içine serpiştirilmiş evler, insanın doğayla kurduğu kırılgan yakınlığı anlatır.",
+            23: "Rüzgârda salınan kır çiçekleri, hayatın inceliğini sessizce gösterir.",
+            24: "Karın içinden çıkan bir çiçek, umudun mevsim seçmediğini hatırlatır.",
+
+            // --- PORTRE (25-36) ---
+            25: "Pencereden bakan yüzler, içeride kalanla dışarıda akan zaman arasında asılı durur.",
+            26: "Dumanla karışan emek, hayatın mutfakta da yavaş yavaş yazıldığını anlatır.",
+            27: "Taş duvarların önünde duran insanlar, mekânla birlikte geçmişi de omuzlarında taşır.",
+            28: "Yan yana oturan çocuklar, sessizliğin içinde bile birbirlerine yaslanan bir dünyanın parçasıdır.",
+            29: "Karanlıktan bakan bir yüz, gülümsemenin en çok gölgede büyüdüğünü fısıldar.",
+            30: "Kumaşların arasından görünen bakış, korunma ihtiyacının ne kadar insani olduğunu anlatır.",
+            31: "Sokakta duran yaşlı bir beden, geçmişle bugünü aynı anda taşır.",
+            32: "Çitin arkasından bakan çocuk, dünyanın her zaman biraz uzakta durduğunu hisseder.",
+            33: "Ateşin başındaki emek, zamanın ağır ama kararlı akışına eşlik eder.",
+            34: "Dağınık saçların ardındaki bakış, hayatın henüz tamamlanmamış bir hâlidir.",
+            35: "Bir odanın sessizliğinde uzanan beden, günün yükünü yavaşça yere bırakır.",
+            36: "Aynı masanın etrafında toplanan insanlar, hayatın paylaşıldıkça çoğaldığını hatırlatır."
         };
 
         const galleryContainer = document.getElementById('gallery-container');
@@ -171,65 +155,37 @@
             { start: 25, end: 36, category: 'portrait', label: 'Ruhun Aynası' }
         ];
 
-        let currentPhotoId = 1; // Takip için
-        let currentCategory = 'bw'; // Mevcut kategori
+        let currentPhotoId = 1;
+        let currentCategory = 'bw';
 
-        // Galeri Oluşturma
         config.forEach(group => {
             for (let i = group.start; i <= group.end; i++) {
                 const item = document.createElement('div');
                 item.className = `masonry-item group cursor-zoom-in ${group.category !== 'bw' ? 'hidden-item' : ''}`;
                 item.dataset.category = group.category;
-                item.dataset.label = group.label;
-                item.dataset.id = i;
                 item.onclick = () => openLightbox(i, group.category);
-                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')" onerror="this.style.display='none'"></div>`;
+                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
                 galleryContainer.appendChild(item);
             }
         });
 
-        // Mobil Menü Mantığı (YENİLENDİ: Full Overlay)
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        let isMenuOpen = false;
+        function filterGallery(cat, el) {
+            currentCategory = cat; 
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
+            el.classList.add('active', 'text-white');
+            document.querySelectorAll('.masonry-item').forEach(item => 
+                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item')
+            );
+        }
 
-        btn.addEventListener('click', () => {
-            isMenuOpen = !isMenuOpen;
-            if(isMenuOpen) {
-                menu.classList.remove('hidden');
-                setTimeout(() => menu.classList.remove('opacity-0'), 10);
-                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'; // X ikonu
-            } else {
-                menu.classList.add('opacity-0');
-                setTimeout(() => menu.classList.add('hidden'), 300);
-                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>'; // Hamburger
-            }
-        });
-
-        // Lightbox Mantığı (Gelişmiş Navigasyonlu)
         function openLightbox(id, category) {
             currentPhotoId = parseInt(id);
             currentCategory = category;
             updateLightbox();
-            
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
             setTimeout(() => lb.classList.remove('opacity-0'), 10);
-        }
-
-        function changePhoto(direction) {
-            // Mevcut kategorinin sınırlarını bul
-            const catConfig = config.find(c => c.category === currentCategory);
-            let newId = currentPhotoId + direction;
-
-            // Döngüsel navigasyon (Son fotodan başa, baştan sona)
-            if (newId > catConfig.end) newId = catConfig.start;
-            if (newId < catConfig.start) newId = catConfig.end;
-
-            currentPhotoId = newId;
-            updateLightbox();
         }
 
         function updateLightbox() {
@@ -239,6 +195,15 @@
             document.getElementById('photo-quote').innerText = photoData[currentPhotoId] || "";
         }
 
+        function changePhoto(direction) {
+            const catConfig = config.find(c => c.category === currentCategory);
+            let newId = currentPhotoId + direction;
+            if (newId > catConfig.end) newId = catConfig.start;
+            if (newId < catConfig.start) newId = catConfig.end;
+            currentPhotoId = newId;
+            updateLightbox();
+        }
+
         function closeLightbox() {
             const lb = document.getElementById('lightbox');
             lb.classList.add('opacity-0');
@@ -246,14 +211,16 @@
             setTimeout(() => lb.classList.add('hidden'), 300);
         }
 
-        function filterGallery(cat, el) {
-            currentCategory = cat; // Kategori değişti
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
-            el.classList.add('active', 'text-white');
-            document.querySelectorAll('.masonry-item').forEach(item => 
-                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item')
-            );
-        }
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            const menu = document.getElementById('mobile-menu');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => menu.classList.remove('opacity-0'), 10);
+            } else {
+                menu.classList.add('opacity-0');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+        };
     </script>
 </body>
 </html>
