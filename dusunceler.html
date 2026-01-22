@@ -80,7 +80,7 @@
 
             <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 
-                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-24">
+                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-23">
                     <div class="h-60 overflow-hidden relative">
                         <img src="img/27.webp" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">
                     </div>
@@ -88,7 +88,7 @@
                         <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3">Eleştiri</span>
                         <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors">Biçim mi, Ruh mu?</h3>
                         <div class="flex items-center text-[10px] tracking-widest uppercase text-gray-500 mb-4 space-x-4">
-                            <span>24 Ocak 2026</span>
+                            <span>23 Ocak 2026</span>
                             <span>·</span>
                             <span>4 dk okuma</span>
                         </div>
@@ -163,7 +163,6 @@
             }
         };
 
-        // Yazıları tarihe göre sıralama scripti
         const container = document.getElementById("yazi-listesi");
         const items = Array.from(container.children);
         items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
