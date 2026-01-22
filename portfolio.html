@@ -57,6 +57,7 @@
                 <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Ana Sayfa</a>
                 <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Hakkımda</a>
                 <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
+                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Düşünceler</a>
                 <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
             </div>
             <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none relative z-[10001]">
@@ -69,6 +70,7 @@
         <a href="index.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Ana Sayfa</a>
         <a href="about.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Hakkımda</a>
         <a href="portfolio.html" class="text-xl font-bold uppercase tracking-[0.3em] text-brand-gold">Portfolyo</a>
+        <a href="dusunceler.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Düşünceler</a>
         <a href="contact.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">İletişim</a>
     </div>
 
@@ -158,7 +160,7 @@
             updateLightbox();
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('no-scroll'); // no-scroll eklendi
             setTimeout(() => lb.classList.remove('opacity-0'), 10);
         }
 
@@ -179,7 +181,7 @@
         function closeLightbox() {
             const lb = document.getElementById('lightbox');
             lb.classList.add('opacity-0');
-            document.body.style.overflow = 'auto';
+            document.body.classList.remove('no-scroll'); // no-scroll silindi
             setTimeout(() => lb.classList.add('hidden'), 300);
         }
 
@@ -187,11 +189,11 @@
             const menu = document.getElementById('mobile-menu');
             if(menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                document.body.classList.add('no-scroll'); // no-scroll eklendi
                 setTimeout(() => menu.classList.remove('opacity-0'), 10);
             } else {
                 menu.classList.add('opacity-0');
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('no-scroll'); // no-scroll silindi
                 setTimeout(() => menu.classList.add('hidden'), 300);
             }
         };
