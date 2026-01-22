@@ -21,7 +21,6 @@
         @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         
-        /* Masonry Grid Ayarları - Asla Bozulmadı */
         .masonry-grid { column-count: 1; column-gap: 1.5rem; }
         @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
@@ -70,10 +69,14 @@
 
     <section class="pt-40 pb-12 text-center">
         <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
-        <div class="flex flex-wrap justify-center gap-8 border-b border-white/5 pb-4 px-4">
-            <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('bw', this)">Siyah Beyaz</button>
-            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('nature', this)">Doğa</button>
-            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portrait', this)">Portre</button>
+        <div class="flex flex-wrap justify-center gap-6 md:gap-10 border-b border-white/5 pb-6 px-4 max-w-6xl mx-auto">
+            <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('sokak', this)">Sokak Hikayeleri</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portre', this)">Siyah Beyaz Portreler</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('renkli_doga', this)">Renkli Doğa Peyzajları</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('makro', this)">Makro Doğa Detayları</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('hayvan', this)">Hayvanlar ve Etkileşim</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('kulturel', this)">Kültürel Yaşam</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('soyut', this)">Soyut Atmosfer</button>
         </div>
     </section>
 
@@ -96,81 +99,45 @@
             <div class="w-full max-w-2xl px-4">
                 <div class="glass-box rounded-xl p-8 text-center">
                     <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.4em] text-[10px] mb-4 font-bold opacity-90"></h4>
-                    <p id="photo-quote" class="text-gray-100 text-lg md:text-xl font-normal leading-relaxed tracking-wide min-h-[3rem] antialiased"></p>
-                    <div class="w-12 h-[2px] bg-brand-gold/50 mx-auto mt-6"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const photoData = {
-            // --- SİYAH BEYAZ (1-12) ---
-            1: "Taş sokakların arasında ağır ağır dolaşan sessizlik, geçmişten bugüne uzanan görünmez bir hat gibi yerini korur.",
-            2: "Karın içinde yürüyen insan, soğuğun değil, kendi iç sesinin ağırlığını taşır.",
-            3: "Bir çocukla bir hayvanın karşılaşmasında, dünya kısa bir an için daha sade, daha dürüst bir hâl alır.",
-            4: "Yokuş yukarı ilerleyen adımlar, hayatın aceleye gelmeyen tarafını sessizce öğretir.",
-            5: "Aynı yolda yürüyen kalabalıklar, birbirine yaklaşmadan akan ayrı hayatlar gibidir.",
-            6: "Karanlıkta sürdürülen emek, görünmeden var olmayı kabul etmiş bir sabır taşır.",
-            7: "Işığın değdiği yerde insan geri çekilir, anlam yavaşça öne çıkar.",
-            8: "Kömürücü dumanının içinde beliren siluet, emeğin bedenle birlikte havaya karıştığı ağır bir zamanı taşır.",
-            9: "Köprü sisin içine uzanırken, insan bilmediği bir yere yürümeyi de öğrenir.",
-            10: "Yukarıdan bakılan şehir, birbirine dokunmadan akan hayatların ortak suskunluğudur.",
-            11: "Dağların eteğinde sürdürülen emek, toprağa bırakılmış uzun bir yaşam cümlesi gibidir.",
-            12: "Oyunun peşinden koşan çocuk, zamanın henüz ağırlık kazanmadığı bir dünyayı hatırlatır.",
-
-            // --- DOĞA (13-24) ---
-            13: "Şelalenin suyu, durmadan anlatılan eski bir hikâye gibi kendi yolunu bulur.",
-            14: "Vadinin üzerine çöken bulutlar, gökyüzünün yeryüzüne eğildiği anları fısıldar.",
-            15: "Bir çiçeğe konan kelebek, hayatın hafifliğini ve geçiciliğini birlikte taşır.",
-            16: "Gün batarken uzayan gölgeler, zamanın acele etmeden çekilişidir.",
-            17: "Yeşilin içinde uzanan yollar, insanı durarak yürümeye davet eder.",
-            18: "Ufka karşı duran bir canlı, doğanın sessiz ama derin duruşunu taşır.",
-            19: "Sislerin ardında kalan dağlar, her şeyin hemen görünmek zorunda olmadığını hatırlatır.",
-            20: "Güneş suya dokunduğunda, gün kendi içine kapanır.",
-            21: "İnce kanatlara işlenmiş desenler, yaratılışın sabırlı dokunuşlarını saklar.",
-            22: "Yeşilin içine serpiştirilmiş evler, insanın doğayla kurduğu kırılgan yakınlığı anlatır.",
-            23: "Rüzgârda salınan kır çiçekleri, hayatın inceliğini sessizce gösterir.",
-            24: "Karın içinden çıkan bir çiçek, umudun mevsim seçmediğini hatırlatır.",
-
-            // --- PORTRE (25-36) ---
-            25: "Pencereden bakan yüzler, içeride kalanla dışarıda akan zaman arasında asılı durur.",
-            26: "Dumanla karışan emek, hayatın mutfakta da yavaş yavaş yazıldığını anlatır.",
-            27: "Taş duvarların önünde duran insanlar, mekânla birlikte geçmişi de omuzlarında taşır.",
-            28: "Yan yana oturan çocuklar, sessizliğin içinde bile birbirlerine yaslanan bir dünyanın parçasıdır.",
-            29: "Karanlıktan bakan bir yüz, gülümsemenin en çok gölgede büyüdüğünü fısıldar.",
-            30: "Kumaşların arasından görünen bakış, korunma ihtiyacının ne kadar insani olduğunu anlatır.",
-            31: "Sokakta duran yaşlı bir beden, geçmişle bugünü aynı anda taşır.",
-            32: "Çitin arkasından bakan çocuk, dünyanın her zaman biraz uzakta durduğunu hisseder.",
-            33: "Ateşin başındaki emek, zamanın ağır ama kararlı akışına eşlik eder.",
-            34: "Dağınık saçların ardındaki bakış, hayatın henüz tamamlanmamış bir hâlidir.",
-            35: "Bir odanın sessizliğinde uzanan beden, günün yükünü yavaşça yere bırakır.",
-            36: "Aynı masanın etrafında toplanan insanlar, hayatın paylaşıldıkça çoğaldığını hatırlatır."
-        };
-
         const galleryContainer = document.getElementById('gallery-container');
+
         const config = [
-            { start: 1, end: 12, category: 'bw', label: 'Leke ve Gölge' },
-            { start: 13, end: 24, category: 'nature', label: 'Yeryüzü Şiiri' },
-            { start: 25, end: 36, category: 'portrait', label: 'Ruhun Aynası' }
+            { category: 'sokak',       label: 'Sokak Hikayeleri',       images: [1,2,4,5,12,27,31] },
+            { category: 'portre',      label: 'Siyah Beyaz Portreler',   images: [25,28,29,30,32,34,36] }, // 36 buraya eklendi
+            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları',  images: [13,14,16,17,19,22,23] },
+            { category: 'makro',       label: 'Makro Doğa Detayları',    images: [15,21,24] },
+            { category: 'hayvan',      label: 'Hayvanlar ve Etkileşim',  images: [3,18] },
+            { category: 'kulturel',    label: 'Kültürel Yaşam',          images: [6,11,26,33,35] },
+            { category: 'soyut',       label: 'Soyut Atmosfer',          images: [7,8,9,20] }
         ];
 
-        let currentPhotoId = 1;
-        let currentCategory = 'bw';
+        let currentPhotoIndex = 0;
+        let currentCategory = 'sokak';
+        let currentImages = [];
 
-        config.forEach(group => {
-            for (let i = group.start; i <= group.end; i++) {
-                const item = document.createElement('div');
-                item.className = `masonry-item group cursor-zoom-in ${group.category !== 'bw' ? 'hidden-item' : ''}`;
-                item.dataset.category = group.category;
-                item.onclick = () => openLightbox(i, group.category);
-                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${i}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
-                galleryContainer.appendChild(item);
-            }
-        });
+        function loadGallery() {
+            galleryContainer.innerHTML = '';
+            config.forEach(group => {
+                group.images.forEach(id => {
+                    const item = document.createElement('div');
+                    item.className = `masonry-item group cursor-zoom-in ${group.category !== currentCategory ? 'hidden-item' : ''}`;
+                    item.dataset.category = group.category;
+                    item.dataset.id = id;
+                    item.onclick = () => openLightbox(id, group.category);
+                    item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${id}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
+                    galleryContainer.appendChild(item);
+                });
+            });
+        }
 
         function filterGallery(cat, el) {
-            currentCategory = cat; 
+            currentCategory = cat;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
             el.classList.add('active', 'text-white');
             document.querySelectorAll('.masonry-item').forEach(item => 
@@ -179,28 +146,28 @@
         }
 
         function openLightbox(id, category) {
-            currentPhotoId = parseInt(id);
             currentCategory = category;
+            const group = config.find(g => g.category === category);
+            currentImages = group.images;
+            currentPhotoIndex = currentImages.indexOf(id);
             updateLightbox();
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden';
             setTimeout(() => lb.classList.remove('opacity-0'), 10);
         }
 
         function updateLightbox() {
-            const catConfig = config.find(c => c.category === currentCategory);
-            document.getElementById('lightbox-img').src = `img/${currentPhotoId}.webp`;
-            document.getElementById('photo-label').innerText = catConfig.label;
-            document.getElementById('photo-quote').innerText = photoData[currentPhotoId] || "";
+            const id = currentImages[currentPhotoIndex];
+            document.getElementById('lightbox-img').src = `img/${id}.webp`;
+            const group = config.find(g => g.category === currentCategory);
+            document.getElementById('photo-label').innerText = group.label;
         }
 
         function changePhoto(direction) {
-            const catConfig = config.find(c => c.category === currentCategory);
-            let newId = currentPhotoId + direction;
-            if (newId > catConfig.end) newId = catConfig.start;
-            if (newId < catConfig.start) newId = catConfig.end;
-            currentPhotoId = newId;
+            currentPhotoIndex += direction;
+            if (currentPhotoIndex >= currentImages.length) currentPhotoIndex = 0;
+            if (currentPhotoIndex < 0) currentPhotoIndex = currentImages.length - 1;
             updateLightbox();
         }
 
@@ -221,6 +188,10 @@
                 setTimeout(() => menu.classList.add('hidden'), 300);
             }
         };
+
+        // Sayfa yüklendiğinde galeriyi başlat
+        loadGallery();
+        document.querySelector('.filter-btn').classList.add('active', 'text-white');
     </script>
 </body>
 </html>
