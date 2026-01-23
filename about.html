@@ -24,128 +24,129 @@
     <style>
         @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
-        
+
         /* Mobil Menü İçin Sayfa Kilitleme */
         .no-scroll { overflow: hidden; height: 100vh; }
-        
+
         /* Resim Paspartu Kutusu - Eşitlik Garantisi */
         .paspartu-box {
             background-color: white;
-            padding: 12px; /* Kesin ve eşit paspartu kalınlığı */
+            padding: 12px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
+
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-[110]">
-            <a href="index.html" class="text-2xl tracking-widest text-white">
-                <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-            </a>
+<nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-[110]">
+        <a href="index.html" class="text-2xl tracking-widest text-white">
+            <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+        </a>
 
-            <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
-            </div>
-
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none transition-transform duration-300">
-                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+        <div class="hidden md:flex space-x-12">
+            <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+            <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold">Hakkımda</a>
+            <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
+            <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+            <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
         </div>
-    </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 z-[90] bg-brand-black/98 hidden flex flex-col items-center justify-center space-y-8 backdrop-blur-xl transition-opacity duration-300 opacity-0 overflow-hidden">
-        <a href="index.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Ana Sayfa</a>
-        <a href="about.html" class="text-xl font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
-        <a href="portfolio.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Portfolyo</a>
-        <a href="dusunceler.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Düşünceler</a>
-        <a href="contact.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">İletişim</a>
+        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none transition-transform duration-300">
+            <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
     </div>
+</nav>
 
-    <section class="pt-40 pb-20 px-6 flex-grow flex items-center">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            
-            <div class="order-1 lg:order-1 flex justify-center">
-                <div class="paspartu-box w-full max-w-md lg:max-w-none transform transition duration-500 hover:scale-[1.01]">
-                    <div class="relative overflow-hidden aspect-[3/4]">
-                        <img src="img/umitozguler.webp" alt="Ümit Özgüler" class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0">
-                    </div>
-                </div>
-            </div>
+<!-- MOBİL MENÜ – SADECE BURASI DÜZENLENDİ -->
+<div id="mobile-menu" class="fixed inset-0 z-[90] bg-brand-black/95 hidden flex flex-col items-center justify-center space-y-10 backdrop-blur-xl opacity-0 transition-opacity duration-300">
+    <a href="index.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+    <a href="about.html" class="text-xl font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
+    <a href="portfolio.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
+    <a href="dusunceler.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
+    <a href="contact.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
+</div>
 
-            <div class="space-y-8 order-2 lg:order-2 flex flex-col justify-center">
-                <div>
-                    <h1 class="text-4xl lg:text-7xl text-white mb-2 font-script tracking-wide leading-tight">
-                        Işık, Gölge ve <span class="text-brand-gold">Ruh.</span>
-                    </h1>
-                    <div class="w-24 h-[2px] bg-brand-gold mb-6 mt-4"></div>
-                </div>
-                
-                <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
-                    Fotoğraf, benim için zamanı durdurmanın ve görünenin ardındaki hikayeyi keşfetmenin en güçlü yoludur. <strong class="text-white font-medium">20 yılı aşkın süredir</strong>, vizörün ardından ülkemizin eşsiz coğrafyasına tanıklık ediyorum.
-                </p>
-                
-                <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
-                    <strong class="text-white font-medium">BUFSAD</strong> bünyesinde atölye hocalığı yaparak deneyimlerimi paylaşırken, <strong class="text-white font-medium">TFSF</strong> jüri üyeliği görevimle fotoğraf sanatının gelişimine katkı sundum.
-                </p>
+<section class="pt-40 pb-20 px-6 flex-grow flex items-center">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-                <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
-                    Eserlerim bugüne kadar <strong class="text-white font-medium">10'dan fazla karma sergide</strong> sanatseverlerle buluştu. Her karede, doğanın sesini ve insan ruhunun derinliğini aramaya devam ediyorum.
-                </p>
-                
-                <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-8 mt-4">
-                    <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">20+</span>
-                        <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Deneyim</span>
-                    </div>
-                    <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">10+</span>
-                        <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Sergi</span>
-                    </div>
-                    <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">TFSF</span>
-                        <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Jüri</span>
-                    </div>
+        <div class="order-1 lg:order-1 flex justify-center">
+            <div class="paspartu-box w-full max-w-md lg:max-w-none transform transition duration-500 hover:scale-[1.01]">
+                <div class="relative overflow-hidden aspect-[3/4]">
+                    <img src="img/umitozguler.webp" alt="Ümit Özgüler" class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0">
                 </div>
             </div>
         </div>
-    </section>
 
-    <footer class="bg-brand-black py-12 border-t border-white/5 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 text-center text-gray-600 text-[10px] tracking-[0.2em] uppercase">
-            &copy; 2026 Ümit Özgüler.
+        <div class="space-y-8 order-2 lg:order-2 flex flex-col justify-center">
+            <div>
+                <h1 class="text-4xl lg:text-7xl text-white mb-2 font-script tracking-wide leading-tight">
+                    Işık, Gölge ve <span class="text-brand-gold">Ruh.</span>
+                </h1>
+                <div class="w-24 h-[2px] bg-brand-gold mb-6 mt-4"></div>
+            </div>
+
+            <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
+                Fotoğraf, benim için zamanı durdurmanın ve görünenin ardındaki hikayeyi keşfetmenin en güçlü yoludur. <strong class="text-white font-medium">20 yılı aşkın süredir</strong>, vizörün ardından ülkemizin eşsiz coğrafyasına tanıklık ediyorum.
+            </p>
+
+            <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
+                <strong class="text-white font-medium">BUFSAD</strong> bünyesinde atölye hocalığı yaparak deneyimlerimi paylaşırken, <strong class="text-white font-medium">TFSF</strong> jüri üyeliği görevimle fotoğraf sanatının gelişimine katkı sundum.
+            </p>
+
+            <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
+                Eserlerim bugüne kadar <strong class="text-white font-medium">10'dan fazla karma sergide</strong> sanatseverlerle buluştu. Her karede, doğanın sesini ve insan ruhunun derinliğini aramaya devam ediyorum.
+            </p>
+
+            <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-8 mt-4">
+                <div class="text-center md:text-left">
+                    <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">20+</span>
+                    <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Deneyim</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">10+</span>
+                    <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Sergi</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">TFSF</span>
+                    <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Jüri</span>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        let isMenuOpen = false;
+<footer class="bg-brand-black py-12 border-t border-white/5 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 text-center text-gray-600 text-[10px] tracking-[0.2em] uppercase">
+        &copy; 2026 Ümit Özgüler.
+    </div>
+</footer>
 
-        btn.addEventListener('click', () => {
-            isMenuOpen = !isMenuOpen;
-            if(isMenuOpen) {
-                menu.classList.remove('hidden');
-                document.body.classList.add('no-scroll');
-                setTimeout(() => menu.classList.remove('opacity-0'), 10);
-                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'; 
-            } else {
-                menu.classList.add('opacity-0');
-                document.body.classList.remove('no-scroll');
-                setTimeout(() => {
-                    menu.classList.add('hidden');
-                }, 300);
-                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>'; 
-            }
-        });
-    </script>
+<script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    let isMenuOpen = false;
+
+    btn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+
+        if (isMenuOpen) {
+            menu.classList.remove('hidden');
+            document.body.classList.add('no-scroll');
+            setTimeout(() => menu.classList.remove('opacity-0'), 10);
+            menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+        } else {
+            menu.classList.add('opacity-0');
+            document.body.classList.remove('no-scroll');
+            setTimeout(() => menu.classList.add('hidden'), 300);
+            menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+        }
+    });
+</script>
+
 </body>
-
 </html>
