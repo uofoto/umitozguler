@@ -28,7 +28,6 @@
 
 <body class="bg-brand-black text-white font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <!-- NAVBAR -->
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
@@ -36,7 +35,6 @@
                     <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
 
-                <!-- Masaüstü Menü -->
                 <div class="hidden md:flex space-x-12">
                     <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
                     <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
@@ -45,7 +43,6 @@
                     <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">İletişim</a>
                 </div>
 
-                <!-- Mobil Menü Butonu -->
                 <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -54,19 +51,17 @@
             </div>
         </div>
 
-        <!-- Mobil Menü -->
-        <div class="hidden md:hidden bg-brand-dark border-t border-white/5 absolute w-full" id="mobile-menu">
-            <div class="px-6 py-8 space-y-6 text-center flex flex-col">
-                <a href="index.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Ana Sayfa</a>
-                <a href="about.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Portfolyo</a>
-                <a href="dusunceler.html" class="text-sm uppercase tracking-widest hover:text-brand-gold">Düşünceler</a>
-                <a href="contact.html" class="text-sm uppercase tracking-widest text-brand-gold">İletişim</a>
+        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
+            <div class="px-6 py-8 space-y-4 flex flex-col">
+                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">İletişim</a>
             </div>
         </div>
     </nav>
 
-    <!-- İÇERİK -->
     <section class="flex-grow flex items-center justify-center pt-32 pb-20 px-4">
         <div class="max-w-2xl w-full">
             <div class="text-center mb-16">
@@ -100,19 +95,25 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="bg-brand-black py-12 border-t border-white/5 mt-auto text-center">
         <div class="flex justify-center space-x-12 mb-8">
             <a href="https://instagram.com/umitozguler" target="_blank" class="text-xs font-bold uppercase tracking-widest text-white hover:text-brand-gold">Instagram</a>
             <a href="https://twitter.com/uozguler" target="_blank" class="text-xs font-bold uppercase tracking-widest text-white hover:text-brand-gold">Twitter (X)</a>
         </div>
+        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">
+            &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
+        </p>
     </footer>
 
     <script>
-        document.getElementById('mobile-menu-btn')
-            .addEventListener('click', () =>
-                document.getElementById('mobile-menu').classList.toggle('hidden')
-            );
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            const menu = document.getElementById('mobile-menu');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        };
     </script>
 
 </body>
