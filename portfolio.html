@@ -40,16 +40,14 @@
         }
         .nav-arrow:hover { background: rgba(197, 160, 89, 0.2); transform: scale(1.1); }
 
-        #mobile-menu {
-            z-index: 9999;
-            background-color: rgba(5, 5, 5, 0.98);
-        }
+        /* Mobil Menü İçin no-scroll sınıfı */
+        .no-scroll { overflow: hidden; height: 100vh; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-[10000] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-50">
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-[110]">
             <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
                 <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
             </a>
@@ -60,19 +58,21 @@
                 <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Düşünceler</a>
                 <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold focus:outline-none relative z-[10001]">
-                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none">
+                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
-    </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 hidden flex flex-col items-center justify-center space-y-8 backdrop-blur-xl opacity-0 transition-opacity duration-300">
-        <a href="index.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Ana Sayfa</a>
-        <a href="about.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Hakkımda</a>
-        <a href="portfolio.html" class="text-xl font-bold uppercase tracking-[0.3em] text-brand-gold">Portfolyo</a>
-        <a href="dusunceler.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">Düşünceler</a>
-        <a href="contact.html" class="text-xl font-light uppercase tracking-[0.3em] hover:text-brand-gold">İletişim</a>
-    </div>
+        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
+            <div class="px-6 py-8 space-y-4 flex flex-col items-start">
+                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Portfolyo</a>
+                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
+            </div>
+        </div>
+    </nav>
 
     <section class="pt-40 pb-12 text-center relative z-10">
         <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
@@ -160,7 +160,7 @@
             updateLightbox();
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden');
-            document.body.classList.add('no-scroll'); // no-scroll eklendi
+            document.body.classList.add('no-scroll');
             setTimeout(() => lb.classList.remove('opacity-0'), 10);
         }
 
@@ -181,7 +181,7 @@
         function closeLightbox() {
             const lb = document.getElementById('lightbox');
             lb.classList.add('opacity-0');
-            document.body.classList.remove('no-scroll'); // no-scroll silindi
+            document.body.classList.remove('no-scroll');
             setTimeout(() => lb.classList.add('hidden'), 300);
         }
 
@@ -189,11 +189,11 @@
             const menu = document.getElementById('mobile-menu');
             if(menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
-                document.body.classList.add('no-scroll'); // no-scroll eklendi
+                document.body.classList.add('no-scroll');
                 setTimeout(() => menu.classList.remove('opacity-0'), 10);
             } else {
                 menu.classList.add('opacity-0');
-                document.body.classList.remove('no-scroll'); // no-scroll silindi
+                document.body.classList.remove('no-scroll');
                 setTimeout(() => menu.classList.add('hidden'), 300);
             }
         };
