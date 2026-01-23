@@ -202,6 +202,208 @@
         document.querySelector('.filter-btn').classList.add('active', 'text-white');
     </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolyo | Ümit Özgüler</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059' },
+                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        
+        .masonry-grid { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; transition: all 0.5s ease; }
+        .hidden-item { display: none; }
+        
+        .filter-btn.active { color: #c5a059; border-bottom: 1px solid #c5a059; }
+        img { transition: opacity 0.8s ease; }
+        .loaded { opacity: 1 !important; }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+        .nav-arrow:hover { background: rgba(197, 160, 89, 0.2); transform: scale(1.1); }
+
+        /* Mobil Menü İçin no-scroll sınıfı */
+        .no-scroll { overflow: hidden; height: 100vh; }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-[110]">
+            <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
+                <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+            </a>
+            <div class="hidden md:flex space-x-12">
+                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
+                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none">
+                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
+            <div class="px-6 py-8 space-y-4 flex flex-col items-start">
+                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Portfolyo</a>
+                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-40 pb-12 text-center relative z-10">
+        <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter">Koleksiyon</h1>
+        <div class="flex flex-col md:flex-row flex-wrap justify-center items-center gap-6 md:gap-10 border-b border-white/5 pb-6 px-4 max-w-6xl mx-auto">
+            <button class="filter-btn active text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('sokak', this)">Sokak Hikayeleri</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('portre', this)">Siyah Beyaz Portreler</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('renkli_doga', this)">Renkli Doğa Peyzajları</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('makro', this)">Makro Doğa Detayları</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('hayvan', this)">Hayvanlar ve Etkileşim</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('kulturel', this)">Kültürel Yaşam</button>
+            <button class="filter-btn text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-all pb-1" onclick="filterGallery('soyut', this)">Soyut Atmosfer</button>
+        </div>
+    </section>
+
+    <section class="pb-24 px-6 relative z-10">
+        <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
+    </section>
+
+    <div id="lightbox" class="fixed inset-0 z-[11000] bg-brand-black/98 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300 backdrop-blur-md">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold z-[11001] p-2 bg-black/20 rounded-full border border-white/10 transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <button onclick="changePhoto(-1)" class="nav-arrow absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white p-3 rounded-full border border-white/10 bg-black/30 z-[11001] transition-all">
+            <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button onclick="changePhoto(1)" class="nav-arrow absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white p-3 rounded-full border border-white/10 bg-black/30 z-[11001] transition-all">
+            <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <div class="max-w-5xl w-full flex flex-col items-center relative">
+            <img id="lightbox-img" src="" class="max-h-[55vh] md:max-h-[60vh] shadow-2xl mb-8 border border-white/5 rounded-sm select-none">
+            <div class="w-full max-w-2xl px-4">
+                <div class="glass-box rounded-xl p-8 text-center">
+                    <h4 id="photo-label" class="text-brand-gold uppercase tracking-[0.4em] text-[10px] mb-4 font-bold opacity-90"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+
+        const config = [
+            { category: 'sokak',       label: 'Sokak Hikayeleri',       images: [1,2,4,5,12,27,31] },
+            { category: 'portre',      label: 'Siyah Beyaz Portreler',   images: [25,28,29,30,32,34,36] },
+            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları',  images: [13,14,16,17,19,22,23] },
+            { category: 'makro',       label: 'Makro Doğa Detayları',    images: [10,15,21,24,37,38,39,40,41] },
+            { category: 'hayvan',      label: 'Hayvanlar ve Etkileşim',  images: [3,18] },
+            { category: 'kulturel',    label: 'Kültürel Yaşam',          images: [6,11,26,33,35] },
+            { category: 'soyut',       label: 'Soyut Atmosfer',          images: [7,8,9,20] }
+        ];
+
+        let currentPhotoIndex = 0;
+        let currentCategory = 'sokak';
+        let currentImages = [];
+
+        function loadGallery() {
+            galleryContainer.innerHTML = '';
+            config.forEach(group => {
+                group.images.forEach(id => {
+                    const item = document.createElement('div');
+                    item.className = `masonry-item group cursor-zoom-in ${group.category !== currentCategory ? 'hidden-item' : ''}`;
+                    item.dataset.category = group.category;
+                    item.dataset.id = id;
+                    item.onclick = () => openLightbox(id, group.category);
+                    item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${id}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
+                    galleryContainer.appendChild(item);
+                });
+            });
+        }
+
+        function filterGallery(cat, el) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
+            el.classList.add('active', 'text-white');
+            document.querySelectorAll('.masonry-item').forEach(item => 
+                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item')
+            );
+        }
+
+        function openLightbox(id, category) {
+            currentCategory = category;
+            const group = config.find(g => g.category === category);
+            currentImages = group.images;
+            currentPhotoIndex = currentImages.indexOf(id);
+            updateLightbox();
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('hidden');
+            document.body.classList.add('no-scroll');
+            setTimeout(() => lb.classList.remove('opacity-0'), 10);
+        }
+
+        function updateLightbox() {
+            const id = currentImages[currentPhotoIndex];
+            document.getElementById('lightbox-img').src = `img/${id}.webp`;
+            const group = config.find(g => g.category === currentCategory);
+            document.getElementById('photo-label').innerText = group.label;
+        }
+
+        function changePhoto(direction) {
+            currentPhotoIndex += direction;
+            if (currentPhotoIndex >= currentImages.length) currentPhotoIndex = 0;
+            if (currentPhotoIndex < 0) currentPhotoIndex = currentImages.length - 1;
+            updateLightbox();
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('opacity-0');
+            document.body.classList.remove('no-scroll');
+            setTimeout(() => lb.classList.add('hidden'), 300);
+        }
+
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            const menu = document.getElementById('mobile-menu');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                document.body.classList.add('no-scroll');
+                setTimeout(() => menu.classList.remove('opacity-0'), 10);
+            } else {
+                menu.classList.add('opacity-0');
+                document.body.classList.remove('no-scroll');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+        };
+
+        loadGallery();
+        document.querySelector('.filter-btn').classList.add('active', 'text-white');
+    </script>
+</body>
 </html>
-
-
