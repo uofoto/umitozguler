@@ -40,9 +40,6 @@
         }
         .hero-zoom { animation: heroZoom 20s infinite alternate; }
         @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
-
-        /* Mobil Menü İçin no-scroll */
-        .no-scroll { overflow: hidden; height: 100vh; }
     </style>
 </head>
 
@@ -51,10 +48,9 @@
     <nav class="fixed w-full z-50 bg-brand-black/40 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="index.html" class="text-2xl tracking-widest text-white">
+                <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
                     <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
-
                 <div class="hidden md:flex space-x-12">
                     <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Ana Sayfa</a>
                     <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Hakkımda</a>
@@ -62,17 +58,14 @@
                     <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Düşünceler</a>
                     <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
                 </div>
-
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
 
-        <div class="hidden bg-brand-black/95 border-t border-white/5 absolute w-full z-50 transition-opacity duration-300 opacity-0" id="mobile-menu">
-            <div class="px-6 py-8 space-y-4 flex flex-col items-start">
+        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
+            <div class="px-6 py-8 space-y-4 flex flex-col">
                 <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Ana Sayfa</a>
                 <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
                 <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
@@ -114,15 +107,12 @@
             const menu = document.getElementById('mobile-menu');
             if(menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
-                document.body.classList.add('no-scroll');
                 setTimeout(() => menu.classList.remove('opacity-0'), 10);
             } else {
                 menu.classList.add('opacity-0');
-                document.body.classList.remove('no-scroll');
                 setTimeout(() => menu.classList.add('hidden'), 300);
             }
         };
     </script>
-
 </body>
 </html>
