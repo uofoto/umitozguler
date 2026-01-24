@@ -39,8 +39,6 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
         .nav-arrow:hover { background: rgba(197, 160, 89, 0.2); transform: scale(1.1); }
-
-        /* Mobil Menü İçin no-scroll sınıfı */
         .no-scroll { overflow: hidden; height: 100vh; }
     </style>
 </head>
@@ -117,7 +115,7 @@
         const config = [
             { category: 'sokak',       label: 'Sokak Hikayeleri',       images: [1,2,4,5,12,27,31,51,52] },
             { category: 'portre',      label: 'Siyah Beyaz Portreler',   images: [25,28,29,30,32,34,36,42,43] },
-            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları',  images: [13,14,16,17,19,22,23,54,53] },
+            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları',  images: [13,14,16,17,19,22,23,53,54] },
             { category: 'makro',       label: 'Makro Doğa Detayları',    images: [10,15,21,24,37,38,39,40,41] },
             { category: 'hayvan',      label: 'Hayvanlar ve Etkileşim',  images: [3,18,44,45,46,47,48,49,50] },
             { category: 'kulturel',    label: 'Kültürel Yaşam',          images: [6,11,26,33,35,60,61,62,63] },
@@ -131,13 +129,21 @@
         function loadGallery() {
             galleryContainer.innerHTML = '';
             config.forEach(group => {
-                group.images.forEach(id => {
+                // Görselleri tersine çevirerek en son ekleneni başa alıyoruz
+                const reversedImages = [...group.images].reverse();
+                
+                reversedImages.forEach(id => {
                     const item = document.createElement('div');
                     item.className = `masonry-item group cursor-zoom-in ${group.category !== currentCategory ? 'hidden-item' : ''}`;
                     item.dataset.category = group.category;
                     item.dataset.id = id;
                     item.onclick = () => openLightbox(id, group.category);
-                    item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${id}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')"></div>`;
+                    item.innerHTML = `
+                        <div class="overflow-hidden bg-brand-dark rounded-sm">
+                            <img src="img/${id}.webp" loading="lazy" 
+                                 class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" 
+                                 onload="this.classList.add('loaded')">
+                        </div>`;
                     galleryContainer.appendChild(item);
                 });
             });
@@ -155,7 +161,8 @@
         function openLightbox(id, category) {
             currentCategory = category;
             const group = config.find(g => g.category === category);
-            currentImages = group.images;
+            // Lightbox içindeki sıralamayı da galeri sırasıyla (ters) eşliyoruz
+            currentImages = [...group.images].reverse();
             currentPhotoIndex = currentImages.indexOf(id);
             updateLightbox();
             const lb = document.getElementById('lightbox');
@@ -190,23 +197,14 @@
             if(menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
                 document.body.classList.add('no-scroll');
-                setTimeout(() => menu.classList.remove('opacity-0'), 10);
             } else {
-                menu.classList.add('opacity-0');
+                menu.classList.add('hidden');
                 document.body.classList.remove('no-scroll');
-                setTimeout(() => menu.classList.add('hidden'), 300);
             }
         };
 
+        // Sayfa yüklendiğinde galeriyi başlat
         loadGallery();
-        document.querySelector('.filter-btn').classList.add('active', 'text-white');
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
