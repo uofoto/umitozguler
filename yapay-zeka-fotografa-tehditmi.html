@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yapay Zeka Fotoğrafa Tehdit mi? | Ümit Özgüler</title>
     
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.umitozguler.com.tr/yapay-zeka-fotografa-tehditmi.html">
     <meta property="og:title" content="Yapay Zeka Fotoğrafa Tehdit mi? | Ümit Özgüler">
-    <meta property="og:description" content="Yapay zeka işleri hızlandırabilir, ancak insan elinin değdiği o kadim 'tadı' verebilir mi?">
-    <meta property="og:image" content="img/9.webp">
+    <meta property="og:description" content="Yapay zeka artık bir gelecek projeksiyonu değil, bugünün kaçınılmaz bir gerçeği. Algoritmaların hızı işlerimizi kolaylaştırıyor ancak insan elinin değdiği o kadim 'tadı' verebilir mi?">
+    <meta property="og:image" content="https://www.umitozguler.com.tr/img/9.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Yapay Zeka Fotoğrafa Tehdit mi?">
+    <meta name="twitter:description" content="Yapay zeka işleri hızlandırabilir, ancak insan elinin değdiği o kadim 'tadı' verebilir mi?">
+    <meta name="twitter:image" content="https://www.umitozguler.com.tr/img/9.webp">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -27,6 +34,7 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.8rem; line-height: 1.9; }
         .article-content strong { color: white; font-weight: 600; }
+        .article-content h2 { color: #c5a059; font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
         #mobile-menu { transition: opacity 0.3s ease-in-out; }
     </style>
 </head>
@@ -135,7 +143,7 @@
                 </div>
             </div>
             
-            <div class="mb-12 pt-8 border-t border-white/10 flex justify-between items-center">
+            <div class="mt-16 pt-8 border-t border-white/10 flex justify-between items-center">
                 <span class="text-xs text-gray-500 tracking-widest uppercase">Yazar: Ümit Özgüler</span>
             </div>
 
@@ -165,7 +173,7 @@
             }
         });
 
-        // Makaleye Özel Sayaç (ID: ai_threat_article)
+        // Makaleye Özel Sayaç
         function updateViewCount() {
             const storageKey = 'view_count_ai_threat';
             const sessionKey = 'visited_ai_threat';
@@ -183,21 +191,22 @@
         }
 
         // Sosyal Medya Paylaşım Fonksiyonları
+        const siteUrl = "https://www.umitozguler.com.tr/yapay-zeka-fotografa-tehditmi.html";
+        const articleTitle = "Yapay Zeka Fotoğrafa Tehdit mi?";
+        const shareQuote = "Yapay zeka işleri hızlandırabilir, ancak insan elinin değdiği o kadim 'tadı' verebilir mi?";
+
         function shareOnWhatsApp() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Ümit Özgüler'in 'Yapay Zeka Fotoğrafa Tehdit mi?' yazısını okumanızı öneririm: ");
-            window.open(`https://api.whatsapp.com/send?text=${text}${url}`, '_blank');
+            const text = encodeURIComponent(articleTitle + " " + shareQuote + " " + siteUrl);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
         }
 
         function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`, 'facebook-share-dialog', 'width=800,height=600');
         }
 
         function shareOnTwitter() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Yapay Zeka Fotoğrafa Tehdit mi?");
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+            const text = encodeURIComponent(shareQuote);
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(siteUrl)}&text=${text}`, '_blank');
         }
 
         window.onload = updateViewCount;
