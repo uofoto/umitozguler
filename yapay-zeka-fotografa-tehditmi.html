@@ -165,20 +165,20 @@
             }
         });
 
-        // Makaleye Özel Sayaç
+        // Makaleye Özel Sayaç - Her girişte artacak şekilde ayarlandı
         function updateViewCount() {
             const storageKey = 'view_count_ai_threat';
-            const sessionKey = 'visited_ai_threat';
             
+            // Mevcut sayıyı al
             let views = localStorage.getItem(storageKey) || 0;
-            let hasVisited = sessionStorage.getItem(sessionKey);
+            
+            // Kısıtlama olmaksızın her seferinde 1 artır
+            views = parseInt(views) + 1;
+            
+            // Yeni değeri kaydet
+            localStorage.setItem(storageKey, views);
 
-            if (!hasVisited) {
-                views = parseInt(views) + 1;
-                localStorage.setItem(storageKey, views);
-                sessionStorage.setItem(sessionKey, 'true');
-            }
-
+            // Ekrana yazdır
             document.getElementById('view-count').innerText = views;
         }
 
@@ -191,7 +191,6 @@
 
         function shareOnFacebook() {
             const url = encodeURIComponent(window.location.href);
-            // Facebook SDK gerektirmeden en güncel paylaşım yöntemi
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'facebook-share-dialog', 'width=800,height=600');
         }
 
