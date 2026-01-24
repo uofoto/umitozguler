@@ -79,7 +79,7 @@
                     <span class="text-gray-600">|</span>
                     <span>5 Dakikalık Okuma</span>
                     <span class="text-gray-600">|</span>
-                    <span class="flex items-center"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> 1.240 Okunma</span>
+                    <span class="flex items-center"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> <span id="view-count">0</span> Okunma</span>
                 </div>
             </div>
 
@@ -143,6 +143,27 @@
                 setTimeout(() => menu.classList.add('hidden'), 300);
             }
         });
+
+        // Akıllı Sayaç Fonksiyonu (Local Storage Temelli)
+        function updateViewCount() {
+            let views = localStorage.getItem('view_count_ai_article');
+            let hasVisited = sessionStorage.getItem('visited_ai_article'); // Tarayıcı kapanana kadar tekil sayması için
+
+            if (!views) {
+                views = 0;
+            }
+
+            // Eğer bu sekmede ilk kez açılıyorsa sayacı 1 artır
+            if (!hasVisited) {
+                views = parseInt(views) + 1;
+                localStorage.setItem('view_count_ai_article', views);
+                sessionStorage.setItem('visited_ai_article', 'true');
+            }
+
+            document.getElementById('view-count').innerText = views;
+        }
+
+        window.onload = updateViewCount;
     </script>
 </body>
 </html>
