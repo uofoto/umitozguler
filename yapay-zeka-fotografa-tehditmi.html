@@ -78,14 +78,6 @@
                     <span>24 Ocak 2026</span>
                     <span class="text-gray-600">|</span>
                     <span>Sanat & Teknoloji</span>
-                    <span class="text-gray-600">|</span>
-                    <span class="flex items-center">
-                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                        </svg> 
-                        <span id="view-count">0</span> Okunma
-                    </span>
                 </div>
             </div>
 
@@ -165,23 +157,6 @@
             }
         });
 
-        // Makaleye Özel Sayaç - Her girişte artacak şekilde ayarlandı
-        function updateViewCount() {
-            const storageKey = 'view_count_ai_threat';
-            
-            // Mevcut sayıyı al
-            let views = localStorage.getItem(storageKey) || 0;
-            
-            // Kısıtlama olmaksızın her seferinde 1 artır
-            views = parseInt(views) + 1;
-            
-            // Yeni değeri kaydet
-            localStorage.setItem(storageKey, views);
-
-            // Ekrana yazdır
-            document.getElementById('view-count').innerText = views;
-        }
-
         // Sosyal Medya Paylaşım Fonksiyonları
         function shareOnWhatsApp() {
             const url = encodeURIComponent(window.location.href);
@@ -199,9 +174,6 @@
             const text = encodeURIComponent("Yapay Zeka Fotoğrafa Tehdit mi?");
             window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
         }
-
-        window.onload = updateViewCount;
     </script>
 </body>
 </html>
-
