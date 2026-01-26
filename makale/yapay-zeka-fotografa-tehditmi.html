@@ -27,7 +27,7 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.8rem; line-height: 1.9; }
         .article-content strong { color: white; font-weight: 600; }
-        #mobile-menu { transition: opacity 0.3s ease-in-out; }
+        #mobile-menu { transition: all 0.3s ease-in-out; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -45,19 +45,18 @@
                     <a href="../dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Düşünceler</a>
                     <a href="../contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
-
-        <div class="hidden opacity-0 bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
-            <div class="px-6 py-8 space-y-4 flex flex-col">
-                <a href="../index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                <a href="../about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
-                <a href="../portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="../dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Düşünceler</a>
-                <a href="../contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>
+        <div id="mobile-menu" class="hidden bg-brand-dark border-b border-white/5 w-full md:hidden">
+            <div class="px-6 py-8 space-y-4 flex flex-col items-start text-xs font-semibold uppercase tracking-[0.2em]">
+                <a href="../index.html" class="hover:text-brand-gold">Ana Sayfa</a>
+                <a href="../about.html" class="hover:text-brand-gold">Hakkımda</a>
+                <a href="../portfolio.html" class="hover:text-brand-gold">Portfolyo</a>
+                <a href="../dusunceler.html" class="text-brand-gold">Düşünceler</a>
+                <a href="../contact.html" class="hover:text-brand-gold">İletişim</a>
             </div>
         </div>
     </nav>
@@ -69,11 +68,9 @@
                 <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors border-b border-transparent hover:border-brand-gold pb-1">
                     ← Tüm Yazılar
                 </a>
-                
                 <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
                     Yapay Zeka Fotoğrafa Tehdit mi?
                 </h1>
-                
                 <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-gold space-x-4">
                     <span>24 Ocak 2026</span>
                     <span class="text-gray-600">|</span>
@@ -81,12 +78,56 @@
                 </div>
             </div>
 
-            <div class="mb-12 shadow-2xl">
-                <img src="../img/9.webp" alt="İnsan Eli ve Teknoloji" class="w-full h-auto rounded-sm opacity-90 hover:opacity-100 transition duration-1000">
-                <p class="text-center text-[10px] text-gray-600 mt-4 tracking-widest uppercase">Fotoğraf: Ümit Özgüler</p>
+            <div class="mb-12 group">
+                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
+                    <img src="../img/9.webp" alt="İnsan Eli ve Teknoloji" class="w-full h-auto grayscale opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:scale-[1.01]">
+                    
+                    <div class="absolute bottom-6 right-6 hidden md:flex space-x-6 text-[9px] tracking-[0.2em] text-white/70 bg-black/70 backdrop-blur-lg px-6 py-4 rounded-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 uppercase">
+                        <div class="flex flex-col">
+                            <span class="text-brand-gold mb-1 font-bold">Telif</span>
+                            <span>&copy; Ümit Özgüler</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10 pl-6">
+                            <span class="text-brand-gold mb-1 font-bold">Çekim Yeri</span>
+                            <span>Bilecik</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10 pl-6">
+                            <span class="text-brand-gold mb-1 font-bold">Kategori</span>
+                            <span>Soyut Atmosfer</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10 pl-6">
+                            <span class="text-brand-gold mb-1 font-bold">Çekim Tarihi</span>
+                            <span>2016</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-center mt-8 md:hidden">
+                    <p class="text-[11px] text-gray-400 mb-6 tracking-[0.5em] uppercase font-medium">
+                        &copy; Ümit Özgüler
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 w-full text-center uppercase tracking-[0.1em]">
+                        <div class="flex flex-col">
+                            <span class="text-[7px] text-gray-500 mb-1">Çekim Yeri</span>
+                            <span class="text-[9px] text-brand-gold font-medium">Bilecik</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10">
+                            <span class="text-[7px] text-gray-500 mb-1">Kategori</span>
+                            <span class="text-[9px] text-brand-gold font-medium">Soyut</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10">
+                            <span class="text-[7px] text-gray-500 mb-1">Tarih</span>
+                            <span class="text-[9px] text-brand-gold font-medium">2016</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-14 mb-14">
+                    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div>
+                </div>
             </div>
 
-            <div class="article-content text-gray-400 font-light text-base md:text-lg text-left leading-relaxed">
+            <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
                 <p>
                     <span class="text-4xl float-left mr-2 mt-[-10px] text-brand-gold font-serif">Y</span>apay zeka artık bir gelecek projeksiyonu değil, bugünün kaçınılmaz bir gerçeği. Fotoğraftan müziğe, mimariden edebiyata kadar her alanda algoritmaların o muazzam hızına tanıklık ediyoruz. Kabul edelim; yapay zeka işleri kolaylaştırıyor, süreci hızlandırıyor ve bize vakit kazandırıyor. Ancak tam da bu noktada durup kendimize sormamız gerekiyor: <strong>Hızın olduğu yerde haz, tekniğin olduğu yerde tat kalıyor mu?</strong>
                 </p>
@@ -102,7 +143,7 @@
                 <p>
                     Fotoğrafçılıkta yapay zeka, bir saniyede binlerce alternatif sunabilir. Gökyüzünü değiştirebilir, olmayan bir ışığı varmış gibi gösterebilir. Bu hız büyüleyicidir. Ancak bir fotoğrafçının, o doğru ışığı yakalamak için bir tepenin başında saatlerce beklemesindeki o <strong>"sabır"</strong>, esere sinen görünmez bir katmandır. İzleyici o fotoğrafa baktığında sadece bir manzara görmez; o emeğin, o bekleyişin ve o insanın doğayla kurduğu bağın kokusunu alır. Doğal bir ürünün insanda bıraktığı huzur, onun bir "son" değil, bir "süreç" olmasından kaynaklanır. 
                 </p>
-                
+
                 <p>
                     Yapay zeka süreci yok sayar, bizi doğrudan sonuca fırlatır. Oysa insan ruhu, sonuca değil, sürece ve o sürecin içindeki insani dokunuşa ihtiyaç duyar. Elin değdiği yerde sevgi vardır, hata yapma ihtimali vardır ve en önemlisi <strong>ruh</strong> vardır. Yapay zekayı reddetmek, matbaayı reddetmek kadar anlamsızdır. O, işlerimizi hızlandıran güçlü bir yardımcıdır. Ancak onu bir "yaratıcı" değil, bir "araç" olarak konumlandırmalıyız. 
                 </p>
@@ -112,69 +153,43 @@
                 </p>
             </div>
 
-            <div class="mt-12 mb-8 pt-8 border-t border-white/5">
-                <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 text-center">Bu Yazıyı Paylaş</p>
+            <div class="mt-12 mb-8 pt-8 border-t border-white/5 text-center">
+                <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6">Bu Yazıyı Paylaş</p>
                 <div class="flex justify-center space-x-8">
-                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412 0 6.556-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.224-3.669l.303.18c1.544.917 3.31 1.401 5.115 1.402 5.562 0 10.089-4.527 10.089-10.089 0-2.699-1.051-5.236-2.961-7.146s-4.447-2.961-7.148-2.961c-5.563 0-10.09 4.526-10.09 10.089 0 1.782.463 3.52 1.34 5.025l.197.337-1.117 4.079 4.175-1.096z"/></svg>
-                    </a>
-                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </a>
+                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors text-xs uppercase tracking-widest font-medium">Whatsapp</a>
+                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors text-xs uppercase tracking-widest font-medium">Facebook</a>
+                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-widest font-medium">Twitter</a>
                 </div>
             </div>
-            
-            <div class="mb-12 pt-8 border-t border-white/10 flex justify-between items-center">
-                <span class="text-xs text-gray-500 tracking-widest uppercase">Yazar: Ümit Özgüler</span>
-            </div>
 
+            <div class="mb-12 pt-8 border-t border-white/10 flex justify-between items-center text-xs text-gray-500 tracking-widest uppercase text-center font-medium">
+                <span class="w-full text-center">Yazar: Ümit Özgüler</span>
+            </div>
         </div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
-        <div class="flex justify-center space-x-12 mb-10">
-            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>
-            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>
-        </div>
         <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">
             &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
         </p>
     </footer>
 
     <script>
-        // Mobil Menü Fonksiyonu
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            const menu = document.getElementById('mobile-menu');
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                setTimeout(() => menu.classList.remove('opacity-0'), 10);
-            } else {
-                menu.classList.add('opacity-0');
-                setTimeout(() => menu.classList.add('hidden'), 300);
-            }
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
 
-        // Sosyal Medya Paylaşım Fonksiyonları
         function shareOnWhatsApp() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Ümit Özgüler'in 'Yapay Zeka Fotoğrafa Tehdit mi?' yazısını okumanızı öneririm: ");
-            window.open(`https://api.whatsapp.com/send?text=${text}${url}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank');
         }
-
         function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'facebook-share-dialog', 'width=800,height=600');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600');
         }
-
         function shareOnTwitter() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Yapay Zeka Fotoğrafa Tehdit mi?");
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank');
         }
     </script>
 </body>
 </html>
-
