@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolyo | Ümit Özgüler</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -18,205 +24,215 @@
         }
     </script>
     <style>
-        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        .page-animate { animation: fadeIn 1s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .masonry-grid { column-count: 1; column-gap: 1.5rem; }
         @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
-        .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; transition: all 0.5s ease; }
-        .hidden-item { display: none; }
         
+        .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; }
         .filter-btn.active { color: #c5a059; border-bottom: 1px solid #c5a059; }
-        img { transition: opacity 0.8s ease; }
-        .loaded { opacity: 1 !important; }
-
-        /* Vay Be Etkisi: Glassmorphism */
-        .glass-box {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
+        
+        .photo-card img { filter: grayscale(100%); transition: all 0.6s ease; }
+        .photo-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        
+        #lightbox { 
+            transition: opacity 0.3s ease; 
+            backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.85);
         }
         
-        .no-scroll { overflow: hidden; height: 100vh; }
+        .nav-btn { background: rgba(0,0,0,0.5); border-radius: 50%; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-btn:hover { background: rgba(197, 160, 89, 0.3); border-color: #c5a059; color: white; }
         
-        /* Mobil Menü Sola Dayalı ve Net */
-        #mobile-menu {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-100%);
-            visibility: hidden;
-        }
-        #mobile-menu.active {
-            transform: translateX(0);
-            visibility: visible;
-        }
+        .info-strip { background: linear-gradient(to right, transparent, rgba(0,0,0,0.8), transparent); }
+        
+        /* Mobil Menü Animasyonu */
+        #mobile-menu { transition: all 0.3s ease-in-out; transform: translateY(-20px); opacity: 0; pointer-events: none; }
+        #mobile-menu.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-[100] bg-brand-black border-b border-white/10 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-[110]">
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
             <a href="index.html" class="text-2xl tracking-widest text-white">
                 <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
             </a>
             
             <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Hakkımda</a>
+                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
+                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
                 <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
-                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1 transition-colors">İletişim</a>
+                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Düşünceler</a>
+                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
             </div>
 
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none z-[120]">
-                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+            <button id="hamburger-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
 
-        <div class="fixed inset-0 bg-brand-black z-[100] md:hidden" id="mobile-menu">
-            <div class="flex flex-col pt-32 px-10 space-y-6 text-left">
-                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] border-b border-white/5 pb-2">Ana Sayfa</a>
-                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] border-b border-white/5 pb-2">Hakkımda</a>
-                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold border-b border-white/5 pb-2">Portfolyo</a>
-                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] border-b border-white/5 pb-2">Düşünceler</a>
-                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] border-b border-white/5 pb-2">İletişim</a>
+        <div id="mobile-menu" class="absolute top-24 left-0 w-full bg-brand-dark border-b border-white/10 md:hidden">
+            <div class="flex flex-col p-8 space-y-6 text-center">
+                <a href="index.html" class="text-sm uppercase tracking-[0.2em]">Ana Sayfa</a>
+                <a href="about.html" class="text-sm uppercase tracking-[0.2em]">Hakkımda</a>
+                <a href="portfolio.html" class="text-sm uppercase tracking-[0.2em] text-brand-gold">Portfolyo</a>
+                <a href="dusunceler.html" class="text-sm uppercase tracking-[0.2em]">Düşünceler</a>
+                <a href="contact.html" class="text-sm uppercase tracking-[0.2em]">İletişim</a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-40 pb-12 text-center relative z-10">
-        <h1 class="text-4xl font-bold text-white mb-10 tracking-tighter uppercase">Koleksiyon</h1>
-        <div class="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 md:gap-10 border-b border-white/5 pb-6 px-4 max-w-6xl mx-auto">
-            <button class="filter-btn active text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('sokak', this)">Sokak Hikayeleri</button>
-            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('portre', this)">Siyah Beyaz Portreler</button>
-            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('renkli_doga', this)">Renkli Doğa Peyzajları</button>
-            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('makro', this)">Makro Doğa Detayları</button>
-            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('hayvan', this)">Hayvanlar ve Etkileşim</button>
-            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('kulturel', this)">Kültürel Yaşam</button>
-            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500 hover:text-white pb-1" onclick="filterGallery('soyut', this)">Soyut Atmosfer</button>
+    <section class="pt-40 pb-12 text-center px-4">
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-10 tracking-tighter uppercase">Koleksiyon</h1>
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 border-b border-white/5 pb-6">
+            <button class="filter-btn active text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('sokak', this)">Sokak</button>
+            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('portre', this)">Portre</button>
+            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('renkli_doga', this)">Doğa</button>
+            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('makro', this)">Makro</button>
+            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('hayvan', this)">Hayvanlar</button>
+            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('kulturel', this)">Kültür</button>
+            <button class="filter-btn text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('soyut', this)">Soyut</button>
         </div>
     </section>
 
-    <section class="pb-24 px-6 relative z-10">
+    <section class="pb-24 px-6">
         <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
+        <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
     </section>
 
-    <div id="lightbox" class="fixed inset-0 z-[11000] bg-black/95 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300 backdrop-blur-xl" onclick="closeLightbox()">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/50 hover:text-brand-gold z-[11001] p-2">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex flex-col items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/40 hover:text-white z-[2050] p-4">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.2"></path></svg>
         </button>
         
-        <button onclick="changePhoto(event, -1)" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white p-4 z-[11001]">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        <button onclick="changePhoto(event, -1)" class="nav-btn absolute left-4 top-1/2 -translate-y-1/2 text-white/60 p-4 z-[2050]">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2.5"></path></svg>
         </button>
 
-        <button onclick="changePhoto(event, 1)" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white p-4 z-[11001]">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <button onclick="changePhoto(event, 1)" class="nav-btn absolute right-4 top-1/2 -translate-y-1/2 text-white/60 p-4 z-[2050]">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2.5"></path></svg>
         </button>
 
-        <div class="max-w-5xl w-full flex flex-col items-center relative" onclick="event.stopPropagation()">
-            <img id="lightbox-img" src="" class="max-h-[75vh] md:max-h-[80vh] shadow-2xl border border-white/5 bg-black">
-            <div class="w-full glass-box mt-4">
-                <p id="photo-label" class="py-4 text-center text-brand-gold uppercase tracking-[0.5em] text-[10px] font-bold"></p>
+        <div class="relative max-w-5xl w-full flex flex-col items-center px-4" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" class="max-h-[75vh] md:max-h-[80vh] object-contain shadow-2xl border border-white/5 bg-black">
+            <div class="w-full mt-4 info-strip border-t border-white/10">
+                <p id="photo-label" class="py-4 text-center text-brand-gold uppercase tracking-[0.5em] text-[11px] font-bold"></p>
             </div>
         </div>
     </div>
 
     <script>
-        const galleryContainer = document.getElementById('gallery-container');
         const config = [
-            { category: 'sokak', label: 'Sokak Hikayeleri', images: [1,2,4,5,12,27,31,51,52] },
+            { category: 'sokak', label: 'Sokak Hikayeleri', images: [1,2,4,5,12,27,31,51,52,65,67] },
             { category: 'portre', label: 'Siyah Beyaz Portreler', images: [25,28,29,30,32,34,36,42,43] },
-            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları', images: [13,14,16,17,19,22,23,53,54] },
+            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları', images: [13,14,16,17,19,22,23,53,54,69,70] },
             { category: 'makro', label: 'Makro Doğa Detayları', images: [10,15,21,24,37,38,39,40,41] },
-            { category: 'hayvan', label: 'Hayvanlar ve Etkileşim', images: [3,18,44,45,46,47,48,49,50] },
-            { category: 'kulturel', label: 'Kültürel Yaşam', images: [6,11,26,33,35,60,61,62,63] },
-            { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59] }
+            { category: 'hayvan', label: 'Hayvanlar ve Etkileşim', images: [3,18,44,45,46,47,48,49,50,68] },
+            { category: 'kulturel', label: 'Kültürel Yaşam', images: [6,11,26,33,35,60,61,62,63,66] },
+            { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59,64] }
         ];
 
-        let currentPhotoIndex = 0;
         let currentCategory = 'sokak';
+        let currentPage = 1;
+        const itemsPerPage = 9;
         let activeImages = [];
+        let currentIndex = 0;
+
+        // Mobil Menü Mantığı
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        hamburgerBtn.onclick = () => {
+            mobileMenu.classList.toggle('active');
+            const icon = document.getElementById('menu-icon');
+            // Menü açıksa çarpı, kapalıysa hamburger yap
+            if (mobileMenu.classList.contains('active')) {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        };
 
         function loadGallery() {
-            galleryContainer.innerHTML = '';
-            config.forEach(group => {
-                const reversedImages = [...group.images].reverse();
-                reversedImages.forEach(id => {
-                    const item = document.createElement('div');
-                    item.className = `masonry-item group cursor-pointer ${group.category !== currentCategory ? 'hidden-item' : ''}`;
-                    item.dataset.category = group.category;
-                    item.onclick = () => {
-                        const currentGroup = config.find(g => g.category === group.category);
-                        activeImages = [...currentGroup.images].reverse();
-                        currentPhotoIndex = activeImages.indexOf(id);
-                        openLightbox();
-                    };
-                    item.innerHTML = `
-                        <div class="overflow-hidden bg-brand-dark rounded-sm">
-                            <img src="img/${id}.webp" loading="lazy" class="w-full opacity-0 grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" onload="this.classList.add('loaded')">
-                        </div>`;
-                    galleryContainer.appendChild(item);
-                });
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            const group = config.find(g => g.category === currentCategory);
+            activeImages = [...group.images].reverse();
+            const displayImages = activeImages.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+            displayImages.forEach((id, index) => {
+                const item = document.createElement('div');
+                item.className = "masonry-item photo-card cursor-pointer";
+                item.onclick = () => openLightbox((currentPage - 1) * itemsPerPage + index);
+                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${id}.webp" loading="lazy" class="w-full block"></div>`;
+                container.appendChild(item);
             });
+            renderPagination(Math.ceil(activeImages.length / itemsPerPage));
         }
 
-        function filterGallery(cat, el) {
-            currentCategory = cat;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
-            el.classList.add('active', 'text-white');
-            document.querySelectorAll('.masonry-item').forEach(item => 
-                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item')
-            );
+        function renderPagination(total) {
+            const ctrl = document.getElementById('pagination-controls');
+            ctrl.innerHTML = '';
+            if (total <= 1) return;
+            for (let i = 1; i <= total; i++) {
+                const b = document.createElement('button');
+                b.innerText = i;
+                b.className = `w-10 h-10 border border-white/10 text-xs ${i === currentPage ? 'bg-brand-gold text-black' : ''}`;
+                b.onclick = () => { currentPage = i; loadGallery(); window.scrollTo({top: 350, behavior: 'smooth'}); };
+                ctrl.appendChild(b);
+            }
         }
 
-        function openLightbox() {
-            updateLightbox();
+        function filterGallery(cat, btn) {
+            currentCategory = cat; currentPage = 1;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadGallery();
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
             const lb = document.getElementById('lightbox');
+            updateLightboxContent();
             lb.classList.remove('hidden');
-            document.body.classList.add('no-scroll');
-            setTimeout(() => lb.classList.remove('opacity-0'), 50);
-        }
-
-        function updateLightbox() {
-            const id = activeImages[currentIndex = currentPhotoIndex];
-            document.getElementById('lightbox-img').src = `img/${id}.webp`;
-            document.getElementById('photo-label').innerText = config.find(g => g.category === currentCategory).label;
-        }
-
-        function changePhoto(e, dir) {
-            if(e) e.stopPropagation();
-            currentPhotoIndex = (currentPhotoIndex + dir + activeImages.length) % activeImages.length;
-            updateLightbox();
+            setTimeout(() => lb.style.opacity = "1", 50);
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lb = document.getElementById('lightbox');
-            lb.classList.add('opacity-0');
-            setTimeout(() => {
-                lb.classList.add('hidden');
-                document.body.classList.remove('no-scroll');
-            }, 300);
+            lb.style.opacity = "0";
+            setTimeout(() => { lb.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
         }
 
-        // Hamburger Menü Kontrolü
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon').querySelector('path');
+        function updateLightboxContent() {
+            const id = activeImages[currentIndex];
+            const img = document.getElementById('lightbox-img');
+            img.style.opacity = "0.5";
+            img.src = `img/${id}.webp`;
+            img.onload = () => img.style.opacity = "1";
+            const group = config.find(g => g.category === currentCategory);
+            document.getElementById('photo-label').innerText = group.label;
+        }
 
-        mobileMenuBtn.onclick = () => {
-            mobileMenu.classList.toggle('active');
-            if(mobileMenu.classList.contains('active')) {
-                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                document.body.classList.add('no-scroll');
-            } else {
-                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                document.body.classList.remove('no-scroll');
-            }
-        };
+        function changePhoto(event, dir) {
+            if (event) event.stopPropagation();
+            currentIndex = (currentIndex + dir + activeImages.length) % activeImages.length;
+            updateLightboxContent();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const lb = document.getElementById('lightbox');
+            if (lb.classList.contains('hidden')) return;
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowRight") changePhoto(null, 1);
+            if (e.key === "ArrowLeft") changePhoto(null, -1);
+        });
 
         loadGallery();
     </script>
