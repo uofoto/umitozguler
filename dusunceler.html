@@ -1,17 +1,361 @@
-<!DOCTYPE html><html lang="tr"><head>    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>    <script>      window.dataLayer = window.dataLayer || [];      function gtag(){dataLayer.push(arguments);}      gtag('js', new Date());      gtag('config', 'G-QW3FEBRP69');    </script>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Düşünceler | Ümit Özgüler</title>        <script src="https://cdn.tailwindcss.com"></script>    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">        <script>        tailwind.config = {            theme: {                extend: {                    colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059' },                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }                }            }        }    </script>    <style>        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }        .page-animate { animation: fadeInPage 1s ease-in forwards; }        .glass {            background: rgba(255, 255, 255, 0.03);            border: 1px solid rgba(255, 255, 255, 0.08);            transition: all 0.4s ease;        }        .glass:hover {            border-color: rgba(197, 160, 89, 0.5);            background: rgba(255, 255, 255, 0.05);            transform: translateY(-5px);        }    </style></head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
-    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">        <div class="max-w-7xl mx-auto px-6">            <div class="flex justify-between items-center h-24">                <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>                </a>                <div class="hidden md:flex space-x-12">                    <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>                    <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>                    <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Portfolyo</a>                    <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Düşünceler</a>                    <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>                </div>                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>                </button>            </div>        </div>
-        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">            <div class="px-6 py-8 space-y-4 flex flex-col">                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Düşünceler</a>                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>            </div>        </div>    </nav>
+<!doctype html>
+<html lang="tr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-QW3FEBRP69");
+        </script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Düşünceler | Ümit Özgüler</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: { "brand-black": "#050505", "brand-dark": "#0f0f0f", "brand-gold": "#c5a059" },
+                        fontFamily: { sans: ['"Montserrat"', "sans-serif"] },
+                    },
+                },
+            };
+        </script>
+        <style>
+            @keyframes fadeInPage {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            .page-animate {
+                animation: fadeInPage 1s ease-in forwards;
+            }
+            .glass {
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                transition: all 0.4s ease;
+            }
+            .glass:hover {
+                border-color: rgba(197, 160, 89, 0.5);
+                background: rgba(255, 255, 255, 0.05);
+                transform: translateY(-5px);
+            }
+        </style>
+    </head>
+    <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+        <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-24">
+                    <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
+                        <span class="font-extralight text-white">ÜMİT</span>
+                        <span class="font-bold text-white">ÖZGÜLER</span>
+                    </a>
+                    <div class="hidden md:flex space-x-12">
+                        <a
+                            href="index.html"
+                            class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1"
+                            >Ana Sayfa</a
+                        >
+                        <a
+                            href="about.html"
+                            class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1"
+                            >Hakkımda</a
+                        >
+                        <a
+                            href="portfolio.html"
+                            class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1"
+                            >Portfolyo</a
+                        >
+                        <a
+                            href="dusunceler.html"
+                            class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1"
+                            >Düşünceler</a
+                        >
+                        <a
+                            href="contact.html"
+                            class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1"
+                            >İletişim</a
+                        >
+                    </div>
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
+                <div class="px-6 py-8 space-y-4 flex flex-col">
+                    <a
+                        href="index.html"
+                        class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors"
+                        >Ana Sayfa</a
+                    >
+                    <a
+                        href="about.html"
+                        class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors"
+                        >Hakkımda</a
+                    >
+                    <a
+                        href="portfolio.html"
+                        class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors"
+                        >Portfolyo</a
+                    >
+                    <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold"
+                        >Düşünceler</a
+                    >
+                    <a
+                        href="contact.html"
+                        class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold"
+                        >İletişim</a
+                    >
+                </div>
+            </div>
+        </nav>
 
-    <section class="pt-40 pb-12 text-center px-4 relative z-10">        <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tighter uppercase">Düşünceler</h1>        <p class="max-w-2xl mx-auto text-gray-400 text-sm tracking-wide leading-relaxed">            Bu sayfada fotoğraf hakkındaki düşüncelerimi zaman zaman paylaşacağım. Lütfen takipte kalınız.        </p>    </section>
+        <section class="pt-40 pb-12 text-center px-4 relative z-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tighter uppercase">Düşünceler</h1>
+            <p class="max-w-2xl mx-auto text-gray-400 text-sm tracking-wide leading-relaxed">
+                Bu sayfada fotoğraf hakkındaki düşüncelerimi zaman zaman paylaşacağım. Lütfen takipte kalınız.
+            </p>
+        </section>
 
-    <section class="pb-24 px-6 relative z-10">        <div class="max-w-7xl mx-auto">            <h2 class="text-sm uppercase tracking-[0.3em] text-brand-gold mb-12 text-center">Son Yazılar</h2>
-            <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">                                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-25">                    <div class="h-60 overflow-hidden relative">                        <img src="img/28.webp" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">                    </div>                    <div class="p-8 flex flex-col flex-1">                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold">Eleştiri</span>                        <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors">Yarışma Fotoğrafçılığı Eleştirisi</h3>                        <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4">                            <span>25 Ocak 2026</span>                            <span class="mx-2 text-gray-600">|</span>                            <span>OKUMA SÜRESİ: 2 DK</span>                        </div>                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">                            Fotoğraf yarışmalarının tek tipleştiren estetik kaygıları, ojeli tırnaklı modeller ve kurgunun gerçekliği öldürmesi üzerine derin bir eleştiri.                        </p>                        <a href="makale/yarisma-fotografciligi-elestiri.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium">Devamını Oku</a>                    </div>                </article>
-                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-24">                    <div class="h-60 overflow-hidden relative">                        <img src="img/9.webp" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">                    </div>                    <div class="p-8 flex flex-col flex-1">                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold">Teknoloji</span>                        <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors">Yapay Zeka Fotoğrafa Tehdit mi?</h3>                        <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4">                            <span>24 Ocak 2026</span>                            <span class="mx-2 text-gray-600">|</span>                            <span>OKUMA SÜRESİ: 2 DK</span>                        </div>                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">                            Algoritmaların hızı işlerimizi kolaylaştırıyor ancak insan elinin değdiği o kadim "tadı" ve huzuru verebilir mi? Zanaat ve hız üzerine bir karşılaştırma.                        </p>                        <a href="makale/yapay-zeka-fotografa-tehditmi.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium">Devamını Oku</a>                    </div>                </article>
-                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-23">                    <div class="h-60 overflow-hidden relative">                        <img src="img/27.webp" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">                    </div>                    <div class="p-8 flex flex-col flex-1">                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold">Eleştiri</span>                        <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors">Biçim mi, Ruh mu?</h3>                        <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4">                            <span>23 Ocak 2026</span>                            <span class="mx-2 text-gray-600">|</span>                            <span>OKUMA SÜRESİ: 2 DK</span>                        </div>                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">                            Türkiye'de fotoğraf sanatı, kusursuz kompozisyon arayışı içinde "an"ın ruhunu kaybediyor mu? Altın oran takıntısı üzerine bir deneme.                        </p>                        <a href="makale/turkiye-fotograf-tabulari.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium">Devamını Oku</a>                    </div>                </article>
-                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-23">                    <div class="h-60 overflow-hidden relative">                        <img src="img/6.webp" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">                    </div>                    <div class="p-8 flex flex-col flex-1">                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold">Kişisel</span>                        <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors">Neden Fotoğraf Çekiyorum?</h3>                        <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4">                            <span>23 Ocak 2026</span>                            <span class="mx-2 text-gray-600">|</span>                            <span>OKUMA SÜRESİ: 2 DK</span>                        </div>                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">                            Deklanşöre bastığım o milisaniyelik an, sadece bir görüntüyü kaydetmek midir? Yoksa zamana karşı verilen sessiz bir mücadele mi?                        </p>                        <a href="makale/neden-fotograf-cekiyorum.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium">Devamını Oku</a>                    </div>                </article>
-                <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-22">                    <div class="h-60 overflow-hidden relative">                        <img src="img/25.webp" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">                    </div>                    <div class="p-8 flex flex-col flex-1">                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold">Fotoğraf</span>                        <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors">Neden Siyah Beyaz?</h3>                        <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4">                            <span>22 Ocak 2026</span>                            <span class="mx-2 text-gray-600">|</span>                            <span>OKUMA SÜRESİ: 2 DK</span>                        </div>                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">                            Renkleri terk ettiğinizde geriye yalnızca ışık, gölge ve duygu kalır. Siyah beyaz fotoğrafın benim için anlamı üzerine kişisel bir değerlendirme.                        </p>                        <a href="makale/neden-siyah-beyaz.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium">Devamını Oku</a>                    </div>                </article>
-            </div>        </div>    </section>
-    <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center relative z-10">        <div class="flex justify-center space-x-12 mb-10">            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>        </div>        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">            &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.        </p>    </footer>
-    <script>        document.getElementById('mobile-menu-btn').onclick = () => {            const menu = document.getElementById('mobile-menu');            if(menu.classList.contains('hidden')) {                menu.classList.remove('hidden');                setTimeout(() => menu.classList.remove('opacity-0'), 10);            } else {                menu.classList.add('opacity-0');                setTimeout(() => menu.classList.add('hidden'), 300);            }        };
-        const container = document.getElementById("yazi-listesi");        const items = Array.from(container.children);        items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));        items.forEach(item => container.appendChild(item));    </script></body></html>
+        <section class="pb-24 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-sm uppercase tracking-[0.3em] text-brand-gold mb-12 text-center">Son Yazılar</h2>
+                <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <article
+                        class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer"
+                        data-date="2026-01-25"
+                    >
+                        <div class="h-60 overflow-hidden relative">
+                            <img
+                                src="img/28.webp"
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700"
+                            />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold"
+                                >Eleştiri</span
+                            >
+                            <h3
+                                class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors"
+                            >
+                                Yarışma Fotoğrafçılığı Eleştirisi
+                            </h3>
+                            <div
+                                class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4"
+                            >
+                                <span>25 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>OKUMA SÜRESİ: 2 DK</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Fotoğraf yarışmalarının tek tipleştiren estetik kaygıları, ojeli tırnaklı modeller ve
+                                kurgunun gerçekliği öldürmesi üzerine derin bir eleştiri.
+                            </p>
+                            <a
+                                href="makale/yarisma-fotografciligi-elestiri.html"
+                                class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium"
+                                >Devamını Oku</a
+                            >
+                        </div>
+                    </article>
+                    <article
+                        class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer"
+                        data-date="2026-01-24"
+                    >
+                        <div class="h-60 overflow-hidden relative">
+                            <img
+                                src="img/9.webp"
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700"
+                            />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold"
+                                >Teknoloji</span
+                            >
+                            <h3
+                                class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors"
+                            >
+                                Yapay Zeka Fotoğrafa Tehdit mi?
+                            </h3>
+                            <div
+                                class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4"
+                            >
+                                <span>24 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>OKUMA SÜRESİ: 2 DK</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Algoritmaların hızı işlerimizi kolaylaştırıyor ancak insan elinin değdiği o kadim "tadı"
+                                ve huzuru verebilir mi? Zanaat ve hız üzerine bir karşılaştırma.
+                            </p>
+                            <a
+                                href="makale/yapay-zeka-fotografa-tehditmi.html"
+                                class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium"
+                                >Devamını Oku</a
+                            >
+                        </div>
+                    </article>
+                    <article
+                        class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer"
+                        data-date="2026-01-23"
+                    >
+                        <div class="h-60 overflow-hidden relative">
+                            <img
+                                src="img/27.webp"
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700"
+                            />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold"
+                                >Eleştiri</span
+                            >
+                            <h3
+                                class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors"
+                            >
+                                Biçim mi, Ruh mu?
+                            </h3>
+                            <div
+                                class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4"
+                            >
+                                <span>23 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>OKUMA SÜRESİ: 2 DK</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Türkiye'de fotoğraf sanatı, kusursuz kompozisyon arayışı içinde "an"ın ruhunu kaybediyor
+                                mu? Altın oran takıntısı üzerine bir deneme.
+                            </p>
+                            <a
+                                href="makale/turkiye-fotograf-tabulari.html"
+                                class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium"
+                                >Devamını Oku</a
+                            >
+                        </div>
+                    </article>
+                    <article
+                        class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer"
+                        data-date="2026-01-23"
+                    >
+                        <div class="h-60 overflow-hidden relative">
+                            <img
+                                src="img/6.webp"
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700"
+                            />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold"
+                                >Kişisel</span
+                            >
+                            <h3
+                                class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors"
+                            >
+                                Neden Fotoğraf Çekiyorum?
+                            </h3>
+                            <div
+                                class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4"
+                            >
+                                <span>23 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>OKUMA SÜRESİ: 2 DK</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Deklanşöre bastığım o milisaniyelik an, sadece bir görüntüyü kaydetmek midir? Yoksa
+                                zamana karşı verilen sessiz bir mücadele mi?
+                            </p>
+                            <a
+                                href="makale/neden-fotograf-cekiyorum.html"
+                                class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium"
+                                >Devamını Oku</a
+                            >
+                        </div>
+                    </article>
+                    <article
+                        class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer"
+                        data-date="2026-01-22"
+                    >
+                        <div class="h-60 overflow-hidden relative">
+                            <img
+                                src="img/25.webp"
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700"
+                            />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold mb-3 font-bold"
+                                >Fotoğraf</span
+                            >
+                            <h3
+                                class="text-xl text-white font-medium mb-3 group-hover:text-brand-gold transition-colors"
+                            >
+                                Neden Siyah Beyaz?
+                            </h3>
+                            <div
+                                class="flex items-center text-[10px] tracking-widest uppercase text-brand-gold/80 mb-4"
+                            >
+                                <span>22 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>OKUMA SÜRESİ: 2 DK</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Renkleri terk ettiğinizde geriye yalnızca ışık, gölge ve duygu kalır. Siyah beyaz
+                                fotoğrafın benim için anlamı üzerine kişisel bir değerlendirme.
+                            </p>
+                            <a
+                                href="makale/neden-siyah-beyaz.html"
+                                class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-gold transition-colors font-medium"
+                                >Devamını Oku</a
+                            >
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center relative z-10">
+            <div class="flex justify-center space-x-12 mb-10">
+                <a
+                    href="https://instagram.com/umitozguler"
+                    target="_blank"
+                    class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors"
+                    >Instagram</a
+                >
+                <a
+                    href="https://twitter.com/uozguler"
+                    target="_blank"
+                    class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors"
+                    >Twitter (X)</a
+                >
+            </div>
+            <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">
+                &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
+            </p>
+        </footer>
+        <script>
+            document.getElementById("mobile-menu-btn").onclick = () => {
+                const menu = document.getElementById("mobile-menu");
+                if (menu.classList.contains("hidden")) {
+                    menu.classList.remove("hidden");
+                    setTimeout(() => menu.classList.remove("opacity-0"), 10);
+                } else {
+                    menu.classList.add("opacity-0");
+                    setTimeout(() => menu.classList.add("hidden"), 300);
+                }
+            };
+            const container = document.getElementById("yazi-listesi");
+            const items = Array.from(container.children);
+            items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
+            items.forEach((item) => container.appendChild(item));
+        </script>
+    </body>
+</html>
