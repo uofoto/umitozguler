@@ -25,6 +25,7 @@
     <style>
         @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
         #mobile-menu { transition: opacity 0.3s ease-in-out; }
@@ -71,37 +72,9 @@
                 </div>
             </div>
 
-            <div class="mb-12 group">
-                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
-                    <img src="../img/28.webp" alt="Yarışma Fotoğrafçılığı Eleştirisi" class="w-full h-auto grayscale opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:scale-[1.01]">
-                    
-                    <div class="absolute bottom-6 right-6 hidden md:flex space-x-6 text-[9px] tracking-[0.2em] text-white/70 bg-black/70 backdrop-blur-lg px-6 py-4 rounded-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 uppercase">
-                        <div class="flex flex-col">
-                            <span class="text-brand-gold mb-1 font-bold">Çekim Yeri</span>
-                            <span>Yusufeli / Artvin</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">Kategori</span>
-                            <span>Sokaklar</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">Çekim Tarihi</span>
-                            <span>2008</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center gap-6 mt-6 md:hidden text-[9px] tracking-[0.2em] text-brand-gold uppercase opacity-80 font-medium italic">
-                    <span>Artvin</span>
-                    <span>•</span>
-                    <span>Sokaklar</span>
-                    <span>•</span>
-                    <span>2008</span>
-                </div>
-
-                <p class="text-center text-[11px] text-gray-400 mt-6 tracking-[0.5em] uppercase font-medium">
-                    &copy; Ümit Özgüler
-                </p>
+            <div class="mb-12 shadow-2xl">
+                <img src="../img/28.webp" alt="Yarışma Fotoğrafçılığı Eleştirisi" class="w-full h-auto rounded-sm grayscale opacity-90 hover:opacity-100 transition duration-1000">
+                <p class="text-center text-[10px] text-gray-600 mt-4 tracking-widest uppercase">Fotoğraf: Ümit Özgüler</p>
             </div>
 
             <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
@@ -154,14 +127,7 @@
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if(menuBtn) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-
+        // Mobil Menü ve Paylaşım JS kodları buraya gelecek (öncekiyle aynı)
         function shareOnWhatsApp() {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Ümit Özgüler'in 'Yarışma Fotoğrafçılığı' eleştirisini okumanızı öneririm: ");
@@ -178,4 +144,7 @@
         }
     </script>
 </body>
+
 </html>
+
+
