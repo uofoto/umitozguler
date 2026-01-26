@@ -28,7 +28,8 @@
         
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
-        #mobile-menu { transition: opacity 0.3s ease-in-out; }
+        /* Menü geçiş efekti */
+        #mobile-menu { transition: all 0.3s ease-in-out; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -39,6 +40,7 @@
                 <a href="../index.html" class="text-2xl tracking-widest text-white transition-colors">
                     <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
+                
                 <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
                     <a href="../about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
@@ -46,9 +48,22 @@
                     <a href="../dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Düşünceler</a>
                     <a href="../contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden bg-brand-dark border-b border-white/5 w-full md:hidden">
+            <div class="px-6 py-8 space-y-4 flex flex-col items-start">
+                <a href="../index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">Ana Sayfa</a>
+                <a href="../about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">Hakkımda</a>
+                <a href="../portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">Portfolyo</a>
+                <a href="../dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Düşünceler</a>
+                <a href="../contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>
             </div>
         </div>
     </nav>
@@ -127,7 +142,15 @@
     </footer>
 
     <script>
-        // Mobil Menü ve Paylaşım JS kodları buraya gelecek (öncekiyle aynı)
+        // --- MOBİL MENÜ KODU ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- PAYLAŞIM FONKSİYONLARI ---
         function shareOnWhatsApp() {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Ümit Özgüler'in 'Yarışma Fotoğrafçılığı' eleştirisini okumanızı öneririm: ");
@@ -144,7 +167,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
