@@ -49,8 +49,8 @@
         
         .info-strip { background: linear-gradient(to right, transparent, rgba(0,0,0,0.8), transparent); }
         
-        /* Mobil Menü Animasyonu */
-        #mobile-menu { transition: all 0.3s ease-in-out; transform: translateY(-20px); opacity: 0; pointer-events: none; }
+        /* Mobil Menü Animasyonu - Sola Dayalı Düzen */
+        #mobile-menu { transition: all 0.3s ease-in-out; transform: translateY(-10px); opacity: 0; pointer-events: none; }
         #mobile-menu.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
     </style>
 </head>
@@ -77,13 +77,13 @@
             </button>
         </div>
 
-        <div id="mobile-menu" class="absolute top-24 left-0 w-full bg-brand-dark border-b border-white/10 md:hidden">
-            <div class="flex flex-col p-8 space-y-6 text-center">
-                <a href="index.html" class="text-sm uppercase tracking-[0.2em]">Ana Sayfa</a>
-                <a href="about.html" class="text-sm uppercase tracking-[0.2em]">Hakkımda</a>
-                <a href="portfolio.html" class="text-sm uppercase tracking-[0.2em] text-brand-gold">Portfolyo</a>
-                <a href="dusunceler.html" class="text-sm uppercase tracking-[0.2em]">Düşünceler</a>
-                <a href="contact.html" class="text-sm uppercase tracking-[0.2em]">İletişim</a>
+        <div id="mobile-menu" class="absolute top-24 left-0 w-full bg-brand-dark/fe border-b border-white/10 md:hidden z-[90]">
+            <div class="flex flex-col p-6 space-y-4 text-left">
+                <a href="index.html" class="text-[11px] uppercase tracking-[0.2em] py-2 border-b border-white/5 w-full">Ana Sayfa</a>
+                <a href="about.html" class="text-[11px] uppercase tracking-[0.2em] py-2 border-b border-white/5 w-full">Hakkımda</a>
+                <a href="portfolio.html" class="text-[11px] uppercase tracking-[0.2em] text-brand-gold py-2 border-b border-white/5 w-full">Portfolyo</a>
+                <a href="dusunceler.html" class="text-[11px] uppercase tracking-[0.2em] py-2 border-b border-white/5 w-full">Düşünceler</a>
+                <a href="contact.html" class="text-[11px] uppercase tracking-[0.2em] py-2 w-full">İletişim</a>
             </div>
         </div>
     </nav>
@@ -144,13 +144,11 @@
         let activeImages = [];
         let currentIndex = 0;
 
-        // Mobil Menü Mantığı
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         hamburgerBtn.onclick = () => {
             mobileMenu.classList.toggle('active');
             const icon = document.getElementById('menu-icon');
-            // Menü açıksa çarpı, kapalıysa hamburger yap
             if (mobileMenu.classList.contains('active')) {
                 icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
             } else {
