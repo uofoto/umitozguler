@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QW3FEBRP69');
-</script>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolyo | Ümit Özgüler</title>
@@ -95,6 +94,12 @@
 
     <section class="pb-24 px-6 relative z-10">
         <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
+        
+        <div id="pagination-container" class="mt-16 text-center hidden">
+            <a href="portfolio-all.html" class="inline-block px-12 py-4 border border-brand-gold text-brand-gold text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-brand-gold hover:text-black transition-all duration-500">
+                Tüm Koleksiyonu Gör
+            </a>
+        </div>
     </section>
 
     <div id="lightbox" class="fixed inset-0 z-[11000] bg-brand-black/98 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-all duration-300 backdrop-blur-md">
@@ -119,6 +124,7 @@
 
     <script>
         const galleryContainer = document.getElementById('gallery-container');
+        const paginationContainer = document.getElementById('pagination-container');
 
         const config = [
             { category: 'sokak',       label: 'Sokak Hikayeleri',       images: [1,2,4,5,12,27,31,51,52,65,67] },
@@ -136,40 +142,47 @@
 
         function loadGallery() {
             galleryContainer.innerHTML = '';
-            config.forEach(group => {
-                // Görselleri tersine çevirerek en son ekleneni başa alıyoruz
-                const reversedImages = [...group.images].reverse();
-                
-                reversedImages.forEach(id => {
-                    const item = document.createElement('div');
-                    item.className = `masonry-item group cursor-zoom-in ${group.category !== currentCategory ? 'hidden-item' : ''}`;
-                    item.dataset.category = group.category;
-                    item.dataset.id = id;
-                    item.onclick = () => openLightbox(id, group.category);
-                    item.innerHTML = `
-                        <div class="overflow-hidden bg-brand-dark rounded-sm">
-                            <img src="img/${id}.webp" loading="lazy" 
-                                 class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" 
-                                 onload="this.classList.add('loaded')">
-                        </div>`;
-                    galleryContainer.appendChild(item);
-                });
+            
+            // Mevcut kategorinin verisini bul
+            const group = config.find(g => g.category === currentCategory);
+            const reversedImages = [...group.images].reverse();
+            
+            // SADECE İLK 9 GÖRSELİ AL
+            const imagesToShow = reversedImages.slice(0, 9);
+            
+            imagesToShow.forEach(id => {
+                const item = document.createElement('div');
+                item.className = `masonry-item group cursor-zoom-in`;
+                item.dataset.category = group.category;
+                item.dataset.id = id;
+                item.onclick = () => openLightbox(id, group.category);
+                item.innerHTML = `
+                    <div class="overflow-hidden bg-brand-dark rounded-sm">
+                        <img src="img/${id}.webp" loading="lazy" 
+                             class="w-full opacity-0 grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100" 
+                             onload="this.classList.add('loaded')">
+                    </div>`;
+                galleryContainer.appendChild(item);
             });
+
+            // Eğer 9'dan fazla resim varsa butonu göster
+            if (reversedImages.length > 9) {
+                paginationContainer.classList.remove('hidden');
+            } else {
+                paginationContainer.classList.add('hidden');
+            }
         }
 
         function filterGallery(cat, el) {
             currentCategory = cat;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
             el.classList.add('active', 'text-white');
-            document.querySelectorAll('.masonry-item').forEach(item => 
-                item.dataset.category === cat ? item.classList.remove('hidden-item') : item.classList.add('hidden-item')
-            );
+            loadGallery();
         }
 
         function openLightbox(id, category) {
             currentCategory = category;
             const group = config.find(g => g.category === category);
-            // Lightbox içindeki sıralamayı da galeri sırasıyla (ters) eşliyoruz
             currentImages = [...group.images].reverse();
             currentPhotoIndex = currentImages.indexOf(id);
             updateLightbox();
@@ -202,25 +215,11 @@
 
         document.getElementById('mobile-menu-btn').onclick = () => {
             const menu = document.getElementById('mobile-menu');
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                document.body.classList.add('no-scroll');
-            } else {
-                menu.classList.add('hidden');
-                document.body.classList.remove('no-scroll');
-            }
+            menu.classList.toggle('hidden');
+            document.body.classList.toggle('no-scroll');
         };
 
-        // Sayfa yüklendiğinde galeriyi başlat
         loadGallery();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
