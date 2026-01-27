@@ -46,22 +46,22 @@
                     <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden group p-2">
-                    <div class="w-6 h-px bg-white mb-1.5 group-hover:bg-brand-gold transition-all"></div>
-                    <div class="w-6 h-px bg-white group-hover:bg-brand-gold transition-all"></div>
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-black z-50 flex flex-col items-center justify-center space-y-8 opacity-0 transition-opacity duration-300">
-            <button onclick="document.getElementById('mobile-menu-btn').click()" class="absolute top-8 right-8 text-white p-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-            <a href="index.html" class="text-lg font-bold uppercase tracking-[0.4em]">Ana Sayfa</a>
-            <a href="about.html" class="text-lg font-bold uppercase tracking-[0.4em] text-brand-gold">Hakkımda</a>
-            <a href="portfolio.html" class="text-lg font-bold uppercase tracking-[0.4em]">Portfolyo</a>
-            <a href="dusunceler.html" class="text-lg font-bold uppercase tracking-[0.4em]">Düşünceler</a>
-            <a href="contact.html" class="text-lg font-bold uppercase tracking-[0.4em]">İletişim</a>
+        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
+            <div class="px-6 py-8 space-y-4 flex flex-col">
+                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">İletişim</a>
+            </div>
         </div>
     </nav>
 
@@ -119,12 +119,8 @@
             const menu = document.getElementById('mobile-menu');
             if(menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
-                document.body.classList.add('no-scroll');
-                setTimeout(() => menu.classList.remove('opacity-0'), 10);
             } else {
-                menu.classList.add('opacity-0');
-                document.body.classList.remove('no-scroll');
-                setTimeout(() => menu.classList.add('hidden'), 300);
+                menu.classList.add('hidden');
             }
         };
     </script>
