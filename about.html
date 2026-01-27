@@ -1,134 +1,104 @@
+
 <!DOCTYPE html>
 <html lang="tr">
-<head><!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QW3FEBRP69');
-</script>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hakkımda | Ümit Özgüler</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059' },
-                    fontFamily: { 
-                        sans: ['"Montserrat"', 'sans-serif'],
-                        script: ['"Pinyon Script"', 'cursive'] 
-                    }
+                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
-        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-        .page-animate { animation: fadeInPage 1s ease-in forwards; }
-        
-        /* Mobil Menü İçin Sayfa Kilitleme */
-        .no-scroll { overflow: hidden; height: 100vh; }
-        
-        /* Resim Paspartu Kutusu - Eşitlik Garantisi */
-        .paspartu-box {
-            background-color: white;
-            padding: 12px; /* Kesin ve eşit paspartu kalınlığı */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 1s ease-out forwards; }
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+<body class="bg-brand-black text-white font-sans antialiased">
 
-    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center relative z-[110]">
-            <a href="index.html" class="text-2xl tracking-widest text-white">
-                <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-            </a>
-
-            <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
-            </div>
-
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none transition-transform duration-300">
-                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-
-        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50 transition-opacity duration-300 opacity-0" id="mobile-menu">
-            <div class="px-6 py-8 space-y-4 flex flex-col items-start">
-                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
+    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-24">
+                <a href="index.html" class="text-2xl tracking-[0.3em]">
+                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+                </a>
+                <div class="hidden md:flex space-x-12">
+                    <a href="index.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                    <a href="about.html" class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
+                    <a href="portfolio.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                    <a href="dusunceler.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                    <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2">
+                    <div class="w-6 h-px bg-white mb-1.5"></div>
+                    <div class="w-6 h-px bg-white"></div>
+                </button>
             </div>
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 px-6 flex-grow flex items-center">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section class="pt-40 pb-20 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 lg:gap-24 items-center">
             
-            <div class="order-1 lg:order-1 flex justify-center">
-                <div class="paspartu-box w-full max-w-md lg:max-w-none transform transition duration-500 hover:scale-[1.01]">
-                    <div class="relative overflow-hidden aspect-[3/4]">
-                        <img src="img/umitozguler.webp" alt="Ümit Özgüler" class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0">
-                    </div>
+            <div class="w-full md:w-1/2 animate-fade flex justify-center md:justify-end">
+                <div class="relative">
+                    <div class="absolute -bottom-4 -right-4 w-full h-full border-r-2 border-b-2 border-brand-gold"></div>
+                    
+                    <img src="img/umitozguler.webp" alt="Ümit Özgüler" 
+                         class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block">
                 </div>
             </div>
 
-            <div class="space-y-8 order-2 lg:order-2 flex flex-col justify-center">
-                <div>
-                    <h1 class="text-4xl lg:text-7xl text-white mb-2 font-script tracking-wide leading-tight">
+            <div class="w-full md:w-1/2 animate-fade" style="animation-delay: 0.2s;">
+                <div class="mb-12">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tighter uppercase leading-none">
                         Işık, Gölge ve <span class="text-brand-gold">Ruh.</span>
                     </h1>
-                    <div class="w-24 h-[2px] bg-brand-gold mb-6 mt-4"></div>
+                    <div class="w-24 h-[2px] bg-brand-gold mt-6 mb-6"></div>
                 </div>
-                
-                <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
-                    Fotoğraf, benim için zamanı durdurmanın ve görünenin ardındaki hikayeyi keşfetmenin en güçlü yoludur. <strong class="text-white font-medium">20 yılı aşkın süredir</strong>, vizörün ardından ülkemizin eşsiz coğrafyasına tanıklık ediyorum.
-                </p>
-                
-                <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
-                    <strong class="text-white font-medium"> Bursa Fotoğraf ve Sinema Amatörleri Derneği (BUFSAD)</strong> bünyesinde atölye hocalığı yaparak deneyimlerimi paylaşırken, <strong class="text-white font-medium">Türkiye Fotoğraf Sanatı Federasyonu (TFSF)</strong> jüri üyeliği görevimle fotoğraf sanatının gelişimine katkı sundum.
-                </p>
 
-                <p class="text-gray-300 leading-relaxed font-light text-base lg:text-lg">
-                    Eserlerim bugüne kadar <strong class="text-white font-medium">10'dan fazla karma sergide</strong> sanatseverlerle buluştu. Her karede, doğanın sesini ve insan ruhunun derinliğini aramaya devam ediyorum.
-                </p>
-                
-                <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-8 mt-4">
+                <div class="space-y-6 text-gray-400 text-sm lg:text-base leading-relaxed font-light tracking-wide">
+                    <p>Fotoğraf, benim için zamanı durdurmanın ve görünenin ardındaki hikayeyi keşfetmenin en güçlü yoludur. 20 yılı aşkın süredir, vizörün ardından ülkemizin eşsiz coğrafyasına tanıklık ediyorum.</p>
+                    <p>Bursa Fotoğraf ve Sinema Amatörleri Derneği (BUFSAD) bünyesinde atölye hocalığı yaparak deneyimlerimi paylaşırken, Türkiye Fotoğraf Sanatı Federasyonu (TFSF) jüri üyeliği görevimle fotoğraf sanatının gelişimine katkı sundum.</p>
+                    <p>Eserlerim bugüne kadar 10'dan fazla karma sergide sanatseverlerle buluştu. Her karede, doğanın sesini ve insan ruhunun derinliğini aramaya devam ediyorum.</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-8 pt-12 border-t border-white/5">
                     <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">20+</span>
-                        <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Deneyim</span>
+                        <span class="block text-2xl lg:text-3xl font-bold text-white">20+</span>
+                        <span class="text-[9px] uppercase tracking-widest text-brand-gold font-semibold">Yıllık Deneyim</span>
                     </div>
                     <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">10+</span>
-                        <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Sergi</span>
+                        <span class="block text-2xl lg:text-3xl font-bold text-white">10+</span>
+                        <span class="text-[9px] uppercase tracking-widest text-brand-gold font-semibold">Sergi</span>
                     </div>
                     <div class="text-center md:text-left">
                         <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">TFSF</span>
-                        <span class="text-[9px] lg:text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Jüri</span>
+                        <span class="text-[9px] uppercase tracking-widest text-brand-gold font-semibold">Jüri</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-brand-black py-12 border-t border-white/5 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 text-center text-gray-600 text-[10px] tracking-[0.2em] uppercase">
+    <footer class="bg-brand-black py-12 border-t border-white/5 text-center">
+        <div class="max-w-7xl mx-auto px-6 text-gray-600 text-[10px] tracking-[0.2em] uppercase">
             &copy; 2026 Ümit Özgüler.
         </div>
     </footer>
@@ -136,18 +106,8 @@
     <script>
         document.getElementById('mobile-menu-btn').onclick = () => {
             const menu = document.getElementById('mobile-menu');
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                document.body.classList.add('no-scroll');
-                setTimeout(() => menu.classList.remove('opacity-0'), 10);
-            } else {
-                menu.classList.add('opacity-0');
-                document.body.classList.remove('no-scroll');
-                setTimeout(() => menu.classList.add('hidden'), 300);
-            }
+            menu.classList.toggle('hidden');
         };
     </script>
 </body>
 </html>
-
-
