@@ -39,17 +39,39 @@
         
         #lightbox { 
             transition: opacity 0.3s ease; 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px);
-            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Yeni Zarif Buton Tasarımı */
+        .nav-area {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 15%; /* Kenarlarda geniş tıklama alanı */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2050;
+            color: rgba(255,255,255,0.1); /* Normalde çok silik */
         }
         
-        .nav-btn { background: rgba(0,0,0,0.5); border-radius: 50%; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
-        .nav-btn:hover { background: rgba(197, 160, 89, 0.3); border-color: #c5a059; color: white; }
+        .nav-area:hover {
+            color: rgba(197, 160, 89, 0.8); /* Üzerine gelince altın rengi parlar */
+            background: rgba(255,255,255,0.02);
+        }
+
+        .nav-area svg {
+            width: 40px;
+            height: 40px;
+            stroke-width: 1px; /* İnce ve şık çizgi */
+        }
         
-        .info-strip { background: linear-gradient(to right, transparent, rgba(0,0,0,0.8), transparent); }
+        .info-strip { background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); }
         
-        /* Mobil Menü Animasyonu */
         #mobile-menu { transition: all 0.3s ease-in-out; transform: translateY(-20px); opacity: 0; pointer-events: none; }
         #mobile-menu.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
     </style>
@@ -106,24 +128,25 @@
         <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
     </section>
 
-    <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex flex-col items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/40 hover:text-white z-[2050] p-4">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.2"></path></svg>
+    <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+        
+        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white/30 hover:text-white z-[2100] transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1"></path></svg>
         </button>
         
-        <button onclick="changePhoto(event, -1)" class="nav-btn absolute left-4 top-1/2 -translate-y-1/2 text-white/60 p-4 z-[2050]">
-            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2.5"></path></svg>
-        </button>
+        <div onclick="changePhoto(event, -1)" class="nav-area left-0">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+        </div>
 
-        <button onclick="changePhoto(event, 1)" class="nav-btn absolute right-4 top-1/2 -translate-y-1/2 text-white/60 p-4 z-[2050]">
-            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2.5"></path></svg>
-        </button>
-
-        <div class="relative max-w-5xl w-full flex flex-col items-center px-4" onclick="event.stopPropagation()">
-            <img id="lightbox-img" src="" class="max-h-[75vh] md:max-h-[80vh] object-contain shadow-2xl border border-white/5 bg-black">
-            <div class="w-full mt-4 info-strip border-t border-white/10">
-                <p id="photo-label" class="py-4 text-center text-brand-gold uppercase tracking-[0.5em] text-[11px] font-bold"></p>
+        <div class="relative max-w-[80vw] md:max-w-[70vw] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" class="max-h-[80vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-300">
+            <div class="w-full mt-6 info-strip">
+                <p id="photo-label" class="py-2 text-center text-brand-gold uppercase tracking-[0.6em] text-[10px] font-light"></p>
             </div>
+        </div>
+
+        <div onclick="changePhoto(event, 1)" class="nav-area right-0">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
         </div>
     </div>
 
@@ -144,13 +167,11 @@
         let activeImages = [];
         let currentIndex = 0;
 
-        // Mobil Menü Mantığı
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         hamburgerBtn.onclick = () => {
             mobileMenu.classList.toggle('active');
             const icon = document.getElementById('menu-icon');
-            // Menü açıksa çarpı, kapalıysa hamburger yap
             if (mobileMenu.classList.contains('active')) {
                 icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
             } else {
@@ -213,9 +234,11 @@
         function updateLightboxContent() {
             const id = activeImages[currentIndex];
             const img = document.getElementById('lightbox-img');
-            img.style.opacity = "0.5";
-            img.src = `img/${id}.webp`;
-            img.onload = () => img.style.opacity = "1";
+            img.style.opacity = "0";
+            setTimeout(() => {
+                img.src = `img/${id}.webp`;
+                img.onload = () => img.style.opacity = "1";
+            }, 150);
             const group = config.find(g => g.category === currentCategory);
             document.getElementById('photo-label').innerText = group.label;
         }
