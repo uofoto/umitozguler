@@ -44,30 +44,30 @@
             background-color: rgba(0, 0, 0, 0.9);
         }
 
-        /* Yeni Zarif Buton Tasarımı */
+        /* Zarif Navigasyon Alanları */
         .nav-area {
             position: absolute;
             top: 0;
             height: 100%;
-            width: 15%; /* Kenarlarda geniş tıklama alanı */
+            width: 15%; 
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 2050;
-            color: rgba(255,255,255,0.1); /* Normalde çok silik */
+            color: rgba(255,255,255,0.1);
         }
         
         .nav-area:hover {
-            color: rgba(197, 160, 89, 0.8); /* Üzerine gelince altın rengi parlar */
+            color: rgba(197, 160, 89, 0.8);
             background: rgba(255,255,255,0.02);
         }
 
         .nav-area svg {
-            width: 40px;
-            height: 40px;
-            stroke-width: 1px; /* İnce ve şık çizgi */
+            width: 45px;
+            height: 45px;
+            stroke-width: 1px;
         }
         
         .info-strip { background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); }
@@ -128,6 +128,12 @@
         <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
     </section>
 
+    <footer class="mt-auto py-12 border-t border-white/5 text-center">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500 font-light">
+            © 2026 ÜMİT ÖZGÜLER. TÜM HAKLARI SAKLIDIR.
+        </p>
+    </footer>
+
     <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
         
         <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white/30 hover:text-white z-[2100] transition-colors">
@@ -138,7 +144,7 @@
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
         </div>
 
-        <div class="relative max-w-[80vw] md:max-w-[70vw] flex flex-col items-center" onclick="event.stopPropagation()">
+        <div class="relative max-w-[85vw] md:max-w-[75vw] flex flex-col items-center" onclick="event.stopPropagation()">
             <img id="lightbox-img" src="" class="max-h-[80vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-300">
             <div class="w-full mt-6 info-strip">
                 <p id="photo-label" class="py-2 text-center text-brand-gold uppercase tracking-[0.6em] text-[10px] font-light"></p>
