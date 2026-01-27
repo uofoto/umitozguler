@@ -27,8 +27,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 1s ease-out forwards; }
         .no-scroll { overflow: hidden; }
-        /* Mobil Menü Aktifken */
-        #mobile-menu.active { display: flex !important; opacity: 1 !important; }
     </style>
 </head>
 <body class="bg-brand-black text-white font-sans antialiased">
@@ -48,19 +46,22 @@
                     <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-[60]">
-                    <span class="block w-6 h-0.5 bg-white"></span>
-                    <span class="block w-6 h-0.5 bg-white"></span>
+                <button id="mobile-menu-btn" class="md:hidden group p-2">
+                    <div class="w-6 h-px bg-white mb-1.5 group-hover:bg-brand-gold transition-all"></div>
+                    <div class="w-6 h-px bg-white group-hover:bg-brand-gold transition-all"></div>
                 </button>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-black z-50 flex-col justify-center px-12 space-y-5 text-left opacity-0 transition-opacity duration-300">
-            <a href="index.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Ana Sayfa</a>
-            <a href="about.html" class="text-sm font-bold uppercase tracking-[0.3em] text-brand-gold border-l-2 border-brand-gold pl-4">Hakkımda</a>
-            <a href="portfolio.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Portfolyo</a>
-            <a href="dusunceler.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Düşünceler</a>
-            <a href="contact.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">İletişim</a>
+        <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-black z-50 flex flex-col items-center justify-center space-y-8 opacity-0 transition-opacity duration-300">
+            <button onclick="document.getElementById('mobile-menu-btn').click()" class="absolute top-8 right-8 text-white p-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <a href="index.html" class="text-lg font-bold uppercase tracking-[0.4em]">Ana Sayfa</a>
+            <a href="about.html" class="text-lg font-bold uppercase tracking-[0.4em] text-brand-gold">Hakkımda</a>
+            <a href="portfolio.html" class="text-lg font-bold uppercase tracking-[0.4em]">Portfolyo</a>
+            <a href="dusunceler.html" class="text-lg font-bold uppercase tracking-[0.4em]">Düşünceler</a>
+            <a href="contact.html" class="text-lg font-bold uppercase tracking-[0.4em]">İletişim</a>
         </div>
     </nav>
 
@@ -114,30 +115,18 @@
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        menuBtn.addEventListener('click', () => {
-            const isActive = mobileMenu.classList.contains('active');
-            if (isActive) {
-                mobileMenu.classList.remove('active');
-                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-                document.body.classList.remove('no-scroll');
-            } else {
-                mobileMenu.classList.remove('hidden');
-                setTimeout(() => mobileMenu.classList.add('active'), 10);
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            const menu = document.getElementById('mobile-menu');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
                 document.body.classList.add('no-scroll');
-            }
-        });
-
-        const links = mobileMenu.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                setTimeout(() => menu.classList.remove('opacity-0'), 10);
+            } else {
+                menu.classList.add('opacity-0');
                 document.body.classList.remove('no-scroll');
-            });
-        });
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+        };
     </script>
 </body>
 </html>
