@@ -27,7 +27,8 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 1s ease-out forwards; }
         .no-scroll { overflow: hidden; }
-        #mobile-menu.active { display: flex !important; }
+        /* Mobil Menü Aktifken */
+        #mobile-menu.active { display: flex !important; opacity: 1 !important; }
     </style>
 </head>
 <body class="bg-brand-black text-white font-sans antialiased">
@@ -47,19 +48,19 @@
                     <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50">
+                <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-[60]">
                     <span class="block w-6 h-0.5 bg-white"></span>
                     <span class="block w-6 h-0.5 bg-white"></span>
                 </button>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-black/98 z-40 flex-col justify-center px-12 space-y-8 text-left">
-            <a href="index.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Ana Sayfa</a>
-            <a href="about.html" class="text-lg font-bold uppercase tracking-[0.3em] text-brand-gold border-l-2 border-brand-gold pl-4">Hakkımda</a>
-            <a href="portfolio.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Portfolyo</a>
-            <a href="dusunceler.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Düşünceler</a>
-            <a href="contact.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">İletişim</a>
+        <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-black z-50 flex-col justify-center px-12 space-y-5 text-left opacity-0 transition-opacity duration-300">
+            <a href="index.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Ana Sayfa</a>
+            <a href="about.html" class="text-sm font-bold uppercase tracking-[0.3em] text-brand-gold border-l-2 border-brand-gold pl-4">Hakkımda</a>
+            <a href="portfolio.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Portfolyo</a>
+            <a href="dusunceler.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Düşünceler</a>
+            <a href="contact.html" class="text-sm font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">İletişim</a>
         </div>
     </nav>
 
@@ -70,7 +71,7 @@
                 <div class="relative inline-block">
                     <div class="absolute bottom-[-15px] right-[-15px] w-full h-full border-r-4 border-b-4 border-brand-gold -z-10"></div>
                     <img src="img/umitozguler.webp" alt="Ümit Özgüler" 
-                         class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block border-4 border-white">
+                         class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block">
                 </div>
             </div>
 
@@ -117,17 +118,23 @@
         const mobileMenu = document.getElementById('mobile-menu');
 
         menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
+            const isActive = mobileMenu.classList.contains('active');
+            if (isActive) {
+                mobileMenu.classList.remove('active');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                document.body.classList.remove('no-scroll');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.add('active'), 10);
+                document.body.classList.add('no-scroll');
+            }
         });
 
-        // Linklere tıklandığında menüyü kapat
         const links = mobileMenu.querySelectorAll('a');
         links.forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
                 mobileMenu.classList.remove('active');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
                 document.body.classList.remove('no-scroll');
             });
         });
