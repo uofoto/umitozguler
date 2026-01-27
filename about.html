@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -28,6 +27,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 1s ease-out forwards; }
         .no-scroll { overflow: hidden; }
+        #mobile-menu.active { display: flex !important; }
     </style>
 </head>
 <body class="bg-brand-black text-white font-sans antialiased">
@@ -35,9 +35,10 @@
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="index.html" class="text-2xl tracking-[0.3em]">
+                <a href="index.html" class="text-xl md:text-2xl tracking-[0.3em]">
                     <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
                 </a>
+
                 <div class="hidden md:flex space-x-12">
                     <a href="index.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
                     <a href="about.html" class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
@@ -45,11 +46,20 @@
                     <a href="dusunceler.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
                     <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden p-2">
-                    <div class="w-6 h-px bg-white mb-1.5"></div>
-                    <div class="w-6 h-px bg-white"></div>
+
+                <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50">
+                    <span class="block w-6 h-0.5 bg-white"></span>
+                    <span class="block w-6 h-0.5 bg-white"></span>
                 </button>
             </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-black/98 z-40 flex-col justify-center px-12 space-y-8 text-left">
+            <a href="index.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Ana Sayfa</a>
+            <a href="about.html" class="text-lg font-bold uppercase tracking-[0.3em] text-brand-gold border-l-2 border-brand-gold pl-4">Hakkımda</a>
+            <a href="portfolio.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Portfolyo</a>
+            <a href="dusunceler.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">Düşünceler</a>
+            <a href="contact.html" class="text-lg font-bold uppercase tracking-[0.3em] border-l-2 border-transparent hover:border-brand-gold pl-4 transition-all">İletişim</a>
         </div>
     </nav>
 
@@ -57,11 +67,10 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 lg:gap-24 items-center">
             
             <div class="w-full md:w-1/2 animate-fade flex justify-center md:justify-end">
-                <div class="relative">
-                    <div class="absolute -bottom-4 -right-4 w-full h-full border-r-2 border-b-2 border-brand-gold"></div>
-                    
+                <div class="relative inline-block">
+                    <div class="absolute bottom-[-15px] right-[-15px] w-full h-full border-r-4 border-b-4 border-brand-gold -z-10"></div>
                     <img src="img/umitozguler.webp" alt="Ümit Özgüler" 
-                         class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block">
+                         class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block border-4 border-white">
                 </div>
             </div>
 
@@ -73,7 +82,7 @@
                     <div class="w-24 h-[2px] bg-brand-gold mt-6 mb-6"></div>
                 </div>
 
-                <div class="space-y-6 text-gray-400 text-sm lg:text-base leading-relaxed font-light tracking-wide">
+                <div class="space-y-6 text-gray-400 text-sm lg:text-base leading-relaxed font-light tracking-wide text-justify">
                     <p>Fotoğraf, benim için zamanı durdurmanın ve görünenin ardındaki hikayeyi keşfetmenin en güçlü yoludur. 20 yılı aşkın süredir, vizörün ardından ülkemizin eşsiz coğrafyasına tanıklık ediyorum.</p>
                     <p>Bursa Fotoğraf ve Sinema Amatörleri Derneği (BUFSAD) bünyesinde atölye hocalığı yaparak deneyimlerimi paylaşırken, Türkiye Fotoğraf Sanatı Federasyonu (TFSF) jüri üyeliği görevimle fotoğraf sanatının gelişimine katkı sundum.</p>
                     <p>Eserlerim bugüne kadar 10'dan fazla karma sergide sanatseverlerle buluştu. Her karede, doğanın sesini ve insan ruhunun derinliğini aramaya devam ediyorum.</p>
@@ -81,11 +90,11 @@
 
                 <div class="grid grid-cols-3 gap-8 pt-12 border-t border-white/5">
                     <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white">20+</span>
+                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">20+</span>
                         <span class="text-[9px] uppercase tracking-widest text-brand-gold font-semibold">Yıllık Deneyim</span>
                     </div>
                     <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white">10+</span>
+                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">10+</span>
                         <span class="text-[9px] uppercase tracking-widest text-brand-gold font-semibold">Sergi</span>
                     </div>
                     <div class="text-center md:text-left">
@@ -97,17 +106,31 @@
         </div>
     </section>
 
-    <footer class="bg-brand-black py-12 border-t border-white/5 text-center">
+    <footer class="bg-brand-black py-12 border-t border-white/5 text-center mt-auto">
         <div class="max-w-7xl mx-auto px-6 text-gray-600 text-[10px] tracking-[0.2em] uppercase">
             &copy; 2026 Ümit Özgüler.
         </div>
     </footer>
 
     <script>
-        document.getElementById('mobile-menu-btn').onclick = () => {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        };
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+
+        // Linklere tıklandığında menüyü kapat
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
     </script>
 </body>
 </html>
