@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
-<head><!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QW3FEBRP69');
-</script>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ümit Özgüler | Fine Art Photography</title>
@@ -25,7 +24,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'brand-black': '#050505', 'brand-gold': '#c5a059', 'brand-orange': '#ff8c00' },
+                    colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059', 'brand-orange': '#ff8c00' },
                     fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
                 }
             }
@@ -44,11 +43,21 @@
         }
         .animate-shine { animation: shineFade 2.5s ease-out forwards; }
         body { overflow-x: hidden; }
+
+        /* Yeni Menü Paneli Düzenlemesi */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-100%);
+            box-shadow: 20px 0 50px rgba(0,0,0,0.8);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-50 bg-brand-black/80 backdrop-blur-md border-b border-white/10">
+    <nav class="fixed w-full z-[100] bg-brand-black/80 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
@@ -64,20 +73,29 @@
                 </div>
 
                 <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"></path></svg>
                 </button>
             </div>
         </div>
-        <div class="hidden md:hidden bg-brand-black border-t border-white/5 absolute w-full shadow-2xl" id="mobile-menu">
-            <div class="px-6 py-10 space-y-8 text-center flex flex-col">
-                <a href="index.html" class="text-xs uppercase tracking-widest text-brand-gold">Ana Sayfa</a>
-                <a href="about.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">Portfolyo</a>
-                <a href="dusunceler.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">Düşünceler</a>
-                <a href="contact.html" class="text-xs uppercase tracking-widest hover:text-brand-gold">İletişim</a>
-            </div>
-        </div>
     </nav>
+
+    <div id="mobile-menu" class="fixed inset-y-0 left-0 w-[280px] bg-brand-dark z-[200] flex flex-col p-8 md:hidden border-r border-white/5">
+        <button id="close-menu" class="self-start text-white mb-12">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="flex flex-col space-y-6 text-left">
+            <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Ana Sayfa</a>
+            <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
+            <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
+            <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+            <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>
+        </div>
+        <div class="mt-auto opacity-20 text-[10px] tracking-widest uppercase">Ümit Özgüler © 2026</div>
+    </div>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black/80 hidden z-[150] backdrop-blur-sm"></div>
 
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
@@ -105,11 +123,20 @@
     </footer>
 
     <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
+        const btn = document.getElementById("mobile-menu-btn");
+        const menu = document.getElementById("mobile-menu");
+        const overlay = document.getElementById("menu-overlay");
+        const closeBtn = document.getElementById("close-menu");
+
+        function toggleMenu() {
+            menu.classList.toggle("active");
+            overlay.classList.toggle("hidden");
+            document.body.style.overflow = menu.classList.contains("active") ? "hidden" : "auto";
+        }
+
+        btn.onclick = toggleMenu;
+        closeBtn.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
     </script>
 </body>
-
 </html>
-
