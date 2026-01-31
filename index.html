@@ -44,7 +44,6 @@
         .animate-shine { animation: shineFade 2.5s ease-out forwards; }
         body { overflow-x: hidden; }
 
-        /* Yeni Menü Paneli Düzenlemesi */
         #mobile-menu {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(-100%);
@@ -73,7 +72,9 @@
                 </div>
 
                 <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"></path></svg>
+                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -92,7 +93,9 @@
             <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
             <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>
         </div>
-        <div class="mt-auto opacity-20 text-[10px] tracking-widest uppercase">Ümit Özgüler © 2026</div>
+        <div class="mt-auto opacity-20 text-[10px] tracking-widest uppercase">
+            ÜMİT ÖZGÜLER © 2026
+        </div>
     </div>
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/80 hidden z-[150] backdrop-blur-sm"></div>
