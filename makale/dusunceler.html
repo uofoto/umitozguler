@@ -52,9 +52,9 @@
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-thumb { background: #c5a059; }
 
-        /* Mobil Menü Animasyonu */
+        /* Mobil Menü Sütun Animasyonu */
         #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
             transform: translateX(-100%);
         }
         #mobile-menu.active {
@@ -66,12 +66,6 @@
     
     <nav class="fixed w-full z-[150] bg-brand-black/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-20 md:h-24">
-            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16" />
-                </svg>
-            </button>
-
             <a href="index.html" class="text-lg md:text-xl tracking-[0.4em] text-white uppercase">
                 <span class="font-light">ÜMİT</span> <span class="font-bold text-brand-gold">ÖZGÜLER</span>
             </a>
@@ -84,24 +78,34 @@
                 <a href="contact.html" class="hover:text-brand-gold transition-colors">İletişim</a>
             </div>
 
-            <div class="w-6 md:hidden"></div>
-        </div>
-
-        <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-brand-black border-r border-white/10 z-[200] flex flex-col p-8 md:hidden">
-            <button id="menu-close" class="self-end text-white mb-12">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none ml-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 8h16M4 16h16" />
                 </svg>
             </button>
-            <div class="flex flex-col space-y-6 text-[11px] font-bold uppercase tracking-[0.3em] text-left">
-                <a href="index.html" class="hover:text-brand-gold">Ana Sayfa</a>
-                <a href="portfolio.html" class="hover:text-brand-gold">Portfolyo</a>
-                <a href="dusunceler.html" class="text-brand-gold">Düşünceler</a>
-                <a href="about.html" class="hover:text-brand-gold">Hakkımda</a>
-                <a href="contact.html" class="hover:text-brand-gold">İletişim</a>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-y-0 left-0 w-72 bg-brand-black border-r border-brand-gold/20 z-[200] flex flex-col p-10 md:hidden shadow-2xl">
+            <button id="menu-close" class="self-start text-brand-gold mb-16">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <div class="flex flex-col space-y-8 text-[12px] font-bold uppercase tracking-[0.3em] text-left">
+                <a href="index.html" class="hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="portfolio.html" class="hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="dusunceler.html" class="text-brand-gold border-l-2 border-brand-gold pl-4">Düşünceler</a>
+                <a href="about.html" class="hover:text-brand-gold transition-colors pl-4 md:pl-0">Hakkımda</a>
+                <a href="contact.html" class="hover:text-brand-gold transition-colors pl-4 md:pl-0">İletişim</a>
+            </div>
+            
+            <div class="mt-auto opacity-30 text-[8px] tracking-[0.5em] uppercase">
+                Ümit Özgüler © 2026
             </div>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[190]"></div>
+        
+        <div id="menu-overlay" class="fixed inset-0 bg-black/80 hidden z-[190] backdrop-blur-sm"></div>
     </nav>
 
     <header class="pt-48 md:pt-64 pb-16 md:pb-24 text-center px-6">
@@ -114,7 +118,6 @@
     <section class="pb-32 px-6">
         <div class="max-w-7xl mx-auto">
             <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-y-20">
-                
                 <article class="article-card flex flex-col group">
                     <div class="aspect-[3/2] overflow-hidden relative mb-8 bg-neutral-900 border border-white/5">
                         <img src="img/kitaplar.webp" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition duration-1000" />
@@ -186,23 +189,9 @@
                         <a href="makale/turkiye-fotograf-tabulari.html" class="text-[10px] font-bold uppercase tracking-[0.3em] text-white border-b border-brand-gold/30 pb-2 hover:border-brand-gold transition-all">Okumaya Başla</a>
                     </div>
                 </article>
-
-                <article class="article-card flex flex-col group">
-                    <div class="aspect-[3/2] overflow-hidden relative mb-8 bg-neutral-900 border border-white/5">
-                        <img src="img/9.webp" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition duration-1000" />
-                    </div>
-                    <div class="px-2">
-                        <span class="text-[9px] tracking-[0.4em] uppercase text-brand-gold mb-4 font-bold block">Teknoloji</span>
-                        <h3 class="font-serif text-2xl text-white italic mb-4 group-hover:text-brand-gold transition-colors">Yapay Zeka ve Ruh</h3>
-                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-8 line-clamp-2 italic">Makinelerin kusursuzluğu karşısında insanın bıraktığı izler.</p>
-                        <a href="makale/yapay-zeka-fotografa-tehditmi.html" class="text-[10px] font-bold uppercase tracking-[0.3em] text-white border-b border-brand-gold/30 pb-2 hover:border-brand-gold transition-all">Okumaya Başla</a>
-                    </div>
-                </article>
-
             </div>
 
-            <div id="pagination" class="mt-32 flex justify-center items-center space-x-4">
-                </div>
+            <div id="pagination" class="mt-32 flex justify-center items-center space-x-4"></div>
         </div>
     </section>
 
@@ -211,7 +200,6 @@
     </footer>
 
     <script>
-        // Mobil Menü Mantığı
         const menuToggle = document.getElementById('menu-toggle');
         const menuClose = document.getElementById('menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -227,7 +215,6 @@
         menuClose.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // Sayfalama Mantığı
         const itemsPerPage = 6; 
         let currentPage = 1;
         const container = document.getElementById("yazi-listesi");
@@ -240,11 +227,7 @@
             const end = start + itemsPerPage;
 
             items.forEach((item, index) => {
-                if (index >= start && index < end) {
-                    item.style.display = "flex";
-                } else {
-                    item.style.display = "none";
-                }
+                item.style.display = (index >= start && index < end) ? "flex" : "none";
             });
 
             renderPagination();
@@ -254,18 +237,16 @@
         function renderPagination() {
             const totalPages = Math.ceil(items.length / itemsPerPage);
             paginationContainer.innerHTML = "";
-
             if (totalPages <= 1) return;
 
             for (let i = 1; i <= totalPages; i++) {
                 const btn = document.createElement("button");
                 btn.innerText = i;
-                btn.className = `pagination-btn w-12 h-12 rounded-none text-[10px] tracking-widest ${i === currentPage ? 'active' : 'text-gray-500'}`;
+                btn.className = `pagination-btn w-12 h-12 text-[10px] tracking-widest ${i === currentPage ? 'active' : 'text-gray-500'}`;
                 btn.onclick = () => displayPage(i);
                 paginationContainer.appendChild(btn);
             }
         }
-
         displayPage(1);
     </script>
 </body>
