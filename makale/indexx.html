@@ -21,7 +21,10 @@
             theme: {
                 extend: {
                     colors: { 'brand-black': '#050505', 'brand-gold': '#c5a059' },
-                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'], serif: ['"Playfair Display"', 'serif'] }
+                    fontFamily: { 
+                        sans: ['"Montserrat"', 'sans-serif'], 
+                        serif: ['"Playfair Display"', 'serif'] 
+                    }
                 }
             }
         }
@@ -41,9 +44,10 @@
         .text-reveal { animation: textReveal 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
         .hero-overlay { background: linear-gradient(to top, #050505 0%, transparent 60%); }
         
-        /* Mobil Menü Geçişi */
         #mobile-menu { transition: opacity 0.4s ease, visibility 0.4s; }
         .no-scroll { overflow: hidden; }
+        .article-card { transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .article-card:hover { transform: translateY(-8px); }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased page-animate">
@@ -53,111 +57,78 @@
             <a href="index.html" class="text-xl tracking-[0.4em] text-white relative z-[120]">
                 <span class="font-light">ÜMİT</span> <span class="font-bold text-brand-gold">ÖZGÜLER</span>
             </a>
-            
-            <div class="hidden md:flex space-x-10">
-                <a href="index.html" class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold/50 pb-1">Ana Sayfa</a>
-                <a href="portfolio.html" class="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="dusunceler.html" class="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                <a href="about.html" class="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
-                <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
+            <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.2em]">
+                <a href="index.html" class="text-brand-gold border-b border-brand-gold/50 pb-1">Ana Sayfa</a>
+                <a href="portfolio.html" class="hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="dusunceler.html" class="hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="about.html" class="hover:text-brand-gold transition-colors">Hakkımda</a>
+                <a href="contact.html" class="hover:text-brand-gold transition-colors">İletişim</a>
             </div>
-
-            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none relative z-[120] p-2">
-                <svg id="menu-icon" class="w-8 h-8 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"></path>
-                </svg>
+            <button id="mobile-menu-btn" class="md:hidden text-white relative z-[120] p-2">
+                <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"></path></svg>
             </button>
         </div>
-
-        <div id="mobile-menu" class="hidden opacity-0 fixed inset-0 bg-brand-black z-[110] flex flex-col items-center justify-center">
-            <div class="flex flex-col items-center space-y-10">
-                <a href="index.html" class="text-xl uppercase tracking-[0.3em] text-brand-gold font-bold">Ana Sayfa</a>
-                <a href="portfolio.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">Portfolyo</a>
-                <a href="dusunceler.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">Düşünceler</a>
-                <a href="about.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">Hakkımda</a>
-                <a href="contact.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">İletişim</a>
-                
-                <div class="pt-10 flex space-x-8">
-                    <a href="https://instagram.com/umitozguler" class="text-[10px] uppercase tracking-widest text-gray-500">Instagram</a>
-                    <a href="https://twitter.com/uozguler" class="text-[10px] uppercase tracking-widest text-gray-500">Twitter</a>
-                </div>
-            </div>
+        <div id="mobile-menu" class="hidden opacity-0 fixed inset-0 bg-brand-black z-[110] flex flex-col items-center justify-center space-y-10">
+            <a href="index.html" class="text-xl uppercase tracking-[0.3em] text-brand-gold font-bold">Ana Sayfa</a>
+            <a href="portfolio.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">Portfolyo</a>
+            <a href="dusunceler.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">Düşünceler</a>
+            <a href="about.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">Hakkımda</a>
+            <a href="contact.html" class="text-xl uppercase tracking-[0.3em] text-white font-light">İletişim</a>
         </div>
     </nav>
 
     <header class="relative h-screen w-full flex items-center overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-            <img src="img/1.webp" alt="Ümit Özgüler" class="hero-walk absolute inset-0 w-full h-full object-cover">
-        </div>
+        <div class="absolute inset-0"><img src="img/1.webp" alt="Hero" class="hero-walk absolute inset-0 w-full h-full object-cover"></div>
         <div class="absolute inset-0 hero-overlay"></div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full pt-20 text-reveal" style="animation-delay: 0.8s;">
-            <span class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.6em] mb-4 block opacity-80">Sinematik Anlatı</span>
-            <h1 class="font-serif italic text-5xl md:text-[130px] text-white mb-8 leading-[0.85] tracking-tighter">
-                Gözün Ardındaki <br> Zihin
-            </h1>
-            <p class="max-w-lg text-gray-300 mb-10 text-lg md:text-xl font-light leading-relaxed italic border-l border-brand-gold/30 pl-6">
-                Işığın dokusunu ve sessizliğin sesini arayan bir yolculuk.
-            </p>
-            <a href="portfolio.html" class="inline-block border border-white/20 bg-white/5 backdrop-blur-md px-12 py-4 text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-brand-gold hover:text-black transition-all">
-                Koleksiyonu Gör
-            </a>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full text-reveal" style="animation-delay: 0.8s;">
+            <span class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.6em] mb-4 block">Sinematik Anlatı</span>
+            <h1 class="font-serif italic text-5xl md:text-[130px] text-white mb-8 leading-[0.85] tracking-tighter">Gözün Ardındaki <br> Zihin</h1>
+            <p class="max-w-lg text-gray-300 mb-10 text-lg font-light italic border-l border-brand-gold/30 pl-6">Işığın dokusunu ve sessizliğin sesini arayan bir yolculuk.</p>
+            <a href="portfolio.html" class="inline-block border border-white/20 bg-white/5 backdrop-blur-md px-12 py-4 text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-brand-gold hover:text-black transition-all">Koleksiyonu Gör</a>
         </div>
     </header>
 
-    <section class="max-w-6xl mx-auto px-6 py-32 bg-brand-black relative z-10">
+    <section class="max-w-6xl mx-auto px-6 py-32 bg-brand-black">
         <div class="mb-24 text-center">
             <span class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.5em] mb-4 block">Fikirler & Eleştiriler</span>
-            <h2 class="font-serif text-5xl text-white italic">Son Düşünceler</h2>
+            <h2 class="font-serif text-5xl text-white italic">Son Makaleler</h2>
             <div class="w-16 h-px bg-brand-gold/30 mx-auto mt-8"></div>
         </div>
         
-        <div class="grid grid-cols-1 gap-32">
-            <article class="group relative grid md:grid-cols-2 gap-12 items-center">
-                <div class="overflow-hidden aspect-[4/5] bg-neutral-900">
-                    <img src="img/kitaplar.webp" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 transition-all duration-1000">
+        <div class="grid grid-cols-1 gap-24">
+            <article class="article-card group grid md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-7 overflow-hidden aspect-video bg-neutral-900 border border-white/5">
+                    <img src="img/kitaplar.webp" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000">
                 </div>
-                <div class="space-y-6">
+                <div class="md:col-span-5 space-y-6">
                     <div class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.3em]">28 Ocak 2026 • Kuram</div>
                     <h3 class="font-serif text-4xl text-white italic leading-tight">Gözün Ardındaki Zihin</h3>
-                    <p class="text-gray-400 font-light text-lg">Fotoğrafla olan ünsiyetimiz, çoğunlukla bir makineyi dizginleme arzusuyla başlar...</p>
-                    <a href="makale/gozun-ardindaki-zihin.html" class="inline-block text-[10px] uppercase tracking-[0.3em] text-white border-b border-brand-gold pb-2">Okumaya Devam Et</a>
+                    <p class="text-gray-400 font-light text-base italic">Fotoğrafla olan ünsiyetimiz, çoğunlukla bir makineyi dizginleme arzusuyla başlar...</p>
+                    <a href="makale/gozun-ardindaki-zihin.html" class="inline-block text-[10px] font-bold uppercase tracking-[0.3em] text-white border-b border-brand-gold/30 pb-2 hover:border-brand-gold transition-all">Okumaya Devam Et</a>
                 </div>
             </article>
 
-            <article class="group relative grid md:grid-cols-2 gap-12 items-center">
-                <div class="md:order-2 overflow-hidden aspect-[4/5] bg-neutral-900">
-                    <img src="img/28.webp" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 transition-all duration-1000">
+            <article class="article-card group grid md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-7 md:order-2 overflow-hidden aspect-video bg-neutral-900 border border-white/5">
+                    <img src="img/28.webp" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000">
                 </div>
-                <div class="md:order-1 space-y-6 text-left md:text-left">
+                <div class="md:col-span-5 md:order-1 space-y-6">
                     <div class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.3em]">25 Ocak 2026 • Eleştiri</div>
                     <h3 class="font-serif text-4xl text-white italic leading-tight">Yarışma Fotoğrafçılığı</h3>
-                    <p class="text-gray-400 font-light text-lg">Ülkemizde fotoğraf yarışmaları, belirli görsel şablonların tekrarlandığı bir onay mekanizması...</p>
-                    <a href="makale/yarisma-fotografciligi-elestiri.html" class="inline-block text-[10px] uppercase tracking-[0.3em] text-white border-b border-brand-gold pb-2">Okumaya Devam Et</a>
-                </div>
-            </article>
-
-            <article class="group relative grid md:grid-cols-2 gap-12 items-center">
-                <div class="overflow-hidden aspect-[4/5] bg-neutral-900">
-                    <img src="img/9.webp" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 transition-all duration-1000">
-                </div>
-                <div class="space-y-6">
-                    <div class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.3em]">24 Ocak 2026 • Teknoloji</div>
-                    <h3 class="font-serif text-4xl text-white italic leading-tight">Yapay Zeka ve Ruh</h3>
-                    <p class="text-gray-400 font-light text-lg">Kusursuzluk makinelerin işidir; güzellik ise insanın bıraktığı kusurlu izlerde saklıdır...</p>
-                    <a href="makale/yapay-zeka-fotografa-tehditmi.html" class="inline-block text-[10px] uppercase tracking-[0.3em] text-white border-b border-brand-gold pb-2">Okumaya Devam Et</a>
+                    <p class="text-gray-400 font-light text-base italic">Ülkemizde fotoğraf yarışmaları, belirli görsel şablonların tekrarlandığı bir onay mekanizması...</p>
+                    <a href="makale/yarisma-fotografciligi-elestiri.html" class="inline-block text-[10px] font-bold uppercase tracking-[0.3em] text-white border-b border-brand-gold/30 pb-2 hover:border-brand-gold transition-all">Okumaya Devam Et</a>
                 </div>
             </article>
         </div>
-
-        <div class="mt-32 text-center">
-            <a href="dusunceler.html" class="px-16 py-5 border border-white/10 text-[10px] uppercase tracking-[0.4em] hover:bg-white hover:text-black transition-all">Tüm Arşivi Gör</a>
+        <div class="mt-24 text-center">
+            <a href="dusunceler.html" class="px-16 py-5 border border-white/10 text-[10px] uppercase tracking-[0.4em] hover:bg-white hover:text-black transition-all font-bold">Tüm Arşivi Gör</a>
         </div>
     </section>
 
-    <footer class="bg-brand-black py-24 border-t border-white/5 text-center relative z-10">
+    <footer class="bg-brand-black py-24 border-t border-white/5 text-center">
         <div class="flex justify-center space-x-12 mb-12">
-            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-600">Instagram</a>
-            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-600">Twitter (X)</a>
+            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-600 hover:text-brand-gold">Instagram</a>
+            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-600 hover:text-brand-gold">Twitter</a>
         </div>
         <p class="text-gray-700 text-[9px] tracking-[0.6em] uppercase">&copy; 2026 Ümit Özgüler • Fine Art Photography</p>
     </footer>
@@ -165,30 +136,12 @@
     <script>
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
         const body = document.body;
-
-        btn.addEventListener('click', () => {
-            const isHidden = menu.classList.contains('hidden');
-            
-            if (isHidden) {
-                // Menü Açılıyor
-                menu.classList.remove('hidden');
-                setTimeout(() => {
-                    menu.classList.remove('opacity-0');
-                }, 10);
-                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width=\"1.5\" d=\"M6 18L18 6M6 6l12 12\"></path>';
-                body.classList.add('no-scroll');
-            } else {
-                // Menü Kapanıyor
-                menu.classList.add('opacity-0');
-                setTimeout(() => {
-                    menu.classList.add('hidden');
-                }, 400);
-                menuIcon.innerHTML = '<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M4 8h16M4 16h16\"></path>';
-                body.classList.remove('no-scroll');
-            }
-        });
+        btn.onclick = () => {
+            menu.classList.toggle('hidden');
+            setTimeout(() => menu.classList.toggle('opacity-0'), 10);
+            body.classList.toggle('no-scroll');
+        };
     </script>
 </body>
 </html>
