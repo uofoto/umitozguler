@@ -1,150 +1,299 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QW3FEBRP69');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ümit Özgüler | Fine Art Photography</title>
-    
-    <meta property="og:title" content="Ümit Özgüler | Fine Art Photography">
-    <meta property="og:description" content="Işık, gölge ve ruhun buluştuğu fotoğraf kareleri.">
-    <meta property="og:image" content="https://umitozguler.com.tr/img/13.webp">
-    <meta property="og:url" content="https://umitozguler.com.tr">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059', 'brand-orange': '#ff8c00' },
-                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        :root {
+            --accent: #c6a96b;
+            --hover-orange: #ff8c00; 
+            --dark-orange: #cc7000;
         }
-        .page-animate { animation: fadeInPage 1.2s ease-out forwards; }
-        
-        @keyframes shineFade {
-            0% { opacity: 0; filter: brightness(0.5) blur(5px); transform: scale(0.95); }
-            100% { opacity: 1; filter: brightness(1) blur(0); transform: scale(1); }
-        }
-        .animate-shine { animation: shineFade 2.5s ease-out forwards; }
-        body { overflow-x: hidden; }
 
-        #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-100%);
-            box-shadow: 20px 0 50px rgba(0,0,0,0.8);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
-        #mobile-menu.active {
-            transform: translateX(0);
+
+        /* Navigation Bar (Desktop) */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 45px;
+            padding: 25px 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: .4s;
+            font-weight: 400;
+        }
+
+        nav a:hover { color: var(--hover-orange); }
+
+        /* Hamburger Menu (Mobile) */
+        .menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 20;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -50%;
+            width: 50%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 15;
+            display: flex;
+            flex-direction: column;
+            padding: 100px 40px;
+            gap: 30px;
+            transition: 0.5s ease;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu.open { left: 0; }
+        .side-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* HERO & Animations */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
+        @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
+
+        .bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.6) grayscale(100%);
+            transition: opacity 2s ease, filter 4s ease;
+            opacity: 0;
+        }
+
+        .bg.active { opacity: 1; filter: brightness(0.6) grayscale(0%); }
+        .zoom-in { animation: zoomInEffect 12s linear infinite alternate; }
+        .zoom-out { animation: zoomOutEffect 12s linear infinite alternate; }
+
+        .vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+            z-index: 2;
+        }
+
+        .grain {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            background: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            z-index: 3;
+            animation: flicker 0.2s infinite;
+        }
+
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 2s ease 0.3s forwards;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(40px, 8vw, 72px);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 18px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            opacity: .85;
+            margin-bottom: 40px;
+        }
+
+        .cta {
+            display: inline-block;
+            padding: 14px 38px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-size: 14px;
+            transition: .4s;
+        }
+
+        .cta:hover { 
+            background: var(--dark-orange); 
+            border-color: var(--dark-orange); 
+            color: #fff; 
+        }
+
+        footer {
+            position: fixed;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .social-links {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            transition: .4s;
+        }
+
+        .social-links a:hover { opacity: 1; color: var(--hover-orange); }
+
+        .copyright {
+            font-size: 10px;
+            letter-spacing: 2px;
+            opacity: 0.4;
+        }
+
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive Settings */
+        @media(max-width:768px){
+            nav { display: none; }
+            .menu-btn { display: block; }
+            h2 { font-size: 36px; }
         }
     </style>
 </head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+<body>
 
-    <nav class="fixed w-full z-[100] bg-brand-black/80 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-center h-24">
-                <a href="index.html" class="text-2xl tracking-widest text-white transition-colors">
-                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-                </a>
-                
-                <div class="hidden md:flex space-x-10">
-                    <a href="index.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold border-b border-brand-gold pb-1">Ana Sayfa</a>
-                    <a href="about.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Hakkımda</a>
-                    <a href="portfolio.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                    <a href="dusunceler.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                    <a href="contact.html" class="text-[10px] font-semibold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
-                </div>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
-                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
+<div class="side-menu" id="sideMenu">
+    <a href="about.html" onclick="toggleMenu()">Hakkımda</a>
+    <a href="portfolio.html" onclick="toggleMenu()">Koleksiyon</a>
+    <a href="dusunceler.html" onclick="toggleMenu()">Düşünceler</a>
+    <a href="contact.html" onclick="toggleMenu()">İletişim</a>
+</div>
 
-    <div id="mobile-menu" class="fixed inset-y-0 left-0 w-[280px] bg-brand-dark z-[200] flex flex-col p-8 md:hidden border-r border-white/5">
-        <button id="close-menu" class="self-start text-white mb-12">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-        
-        <div class="flex flex-col space-y-6 text-left">
-            <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">Ana Sayfa</a>
-            <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
-            <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-            <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
-            <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold">İletişim</a>
-        </div>
+<nav>
+    <a href="about.html">Hakkımda</a>
+    <a href="portfolio.html">Koleksiyon</a>
+    <a href="dusunceler.html">Düşünceler</a>
+    <a href="contact.html">İletişim</a>
+</nav>
 
-        <div class="mt-auto pt-10 pb-4">
-            <p class="opacity-40 text-[9px] tracking-[0.2em] uppercase text-white">
-                ÜMİT ÖZGÜLER © 2026
-            </p>
-        </div>
+<section class="hero">
+    <div class="bg active zoom-in" id="bg1"></div>
+    <div class="bg inactive" id="bg2"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="content">
+        <h2>Gözün Ardındaki Zihin</h2>
+        <p>Fine Art Photography</p>
+        <a href="portfolio.html" class="cta">KOLEKSİYONU KEŞFET</a>
     </div>
+</section>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/80 hidden z-[150] backdrop-blur-sm"></div>
+<footer>
+    <div class="social-links">
+        <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
+        <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
+    </div>
+    <div class="copyright">
+        &copy; 2026 ÜMİT ÖZGÜLER
+    </div>
+</footer>
 
-    <section class="relative h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="img/13.webp" alt="Hero" class="w-full h-full object-cover opacity-125">
-            <div class="absolute inset-0 bg-black/10"></div>
-        </div>
-        
-        <div class="relative z-10 text-center px-4">
-            <p class="text-brand-orange text-[11px] font-bold uppercase tracking-[0.5em] mb-4 drop-shadow-lg">Fine Art Photography</p>
-            <h1 class="animate-shine text-5xl md:text-8xl font-bold text-white mb-10 leading-tight tracking-tighter drop-shadow-2xl">
-                Zamanı Durdur.
-            </h1>
-            <a href="portfolio.html" class="inline-block border border-white/50 bg-black/10 backdrop-blur-sm px-12 py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-700">
-                Koleksiyonu Keşfet
-            </a>
-        </div>
-    </section>
+<script>
+    const bg1 = document.getElementById("bg1");
+    const bg2 = document.getElementById("bg2");
+    let active = bg1;
+    let inactive = bg2;
 
-    <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center">
-        <div class="flex justify-center space-x-12 mb-10">
-            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>
-            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>
-        </div>
-        <p class="text-gray-700 text-[9px] tracking-[0.4em] uppercase">&copy; 2026 Ümit Özgüler</p>
-    </footer>
+    function randomImage(){ return Math.floor(Math.random() * 105) + 1; }
 
-    <script>
-        const btn = document.getElementById("mobile-menu-btn");
-        const menu = document.getElementById("mobile-menu");
-        const overlay = document.getElementById("menu-overlay");
-        const closeBtn = document.getElementById("close-menu");
+    function setImage(el){
+        const num = randomImage();
+        el.style.backgroundImage = `url('img/${num}.webp')`;
+        el.classList.remove("zoom-in", "zoom-out");
+        const effect = Math.random() > 0.5 ? "zoom-in" : "zoom-out";
+        el.classList.add(effect);
+    }
 
-        function toggleMenu() {
-            menu.classList.toggle("active");
-            overlay.classList.toggle("hidden");
-            // Menü açıkken sayfanın kaymasını engelle
-            document.body.style.overflow = menu.classList.contains("active") ? "hidden" : "auto";
-        }
+    function crossFade(){
+        setImage(inactive);
+        inactive.classList.remove("inactive");
+        inactive.classList.add("active");
+        active.classList.remove("active");
+        active.classList.add("inactive");
+        [active, inactive] = [inactive, active];
+    }
 
-        btn.onclick = toggleMenu;
-        closeBtn.onclick = toggleMenu;
-        overlay.onclick = toggleMenu;
-    </script>
+    function toggleMenu() {
+        document.getElementById("sideMenu").classList.toggle("open");
+    }
+
+    // Başlangıç Ayarları
+    setImage(active);
+    setInterval(crossFade, 10000);
+    document.body.style.overflow = "auto";
+</script>
 </body>
 </html>
