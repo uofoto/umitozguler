@@ -21,7 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation Bar */
+        /* NAVIGATION - Üst Şerit */
         nav {
             position: fixed;
             top: 0;
@@ -29,55 +29,57 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 45px;
-            padding: 25px 0;
-            background: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            gap: clamp(10px, 3vw, 45px);
+            padding: 20px 10px;
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 10;
+            z-index: 1000;
         }
 
         nav a {
             text-decoration: none;
             color: #fff;
-            font-size: 13px;
+            font-size: clamp(9px, 2.2vw, 13px);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             transition: .4s;
-            font-weight: 400;
+            white-space: nowrap;
         }
 
         nav a:hover { color: var(--hover-orange); }
 
-        /* Mobile Menu */
+        /* HAMBURGER BUTONU */
         .menu-btn {
             display: none;
             position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 20;
+            top: 15px;
+            left: 15px;
+            z-index: 1100;
             cursor: pointer;
             background: none;
             border: none;
             color: #fff;
-            font-size: 24px;
+            font-size: 26px;
         }
 
+        /* MOBİL YAN MENÜ */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -50%;
-            width: 50%;
+            left: -100%;
+            width: 75%;
             height: 100vh;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 15;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 1050;
             display: flex;
             flex-direction: column;
             padding: 100px 40px;
             gap: 30px;
-            transition: 0.5s ease;
-            border-right: 1px solid rgba(255,255,255,0.1);
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .side-menu.open { left: 0; }
@@ -89,11 +91,10 @@
             text-transform: uppercase;
         }
 
-        /* HERO & Animations */
+        /* HERO & SLIDESHOW */
         .hero {
             position: relative;
             height: 100vh;
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,73 +102,54 @@
             overflow: hidden;
         }
 
-        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
-        @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
-
         .bg {
             position: absolute;
             inset: 0;
             background-size: cover;
             background-position: center;
-            filter: brightness(0.6) grayscale(100%);
+            filter: brightness(0.5) grayscale(100%);
             transition: opacity 2s ease, filter 4s ease;
             opacity: 0;
         }
 
         .bg.active { opacity: 1; filter: brightness(0.6) grayscale(0%); }
-        .zoom-in { animation: zoomInEffect 12s linear infinite alternate; }
-        .zoom-out { animation: zoomOutEffect 12s linear infinite alternate; }
+        .zoom-in { animation: zoomIn 15s linear infinite alternate; }
+        @keyframes zoomIn { from { transform: scale(1); } to { transform: scale(1.15); } }
 
         .vignette {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle at center, rgba(0,0,0,0) 20%, rgba(0,0,0,0.95) 100%);
             z-index: 2;
         }
 
-        .grain {
-            pointer-events: none;
-            position: absolute;
-            inset: 0;
-            background: url("https://grainy-gradients.vercel.app/noise.svg");
-            opacity: 0.08;
-            mix-blend-mode: overlay;
-            z-index: 3;
-            animation: flicker 0.2s infinite;
-        }
-
-        /* Content & Reveal Animation */
+        /* CONTENT */
         .content {
             position: relative;
             z-index: 5;
             padding: 0 20px;
+            margin-top: 60px;
         }
 
         h2 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(40px, 8vw, 72px);
+            font-size: clamp(32px, 7vw, 72px);
             letter-spacing: 4px;
             margin-bottom: 20px;
             opacity: 0;
-            filter: blur(10px); /* Başlangıçta silik */
+            filter: blur(10px);
             animation: focusReveal 3s ease-out 0.5s forwards;
         }
 
-        @keyframes focusReveal {
-            to {
-                opacity: 1;
-                filter: blur(0); /* Belirgin hale geçiş */
-                transform: translateY(0);
-            }
-        }
+        @keyframes focusReveal { to { opacity: 1; filter: blur(0); } }
 
         .content p {
-            font-size: 18px;
+            font-size: clamp(14px, 2vw, 18px);
             letter-spacing: 5px;
             text-transform: uppercase;
             opacity: 0;
             animation: fadeUp 2s ease 1.5s forwards;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .cta {
@@ -177,18 +159,14 @@
             color: var(--accent);
             text-decoration: none;
             letter-spacing: 2px;
-            font-size: 14px;
+            transition: .4s;
             opacity: 0;
             animation: fadeUp 2s ease 2s forwards;
-            transition: .4s;
         }
 
-        .cta:hover { 
-            background: var(--dark-orange); 
-            border-color: var(--dark-orange); 
-            color: #fff; 
-        }
+        .cta:hover { background: var(--dark-orange); border-color: var(--dark-orange); color: #fff; }
 
+        /* FOOTER - Sosyal Linkler ve Copyright */
         footer {
             position: fixed;
             bottom: 30px;
@@ -222,15 +200,13 @@
             opacity: 0.4;
         }
 
-        @keyframes fadeUp { 
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* MOBİL DÜZELTME */
         @media(max-width:768px){
-            nav { display: none; }
-            .menu-btn { display: block; }
-            h2 { font-size: 36px; }
+            .menu-btn { display: block; } 
+            nav { padding-left: 55px; justify-content: flex-start; } 
+            h2 { font-size: 30px; }
         }
     </style>
 </head>
@@ -256,7 +232,6 @@
     <div class="bg active zoom-in" id="bg1"></div>
     <div class="bg inactive" id="bg2"></div>
     <div class="vignette"></div>
-    <div class="grain"></div>
     <div class="content">
         <h2>Gözün Ardındaki Zihin</h2>
         <p>Fine Art Photography</p>
@@ -269,33 +244,28 @@
         <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
         <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
     </div>
-    <div class="copyright">
-        &copy; 2026 ÜMİT ÖZGÜLER
-    </div>
+    <div class="copyright">&copy; 2026 ÜMİT ÖZGÜLER</div>
 </footer>
 
 <script>
     const bg1 = document.getElementById("bg1");
     const bg2 = document.getElementById("bg2");
-    let active = bg1;
-    let inactive = bg2;
+    let active = bg1, inactive = bg2;
 
     function randomImage(){ return Math.floor(Math.random() * 105) + 1; }
 
     function setImage(el){
         const num = randomImage();
         el.style.backgroundImage = `url('img/${num}.webp')`;
-        el.classList.remove("zoom-in", "zoom-out");
-        const effect = Math.random() > 0.5 ? "zoom-in" : "zoom-out";
-        el.classList.add(effect);
+        el.classList.remove("zoom-in");
+        void el.offsetWidth;
+        el.classList.add("zoom-in");
     }
 
     function crossFade(){
         setImage(inactive);
-        inactive.classList.remove("inactive");
-        inactive.classList.add("active");
-        active.classList.remove("active");
-        active.classList.add("inactive");
+        inactive.classList.remove("inactive"); inactive.classList.add("active");
+        active.classList.remove("active"); active.classList.add("inactive");
         [active, inactive] = [inactive, active];
     }
 
@@ -305,7 +275,6 @@
 
     setImage(active);
     setInterval(crossFade, 10000);
-    document.body.style.overflow = "auto";
 </script>
 </body>
 </html>
