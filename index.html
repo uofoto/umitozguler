@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QW3FEBRP69');
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ümit Özgüler | Fine Art Photography</title>
@@ -11,17 +20,10 @@
             --hover-orange: #ff8c00; 
             --dark-orange: #cc7000;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* NAVIGATION - Üst Şerit */
+        /* Navigation Bar (Desktop) */
         nav {
             position: fixed;
             top: 0;
@@ -29,184 +31,128 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: clamp(10px, 3vw, 45px);
-            padding: 20px 10px;
-            background: rgba(0, 0, 0, 0.75);
+            gap: 45px;
+            padding: 25px 0;
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
+            z-index: 10;
         }
-
         nav a {
             text-decoration: none;
             color: #fff;
-            font-size: clamp(9px, 2.2vw, 13px);
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
+            position: relative;
             transition: .4s;
-            white-space: nowrap;
+            font-weight: 400;
+            padding-bottom: 5px;
         }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--hover-orange);
+            transition: width 0.4s ease;
+        }
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: #fff; }
 
-        nav a:hover { color: var(--hover-orange); }
-
-        /* HAMBURGER BUTONU */
+        /* Hamburger Menu (Mobile) */
         .menu-btn {
             display: none;
             position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1100;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
             cursor: pointer;
             background: none;
             border: none;
             color: #fff;
-            font-size: 26px;
+            font-size: 24px;
         }
-
-        /* MOBİL YAN MENÜ */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -100%;
-            width: 75%;
+            right: -100%; 
+            width: 40%; /* Daha dar ve zarif bir görünüm için %40 yapıldı */
             height: 100vh;
             background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(25px);
-            z-index: 1050;
+            backdrop-filter: blur(20px);
+            z-index: 30;
             display: flex;
             flex-direction: column;
-            padding: 100px 40px;
-            gap: 30px;
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 100px 30px; /* Padding daraltıldı */
+            gap: 25px;
+            transition: 0.5s ease;
+        }
+        .side-menu.open { right: 0; }
+        
+        /* Mobil: Soldan inen turuncu çizgi */
+        .side-menu::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 0;
+            background: var(--hover-orange);
+            transition: height 0.6s ease 0.3s;
+        }
+        .side-menu.open::before { height: 100%; }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
 
-        .side-menu.open { left: 0; }
         .side-menu a {
             color: #fff;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 15px; /* Dar genişlikte dengeli durması için bir tık küçültüldü */
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* HERO & SLIDESHOW */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.5) grayscale(100%);
-            transition: opacity 2s ease, filter 4s ease;
-            opacity: 0;
-        }
-
+        /* HERO & Animations */
+        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
+        @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
+        .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.6) grayscale(100%); transition: opacity 2s ease, filter 4s ease; opacity: 0; }
         .bg.active { opacity: 1; filter: brightness(0.6) grayscale(0%); }
-        .zoom-in { animation: zoomIn 15s linear infinite alternate; }
-        @keyframes zoomIn { from { transform: scale(1); } to { transform: scale(1.15); } }
+        .zoom-in { animation: zoomInEffect 12s linear infinite alternate; }
+        .zoom-out { animation: zoomOutEffect 12s linear infinite alternate; }
+        .vignette { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%); z-index: 2; }
+        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.08; mix-blend-mode: overlay; z-index: 3; }
 
-        .vignette {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0) 20%, rgba(0,0,0,0.95) 100%);
-            z-index: 2;
-        }
-
-        /* CONTENT */
-        .content {
-            position: relative;
-            z-index: 5;
-            padding: 0 20px;
-            margin-top: 60px;
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(32px, 7vw, 72px);
-            letter-spacing: 4px;
-            margin-bottom: 20px;
-            opacity: 0;
-            filter: blur(10px);
-            animation: focusReveal 3s ease-out 0.5s forwards;
-        }
-
-        @keyframes focusReveal { to { opacity: 1; filter: blur(0); } }
-
-        .content p {
-            font-size: clamp(14px, 2vw, 18px);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeUp 2s ease 1.5s forwards;
-            margin-bottom: 60px;
-        }
-
-        .cta {
-            display: inline-block;
-            padding: 14px 38px;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            text-decoration: none;
-            letter-spacing: 2px;
-            transition: .4s;
-            opacity: 0;
-            animation: fadeUp 2s ease 2s forwards;
-        }
-
+        /* Content */
+        .content { position: relative; z-index: 5; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 8vw, 72px); letter-spacing: 4px; margin-bottom: 20px; }
+        .content p { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; }
+        .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; }
         .cta:hover { background: var(--dark-orange); border-color: var(--dark-orange); color: #fff; }
 
-        /* FOOTER - Sosyal Linkler ve Copyright */
-        footer {
-            position: fixed;
-            bottom: 30px;
-            width: 100%;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .social-links {
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-        }
-
-        .social-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.6;
-            transition: .4s;
-        }
-
+        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 10; }
+        .social-links { margin-bottom: 12px; display: flex; justify-content: center; gap: 25px; }
+        .social-links a { color: #fff; text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; transition: .4s; }
         .social-links a:hover { opacity: 1; color: var(--hover-orange); }
+        .copyright { font-size: 10px; letter-spacing: 2px; opacity: 0.4; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        .copyright {
-            font-size: 10px;
-            letter-spacing: 2px;
-            opacity: 0.4;
-        }
-
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* MOBİL DÜZELTME */
         @media(max-width:768px){
-            .menu-btn { display: block; } 
-            nav { padding-left: 55px; justify-content: flex-start; } 
-            h2 { font-size: 30px; }
+            nav { display: none; }
+            .menu-btn { display: block; }
+            h2 { font-size: 36px; }
         }
     </style>
 </head>
@@ -215,6 +161,8 @@
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <div class="side-menu" id="sideMenu">
+    <button class="close-btn" onclick="toggleMenu()">✕</button>
+    <a href="index.html" onclick="toggleMenu()">Anasayfa</a>
     <a href="about.html" onclick="toggleMenu()">Hakkımda</a>
     <a href="portfolio.html" onclick="toggleMenu()">Koleksiyon</a>
     <a href="dusunceler.html" onclick="toggleMenu()">Düşünceler</a>
@@ -222,6 +170,7 @@
 </div>
 
 <nav>
+    <a href="index.html">Anasayfa</a>
     <a href="about.html">Hakkımda</a>
     <a href="portfolio.html">Koleksiyon</a>
     <a href="dusunceler.html">Düşünceler</a>
@@ -232,6 +181,7 @@
     <div class="bg active zoom-in" id="bg1"></div>
     <div class="bg inactive" id="bg2"></div>
     <div class="vignette"></div>
+    <div class="grain"></div>
     <div class="content">
         <h2>Gözün Ardındaki Zihin</h2>
         <p>Fine Art Photography</p>
@@ -244,28 +194,32 @@
         <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
         <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
     </div>
-    <div class="copyright">&copy; 2026 ÜMİT ÖZGÜLER</div>
+    <div class="copyright">
+        &copy; 2026 ÜMİT ÖZGÜLER
+    </div>
 </footer>
 
 <script>
     const bg1 = document.getElementById("bg1");
     const bg2 = document.getElementById("bg2");
-    let active = bg1, inactive = bg2;
+    let active = bg1;
+    let inactive = bg2;
 
     function randomImage(){ return Math.floor(Math.random() * 105) + 1; }
-
     function setImage(el){
         const num = randomImage();
         el.style.backgroundImage = `url('img/${num}.webp')`;
-        el.classList.remove("zoom-in");
-        void el.offsetWidth;
-        el.classList.add("zoom-in");
+        el.classList.remove("zoom-in", "zoom-out");
+        const effect = Math.random() > 0.5 ? "zoom-in" : "zoom-out";
+        el.classList.add(effect);
     }
 
     function crossFade(){
         setImage(inactive);
-        inactive.classList.remove("inactive"); inactive.classList.add("active");
-        active.classList.remove("active"); active.classList.add("inactive");
+        inactive.classList.remove("inactive");
+        inactive.classList.add("active");
+        active.classList.remove("active");
+        active.classList.add("inactive");
         [active, inactive] = [inactive, active];
     }
 
