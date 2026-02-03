@@ -32,37 +32,28 @@
             align-items: center;
             padding: 25px 50px;
             background: transparent;
-            z-index: 10;
+            z-index: 100;
         }
 
-        /* Logo: BÜYÜK HARF ve Gemini Tarzı */
+        /* Logo */
         .logo {
             font-family: 'Outfit', sans-serif;
             font-size: 24px;
             letter-spacing: 2px;
             color: #fff !important;
             text-decoration: none !important;
-            text-transform: uppercase; /* Büyük harf yapıldı */
+            text-transform: uppercase;
             cursor: pointer;
             border: none !important;
         }
         .logo span.thin { font-weight: 300; } 
         .logo span.bold { font-weight: 700; } 
-        
-        .logo:hover {
-            color: #fff !important;
-            text-shadow: none !important;
-        }
+        .logo:hover { color: #fff !important; text-shadow: none !important; }
         .logo::after { display: none !important; content: none !important; }
 
-        .nav-links {
-            display: flex;
-            gap: 45px;
-        }
-
-        /* Üst Linkler: Gemini Fontu (Outfit) uygulandı */
+        .nav-links { display: flex; gap: 45px; }
         .nav-links a {
-            font-family: 'Outfit', sans-serif; /* Font değiştirildi */
+            font-family: 'Outfit', sans-serif;
             text-decoration: none;
             color: #fff;
             font-size: 13px;
@@ -73,7 +64,6 @@
             font-weight: 400;
             padding-bottom: 5px;
         }
-        
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -84,13 +74,13 @@
         .nav-links a:hover::after { width: 100%; }
         .nav-links a:hover { color: #fff; }
 
-        /* Hamburger Menu & Animated Orange Line */
+        /* Hamburger Menu */
         .menu-btn {
             display: none;
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 20;
+            z-index: 200;
             cursor: pointer;
             background: none;
             border: none;
@@ -105,7 +95,7 @@
             height: 100vh;
             background: rgba(10, 10, 10, 0.98);
             backdrop-filter: blur(20px);
-            z-index: 30;
+            z-index: 300;
             display: flex;
             flex-direction: column;
             padding: 100px 30px;
@@ -126,28 +116,33 @@
             top: 20px; right: 20px; font-size: 30px;
             color: #fff; cursor: pointer; background: none; border: none;
         }
-        .side-menu a { 
-            font-family: 'Outfit', sans-serif; 
-            color: #fff; 
-            text-decoration: none; 
-            font-size: 15px; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-        }
+        .side-menu a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* HERO & Background */
-        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
-        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
-        @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
-        .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.8) grayscale(0%); transition: opacity 2s ease, filter 4s ease; opacity: 0; }
-        .bg.active { opacity: 1; }
-        .zoom-in { animation: zoomInEffect 12s linear infinite alternate; }
-        .zoom-out { animation: zoomOutEffect 12s linear infinite alternate; }
-        .vignette { position: absolute; inset: 0; background: transparent; z-index: 2; }
-        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 3; }
+        /* HERO & Background - Siyah ekranı bitiren teknik düzenleme */
+        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
+        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
+        @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
+        
+        .bg { 
+            position: absolute; 
+            inset: 0; 
+            background-size: cover; 
+            background-position: center; 
+            filter: brightness(0.8); 
+            transition: opacity 3s ease-in-out; /* Daha yumuşak geçiş */
+            opacity: 0; 
+            z-index: 1; 
+        }
+        /* Aktif resim her zaman üstte kalır ve siyahlık oluşmaz */
+        .bg.active { opacity: 1; z-index: 2; }
+        .zoom-in { animation: zoomInEffect 15s linear infinite alternate; }
+        .zoom-out { animation: zoomOutEffect 15s linear infinite alternate; }
+
+        .vignette { position: absolute; inset: 0; background: transparent; z-index: 3; }
+        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 4; }
 
         /* Content & Animation */
-        .content { position: relative; z-index: 5; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; }
+        .content { position: relative; z-index: 50; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; }
         h2 { 
             font-family: 'Playfair Display', serif; 
             font-size: clamp(40px, 8vw, 72px); 
@@ -161,7 +156,7 @@
         .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; }
         .cta:hover { background: var(--dark-orange); border-color: var(--dark-orange); color: #fff; }
 
-        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 10; }
+        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 100; }
         .social-links { margin-bottom: 12px; display: flex; justify-content: center; gap: 25px; }
         .social-links a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; transition: .4s; }
         .social-links a:hover { opacity: 1; color: var(--hover-orange); }
@@ -169,8 +164,7 @@
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
         @media(max-width:768px){
-            nav { padding: 25px 20px; justify-content: flex-start; }
-            .logo { font-size: 18px; letter-spacing: 1px; }
+            nav { padding: 25px 20px; }
             .nav-links { display: none; }
             .menu-btn { display: block; }
             h2 { font-size: 36px; }
@@ -180,7 +174,6 @@
 <body>
 
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    
     <div class="side-menu" id="sideMenu">
         <button class="close-btn" onclick="toggleMenu()">✕</button>
         <a href="index.html">Anasayfa</a>
@@ -191,9 +184,7 @@
     </div>
 
     <nav>
-        <a href="index.html" class="logo">
-            <span class="thin">ÜMİT</span> <span class="bold">ÖZGÜLER</span>
-        </a>
+        <a href="index.html" class="logo"><span class="thin">ÜMİT</span> <span class="bold">ÖZGÜLER</span></a>
         <div class="nav-links">
             <a href="index.html">Anasayfa</a>
             <a href="about.html">Hakkımda</a>
@@ -205,7 +196,7 @@
 
     <section class="hero">
         <div class="bg active zoom-in" id="bg1"></div>
-        <div class="bg inactive" id="bg2"></div>
+        <div class="bg" id="bg2"></div>
         <div class="vignette"></div>
         <div class="grain"></div>
         <div class="content">
@@ -220,9 +211,7 @@
             <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
             <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
         </div>
-        <div class="copyright">
-            &copy; 2026 ÜMİT ÖZGÜLER
-        </div>
+        <div class="copyright">&copy; 2026 ÜMİT ÖZGÜLER</div>
     </footer>
 
     <script>
@@ -232,25 +221,39 @@
         let inactive = bg2;
 
         function randomImage(){ return Math.floor(Math.random() * 105) + 1; }
+        
         function setImage(el){
             const num = randomImage();
-            el.style.backgroundImage = `url('img/${num}.webp')`;
+            const img = new Image();
+            img.src = `img/${num}.webp`;
+            // Resim tamamen yüklendikten sonra background yapıyoruz (Siyahlığı önler)
+            img.onload = () => {
+                el.style.backgroundImage = `url('${img.src}')`;
+            };
             el.classList.remove("zoom-in", "zoom-out");
-            const effect = Math.random() > 0.5 ? "zoom-in" : "zoom-out";
-            el.classList.add(effect);
+            el.classList.add(Math.random() > 0.5 ? "zoom-in" : "zoom-out");
         }
+
         function crossFade(){
+            // İnaktif olanı yeni resimle arkada hazırla
             setImage(inactive);
-            inactive.classList.remove("inactive");
-            inactive.classList.add("active");
-            active.classList.remove("active");
-            active.classList.add("inactive");
-            [active, inactive] = [inactive, active];
+            
+            // 500ms sonra (resim yüklenme payı) geçişi başlat
+            setTimeout(() => {
+                inactive.classList.add("active"); // Yeni resim üste gelir
+                
+                // 3 saniye sonra (transition süresi kadar) eskiyi alttan temizle
+                setTimeout(() => {
+                    active.classList.remove("active");
+                    [active, inactive] = [inactive, active];
+                }, 3000);
+            }, 500);
         }
+
         function toggleMenu() { document.getElementById("sideMenu").classList.toggle("open"); }
 
         setImage(active);
-        setInterval(crossFade, 10000);
+        setInterval(crossFade, 9000); // 9 saniyede bir geçiş
     </script>
 </body>
 </html>
