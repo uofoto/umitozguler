@@ -37,6 +37,24 @@
         .photo-card img { filter: grayscale(100%); transition: all 0.6s ease; }
         .photo-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
         
+        /* Üst Menü Linkleri İçin Alt Çizgi Efekti */
+        .nav-link-custom {
+            position: relative;
+        }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: #c5a059; /* brand-gold */
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+
         #lightbox { 
             transition: opacity 0.3s ease; 
             backdrop-filter: blur(20px); 
@@ -84,11 +102,11 @@
             </a>
             
             <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
-                <a href="about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
-                <a href="portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Portfolyo</a>
-                <a href="dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Düşünceler</a>
-                <a href="contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
+                <a href="index.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
+                <a href="about.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
+                <a href="portfolio.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] text-brand-gold py-1">Portfolyo</a>
+                <a href="dusunceler.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Düşünceler</a>
+                <a href="contact.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
             </div>
 
             <button id="hamburger-btn" class="md:hidden text-white focus:outline-none">
@@ -266,6 +284,3 @@
     </script>
 </body>
 </html>
-
-
-
