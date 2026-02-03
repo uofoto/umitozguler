@@ -11,177 +11,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ümit Özgüler | Fine Art Photography</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #c6a96b;
             --hover-orange: #ff8c00;
-            --dark-orange: #cc7000;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* Navigation Bar */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 50px;
-            background: transparent;
-            z-index: 100;
+            top: 0; left: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 50px; background: transparent; z-index: 100;
         }
 
-        /* Logo */
         .logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            letter-spacing: 2px;
-            color: #fff !important;
-            text-decoration: none !important;
-            text-transform: uppercase;
-            cursor: pointer;
-            border: none !important;
+            font-family: 'Outfit', sans-serif; font-size: 24px; letter-spacing: 2px;
+            color: #fff !important; text-decoration: none !important; text-transform: uppercase;
         }
         .logo span.thin { font-weight: 300; } 
         .logo span.bold { font-weight: 700; } 
-        .logo:hover { color: #fff !important; text-shadow: none !important; }
-        .logo::after { display: none !important; content: none !important; }
 
         .nav-links { display: flex; gap: 45px; }
         .nav-links a {
-            font-family: 'Outfit', sans-serif;
-            text-decoration: none;
-            color: #fff;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            transition: .4s;
-            font-weight: 400;
-            padding-bottom: 5px;
+            font-family: 'Outfit', sans-serif; text-decoration: none; color: #fff;
+            font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+            position: relative; transition: .4s; font-weight: 400; padding-bottom: 5px;
         }
         .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0; height: 1px; bottom: 0; left: 0;
-            background-color: var(--hover-orange);
-            transition: width 0.4s ease;
+            content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0;
+            background-color: var(--hover-orange); transition: width 0.4s ease;
         }
         .nav-links a:hover::after { width: 100%; }
-        .nav-links a:hover { color: #fff; }
 
-        /* Hamburger Menu */
-        .menu-btn {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 200;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 24px;
-        }
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 40%;
-            height: 100vh;
-            background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 300;
-            display: flex;
-            flex-direction: column;
-            padding: 100px 30px;
-            gap: 25px;
-            transition: 0.5s ease;
-        }
-        .side-menu.open { right: 0; }
-        .side-menu::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; width: 3px; height: 0;
-            background: var(--hover-orange);
-            transition: height 0.6s ease 0.3s;
-        }
-        .side-menu.open::before { height: 100%; }
-        .close-btn {
-            position: absolute;
-            top: 20px; right: 20px; font-size: 30px;
-            color: #fff; cursor: pointer; background: none; border: none;
-        }
-        .side-menu a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; }
-
-        /* HERO & Background - Siyah ekranı bitiren teknik düzenleme */
         .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
-        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
-        @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
         
         .bg { 
-            position: absolute; 
-            inset: 0; 
-            background-size: cover; 
-            background-position: center; 
-            filter: brightness(0.8); 
-            transition: opacity 3s ease-in-out; /* Daha yumuşak geçiş */
-            opacity: 0; 
-            z-index: 1; 
+            position: absolute; inset: 0; background-size: cover; background-position: center; 
+            filter: brightness(0.7); transition: opacity 3s ease-in-out; opacity: 0; z-index: 1; 
         }
-        /* Aktif resim her zaman üstte kalır ve siyahlık oluşmaz */
+        /* Yeni resim her zaman üstte belirir, siyahlığı önler */
         .bg.active { opacity: 1; z-index: 2; }
+        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
+        @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
         .zoom-in { animation: zoomInEffect 15s linear infinite alternate; }
         .zoom-out { animation: zoomOutEffect 15s linear infinite alternate; }
 
-        .vignette { position: absolute; inset: 0; background: transparent; z-index: 3; }
+        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.5) 100%); z-index: 3; }
         .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 4; }
 
-        /* Content & Animation */
-        .content { position: relative; z-index: 50; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; }
-        h2 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: clamp(40px, 8vw, 72px); 
-            letter-spacing: 4px; 
-            margin-bottom: 20px; 
-            opacity: 0; 
-            animation: titleReveal 3s ease 1s forwards; 
+        .content { position: relative; z-index: 50; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; width: 100%; }
+        
+        #initial-title { position: relative; transition: opacity 3s ease-in-out; margin-bottom: 20px; }
+        .title-wrapper { position: relative; display: inline-block; padding: 20px 40px; }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 72px); letter-spacing: 4px; opacity: 0; animation: titleReveal 3s ease 1s forwards; }
+        .title-border::before, .title-border::after { content: ''; position: absolute; width: 0; height: 0; opacity: 0; border: 1.5px solid var(--hover-orange); animation: borderDraw 2s ease 3s forwards; }
+        .title-border::before { top: 0; left: 0; border-bottom: none; border-right: none; }
+        .title-border::after { bottom: 0; right: 0; border-top: none; border-left: none; }
+
+        #dynamic-quotes { 
+            height: 120px; display: none; opacity: 0; 
+            transition: opacity 3s ease-in-out, filter 3s ease-in-out, transform 3s ease-in-out;
+            align-items: center; justify-content: center; margin-bottom: 20px;
+            filter: blur(15px); transform: translateY(20px);
         }
+        #dynamic-quotes.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+        .quote-text { 
+            font-family: 'Playfair Display', serif; font-style: italic; 
+            font-size: clamp(24px, 4.5vw, 42px); letter-spacing: 1px; color: #fff; 
+            text-shadow: 0 4px 25px rgba(0,0,0,0.8);
+        }
+
+        .static-elements { opacity: 0; animation: fadeIn 2s ease 2s forwards; }
+        .static-sub { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; }
+        .cta { 
+            display: inline-block; padding: 14px 38px; border: 1px solid var(--hover-orange); 
+            color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 14px; 
+            transition: .4s; background: transparent;
+        }
+        .cta:hover { background: var(--hover-orange); border-color: var(--hover-orange); color: #000; font-weight: 600; }
+
+        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 100; font-size: 10px; letter-spacing: 2px; opacity: 0.4; }
+        
+        @keyframes borderDraw { 0% { width: 0; height: 0; opacity: 0; } 50% { width: 100%; height: 0; opacity: 1; } 100% { width: 100%; height: 100%; opacity: 1; } }
         @keyframes titleReveal { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
-        .content p { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; }
-        .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; }
-        .cta:hover { background: var(--dark-orange); border-color: var(--dark-orange); color: #fff; }
-
-        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 100; }
-        .social-links { margin-bottom: 12px; display: flex; justify-content: center; gap: 25px; }
-        .social-links a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; transition: .4s; }
-        .social-links a:hover { opacity: 1; color: var(--hover-orange); }
-        .copyright { font-size: 10px; letter-spacing: 2px; opacity: 0.4; }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        @media(max-width:768px){
-            nav { padding: 25px 20px; }
-            .nav-links { display: none; }
-            .menu-btn { display: block; }
-            h2 { font-size: 36px; }
-        }
+        @media(max-width:768px){ nav { padding: 25px 20px; } .nav-links { display: none; } h2 { font-size: 36px; } }
     </style>
 </head>
 <body>
-
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    <div class="side-menu" id="sideMenu">
-        <button class="close-btn" onclick="toggleMenu()">✕</button>
-        <a href="index.html">Anasayfa</a>
-        <a href="about.html">Hakkımda</a>
-        <a href="portfolio.html">Koleksiyon</a>
-        <a href="dusunceler.html">Düşünceler</a>
-        <a href="contact.html">İletişim</a>
-    </div>
 
     <nav>
         <a href="index.html" class="logo"><span class="thin">ÜMİT</span> <span class="bold">ÖZGÜLER</span></a>
@@ -200,60 +123,119 @@
         <div class="vignette"></div>
         <div class="grain"></div>
         <div class="content">
-            <h2>Gözün Ardındaki Zihin</h2>
-            <p>Fine Art Photography</p>
-            <a href="portfolio.html" class="cta">KOLEKSİYONU KEŞFET</a>
+            <div id="initial-title">
+                <div class="title-wrapper">
+                    <div class="title-border"></div>
+                    <h2>Gözün Ardındaki Zihin</h2>
+                </div>
+            </div>
+            <div id="dynamic-quotes">
+                <p class="quote-text" id="quote-el"></p>
+            </div>
+            <div class="static-elements">
+                <p class="static-sub">Fine Art Photography</p>
+                <a href="portfolio.html" class="cta">KOLEKSİYONU KEŞFET</a>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div class="social-links">
-            <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
-            <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
-        </div>
         <div class="copyright">&copy; 2026 ÜMİT ÖZGÜLER</div>
     </footer>
 
     <script>
+        const quoteDatabase = {
+            makro: ["Makro, evreni küçültür.", "Detay, sonsuzluğu taşır.", "Makro, görünmeyeni büyütür.", "Detay, varoluşu fısıldar.", "Sadelik, derinliğin biçimidir."],
+            portre: ["Portre, yüzün ötesidir.", "Bakış, iç dünyayı ifşa eder.", "Portre, sessiz bir itiraftır.", "Bakış, ruhun eşiğidir.", "Gölge, ruhu açığa çıkarır."],
+            renkli_doga: ["Renk susar, hakikat konuşur.", "Doğal olan, müdahalesiz hakikattir.", "Doğa, sahnesiz konuşur.", "Görünen, görünmeyeni çağırır.", "Işık, hakikati ayıklar."],
+            sokak: ["Fotoğraf, sessiz bir tanıklıktır.", "An, kendiliğinden tamamlanır.", "An, kurgusuz doğar.", "Fotoğraf, zamanın nabzıdır.", "Görüntü, varlığın iz düşümüdür."],
+            hayvan: ["Uyum, hayatın ritmidir.", "Gerçek, müdahale kabul etmez.", "Varlık, kendi dilinde konuşur."],
+            kulturel: ["Kültür, zamanın izidir.", "Gerçek, ışıkta arınır.", "Işık, vicdanı görünür kılar."],
+            soyut: ["Siyah beyaz, özün çıplaklığıdır.", "Işık, varlığı soyar.", "Gölge, anlamı derinleştirir.", "Siyah beyaz, zamanı arındırır.", "Siyah beyaz, ruhun dilidir.", "Sadelik, hakikati keskinleştirir."]
+        };
+
+        const categories = [
+            { key: 'makro', imgs: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
+            { key: 'portre', imgs: [25,29,30,32,34,36,42,43,81] },
+            { key: 'renkli_doga', imgs: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103] },
+            { key: 'sokak', imgs: [1,2,4,5,12,27,28,31,51,52,65,67,72,80,88,89,93,102] },
+            { key: 'hayvan', imgs: [3,18,44,45,46,47,48,49,50,68,99,100] },
+            { key: 'kulturel', imgs: [6,11,26,33,35,60,61,62,63,66,73,74,92] },
+            { key: 'soyut', imgs: [7,8,9,20,55,56,57,58,59,64,71,90] }
+        ];
+
         const bg1 = document.getElementById("bg1");
         const bg2 = document.getElementById("bg2");
+        const initialTitle = document.getElementById("initial-title");
+        const dynamicQuotes = document.getElementById("dynamic-quotes");
+        const quoteEl = document.getElementById("quote-el");
+        
         let active = bg1;
         let inactive = bg2;
+        let isFirstTransition = true;
 
-        function randomImage(){ return Math.floor(Math.random() * 105) + 1; }
-        
-        function setImage(el){
-            const num = randomImage();
+        function getSmartQuote(imgNum) {
+            let categoryKey = 'soyut';
+            for (let cat of categories) {
+                if (cat.imgs.includes(imgNum)) {
+                    categoryKey = cat.key;
+                    break;
+                }
+            }
+            const quotes = quoteDatabase[categoryKey];
+            return `“${quotes[Math.floor(Math.random() * quotes.length)]}”`;
+        }
+
+        function setImage(el) {
+            const num = Math.floor(Math.random() * 105) + 1;
             const img = new Image();
             img.src = `img/${num}.webp`;
-            // Resim tamamen yüklendikten sonra background yapıyoruz (Siyahlığı önler)
-            img.onload = () => {
-                el.style.backgroundImage = `url('${img.src}')`;
-            };
+            el.dataset.imgNum = num;
+            img.onload = () => { el.style.backgroundImage = `url('${img.src}')`; };
             el.classList.remove("zoom-in", "zoom-out");
             el.classList.add(Math.random() > 0.5 ? "zoom-in" : "zoom-out");
         }
 
-        function crossFade(){
-            // İnaktif olanı yeni resimle arkada hazırla
+        function crossFade() {
             setImage(inactive);
+
+            // GİDİŞ: Yazı ve eski başlık, yeni fotoğraf üstüne binmeden hemen önce sönümlenir
+            if (isFirstTransition) {
+                initialTitle.style.opacity = "0";
+            } else {
+                dynamicQuotes.classList.remove("visible");
+            }
             
-            // 500ms sonra (resim yüklenme payı) geçişi başlat
+            // GEÇİŞ: Yeni fotoğraf eski resmin üzerine biner (Siyahlık oluşmaz)
             setTimeout(() => {
-                inactive.classList.add("active"); // Yeni resim üste gelir
+                if (isFirstTransition) {
+                    initialTitle.style.display = "none";
+                    dynamicQuotes.style.display = "flex";
+                    isFirstTransition = false;
+                }
+
+                // Yeni resmi en üste çıkar ve opaklığını aç
+                inactive.classList.add("active");
                 
-                // 3 saniye sonra (transition süresi kadar) eskiyi alttan temizle
+                // Sözü belirle
+                const currentImgNum = parseInt(inactive.dataset.imgNum);
+                quoteEl.innerText = getSmartQuote(currentImgNum);
+                
+                // GELİŞ: Fotoğraf belirmeye başladıktan 1.5s sonra yazı süzülür
+                setTimeout(() => {
+                    dynamicQuotes.classList.add("visible");
+                }, 1500);
+
+                // Katman temizliği: Geçiş bittikten sonra eskiyi arkaya al ve opaklığını sıfırla
                 setTimeout(() => {
                     active.classList.remove("active");
                     [active, inactive] = [inactive, active];
                 }, 3000);
-            }, 500);
+            }, 3000); 
         }
 
-        function toggleMenu() { document.getElementById("sideMenu").classList.toggle("open"); }
-
         setImage(active);
-        setInterval(crossFade, 9000); // 9 saniyede bir geçiş
+        setInterval(crossFade, 9000); 
     </script>
 </body>
 </html>
