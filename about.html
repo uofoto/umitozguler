@@ -12,13 +12,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hakkımda | Ümit Özgüler</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059' },
-                    fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
+                    fontFamily: { sans: ['"Inter"', 'sans-serif'] }
                 }
             }
         }
@@ -28,7 +28,6 @@
         .animate-fade { animation: fadeIn 1s ease-out forwards; }
         .no-scroll { overflow: hidden; }
 
-        /* Fotoğraf Kenarlığı İçin Kayma Animasyonu */
         @keyframes borderSlide {
             0% { height: 0; width: 0; opacity: 0; }
             50% { height: 100%; width: 0; opacity: 1; }
@@ -39,7 +38,6 @@
             animation-delay: 0.5s;
         }
 
-        /* Üst Menü Linkleri İçin Alt Çizgi Efekti */
         .nav-link-custom {
             position: relative;
             padding-bottom: 4px;
@@ -51,14 +49,38 @@
             height: 1px;
             bottom: 0;
             left: 0;
-            background-color: #c5a059; /* brand-gold */
+            background-color: #c5a059;
             transition: width 0.3s ease;
         }
         .nav-link-custom:hover::after {
             width: 100%;
         }
 
-        /* TFSF Kart Dönme Efekti */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        @keyframes lineDown {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+        .menu-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1px;
+            background-color: #c5a059;
+            height: 0;
+        }
+        #mobile-menu.active .menu-line {
+            animation: lineDown 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
         .tfsf-card {
             perspective: 1000px;
             cursor: pointer;
@@ -88,40 +110,42 @@
         .tfsf-back { transform: rotateY(180deg); }
     </style>
 </head>
-<body class="bg-brand-black text-white font-sans antialiased">
+<body class="bg-brand-black text-white font-sans antialiased overflow-x-hidden">
 
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="index.html" class="text-xl md:text-2xl tracking-[0.3em]">
-                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+                <a href="index.html" class="text-xl md:text-2xl tracking-[0.2em]">
+                    <span class="font-normal">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
                 </a>
 
-                <div class="hidden md:flex space-x-12">
-                    <a href="index.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                    <a href="about.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
-                    <a href="portfolio.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                    <a href="dusunceler.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                    <a href="contact.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
+                <div class="hidden md:flex space-x-10">
+                    <a href="index.html" class="nav-link-custom text-[11px] font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                    <a href="about.html" class="nav-link-custom text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-gold">Hakkımda</a>
+                    <a href="portfolio.html" class="nav-link-custom text-[11px] font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                    <a href="dusunceler.html" class="nav-link-custom text-[11px] font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                    <a href="contact.html" class="nav-link-custom text-[11px] font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">İletişim</a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 relative z-[60]">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
         </div>
 
-        <div class="hidden bg-brand-dark border-t border-white/5 absolute w-full z-50" id="mobile-menu">
-            <div class="px-6 py-8 space-y-4 flex flex-col">
-                <a href="index.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Hakkımda</a>
-                <a href="portfolio.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="dusunceler.html" class="text-sm font-semibold uppercase tracking-[0.2em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-gold">İletişim</a>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-dark z-50 shadow-2xl md:hidden flex flex-col pt-32 px-8">
+            <div class="menu-line"></div>
+            <div class="space-y-3 flex flex-col">
+                <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Hakkımda</a>
+                <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">İletişim</a>
             </div>
         </div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
     </nav>
 
     <section class="pt-40 pb-20 px-6">
@@ -137,13 +161,13 @@
 
             <div class="w-full md:w-1/2 animate-fade" style="animation-delay: 0.2s;">
                 <div class="mb-12">
-                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tighter uppercase leading-none">
+                    <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight uppercase leading-none">
                         Işık, Gölge ve <span class="text-brand-gold">Ruh.</span>
                     </h1>
                     <div class="w-24 h-[2px] bg-brand-gold mt-6 mb-6"></div>
                 </div>
 
-                <div class="space-y-6 text-gray-400 text-sm lg:text-base leading-relaxed font-light tracking-wide text-justify">
+                <div class="space-y-6 text-gray-400 text-sm lg:text-base leading-relaxed font-light tracking-wide text-left">
                     <p>Fotoğraf, benim için zamanı durdurmanın ve görünenin ardındaki hikayeyi keşfetmenin en güçlü yoludur. 20 yılı aşkın süredir, vizörün ardından ülkemizin eşsiz coğrafyasına tanıklık ediyorum.</p>
                     <p>Bursa Fotoğraf ve Sinema Amatörleri Derneği (BUFSAD) bünyesinde atölye hocalığı yaparak deneyimlerimi paylaşırken, Türkiye Fotoğraf Sanatı Federasyonu (TFSF) jüri üyeliği görevimle fotoğraf sanatının gelişimine katkı sundum.</p>
                     <p>Eserlerim bugüne kadar 10'dan fazla karma sergide sanatseverlerle buluştu. Her karede, doğanın sesini ve insan ruhunun derinliğini aramaya devam ediyorum.</p>
@@ -184,10 +208,25 @@
     </footer>
 
     <script>
-        document.getElementById('mobile-menu-btn').onclick = () => {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        };
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+        const icon = document.getElementById('menu-icon');
+
+        function toggleMenu() {
+            menu.classList.toggle('active');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('no-scroll');
+            
+            if (menu.classList.contains('active')) {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        }
+
+        menuBtn.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
     </script>
 </body>
 </html>
