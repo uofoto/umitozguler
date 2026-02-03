@@ -21,6 +21,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
+        /* Navigation Bar */
         nav {
             position: fixed;
             top: 0;
@@ -57,6 +58,7 @@
         nav a:hover::after { width: 100%; }
         nav a:hover { color: #fff; }
 
+        /* Mobile Menu */
         .menu-btn {
             display: none;
             position: fixed;
@@ -97,16 +99,23 @@
         }
         .side-menu a { color: #fff; text-decoration: none; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; }
 
+        /* HERO & Background */
         .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
         @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
         @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
-        .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.6) grayscale(100%); transition: opacity 2s ease, filter 4s ease; opacity: 0; }
-        .bg.active { opacity: 1; filter: brightness(0.6) grayscale(0%); }
+        
+        /* Fotoğraf Parlaklığı ve Netliği */
+        .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.8) grayscale(0%); transition: opacity 2s ease, filter 4s ease; opacity: 0; }
+        .bg.active { opacity: 1; }
         .zoom-in { animation: zoomInEffect 12s linear infinite alternate; }
         .zoom-out { animation: zoomOutEffect 12s linear infinite alternate; }
-        .vignette { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%); z-index: 2; }
-        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.08; mix-blend-mode: overlay; z-index: 3; }
 
+        /* Kenar Siyahlığı (Vignette) Kaldırıldı veya Çok Hafifletildi */
+        .vignette { position: absolute; inset: 0; background: transparent; z-index: 2; }
+        
+        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 3; }
+
+        /* Content & Animation */
         .content { position: relative; z-index: 5; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; }
         h2 { 
             font-family: 'Playfair Display', serif; 
