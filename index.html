@@ -53,16 +53,17 @@
             color: #fff; font-size: 28px; z-index: 200;
             transition: opacity 0.3s;
         }
-        /* Menü açıkken hamburger butonunu gizle */
         .menu-btn.hidden { opacity: 0; pointer-events: none; }
 
-        /* Dar Yan Menü ve Dikey Çizgi */
+        /* Rafine ve Daraltılmış Yan Menü */
         .side-menu {
             position: fixed; top: 0; right: -100%; 
-            width: 220px; /* Sütun daraltıldı */
+            width: 180px; 
             height: 100vh;
             background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(20px);
-            z-index: 400; display: flex; flex-direction: column; padding: 100px 40px; gap: 25px;
+            z-index: 400; display: flex; flex-direction: column; 
+            padding: 120px 30px; /* Üst boşluk ayarlandı */
+            gap: 15px; /* Link aralıkları daraltıldı */
             transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .side-menu.open { right: 0; }
@@ -73,9 +74,13 @@
         }
         .side-menu.open::before { height: 100%; }
 
-        .side-menu a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .side-menu a { 
+            font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; 
+            font-size: 13px; /* Yazı boyutu rafine edildi */
+            letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; 
+        }
         .side-menu a:hover { color: var(--hover-orange); }
-        .close-btn { position: absolute; top: 25px; right: 25px; font-size: 30px; color: #fff; cursor: pointer; z-index: 401; }
+        .close-btn { position: absolute; top: 25px; right: 25px; font-size: 26px; color: #fff; cursor: pointer; z-index: 401; }
 
         /* HERO & Background System */
         .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
@@ -251,7 +256,7 @@
         function toggleMenu() { 
             const sideMenu = document.getElementById("sideMenu");
             sideMenu.classList.toggle("open");
-            mainMenuBtn.classList.toggle("hidden"); // Menü açılınca hamburger butonunu gizle
+            mainMenuBtn.classList.toggle("hidden");
         }
 
         setImage(active);
