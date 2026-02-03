@@ -20,6 +20,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
+        /* Navigation Bar */
         nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -46,24 +47,49 @@
         }
         .nav-links a:hover::after { width: 100%; }
 
-        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
-        
-        .bg { 
-            position: absolute; inset: 0; background-size: cover; background-position: center; 
-            filter: brightness(0.7); transition: opacity 3s ease-in-out; opacity: 0; z-index: 1; 
+        /* Hamburger Menu Butonu */
+        .menu-btn {
+            display: none; cursor: pointer; background: none; border: none;
+            color: #fff; font-size: 28px; z-index: 200;
+            transition: opacity 0.3s;
         }
-        /* Yeni resim her zaman üstte belirir, siyahlığı önler */
+        /* Menü açıkken hamburger butonunu gizle */
+        .menu-btn.hidden { opacity: 0; pointer-events: none; }
+
+        /* Dar Yan Menü ve Dikey Çizgi */
+        .side-menu {
+            position: fixed; top: 0; right: -100%; 
+            width: 220px; /* Sütun daraltıldı */
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(20px);
+            z-index: 400; display: flex; flex-direction: column; padding: 100px 40px; gap: 25px;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .side-menu.open { right: 0; }
+        
+        .side-menu::before {
+            content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0;
+            background: var(--hover-orange); transition: height 0.6s ease 0.3s;
+        }
+        .side-menu.open::before { height: 100%; }
+
+        .side-menu a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .side-menu a:hover { color: var(--hover-orange); }
+        .close-btn { position: absolute; top: 25px; right: 25px; font-size: 30px; color: #fff; cursor: pointer; z-index: 401; }
+
+        /* HERO & Background System */
+        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
+        .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.7); transition: opacity 3s ease-in-out; opacity: 0; z-index: 1; }
         .bg.active { opacity: 1; z-index: 2; }
-        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
-        @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
         .zoom-in { animation: zoomInEffect 15s linear infinite alternate; }
         .zoom-out { animation: zoomOutEffect 15s linear infinite alternate; }
+        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
+        @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
 
         .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.5) 100%); z-index: 3; }
         .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 4; }
 
         .content { position: relative; z-index: 50; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; width: 100%; }
-        
         #initial-title { position: relative; transition: opacity 3s ease-in-out; margin-bottom: 20px; }
         .title-wrapper { position: relative; display: inline-block; padding: 20px 40px; }
         h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 72px); letter-spacing: 4px; opacity: 0; animation: titleReveal 3s ease 1s forwards; }
@@ -78,33 +104,44 @@
             filter: blur(15px); transform: translateY(20px);
         }
         #dynamic-quotes.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
-
-        .quote-text { 
-            font-family: 'Playfair Display', serif; font-style: italic; 
-            font-size: clamp(24px, 4.5vw, 42px); letter-spacing: 1px; color: #fff; 
-            text-shadow: 0 4px 25px rgba(0,0,0,0.8);
-        }
+        .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(24px, 4.5vw, 42px); letter-spacing: 1px; color: #fff; text-shadow: 0 4px 25px rgba(0,0,0,0.8); }
 
         .static-elements { opacity: 0; animation: fadeIn 2s ease 2s forwards; }
         .static-sub { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; }
-        .cta { 
-            display: inline-block; padding: 14px 38px; border: 1px solid var(--hover-orange); 
-            color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 14px; 
-            transition: .4s; background: transparent;
-        }
+        .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--hover-orange); color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; background: transparent; }
         .cta:hover { background: var(--hover-orange); border-color: var(--hover-orange); color: #000; font-weight: 600; }
 
-        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 100; font-size: 10px; letter-spacing: 2px; opacity: 0.4; }
+        /* Footer & Social */
+        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 100; }
+        .social-links { margin-bottom: 12px; display: flex; justify-content: center; gap: 30px; }
+        .social-links a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; transition: .4s; }
+        .social-links a:hover { opacity: 1; color: var(--hover-orange); }
+        .copyright { font-size: 10px; letter-spacing: 2px; opacity: 0.3; }
         
         @keyframes borderDraw { 0% { width: 0; height: 0; opacity: 0; } 50% { width: 100%; height: 0; opacity: 1; } 100% { width: 100%; height: 100%; opacity: 1; } }
         @keyframes titleReveal { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        @media(max-width:768px){ nav { padding: 25px 20px; } .nav-links { display: none; } h2 { font-size: 36px; } }
+        @media(max-width:768px){ 
+            nav { padding: 25px 30px; } 
+            .nav-links { display: none; } 
+            .menu-btn { display: block; position: fixed; top: 25px; right: 30px; } 
+            h2 { font-size: 34px; }
+        }
     </style>
 </head>
 <body>
+
+    <button class="menu-btn" id="mainMenuBtn" onclick="toggleMenu()">☰</button>
+    <div class="side-menu" id="sideMenu">
+        <span class="close-btn" onclick="toggleMenu()">✕</span>
+        <a href="index.html">Anasayfa</a>
+        <a href="about.html">Hakkımda</a>
+        <a href="portfolio.html">Koleksiyon</a>
+        <a href="dusunceler.html">Düşünceler</a>
+        <a href="contact.html">İletişim</a>
+    </div>
 
     <nav>
         <a href="index.html" class="logo"><span class="thin">ÜMİT</span> <span class="bold">ÖZGÜLER</span></a>
@@ -140,6 +177,10 @@
     </section>
 
     <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
+            <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
+        </div>
         <div class="copyright">&copy; 2026 ÜMİT ÖZGÜLER</div>
     </footer>
 
@@ -169,6 +210,7 @@
         const initialTitle = document.getElementById("initial-title");
         const dynamicQuotes = document.getElementById("dynamic-quotes");
         const quoteEl = document.getElementById("quote-el");
+        const mainMenuBtn = document.getElementById("mainMenuBtn");
         
         let active = bg1;
         let inactive = bg2;
@@ -176,12 +218,7 @@
 
         function getSmartQuote(imgNum) {
             let categoryKey = 'soyut';
-            for (let cat of categories) {
-                if (cat.imgs.includes(imgNum)) {
-                    categoryKey = cat.key;
-                    break;
-                }
-            }
+            for (let cat of categories) { if (cat.imgs.includes(imgNum)) { categoryKey = cat.key; break; } }
             const quotes = quoteDatabase[categoryKey];
             return `“${quotes[Math.floor(Math.random() * quotes.length)]}”`;
         }
@@ -198,40 +235,23 @@
 
         function crossFade() {
             setImage(inactive);
-
-            // GİDİŞ: Yazı ve eski başlık, yeni fotoğraf üstüne binmeden hemen önce sönümlenir
-            if (isFirstTransition) {
-                initialTitle.style.opacity = "0";
-            } else {
-                dynamicQuotes.classList.remove("visible");
-            }
+            if (isFirstTransition) { initialTitle.style.opacity = "0"; } 
+            else { dynamicQuotes.classList.remove("visible"); }
             
-            // GEÇİŞ: Yeni fotoğraf eski resmin üzerine biner (Siyahlık oluşmaz)
             setTimeout(() => {
-                if (isFirstTransition) {
-                    initialTitle.style.display = "none";
-                    dynamicQuotes.style.display = "flex";
-                    isFirstTransition = false;
-                }
-
-                // Yeni resmi en üste çıkar ve opaklığını aç
+                if (isFirstTransition) { initialTitle.style.display = "none"; dynamicQuotes.style.display = "flex"; isFirstTransition = false; }
                 inactive.classList.add("active");
-                
-                // Sözü belirle
                 const currentImgNum = parseInt(inactive.dataset.imgNum);
                 quoteEl.innerText = getSmartQuote(currentImgNum);
-                
-                // GELİŞ: Fotoğraf belirmeye başladıktan 1.5s sonra yazı süzülür
-                setTimeout(() => {
-                    dynamicQuotes.classList.add("visible");
-                }, 1500);
-
-                // Katman temizliği: Geçiş bittikten sonra eskiyi arkaya al ve opaklığını sıfırla
-                setTimeout(() => {
-                    active.classList.remove("active");
-                    [active, inactive] = [inactive, active];
-                }, 3000);
+                setTimeout(() => { dynamicQuotes.classList.add("visible"); }, 1500);
+                setTimeout(() => { active.classList.remove("active"); [active, inactive] = [inactive, active]; }, 3000);
             }, 3000); 
+        }
+
+        function toggleMenu() { 
+            const sideMenu = document.getElementById("sideMenu");
+            sideMenu.classList.toggle("open");
+            mainMenuBtn.classList.toggle("hidden"); // Menü açılınca hamburger butonunu gizle
         }
 
         setImage(active);
