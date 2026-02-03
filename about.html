@@ -28,17 +28,47 @@
         .animate-fade { animation: fadeIn 1s ease-out forwards; }
         .no-scroll { overflow: hidden; }
 
-        /* TFSF Kart Dönme Efekti ve Hizalama */
+        /* Fotoğraf Kenarlığı İçin Kayma Animasyonu */
+        @keyframes borderSlide {
+            0% { height: 0; width: 0; opacity: 0; }
+            50% { height: 100%; width: 0; opacity: 1; }
+            100% { height: 100%; width: 100%; opacity: 1; }
+        }
+        .animate-border {
+            animation: borderSlide 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* Üst Menü Linkleri İçin Alt Çizgi Efekti */
+        .nav-link-custom {
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #c5a059; /* brand-gold */
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+
+        /* TFSF Kart Dönme Efekti */
         .tfsf-card {
             perspective: 1000px;
             cursor: pointer;
-            width: 100%; /* Konteynıra yayıl */
-            max-width: 120px; /* Maksimum genişlik */
+            width: 100%; 
+            max-width: 120px; 
         }
         .tfsf-card-inner {
             position: relative;
             width: 100%;
-            height: 40px; /* TFSF yazısı ve logo yüksekliği */
+            height: 40px; 
             transition: transform 0.6s;
             transform-style: preserve-3d;
         }
@@ -53,18 +83,9 @@
             display: flex;
             align-items: center;
         }
-        
-        /* Masaüstünde sola, mobilde merkeze hizalama */
-        @media (min-width: 768px) {
-            .tfsf-front, .tfsf-back { justify-content: flex-start; }
-        }
-        @media (max-width: 767px) {
-            .tfsf-front, .tfsf-back { justify-content: center; }
-        }
-
-        .tfsf-back {
-            transform: rotateY(180deg);
-        }
+        @media (min-width: 768px) { .tfsf-front, .tfsf-back { justify-content: flex-start; } }
+        @media (max-width: 767px) { .tfsf-front, .tfsf-back { justify-content: center; } }
+        .tfsf-back { transform: rotateY(180deg); }
     </style>
 </head>
 <body class="bg-brand-black text-white font-sans antialiased">
@@ -77,11 +98,11 @@
                 </a>
 
                 <div class="hidden md:flex space-x-12">
-                    <a href="index.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                    <a href="about.html" class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
-                    <a href="portfolio.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                    <a href="dusunceler.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                    <a href="contact.html" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
+                    <a href="index.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                    <a href="about.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] text-brand-gold">Hakkımda</a>
+                    <a href="portfolio.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                    <a href="dusunceler.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                    <a href="contact.html" class="nav-link-custom text-[10px] font-bold uppercase tracking-[0.3em] hover:text-brand-gold transition-colors">İletişim</a>
                 </div>
 
                 <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2">
@@ -108,7 +129,7 @@
             
             <div class="w-full md:w-1/2 animate-fade flex justify-center md:justify-end">
                 <div class="relative inline-block">
-                    <div class="absolute bottom-[-15px] right-[-15px] w-full h-full border-r-4 border-b-4 border-brand-gold -z-10"></div>
+                    <div class="absolute bottom-[-15px] right-[-15px] border-r-4 border-b-4 border-brand-gold -z-10 animate-border"></div>
                     <img src="img/umitozguler.webp" alt="Ümit Özgüler" 
                          class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block">
                 </div>
@@ -165,14 +186,8 @@
     <script>
         document.getElementById('mobile-menu-btn').onclick = () => {
             const menu = document.getElementById('mobile-menu');
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
-            }
+            menu.classList.toggle('hidden');
         };
     </script>
 </body>
 </html>
-
-
