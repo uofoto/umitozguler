@@ -56,6 +56,7 @@
             width: 100%;
         }
 
+        /* Mobil Menü Konfigürasyonu */
         #mobile-menu {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
@@ -72,8 +73,8 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 1px;
-            background-color: #c5a059;
+            width: 1.5px; /* Çizgi kalınlığı index ile eşitlendi */
+            background-color: #ff8c00; /* İndex'teki canlı turuncu renk */
             height: 0;
         }
         #mobile-menu.active .menu-line {
@@ -135,14 +136,14 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-dark z-50 shadow-2xl md:hidden flex flex-col pt-32 px-8">
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-[40%] bg-brand-dark z-50 shadow-2xl md:hidden flex flex-col pt-32 px-6">
             <div class="menu-line"></div>
-            <div class="space-y-3 flex flex-col">
-                <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Portfolyo</a>
-                <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">İletişim</a>
+            <div class="space-y-5 flex flex-col">
+                <a href="index.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Hakkımda</a>
+                <a href="portfolio.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="dusunceler.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-gold transition-colors">İletişim</a>
             </div>
         </div>
         <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
