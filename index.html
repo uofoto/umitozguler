@@ -9,7 +9,7 @@
         gtag('config', 'G-QW3FEBRP69');
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ümit Özgüler | Fine Art Photography</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -18,28 +18,25 @@
             --hover-orange: #ff8c00;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100%; height: 100vh; }
+        body.menu-open { overflow: hidden; }
 
-        /* Navigation Bar */
+        /* Navigation */
         nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
+            position: fixed; top: 0; left: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 25px 50px; background: transparent; z-index: 100;
         }
-
         .logo {
             font-family: 'Outfit', sans-serif; font-size: 24px; letter-spacing: 2px;
             color: #fff !important; text-decoration: none !important; text-transform: uppercase;
         }
-        .logo span.thin { font-weight: 300; } 
         .logo span.bold { font-weight: 700; } 
-
-        .nav-links { display: flex; gap: 45px; }
+        .nav-links { display: flex; gap: 40px; }
         .nav-links a {
             font-family: 'Outfit', sans-serif; text-decoration: none; color: #fff;
             font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
-            position: relative; transition: .4s; font-weight: 400; padding-bottom: 5px;
+            position: relative; transition: .4s; padding-bottom: 5px;
         }
         .nav-links a::after {
             content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0;
@@ -47,103 +44,85 @@
         }
         .nav-links a:hover::after { width: 100%; }
 
-        /* Hamburger Menu Butonu */
+        /* Hamburger Butonu */
         .menu-btn {
             display: none; cursor: pointer; background: none; border: none;
-            color: #fff; font-size: 28px; z-index: 200;
-            transition: opacity 0.3s;
+            color: #fff; font-size: 28px; z-index: 501;
+            position: fixed; top: 25px; right: 30px; transition: 0.3s;
         }
-        .menu-btn.hidden { opacity: 0; pointer-events: none; }
 
-        /* Rafine ve Daraltılmış Yan Menü */
+        /* Rafine Dar Yan Menü */
         .side-menu {
-            position: fixed; top: 0; right: -100%; 
-            width: 180px; 
-            height: 100vh;
+            position: fixed; top: 0; right: -100%; width: 160px; height: 100vh;
             background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(20px);
-            z-index: 400; display: flex; flex-direction: column; 
-            padding: 120px 30px; 
-            gap: 15px; 
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 500; display: flex; flex-direction: column; 
+            padding: 100px 25px; gap: 20px; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .side-menu.open { right: 0; }
-        
         .side-menu::before {
             content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0;
-            background: var(--hover-orange); transition: height 0.6s ease 0.3s;
+            background: var(--hover-orange); transition: height 0.8s ease 0.3s;
         }
         .side-menu.open::before { height: 100%; }
+        .side-menu.open { right: 0; }
+        .side-menu a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+        .close-btn { position: absolute; top: 25px; right: 25px; font-size: 24px; color: #fff; cursor: pointer; }
 
-        .side-menu a { 
-            font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; 
-            font-size: 13px; 
-            letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; 
+        /* Hero & Background */
+        .hero { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        .bg { 
+            position: absolute; inset: 0; background-size: cover; background-position: center; 
+            filter: brightness(0.5); transition: opacity 3s ease-in-out; 
+            opacity: 0; z-index: 1; transform: scale(1);
         }
-        .side-menu a:hover { color: var(--hover-orange); }
-        .close-btn { position: absolute; top: 25px; right: 25px; font-size: 26px; color: #fff; cursor: pointer; z-index: 401; }
-
-        /* HERO & Background System */
-        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
-        .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.7); transition: opacity 3s ease-in-out; opacity: 0; z-index: 1; }
         .bg.active { opacity: 1; z-index: 2; }
-        .zoom-in { animation: zoomInEffect 15s linear infinite alternate; }
-        .zoom-out { animation: zoomOutEffect 15s linear infinite alternate; }
-        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
-        @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
+        .zoom-in { animation: zoomInEffect 20s linear forwards; }
+        .zoom-out { animation: zoomOutEffect 20s linear forwards; }
+        @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
+        @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
 
-        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.6) 100%); z-index: 3; }
-        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 4; }
+        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%); z-index: 3; pointer-events: none; }
+        .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.06; mix-blend-mode: overlay; z-index: 4; }
 
-        .content { position: relative; z-index: 50; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; width: 100%; }
-        #initial-title { position: relative; transition: opacity 3s ease-in-out; margin-bottom: 20px; }
-        .title-wrapper { position: relative; display: inline-block; padding: 20px 40px; }
-        h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 72px); letter-spacing: 4px; opacity: 0; animation: titleReveal 3s ease 1s forwards; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        .title-border::before, .title-border::after { content: ''; position: absolute; width: 0; height: 0; opacity: 0; border: 1.5px solid var(--hover-orange); animation: borderDraw 2s ease 3s forwards; }
+        /* Content Yerleşimi */
+        .content { position: relative; z-index: 50; padding: 0 20px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        .title-wrapper { position: relative; display: inline-block; padding: 15px 30px; margin-bottom: 5px; }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 6vw, 72px); letter-spacing: 3px; }
+        .title-border::before, .title-border::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1.5px solid var(--hover-orange); }
         .title-border::before { top: 0; left: 0; border-bottom: none; border-right: none; }
         .title-border::after { bottom: 0; right: 0; border-top: none; border-left: none; }
 
-        #dynamic-quotes { 
-            height: 120px; display: none; opacity: 0; 
-            transition: opacity 3s ease-in-out, filter 3s ease-in-out, transform 3s ease-in-out;
-            align-items: center; justify-content: center; margin-bottom: 20px;
-            filter: blur(15px); transform: translateY(20px);
+        #dynamic-quotes { height: 70px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: 2s; margin: 10px 0; }
+        #dynamic-quotes.visible { opacity: 1; }
+        .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(18px, 3.5vw, 36px); color: rgba(255,255,255,0.9); max-width: 90vw; }
+
+        .static-elements { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .static-sub { font-size: 13px; letter-spacing: 5px; text-transform: uppercase; opacity: .7; margin-bottom: 20px; }
+        .cta { display: inline-block; padding: 12px 34px; border: 1px solid var(--hover-orange); color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 11px; transition: .4s; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); }
+        .cta:hover { background: var(--hover-orange); color: #000; font-weight: 600; }
+
+        /* Footer & Social Büyük Harf */
+        footer { position: absolute; bottom: 25px; width: 100%; text-align: center; z-index: 60; }
+        .social-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 8px; }
+        .social-links a { 
+            color: rgba(255,255,255,0.5); text-decoration: none; font-size: 9px; 
+            letter-spacing: 1.5px; text-transform: uppercase; /* BÜYÜK HARF YAPILDI */
         }
-        #dynamic-quotes.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
-        .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(24px, 4.5vw, 42px); letter-spacing: 1px; color: #fff; text-shadow: 0 4px 25px rgba(0,0,0,0.9); padding: 0 10px; }
 
-        .static-elements { opacity: 0; animation: fadeIn 2s ease 2s forwards; }
-        .static-sub { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--hover-orange); color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); }
-        .cta:hover { background: var(--hover-orange); border-color: var(--hover-orange); color: #000; font-weight: 600; }
-
-        /* Footer & Social */
-        footer { position: fixed; bottom: 30px; width: 100%; text-align: center; z-index: 100; }
-        .social-links { margin-bottom: 12px; display: flex; justify-content: center; gap: 30px; }
-        .social-links a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; transition: .4s; }
-        .social-links a:hover { opacity: 1; color: var(--hover-orange); }
-        .copyright { font-size: 10px; letter-spacing: 2px; opacity: 0.3; }
-        
-        @keyframes borderDraw { 0% { width: 0; height: 0; opacity: 0; } 50% { width: 100%; height: 0; opacity: 1; } 100% { width: 100%; height: 100%; opacity: 1; } }
-        @keyframes titleReveal { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { to { opacity: 1; } }
-
-        /* Mobil Düzenlemeler */
         @media(max-width:768px){ 
-            nav { padding: 25px 20px; } 
+            nav { padding: 25px 20px; }
             .nav-links { display: none; } 
-            .menu-btn { display: block; position: fixed; top: 25px; right: 20px; } 
-            h2 { font-size: 30px; letter-spacing: 2px; }
-            .static-sub { font-size: 14px; letter-spacing: 3px; }
-            .cta { padding: 12px 30px; font-size: 12px; }
+            .menu-btn { display: block; }
+            .content { justify-content: center; padding-bottom: 80px; }
+            #dynamic-quotes { height: 50px; }
+            .static-sub { margin-bottom: 15px; font-size: 10px; }
             footer { bottom: 20px; }
-            .vignette { background: radial-gradient(circle, transparent 10%, rgba(0,0,0,0.7) 100%); }
         }
     </style>
 </head>
 <body>
 
     <button class="menu-btn" id="mainMenuBtn" onclick="toggleMenu()">☰</button>
+    
     <div class="side-menu" id="sideMenu">
         <span class="close-btn" onclick="toggleMenu()">✕</span>
         <a href="index.html">Anasayfa</a>
@@ -154,7 +133,7 @@
     </div>
 
     <nav>
-        <a href="index.html" class="logo"><span class="thin">ÜMİT</span> <span class="bold">ÖZGÜLER</span></a>
+        <a href="index.html" class="logo"><span style="font-weight:300">ÜMİT</span> <span class="bold">ÖZGÜLER</span></a>
         <div class="nav-links">
             <a href="index.html">Anasayfa</a>
             <a href="about.html">Hakkımda</a>
@@ -169,8 +148,9 @@
         <div class="bg" id="bg2"></div>
         <div class="vignette"></div>
         <div class="grain"></div>
+        
         <div class="content">
-            <div id="initial-title">
+            <div id="initial-ui">
                 <div class="title-wrapper">
                     <div class="title-border"></div>
                     <h2>Gözün Ardındaki Zihin</h2>
@@ -188,94 +168,93 @@
 
     <footer>
         <div class="social-links">
-            <a href="https://www.instagram.com/umitozguler" target="_blank">Instagram</a>
-            <a href="https://x.com/uozguler" target="_blank">X (Twitter)</a>
+            <a href="https://www.instagram.com/umitozguler" target="_blank">INSTAGRAM</a>
+            <a href="https://x.com/uozguler" target="_blank">TWITTER (X)</a>
         </div>
-        <div class="copyright">&copy; 2026 ÜMİT ÖZGÜLER</div>
+        <p style="font-size: 8px; opacity: 0.3; letter-spacing: 2px;">&copy; 2026 ÜMİT ÖZGÜLER</p>
     </footer>
 
     <script>
+        const availableImages = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 22, 23, 24, 25, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 40, 43, 44, 45, 46, 48, 49, 54, 56, 57, 58, 66, 69, 76, 77, 85, 90, 92, 99, 100, 102, 103];
+        
         const quoteDatabase = {
-            makro: ["Makro, evreni küçültür.", "Detay, sonsuzluğu taşır.", "Makro, görünmeyeni büyütür.", "Detay, varoluşu fısıldar.", "Sadelik, derinliğin biçimidir."],
-            portre: ["Portre, yüzün ötesidir.", "Bakış, iç dünyayı ifşa eder.", "Portre, sessiz bir itiraftır.", "Bakış, ruhun eşiğidir.", "Gölge, ruhu açığa çıkarır."],
-            renkli_doga: ["Renk susar, hakikat konuşur.", "Doğal olan, müdahalesiz hakikattir.", "Doğa, sahnesiz konuşur.", "Görünen, görünmeyeni çağırır.", "Işık, hakikati ayıklar."],
-            sokak: ["Fotoğraf, sessiz bir tanıklıktır.", "An, kendiliğinden tamamlanır.", "An, kurgusuz doğar.", "Fotoğraf, zamanın nabzıdır.", "Görüntü, varlığın iz düşümüdür."],
+            makro: ["Makro, evreni küçültür.", "Detay, sonsuzluğu taşır.", "Makro, görünmeyeni büyütür."],
+            portre: ["Portre, yüzün ötesidir.", "Bakış, iç dünyayı ifşa eder.", "Bakış, ruhun eşiğidir."],
+            renkli_doga: ["Renk susar, hakikat konuşur.", "Doğa, sahnesiz konuşur.", "Işık, hakikati ayıklar."],
+            sokak: ["Fotoğraf, sessiz bir tanıklıktır.", "An, kendiliğinden tamamlanır.", "Fotoğraf, zamanın nabzıdır."],
             hayvan: ["Uyum, hayatın ritmidir.", "Gerçek, müdahale kabul etmez.", "Varlık, kendi dilinde konuşur."],
-            kulturel: ["Kültür, zamanın izidir.", "Gerçek, ışıkta arınır.", "Işık, vicdanı görünür kılar."],
-            soyut: ["Siyah beyaz, özün çıplaklığıdır.", "Işık, varlığı soyar.", "Gölge, anlamı derinleştirir.", "Siyah beyaz, zamanı arındırır.", "Siyah beyaz, ruhun dilidir.", "Sadelik, hakikati keskinleştirir."]
+            kulturel: ["Kültür, zamanın izidir.", "Işık, vicdanı görünür kılar."],
+            soyut: ["Siyah beyaz, özün çıplaklığıdır.", "Gölge, anlamı derinleştirir.", "Sadelik, hakikati keskinleştirir."]
         };
 
         const categories = [
             { key: 'makro', imgs: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
             { key: 'portre', imgs: [25,29,30,32,34,36,42,43,81] },
             { key: 'renkli_doga', imgs: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103] },
-            { key: 'sokak', imgs: [1,2,4,5,12,27,28,31,51,52,65,67,72,80,88,89,93,102] },
+            { key: 'sokak', imgs: [1,2,4,5,9,12,27,28,31,51,52,65,67,72,80,88,89,93,102] },
             { key: 'hayvan', imgs: [3,18,44,45,46,47,48,49,50,68,99,100] },
             { key: 'kulturel', imgs: [6,11,26,33,35,60,61,62,63,66,73,74,92] },
             { key: 'soyut', imgs: [7,8,9,20,55,56,57,58,59,64,71,90] }
         ];
 
-        // Ekran görüntündeki mevcut fotoğrafların listesi
-        const availableImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 40, 43, 44, 45, 46, 48, 49, 54, 56, 57, 58, 66, 69, 76, 77, 85, 90, 92, 99, 100, 102, 103];
-
-        const bg1 = document.getElementById("bg1");
-        const bg2 = document.getElementById("bg2");
-        const initialTitle = document.getElementById("initial-title");
-        const dynamicQuotes = document.getElementById("dynamic-quotes");
+        let activeBg = document.getElementById("bg1");
+        let nextBg = document.getElementById("bg2");
+        const quoteBox = document.getElementById("dynamic-quotes");
         const quoteEl = document.getElementById("quote-el");
+        const initialUI = document.getElementById("initial-ui");
         const mainMenuBtn = document.getElementById("mainMenuBtn");
-        
-        let active = bg1;
-        let inactive = bg2;
-        let isFirstTransition = true;
 
-        function getSmartQuote(imgNum) {
-            let categoryKey = 'soyut';
-            for (let cat of categories) { if (cat.imgs.includes(imgNum)) { categoryKey = cat.key; break; } }
-            const quotes = quoteDatabase[categoryKey];
-            return `“${quotes[Math.floor(Math.random() * quotes.length)]}”`;
-        }
-
-        function setImage(el) {
-            // Sadece senin klasöründe olan (ekran görüntüsündeki) fotoğraflardan birini seçer
-            const randomIndex = Math.floor(Math.random() * availableImages.length);
-            const num = availableImages[randomIndex];
-            
-            // Ekran genişliğine göre klasör yolunu belirle
+        function getImgPath(num) {
             const folder = window.innerWidth <= 768 ? 'img/mobile/' : 'img/';
-            const imgPath = `${folder}${num}.webp`;
+            return `${folder}${num}.webp`;
+        }
 
+        function preloadImage(el, callback) {
+            const num = availableImages[Math.floor(Math.random() * availableImages.length)];
             const img = new Image();
-            img.src = imgPath;
-            el.dataset.imgNum = num;
-            img.onload = () => { el.style.backgroundImage = `url('${img.src}')`; };
-            el.classList.remove("zoom-in", "zoom-out");
-            el.classList.add(Math.random() > 0.5 ? "zoom-in" : "zoom-out");
+            img.src = getImgPath(num);
+            img.onload = () => {
+                el.style.backgroundImage = `url('${img.src}')`;
+                el.dataset.imgNum = num;
+                el.classList.remove("zoom-in", "zoom-out");
+                void el.offsetWidth;
+                el.classList.add(Math.random() > 0.5 ? "zoom-in" : "zoom-out");
+                if(callback) callback();
+            };
         }
 
-        function crossFade() {
-            setImage(inactive);
-            if (isFirstTransition) { initialTitle.style.opacity = "0"; } 
-            else { dynamicQuotes.classList.remove("visible"); }
-            
-            setTimeout(() => {
-                if (isFirstTransition) { initialTitle.style.display = "none"; dynamicQuotes.style.display = "flex"; isFirstTransition = false; }
-                inactive.classList.add("active");
-                const currentImgNum = parseInt(inactive.dataset.imgNum);
-                quoteEl.innerText = getSmartQuote(currentImgNum);
-                setTimeout(() => { dynamicQuotes.classList.add("visible"); }, 1500);
-                setTimeout(() => { active.classList.remove("active"); [active, inactive] = [inactive, active]; }, 3000);
-            }, 3000); 
+        function cycle() {
+            quoteBox.classList.remove("visible");
+            if (initialUI.style.opacity !== "0") initialUI.style.opacity = "0";
+
+            preloadImage(nextBg, () => {
+                setTimeout(() => {
+                    nextBg.classList.add("active");
+                    let key = 'soyut';
+                    const num = parseInt(nextBg.dataset.imgNum);
+                    for (let cat of categories) { if (cat.imgs.includes(num)) { key = cat.key; break; } }
+                    quoteEl.innerText = `“${quoteDatabase[key][Math.floor(Math.random() * quoteDatabase[key].length)]}”`;
+                    
+                    setTimeout(() => {
+                        activeBg.classList.remove("active");
+                        quoteBox.classList.add("visible");
+                        [activeBg, nextBg] = [nextBg, activeBg];
+                    }, 3000);
+                }, 1000);
+            });
         }
 
-        function toggleMenu() { 
-            const sideMenu = document.getElementById("sideMenu");
-            sideMenu.classList.toggle("open");
-            mainMenuBtn.classList.toggle("hidden");
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            const isOpen = menu.classList.toggle("open");
+            document.body.classList.toggle("menu-open");
+            mainMenuBtn.style.display = isOpen ? "none" : "block";
         }
 
-        setImage(active);
-        setInterval(crossFade, 9000); 
+        preloadImage(activeBg, () => {
+            activeBg.classList.add("active");
+            setInterval(cycle, 9000);
+        });
     </script>
 </body>
 </html>
