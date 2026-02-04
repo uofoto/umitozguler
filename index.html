@@ -86,7 +86,6 @@
         /* Content Yerleşimi */
         .content { position: relative; z-index: 50; padding: 0 20px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
         
-        /* Titremeyi önlemek için alan korumalı Title Wrapper */
         .title-wrapper { 
             position: relative; 
             display: inline-block; 
@@ -97,7 +96,6 @@
             visibility: visible;
         }
         .title-wrapper.visible { opacity: 1; }
-        /* Geçiş anında display:none yerine visibility kullanıyoruz */
         .title-wrapper.hidden-flow { opacity: 0; visibility: hidden; pointer-events: none; }
 
         h2 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 6vw, 72px); letter-spacing: 4px; }
@@ -133,20 +131,25 @@
         }
 
         .static-elements { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
-        .static-sub { font-size: 13px; letter-spacing: 5px; text-transform: uppercase; opacity: .7; margin-bottom: 20px; }
+        /* Harf aralığı artırılmış alt başlık */
+        .static-sub { font-size: 13px; letter-spacing: 8px; text-transform: uppercase; opacity: .6; margin-bottom: 25px; font-weight: 300; }
+        
+        /* Şeffaf ve ince çerçeveli butonu (CTA) */
         .cta { 
-            display: inline-block; padding: 14px 40px; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            color: #fff; 
-            text-decoration: none; letter-spacing: 3px; font-size: 11px; 
-            transition: .5s cubic-bezier(0.4, 0, 0.2, 1); 
-            background: rgba(255,255,255,0.03); 
-            backdrop-filter: blur(8px);
+            display: inline-block; padding: 15px 45px; 
+            border: 0.5px solid rgba(255,255,255,0.15); /* Çok ince ve silik çerçeve */
+            color: rgba(255,255,255,0.8); 
+            text-decoration: none; letter-spacing: 5px; font-size: 10px; 
+            transition: .6s cubic-bezier(0.4, 0, 0.2, 1); 
+            background: rgba(255,255,255,0.02); 
+            backdrop-filter: blur(5px);
+            text-transform: uppercase;
         }
         .cta:hover { 
-            background: rgba(255,255,255,0.1); 
+            background: rgba(255,255,255,0.08); 
             border-color: var(--hover-orange); 
-            letter-spacing: 4px;
+            color: #fff;
+            letter-spacing: 6px; /* Zarif bir genişleme efekti */
         }
 
         /* Footer & Social */
@@ -162,13 +165,12 @@
             .content { justify-content: center; padding-bottom: 80px; }
             #dynamic-quotes { height: 45px; }
             .quote-text { font-size: 15px; letter-spacing: 0.3px; }
-            .static-sub { margin-bottom: 15px; font-size: 10px; }
+            .static-sub { margin-bottom: 15px; font-size: 9px; letter-spacing: 5px; }
             footer { bottom: 20px; }
         }
     </style>
 </head>
 <body>
-
     <button class="menu-btn" id="mainMenuBtn" onclick="toggleMenu()">☰</button>
     
     <div class="side-menu" id="sideMenu">
@@ -270,7 +272,6 @@
         }
 
         function cycle() {
-            // Başlık alanını sarsmadan gizlemek için visibility sınıfı ekliyoruz
             if (initialUI.classList.contains("visible")) {
                 initialUI.classList.add("hidden-flow");
             }
