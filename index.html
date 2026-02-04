@@ -15,7 +15,7 @@
     <style>
         :root {
             --accent: #c6a96b;
-            --hover-orange: #ff8c00; /* Orijinal Turuncu Geri Döndü */
+            --hover-orange: #ff8c00;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100%; height: 100vh; }
@@ -86,16 +86,19 @@
         /* Content Yerleşimi */
         .content { position: relative; z-index: 50; padding: 0 20px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
         
-        /* Başlık & L Çizgileri Yakınlaştırma (Turuncu Rengi Geri Geldi) */
+        /* Titremeyi önlemek için alan korumalı Title Wrapper */
         .title-wrapper { 
             position: relative; 
             display: inline-block; 
             padding: 12px 25px; 
             margin-bottom: 5px; 
             opacity: 0;
-            transition: opacity 3s ease;
+            transition: opacity 4s cubic-bezier(0.4, 0, 0.2, 1), visibility 4s; 
+            visibility: visible;
         }
         .title-wrapper.visible { opacity: 1; }
+        /* Geçiş anında display:none yerine visibility kullanıyoruz */
+        .title-wrapper.hidden-flow { opacity: 0; visibility: hidden; pointer-events: none; }
 
         h2 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 6vw, 72px); letter-spacing: 4px; }
 
@@ -104,18 +107,33 @@
             position: absolute; 
             width: 25px; 
             height: 25px; 
-            border: 1px solid var(--hover-orange); /* Turuncu Renk */
+            border: 1px solid var(--hover-orange); 
         }
         .title-border::before { top: 0; left: 0; border-bottom: none; border-right: none; }
         .title-border::after { bottom: 0; right: 0; border-top: none; border-left: none; }
 
-        #dynamic-quotes { height: 70px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: 2s; margin: 10px 0; }
+        #dynamic-quotes { 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 0; 
+            transition: 2.5s ease; 
+            margin: 10px 0; 
+        }
         #dynamic-quotes.visible { opacity: 1; }
-        .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(18px, 3.5vw, 36px); color: rgba(255,255,255,0.9); max-width: 90vw; }
+        .quote-text { 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic; 
+            font-size: clamp(16px, 3vw, 30px); 
+            color: rgba(255,255,255,0.9); 
+            letter-spacing: 0.5px; 
+            max-width: 85vw; 
+            line-height: 1.4;
+        }
 
-        /* CTA Buton Yenileme */
-        .static-elements { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .static-sub { font-size: 13px; letter-spacing: 5px; text-transform: uppercase; opacity: .7; margin-bottom: 25px; }
+        .static-elements { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
+        .static-sub { font-size: 13px; letter-spacing: 5px; text-transform: uppercase; opacity: .7; margin-bottom: 20px; }
         .cta { 
             display: inline-block; padding: 14px 40px; 
             border: 1px solid rgba(255,255,255,0.2); 
@@ -127,7 +145,7 @@
         }
         .cta:hover { 
             background: rgba(255,255,255,0.1); 
-            border-color: var(--hover-orange); /* Turuncu Vurgu */
+            border-color: var(--hover-orange); 
             letter-spacing: 4px;
         }
 
@@ -142,7 +160,8 @@
             .nav-links { display: none; } 
             .menu-btn { display: block; }
             .content { justify-content: center; padding-bottom: 80px; }
-            #dynamic-quotes { height: 50px; }
+            #dynamic-quotes { height: 45px; }
+            .quote-text { font-size: 15px; letter-spacing: 0.3px; }
             .static-sub { margin-bottom: 15px; font-size: 10px; }
             footer { bottom: 20px; }
         }
@@ -251,11 +270,12 @@
         }
 
         function cycle() {
-            quoteBox.classList.remove("visible");
+            // Başlık alanını sarsmadan gizlemek için visibility sınıfı ekliyoruz
             if (initialUI.classList.contains("visible")) {
-                initialUI.classList.remove("visible");
-                setTimeout(() => { initialUI.style.display = "none"; }, 3000);
+                initialUI.classList.add("hidden-flow");
             }
+            
+            quoteBox.classList.remove("visible");
 
             preloadImage(nextBg, () => {
                 setTimeout(() => {
