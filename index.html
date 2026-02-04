@@ -62,8 +62,8 @@
             height: 100vh;
             background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(20px);
             z-index: 400; display: flex; flex-direction: column; 
-            padding: 120px 30px; /* Üst boşluk ayarlandı */
-            gap: 15px; /* Link aralıkları daraltıldı */
+            padding: 120px 30px; 
+            gap: 15px; 
             transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .side-menu.open { right: 0; }
@@ -76,7 +76,7 @@
 
         .side-menu a { 
             font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; 
-            font-size: 13px; /* Yazı boyutu rafine edildi */
+            font-size: 13px; 
             letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; 
         }
         .side-menu a:hover { color: var(--hover-orange); }
@@ -91,13 +91,13 @@
         @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.1); } }
         @keyframes zoomOutEffect { from { transform: scale(1.1); } to { transform: scale(1); } }
 
-        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.5) 100%); z-index: 3; }
+        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.6) 100%); z-index: 3; }
         .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.05; mix-blend-mode: overlay; z-index: 4; }
 
         .content { position: relative; z-index: 50; opacity: 0; transform: translateY(30px); animation: fadeUp 2s ease 0.3s forwards; padding: 0 20px; width: 100%; }
         #initial-title { position: relative; transition: opacity 3s ease-in-out; margin-bottom: 20px; }
         .title-wrapper { position: relative; display: inline-block; padding: 20px 40px; }
-        h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 72px); letter-spacing: 4px; opacity: 0; animation: titleReveal 3s ease 1s forwards; }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 72px); letter-spacing: 4px; opacity: 0; animation: titleReveal 3s ease 1s forwards; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
         .title-border::before, .title-border::after { content: ''; position: absolute; width: 0; height: 0; opacity: 0; border: 1.5px solid var(--hover-orange); animation: borderDraw 2s ease 3s forwards; }
         .title-border::before { top: 0; left: 0; border-bottom: none; border-right: none; }
         .title-border::after { bottom: 0; right: 0; border-top: none; border-left: none; }
@@ -109,11 +109,11 @@
             filter: blur(15px); transform: translateY(20px);
         }
         #dynamic-quotes.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
-        .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(24px, 4.5vw, 42px); letter-spacing: 1px; color: #fff; text-shadow: 0 4px 25px rgba(0,0,0,0.8); }
+        .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(24px, 4.5vw, 42px); letter-spacing: 1px; color: #fff; text-shadow: 0 4px 25px rgba(0,0,0,0.9); padding: 0 10px; }
 
         .static-elements { opacity: 0; animation: fadeIn 2s ease 2s forwards; }
-        .static-sub { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; }
-        .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--hover-orange); color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; background: transparent; }
+        .static-sub { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; opacity: .85; margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .cta { display: inline-block; padding: 14px 38px; border: 1px solid var(--hover-orange); color: var(--hover-orange); text-decoration: none; letter-spacing: 2px; font-size: 14px; transition: .4s; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); }
         .cta:hover { background: var(--hover-orange); border-color: var(--hover-orange); color: #000; font-weight: 600; }
 
         /* Footer & Social */
@@ -128,11 +128,16 @@
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { to { opacity: 1; } }
 
+        /* Mobil Düzenlemeler */
         @media(max-width:768px){ 
-            nav { padding: 25px 30px; } 
+            nav { padding: 25px 20px; } 
             .nav-links { display: none; } 
-            .menu-btn { display: block; position: fixed; top: 25px; right: 30px; } 
-            h2 { font-size: 34px; }
+            .menu-btn { display: block; position: fixed; top: 25px; right: 20px; } 
+            h2 { font-size: 30px; letter-spacing: 2px; }
+            .static-sub { font-size: 14px; letter-spacing: 3px; }
+            .cta { padding: 12px 30px; font-size: 12px; }
+            footer { bottom: 20px; }
+            .vignette { background: radial-gradient(circle, transparent 10%, rgba(0,0,0,0.7) 100%); }
         }
     </style>
 </head>
@@ -210,6 +215,9 @@
             { key: 'soyut', imgs: [7,8,9,20,55,56,57,58,59,64,71,90] }
         ];
 
+        // Ekran görüntündeki mevcut fotoğrafların listesi
+        const availableImages = [1, 6, 9, 12, 13, 14, 15, 16, 22, 23, 25, 27, 28, 29, 30, 32, 34, 40, 44, 45, 46, 48, 54, 56, 58, 69, 76, 77, 99, 100, 102, 103];
+
         const bg1 = document.getElementById("bg1");
         const bg2 = document.getElementById("bg2");
         const initialTitle = document.getElementById("initial-title");
@@ -229,9 +237,16 @@
         }
 
         function setImage(el) {
-            const num = Math.floor(Math.random() * 105) + 1;
+            // Sadece senin klasöründe olan (ekran görüntüsündeki) fotoğraflardan birini seçer
+            const randomIndex = Math.floor(Math.random() * availableImages.length);
+            const num = availableImages[randomIndex];
+            
+            // Ekran genişliğine göre klasör yolunu belirle
+            const folder = window.innerWidth <= 768 ? 'img/mobile/' : 'img/';
+            const imgPath = `${folder}${num}.webp`;
+
             const img = new Image();
-            img.src = `img/${num}.webp`;
+            img.src = imgPath;
             el.dataset.imgNum = num;
             img.onload = () => { el.style.backgroundImage = `url('${img.src}')`; };
             el.classList.remove("zoom-in", "zoom-out");
