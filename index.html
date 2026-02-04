@@ -131,13 +131,11 @@
         }
 
         .static-elements { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
-        /* Harf aralığı artırılmış alt başlık */
         .static-sub { font-size: 13px; letter-spacing: 8px; text-transform: uppercase; opacity: .6; margin-bottom: 25px; font-weight: 300; }
         
-        /* Şeffaf ve ince çerçeveli butonu (CTA) */
         .cta { 
             display: inline-block; padding: 15px 45px; 
-            border: 0.5px solid rgba(255,255,255,0.15); /* Çok ince ve silik çerçeve */
+            border: 0.5px solid rgba(255,255,255,0.15); 
             color: rgba(255,255,255,0.8); 
             text-decoration: none; letter-spacing: 5px; font-size: 10px; 
             transition: .6s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -149,7 +147,7 @@
             background: rgba(255,255,255,0.08); 
             border-color: var(--hover-orange); 
             color: #fff;
-            letter-spacing: 6px; /* Zarif bir genişleme efekti */
+            letter-spacing: 6px;
         }
 
         /* Footer & Social */
@@ -238,7 +236,7 @@
         const categories = [
             { key: 'makro', imgs: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
             { key: 'portre', imgs: [25,29,30,32,34,36,42,43,81] },
-            { key: 'renkli_doga', imgs: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103] },
+            { key: 'renkli_doga', imgs: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103,105] },
             { key: 'sokak', imgs: [1,2,4,5,9,12,27,28,31,51,52,65,67,72,80,88,89,93,102] },
             { key: 'hayvan', imgs: [3,18,44,45,46,47,48,49,50,68,99,100] },
             { key: 'kulturel', imgs: [6,11,26,33,35,60,61,62,63,66,73,74,92] },
@@ -276,21 +274,28 @@
                 initialUI.classList.add("hidden-flow");
             }
             
+            // 1. Önce mevcut sözü kapat
             quoteBox.classList.remove("visible");
 
             preloadImage(nextBg, () => {
                 setTimeout(() => {
+                    // 2. Yeni fotoğrafı getir
                     nextBg.classList.add("active");
-                    let key = 'soyut';
-                    const num = parseInt(nextBg.dataset.imgNum);
-                    for (let cat of categories) { if (cat.imgs.includes(num)) { key = cat.key; break; } }
-                    quoteEl.innerText = `“${quoteDatabase[key][Math.floor(Math.random() * quoteDatabase[key].length)]}”`;
                     
+                    // 3. Sözü hemen değiştirme, fotoğrafın geçişini bekle
                     setTimeout(() => {
-                        activeBg.classList.remove("active");
+                        let key = 'soyut';
+                        const num = parseInt(nextBg.dataset.imgNum);
+                        for (let cat of categories) { if (cat.imgs.includes(num)) { key = cat.key; break; } }
+                        
+                        // 4. Yeni sözü şimdi ata ve görünür yap
+                        quoteEl.innerText = `“${quoteDatabase[key][Math.floor(Math.random() * quoteDatabase[key].length)]}”`;
                         quoteBox.classList.add("visible");
+                        
+                        // 5. Eski katmanı temizle
+                        activeBg.classList.remove("active");
                         [activeBg, nextBg] = [nextBg, activeBg];
-                    }, 3000);
+                    }, 1500); // Fotoğrafın geçiş süresiyle senkronize edildi
                 }, 1000);
             });
         }
