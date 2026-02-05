@@ -71,7 +71,7 @@
         .hero { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .bg { 
             position: absolute; inset: 0; background-size: cover; background-position: center; 
-            filter: brightness(1.1); transition: opacity 3s ease-in-out; 
+            filter: brightness(1.5); transition: opacity 3s ease-in-out; 
             opacity: 0; z-index: 1; transform: scale(1);
         }
         .bg.active { opacity: 1; z-index: 2; }
@@ -80,7 +80,7 @@
         @keyframes zoomInEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
         @keyframes zoomOutEffect { from { transform: scale(1.15); } to { transform: scale(1); } }
 
-        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%); z-index: 3; pointer-events: none; }
+        .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.0.3) 100%); z-index: 3; pointer-events: none; }
         .grain { pointer-events: none; position: absolute; inset: 0; background: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.06; mix-blend-mode: overlay; z-index: 4; }
 
         /* Content Yerleşimi */
@@ -312,4 +312,5 @@
     </script>
 </body>
 </html>
+
 
