@@ -131,7 +131,6 @@
         }
 
         .static-elements { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
-        .static-sub { font-size: 13px; letter-spacing: 8px; text-transform: uppercase; opacity: .6; margin-bottom: 25px; font-weight: 300; }
         
         .cta { 
             display: inline-block; padding: 15px 45px; 
@@ -163,7 +162,6 @@
             .content { justify-content: center; padding-bottom: 80px; }
             #dynamic-quotes { height: 45px; }
             .quote-text { font-size: 15px; letter-spacing: 0.3px; }
-            .static-sub { margin-bottom: 15px; font-size: 9px; letter-spacing: 5px; }
             footer { bottom: 20px; }
         }
     </style>
@@ -181,7 +179,12 @@
     </div>
 
     <nav>
-        <a href="index.html" class="logo"><span style="font-weight:300">ÜMİT</span> <span class="bold">ÖZGÜLER</span></a>
+        <a href="index.html" class="logo">
+            <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                <div><span style="font-weight:300">ÜMİT</span> <span class="bold">ÖZGÜLER</span></div>
+                <span style="font-size: 8px; letter-spacing: 5.2px; opacity: 0.6; font-weight: 300;">FINE ART PHOTOGRAPHY</span>
+            </div>
+        </a>
         <div class="nav-links">
             <a href="index.html">Anasayfa</a>
             <a href="about.html">Hakkımda</a>
@@ -206,7 +209,6 @@
                 <p class="quote-text" id="quote-el"></p>
             </div>
             <div class="static-elements">
-                <p class="static-sub">Fine Art Photography</p>
                 <a href="portfolio.html" class="cta">KOLEKSİYONU KEŞFET</a>
             </div>
         </div>
@@ -274,28 +276,23 @@
                 initialUI.classList.add("hidden-flow");
             }
             
-            // 1. Önce mevcut sözü kapat
             quoteBox.classList.remove("visible");
 
             preloadImage(nextBg, () => {
                 setTimeout(() => {
-                    // 2. Yeni fotoğrafı getir
                     nextBg.classList.add("active");
                     
-                    // 3. Sözü hemen değiştirme, fotoğrafın geçişini bekle
                     setTimeout(() => {
                         let key = 'soyut';
                         const num = parseInt(nextBg.dataset.imgNum);
                         for (let cat of categories) { if (cat.imgs.includes(num)) { key = cat.key; break; } }
                         
-                        // 4. Yeni sözü şimdi ata ve görünür yap
                         quoteEl.innerText = `“${quoteDatabase[key][Math.floor(Math.random() * quoteDatabase[key].length)]}”`;
                         quoteBox.classList.add("visible");
                         
-                        // 5. Eski katmanı temizle
                         activeBg.classList.remove("active");
                         [activeBg, nextBg] = [nextBg, activeBg];
-                    }, 1500); // Fotoğrafın geçiş süresiyle senkronize edildi
+                    }, 1500);
                 }, 1000);
             });
         }
@@ -315,5 +312,3 @@
     </script>
 </body>
 </html>
-
-
