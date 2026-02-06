@@ -88,29 +88,31 @@
     </span>
 </a>
                 <div class="hidden md:flex space-x-12">
-                    <a href="../index.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1">Ana Sayfa</a>
-                    <a href="../about.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1">Hakkımda</a>
-                    <a href="../portfolio.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1">Portfolyo</a>
-                    <a href="../dusunceler.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Düşünceler</a>
-                    <a href="../contact.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1">İletişim</a>
+                    <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
+                    <a href="../analizler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Analizler</a>
+                    <a href="../dusunceler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] text-brand-orange py-1">Düşünceler</a>
+                    <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[60]">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+
+                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
+                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
+                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
+                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
                 </button>
             </div>
         </div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-dark z-50 shadow-2xl md:hidden flex flex-col pt-32 px-8">
-            <div class="menu-line"></div>
-            <div class="space-y-4 flex flex-col items-start text-xs font-semibold uppercase tracking-[0.2em]">
-                <a href="../index.html" class="hover:text-brand-orange transition-colors">Ana Sayfa</a>
-                <a href="../about.html" class="hover:text-brand-orange transition-colors">Hakkımda</a>
-                <a href="../portfolio.html" class="hover:text-brand-orange transition-colors">Portfolyo</a>
-                <a href="../dusunceler.html" class="text-brand-gold">Düşünceler</a>
-                <a href="../contact.html" class="hover:text-brand-orange transition-colors">İletişim</a>
-            </div>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl">
+            <div id="menu-line" class="absolute left-0 top-0 w-[2px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
+            <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white">Ana Sayfa</a>
+            <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white">Hakkımda</a>
+            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white">Portfolyo</a>
+            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-2 text-white">Analizler</a>
+            <a href="../dusunceler.html" class="text-brand-orange font-bold py-2">Düşünceler</a>
+            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white">İletişim</a>
+        </div>
         </div>
         <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
     </nav>
