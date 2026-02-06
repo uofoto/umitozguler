@@ -55,10 +55,7 @@
             animation-delay: 0.3s;
         }
 
-        /* Üst Menü Linkleri İçin Alt Çizgi Efekti */
-        .nav-link-custom {
-            position: relative;
-        }
+        .nav-link-custom { position: relative; }
         .nav-link-custom::after {
             content: '';
             position: absolute;
@@ -69,9 +66,7 @@
             background-color: #ff8c00;
             transition: width 0.3s ease;
         }
-        .nav-link-custom:hover::after {
-            width: 100%;
-        }
+        .nav-link-custom:hover::after { width: 100%; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -80,14 +75,15 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
-    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-    </div>
-    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-        FINE ART PHOTOGRAPHY
-    </span>
-</a>
-               <div class="hidden md:flex space-x-12">
+                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                    </div>
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                        FINE ART PHOTOGRAPHY
+                    </span>
+                </a>
+
+                <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
                     <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
                     <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
@@ -105,7 +101,7 @@
         </div>
 
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl">
-            <div id="menu-line" class="absolute left-0 top-0 w-[2px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
+            <div class="menu-line"></div>
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white">Hakkımda</a>
             <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white">Portfolyo</a>
@@ -113,11 +109,10 @@
             <a href="../dusunceler.html" class="text-brand-orange font-bold py-2">Düşünceler</a>
             <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white">İletişim</a>
         </div>
-        </div>
         <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
     </nav>
 
-    <article class="pt-32 pb-20 px-6 flex-grow">
+    <article class="pt-48 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto">
             
             <div class="text-center mb-10">
@@ -157,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="mt-14 mb-14">
                     <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div>
                 </div>
@@ -170,11 +165,11 @@
                 <p>
                     Bir fotoğrafçı, deklanşöre bastığı anda sadece ışığı değil, duyguyu, hikayeyi ve hatta geçmişi ve geleceği de kayıt altına alır. Bu kayıt, ne kadar doğal ve kurgudan uzak olursa, etkisi o denli güçlü olur. Hayatın kendi doğal akışı içinde, müdahale edilmemiş, sahnelenmemiş anlar, izleyiciyle çok daha samimi bir bağ kurar. Bir çocuğun oyun oynarkenki saf neşesi, yaşlı bir çiftçinin yorgun ama bilge bakışları veya bir dağ yamacında açan tek bir çiçeğin zarafeti... Bunlar, kurgunun asla taklit edemeyeceği, gerçekliğin kendisinden fışkıran anlardır.
                 </p>
-                <p>
-                    <blockquote class="border-l-2 border-brand-gold pl-6 my-10 italic text-white/80 text-lg md:text-xl">
-                        “Fotoğraf gerçeği yakalar. Gerçek, tek bir yorumu olmayan, ancak binlerce farklı çağrışım uyandıran bir aynadır.”
-                    </blockquote>
-                </p>
+                
+                <blockquote class="border-l-2 border-brand-gold pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
+                    “Fotoğraf gerçeği yakalar. Gerçek, tek bir yorumu olmayan, ancak binlerce farklı çağrışım uyandıran bir aynadır.”
+                </blockquote>
+
                 <p>
                     <strong>Karar anı</strong>, fotoğrafçılıkta yalnızca teknik bir terim değil, aynı zamanda felsefi bir duruştur. O anı yakalamak, fotoğrafçının dünyayla kurduğu sezgisel bağın bir göstergesidir. Sahneyi önceden tasarlamak yerine, anın akışına kendinizi bırakmak ve o mucizevi kesişim noktasını ustaca yakalamak, izleyicide çok daha güçlü bir etki bırakır. Çünkü o an, tektir, bir daha asla tekrarlanmayacaktır ve bu eşsizlik, fotoğrafın ruhuna işler.
                 </p>
@@ -191,51 +186,42 @@
                     <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-widest font-medium">Twitter</a>
                 </div>
             </div>
-
-            <div class="mb-12 pt-8 border-t border-white/10 flex justify-between items-center text-xs text-gray-500 tracking-widest uppercase text-center font-medium">
+            <div class="mb-12 pt-8 border-t border-white/10 text-xs text-gray-500 tracking-widest uppercase text-center font-medium">
                 <span class="w-full text-center">Yazar: Ümit Özgüler</span>
             </div>
         </div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
-        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">
-            &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
-        </p>
+        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menuBtn = document.getElementById('menu-toggle');
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('menu-overlay');
-        const icon = document.getElementById('menu-icon');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
 
         function toggleMenu() {
             menu.classList.toggle('active');
             if (overlay) overlay.classList.toggle('hidden');
             document.body.classList.toggle('no-scroll');
             
-            if (menu.classList.contains('active')) {
-                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-            } else {
-                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            }
+            line1.classList.toggle('rotate-45');
+            line1.classList.toggle('translate-y-2');
+            line2.classList.toggle('opacity-0');
+            line3.classList.toggle('-rotate-45');
+            line3.classList.toggle('-translate-y-2');
         }
 
-        menuBtn.onclick = toggleMenu;
+        menuBtn.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', toggleMenu);
 
-        function shareOnWhatsApp() {
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank');
-        }
-        function shareOnFacebook() {
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600');
-        }
-        function shareOnTwitter() {
-            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank');
-        }
+        function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); }
+        function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); }
+        function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
     </script>
 </body>
-
 </html>
-
-
