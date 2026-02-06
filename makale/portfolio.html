@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolyo | Ümit Özgüler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        'brand-black': '#050505', 
+                        'brand-dark': '#0f0f0f', 
+                        'brand-gold': '#c5a059',
+                        'brand-orange': '#ff8c00' 
+                    },
+                    fontFamily: { sans: ['"Inter"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .page-animate { animation: fadeIn 1s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .masonry-grid { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        
+        .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; }
+        .filter-btn.active { color: #ff8c00; border-bottom: 1px solid #ff8c00; }
+        
+        .photo-card img { filter: grayscale(100%); transition: all 0.6s ease; }
+        .photo-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        
+        .nav-link-custom { position: relative; }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ff8c00;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after { width: 100%; }
+
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active { transform: translateX(0); }
+        
+        @keyframes lineDown {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+        .menu-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            background-color: #ff8c00;
+            height: 0;
+        }
+        #mobile-menu.active .menu-line {
+            animation: lineDown 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        #lightbox { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.9); }
+        .nav-area:hover { color: #ff8c00; background: rgba(255,255,255,0.02); }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="index.html" class="text-xl md:text-2xl tracking-[0.2em] text-white">
+                <span class="font-normal">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-10">
+                <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Ana Sayfa</a>
+                <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Hakkımda</a>
+                <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1">Portfolyo</a>
+                <a href="dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Düşünceler</a>
+                <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">İletişim</a>
+            </div>
+
+            <button id="hamburger-btn" class="md:hidden text-white focus:outline-none relative z-[110]">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-dark border-l border-white/10 md:hidden flex flex-col pt-32 px-8">
+            <div class="menu-line"></div>
+            <div class="flex flex-col space-y-4 text-left">
+                <a href="index.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Portfolyo</a>
+                <a href="dusunceler.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">İletişim</a>
+            </div>
+        </div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
+    </nav>
+
+    <section class="pt-40 pb-12 text-center px-4">
+        <h1 class="text-2xl md:text-3xl font-bold text-white mb-6 tracking-tight uppercase">Koleksiyon</h1>
+        <div class="w-20 h-[2px] bg-brand-orange mx-auto mb-10"></div>
+        
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 border-b border-white/5 pb-6">
+            <button class="filter-btn active text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('makro', this)">Makro</button>
+            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('portre', this)">Portre</button>
+            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('renkli_doga', this)">Doğa</button>
+            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('sokak', this)">Sokak</button>
+            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('hayvan', this)">Uyum</button>
+            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('kulturel', this)">Kültür</button>
+            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('soyut', this)">Soyut</button>
+        </div>
+    </section>
+
+    <section class="pb-24 px-6">
+        <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
+        <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
+    </section>
+
+    <footer class="mt-auto py-12 border-t border-white/5 text-center">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500 font-light">
+            © 2026 ÜMİT ÖZGÜLER. TÜM HAKLARI SAKLIDIR.
+        </p>
+    </footer>
+
+    <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white hover:text-brand-orange z-[2100] transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        
+        <div onclick="changePhoto(event, -1)" class="nav-area left-0 absolute h-full w-[15%] flex items-center justify-center cursor-pointer">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-width="1.5"></path></svg>
+        </div>
+
+        <div class="relative max-w-[85vw] md:max-w-[75vw] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" class="max-h-[80vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-300">
+            <div class="w-full mt-6">
+                <p id="photo-label" class="py-1 text-center text-brand-orange uppercase tracking-[0.6em] text-[10px] font-light"></p>
+                <p id="photo-description" class="text-center text-gray-200 italic text-[15px] mt-3 font-light max-w-3xl mx-auto px-8 leading-relaxed"></p>
+            </div>
+        </div>
+
+        <div onclick="changePhoto(event, 1)" class="nav-area right-0 absolute h-full w-[15%] flex items-center justify-center cursor-pointer">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-width="1.5"></path></svg>
+        </div>
+    </div>
+
+    <script>
+// Her fotoğraf için ayrı değerlendirme metni listesi
+const photoComments = {
+    "3": "Işığın siyah-beyaz tonlardaki dramatik geçişleri sahneye zamansız bir derinlik katarken, çocuk ile köpek arasındaki yüz yüze kompozisyon, izleyiciyi evrensel bir masumiyet durağına davet ediyor. Bu görsel anlatı, insan zihninde 'güven' ve 'bağ kurma' gibi en temel duyguları harekete geçirerek; saf sadakatin ve korumasızlığın yarattığı o naif gücü kalbinizde hissettiriyor.",
+    "18": "Ters ışıkla vurgulanan siluetler ve katmanlı dağ sıraları, sahneye mistik bir derinlik katarken; doğanın bu sessiz anı, izleyicide dinginlik ve evrenin büyüklüğü karşısında huzurlu bir yalnızlık duygusu uyandırıyor. Şafağın vakur ışığında canlının doğayla kurduğu bu dilsiz bağ, modern dünyanın ötesinde, kadim bir tevazu ve sükûnet hikayesi anlatıyor.",
+    "44": "Düşük bakış açısı ve merkezi kompozisyon, yolun sonsuzluk hissini pekiştirirken; arka plandaki puslu dağlar ile ön plandaki sürünün ritmik hareketi arasında kusursuz bir derinlik dengesi kurulmuş. Bu görsel anlatı, izleyicide dingin bir 'ait olma' duygusu uyandırıyor; modern dünyanın karmaşasından uzak, toprağın ve doğanın kadim ritmine yapılan o sessiz, vakur yolculuğun huzurunu kalbinizde hissettiriyor.",
+    "45": "Dinamik bir kompozisyonla yakalanan sürünün çapraz ilerleyişi, kadrajda güçlü bir hareket duygusu yaratırken; ışığın objeler üzerindeki yumuşak dağılımı, toz bulutlarıyla birleşerek sahneye sinematik bir atmosfer kazandırıyor. Bu görsel anlatı, izleyicide kadim bir göçün parçası olma hissini uyandırırken; doğanın döngüsü içindeki o bitmek bilmeyen devinimi, umut dolu bir kararlılık ve kolektif bir ruhla kalbe işliyor.",
+    "46": "Geniş açının yarattığı derinlikte, bulutlu gökyüzü ile dağların dokusu arasındaki sert siyah-beyaz tonlar, sahneye epik bir atmosfer katıyor. Bu görsel kompozisyon, izleyicide çocukluğun masumiyeti ile doğanın sert gerçekliği arasındaki o dilsiz dayanışmayı hissettirirken; zamansız bir sadelik ve vakur bir kabulleniş duygusu uyandırıyor.",
+    "47": "Yüksek kontrastlı siyah-beyaz tercihinden aldığı güçle, dokusal detayları ve ışık-gölge dengesini dramatik bir anlatı unsuru olarak kullanan bu kare; izleyicide derin bir emektarlık ve sessiz bir dayanışma duygusu uyandırırken, omuz omuza verilmiş bir yaşam yükünü teknik bir paralellikle vurguluyor.",
+    "48": "Yüksek kontrastlı siyah-beyaz tonlar, figürün üzerindeki ışık ve gölge oyunlarını keskinleştirerek dramatik bir derinlik yaratırken; dokuların belirginliği fotoğrafın belgesel gücünü zirveye taşıyor. Bu kompozisyon, izleyicide emeğin ve zamanın yüze kazıdığı o kadim bilgeliğe karşı derin bir saygı uyandırırken; yaşanmışlığın vakur sessizliğini ve insan ruhunun sarsılmaz direncini iliklerinize kadar hissettiriyor.",
+    "49": "Fotoğraf; emeğin, çocukluğun ve doğayla iç içe olmanın getirdiği o 'saf ama sert' gerçekliği, hiçbir süslemeye kaçmadan doğrudan kalbe aktarıyor.",
+    "50": "Yüksek bir bakış açısından yakalanan geniş ölçekli kompozisyonuyla, dik bir yamaçta ilerleyen sürünün ritmik hattını sunan bu kare; izleyicide hayranlık ve coğrafyanın zorlu koşullarına karşı geliştirilen o sarsılmaz uyum duygusunu tetiklerken, doğanın heybeti karşısında yaşamın azmini teknik bir ustalıkla belgeliyor.",
+    "66": "Yüksek bir bakış açısından yakalanan bu yalın kompozisyon, semazenlerin ritmik hareketini ve tennurelerin form birliğini vurgulayarak; izleyicide dünyevi karmaşadan arınmış bir hafiflik ve içsel bir denge duygusu uyandırırken, sessiz bir teslimiyetin manevi sükûnetini minimalist bir estetikle sunuyor.",
+    "68": "Sert güneş ışığının yarattığı keskin gölgeler ve yüksek doku belirginliğiyle kırsal yaşamın yalınlığını sunan bu kare; izleyicide doğaya uyum ve gündelik yaşamın sessiz ritmine dair bir huzur uyandırırken, insan ve hayvan arasındaki kadim iş birliğini samimi bir dille aktarıyor.",
+    "92": "Pencereden süzülen tek yönlü ışığın yarattığı dramatik üçgensel aydınlatma, izleyicide zanaatın sessiz bilgeliğine dair bir hayranlık uyandırırken; topraktan bir form var etmenin verdiği derin zihinsel dinginliği ve emeğin kutsallığını karanlığın içindeki bu ışıklı odakta topluyor.",
+    "99": "Yüksek enstantane hızıyla dondurulmuş dinamik bir anı, toz bulutlarının yarattığı sinematik bir derinlik ve sığ alan derinliğiyle ustalıkla sunan bu kare; izleyicide özgürlük ve yüksek adrenalin duygularını tetiklerken, kadim bir bozkır ruhunu modern bir estetikle yeniden canlandırıyor.",
+    "100": "Sığ alan derinliği ve yoğun toz bulutlarının yarattığı sinematik soyutlama, izleyicide sonsuz bir bozkırda süregelen epik bir mücadele ve özgürlük duygusu uyandırırken; ışığın toz zerreleri üzerindeki masalsı dağılımı, hareketin enerjisini zamanın ötesinde bir gelenekle birleştiriyor."
+};
+        const config = [
+            { category: 'makro', label: 'Makro Doğa Detayları', images: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
+            { category: 'portre', label: 'Siyah Beyaz Portreler', images: [25,29,30,32,34,36,42,43,81] },
+            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları', images: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103,105] },
+            { category: 'sokak', label: 'Sokak Hikayeleri', images: [1,2,4,5,12,27,28,31,51,52,65,67,72,80,88,89,93,102] },
+            { category: 'hayvan', label: 'Uyum', images: [3,18,44,45,46,47,48,49,50,68,99,100] },
+            { category: 'kulturel', label: 'Kültürel Yaşam', images: [6,11,26,33,35,60,61,62,63,66,73,74,92] },
+            { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59,64,71,90] }
+        ];
+
+        let currentCategory = 'makro';
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let activeImages = [];
+        let currentIndex = 0;
+
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('no-scroll');
+            const icon = document.getElementById('menu-icon');
+            if (mobileMenu.classList.contains('active')) {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        }
+
+        hamburgerBtn.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
+
+        function loadGallery() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            const group = config.find(g => g.category === currentCategory);
+            activeImages = [...group.images].reverse();
+            const displayImages = activeImages.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+            displayImages.forEach((id, index) => {
+                const item = document.createElement('div');
+                item.className = "masonry-item photo-card cursor-pointer";
+                item.onclick = () => openLightbox((currentPage - 1) * itemsPerPage + index);
+                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${id}.webp" loading="lazy" class="w-full block"></div>`;
+                container.appendChild(item);
+            });
+            renderPagination(Math.ceil(activeImages.length / itemsPerPage));
+        }
+
+        function renderPagination(total) {
+            const ctrl = document.getElementById('pagination-controls');
+            ctrl.innerHTML = '';
+            if (total <= 1) return;
+            for (let i = 1; i <= total; i++) {
+                const b = document.createElement('button');
+                b.innerText = i;
+                b.className = `w-10 h-10 border border-white/10 text-xs transition-colors ${i === currentPage ? 'bg-brand-orange text-black font-bold' : 'text-brand-orange hover:bg-white/5'}`;
+                b.onclick = () => { currentPage = i; loadGallery(); window.scrollTo({top: 350, behavior: 'smooth'}); };
+                ctrl.appendChild(b);
+            }
+        }
+
+        function filterGallery(cat, btn) {
+            currentCategory = cat; currentPage = 1;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadGallery();
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const lb = document.getElementById('lightbox');
+            updateLightboxContent();
+            lb.classList.remove('hidden');
+            setTimeout(() => lb.style.opacity = "1", 50);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.style.opacity = "0";
+            setTimeout(() => { lb.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
+        }
+
+        function updateLightboxContent() {
+            const id = activeImages[currentIndex];
+            const img = document.getElementById('lightbox-img');
+            const label = document.getElementById('photo-label');
+            const description = document.getElementById('photo-description');
+
+            img.style.opacity = "0";
+            setTimeout(() => {
+                img.src = `img/${id}.webp`;
+                img.onload = () => img.style.opacity = "1";
+            }, 150);
+
+            const group = config.find(g => g.category === currentCategory);
+            label.innerText = group ? group.label : "";
+
+            const comment = photoComments[id.toString()];
+            description.innerText = comment ? comment : "";
+        }
+
+        function changePhoto(event, dir) {
+            if (event) event.stopPropagation();
+            currentIndex = (currentIndex + dir + activeImages.length) % activeImages.length;
+            updateLightboxContent();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const lb = document.getElementById('lightbox');
+            if (lb.classList.contains('hidden')) return;
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowRight") changePhoto(null, 1);
+            if (e.key === "ArrowLeft") changePhoto(null, -1);
+        });
+
+        loadGallery();
+    </script>
+</body>
+</html>
