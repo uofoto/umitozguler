@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neden Siyah Beyaz? | Ümit Özgüler</title>
@@ -27,8 +34,9 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
+        .no-scroll { overflow: hidden; }
         
-        /* Sağdan Açılan Menü Konfigürasyonu */
+        /* MENÜ DÜZENLEMESİ */
         #mobile-menu {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
@@ -54,10 +62,7 @@
             animation-delay: 0.3s;
         }
 
-        /* Üst Menü Linkleri İçin Alt Çizgi Efekti */
-        .nav-link-custom {
-            position: relative;
-        }
+        .nav-link-custom { position: relative; }
         .nav-link-custom::after {
             content: '';
             position: absolute;
@@ -68,18 +73,15 @@
             background-color: #ff8c00;
             transition: width 0.3s ease;
         }
-        .nav-link-custom:hover::after {
-            width: 100%;
-        }
-        .no-scroll { overflow: hidden; }
+        .nav-link-custom:hover::after { width: 100%; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
+                <a href="../index.html" class="flex flex-col items-center group relative z-40">
                     <div class="text-2xl tracking-widest text-white transition-colors leading-none">
                         <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                     </div>
@@ -96,7 +98,7 @@
                     <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
                 </div>
 
-                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
+                <button id="menu-toggle-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
@@ -104,16 +106,16 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl">
-            <div id="menu-line" class="absolute left-0 top-0 w-[2px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
-            <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white">Ana Sayfa</a>
-            <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white">Hakkımda</a>
-            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white">Portfolyo</a>
-            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-2 text-white">Analizler</a>
-            <a href="../dusunceler.html" class="text-brand-orange font-bold py-2">Düşünceler</a>
-            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white">İletişim</a>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
+            <div class="menu-line"></div>
+            <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
+            <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
+            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
+            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Analizler</a>
+            <a href="../dusunceler.html" class="text-brand-orange font-bold py-1 text-[11px] uppercase tracking-[0.15em]">Düşünceler</a>
+            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
     </nav>
 
     <article class="pt-32 pb-20 px-6 flex-grow">
@@ -209,7 +211,7 @@
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('menu-toggle');
+        const menuBtn = document.getElementById('menu-toggle-btn');
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('menu-overlay');
         const line1 = document.getElementById('line1');
@@ -218,7 +220,7 @@
 
         function toggleMenu() {
             menu.classList.toggle('active');
-            if (overlay) overlay.classList.toggle('hidden');
+            overlay.classList.toggle('hidden');
             document.body.classList.toggle('no-scroll');
             
             line1.classList.toggle('rotate-45');
@@ -228,18 +230,12 @@
             line3.classList.toggle('-translate-y-2');
         }
 
-        menuBtn.addEventListener('click', toggleMenu);
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if (overlay) overlay.addEventListener('click', toggleMenu);
 
-        function shareOnWhatsApp() {
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank');
-        }
-        function shareOnFacebook() {
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600');
-        }
-        function shareOnTwitter() {
-            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank');
-        }
+        function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); }
+        function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); }
+        function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
     </script>
 </body>
 </html>
