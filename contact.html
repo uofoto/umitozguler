@@ -47,6 +47,7 @@
         }
         .nav-link-custom:hover::after { width: 100%; }
 
+        /* MENÜ DÜZENLEMESİ */
         #mobile-menu {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
@@ -71,10 +72,10 @@
 
 <body class="bg-brand-black text-white font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
+                <a href="../index.html" class="flex flex-col items-center group relative z-40">
                     <div class="text-2xl tracking-widest text-white transition-colors leading-none">
                         <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                     </div>
@@ -92,7 +93,7 @@
                     <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold">İletişim</a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[120]">
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -100,18 +101,18 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 z-[110] shadow-2xl md:hidden flex flex-col pt-32 px-8">
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[100] border-l border-white/5 shadow-2xl md:hidden flex flex-col pt-32 px-6">
             <div class="menu-line"></div>
             <div class="space-y-6 flex flex-col">
-                <a href="index.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
-                <a href="portfolio.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Portfolyo</a>
-                <a href="analizler.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Analizler</a>
-                <a href="dusunceler.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
-                <a href="contact.html" class="text-[13px] font-semibold uppercase tracking-[0.15em] text-brand-gold">İletişim</a>
+                <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Portfolyo</a>
+                <a href="analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Analizler</a>
+                <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
+                <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">İletişim</a>
             </div>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[100] md:hidden"></div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
     </nav>
 
     <section class="flex-grow flex items-center justify-center pt-32 pb-20 px-4">
