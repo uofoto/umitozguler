@@ -200,9 +200,32 @@
             document.body.classList.toggle('no-scroll');
         });
 
-        function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); }
-        function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); }
-        function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
+        // Bildirim gönderme fonksiyonu
+        function paylasimiBildir(platform) {
+            fetch("https://formspree.io/f/xgolegaa", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mesaj: "Bir okuyucu makalenizi paylaştı!",
+                    makale: document.title,
+                    url: window.location.href,
+                    platform: platform
+                })
+            }).catch(error => console.log('Bildirim gönderilemedi.'));
+        }
+
+        function shareOnWhatsApp() { 
+            paylasimiBildir('WhatsApp');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); 
+        }
+        function shareOnFacebook() { 
+            paylasimiBildir('Facebook');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); 
+        }
+        function shareOnTwitter() { 
+            paylasimiBildir('Twitter');
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); 
+        }
     </script>
 </body>
 </html>
