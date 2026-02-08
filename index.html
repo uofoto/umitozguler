@@ -11,19 +11,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ümit Özgüler | Fine Art Photography</title>
+    
+    <link rel="preload" as="image" href="img/1.webp" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --accent: #c6a96b;
             --hover-orange: #ff8c00;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        /* Siyah ekran patlamasını önlemek için body rengini yumuşattık */
-        body { background: #0a0a0a; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100%; height: 100vh; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100%; height: 100vh; }
         body.menu-open { overflow: hidden; }
 
-        /* Navigation */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
@@ -62,7 +62,6 @@
         .side-menu a { font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
         .close-btn { position: absolute; top: 25px; right: 25px; font-size: 24px; color: #fff; cursor: pointer; }
 
-        /* Hero & Background */
         .hero { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .bg { 
             position: absolute; inset: 0; background-size: cover; background-position: center; 
@@ -80,11 +79,17 @@
 
         .content { position: relative; z-index: 50; padding: 0 20px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
         
+        /* DOKUNUŞ: Silikten belirgine (Opacity odaklı) ve yumuşak süzülme */
         .title-wrapper { 
             position: relative; display: inline-block; padding: 12px 25px; margin-bottom: 5px; 
-            opacity: 0; transition: opacity 2.5s ease; 
+            opacity: 0; /* Tamamen silik başlar */
+            transform: translateY(15px); /* Daha aşağıdan başlar */
+            transition: opacity 4s ease-out, transform 4s cubic-bezier(0.2, 0.8, 0.2, 1); 
         }
-        .title-wrapper.visible { opacity: 1; }
+        .title-wrapper.visible { 
+            opacity: 1; /* Belirginleşir */
+            transform: translateY(0); /* Yerine oturur */
+        }
         .title-wrapper.hidden-flow { opacity: 0; visibility: hidden; pointer-events: none; }
 
         h2 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 6vw, 72px); letter-spacing: 4px; }
@@ -97,7 +102,7 @@
 
         #dynamic-quotes { 
             height: 60px; display: flex; align-items: center; justify-content: center; 
-            opacity: 0; transition: 2s ease; margin: 10px 0; 
+            opacity: 0; transition: 2.5s ease; margin: 10px 0; 
         }
         #dynamic-quotes.visible { opacity: 1; }
         .quote-text { 
@@ -125,7 +130,6 @@
 </head>
 <body>
     <button class="menu-btn" id="mainMenuBtn" onclick="toggleMenu()">☰</button>
-    
     <div class="side-menu" id="sideMenu">
         <span class="close-btn" onclick="toggleMenu()">✕</span>
         <a href="index.html">Anasayfa</a>
@@ -158,7 +162,6 @@
         <div class="bg" id="bg2"></div>
         <div class="vignette"></div>
         <div class="grain"></div>
-        
         <div class="content">
             <div id="initial-ui" class="title-wrapper">
                 <div class="title-border"></div>
@@ -183,7 +186,6 @@
 
     <script>
         const availableImages = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 22, 23, 24, 25, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 40, 43, 44, 45, 46, 48, 49, 54, 56, 57, 58, 66, 69, 76, 77, 85, 90, 92, 99, 100, 102, 103];
-        
         const quoteDatabase = {
             makro: ["Makro, evreni küçültür.", "Detay, sonsuzluğu taşır.", "Makro, görünmeyeni büyütür."],
             portre: ["Portre, yüzün ötesidir.", "Bakış, iç dünyayı ifşa eder.", "Bakış, ruhun eşiğidir."],
@@ -193,7 +195,6 @@
             kulturel: ["Kültür, zamanın izidir.", "Işık, vicdanı görünür kılar."],
             soyut: ["Siyah beyaz, özün çıplaklığıdır.", "Gölge, anlamı derinleştirir.", "Sadelik, hakikati keskinleştirir."]
         };
-
         const categories = [
             { key: 'makro', imgs: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
             { key: 'portre', imgs: [25,29,30,32,34,36,42,43,81] },
@@ -215,9 +216,10 @@
             return `${folder}${num}.webp`;
         }
 
-        function preloadImage(el, callback) {
+        function preloadImage(el, callback, priority = false) {
             const num = availableImages[Math.floor(Math.random() * availableImages.length)];
             const img = new Image();
+            if(priority) img.fetchPriority = "high";
             img.src = getImgPath(num);
             img.onload = () => {
                 el.style.backgroundImage = `url('${img.src}')`;
@@ -254,14 +256,13 @@
             document.getElementById("mainMenuBtn").style.display = isOpen ? "none" : "block";
         }
 
-        // İLK YÜKLEME: Önce resmi arka planda yükle, sonra göster (Siyah ekranı bitiren kısım)
         preloadImage(activeBg, () => {
-            activeBg.classList.add("active"); // Resim hazır, şimdi göster
+            activeBg.classList.add("active");
             setTimeout(() => { 
-                initialUI.classList.add("visible"); // Yazıyı resimle beraber getir
-            }, 300);
+                initialUI.classList.add("visible"); 
+            }, 500); 
             setInterval(cycle, 9000);
-        });
+        }, true);
     </script>
 </body>
 </html>
