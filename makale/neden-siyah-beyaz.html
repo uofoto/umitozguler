@@ -34,46 +34,24 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
-        .no-scroll { overflow: hidden; }
-        
-        /* MENÜ DÜZENLEMESİ */
-        #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%);
-        }
-        #mobile-menu.active {
-            transform: translateX(0);
-        }
-        
-        @keyframes lineDown {
-            from { height: 0; }
-            to { height: 100%; }
-        }
-        .menu-line {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1.5px;
-            background-color: #ff8c00;
-            height: 0;
-        }
-        #mobile-menu.active .menu-line {
-            animation: lineDown 0.8s ease-out forwards;
-            animation-delay: 0.3s;
-        }
 
-        .nav-link-custom { position: relative; }
+        .nav-link-custom { position: relative; transition: color 0.3s ease; }
         .nav-link-custom::after {
             content: '';
             position: absolute;
             width: 0;
-            height: 1.5px;
-            bottom: 0;
+            height: 1px;
+            bottom: -4px;
             left: 0;
             background-color: #ff8c00;
             transition: width 0.3s ease;
         }
         .nav-link-custom:hover::after { width: 100%; }
+        .nav-link-custom:hover { color: #ff8c00; }
+
+        #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
+        #mobile-menu.active { transform: translateX(0); }
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -89,6 +67,7 @@
                         FINE ART PHOTOGRAPHY
                     </span>
                 </a>
+                
                 <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
                     <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
@@ -107,7 +86,6 @@
         </div>
 
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
-            <div class="menu-line"></div>
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
             <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
@@ -115,73 +93,57 @@
             <a href="../dusunceler.html" class="text-brand-orange font-bold py-1 text-[11px] uppercase tracking-[0.15em]">Düşünceler</a>
             <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
     </nav>
 
-    <article class="pt-32 pb-20 px-6 flex-grow">
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden"></div>
+
+    <article class="pt-48 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto">
             
             <div class="text-center mb-10">
-                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors border-b border-transparent hover:border-brand-gold pb-1">
-                    ← Tüm Yazılar
+                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
+                    ← Tüm Düşünceler
                 </a>
                 <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
                     Neden Siyah Beyaz?
                 </h1>
-                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-gold space-x-4">
-                    <span>22 Ocak 2026</span>
+                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-orange space-x-4">
+                    <span>20 OCAK 2026</span>
                     <span class="text-gray-600">|</span>
-                    <span>Fotoğraf Üzerine</span>
+                    <span>Estetik ve Felsefe</span>
                 </div>
             </div>
 
             <div class="mb-12 group">
                 <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
-                    <img src="../img/25.webp" alt="Siyah Beyaz Portre" class="w-full h-auto grayscale opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:scale-[1.01]">
-                    
-                    <div class="absolute bottom-6 right-6 hidden md:flex space-x-6 text-[9px] tracking-[0.2em] text-white/70 bg-black/70 backdrop-blur-lg px-6 py-4 rounded-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 uppercase">
-                        <div class="flex flex-col">
-                            <span class="text-brand-gold mb-1 font-bold">Telif</span>
-                            <span>&copy; Ümit Özgüler</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">Çekim Yeri</span>
-                            <span>Bursa</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">Kategori</span>
-                            <span>Portre</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">Çekim Tarihi</span>
-                            <span>2016</span>
-                        </div>
-                    </div>
+                    <img src="../img/25.webp" alt="Neden Siyah Beyaz?" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
                 </div>
-                
                 <div class="mt-14 mb-14">
-                    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div>
+                    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-orange/60 to-transparent"></div>
                 </div>
             </div>
 
             <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
                 <p>
-                    <span class="text-4xl float-left mr-2 mt-[-10px] text-brand-gold font-serif">R</span>enkleri terk ettiğinizde geriye ne kalır? Çoğu insan için bu bir eksikliktir. Mavi gökyüzünü, yeşil çimenleri ya da kırmızı bir elbiseyi görememek, gerçekliğin bir parçasını kaybetmek gibidir. Ancak bir fotoğrafçı için renklerin yokluğu, bambaşka bir gerçekliğin kapılarını aralar.
+                    Renkler dünyayı olduğu gibi anlatır; siyah-beyaz ise dünyayı <strong>hissettirdiğimiz gibi.</strong> Fotoğrafın bu en saf hali, bir eksiklik değil, aksine bir yoğunlaşmadır. Renkleri terk ettiğinizde geriye sadece ışığın mimarisi, gölgenin gizemi ve duygunun çıplaklığı kalır.
                 </p>
+
+                <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Form ve Dokuya Odaklanmak</h3>
                 <p>
-                    Siyah beyaz fotoğraf, izleyiciyi <strong>"ne olduğu"</strong> ile değil, <strong>"nasıl hissettirdiği"</strong> ile ilgilenmeye zorlar. Renkler bazen gürültülüdür; dikkati dağıtır, gözü yorar ve asıl konudan uzaklaştırır. Oysa monokrom bir dünyada, dikkat dağıtıcı unsurlar silinir. Geriye sadece ışık, gölge, doku ve form kalır.
+                    Bir sahnede renkler olduğunda, gözümüz en parlak veya en canlı renge kayma eğilimindedir. Ancak siyah-beyaz bir karede, dikkati dağıtacak bir gürültü yoktur. İzleyici doğrudan objenin formuna, yüzeydeki dokuya ve sahnenin geometrisine odaklanır. Bu, <strong>görmenin en rafine halidir.</strong>
                 </p>
-                <blockquote class="border-l-2 border-brand-gold pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
-                    "Renkler göze hitap eder, siyah beyaz ise ruha."
+
+                <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Zamansızlık Hissi</h3>
+                <p>
+                    Renkli fotoğraflar genellikle çekildikleri dönemin modasını veya teknolojik imkanlarını ele verir. Siyah-beyaz ise zamandan bağımsızdır. Elli yıl önce çekilmiş bir kare ile bugün çekilmiş bir kare yan yana durduğunda, aralarındaki fark teknikten ziyade ruh haline dönüşür. Siyah-beyaz, <strong>anı dondurmaz; onu zamansızlaştırır.</strong>
+                </p>
+
+                <blockquote class="border-l-2 border-brand-orange pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
+                    "Renkler gözü oyalar, siyah-beyaz ise kalbi meşgul eder."
                 </blockquote>
+
                 <p>
-                    Portre fotoğraflarında bu etki daha da çarpıcıdır. Renkli bir portrede kişinin giysisine, makyajına veya arka plandaki renklere takılabilirsiniz. Ancak siyah beyaz bir portrede, doğrudan gözlere bakarsınız. İfadedeki o milisaniyelik değişimi, yüzdeki yaşanmışlık çizgilerini ve bakışların derinliğini görürsünüz.
-                </p>
-                <p>
-                    Benim için siyah beyaz, nostalji değil, bir <strong>sadeleşme biçimidir</strong>. Karmaşık bir dünyada, özü bulma çabasıdır. Vizörden baktığımda dünyayı gri tonlarında hayal etmek, bana sahnenin geometrisini ve duygusunu daha net görme şansı veriyor.
-                </p>
-                <p>
-                    Bu yüzden portfolyomda sıkça siyah beyaza rastlarsınız. Çünkü bazen bir hikayeyi anlatmak için renklere ihtiyacınız yoktur; sadece doğru ışığa ve o anı yakalayacak bir göze ihtiyacınız vardır.
+                    Benim için siyah-beyaz çalışmak, bir hikayeyi anlatırken en dürüst kelimeleri seçmek gibidir. Fazlalıklardan arınmış, net ve bir o kadar da derin. Işık ve gölge arasındaki o sonsuz savaşta taraf tutmak değil, o savaşın içindeki sessiz uyumu yakalamaktır.
                 </p>
             </div>
 
@@ -193,21 +155,11 @@
                     <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-widest font-medium">Twitter</a>
                 </div>
             </div>
-
-            <div class="mb-12 pt-8 border-t border-white/10 flex justify-between items-center text-xs text-gray-500 tracking-widest uppercase text-center font-medium">
-                <span class="w-full text-center">Yazar: Ümit Özgüler</span>
-            </div>
         </div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
-        <div class="flex justify-center space-x-12 mb-10">
-            <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Instagram</a>
-            <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors">Twitter (X)</a>
-        </div>
-        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">
-            &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
-        </p>
+        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
     <script>
@@ -233,9 +185,32 @@
         if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if (overlay) overlay.addEventListener('click', toggleMenu);
 
-        function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); }
-        function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); }
-        function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
+        // Bildirim gönderme fonksiyonu
+        function paylasimiBildir(platform) {
+            fetch("https://formspree.io/f/xgolegaa", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mesaj: "Bir okuyucu düşünce yazınızı paylaştı!",
+                    makale: document.title,
+                    url: window.location.href,
+                    platform: platform
+                })
+            }).catch(error => console.log('Bildirim gönderilemedi.'));
+        }
+
+        function shareOnWhatsApp() { 
+            paylasimiBildir('WhatsApp');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); 
+        }
+        function shareOnFacebook() { 
+            paylasimiBildir('Facebook');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); 
+        }
+        function shareOnTwitter() { 
+            paylasimiBildir('Twitter');
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); 
+        }
     </script>
 </body>
 </html>
