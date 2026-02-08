@@ -34,6 +34,10 @@
         .nav-link-custom { position: relative; }
         .nav-link-custom::after { content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0; background-color: #ff8c00; transition: width 0.3s ease; }
         .nav-link-custom:hover::after { width: 100%; }
+
+        /* Örnek koddan alınan çizgi animasyon ayarları */
+        #menu-line { height: 0; transition: height 0.6s ease-out 0.3s; }
+        #mobile-menu.active #menu-line { height: 100%; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -64,7 +68,10 @@
                 </button>
             </div>
         </div>
+        
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
+            <div id="menu-line" class="absolute left-0 top-0 w-[1.5px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
+            
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
             <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
@@ -170,6 +177,4 @@
         function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
     </script>
 </body>
-
 </html>
-
