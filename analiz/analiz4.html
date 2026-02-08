@@ -24,39 +24,40 @@
         }
     </script>
     <style>
-        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-        .page-animate { animation: fadeInPage 1s ease-in forwards; }
-        .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
-        .article-content strong { color: white; font-weight: 600; }
-        .no-scroll { overflow: hidden; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        .nav-link-custom { position: relative; transition: color 0.3s ease; }
+        .nav-link-custom::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0; background-color: #ff8c00; transition: width 0.3s ease; }
+        .nav-link-custom:hover::after { width: 100%; }
+        .nav-link-custom:hover { color: #ff8c00; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
         #mobile-menu.active { transform: translateX(0); }
-        .nav-link-custom { position: relative; }
-        .nav-link-custom::after { content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0; background-color: #ff8c00; transition: width 0.3s ease; }
-        .nav-link-custom:hover::after { width: 100%; }
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen">
 
-    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
+    <nav class="fixed w-full z-[100] bg-brand-black/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-40">
-                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
+                    <div class="text-2xl tracking-widest text-white leading-none">
+                        <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
                     </div>
                     <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
                         FINE ART PHOTOGRAPHY
                     </span>
                 </a>
-                <div class="hidden md:flex space-x-12">
-                    <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
-                    <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
-                    <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
-                    <a href="../analizler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] text-brand-orange py-1">Analizler</a>
-                    <a href="../dusunceler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Düşünceler</a>
-                    <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
+                
+                <div class="hidden md:flex space-x-10">
+                    <a href="../index.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em]">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em]">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em]">Portfolyo</a>
+                    <a href="../analizler.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] text-brand-orange">Analizler</a>
+                    <a href="../dusunceler.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em]">Düşünceler</a>
+                    <a href="../contact.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em]">İletişim</a>
                 </div>
+
                 <button id="menu-toggle-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
@@ -64,86 +65,81 @@
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
-            <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
-            <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
-            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
-            <a href="../analizler.html" class="text-brand-orange font-bold py-1 text-[11px] uppercase tracking-[0.15em]">Analizler</a>
-            <a href="../dusunceler.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Düşünceler</a>
-            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
-        </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
     </nav>
 
-    <article class="pt-48 pb-20 px-6 flex-grow">
-        <div class="max-w-3xl mx-auto">
-            <div class="text-center mb-10">
-                <a href="../analizler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-64 bg-brand-dark z-[100] flex flex-col pt-32 px-10 space-y-6 shadow-2xl border-l border-white/5 md:hidden">
+        <a href="../index.html" class="text-[11px] font-medium uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
+        <a href="../about.html" class="text-[11px] font-medium uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Hakkımda</a>
+        <a href="../portfolio.html" class="text-[11px] font-medium uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Portfolyo</a>
+        <a href="../analizler.html" class="text-[11px] font-medium uppercase tracking-[0.2em] text-brand-orange">Analizler</a>
+        <a href="../dusunceler.html" class="text-[11px] font-medium uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Düşünceler</a>
+        <a href="../contact.html" class="text-[11px] font-medium uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">İletişim</a>
+    </div>
+
+    <main class="pt-40 pb-20 px-6 flex-grow animate-fade-in">
+        <article class="max-w-4xl mx-auto">
+            <header class="text-center mb-16">
+                <a href="../analizler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors">
                     ← Tüm Analizler
                 </a>
-                <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-                    Fotoğraf Okuma No: 4
-                </h1>
-                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-gold space-x-4">
-                    <span>07 Şubat 2026</span>
-                    <span class="text-gray-600">|</span>
-                    <span>Küratör Analizi</span>
+                <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">Fotoğraf Okuma No: 4</h1>
+                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-orange space-x-4">
+                    <span>08 ŞUBAT 2026</span>
+                    <span class="text-gray-700">|</span>
+                    <span>BELGESEL ANALİZ</span>
                 </div>
-            </div>
+            </header>
 
-            <div class="mb-12 group">
-                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
-                    <img src="../img/89.webp" alt="Eşik ve Hareket" class="w-full h-auto opacity-90 group-hover:opacity-100 transition duration-1000">
-                    
-                    <div class="absolute bottom-6 right-6 hidden md:flex space-x-6 text-[9px] tracking-[0.2em] text-white/70 bg-black/70 backdrop-blur-lg px-6 py-4 rounded-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-700 uppercase">
-                        <div class="flex flex-col">
-                            <span class="text-brand-gold mb-1 font-bold">KAMERA</span>
-                            <span>fujifilm xt3</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">LENS</span>
-                            <span>18-55 mm fujinon</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">ODAK UZAKLIĞI</span>
-                            <span>42 MM</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10 pl-6">
-                            <span class="text-brand-gold mb-1 font-bold">EXİF BİLGİLERİ</span>
-                            <span>F/13 I 1/125 sn I ISO 400</span>
+            <div class="relative mb-16 group overflow-hidden rounded-sm shadow-2xl bg-brand-dark">
+                <img src="../img/50.webp" alt="Fotoğraf Analizi 4" class="w-full h-auto grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.02]">
+                <div class="absolute bottom-6 left-6 hidden md:block">
+                    <div class="bg-black/60 backdrop-blur-md px-6 py-4 border border-white/10 rounded-sm">
+                        <div class="grid grid-cols-3 gap-8 text-[9px] tracking-[0.2em] uppercase">
+                            <div><p class="text-brand-orange mb-1">Kamera</p><p class="text-white font-medium">Nikon D90</p></div>
+                            <div><p class="text-brand-orange mb-1">Lens</p><p class="text-white font-medium">18-55mm VR</p></div>
+                            <div><p class="text-brand-orange mb-1">Exif</p><p class="text-white font-medium">f/5.6 | 1/200s | ISO 200</p></div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-14 mb-14"><div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div></div>
             </div>
 
-            <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
-                <p><strong>Kompozisyon ve Dinamik Eşitlik:</strong> Fotoğraf, diyagonal bir akışın merkezine yerleşmiş iki figür arasındaki gerilim üzerine inşa edilmiştir. Sağ alt köşeden merkeze doğru sıçrayan çocuk figürü, "Karar Anı" kuramının kusursuz bir örneğini sunarken; sol üstte durağan duran yetişkin figürü, bu devinime görsel bir ağırlık ve denge kazandırıyor. Suyun yatağı, bakışı diyagonal olarak yönlendirerek derinlik algısını artırıyor.</p>
+            <div class="max-w-2xl mx-auto">
+                <div class="prose prose-invert prose-orange max-w-none text-gray-300 font-light leading-relaxed space-y-8 text-lg">
+                    <section>
+                        <h3 class="text-white font-semibold text-xl mb-4 tracking-wide uppercase text-[14px]">Anın Belgelenmesi</h3>
+                        <p>Siyah beyazın dramatik gücüyle harmanlanmış bu kare, gündelik bir anın ölümsüzleştiği o nadir saniyelerden biri. Kompozisyonun kalbinde yer alan figür ve onun çevreyle etkileşimi, izleyiciyi bir hikayenin içine çekiyor.</p>
+                    </section>
 
-                <p><strong>Işık ve Teknik Atmosfer:</strong> Yumuşak bir gün ışığının hakim olduğu sahnede, renkler pastel bir doygunlukta tercih edilmiştir. Çocuğun üzerindeki pembe ve kırmızı tonlar, doğanın yeşil ve gri dokusu içinde görsel bir "punctum" [Barthes, Punctum'u fotoğrafın içinden yükselen ve insanı delip geçen bir anlam olarak ifade etmektedir.] yaratarak izleyicinin ilgisini doğrudan aksiyona çeker. Fujifilm’in karakteristik renk paleti, sahneye zamansız ve resimsel bir atmosfer katmıştır.</p>
+                    <section>
+                        <h3 class="text-white font-semibold text-xl mb-4 tracking-wide uppercase text-[14px]">Işık ve Gölge Oyunu</h3>
+                        <p>Yandan gelen sert ışık, objelerin dokusunu ve karakterini ön plana çıkarırken; derin gölgeler sahneye gizemli bir derinlik katıyor. Nikon D90'ın klasik sensör yapısı, ton geçişlerindeki yumuşaklığı ve kontrast başarısını bu karede bir kez daha kanıtlıyor.</p>
+                    </section>
 
-                <p><strong>Sanatsal Görünürlük ve Estetik:</strong> Sahne, bir eşiği atlama eylemi üzerinden kurgulanmıştır. Suyun üzerinde asılı kalan o milisaniyelik an, fotoğrafın estetik gücünü belirler. Arka plandaki figürün hafif flu yapısı ve durağanlığı, çocuğun netliği ve dinamizmiyle birleşerek yaşamın iki farklı fazını (merak/hareket vs. tecrübe/izleme) aynı kadrajda buluşturur.</p>
+                    <blockquote class="border-l-2 border-brand-orange pl-8 py-2 my-12 italic text-white/90 text-xl bg-white/5">
+                        "Fotoğraf, sadece bir görüntünün kaydı değil, bir duygunun dondurulmuş halidir. Bu karede hissettiğimiz şey; zamanın durduğu o sessiz boşluktur."
+                    </blockquote>
 
-                <blockquote class="border-l-2 border-brand-gold pl-6 my-10 italic text-white/80 text-lg leading-relaxed">
-                    "Hareketin içindeki sessizlik, yaşamın en dürüst tanıklığıdır."
-                </blockquote>
+                    <section>
+                        <h3 class="text-white font-semibold text-xl mb-4 tracking-wide uppercase text-[14px]">Teknik İnceleme</h3>
+                        <p>18-55mm kit lensin sağladığı perspektif, sokağın doğallığını bozmadan sahneyi geniş bir çerçeveden görmemizi sağlıyor. f/5.6 diyafram, arka planı hikayeden koparmadan yeterli bir netlik alanı sunarak belgesel dilini güçlendiriyor.</p>
+                    </section>
+                </div>
 
-                <p><strong>Felsefi Derinlik ve Kuramsal Okuma:</strong> Bu fotoğraf, felsefi olarak "Eşik" kavramını sorgular. Çocuk, bir yakadan diğerine geçerken sadece fiziksel bir engeli değil, bir büyüme evresini de sembolize eder. Arkadaki figürün koruyucu ama müdahale etmeyen duruşu, bireyleşme sürecindeki "izleme" eylemini temsil eder. Akıp giden su, zamanın durdurulamaz akışını simgelerken, fotoğrafçının deklanşörü bu akışı dondurarak zamanı mekansallaştırmıştır.</p>
-            </div>
-
-            <div class="mt-12 mb-8 pt-8 border-t border-white/5 text-center">
-                <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6">Analizi Paylaş</p>
-                <div class="flex justify-center space-x-8">
-                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors text-xs uppercase tracking-widest font-medium">Whatsapp</a>
-                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors text-xs uppercase tracking-widest font-medium">Facebook</a>
-                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-widest font-medium">Twitter</a>
+                <div class="mt-20 pt-10 border-t border-white/10 text-center">
+                    <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-8">Bu Analizi Paylaş</p>
+                    <div class="flex justify-center space-x-10">
+                        <button onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors text-[11px] uppercase tracking-widest font-semibold">WhatsApp</button>
+                        <button onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors text-[11px] uppercase tracking-widest font-semibold">Facebook</button>
+                        <button onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-[11px] uppercase tracking-widest font-semibold">Twitter</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
+    </main>
 
-    <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
-        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+    <footer class="py-16 border-t border-white/5 text-center bg-brand-dark/30">
+        <p class="text-[10px] tracking-[0.2em] text-gray-600 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
     <script>
@@ -165,12 +161,32 @@
         if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if (overlay) overlay.addEventListener('click', toggleMenu);
 
-        function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); }
-        function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); }
-        function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
+        // Bildirim gönderme fonksiyonu
+        function paylasimiBildir(platform) {
+            fetch("https://formspree.io/f/xgolegaa", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mesaj: "Bir okuyucu makalenizi paylaştı!",
+                    makale: document.title,
+                    url: window.location.href,
+                    platform: platform
+                })
+            }).catch(error => console.log('Bildirim gönderilemedi.'));
+        }
+
+        function shareOnWhatsApp() { 
+            paylasimiBildir('WhatsApp');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); 
+        }
+        function shareOnFacebook() { 
+            paylasimiBildir('Facebook');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); 
+        }
+        function shareOnTwitter() { 
+            paylasimiBildir('Twitter');
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); 
+        }
     </script>
 </body>
-
 </html>
-
-
