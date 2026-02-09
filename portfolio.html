@@ -221,7 +221,14 @@
                 const item = document.createElement('div');
                 item.className = "masonry-item photo-card cursor-pointer";
                 item.onclick = () => openLightbox((currentPage - 1) * itemsPerPage + index);
-                item.innerHTML = `<div class="overflow-hidden bg-brand-dark rounded-sm"><img src="img/${id}.webp" loading="lazy" class="w-full block"></div>`;
+                // Mobil için imgmobil klasöründen çekme özelliği eklendi
+                item.innerHTML = `
+                    <div class="overflow-hidden bg-brand-dark rounded-sm">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="imgmobil/${id}.webp">
+                            <img src="img/${id}.webp" loading="lazy" class="w-full block">
+                        </picture>
+                    </div>`;
                 container.appendChild(item);
             });
             renderPagination(Math.ceil(activeImages.length / itemsPerPage));
