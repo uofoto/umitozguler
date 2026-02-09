@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta name="description" content="Ümit Özgüler Fotoğraf Galerisi. Işık, an ve felsefeyi buluşturan siyah-beyaz ve renkli fotoğraf çalışmaları, portfolyo ve sergiler.">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -81,7 +80,9 @@
         }
 
         #lightbox { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.9); }
-        .nav-area:hover { color: #ff8c00; background: rgba(255,255,255,0.02); }
+        /* Nav-area artık tüm ekranı değil, sadece fotoğrafın yanlarını kaplayacak */
+        .nav-area { z-index: 2200; transition: all 0.3s ease; height: 300px; margin-top: auto; margin-bottom: auto; }
+        .nav-area:hover { color: #ff8c00; }
         .no-scroll { overflow: hidden; }
     </style>
 </head>
@@ -158,20 +159,23 @@
     </footer>
 
     <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
-        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white hover:text-brand-orange z-[2100] transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1"></path></svg>
+        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white hover:text-brand-orange z-[3000] transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.5"></path></svg>
         </button>
-        <div onclick="changePhoto(event, -1)" class="nav-area left-0 absolute h-full w-[15%] flex items-center justify-center cursor-pointer">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+        
+        <div onclick="changePhoto(event, -1)" class="nav-area left-0 absolute inset-y-0 w-[20%] flex items-center justify-start pl-4 md:pl-12 cursor-pointer">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-width="1.5"></path></svg>
         </div>
+
         <div class="relative max-w-[85vw] md:max-w-[75vw] flex flex-col items-center" onclick="event.stopPropagation()">
             <img id="lightbox-img" src="" class="max-h-[80vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-300">
             <div class="w-full mt-6">
                 <p id="photo-label" class="py-2 text-center text-brand-orange uppercase tracking-[0.6em] text-[10px] font-light"></p>
             </div>
         </div>
-        <div onclick="changePhoto(event, 1)" class="nav-area right-0 absolute h-full w-[15%] flex items-center justify-center cursor-pointer">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
+
+        <div onclick="changePhoto(event, 1)" class="nav-area right-0 absolute inset-y-0 w-[20%] flex items-center justify-end pr-4 md:pr-12 cursor-pointer">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-width="1.5"></path></svg>
         </div>
     </div>
 
@@ -222,7 +226,6 @@
                 const item = document.createElement('div');
                 item.className = "masonry-item photo-card cursor-pointer";
                 item.onclick = () => openLightbox((currentPage - 1) * itemsPerPage + index);
-                // Mobil için imgmobil klasöründen çekme özelliği eklendi
                 item.innerHTML = `
                     <div class="overflow-hidden bg-brand-dark rounded-sm">
                         <picture>
@@ -299,5 +302,4 @@
         loadGallery();
     </script>
 </body>
-
 </html>
