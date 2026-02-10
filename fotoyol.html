@@ -67,17 +67,25 @@
                 background: #ff8c00; color: #050505; border-color: #ff8c00;
             }
             .no-scroll { overflow: hidden; }
+
+            /* PAYLAŞIM BUTONLARI RENKLERİ */
+            .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
+            .share-link:hover { transform: translateY(-2px); }
+            .hover-whatsapp:hover { color: #25D366 !important; }
+            .hover-facebook:hover { color: #1877F2 !important; }
+            .hover-x:hover { color: #ffffff !important; }
         </style>
     </head>
     <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+        
         <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="flex justify-between items-center h-24">
-                    <a href="../index.html" class="flex flex-col items-center group relative z-40">
-                        <div class="text-2xl tracking-widest text-white leading-none uppercase">
+                    <a href="index.html" class="flex flex-col items-center group relative z-40">
+                        <div class="text-2xl tracking-widest text-white transition-colors leading-none uppercase">
                             <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
                         </div>
-                        <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px; width: 100%; text-align: center;">
+                        <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
                             FINE ART PHOTOGRAPHY
                         </span>
                     </a>
@@ -131,54 +139,20 @@
                 <h2 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-12 text-center font-bold">Yolculuk Hikayeleri</h2>
                 <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-white">
                     
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-10">
-                        <div class="h-60 overflow-hidden relative">
-                            <img src="img/11.webp" alt="Yusufeli" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
+                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-11">
+                        <div class="h-60 overflow-hidden relative" onclick="window.location.href='fotoyol/gezi1.html'">
+                            <img src="fotoyol/img/14.webp" alt="Yusufeli Dağları" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
                         </div>
                         <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Belgesel</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Yusufeli: Bir Devrin Sonu</h3>
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Gezi Notları</span>
+                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Yükseklerdeki Sessizlik: Yusufeli Dağları</h3>
                             <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>10 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span> <span>ARTVİN</span>
+                                <span>11 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span> <span>ARTVİN</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                Baraj suları yükselmeden hemen önce, vadinin son ışıklarını ve taşınan yaşamları belgelediğim hüzünlü bir veda yolculuğu.
+                                Artvin Yusufeli'nin sarp dağlarında ışığın ve sessizliğin peşinde geçen bir keşif yolculuğu.
                             </p>
-                            <a href="gezi/yusufeli.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">İncele</a>
-                        </div>
-                    </article>
-
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-25">
-                        <div class="h-60 overflow-hidden relative">
-                            <img src="img/18.webp" alt="Yalova" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
-                        </div>
-                        <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Teknik</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Yalova: Ahmet Usta'nın İzinde</h3>
-                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>25 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span> <span>YALOVA</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                Kardeşim İbrahim Özgüler'in babamızın anısına tasarladığı yerli ekipmanların hikayesi ve görsel dökümü.
-                            </p>
-                            <a href="gezi/yalova.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">İncele</a>
-                        </div>
-                    </article>
-
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2025-12-28">
-                        <div class="h-60 overflow-hidden relative">
-                            <img src="img/68.webp" alt="Ahıska" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
-                        </div>
-                        <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Kültür</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Bilal Dede ve Ahıska İzleri</h3>
-                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>28 Aralık 2025</span> <span class="mx-2 text-gray-600">|</span> <span>AHISKA</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                Atalarımızın göç yollarını ve Ahıska kültürünün görsel mirasını belgelediğim köklere dönüş hikayesi.
-                            </p>
-                            <a href="gezi/ahiska.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">İncele</a>
+                            <a href="fotoyol/gezi1.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yazının Tamamını Oku</a>
                         </div>
                     </article>
 
@@ -187,11 +161,16 @@
             </div>
         </section>
 
-        <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center relative z-10">
-            <div class="flex justify-center space-x-12 mb-10">
-                <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors">Instagram</a>
-                <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors">Twitter (X)</a>
+        <div class="pb-20 pt-10 border-t border-white/5 text-center relative z-10">
+            <h3 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-8 font-bold">Bu Sayfayı Paylaş</h3>
+            <div class="flex justify-center items-center space-x-12">
+                <a href="https://wa.me/?text=Ümit%20Özgüler%20-%20Fotoyol%20Hikayeleri%20https://umitozguler.com.tr/fotoyol.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">WhatsApp</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
+                <a href="https://twitter.com/intent/tweet?text=Ümit%20Özgüler%20-%20Fotoyol%20Hikayeleri%20&url=https://umitozguler.com.tr/fotoyol.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
             </div>
+        </div>
+
+        <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center relative z-10">
             <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
         </footer>
 
