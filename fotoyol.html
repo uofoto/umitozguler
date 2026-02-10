@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag("js", new Date());
+            gtag("config", "G-QW3FEBRP69");
+        </script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fotoyol | Ümit Özgüler</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: { 
+                            "brand-black": "#121212", 
+                            "brand-dark": "#1a1a1a", 
+                            "brand-gold": "#c5a059",
+                            "brand-orange": "#ff8c00" 
+                        },
+                        fontFamily: { sans: ['"Inter"', "sans-serif"] },
+                    },
+                },
+            };
+        </script>
+        <style>
+            @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+            .page-animate { animation: fadeInPage 1s ease-in forwards; }
+            .glass {
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                transition: all 0.4s ease;
+            }
+            .glass:hover {
+                border-color: rgba(255, 140, 0, 0.5);
+                background: rgba(255, 255, 255, 0.05);
+                transform: translateY(-5px);
+            }
+            .nav-link-custom { position: relative; }
+            .nav-link-custom::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 1.5px;
+                bottom: 0;
+                left: 0;
+                background-color: #ff8c00;
+                transition: width 0.3s ease;
+            }
+            .nav-link-custom:hover::after { width: 100%; }
+
+            #mobile-menu {
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(100%);
+            }
+            #mobile-menu.active { transform: translateX(0); }
+            
+            @keyframes lineDown { from { height: 0; } to { height: 100%; } }
+            .menu-line {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 1.5px;
+                background-color: #ff8c00;
+                height: 0;
+            }
+            #mobile-menu.active .menu-line {
+                animation: lineDown 0.8s ease-out forwards;
+                animation-delay: 0.3s;
+            }
+            .pagination-btn.active {
+                background: #ff8c00;
+                color: #050505;
+                border-color: #ff8c00;
+            }
+            .no-scroll { overflow: hidden; }
+        </style>
+    </head>
+    <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+        <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-24">
+                    <a href="../index.html" class="flex flex-col items-center group relative z-40">
+                        <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                            <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                        </div>
+                        <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                            FINE ART PHOTOGRAPHY
+                        </span>
+                    </a>
+                    
+                    <div class="hidden md:flex space-x-10">
+                        <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Ana Sayfa</a>
+                        <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Hakkımda</a>
+                        <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Portfolyo</a>
+                        <a href="analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Analizler</a>
+                        <a href="fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1">Fotoyol</a>
+                        <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">İletişim</a>
+                    </div>
+
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[100] shadow-2xl md:hidden flex flex-col pt-32 px-6">
+                <div class="menu-line"></div>
+                <div class="space-y-4 flex flex-col">
+                    <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                    <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
+                    <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Portfolyo</a>
+                    <a href="analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors text-brand-gold">Analizler</a>
+                    <a href="fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Fotoyol</a>
+                    <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">İletişim</a>
+                </div>
+            </div>
+            <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
+        </nav>
+
+        <section class="pt-40 pb-12 text-center px-4 relative z-10">
+            <div class="relative inline-block mb-8">
+                <div class="absolute top-0 left-[-20px] w-4 h-4 border-t-2 border-l-2 border-brand-orange"></div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase leading-none px-2">Fotoyol</h1>
+                <div class="absolute bottom-[-10px] right-[-10px] w-4 h-4 border-b-2 border-r-2 border-brand-orange"></div>
+            </div>
+
+            <p class="max-w-2xl mx-auto text-gray-400 text-sm tracking-wide leading-relaxed uppercase">
+                Işığın peşinde geçen yolculuklar, coğrafi deneyimler ve kadraj arkası hikayeleri.
+            </p>
+        </section>
+
+        <section class="pb-24 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-12 text-center font-bold">Yol Notları</h2>
+                <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    
+                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-10">
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="img/11.webp" alt="Yusufeli Gezisi" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700" />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Doğu Karadeniz</span>
+                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Yusufeli: Belleğin Son İzleri</h3>
+                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
+                                <span>10 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>LOKASYON: ARTVİN</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Baraj suları yükselmeden hemen önce, vadinin son ışıklarını ve taşınan yaşamları belgelediğim hüzünlü bir veda yolculuğu.
+                            </p>
+                            <a href="gezi/yusufeli-vadi.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yolculuğu İncele</a>
+                        </div>
+                    </article>
+
+                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-01-25">
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="img/18.webp" alt="Yalova Ziyareti" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700" />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Marmara</span>
+                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Yalova: Bir Usta Yadigarı</h3>
+                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
+                                <span>25 Ocak 2026</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>LOKASYON: YALOVA</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Kardeşim İbrahim Özgüler'i ziyaret ve babamız Ahmet Usta'nın anısına üretilen yerli tasarımın teknik hikayesi.
+                            </p>
+                            <a href="gezi/yalova-ziyaret.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yolculuğu İncele</a>
+                        </div>
+                    </article>
+
+                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2025-12-28">
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="img/68.webp" alt="Ahıska İzleri" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700" />
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Kültürel Miras</span>
+                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Bilal Dede'nin Toprakları</h3>
+                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
+                                <span>28 Aralık 2025</span> <span class="mx-2 text-gray-600">|</span>
+                                <span>LOKASYON: AHISKA</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                                Köklere dönüş; Ahıska göçmenlerinin ve atalarımızın izini sürdüğüm belgesel tadında bir fotoğraf yolculuğu.
+                            </p>
+                            <a href="gezi/ahiska-izleri.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yolculuğu İncele</a>
+                        </div>
+                    </article>
+
+                </div>
+                <div id="pagination" class="mt-20 flex justify-center items-center space-x-4"></div>
+            </div>
+        </section>
+
+        <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center relative z-10">
+            <div class="flex justify-center space-x-12 mb-10">
+                <a href="https://instagram.com/umitozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors">Instagram</a>
+                <a href="https://twitter.com/uozguler" target="_blank" class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors">Twitter (X)</a>
+            </div>
+            <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+        </footer>
+
+        <script>
+            // Menü Kontrolleri
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+            const icon = document.getElementById('menu-icon');
+
+            function toggleMenu() {
+                menu.classList.toggle('active');
+                overlay.classList.toggle('hidden');
+                document.body.classList.toggle('no-scroll');
+                if (menu.classList.contains('active')) {
+                    icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                } else {
+                    icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                }
+            }
+            menuBtn.onclick = toggleMenu;
+            overlay.onclick = toggleMenu;
+
+            // Sayfalama ve Sıralama (Analizler sayfanızdaki mantıkla birebir aynı)
+            const itemsPerPage = 6;
+            let currentPage = 1;
+            const container = document.getElementById("yazi-listesi");
+            const paginationContainer = document.getElementById("pagination");
+            const items = Array.from(container.children);
+            
+            items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
+            items.forEach(item => container.appendChild(item));
+
+            function displayPage(page) {
+                currentPage = page;
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                items.forEach((item, index) => {
+                    item.style.display = (index >= start && index < end) ? "flex" : "none";
+                });
+                updatePaginationButtons();
+            }
+
+            function updatePaginationButtons() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                paginationContainer.innerHTML = "";
+                if (totalPages <= 1) return;
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement("button");
+                    btn.innerText = i;
+                    btn.className = `pagination-btn px-4 py-2 border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:border-brand-orange transition-colors ${i === currentPage ? 'active' : ''}`;
+                    btn.onclick = () => { displayPage(i); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+                    paginationContainer.appendChild(btn);
+                }
+            }
+            displayPage(1);
+        </script>
+    </body>
+</html>
