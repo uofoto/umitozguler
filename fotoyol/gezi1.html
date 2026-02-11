@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag("js", new Date());
+            gtag("config", "G-QW3FEBRP69");
+        </script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Yusufeli’nde Bir "Öküz Dağı" Hikayesi | Ümit Özgüler</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: { 
+                            "brand-black": "#121212", 
+                            "brand-dark": "#1a1a1a", 
+                            "brand-gold": "#c5a059",
+                            "brand-orange": "#ff8c00" 
+                        },
+                        fontFamily: { sans: ['"Inter"', "sans-serif"] },
+                    },
+                },
+            };
+        </script>
+        <style>
+            @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+            .page-animate { animation: fadeInPage 1s ease-in forwards; }
+            .nav-link-custom { position: relative; }
+            .nav-link-custom::after {
+                content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0;
+                background-color: #ff8c00; transition: width 0.3s ease;
+            }
+            .nav-link-custom:hover::after { width: 100%; }
+
+            #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
+            #mobile-menu.active { transform: translateX(0); }
+            
+            @keyframes lineDown { from { height: 0; } to { height: 100%; } }
+            .menu-line { position: absolute; left: 0; top: 0; width: 1.5px; background-color: #ff8c00; height: 0; }
+            #mobile-menu.active .menu-line { animation: lineDown 0.8s ease-out forwards; animation-delay: 0.3s; }
+
+            body.no-scroll #mobile-menu-btn { opacity: 0; pointer-events: none; }
+            #mobile-menu-btn { transition: opacity 0.3s ease; }
+
+            .no-scroll { overflow: hidden; }
+            .article-content p { margin-bottom: 1.5rem; line-height: 1.8; color: #a0a0a0; }
+            .article-content h2 { color: #ffffff; font-size: 1.5rem; margin: 2rem 0 1rem; font-weight: 600; }
+            
+            .image-caption { 
+                font-size: 12px; color: #777; margin-top: 12px; text-align: center; 
+                font-weight: 300; letter-spacing: 0.05em; font-style: italic;
+            }
+            picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); }
+
+            .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
+            .share-link:hover { transform: translateY(-2px); }
+            .hover-whatsapp:hover { color: #25D366 !important; }
+            .hover-facebook:hover { color: #1877F2 !important; }
+            .hover-x:hover { color: #ffffff !important; }
+        </style>
+    </head>
+    <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+        
+        <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-24">
+                    <a href="../index.html" class="flex flex-col items-center group relative z-40">
+                        <div class="text-2xl tracking-widest text-white leading-none uppercase">
+                            <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                        </div>
+                        <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px; width: 100%; text-align: center;">
+                            FINE ART PHOTOGRAPHY
+                        </span>
+                    </a>
+                    
+                    <div class="hidden md:flex space-x-10 text-white">
+                        <a href="../index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Ana Sayfa</a>
+                        <a href="../about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Hakkımda</a>
+                        <a href="../portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Portfolyo</a>
+                        <a href="../analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Analizler</a>
+                        <a href="../dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Düşünceler</a>
+                        <a href="../fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1 transition-colors">Fotoyol</a>
+                        <a href="../contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">İletişim</a>
+                    </div>
+
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[120] shadow-2xl md:hidden flex flex-col pt-32 px-6">
+                <div class="menu-line"></div>
+                <button id="close-menu-btn" class="absolute top-8 right-6 text-white hover:text-brand-orange transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="space-y-4 flex flex-col text-white text-right">
+                    <a href="../index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Ana Sayfa</a>
+                    <a href="../about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Hakkımda</a>
+                    <a href="../portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Portfolyo</a>
+                    <a href="../analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Analizler</a>
+                    <a href="../dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Düşünceler</a>
+                    <a href="../fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Fotoyol</a>
+                    <a href="../contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">İletişim</a>
+                </div>
+            </div>
+            <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[115] md:hidden"></div>
+        </nav>
+
+        <header class="pt-48 pb-20 px-6 max-w-5xl mx-auto w-full">
+            <div class="flex items-center text-[10px] tracking-[0.4em] uppercase text-brand-orange mb-6 font-bold">
+                <span>📍 ARTVİN / YUSUFELİ</span> <span class="mx-3 text-gray-700">/</span> <span>11 ŞUBAT 2026</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight uppercase mb-8">
+                Yusufeli’nde Bir <br><span class="text-brand-gold font-light italic">"Öküz Dağı" Hikayesi</span>
+            </h1>
+        </header>
+
+        <main class="flex-grow max-w-4xl mx-auto px-6 pb-24 w-full article-content">
+            
+            <section class="max-w-2xl mx-auto">
+                <p>
+                    Rotamızı Artvin’in sarp coşkusuyla yoğrulmuş Yusufeli’ne, oradan da bulutların komşusu <strong>Yokuşlu (Nihah)</strong> köyünnün"Öküz Dağına" çeviriyoruz. 2500 metrelik rakımda, rüzgarın sert estiği ama toprağın cömertçe yeşerdiği bir noktadayız: <strong>Öküz Dağı.</strong> Burada zaman, şehirli insanın saatine göre değil, güneşin dağın arkasına devrilişine ve otun taze kokusuna göre akar.
+                </p>
+            </section>
+
+            <figure class="mb-16">
+                <picture>
+                    <img src="img/1.webp" alt="Yusufeli Dağları 1" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Güneşin batışında çoban kulübesinde akşam sohbeti</figcaption>
+            </figure>
+
+            <section class="max-w-2xl mx-auto">
+                <h2>Göçün Sessiz Tanıkları</h2>
+                <p>
+                    Bu coğrafyada her köyün bir "Öküz Dağı" vardı. Haziran ayı sonu geldiğinde, köyün en diri boğaları ve tosunları bir araya toplanır, "semizlensinler" diye dağın insafına bırakılırdı. Ama bu sadece bir otlatma serüveninden öte; bu, bir <strong>çobanın üç aylık münzevi yaşamıydı.</strong>
+                </p>
+            </section>
+
+            <figure class="my-16">
+                <picture>
+                    <img src="img/2.webp" alt="Yusufeli Dağları 2" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Çoban kulübesi ve bir tosun</figcaption>
+            </figure>
+
+            <section class="max-w-2xl mx-auto">
+                <h2>Çobanın Kulübesi: X’ul: </h2>
+                <p>
+                    Çoban, bu yüksek irtifada köylünün emanetine bekçilik eden kişidir. Barınağı ise yerel dilde <strong>"x’ul"</strong> denilen, taştan ve ahşaptan yapılma, rüzgarı göğüsleyen o mütevazı kulübedir. Çobanın dünyası bu üç ay boyunca x’ulü, sadık atı ve emrindeki onlarca baş hayvandan ibarettir.
+                </p>
+            </section>
+
+            <figure class="my-16">
+                <picture>
+                    <img src="img/3.webp" alt="Yusufeli Dağları 3" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Yaylımda dinlenen boğalar</figcaption>
+            </figure>
+
+            <section class="max-w-2xl mx-auto">
+                <p>
+                    "Dağda atı olmayanın ayağı yoktur," der eskiler. 2000-2500 metre rakımlı dağlarda at, eşek veya katır; sadece bir binek hayvanından öte, dik yamaçlarda çobanın gözü, kulağı ve en yakın dert ortağıdır.
+                </p>
+            </section>
+
+            <figure class="my-16">
+                <picture>
+                    <img src="img/4.webp" alt="Yusufeli Dağları 4" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Çoban kulübesinin içi ve çobanın misafirleri</figcaption>
+            </figure>
+
+            <section class="max-w-2xl mx-auto">
+                <h2>Yol Geldi, Ruh Gitti</h2>
+                <p>
+                    Günümüzde bu dağlara araba yolları çıktı. Eskiden günlerce süren patikalar, şimdi tekerlek izleriyle çiğneniyor. Ancak hazindir ki; yolun geldiği yere sessizlik çökmüş. Yol gelmiş ama köyler boşalmış; ne o eski tosunların tozu dumana katan gücü kalmış, ne de x’ullerin önünde tüten dumanlar.
+                </p>
+            </section>
+
+            <figure class="my-16">
+                <picture>
+                    <img src="img/5.webp" alt="Yusufeli Dağları 5" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Çoban atının yükünü boşaltıyor</figcaption>
+            </figure>
+
+            <section class="max-w-2xl mx-auto">
+                <h2>Bir Kültürün Son Nöbeti</h2>
+                <p>
+                    Eylül başı geldiğinde köye inen o "semizlenmiş" sürünün çıkardığı sesler, artık hatıraların derinliklerinde yankılanıyor. Çobanın değneğine yaslanıp ufka baktığı o an, insanın doğayla kurduğu o sarsılmaz ve sert dostluğu temsil ediyor.
+                </p>
+            </section>
+
+            <figure class="my-16">
+                <picture>
+                    <img src="img/6.webp" alt="Yusufeli Dağları 6" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Kürnden su içine tosunlar</figcaption>
+            </figure>
+
+            <section class="max-w-2xl mx-auto">
+                <p>
+                    Yusufeli’nin bu sarp yamaçlarında, bir zamanlar hayatın nabzı boğaların böğürtüsü ve çobanın ıslığıyla atardı. Şimdi ise elimizde kalan; bu kıymetli kareler, depreşen anılar ve "nerede o eski dağlar" dedirten bir iç çekişten fazılası değil.
+                </p>
+            </section>
+
+            <figure class="my-16">
+                <picture>
+                    <img src="img/7.webp" alt="Yusufeli Dağları 7" class="grayscale hover:grayscale-0 transition duration-700">
+                </picture>
+                <figcaption class="image-caption">Katman katman Kaçkar Dağları</figcaption>
+            </figure>
+
+            <div class="mt-24 pt-12 border-t border-white/5 text-center">
+                <h3 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-8 font-bold text-center">Bu Yazıyı Paylaş</h3>
+                <div class="flex justify-center items-center space-x-12">
+                    <a href="https://wa.me/?text=Ümit%20Özgüler%20-%20Yusufeli%20Öküz%20Dağı%20Hikayesi%20https://umitozguler.com.tr/fotoyol/gezi1.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">WhatsApp</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi1.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
+                    <a href="https://twitter.com/intent/tweet?text=Ümit%20Özgüler%20-%20Yusufeli%20Öküz%20Dağı%20Hikayesi%20&url=https://umitozguler.com.tr/fotoyol/gezi1.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="../fotoyol.html" class="text-xs uppercase tracking-[0.3em] text-gray-400 hover:text-white transition-colors font-bold">
+                    ← fotoyol listesine dön
+                </a>
+            </div>
+        </main>
+
+        <footer class="bg-brand-black py-16 border-t border-white/5 text-center relative z-10">
+            <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+        </footer>
+
+        <script>
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+
+            function toggleMenu() {
+                menu.classList.toggle('active');
+                overlay.classList.toggle('hidden');
+                document.body.classList.toggle('no-scroll');
+            }
+
+            menuBtn.onclick = toggleMenu;
+            closeBtn.onclick = toggleMenu;
+            overlay.onclick = toggleMenu;
+        </script>
+    </body>
+</html>
