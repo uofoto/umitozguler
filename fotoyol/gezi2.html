@@ -68,13 +68,15 @@
             letter-spacing: 0.02em;
         }
         .custom-quote {
-            border-left: 3px solid #ff8c00;
-            padding-left: 2rem;
-            margin-left: 1.5rem;
-            margin-bottom: 2.5rem;
-            font-style: italic;
-            color: #a0a0a0;
-        }
+    border-left: 3px solid #ff8c00;
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: transparent !important; /* Arka planı tamamen siyah/şeffaf yapar */
+    font-style: italic;
+    color: #e0e0e0;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
         .image-caption { 
             font-size: 12px; 
             color: #888; 
@@ -145,7 +147,7 @@
                     <span>TRABZON / TONYA</span>
                 </div>
                 <h1 class="text-3xl md:text-5xl font-normal text-white tracking-tight leading-[1.1] uppercase">
-                    Anabedama’nın İzinde: <br>
+                    Sisin Şiire Dönüştüğü Yer: <br>
                     <span class="text-brand-gold font-light italic tracking-normal normal-case block mt-2">Tonya Çayıriçi Köyü</span>
                 </h1>
             </div>
@@ -158,9 +160,20 @@
 
     <main class="flex-grow max-w-4xl mx-auto px-6 pb-24 w-full article-content">
         <section>
-            <p>Trabzon’un yeşil sinesinde, sislerin arasından sisler dağıldıkça sıyrılıp gelen bir hikâyedir Tonya. Bu kez rotamızı, modern zamanların hızıyla kadim geçmişin sükuneti arasında kalmış bir durağa, eski adıyla <strong>Anabedama</strong>, bugünkü ismiyle <strong>Çayıriçi Köyü</strong>’ne çevirdik.</p>
-            <p>İşte doğanın cömertliği ve değişimin hüznü arasında gerçekleştirdiğimiz o geziye dair notlar:</p>
+            <p>Yeşil sinesinde, sisler dağıldıkça sıyrılıp gelen bir hikâyedir Tonya. Bu kez rotamızı, modern zamanların hızıyla geçmişin sükuneti arasında kalmış bir durağa, eski adıyla <strong>Anabedama</strong>, bugünkü ismiyle <strong>Çayıriçi Köyü</strong>’ne çevirdik.</p>
         </section>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/11.webp" media="(max-width: 768px)">
+                <img src="img/11.webp" alt="Çayıriçi gündoğumu" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Çayıriçi gündoğumu</figcaption>
+        </figure>
+
+        <div class="custom-quote">
+            "Anabedama; Fol Deresi’nin sesiyle yıkanan, sisin içinde kaybolup kendi ruhunu bulanların, ufku geniş yamaçlarında sükuneti şiir eylediği bir vuslat durağıdır."
+        </div>
 
         <div class="my-10 border border-white/10 p-6 rounded-sm bg-white/5 flex flex-col md:flex-row items-center justify-between group">
             <div class="flex items-center space-x-4 text-left">
@@ -181,134 +194,161 @@
             </a>
         </div>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/9.webp" media="(max-width: 768px)">
-                <img src="img/9.webp" alt="Fol Deresi ve Tonya yolu" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Yeşilin tonları arasında Fol Deresi’nin izini sürmek</figcaption>
-        </figure>
-
         <section>
-            <h2>Yeşilin İçinde Kaybolmak: Fol Deresi’nin İzinde</h2>
-            <p>Vakfıkebir’den ayrılıp Tonya’ya doğru 20 kilometrelik o meşhur yola koyulduğunuzda, Karadeniz size ilk selamını <strong>Fol Deresi</strong> ile veriyor. Tonya’dan Çayıriçi’ne uzanan 10 kilometrelik tırmanış ise tam bir görsel şölene dönüşüyor. Yol boyunca yukarı çıktıkça manzara sadece güzelleşmiyor, adeta derinleşiyor.</p>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/10.webp" media="(max-width: 768px)">
-                <img src="img/10.webp" alt="Tonya'nın derin vadileri" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Yükseldikçe açılan eşsiz Tonya panoraması</figcaption>
-        </figure>
-
-        <section>
-            <p>İnsan, üzerine bir yorgan gibi serilen yeşilin içinde kaybolurken, şehre ait ne varsa geride bırakıyor ve kendini başka bir dünyanın eşiğinde hissediyor.</p>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/11.webp" media="(max-width: 768px)">
-                <img src="img/11.webp" alt="Anabedama genel görünüm" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Anabedama: Alışılmışın dışında, geniş ufuklu bir Karadeniz coğrafyası</figcaption>
-        </figure>
-
-        <section>
-            <h2>Anabedama: Geniş Ufuklu Bir Yayla Köyü</h2>
-            <p>Çayıriçi’ne vardığınızda, Karadeniz köylerinin o alışılagelmiş dik ve dar coğrafyasından farklı bir tablo karşılıyor sizi. Anabedama, komşularına kıyasla daha <strong>düz bir konuma ve geniş bir ufka</strong> sahip. Bakışlarınız yamaçlara hapsolmuyor; aksine, gökyüzüyle yeşilin buluştuğu o geniş çizgide özgürleşiyor.</p>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/12.webp" media="(max-width: 768px)">
-                <img src="img/12.webp" alt="Tonya geleneksel mimari" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Zamana direnen geleneksel mimari, betonun soğukluğuna karşı</figcaption>
-        </figure>
-
-        <section>
-            <h2>Değişimin Yüzü: Modern Beton ve Kaybolan Miras</h2>
-            <p>Ancak bu güzelliğin içinde yüreği burkan bir detay var: <strong>Geleneksel mimari</strong>. O eski, ruhu olan ahşap ve taş evlerin birer birer yok oluşuna tanıklık etmek üzücü. Onların yerini, köye geri dönen emeklilerin inşa ettiği modern betonarme binalar almış.</p>
-            
-            <div class="custom-quote">
-                "Keşke," diyoruz içimizden... "Geri dönenler, bu eşsiz coğrafyaya betonun soğukluğunu değil, kadim konakların sıcaklığını taşısaydı." Kuşkusuz bu bir ekonomik tercih meselesi, ancak estetik bir kaybın sızısı da baki kalıyor.
-            </div>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/13.webp" media="(max-width: 768px)">
-                <img src="img/13.webp" alt="Betonarme yapılaşma" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Geleneksel dokunun yerini alan yeni yapılar</figcaption>
-        </figure>
-
-        <section>
-            <h2>Turizmin Yeni Soluğu ve Yeşil Cennet</h2>
-            <p>Bölge, son yıllarda Erikbeli Yaylası’ndaki <strong>Foleya Mountain Resort</strong> ile turizmde ciddi bir ivme yakalamış durumda. Çayıriçi de bu ana güzergâh üzerinde olmanın avantajını hissetmeye başlamış.</p>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/14.webp" media="(max-width: 768px)">
-                <img src="img/14.webp" alt="Yeşil Cennet Kır Bahçesi" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Değirmendüzü mevkii: Yeşil Cennet Kır Bahçesi</figcaption>
-        </figure>
-
-        <section>
-            <h3>Yeşil Cennet Kır Bahçesi</h3>
-            <p>Çayıriçi’ne vardığınızda mola vermeniz gereken en önemli nokta. Doğanın kalbinde, her köşesi özenle düşünülmüş harika bir tesis.</p>
-            
-            <h3>Lezzet Durağı</h3>
-            <p>Burada Tonya’nın dünyaca meşhur süt ürünlerinin ve en taze yöresel yemeklerinin tadına bakabilir, Karadeniz misafirperverliğini iliklerinize kadar hissedebilirsiniz.</p>
+            <h2>Yeşilin İçinde Kaybolmak</h2>
+            <p>Vakfıkebir’in kıyı çizgisinden ayrılıp Tonya’nın yeşil derinliklerine doğru direksiyon kırdığınızda, huzur size ilk selamını Fol Deresi ile verir. Bu yolculukta Karadeniz, hırçın dalgalarının sesini geride bırakıp size ilk samimi selamını verdikten sonra, yolun kıvrımlarıyla dans ederek size Tonya'ya varıncaya kadar eşlik eder. Suyun taşlarla olan sohbeti, hafiten çizeleyen yağmur ve sisin uzaktan el sallaması yaklaşmakta olan yayla sükunetinin de ilk habercisidir.</p>
         </section>
 
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/15.webp" media="(max-width: 768px)">
-                <img src="img/15.webp" alt="Terk edilmiş köy okulu" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/15.webp" alt="Fol Deresi" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
-            <figcaption class="image-caption">Göçün sessiz tanıkları: Kapalı okul ve sağlık ocağı</figcaption>
+            <figcaption class="image-caption">Fol Deresi sisle daima yoldaş</figcaption>
+        </figure>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/13.webp" media="(max-width: 768px)">
+                <img src="img/13.webp" alt="Fol Vadisi" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Çayıriçi'nden Fol Vadisi'ne bakış</figcaption>
         </figure>
 
         <section>
-            <h2>Köyden Kente, Kentten Köye: Sosyal Bir Portre</h2>
-            <p>Çayıriçi, göçün her iki yüzünü de yaşıyor. Bir yanda göç nedeniyle kapısına kilit vurulmuş, sessizliğe bürünmüş bir <strong>ilköğretim okulu</strong> ve son yıllarda kapanan bir <strong>sağlık ocağı</strong>...</p>
+            <h2>Anabedama: Yeşil Bir Sessizlik Manifestosu</h2>
+            <p>Çayıriçi’ne ayak bastığınızda, Karadeniz’in o alışılagelmiş, insanı kuşatan dik ve dar coğrafi formları yerini bambaşka bir ferahlığa bırakır. Anabedama, komşu yamaçların aksine, tabiatın cömertçe sunduğu düz bir plato üzerinde yükselen mağrur duruşu ve bakışları sonsuzluğa davet eden geniş ufkuyla sizi karşılar. Burada coğrafya, yamaçların arasına sıkışıp kalmak yerine, gökyüzüyle kucaklaşan panoramik bir sükunete evrilir. <strong>düz bir konuma ve geniş bir ufka</strong> sahip.</p>
         </section>
 
         <figure class="my-12">
             <picture>
-                <source srcset="img/mobil/16.webp" media="(max-width: 768px)">
-                <img src="img/16.webp" alt="Köyde yaşamdan kesitler" class="grayscale hover:grayscale-0 transition duration-700">
+                <source srcset="img/mobil/14.webp" media="(max-width: 768px)">
+                <img src="img/14.webp" alt="Çayıriçi konumu" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
-            <figcaption class="image-caption">Değişen sosyal doku ve yeni yerleşimler</figcaption>
+            <figcaption class="image-caption">Çayıriçi düz bir alan üzerine kurulmuş konumu ile dikkat çekiyor</figcaption>
+        </figure>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/10.webp" media="(max-width: 768px)">
+                <img src="img/10.webp" alt="Kaletaşı" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Kaletaşı masallardaki gibi görkemli</figcaption>
         </figure>
 
         <section>
-            <p>Diğer yanda ise emeklilik sonrası şehirden köye dönenlerin yarattığı yeni bir yerleşim düzeni. Köyün okulu kapalı olsa da, yeni binaların yükselmesi buranın hala yaşadığının bir kanıtı.</p>
+            <h2>Değişimin Yüzü: Modern Beton ve Kaybolan Miras</h2>
+            <p>Ancak bu güzelliğin içinde yüreği burkan bir detay var: <strong>Geleneksel mimari</strong>. O eski, ruhu olan ahşap ve taş evlerin, yanındaki serenderlerin ve özenle yapılmış otlukların birer birer yok oluşuna tanıklık etmek üzücü.</p>
         </section>
 
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/17.webp" media="(max-width: 768px)">
-                <img src="img/17.webp" alt="Tonya'dan yayla manzarası" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/17.webp" alt="Geleneksel mimari" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
-            <figcaption class="image-caption">Geçmişin ruhu ile geleceğin inşası arasında Anabedama</figcaption>
+            <figcaption class="image-caption">Geleneksel mimari örneği ev, serender ve otluk</figcaption>
+        </figure>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/16.webp" media="(max-width: 768px)">
+                <img src="img/16.webp" alt="Çayıriçi görünüm" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Çayıriçi genel görünüm</figcaption>
+        </figure>
+
+        <section>
+            <h2>Lezzet Durağı: Tereyağı ve Mısır Ununun Kardeşliği</h2>
+            <p>Tonya denince akla gelen ilk, hiç şüphesiz lezzeti ile efsanevi <strong>Tonya Tereyağı</strong>'dır. Ancak burada tereyağı, alelade bir kahvaltılık olmanın çok ötesinde; sütün sabırla yoğrulduğu bir zanaat, yayla çiçeklerinin kokusunu sofraya taşıyan bir emek hikâyesidir. Sütün kaymağından süzülüp gelen o karakteristik altın sarısı renk, Tonya’nın doğasına duyulan sadakatin ve kuşaktan kuşağa aktarılan bir mutfak estetiğinin en saf tezahürüdür</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/21.webp" media="(max-width: 768px)">
+                <img src="img/21.webp" alt="Tereyağı yapımı" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Meşhur Tonya tereyağı yapımı</figcaption>
+        </figure>
+
+        <section>
+            <p>Bu lezzetin en yakın yoldaşı ise <strong>mısır unudur</strong>. Değirmenlerde ağır ağır öğütülen mısırın kokusu, toprağın bereketiyle harmanlanır.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/19.webp" media="(max-width: 768px)">
+                <img src="img/19.webp" alt="mısır unu öğütme" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Mısır unu öğütme. Mısır unu her Karadenizlinin vazgeçilmezidir.</figcaption>
+        </figure>
+
+        <section>
+            <h2>Karadeniz Kadını ve Sadık Dostu: Sepet</h2>
+            <p> Bu coğrafyanın asıl kahramanları, hiç kuşkusuz Karadeniz kadınlarıdır. Onların sırtından eksik olmayan o meşhur sepet, acıların ve sevinçlerin sessizce paylaşıldığı sadık bir arkadaştır. Öyle ki o sepetin içine; bazen heybetiyle fırınlardan taşan kocaman bir Vakfıkebir ekmeği yerleşir, bazen de yorulmuş bir kuzu yavrusu usulca kıvrılır. Karadeniz kadını ile sepeti arasındaki o kopmaz bağ; bazen bereketi, bazen şefkati sırtlanıp yokuşları zarafetle aşan vakur bir hayat hikâyesidir.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/22.webp" media="(max-width: 768px)">
+                <img src="img/22.webp" alt="Sepet" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Sepet Karadeniz kadını vazgeçilmezidir</figcaption>
+        </figure>
+
+        <section>
+            <h2>Değirmendüzü Mevkii: Yeşil Cennet Kır Bahçesi</h2>
+            <p>Çayıriçi’nin kalbi sayılan Değirmendüzü mevkii, doğanın kucağında yükselen zarif bir yatırıma, <strong>Yeşil Cennet Kır Bahçesi</strong>’ne ev sahipliği yapıyor. Burası bir mola yerinin çok ötesinde; bölge turizminin geleceğine atılmış vizyoner bir imza, doğayla barışık bir sığınak.</p>
+            <p>Fol Deresi’nin hiç dinmeyen o hırçın ama huzur veren melodisi eşliğinde, yöresel lezzetlerin tadına bakmak burada tam bir ritüele dönüşüyor. Dere kenarında, suyun serinliği ve yeşilin her tonuyla sarmalanmış bu harika mekanda; demli bir çay eşliğinde edilen koyu sohbetler, manzaranın büyüsüyle birleşen muhteşem sofralar, insana zamanın durduğunu hissettiriyor.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/20.webp" media="(max-width: 768px)">
+                <img src="img/20.webp" alt="Yeşil Cennet inşaat" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Değirmendüzü mevkisindeki Yeşil Cennet Kır Bahçesinin tamamlanmaya yakın zamanlarında çekilen bir kare</figcaption>
+        </figure>
+
+        <section>
+            <h2>Turizmin Yeni Soluğu</h2>
+            <p>Bölge, son yıllarda Erikbeli Yaylası’ndaki <strong>Foleya Mountain Resort</strong> ile turizmde ciddi bir ivme yakalamış durumda. Bu modern tesis, bölgenin doğallığı ile konforu birleştirerek turizmde yeni bir vizyon sunuyor.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/23.webp" media="(max-width: 768px)">
+                <img src="img/23.webp" alt="Foleya Resort" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Foleya Mountain Resort otel</figcaption>
         </figure>
 
         <section>
             <h2>Sonuç Olarak</h2>
-            <p>Tonya Çayıriçi (Anabedama), hem bir geçiş noktası hem de başlı başına bir varış noktası. Eğer yolunuz düşerse, beton binaların arasından sislerin dağıldığı ufka bakın; Fol Deresi’nin sesini dinleyin ve o geniş coğrafyanın tadını çıkarın.</p>
+            <p>Anabedama, Karadeniz’in hırçın coğrafyasında bulutların arasına gizlenmiş, tabiatın en zarif ve en geniş ufuklu sığınağıdır. Havadan bakıldığında bir ressamın fırçasından çıkmış dingin bir tabloyu andıran bu yerleşim; geleneksel taş konakların sıcaklığıyla mısır ununun bereketi, Fol Deresi’nin gümüş şarkısıyla Karadeniz kadınının vakur sepeti arasında kurulan eşsiz bir dengedir. Burada zaman, modern dünyanın hızına inat; sislerin arasından süzülen bir ışık huzmesi kadar yavaş, şiirsel bir sükunet kadar derindir. Çayıriçi, yeşilin sonsuzluğuna açılan o geniş ufuk çizgisinde, insanın kendi içsel sükunetine vardığı bir vuslat durağıdır..</p>
         </section>
 
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/18.webp" media="(max-width: 768px)">
-                <img src="img/18.webp" alt="Anabedama panoramik" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/18.webp" alt="Çayıriçi havadan" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
-            <figcaption class="image-caption">Sisler dağılırken Çayıriçi'nin eşsiz perspektifi</figcaption>
+            <figcaption class="image-caption">Çayıriçi'nin havadan görünümü</figcaption>
+        </figure>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/12.webp" media="(max-width: 768px)">
+                <img src="img/12.webp" alt="Çayıriçi şiir" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Çayıriçi şiir gibi</figcaption>
+        </figure>
+
+        <figure class="my-12">
+            <picture>
+                <source srcset="img/mobil/9.webp" media="(max-width: 768px)">
+                <img src="img/9.webp" alt="Çayıriçi günbatımı" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Çayıriçi'nde günbatımı</figcaption>
         </figure>
 
         <div class="my-12">
@@ -326,8 +366,8 @@
         </div>
 
         <div class="mt-24 pt-12 border-t border-white/5 text-center">
-            <h3 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-8 font-bold text-center">Bu Yazıyı Paylaş</h3>
-            <div class="flex justify-center items-center space-x-12">
+    <h3 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-8 font-bold text-center">Bu Yazıyı Paylaş</h3>
+    <div class="flex justify-center items-center space-x-12">
                 <a href="https://wa.me/?text=Ümit%20Özgüler%20-%20Anabedama%20Tonya%20Gezi%20Yazısı%20https://umitozguler.com.tr/fotoyol/tonya-cayirici.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">WhatsApp</a>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/tonya-cayirici.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
                 <a href="https://twitter.com/intent/tweet?text=Ümit%20Özgüler%20-%20Tonya%20Çayıriçi%20&url=https://umitozguler.com.tr/fotoyol/tonya-cayirici.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
