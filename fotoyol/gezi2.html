@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", "G-QW3FEBRP69");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anabedama’nın İzinde: Tonya Çayıriçi | Ümit Özgüler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        "brand-black": "#121212", 
+                        "brand-dark": "#1a1a1a", 
+                        "brand-gold": "#c5a059",
+                        "brand-orange": "#ff8c00" 
+                    },
+                    fontFamily: { sans: ['"Inter"', "sans-serif"] },
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        .nav-link-custom { position: relative; }
+        .nav-link-custom::after {
+            content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0;
+            background-color: #ff8c00; transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after { width: 100%; }
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
+        #mobile-menu.active { transform: translateX(0); }
+        @keyframes lineDown { from { height: 0; } to { height: 100%; } }
+        .menu-line { position: absolute; left: 0; top: 0; width: 1.5px; background-color: #ff8c00; height: 0; }
+        #mobile-menu.active .menu-line { animation: lineDown 0.8s ease-out forwards; animation-delay: 0.3s; }
+        body.no-scroll #mobile-menu-btn { opacity: 0; pointer-events: none; }
+        #mobile-menu-btn { transition: opacity 0.3s ease; }
+        .no-scroll { overflow: hidden; }
+        
+        .article-content p { 
+            margin-bottom: 1.8rem; 
+            line-height: 2.0; 
+            color: #d1d1d1; 
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+        .article-content h2 { 
+            color: #ffffff; 
+            font-size: 1.75rem; 
+            margin: 3.5rem 0 1.5rem; 
+            font-weight: 600; 
+            letter-spacing: -0.02em;
+        }
+        .image-caption { 
+            font-size: 12px; 
+            color: #888; 
+            margin-top: 12px; 
+            text-align: center; 
+            font-weight: 300; 
+            letter-spacing: 0.05em; 
+            font-style: italic; 
+        }
+        picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
+        .share-link:hover { transform: translateY(-2px); }
+        .hover-whatsapp:hover { color: #25D366 !important; }
+        .hover-facebook:hover { color: #1877F2 !important; }
+        .hover-x:hover { color: #ffffff !important; }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+    
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-24">
+                <a href="../index.html" class="flex flex-col items-center group relative z-40">
+                    <div class="text-2xl tracking-widest text-white leading-none uppercase">
+                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                    </div>
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px; width: 100%; text-align: center;">FINE ART PHOTOGRAPHY</span>
+                </a>
+                <div class="hidden md:flex space-x-10 text-white">
+                    <a href="../index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Portfolyo</a>
+                    <a href="../analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Analizler</a>
+                    <a href="../dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Düşünceler</a>
+                    <a href="../fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1 transition-colors">Fotoyol</a>
+                    <a href="../contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">İletişim</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[120] shadow-2xl md:hidden flex flex-col pt-32 px-6 text-right">
+            <div class="menu-line"></div>
+            <button id="close-menu-btn" class="absolute top-8 right-6 text-white hover:text-brand-orange transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="space-y-4 flex flex-col text-white">
+                <a href="../index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Ana Sayfa</a>
+                <a href="../about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Hakkımda</a>
+                <a href="../portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Portfolyo</a>
+                <a href="../analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Analizler</a>
+                <a href="../dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Düşünceler</a>
+                <a href="../fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Fotoyol</a>
+                <a href="../contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">İletişim</a>
+            </div>
+        </div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[115] md:hidden"></div>
+    </nav>
+
+    <header class="pt-48 pb-10 px-6 max-w-5xl mx-auto w-full page-animate">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-l-2 border-brand-gold pl-8 py-2">
+            <div class="max-w-2xl">
+                <div class="flex items-center text-[10px] tracking-[0.5em] uppercase text-brand-orange mb-4 font-bold opacity-80">
+                    <svg class="w-3 h-3 mr-2 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>TRABZON / TONYA</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-normal text-white tracking-tight leading-[1.1] uppercase">
+                    Anabedama’nın İzinde: <br>
+                    <span class="text-brand-gold font-light italic tracking-normal normal-case block mt-2">Tonya Çayıriçi Köyü</span>
+                </h1>
+            </div>
+            <div class="mt-6 md:mt-0 text-right">
+                <span class="text-[9px] tracking-[0.3em] uppercase text-gray-500 font-semibold block">Yol Hikayesi No: 02</span>
+                <span class="text-[9px] tracking-[0.3em] uppercase text-gray-600 block">12 Şubat 2026</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-6 pb-24 w-full article-content">
+        <section>
+            <p>Trabzon’un yeşil sinesinde, sislerin arasından sıyrılıp gelen bir hikâyedir Tonya. Bu kez rotamızı, modern zamanların hızıyla kadim geçmişin sükuneti arasında kalmış bir durağa, eski adıyla <strong>Anabedama</strong>, bugünkü ismiyle <strong>Çayıriçi Köyü</strong>’ne çevirdik.</p>
+        </section>
+
+        <div class="my-10 border border-white/10 p-6 rounded-sm bg-white/5 flex flex-col md:flex-row items-center justify-between group">
+            <div class="flex items-center space-x-4 text-left">
+                <div class="w-12 h-12 bg-brand-dark flex items-center justify-center rounded-full text-brand-gold border border-white/10">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-[10px] tracking-[0.3em] uppercase text-brand-orange font-bold">Rotalar / Konum</h4>
+                    <p class="text-lg text-white font-medium tracking-tight">Çayıriçi (Anabedama), Tonya</p>
+                    <p class="text-[11px] text-gray-500 uppercase tracking-widest mt-1">Vakfıkebir - Tonya Yolu Üzeri</p>
+                </div>
+            </div>
+            <a href="https://maps.google.com" target="_blank" 
+               class="mt-6 md:mt-0 px-6 py-2 border border-white/30 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-gold hover:text-brand-black hover:border-brand-gold transition-all duration-300 text-white">
+                Haritada Görüntüle
+            </a>
+        </div>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/9.webp" alt="Tonya'nın sisli vadileri" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Tonya'nın sisli vadileri ve Fol Deresi'nin yankısı</figcaption>
+        </figure>
+
+        <section>
+            <h2>Yeşilin İçinde Kaybolmak: Fol Deresi’nin İzinde</h2>
+            <p>Vakfıkebir’den ayrılıp Tonya’ya doğru 20 kilometrelik o meşhur yola koyulduğunuzda, Karadeniz size ilk selamını <strong>Fol Deresi</strong> ile veriyor. Tonya’dan Çayıriçi’ne uzanan 10 kilometrelik tırmanış ise tam bir görsel şölene dönüşüyor. Yol boyunca yukarı çıktıkça manzara sadece güzelleşmiyor, adeta derinleşiyor. İnsan, üzerine bir yorgan gibi serilen yeşilin içinde kaybolurken, şehre ait ne varsa geride bırakıyor ve kendini başka bir dünyanın eşiğinde hissediyor.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/10.webp" alt="Çayıriçi Köyü yerleşimi" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Anabedama: Karadeniz'in alışılmışın dışındaki düz ve geniş ufku</figcaption>
+        </figure>
+
+        <section>
+            <h2>Anabedama: Geniş Ufuklu Bir Yayla Köyü</h2>
+            <p>Çayıriçi’ne vardığınızda, Karadeniz köylerinin o alışılagelmiş dik ve dar coğrafyasından farklı bir tablo karşılıyor sizi. Anabedama, komşularına kıyasla daha <strong>düz bir konuma ve geniş bir ufka</strong> sahip. Bakışlarınız yamaçlara hapsolmuyor; aksine, gökyüzüyle yeşilin buluştuğu o geniş çizgide özgürleşiyor.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/11.webp" alt="Geleneksel Tonya evi" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Zamana direnen son geleneksel mimari örnekleri</figcaption>
+        </figure>
+
+        <section>
+            <h2>Değişimin Yüzü: Modern Beton ve Kaybolan Miras</h2>
+            <p>Ancak bu güzelliğin içinde yüreği burkan bir detay var: Geleneksel mimari. O eski, ruhu olan ahşap ve taş evlerin birer birer yok oluşuna tanıklık etmek üzücü. Onların yerini, köye geri dönen emeklilerin inşa ettiği modern betonarme binalar almış. Keşke geri dönenler, bu eşsiz coğrafyaya betonun soğukluğunu değil, kadim konakların sıcaklığını taşısaydı. Kuşkusuz bu bir ekonomik tercih meselesi, ancak estetik bir kaybın sızısı da baki kalıyor.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/12.webp" alt="Yeşil Cennet Kır Bahçesi" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Değirmendüzü mevkii: Yeşil Cennet Kır Bahçesi</figcaption>
+        </figure>
+
+        <section>
+            <h2>Turizmin Yeni Soluğu ve Yeşil Cennet</h2>
+            <p>Bölge, son yıllarda <strong>Erikbeli Yaylası</strong>’ndaki <em>Foleya Mountain Resort</em> ile turizmde ciddi bir ivme yakalamış durumda. Çayıriçi de bu ana güzergâh üzerinde olmanın avantajını hissetmeye başlamış. Bu hareketliliğin en güzel meyvelerinden biri de <strong>Değirmendüzü</strong> mevkii. Burada açılan <strong>Yeşil Cennet Kır Bahçesi</strong>, yöresel lezzetleri tatmak isteyenler için harika bir tesis olmuş.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/13.webp" alt="Köyün terk edilmiş okulu" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Sessizliğe bürünen köy okulu ve sağlık ocağı</figcaption>
+        </figure>
+
+        <section>
+            <h2>Köden Kente Göç: Sosyal Bir Portre</h2>
+            <p>Çayıriçi, göçün her iki yüzünü de yaşıyor. Bir yanda göç nedeniyle kapısına kilit vurulmuş, sessizliğe bürünmüş bir <strong>ilköğretim okulu</strong> ve son yıllarda kapanan bir <strong>sağlık ocağı</strong>... Diğer yanda ise emeklilik sonrası şehirden köye dönenlerin yarattığı yeni bir yerleşim düzeni. Köyün sosyal dokusu bu değişimle yeniden şekilleniyor.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/14.webp" alt="Betonarme evlerin artışı" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Geleneksel ile modernin çatışması</figcaption>
+        </figure>
+
+        <section>
+            <p>Tonya Çayıriçi (Anabedama), hem bir geçiş noktası hem de başlı başına bir varış noktası. Eğer yolunuz düşerse, beton binaların arasından sıyrılıp ufka bakın; Fol Deresi’nin sesini dinleyin ve o geniş coğrafyanın tadını çıkarın. Çayıriçi'nin ekonomik olarak bu turizm hareketliliğinden nasıl bir pay alacağını ise henüz zaman gösterecek.</p>
+        </section>
+
+        <figure class="my-12">
+            <picture>
+                <img src="img/15.webp" alt="Tonya'dan genel görünüm" class="grayscale hover:grayscale-0 transition duration-700">
+            </picture>
+            <figcaption class="image-caption">Ufku geniş, ruhu derin: Anabedama</figcaption>
+        </figure>
+
+        <div class="mt-24 pt-12 border-t border-white/5 text-center">
+            <h3 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-8 font-bold text-center">Bu Yazıyı Paylaş</h3>
+            <div class="flex justify-center items-center space-x-12">
+                <a href="https://wa.me/?text=Ümit%20Özgüler%20-%20Tonya%20Çayıriçi%20Gezi%20Yazısı%20https://umitozguler.com.tr/fotoyol/tonya.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">WhatsApp</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/tonya.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
+                <a href="https://twitter.com/intent/tweet?text=Ümit%20Özgüler%20-%20Tonya%20Çayıriçi%20&url=https://umitozguler.com.tr/fotoyol/tonya.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="../fotoyol.html" class="text-xs uppercase tracking-[0.3em] text-gray-400 hover:text-white transition-colors font-bold">← fotoyol listesine dön</a>
+        </div>
+    </main>
+
+    <footer class="bg-brand-black py-16 border-t border-white/5 text-center relative z-10">
+        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu() {
+            menu.classList.toggle('active');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('no-scroll');
+        }
+        menuBtn.onclick = toggleMenu;
+        closeBtn.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
+    </script>
+</body>
+</html>
