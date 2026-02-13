@@ -1,248 +1,107 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QW3FEBRP69');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkımda | Ümit Özgüler</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { 
-                        'brand-black': '#121212', 
-                        'brand-dark': '#1a1a1a', 
-                        'brand-gold': '#c5a059',
-                        'brand-orange': '#ff8c00'
-                    },
-                    fontFamily: { sans: ['"Inter"', 'sans-serif'] }
-                }
-            }
+<!DOCTYPE html><html lang="tr"><head>    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>    <script>      window.dataLayer = window.dataLayer || [];      function gtag(){dataLayer.push(arguments);}      gtag('js', new Date());      gtag('config', 'G-QW3FEBRP69');    </script>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Hakkımda | Ümit Özgüler</title>    <script src="https://cdn.tailwindcss.com"></script>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">    <script>        tailwind.config = {            theme: {                extend: {                    colors: {                         'brand-black': '#121212',                         'brand-dark': '#1a1a1a',                         'brand-gold': '#c5a059',                        'brand-orange': '#ff8c00'                    },                    fontFamily: { sans: ['"Inter"', 'sans-serif'] }                }            }        }    </script>    <style>        /* Fotoğraf Çizgi Animasyonu */
+        @keyframes lineDown { from { height: 0; } to { height: 100%; } }
+        .photo-wrapper { position: relative; }
+        .photo-wrapper::before { 
+            content: ''; position: absolute; top: 0; left: -15px; width: 2px; background: #ff8c00; z-index: 20;
+            animation: lineDown 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
         }
-    </script>
-    <style>
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 1s ease-out forwards; }
+        .nav-link-custom { position: relative; }
+        .nav-link-custom::after { content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0; background-color: #ff8c00; transition: width 0.3s ease; }
+        .nav-link-custom:hover::after { width: 100%; }
+
+        /* Mobil Menü Konumlandırma */
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); width: auto; min-width: 200px; padding: 100px 30px 40px 30px; left: auto; right: 0; z-index: 150; }
+        #mobile-menu.active { transform: translateX(0); }
+        .menu-line { position: absolute; left: 0; top: 0; width: 2px; height: 0; background: #ff8c00; transition: height 0.6s ease 0.3s; }
+        #mobile-menu.active .menu-line { height: 100%; }
         .no-scroll { overflow: hidden; }
-
-        @keyframes borderSlide {
-            0% { height: 0; width: 0; opacity: 0; }
-            50% { height: 100%; width: 0; opacity: 1; }
-            100% { height: 100%; width: 100%; opacity: 1; }
-        }
-        .animate-border {
-            animation: borderSlide 1.5s ease-out forwards;
-            animation-delay: 0.5s;
-        }
-
-        .nav-link-custom {
-            position: relative;
-            padding-bottom: 4px;
-        }
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1.5px;
-            bottom: 0;
-            left: 0;
-            background-color: #ff8c00;
-            transition: width 0.3s ease;
-        }
-        .nav-link-custom:hover::after {
-            width: 100%;
-        }
-
-        #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%);
-        }
-        #mobile-menu.active {
-            transform: translateX(0);
-        }
-        
-        @keyframes lineDown {
-            from { height: 0; }
-            to { height: 100%; }
-        }
-        .menu-line {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1.5px;
-            background-color: #ff8c00;
-            height: 0;
-        }
-        #mobile-menu.active .menu-line {
-            animation: lineDown 0.8s ease-out forwards;
-            animation-delay: 0.3s;
-        }
-
-        .tfsf-card {
-            perspective: 1000px;
-            cursor: pointer;
-            width: 100%; 
-            max-width: 120px; 
-        }
-        .tfsf-card-inner {
-            position: relative;
-            width: 100%;
-            height: 40px; 
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .tfsf-card:hover .tfsf-card-inner {
-            transform: rotateY(180deg);
-        }
-        .tfsf-front, .tfsf-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-        }
-        @media (min-width: 768px) { .tfsf-front, .tfsf-back { justify-content: flex-start; } }
-        @media (max-width: 767px) { .tfsf-front, .tfsf-back { justify-content: center; } }
-        .tfsf-back { transform: rotateY(180deg); }
-    </style>
-</head>
-<body class="bg-brand-black text-white font-sans antialiased overflow-x-hidden">
-
+    </style></head><body class="bg-brand-black text-white font-sans antialiased">
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-40">
-                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
+                    <div class="text-2xl tracking-widest text-white leading-none">
+                        <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
                     </div>
-                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-                        FINE ART PHOTOGRAPHY
-                    </span>
+                    <span class="text-[8px] tracking-[5.3px] opacity-90 font-light block mt-1 uppercase text-center w-full">FINE ART PHOTOGRAPHY</span>
                 </a>
                 <div class="hidden md:flex space-x-10">
-                    <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
-                    <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold">Hakkımda</a>
-                    <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Portfolyo</a>
-                    <a href="analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Analizler</a>
-                    <a href="dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Düşünceler</a>
-                    <a href="fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">Fotoyol</a>
-                    <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors">İletişim</a>
+                    <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                    <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest text-brand-gold border-b border-brand-orange/50">Hakkımda</a>
+                    <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest hover:text-brand-orange transition-colors">Portfolyo</a>
+                    <a href="analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest hover:text-brand-orange transition-colors">Analizler</a>
+                    <a href="dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest hover:text-brand-orange transition-colors">Düşünceler</a>
+                    <a href="fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest hover:text-brand-orange transition-colors">Fotoyol</a>
+                    <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-widest hover:text-brand-orange transition-colors">İletişim</a>
                 </div>
-
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                <button id="mobile-menu-btn" class="md:hidden z-[110] text-white p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
-
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[100] shadow-2xl md:hidden flex flex-col pt-32 px-6">
-            <div class="menu-line"></div>
-            <div class="space-y-4 flex flex-col">
-                <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Hakkımda</a>
-                <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Portfolyo</a>
-                <a href="analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Analizler</a>
-                <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
-                <a href="fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Fotoyol</a>
-                <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">İletişim</a>
-            </div>
-        </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
     </nav>
 
-    <section class="pt-40 pb-20 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 lg:gap-16 items-center justify-center">
-            
-            <div class="w-full md:w-[45%] animate-fade flex justify-center md:justify-end">
-                <div class="relative inline-block">
-                    <div class="absolute bottom-[-15px] right-[-15px] border-r-4 border-b-4 border-brand-orange -z-10 animate-border"></div>
-                    <img src="img/umitozguler.webp" alt="Ümit Özgüler" 
-                         class="relative z-10 max-w-full h-auto max-h-[500px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl block">
-                </div>
-            </div>
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 bg-brand-dark shadow-2xl flex flex-col md:hidden">
+        <div class="menu-line"></div>
+        <button id="close-menu" class="absolute top-8 right-6 text-white/50 hover:text-brand-orange p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="flex flex-col space-y-3 items-start">
+            <a href="index.html" class="text-[14px] tracking-[0.2em] uppercase font-medium hover:text-brand-orange">Ana Sayfa</a>
+            <a href="about.html" class="text-[14px] tracking-[0.2em] uppercase font-medium text-brand-orange">Hakkımda</a>         
+            <a href="portfolio.html" class="text-[14px] tracking-[0.2em] uppercase font-medium hover:text-brand-orange">Portfolyo</a>
+            <a href="analizler.html" class="text-[14px] tracking-[0.2em] uppercase font-medium hover:text-brand-orange">Analizler</a>
+            <a href="dusunceler.html" class="text-[14px] tracking-[0.2em] uppercase font-medium hover:text-brand-orange">Düşünceler</a>
+            <a href="fotoyol.html" class="text-[14px] tracking-[0.2em] uppercase font-medium hover:text-brand-orange">Fotoyol</a>
+            <a href="contact.html" class="text-[14px] tracking-[0.2em] uppercase font-medium hover:text-brand-orange">İletişim</a>
+        </div>
+    </div>
 
-            <div class="w-full md:w-[50%] animate-fade" style="animation-delay: 0.2s;">
-                <div class="mb-12">
-                    <div class="relative inline-block">
-                        <div class="absolute top-0 left-[-20px] w-4 h-4 border-t-2 border-l-2 border-brand-orange"></div>
-                        <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase leading-none px-2">
-                            Işık, Gölge & <span class="text-brand-orange">Ruh.</span>
-                        </h1>
-                        <div class="absolute bottom-[-10px] right-[-10px] w-4 h-4 border-b-2 border-r-2 border-brand-orange"></div>
+    <main class="pt-48 pb-20 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+                <div class="w-full lg:w-5/12 animate-fade relative">
+                    <div class="photo-wrapper max-w-md mx-auto lg:mx-0">
+                        <img src="img/umitozguler.webp" alt="Ümit Özgüler" class="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-1000 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                     </div>
                 </div>
-
-                <div class="space-y-6 text-gray-400 text-sm lg:text-base leading-relaxed font-light tracking-wide text-left max-w-xl">
-                    <p>Fotoğraf, benim için sadece bir anı dondurmak değil; zamanın akışına atılmış estetik bir çapa, görünenin ardındaki gizli hikayeyi arama sanatıdır. 20 yılı aşkın süredir vizörün dar çerçevesinden Anadolu’nun kadim coğrafyasına bakarken, aslında toprağın sesini ve insan ruhunun saklı derinliklerini arıyorum.</p>
-                    <p>Sanat yolculuğumdaki teknik disiplinin temelinde, 8 yılı aşkın süredir devam eden tutkulu bir doğa gözlemciliği serüveni yatmaktadır. Kelebek eğitim kamplarında başlayan bu süreçte, Türkiye'nin Kelebekleri kitabının yazarı Prof. Dr. Ahmet Baytaş ile birlikte saha çalışmaları yürütme fırsatı buldum. Bu birikimi akademik bir düzeye taşıyarak; Hatay Mustafa Kemal Üniversitesi’nden Prof. Dr. Erol Atay proje koordinatörlüğünde yürütülen, TÜBİTAK destekli "Kelebeğimi Tanıyorum Şimdi Kelebek Gözlem Zamanı" projesinde yer aldım. Bu kıymetli birliktelikler ve saha tecrübeleri, vizörümdeki detaycılığın ana kaynağı olmuştur. Bu birikimin bir meyvesi olarak, kelebeklerin teşhisine yönelik pratik bir arazi rehberi niteliğindeki 3 ciltlik 'Türkiye Kelebekleri' serisinin ilk cildi basıma hazır hale gelmiş, serinin devamı niteliğindeki çalışmalar ise tüm hızıyla sürmektedir.</p>
-                    <p>Bursa Fotoğraf ve Sinema Amatörleri Derneği (BUFSAD) bünyesinde sürdürdüğüm atölye hocalığı ile bilgi birikimi mi paylaşırken, Türkiye Fotoğraf Sanatı Federasyonu (TFSF) jüri üyeliği görevimle ulusal fotoğraf sanatının gelişimine katkı sundum. Makro fotoğrafçılık üzerine gerçekleştirdiğim sunum ve söyleşilerin yanı sıra, fotoğrafın edebi diliyle harmanlanan 'Fotoğraf Altı Yazılar' isimli kitabım da çok kısa bir süre içinde okurlarla buluşacaktır. Doğanın makro dünyasından sokağın dinamizmine uzanan yolculuğumda, son yıllarda odağımı insan ve sokak temalarına yoğunlaştırarak yaşamın en yalın ve zamansız anlarını kayıt altına alıyorum. Bugün, ondan fazla karma sergide yer bulan tüm fotoğraf çalışmalarımı; bilimsel bir titizlikle ve yaşamın özünü sanatsal bir duyarlılıkla harmanlayarak gelecek nesillere aktarılacak kalıcı eserlere dönüştürüyorum.</p>
-                </div>
-
-                <div class="grid grid-cols-3 gap-8 pt-12 border-t border-white/5 max-w-xl">
-                    <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">20+</span>
-                        <span class="text-[9px] uppercase tracking-widest text-brand-orange font-semibold">Yıllık Deneyim</span>
+                <div class="w-full lg:w-7/12 animate-fade" style="animation-delay: 0.3s;">
+                    <header class="mb-10">
+                        <span class="text-brand-orange text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Eğitim Yöneticisi & Fotoğrafsever</span>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter leading-tight mb-6">Işık, Gölge & <br><span class="text-brand-orange">Ruhun İzinde.</span></h1>
+                        <div class="w-20 h-1 bg-brand-orange"></div>
+                    </header>
+                    <div class="space-y-8 text-gray-400 text-base md:text-lg leading-relaxed font-light text-justify lg:text-left">
+                        <p class="first-letter:text-5xl first-letter:font-bold first-letter:text-brand-orange first-letter:mr-3 first-letter:float-left">Fotoğraf, benim için sadece bir anı dondurmak değil; zamanın akışına atılmış estetik bir çapa, görünenin ardındaki gizli hikayeyi arama sanatıdır. 20 yılı aşkın süredir vizörün dar çerçevesinden Anadolu’nun kadim coğrafyasına bakarken, aslında toprağın sesini arıyorum.</p>
+                        <p>Sanat yolculuğumdaki teknik disiplinin temelinde, 8 yılı aşkın süredir devam eden tutkulu bir doğa gözlemciliği serüveni yatmaktadır. Bu süreçte Prof. Dr. Ahmet Baytaş, rahmetli Prof.Dr. Olcay Yeğin ile saha gözlemleri ve Prof. Dr. Erol Atay'ın koordinatörlüğünde akademik ve TÜBİTAK destekli projelerde yer alarak kelebek gözlemciliği ve tür teşhisi üzerine derinlemesine çalışmalar yürüttüm.</p>
+                        <blockquote class="border-l-2 border-brand-orange pl-6 py-2 italic text-gray-300">"Doğanın makro dünyasından sokağın dinamizmine uzanan yolculuğumda, yaşamın en yalın ve zamansız anlarını kayıt altına alıyorum."</blockquote>
+                        <p>BUFSAD bünyesinde atölye hocalığı ve TFSF jüri üyeliği görevlerimle fotoğraf sanatının gelişimine katkı sunarken, yakında kitap raflarında yerine alacak olan, edebi bir antım dille harmanlanan 'Fotoğraf Altı Yazılar' isimli kitabım ile bu sanatı kalıcı bir esere dönüştürmeyi amaçlıyorum.</p>
                     </div>
-                    <div class="text-center md:text-left">
-                        <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">10+</span>
-                        <span class="text-[9px] uppercase tracking-widest text-brand-orange font-semibold">Sergi</span>
-                    </div>
-                    
-                    <div class="text-center md:text-left flex flex-col items-center md:items-start">
-                        <div class="tfsf-card" onclick="window.open('https://tfsf.org.tr/', '_blank')">
-                            <div class="tfsf-card-inner">
-                                <div class="tfsf-front">
-                                    <span class="block text-2xl lg:text-3xl font-bold text-white uppercase">TFSF</span>
-                                </div>
-                                <div class="tfsf-back">
-                                    <img src="img/tfsf.jpg" alt="TFSF Logo" class="h-8 lg:h-10 object-contain">
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-[9px] uppercase tracking-widest text-brand-orange font-semibold">Jüri</span>
+                    <div class="grid grid-cols-3 gap-8 pt-12 border-t border-white/5 mt-12">
+                        <div><span class="block text-4xl font-bold text-white uppercase">20+</span><span class="text-[10px] uppercase tracking-[0.2em] text-brand-orange font-semibold">Yıllık Deneyim</span></div>
+                        <div><span class="block text-4xl font-bold text-white uppercase">10+</span><span class="text-[10px] uppercase tracking-[0.2em] text-brand-orange font-semibold">Karma Sergi</span></div>
+                        <a href="https://tfsf.org.tr/tr" target="_blank" class="group cursor-pointer block">
+    <span class="block text-4xl font-bold text-white uppercase group-hover:text-brand-orange transition-colors">TFSF</span>
+    <span class="text-[10px] uppercase tracking-[0.2em] text-brand-orange font-semibold">Jüri Üyesi</span>
+</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <footer class="bg-brand-black py-12 border-t border-white/5 text-center mt-auto">
-        <div class="max-w-7xl mx-auto px-6 text-gray-600 text-[10px] tracking-[0.2em] uppercase">
-            &copy; 2026 Ümit Özgüler.
-        </div>
+    <footer class="bg-brand-black py-12 border-t border-white/5 text-center">
+        <div class="text-gray-500 text-[10px] tracking-[0.2em] uppercase">&copy; 2026 Ümit Özgüler</div>
     </footer>
 
     <script>
         const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu');
         const menu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
-        const icon = document.getElementById('menu-icon');
-
-        function toggleMenu() {
-            menu.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.classList.toggle('no-scroll');
-            
-            if (menu.classList.contains('active')) {
-                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-            } else {
-                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            }
-        }
-
-        menuBtn.onclick = toggleMenu;
-        overlay.onclick = toggleMenu;
-    </script>
-</body>
-</html>
+        function toggleMenu() { menu.classList.toggle('active'); document.body.classList.toggle('no-scroll'); }
+        if (menuBtn) menuBtn.onclick = toggleMenu;
+        if (closeBtn) closeBtn.onclick = toggleMenu;
+        document.querySelectorAll('#mobile-menu a').forEach(link => { link.onclick = toggleMenu; });
+    </script></body></html>
