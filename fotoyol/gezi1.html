@@ -70,16 +70,41 @@
             letter-spacing: 0.05em; 
             font-style: italic; 
         }
-        picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); }
+        picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); cursor: zoom-in; }
         .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
         .share-link:hover { transform: translateY(-2px); }
         .hover-whatsapp:hover { color: #25D366 !important; }
         .hover-facebook:hover { color: #1877F2 !important; }
         .hover-x:hover { color: #ffffff !important; }
+
+        /* LIGHTBOX STYLES */
+        #lightbox {
+            position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #lightbox.active { display: flex; opacity: 1; }
+        #lightbox img { 
+            max-width: 95%; max-height: 85vh; object-fit: contain;
+            transform: scale(0.95); transition: transform 0.3s ease; 
+        }
+        #lightbox.active img { transform: scale(1); }
+        #lightbox-close { position: absolute; top: 30px; right: 40px; color: white; cursor: pointer; font-size: 40px; font-weight: 200; }
+        #lightbox-caption { 
+            margin-top: 20px; color: #ccc; font-size: 16px; text-align: center; width: 90%; 
+            font-weight: 300; font-style: italic; letter-spacing: 0.02em; line-height: 1.5;
+        }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
     
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close">×</span>
+        <img id="lightbox-img" src="" alt="">
+        <div id="lightbox-caption"></div>
+    </div>
+
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
@@ -274,7 +299,7 @@
     </main>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center relative z-10">
-        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
     <script>
@@ -290,7 +315,30 @@
         menuBtn.onclick = toggleMenu;
         closeBtn.onclick = toggleMenu;
         overlay.onclick = toggleMenu;
+
+        // --- FULLSCREEN LIGHTBOX SCRIPT ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        // Sayfa içindeki (main) tüm resim etiketlerini seçer
+        document.querySelectorAll('main img').forEach(image => {
+            image.onclick = (e) => {
+                e.stopPropagation();
+                lightbox.classList.add('active');
+                lightboxImg.src = image.src;
+                lightboxCaption.innerText = image.alt;
+                document.body.classList.add('no-scroll');
+            };
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+
+        lightbox.onclick = closeLightbox;
+        document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
     </script>
 </body>
 </html>
-
