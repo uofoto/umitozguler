@@ -68,15 +68,15 @@
             letter-spacing: 0.02em;
         }
         .custom-quote {
-    border-left: 3px solid #ff8c00;
-    padding: 1.5rem 2rem;
-    margin: 3rem 0;
-    background: transparent !important; /* Arka planı tamamen siyah/şeffaf yapar */
-    font-style: italic;
-    color: #e0e0e0;
-    line-height: 1.8;
-    font-size: 1.1rem;
-}
+            border-left: 3px solid #ff8c00;
+            padding: 1.5rem 2rem;
+            margin: 3rem 0;
+            background: transparent !important;
+            font-style: italic;
+            color: #e0e0e0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
         .image-caption { 
             font-size: 12px; 
             color: #888; 
@@ -86,16 +86,50 @@
             letter-spacing: 0.05em; 
             font-style: italic; 
         }
-        picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); }
+        picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); cursor: zoom-in; }
         .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
         .share-link:hover { transform: translateY(-2px); }
         .hover-whatsapp:hover { color: #25D366 !important; }
         .hover-facebook:hover { color: #1877F2 !important; }
         .hover-x:hover { color: #ffffff !important; }
+
+        /* LIGHTBOX STYLES */
+        #lightbox {
+            position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #lightbox.active { display: flex; opacity: 1; }
+        #lightbox img { 
+            max-width: 95%; 
+            max-height: 85vh; 
+            object-fit: contain;
+            transform: scale(0.95); transition: transform 0.3s ease; 
+        }
+        #lightbox.active img { transform: scale(1); }
+        #lightbox-close { position: absolute; top: 30px; right: 40px; color: white; cursor: pointer; font-size: 40px; font-weight: 200; }
+        #lightbox-caption { 
+            margin-top: 20px; 
+            color: #ccc; 
+            font-size: 16px; 
+            text-align: center; 
+            width: 90%; 
+            font-weight: 300; 
+            font-style: italic;
+            letter-spacing: 0.02em; 
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
     
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close">×</span>
+        <img id="lightbox-img" src="" alt="">
+        <div id="lightbox-caption"></div>
+    </div>
+
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
@@ -189,9 +223,9 @@
                 </div>
             </div>
             <a href="https://www.google.com/maps/place/%C3%87ay%C4%B1ri%C3%A7i,+61500+Tonya%2FTrabzon/@40.8374459,39.304544,15z" target="_blank" 
-   class="mt-6 md:mt-0 px-6 py-2 border border-white/30 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-gold hover:text-brand-black hover:border-brand-gold transition-all duration-300 text-white">
-    Haritada Görüntüle
-</a>
+               class="mt-6 md:mt-0 px-6 py-2 border border-white/30 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-gold hover:text-brand-black hover:border-brand-gold transition-all duration-300 text-white">
+                Haritada Görüntüle
+            </a>
         </div>
 
         <section>
@@ -202,7 +236,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/15.webp" media="(max-width: 768px)">
-                <img src="img/15.webp" alt="Fol Deresi" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/15.webp" alt="Fol Vadisi sisle daima yoldaş" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Fol Vadisi sisle daima yoldaş</figcaption>
         </figure>
@@ -210,7 +244,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/13.webp" media="(max-width: 768px)">
-                <img src="img/13.webp" alt="Fol Vadisi" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/13.webp" alt="Çayıriçi'nden Fol Vadisi'ne bakış" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Çayıriçi'nden Fol Vadisi'ne bakış</figcaption>
         </figure>
@@ -223,7 +257,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/14.webp" media="(max-width: 768px)">
-                <img src="img/14.webp" alt="Çayıriçi konumu" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/14.webp" alt="Çayıriçi düz bir alan üzerine kurulmuş konumu ile dikkat çekiyor" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Çayıriçi düz bir alan üzerine kurulmuş konumu ile dikkat çekiyor</figcaption>
         </figure>
@@ -231,9 +265,9 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/10.webp" media="(max-width: 768px)">
-                <img src="img/10.webp" alt="Kaletaşı" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/10.webp" alt="Kaletaşı ve çevresi masallardaki gibi.." class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
-            <figcaption class="image-caption">Kaletaşı ve çevrei masallardaki gibi..</figcaption>
+            <figcaption class="image-caption">Kaletaşı ve çevresi masallardaki gibi..</figcaption>
         </figure>
 
         <section>
@@ -244,7 +278,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/17.webp" media="(max-width: 768px)">
-                <img src="img/17.webp" alt="Geleneksel mimari" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/17.webp" alt="Geleneksel mimari örneği ev, serender ve otluk" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Geleneksel mimari örneği ev, serender ve otluk</figcaption>
         </figure>
@@ -252,20 +286,20 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/16.webp" media="(max-width: 768px)">
-                <img src="img/16.webp" alt="Çayıriçi görünüm" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/16.webp" alt="Çayıriçi genel görünüm" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Çayıriçi genel görünüm</figcaption>
         </figure>
 
         <section>
             <h2>Lezzet Durağı: Tereyağı ve Mısır Ununun Kardeşliği</h2>
-            <p>Tonya denince akla gelen ilk, hiç şüphesiz lezzeti ile efsanevi <strong>Tonya Tereyağı</strong>'dır. Ancak burada tereyağı, alelade bir kahvaltılık olmanın çok ötesinde; sütün sabırla yoğrulduğu bir zanaat, yayla çiçeklerinin kokusunu sofraya taşıyan bir emek hikâyesidir. Sütün kaymağından süzülüp gelen o karakteristik altın sarısı renk, Tonya’nın doğasına duyulan sadakatin ve kuşaktan kuşağa aktarılan bir mutfak estetiğinin en saf tezahürüdür</p>
+            <p>Tonya denince akla gelen ilk, hiç şüphesiz lezzeti ile efsanevi <strong>Tonya Tereyağı</strong>'dır. Ancak burada tereyağı, alelade bir kahvaltılık olmanın çok ötesinde; sütün sabırla yoğrulduğu bir zanaat, yayla çiçeklerinin kokusunu sofraya taşıyan bir emek hikâyesidir. Sütün kaymağından süzülüp gelen o karakteristik altın sarısı renk, Tonya’nın doğasına duyulan sadakatin ve kuşaktan kuşağa aktarılan bir mutfak estetiğinin en saf tezahürüdür.</p>
         </section>
 
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/21.webp" media="(max-width: 768px)">
-                <img src="img/21.webp" alt="Tereyağı yapımı" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/21.webp" alt="Meşhur Tonya tereyağı yapımı" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Meşhur Tonya tereyağı yapımı</figcaption>
         </figure>
@@ -277,20 +311,20 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/19.webp" media="(max-width: 768px)">
-                <img src="img/19.webp" alt="mısır unu öğütme" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/19.webp" alt="Mısır öğütme. Mısır unu her Karadenizlinin vazgeçilmezidir." class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Mısır öğütme. Mısır unu her Karadenizlinin vazgeçilmezidir.</figcaption>
         </figure>
 
         <section>
             <h2>Karadeniz Kadını ve Sadık Dostu: Sepet</h2>
-            <p> Bu coğrafyanın asıl kahramanları, hiç kuşkusuz kadınlardır. Onların sırtından eksik olmayan sepet, acıların ve sevinçlerin sessizce paylaşıldığı sadık bir arkadaştır. Öyle ki o sepetin içine; bazen heybetiyle fırınlardan taşan kocaman bir Vakfıkebir ekmeği yerleşir, bazen de yorulmuş bir kuzu yavrusu usulca kıvrılır. Karadeniz kadını ile sepeti arasındaki o kopmaz bağ; bazen bereketi, bazen şefkati sırtlanıp yokuşları zarafetle aşan vakur bir hayat hikâyesidir.</p>
+            <p>Bu coğrafyanın asıl kahramanları, hiç kuşkusuz kadınlardır. Onların sırtından eksik olmayan sepet, acıların ve sevinçlerin sessizce paylaşıldığı sadık bir arkadaştır. Öyle ki o sepetin içine; bazen heybetiyle fırınlardan taşan kocaman bir Vakfıkebir ekmeği yerleşir, bazen de yorulmuş bir kuzu yavrusu usulca kıvrılır. Karadeniz kadını ile sepeti arasındaki o kopmaz bağ; bazen bereketi, bazen şefkati sırtlanıp yokuşları zarafetle aşan vakur bir hayat hikâyesidir.</p>
         </section>
 
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/22.webp" media="(max-width: 768px)">
-                <img src="img/22.webp" alt="Sepet" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/22.webp" alt="Sepet Karadeniz kadını vazgeçilmezidir" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Sepet Karadeniz kadını vazgeçilmezidir</figcaption>
         </figure>
@@ -304,7 +338,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/20.webp" media="(max-width: 768px)">
-                <img src="img/20.webp" alt="Yeşil Cennet inşaat" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/20.webp" alt="Değirmendüzü mevkisindeki Yeşil Cennet Kır Bahçesinin tamamlanmaya yakın zamanlarında çekilen bir kare" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Değirmendüzü mevkisindeki Yeşil Cennet Kır Bahçesinin tamamlanmaya yakın zamanlarında çekilen bir kare</figcaption>
         </figure>
@@ -317,20 +351,20 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/23.webp" media="(max-width: 768px)">
-                <img src="img/23.webp" alt="Foleya Resort" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/23.webp" alt="Foleya Mountain Resort otel" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
-            <figcaption class="image-caption">Foleya Mountain Resort Otel</figcaption>
+            <figcaption class="image-caption">Foleya Mountain Resort otel</figcaption>
         </figure>
 
         <section>
             <h2>Sonuç Olarak</h2>
-            <p>Anabedama, Karadeniz’in hırçın coğrafyasında bulutların arasına gizlenmiş, tabiatın en zarif ve en geniş ufuklu sığınağıdır. Havadan bakıldığında bir ressamın fırçasından çıkmış dingin bir tabloyu andıran bu yerleşim; geleneksel taş konakların sıcaklığıyla mısır ununun bereketi, Fol Deresi’nin gümüş şarkısıyla Karadeniz kadınının vakur sepeti arasında kurulan eşsiz bir dengedir. Burada zaman, modern dünyanın hızına inat; sislerin arasından süzülen bir ışık huzmesi kadar yavaş, şiirsel bir sükunet kadar derindir. Çayıriçi, yeşilin sonsuzluğuna açılan o geniş ufuk çizgisinde, insanın kendi içsel sükunetine vardığı bir vuslat durağıdır..</p>
+            <p>Anabedama, Karadeniz’in hırçın coğrafyasında bulutların arasına gizlenmiş, tabiatın en zarif ve en geniş ufuklu sığınağıdır. Havadan bakıldığında bir ressamın fırçasından çıkmış dingin bir tabloyu andıran bu yerleşim; geleneksel taş konakların sıcaklığıyla mısır ununun bereketi, Fol Deresi’nin gümüş şarkısıyla Karadeniz kadınının vakur sepeti arasında kurulan eşsiz bir dengedir. Burada zaman, modern dünyanın hızına inat; sislerin arasından süzülen bir light huzmesi kadar yavaş, şiirsel bir sükunet kadar derindir. Çayıriçi, yeşilin sonsuzluğuna açılan o geniş ufuk çizgisinde, insanın kendi içsel sükunetine vardığı bir vuslat durağıdır.</p>
         </section>
 
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/18.webp" media="(max-width: 768px)">
-                <img src="img/18.webp" alt="Çayıriçi havadan" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/18.webp" alt="Çayıriçi'nin havadan görünümü" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Çayıriçi'nin havadan görünümü</figcaption>
         </figure>
@@ -338,7 +372,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/12.webp" media="(max-width: 768px)">
-                <img src="img/12.webp" alt="Çayıriçi şiir" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/12.webp" alt="Çayıriçi şiir gibi" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Çayıriçi şiir gibi</figcaption>
         </figure>
@@ -346,7 +380,7 @@
         <figure class="my-12">
             <picture>
                 <source srcset="img/mobil/9.webp" media="(max-width: 768px)">
-                <img src="img/9.webp" alt="Çayıriçi günbatımı" class="grayscale hover:grayscale-0 transition duration-700">
+                <img src="img/9.webp" alt="Çayıriçi'nde günbatımı" class="grayscale hover:grayscale-0 transition duration-700">
             </picture>
             <figcaption class="image-caption">Çayıriçi'nde günbatımı</figcaption>
         </figure>
@@ -364,20 +398,21 @@
             </div>
             <figcaption class="image-caption">Çayıriçi havadan.. </figcaption>
         </div>
-    <div class="max-w-4xl mx-auto px-6 mt-20 pt-10 border-t border-white/5">
-    <div class="flex flex-col items-center justify-center gap-6">
-        <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-orange">Bu Yazıyı Paylaş</span>
-        <div class="flex items-center gap-8">
-            <a href="https://api.whatsapp.com/send?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü%20https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Whatsapp</a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
-            <a href="https://twitter.com/intent/tweet?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü&url=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
-        </div>
-    </div>
+        
+        <div class="max-w-4xl mx-auto px-6 mt-20 pt-10 border-t border-white/5">
+            <div class="flex flex-col items-center justify-center gap-6">
+                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-orange">Bu Yazıyı Paylaş</span>
+                <div class="flex items-center gap-8">
+                    <a href="https://api.whatsapp.com/send?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü%20https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Whatsapp</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
+                    <a href="https://twitter.com/intent/tweet?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü&url=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
+                </div>
+            </div>
 
-    <div class="mt-12 text-center pb-20">
-        <a href="../fotoyol.html" class="text-xs uppercase tracking-[0.3em] text-gray-400 hover:text-white transition-colors font-bold">← fotoyol listesine dön</a>
-    </div>
-</div>
+            <div class="mt-12 text-center pb-20">
+                <a href="../fotoyol.html" class="text-xs uppercase tracking-[0.3em] text-gray-400 hover:text-white transition-colors font-bold">← fotoyol listesine dön</a>
+            </div>
+        </div>
     </main>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center relative z-10">
@@ -397,7 +432,30 @@
         menuBtn.onclick = toggleMenu;
         closeBtn.onclick = toggleMenu;
         overlay.onclick = toggleMenu;
+
+        // LIGHTBOX SCRIPT
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        document.querySelectorAll('figure img').forEach(image => {
+            image.onclick = (e) => {
+                e.stopPropagation();
+                lightbox.classList.add('active');
+                lightboxImg.src = image.src;
+                lightboxCaption.innerText = image.alt;
+                document.body.classList.add('no-scroll');
+            };
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") closeLightbox();
+        });
     </script>
 </body>
-
 </html>
