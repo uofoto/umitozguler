@@ -12,383 +12,401 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sisin Şiire Dönüştüğü Yer: Tonya Çayıriçi Köyü | Ümit Özgüler</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Gemini estetiği için Outfit ve Inter fontlarını ekledik -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: { 
-                        "brand-black": "#121212", 
-                        "brand-dark": "#1a1a1a", 
+                        "brand-black": "#0a0a0a", 
+                        "brand-dark": "#121212", 
                         "brand-gold": "#c5a059",
                         "brand-orange": "#ff8c00" 
                     },
-                    fontFamily: { sans: ['"Inter"', "sans-serif"] },
+                    fontFamily: { 
+                        sans: ['"Inter"', "sans-serif"],
+                        display: ['"Outfit"', "sans-serif"] 
+                    },
                 },
             },
         };
     </script>
     <style>
-        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #0a0a0a; overflow-x: hidden; }
+        
+        #fog-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none; opacity: 0.5;
+        }
+
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .article-content p { 
+            margin-bottom: 1.5rem; line-height: 2.1; color: #a3a3a3; font-size: 1.15rem; font-weight: 300;
+        }
+        /* Başlıklar arası boşluklar optimize edildi */
+        .article-content h2 {
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff; font-size: 2.25rem; margin: 3.5rem 0 1.5rem; font-weight: 300; letter-spacing: -0.03em;
+        }
+        .article-content strong { color: #fff; font-weight: 500; }
+
+        .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; }
+        .img-container img {
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
+            filter: grayscale(100%) contrast(1.1);
+            width: 100%; height: auto; display: block;
+        }
+        .img-container:hover img { transform: scale(1.03); filter: grayscale(0%) contrast(1); }
+
+        .image-caption { 
+            font-size: 11px; color: #555; margin-top: 15px; text-align: center; 
+            font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+        }
+
+        .custom-quote {
+            border-left: 1px solid #c5a059; padding: 3rem; margin: 4rem 0;
+            font-size: 1.6rem; font-weight: 200; font-style: italic; color: #eee;
+            background: linear-gradient(90deg, rgba(197, 160, 89, 0.03) 0%, transparent 100%);
+            line-height: 1.6;
+        }
+
         .nav-link-custom { position: relative; }
         .nav-link-custom::after {
-            content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0;
-            background-color: #ff8c00; transition: width 0.3s ease;
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0;
+            background-color: #ff8c00; transition: width 0.4s ease;
         }
         .nav-link-custom:hover::after { width: 100%; }
-        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
+
+        #mobile-menu { 
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+            transform: translateX(100%); 
+            width: 160px; 
+        }
         #mobile-menu.active { transform: translateX(0); }
-        @keyframes lineDown { from { height: 0; } to { height: 100%; } }
-        .menu-line { position: absolute; left: 0; top: 0; width: 1.5px; background-color: #ff8c00; height: 0; }
-        #mobile-menu.active .menu-line { animation: lineDown 0.8s ease-out forwards; animation-delay: 0.3s; }
-        body.no-scroll #mobile-menu-btn { opacity: 0; pointer-events: none; }
-        #mobile-menu-btn { transition: opacity 0.3s ease; }
-        .no-scroll { overflow: hidden; }
         
-        .article-content p { 
-            margin-bottom: 1.8rem; 
-            line-height: 2.0; 
-            color: #d1d1d1; 
-            font-size: 1.05rem;
-            font-weight: 300;
+        .menu-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            height: 0;
+            background: #ff8c00; 
+            transition: height 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
         }
-        .article-content h2 { 
-            color: #ffffff; 
-            font-size: 1.75rem; 
-            margin: 3.5rem 0 1.5rem; 
-            font-weight: 600; 
-            letter-spacing: -0.02em;
+        #mobile-menu.active .menu-line {
+            height: 100%;
         }
-        .article-content h3 { 
-            color: #c5a059; 
-            font-size: 1.25rem; 
-            margin: 2rem 0 1rem; 
-            font-weight: 500; 
-            letter-spacing: 0.02em;
-        }
-        .custom-quote {
-            border-left: 3px solid #ff8c00;
-            padding: 1.5rem 2rem;
-            margin: 3rem 0;
-            background: transparent !important;
-            font-style: italic;
-            color: #e0e0e0;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        .image-caption { 
-            font-size: 12px; 
-            color: #888; 
-            margin-top: 12px; 
-            text-align: center; 
-            font-weight: 300; 
-            letter-spacing: 0.05em; 
-            font-style: italic; 
-        }
-        picture img { width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.05); cursor: zoom-in; }
-        .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
-        .share-link:hover { transform: translateY(-2px); }
+
+        .no-scroll { overflow: hidden; }
+
         .hover-whatsapp:hover { color: #25D366 !important; }
         .hover-facebook:hover { color: #1877F2 !important; }
         .hover-x:hover { color: #ffffff !important; }
 
-        /* LIGHTBOX STYLES */
+        /* MODERN LIGHTBOX - EKRANI DAHA FAZLA KAPLAYACAK ŞEKİLDE GÜNCELLENDİ */
         #lightbox {
-            position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.98);
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
+            position: fixed; inset: 0; z-index: 2000;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: none; opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-direction: column; align-items: center; justify-content: center; padding: 1rem;
         }
         #lightbox.active { display: flex; opacity: 1; }
-        #lightbox img { 
-            max-width: 95%; 
-            max-height: 85vh; 
+        #lightbox-img {
+            max-width: 100%; 
+            max-height: 92vh; /* Ekranın neredeyse tamamını kaplaması için yükseltildi */
             object-fit: contain;
-            transform: scale(0.95); transition: transform 0.3s ease; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        #lightbox.active img { transform: scale(1); }
-        #lightbox-close { position: absolute; top: 30px; right: 40px; color: white; cursor: pointer; font-size: 40px; font-weight: 200; }
-        #lightbox-caption { 
-            margin-top: 20px; 
-            color: #ccc; 
-            font-size: 16px; 
-            text-align: center; 
-            width: 90%; 
-            font-weight: 300; 
-            font-style: italic;
-            letter-spacing: 0.02em; 
-            line-height: 1.5;
+        #lightbox.active #lightbox-img { transform: scale(1) translateY(0); }
+        #lightbox-caption {
+            margin-top: 1rem; color: #c5a059; font-size: 11px;
+            letter-spacing: 0.3em; text-transform: uppercase;
+            font-weight: 300; text-align: center;
+            opacity: 0; transition: opacity 0.5s ease 0.3s;
         }
+        #lightbox.active #lightbox-caption { opacity: 1; }
+        .close-lightbox {
+            position: absolute; top: 1.5rem; right: 1.5rem; color: white; cursor: pointer;
+            z-index: 2100; width: 44px; height: 44px; display: flex;
+            align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05); border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .close-lightbox:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
     </style>
 </head>
-<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
-    
-    <div id="lightbox" onclick="closeLightbox()">
-        <span id="lightbox-close">×</span>
-        <img id="lightbox-img" src="" alt="">
-        <div id="lightbox-caption"></div>
+<body class="text-gray-300 font-sans antialiased flex flex-col min-h-screen">
+
+    <div id="hero-container" class="relative h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black">
+        <canvas id="fog-canvas"></canvas>
+        
+        <nav class="absolute top-0 w-full z-[100] bg-transparent">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-24">
+                    <!-- LOGO ALANI -->
+                    <a id="main-logo" href="../index.html" class="flex flex-col items-center group relative z-40">
+                        <div class="text-2xl tracking-widest text-white leading-none uppercase">
+                            <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                        </div>
+                        <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px; width: 100%; text-align: center;">FINE ART PHOTOGRAPHY</span>
+                    </a>
+                    
+                    <div class="hidden md:flex space-x-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">
+                        <a href="../index.html" class="nav-link-custom hover:text-brand-orange">Ana Sayfa</a>
+                        <a href="../about.html" class="nav-link-custom hover:text-brand-orange">Hakkımda</a>
+                        <a href="../portfolio.html" class="nav-link-custom hover:text-brand-orange">Portfolyo</a>
+                        <a href="../analizler.html" class="nav-link-custom hover:text-brand-orange">Analizler</a>
+                        <a href="../dusunceler.html" class="nav-link-custom hover:text-brand-orange">Düşünceler</a>
+                        <a href="../fotoyol.html" class="nav-link-custom text-brand-gold">Fotoyol</a>
+                        <a href="../contact.html" class="nav-link-custom hover:text-brand-orange">İletişim</a>
+                    </div>
+
+                    <button id="mobile-menu-btn" class="md:hidden text-white p-2 z-[110]">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- MOBİL MENÜ -->
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen bg-brand-dark z-[120] flex flex-col pt-32 px-8 text-left md:hidden border-l border-white/5">
+            <div class="menu-line"></div>
+            <button id="close-menu-btn" class="absolute top-8 right-6 text-white hover:text-brand-orange transition-colors"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            <div class="space-y-4 flex flex-col text-white/70 text-[11px] uppercase tracking-widest font-bold">
+                <a href="../index.html" class="hover:text-brand-gold transition-colors">Ana Sayfa</a>
+                <a href="../about.html" class="hover:text-brand-gold transition-colors">Hakkımda</a>
+                <a href="../portfolio.html" class="hover:text-brand-gold transition-colors">Portfolyo</a>
+                <a href="../analizler.html" class="hover:text-brand-gold transition-colors">Analizler</a>
+                <a href="../dusunceler.html" class="hover:text-brand-gold transition-colors">Düşünceler</a>
+                <a href="../fotoyol.html" class="text-brand-gold">Fotoyol</a>
+                <a href="../contact.html" class="hover:text-brand-gold transition-colors">İletişim</a>
+            </div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 reveal">
+            <div class="inline-flex items-center text-[10px] tracking-[0.8em] uppercase text-brand-gold mb-8 font-bold opacity-80 border-b border-brand-gold/20 pb-3">
+                TRABZON / TONYA
+            </div>
+            <h1 class="text-5xl md:text-8xl font-thin text-white tracking-tighter leading-tight uppercase font-display">
+                Sisin Şiire <br>
+                <span class="font-bold italic text-brand-gold lowercase tracking-normal">Dönüştüğü Yer</span>
+            </h1>
+            <p class="mt-10 text-[10px] tracking-[0.5em] text-gray-500 uppercase font-light">Çayıriçi Köyü • Yol Hikayesi No: 02 • 12 Şubat 2026</p>
+        </div>
+
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-20 animate-pulse">
+            <div class="w-[1px] h-16 bg-white"></div>
+        </div>
     </div>
 
-    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-40">
-                    <div class="text-2xl tracking-widest text-white leading-none uppercase">
-                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-                    </div>
-                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px; width: 100%; text-align: center;">FINE ART PHOTOGRAPHY</span>
-                </a>
-                <div class="hidden md:flex space-x-10 text-white">
-                    <a href="../index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Ana Sayfa</a>
-                    <a href="../about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Hakkımda</a>
-                    <a href="../portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Portfolyo</a>
-                    <a href="../analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Analizler</a>
-                    <a href="../dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Düşünceler</a>
-                    <a href="../fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1 transition-colors">Fotoyol</a>
-                    <a href="../contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">İletişim</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-            </div>
-        </div>
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[120] shadow-2xl md:hidden flex flex-col pt-32 px-6 text-right">
-            <div class="menu-line"></div>
-            <button id="close-menu-btn" class="absolute top-8 right-6 text-white hover:text-brand-orange transition-colors">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <div class="space-y-4 flex flex-col text-white">
-                <a href="../index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Ana Sayfa</a>
-                <a href="../about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Hakkımda</a>
-                <a href="../portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Portfolyo</a>
-                <a href="../analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Analizler</a>
-                <a href="../dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">Düşünceler</a>
-                <a href="../fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Fotoyol</a>
-                <a href="../contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange">İletişim</a>
-            </div>
-        </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[115] md:hidden"></div>
-    </nav>
-
-    <header class="pt-48 pb-10 px-6 max-w-5xl mx-auto w-full page-animate">
-        <div class="flex flex-col md:flex-row md:items-end justify-between border-l-2 border-brand-gold pl-8 py-2">
-            <div class="max-w-2xl">
-                <div class="flex items-center text-[10px] tracking-[0.5em] uppercase text-brand-orange mb-4 font-bold opacity-80">
-                    <svg class="w-3 h-3 mr-2 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    <span>TRABZON / TONYA</span>
-                </div>
-                <h1 class="text-3xl md:text-5xl font-normal text-white tracking-tight leading-[1.1] uppercase">
-                    Sisin Şiire Dönüştüğü Yer: <br>
-                    <span class="text-brand-gold font-light italic tracking-normal normal-case block mt-2">Tonya Çayıriçi Köyü</span>
-                </h1>
-            </div>
-            <div class="mt-6 md:mt-0 text-right">
-                <span class="text-[9px] tracking-[0.3em] uppercase text-gray-500 font-semibold block">Yol Hikayesi No: 02</span>
-                <span class="text-[9px] tracking-[0.3em] uppercase text-gray-600 block">12 Şubat 2026</span>
-            </div>
-        </div>
-    </header>
-
-    <main class="flex-grow max-w-4xl mx-auto px-6 pb-24 w-full article-content">
-        <section>
+    <main class="max-w-4xl mx-auto px-6 py-16 w-full article-content">
+        
+        <section class="reveal">
             <p>Hırçın bir yeşilliğin kalbinden kopup gelen, doğanın zamana fısıldadığı bir hikâyedir Tonya. Bu kez rotamızı, modern zamanların hızıyla geçmişin sükuneti arasında kalmış bir durağa, eski adıyla <strong>Anabedama</strong>, bugünkü ismiyle <strong>Çayıriçi Köyü</strong>’ne çevirdik.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/11.webp" media="(max-width: 768px)">
-                <img src="img/11.webp" alt="Çayıriçi köyünde gündoğumu" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
+        <!-- figure my-16 olarak güncellendi -->
+        <figure class="my-16 reveal">
+            <div class="img-container">
+                <picture>
+                    <source srcset="img/mobil/11.webp" media="(max-width: 768px)">
+                    <img src="img/11.webp" alt="Çayıriçi köyünde gündoğumu">
+                </picture>
+            </div>
             <figcaption class="image-caption">Çayıriçi köyünde gündoğumu</figcaption>
         </figure>
 
-        <div class="custom-quote">
-            "Anabedama; Fol Deresi’nin sesiyle yıkanan, sisin içinde kaybolup kendi ruhunu bulanların, ufku geniş yamaçlarında sükuneti şiir eylediği bir vuslat durağıdır."
+        <div class="custom-quote reveal">
+            "Anabedama; Fol Deresi’nin sesiyla yıkanan, sisin içinde kaybolup kendi ruhunu bulanların, ufku geniş yamaçlarında sükuneti şiir eylediği bir vuslat durağıdır."
         </div>
 
-        <div class="my-10 border border-white/10 p-6 rounded-sm bg-white/5 flex flex-col md:flex-row items-center justify-between group">
-            <div class="flex items-center space-x-4 text-left">
-                <div class="w-12 h-12 bg-brand-dark flex items-center justify-center rounded-full text-brand-gold border border-white/10">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
+        <div class="my-16 p-12 rounded-sm bg-brand-dark border border-white/5 flex flex-col md:flex-row items-center justify-between reveal group shadow-2xl">
+            <div class="flex items-center space-x-8">
+                <div class="w-16 h-16 bg-black flex items-center justify-center rounded-full text-brand-gold border border-brand-gold/20 group-hover:border-brand-gold transition-all duration-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 </div>
                 <div>
-                    <h4 class="text-[10px] tracking-[0.3em] uppercase text-brand-orange font-bold">Rotalar / Konum</h4>
-                    <p class="text-lg text-white font-medium tracking-tight">Çayıriçi (Anabedama), Tonya</p>
-                    <p class="text-[11px] text-gray-500 uppercase tracking-widest mt-1">Vakfıkebir - Tonya Yolu Üzeri</p>
+                    <h4 class="text-[10px] tracking-[0.4em] uppercase text-brand-orange font-bold mb-1">Rotalar / Konum</h4>
+                    <p class="text-xl text-white font-light">Çayıriçi (Anabedama), Tonya</p>
+                    <p class="text-[10px] text-gray-600 uppercase tracking-widest mt-1">Vakfıkebir - Tonya Yolu Üzeri</p>
                 </div>
             </div>
             <a href="https://www.google.com/maps/place/%C3%87ay%C4%B1ri%C3%A7i,+61500+Tonya%2FTrabzon/@40.8374459,39.304544,15z" target="_blank" 
-               class="mt-6 md:mt-0 px-6 py-2 border border-white/30 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-gold hover:text-brand-black hover:border-brand-gold transition-all duration-300 text-white">
+               class="mt-10 md:mt-0 px-8 py-3 border border-white/10 text-[10px] font-bold uppercase tracking-[0.3em] text-white hover:bg-brand-gold hover:text-black hover:border-brand-gold transition-all duration-500">
                 Haritada Görüntüle
             </a>
         </div>
 
-        <section>
+        <section class="reveal">
             <h2>Yeşilin İçinde Kaybolmak</h2>
-            <p>Vakfıkebir’in kıyı çizgisinden ayrılıp Tonya’nın yeşil derinliklerine doğru direksiyon kırdığınızda, huzur size ilk selamını Fol Deresi ile verir. Fol Deresi bu yolculukta yolun kıvrımlarıyla dans ederek size Tonya'ya varıncaya kadar eşlik eder. Suyun taşlarla olan sohbeti, hafiten çizeleyen yağmur ve sisin uzaktan el sallaması yaklaşmakta olan huzurun da ilk habercisidir.</p>
+            <p>Vakfıkebir’in kıyı çizgisinden ayrılıp Tonya’nın yeşil derinliklerine doğru direksiyon kırdığınızda, huzur size ilk selamını Fol Deresi ile verir. Fol Deresi bu yolculukta yolun kıvrımlarıyla dance ederek size Tonya'ya varıncaya kadar eşlik eder. Suyun taşlarla olan sohbeti, hafiten çizeleyen yağmur ve sisin uzaktan el sallaması yaklaşmakta olan huzurun da ilk habercisidir.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/15.webp" media="(max-width: 768px)">
-                <img src="img/15.webp" alt="Fol Vadisi sisle daima yoldaş" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Fol Vadisi sisle daima yoldaş</figcaption>
-        </figure>
+        <!-- grid my-16 olarak güncellendi -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/15.webp" media="(max-width: 768px)">
+                        <img src="img/15.webp" alt="Fol Vadisi sisle daima yoldaş">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Fol Vadisi Sisle Yoldaş</figcaption>
+            </figure>
+            <figure class="reveal" style="transition-delay: 0.2s;">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/13.webp" media="(max-width: 768px)">
+                        <img src="img/13.webp" alt="Çayıriçi'nden Fol Vadisi'ne bakış">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Vadiye Bakış</figcaption>
+            </figure>
+        </div>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/13.webp" media="(max-width: 768px)">
-                <img src="img/13.webp" alt="Çayıriçi'nden Fol Vadisi'ne bakış" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Çayıriçi'nden Fol Vadisi'ne bakış</figcaption>
-        </figure>
-
-        <section>
+        <section class="reveal">
             <h2>Anabedama: Yeşil Bir Sessizlik Manifestosu</h2>
             <p>Çayıriçi’ne ayak bastığınızda, Karadeniz’in o alışılagelmiş, insanı kuşatan dik ve dar coğrafi formları yerini bambaşka bir ferahlığa bırakır. Anabedama, komşu yamaçların aksine, tabiatın cömertçe sunduğu düz bir plato üzerinde yükselen mağrur duruşu ve bakışları sonsuzluğa davet eden geniş ufkuyla sizi karşılar. Burada coğrafya, yamaçların arasına sıkışıp kalmak yerine, gökyüzüyle kucaklaşan panoramik bir sükunete evrilir. <strong>Köy, düz bir konuma ve geniş bir ufka</strong> sahip.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/14.webp" media="(max-width: 768px)">
-                <img src="img/14.webp" alt="Çayıriçi düz bir alan üzerine kurulmuş konumu ile dikkat çekiyor" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Çayıriçi düz bir alan üzerine kurulmuş konumu ile dikkat çekiyor</figcaption>
-        </figure>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/14.webp" media="(max-width: 768px)">
+                        <img src="img/14.webp" alt="Çayıriçi konumu">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Düz Konum ve Ufuk</figcaption>
+            </figure>
+            <figure class="reveal" style="transition-delay: 0.1s;">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/10.webp" media="(max-width: 768px)">
+                        <img src="img/10.webp" alt="Kaletaşı ve çevresi">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Masalsı Kaletaşı</figcaption>
+            </figure>
+        </div>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/10.webp" media="(max-width: 768px)">
-                <img src="img/10.webp" alt="Kaletaşı ve çevresi masallardaki gibi.." class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Kaletaşı ve çevresi masallardaki gibi..</figcaption>
-        </figure>
-
-        <section>
+        <section class="reveal">
             <h2>Değişimin Yüzü: Modern Beton ve Kaybolan Miras</h2>
             <p>Ancak bu güzelliğin içinde yüreği burkan bir detay var: <strong>Geleneksel mimari</strong>. O eski, ruhu olan ahşap ve taş evlerin, yanındaki serenderlerin ve özenle yapılmış otlukların birer birer yok oluşuna tanıklık etmek üzücü.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/17.webp" media="(max-width: 768px)">
-                <img src="img/17.webp" alt="Geleneksel mimari örneği ev, serender ve otluk" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Geleneksel mimari örneği ev, serender ve otluk</figcaption>
-        </figure>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/17.webp" media="(max-width: 768px)">
+                        <img src="img/17.webp" alt="Geleneksel mimari örneği">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Geleneksel Ev ve Serender</figcaption>
+            </figure>
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/16.webp" media="(max-width: 768px)">
+                        <img src="img/16.webp" alt="Çayıriçi genel görünüm">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Köyün Genel Dokusu</figcaption>
+            </figure>
+        </div>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/16.webp" media="(max-width: 768px)">
-                <img src="img/16.webp" alt="Çayıriçi genel görünüm" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Çayıriçi genel görünüm</figcaption>
-        </figure>
-
-        <section>
+        <section class="reveal">
             <h2>Lezzet Durağı: Tereyağı ve Mısır Ununun Kardeşliği</h2>
             <p>Tonya denince akla gelen ilk, hiç şüphesiz lezzeti ile efsanevi <strong>Tonya Tereyağı</strong>'dır. Ancak burada tereyağı, alelade bir kahvaltılık olmanın çok ötesinde; sütün sabırla yoğrulduğu bir zanaat, yayla çiçeklerinin kokusunu sofraya taşıyan bir emek hikâyesidir. Sütün kaymağından süzülüp gelen o karakteristik altın sarısı renk, Tonya’nın doğasına duyulan sadakatin ve kuşaktan kuşağa aktarılan bir mutfak estetiğinin en saf tezahürüdür.</p>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/21.webp" media="(max-width: 768px)">
-                <img src="img/21.webp" alt="Meşhur Tonya tereyağı yapımı" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Meşhur Tonya tereyağı yapımı</figcaption>
-        </figure>
-
-        <section>
             <p>Bu lezzetin en yakın yoldaşı ise <strong>mısır unudur</strong>. Değirmenlerde ağır ağır öğütülen mısırın kokusu, toprağın bereketiyle harmanlanır.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/19.webp" media="(max-width: 768px)">
-                <img src="img/19.webp" alt="Mısır öğütme. Mısır unu her Karadenizlinin vazgeçilmezidir." class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Mısır öğütme. Mısır unu her Karadenizlinin vazgeçilmezidir.</figcaption>
-        </figure>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/21.webp" media="(max-width: 768px)">
+                        <img src="img/21.webp" alt="Tonya tereyağı yapımı">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Altın Sarısı Emek</figcaption>
+            </figure>
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/19.webp" media="(max-width: 768px)">
+                        <img src="img/19.webp" alt="Mısır öğütme">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Bereketi Öğütmek</figcaption>
+            </figure>
+        </div>
 
-        <section>
+        <section class="reveal">
             <h2>Karadeniz Kadını ve Sadık Dostu: Sepet</h2>
             <p>Bu coğrafyanın asıl kahramanları, hiç kuşkusuz kadınlardır. Onların sırtından eksik olmayan sepet, acıların ve sevinçlerin sessizce paylaşıldığı sadık bir arkadaştır. Öyle ki o sepetin içine; bazen heybetiyle fırınlardan taşan kocaman bir Vakfıkebir ekmeği yerleşir, bazen de yorulmuş bir kuzu yavrusu usulca kıvrılır. Karadeniz kadını ile sepeti arasındaki o kopmaz bağ; bazen bereketi, bazen şefkati sırtlanıp yokuşları zarafetle aşan vakur bir hayat hikâyesidir.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/22.webp" media="(max-width: 768px)">
-                <img src="img/22.webp" alt="Sepet Karadeniz kadını vazgeçilmezidir" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Sepet Karadeniz kadını vazgeçilmezidir</figcaption>
+        <figure class="my-16 reveal">
+            <div class="img-container">
+                <picture>
+                    <source srcset="img/mobil/22.webp" media="(max-width: 768px)">
+                    <img src="img/22.webp" alt="Karadeniz kadını ve sepeti">
+                </picture>
+            </div>
+            <figcaption class="image-caption">Karadeniz Kadını ve Sepeti</figcaption>
         </figure>
 
-        <section>
+        <section class="reveal">
             <h2>Değirmendüzü Mevkii: Yeşil Cennet Kır Bahçesi</h2>
             <p>Çayıriçi’nin kalbi sayılan Değirmendüzü mevkii, doğanın kucağında yükselen zarif bir yatırıma, <strong>Yeşil Cennet Kır Bahçesi</strong>’ne ev sahipliği yapıyor. Burası bir mola yerinin çok ötesinde; bölge turizminin geleceğine atılmış vizyoner bir imza, doğayla barışık bir sığınak.</p>
             <p>Fol Deresi’nin hiç dinmeyen o hırçın ama huzur veren melodisi eşliğinde, yöresel lezzetlerin tadına bakmak burada tam bir ritüele dönüşüyor. Dere kenarında, suyun serinliği ve yeşilin her tonuyla sarmalanmış bu harika mekanda; demli bir çay eşliğinde edilen koyu sohbetler, manzaranın büyüsüyle birleşen muhteşem sofralar, insana zamanın durduğunu hissettiriyor.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/20.webp" media="(max-width: 768px)">
-                <img src="img/20.webp" alt="Değirmendüzü mevkisindeki Yeşil Cennet Kır Bahçesinin tamamlanmaya yakın zamanlarında çekilen bir kare" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Değirmendüzü mevkisindeki Yeşil Cennet Kır Bahçesinin tamamlanmaya yakın zamanlarında çekilen bir kare</figcaption>
-        </figure>
-
-        <section>
+        <section class="reveal">
             <h2>Turizmin Yeni Soluğu</h2>
             <p>Bölge, son yıllarda Erikbeli Yaylası’ndaki <strong>Foleya Mountain Resort</strong> ile turizmde ciddi bir ivme yakalamış durumda. Bu modern tesis, bölgenin doğallığı ile konforu birleştirerek turizmde yeni bir vizyon sunuyor.</p>
         </section>
 
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/23.webp" media="(max-width: 768px)">
-                <img src="img/23.webp" alt="Foleya Mountain Resort otel" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Foleya Mountain Resort otel</figcaption>
-        </figure>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/20.webp" media="(max-width: 768px)">
+                        <img src="img/20.webp" alt="Yeşil Cennet Kır Bahçesi">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Değirmendüzü Mola Noktası</figcaption>
+            </figure>
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/23.webp" media="(max-width: 768px)">
+                        <img src="img/23.webp" alt="Foleya Mountain Resort">
+                    </picture>
+                </div>
+                <figcaption class="image-caption">Foleya Mountain Resort</figcaption>
+            </figure>
+        </div>
 
-        <section>
-            <h2>Sonuç Olarak</h2>
-            <p>Anabedama, Karadeniz’in hırçın coğrafyasında bulutların arasına gizlenmiş, tabiatın en zarif ve en geniş ufuklu sığınağıdır. Havadan bakıldığında bir ressamın fırçasından çıkmış dingin bir tabloyu andıran bu yerleşim; geleneksel taş konakların sıcaklığıyla mısır ununun bereketi, Fol Deresi’nin gümüş şarkısıyla Karadeniz kadınının vakur sepeti arasında kurulan eşsiz bir dengedir. Burada zaman, modern dünyanın hızına inat; sislerin arasından süzülen bir light huzmesi kadar yavaş, şiirsel bir sükunet kadar derindir. Çayıriçi, yeşilin sonsuzluğuna açılan o geniş ufuk çizgisinde, insanın kendi içsel sükunetine vardığı bir vuslat durağıdır.</p>
-        </section>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/18.webp" media="(max-width: 768px)">
-                <img src="img/18.webp" alt="Çayıriçi'nin havadan görünümü" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Çayıriçi'nin havadan görünümü</figcaption>
-        </figure>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/12.webp" media="(max-width: 768px)">
-                <img src="img/12.webp" alt="Çayıriçi şiir gibi" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Çayıriçi şiir gibi</figcaption>
-        </figure>
-
-        <figure class="my-12">
-            <picture>
-                <source srcset="img/mobil/9.webp" media="(max-width: 768px)">
-                <img src="img/9.webp" alt="Çayıriçi'nde günbatımı" class="grayscale hover:grayscale-0 transition duration-700">
-            </picture>
-            <figcaption class="image-caption">Çayıriçi'nde günbatımı</figcaption>
-        </figure>
-
-        <div class="my-12">
-            <div class="relative pb-[56.25%] h-0 overflow-hidden rounded-sm border border-white/10 shadow-2xl">
+        <div class="my-16 reveal">
+            <div class="relative pb-[56.25%] h-0 overflow-hidden rounded-sm border border-white/5 shadow-2xl group">
                 <iframe 
-                    class="absolute top-0 left-0 w-full h-full grayscale hover:grayscale-0 transition duration-700"
+                    class="absolute top-0 left-0 w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000"
                     src="https://www.youtube.com/embed/fo8peC2oguk?si=jQP64fazTIwZvkkr" 
                     title="YouTube video player" 
                     frameborder="0" 
@@ -396,66 +414,166 @@
                     allowfullscreen>
                 </iframe>
             </div>
-            <figcaption class="image-caption">Çayıriçi havadan.. </figcaption>
+            <figcaption class="image-caption">Anabedama Havadan Bir Bakış</figcaption>
         </div>
-        
-        <div class="max-w-4xl mx-auto px-6 mt-20 pt-10 border-t border-white/5">
+
+        <section class="reveal">
+            <h2>Sonuç Olarak</h2>
+            <p>Anabedama, Karadeniz’in hırçın coğrafyasında bulutların arasına gizlenmiş, tabiatın en zarif ve en geniş ufuklu sığınağıdır. Havadan bakıldığında bir ressamın fırçasından çıkmış dingin bir tabloyu andıran bu yerleşim; geleneksel taş konakların sıcaklığıyla mısır ununun bereketi, Fol Deresi’nin gümüş şarkısıyla Karadeniz kadınının vakur sepeti arasında kurulan eşsiz bir dengedir. Burada zaman, modern dünyanın hızına inat; sislerin arasından süzülen bir ışık huzmesi kadar yavaş, şiirsel bir sükunet kadar derindir. Çayıriçi, yeşilin sonsuzluğuna açılan o geniş ufuk çizgisinde, insanın kendi içsel sükunetine vardığı bir vuslat durağıdır.</p>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-16">
+            <figure class="reveal">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/18.webp" media="(max-width: 768px)">
+                        <img src="img/18.webp" alt="Havadan görünüm" class="h-64 object-cover">
+                    </picture>
+                </div>
+            </figure>
+            <figure class="reveal" style="transition-delay: 0.1s;">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/12.webp" media="(max-width: 768px)">
+                        <img src="img/12.webp" alt="Çayıriçi şiir gibi" class="h-64 object-cover">
+                    </picture>
+                </div>
+            </figure>
+            <figure class="reveal" style="transition-delay: 0.2s;">
+                <div class="img-container">
+                    <picture>
+                        <source srcset="img/mobil/9.webp" media="(max-width: 768px)">
+                        <img src="img/9.webp" alt="Günbatımı" class="h-64 object-cover">
+                    </picture>
+                </div>
+            </figure>
+        </div>
+
+        <!-- Alt Bölüm Boşlukları -->
+        <div class="mt-12 pt-8 border-t border-white/5 reveal">
             <div class="flex flex-col items-center justify-center gap-6">
-                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-orange">Bu Yazıyı Paylaş</span>
-                <div class="flex items-center gap-8">
-                    <a href="https://api.whatsapp.com/send?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü%20https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Whatsapp</a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
-                    <a href="https://twitter.com/intent/tweet?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü&url=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
+                <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold">Bu Hikayeyi Paylaş</span>
+                <div class="flex items-center gap-12 text-[11px] font-bold uppercase tracking-widest">
+                    <a href="https://api.whatsapp.com/send?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü%20https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
+                    <a href="https://twitter.com/intent/tweet?text=Sisin%20Şiire%20Dönüştüğü%20Yer:%20Tonya%20Çayıriçi%20Köyü&url=https://umitozguler.com.tr/fotoyol/gezi2.html" target="_blank" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
                 </div>
             </div>
-
-            <div class="mt-12 text-center pb-20">
-                <a href="../fotoyol.html" class="text-xs uppercase tracking-[0.3em] text-gray-400 hover:text-white transition-colors font-bold">← fotoyol listesine dön</a>
+            <div class="mt-10 text-center">
+                <a href="../fotoyol.html" class="text-[10px] uppercase tracking-[0.4em] text-gray-600 hover:text-brand-gold transition-colors font-bold">← Fotoyol Listesine Dön</a>
             </div>
         </div>
     </main>
 
-    <footer class="bg-brand-black py-16 border-t border-white/5 text-center relative z-10">
-        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+    <footer class="bg-brand-black py-12 border-t border-white/5 text-center">
+        <p class="text-[9px] tracking-[0.3em] text-gray-700 uppercase">© 2026 Ümit Özgüler Tüm Hakları Saklıdır.</p>
     </footer>
 
+    <!-- MODERN LIGHTBOX -->
+    <div id="lightbox">
+        <div class="close-lightbox" onclick="closeLightbox()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </div>
+        <img id="lightbox-img" src="" alt="">
+        <div id="lightbox-caption"></div>
+    </div>
+
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const closeBtn = document.getElementById('close-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
-        function toggleMenu() {
-            menu.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.classList.toggle('no-scroll');
+        const canvas = document.getElementById('fog-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
-        menuBtn.onclick = toggleMenu;
-        closeBtn.onclick = toggleMenu;
-        overlay.onclick = toggleMenu;
 
-        // LIGHTBOX SCRIPT
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxCaption = document.getElementById('lightbox-caption');
+        class FogParticle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 400 + 250;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.2 - 0.1;
+                this.opacity = Math.random() * 0.4;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < -this.size) this.x = width + this.size;
+                if (this.x > width + this.size) this.x = -this.size;
+                if (this.y < -this.size) this.y = height + this.size;
+                if (this.y > height + this.size) this.y = -this.size;
+            }
+            draw() {
+                ctx.beginPath();
+                const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                grad.addColorStop(0, `rgba(180, 180, 180, ${this.opacity})`);
+                grad.addColorStop(1, 'rgba(10, 10, 10, 0)');
+                ctx.fillStyle = grad;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-        document.querySelectorAll('figure img').forEach(image => {
-            image.onclick = (e) => {
+        function initFog() {
+            resize();
+            particles = Array.from({length: 12}, () => new FogParticle());
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+        window.addEventListener('resize', resize);
+        initFog();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        const mBtn = document.getElementById('mobile-menu-btn');
+        const cBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        mBtn.onclick = () => { menu.classList.add('active'); document.body.classList.add('no-scroll'); };
+        cBtn.onclick = () => { menu.classList.remove('active'); document.body.classList.remove('no-scroll'); };
+
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        const lbCap = document.getElementById('lightbox-caption');
+
+        document.querySelectorAll('.img-container img').forEach(img => {
+            img.onclick = (e) => {
                 e.stopPropagation();
-                lightbox.classList.add('active');
-                lightboxImg.src = image.src;
-                lightboxCaption.innerText = image.alt;
+                lbImg.src = img.src;
+                lbCap.innerText = img.alt;
+                lb.style.display = 'flex';
+                lb.offsetHeight; 
+                lb.classList.add('active');
                 document.body.classList.add('no-scroll');
             };
         });
 
         function closeLightbox() {
-            lightbox.classList.remove('active');
+            lb.classList.remove('active');
             document.body.classList.remove('no-scroll');
+            setTimeout(() => {
+                if (!lb.classList.contains('active')) {
+                    lb.style.display = 'none';
+                    lbImg.src = '';
+                }
+            }, 500);
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") closeLightbox();
-        });
+        lb.onclick = (e) => { if (e.target === lb || e.target === lbImg) closeLightbox(); };
+        document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
     </script>
 </body>
 </html>
