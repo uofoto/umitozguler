@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zirvelerin Soylu Beyazı: Parnassius Apollo | Ümit Özgüler</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Gemini estetiği için Outfit ve Inter fontlarını ekledik -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
     <script>
         tailwind.config = {
@@ -92,11 +93,16 @@
         
         .menu-line {
             position: absolute;
-            left: 0; top: 0; width: 1.5px; height: 0;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            height: 0;
             background: #ff8c00; 
             transition: height 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
         }
-        #mobile-menu.active .menu-line { height: 100%; }
+        #mobile-menu.active .menu-line {
+            height: 100%;
+        }
 
         .no-scroll { overflow: hidden; }
 
@@ -104,6 +110,7 @@
         .hover-facebook:hover { color: #1877F2 !important; }
         .hover-x:hover { color: #ffffff !important; }
 
+        /* MODERN LIGHTBOX */
         #lightbox {
             position: fixed; inset: 0; z-index: 2000;
             background-color: rgba(0, 0, 0, 0.95);
@@ -114,7 +121,9 @@
         }
         #lightbox.active { display: flex; opacity: 1; }
         #lightbox-img {
-            max-width: 100%; max-height: 92vh; object-fit: contain;
+            max-width: 100%; 
+            max-height: 92vh;
+            object-fit: contain;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             transform: scale(0.95) translateY(10px);
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -146,6 +155,7 @@
         <nav class="absolute top-0 w-full z-[100] bg-transparent">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="flex justify-between items-center h-24">
+                    <!-- LOGO ALANI -->
                     <a id="main-logo" href="../index.html" class="flex flex-col items-center group relative z-40">
                         <div class="text-2xl tracking-widest text-white leading-none uppercase">
                             <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
@@ -207,8 +217,8 @@
         <figure class="my-16 reveal">
             <div class="img-container">
                 <picture>
-                    <source srcset="fotoyol/img/mobil/24.webp" media="(max-width: 768px)">
-                    <img src="fotoyol/img/24.webp" alt="Apollo'nun evinde">
+                    <source srcset="img/mobil/24.webp" media="(max-width: 768px)">
+                    <img src="img/24.webp" alt="Apollo'nun evinde">
                 </picture>
             </div>
             <figcaption class="image-caption">Apollo'nun evinde</figcaption>
@@ -227,8 +237,8 @@
         <figure class="my-16 reveal">
             <div class="img-container">
                 <picture>
-                    <source srcset="fotoyol/img/mobil/25.webp" media="(max-width: 768px)">
-                    <img src="fotoyol/img/25.webp" alt="Parnassius Apollo">
+                    <source srcset="img/mobil/25.webp" media="(max-width: 768px)">
+                    <img src="img/25.webp" alt="Parnassius Apollo">
                 </picture>
             </div>
         </figure>
@@ -243,16 +253,16 @@
             <figure class="reveal">
                 <div class="img-container">
                     <picture>
-                        <source srcset="fotoyol/img/mobil/26.webp" media="(max-width: 768px)">
-                        <img src="fotoyol/img/26.webp" alt="Apollo Habitat">
+                        <source srcset="img/mobil/26.webp" media="(max-width: 768px)">
+                        <img src="img/26.webp" alt="Apollo Habitat">
                     </picture>
                 </div>
             </figure>
             <figure class="reveal" style="transition-delay: 0.2s;">
                 <div class="img-container">
                     <picture>
-                        <source srcset="fotoyol/img/mobil/27.webp" media="(max-width: 768px)">
-                        <img src="fotoyol/img/27.webp" alt="Apollo Kanat Detayı">
+                        <source srcset="img/mobil/27.webp" media="(max-width: 768px)">
+                        <img src="img/27.webp" alt="Apollo Kanat Detayı">
                     </picture>
                 </div>
             </figure>
@@ -268,9 +278,9 @@
 
         <!-- Grid: 28, 29, 30 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-16">
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/28.webp" class="h-64 object-cover" alt="Apollo Gözlemi"></div></figure>
-            <figure class="reveal" style="transition-delay: 0.1s;"><div class="img-container"><img src="fotoyol/img/29.webp" class="h-64 object-cover" alt="Apollo Dağları"></div></figure>
-            <figure class="reveal" style="transition-delay: 0.2s;"><div class="img-container"><img src="fotoyol/img/30.webp" class="h-64 object-cover" alt="Apollo Makro"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/28.webp" class="h-64 object-cover" alt="Apollo Gözlemi"></div></figure>
+            <figure class="reveal" style="transition-delay: 0.1s;"><div class="img-container"><img src="img/29.webp" class="h-64 object-cover" alt="Apollo Dağları"></div></figure>
+            <figure class="reveal" style="transition-delay: 0.2s;"><div class="img-container"><img src="img/30.webp" class="h-64 object-cover" alt="Apollo Makro"></div></figure>
         </div>
 
         <section class="reveal">
@@ -281,9 +291,9 @@
 
         <!-- Stack: 31, 32, 33 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-16">
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/31.webp" class="h-64 object-cover"></div></figure>
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/32.webp" class="h-64 object-cover"></div></figure>
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/33.webp" class="h-64 object-cover"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/31.webp" class="h-64 object-cover"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/32.webp" class="h-64 object-cover"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/33.webp" class="h-64 object-cover"></div></figure>
         </div>
 
         <section class="reveal">
@@ -292,14 +302,14 @@
 
         <!-- Stack: 34, 35, 36, 37, 38 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/34.webp"></div></figure>
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/35.webp"></div></figure>
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/36.webp"></div></figure>
-            <figure class="reveal"><div class="img-container"><img src="fotoyol/img/37.webp"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/34.webp"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/35.webp"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/36.webp"></div></figure>
+            <figure class="reveal"><div class="img-container"><img src="img/37.webp"></div></figure>
         </div>
         <figure class="my-16 reveal">
             <div class="img-container">
-                <img src="fotoyol/img/38.webp" alt="Apollo Zirvede">
+                <img src="img/38.webp" alt="Apollo Zirvede">
             </div>
         </figure>
 
@@ -307,8 +317,8 @@
         <figure class="my-16 reveal">
             <div class="img-container">
                 <picture>
-                    <source srcset="fotoyol/img/mobil/39.webp" media="(max-width: 768px)">
-                    <img src="fotoyol/img/39.webp" alt="apollo ile dans">
+                    <source srcset="img/mobil/39.webp" media="(max-width: 768px)">
+                    <img src="img/39.webp" alt="apollo ile dans">
                 </picture>
             </div>
             <figcaption class="image-caption">apollo ile dans</figcaption>
@@ -323,12 +333,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
             <figure class="reveal">
                 <div class="img-container">
-                    <img src="fotoyol/img/40.webp" alt="Final Apollo 1">
+                    <img src="img/40.webp" alt="Final Apollo 1">
                 </div>
             </figure>
             <figure class="reveal">
                 <div class="img-container">
-                    <img src="fotoyol/img/41.webp" alt="Final Apollo 2">
+                    <img src="img/41.webp" alt="Final Apollo 2">
                 </div>
             </figure>
         </div>
