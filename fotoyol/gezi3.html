@@ -15,7 +15,7 @@
     <!-- Gemini estetiği için Outfit ve Inter fontlarını ekledik -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
     <script>
-        tailwind.config = {
+        tailwinc.config = {
             theme: {
                 extend: {
                     colors: { 
@@ -60,7 +60,7 @@
         .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; }
         .img-container img {
             transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
-            filter: grayscale(0%) contrast(1); /* Siyah beyaz efekti kaldırıldı */
+            filter: grayscale(0%) contrast(1);
             width: 100%; height: auto; display: block;
         }
         .img-container:hover img { transform: scale(1.03); filter: grayscale(0%) contrast(1.05); }
@@ -275,6 +275,11 @@
             <strong>Kayaların Gücü:</strong> Tırtılları; <em>Sedum album</em>, <em>Sedum rosea</em> ve <em>Sempervivum</em> gibi dam koruğu ailesinden bitkilerle beslenir. Bu bitkiler, sadece en dirençli olanların tutunabildiği dik kayalıklarda yetişir.<br>
             <strong>Nesil Döngüsü:</strong> Haziran, Temmuz ve Ağustos aylarında uçan bu türün tırtılları, siyah gövdeleri üzerindeki turuncu beneklerle adeta bir mücevher gibidir.</p>
         </section>
+
+        <!-- Yanında çizgi olan açıklayıcı iç paragraf -->
+        <div class="custom-quote reveal">
+            Parnassius Apollo, ekolojik açıdan bir indikatör türdür. Bulunduğu bölgenin biyolojik çeşitliliğinin ve iklimsel sağlığının en hassas göstergelerinden biridir. Onun yüksek irtifa platolarındaki varlığı, o ekosistemin henüz bozulmamış, saf doğasının bir teyidi niteliğindedir.
+        </div>
 
         <!-- Grid: 28, 29, 30 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-16">
