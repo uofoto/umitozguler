@@ -54,13 +54,17 @@
             font-family: 'Outfit', sans-serif;
             color: #ffffff; font-size: 2.25rem; margin: 3.5rem 0 1.5rem; font-weight: 300; letter-spacing: -0.03em;
         }
+        .article-content h3 {
+            font-family: 'Outfit', sans-serif;
+            color: #c5a059; font-size: 1.5rem; margin: 2rem 0 1rem; font-weight: 400;
+        }
         .article-content strong { color: #fff; font-weight: 500; }
 
         .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; }
         .img-container img {
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
             width: 100%; height: auto; display: block;
-            /* Grayscale filtresi kaldırıldı */
+            /* Orijinal renkler için grayscale filtresi tamamen kaldırıldı */
         }
         .img-container:hover img { transform: scale(1.03); }
 
@@ -234,21 +238,33 @@
             <p>Kelebekler dört evrede gelişimlerini tamamlar: <strong>yumurta, tırtıl, koza (pupa) ve ergin kelebek.</strong> Toplumda yaygın olan “Kelebekler bir gün yaşar” inanışı doğru değildir. Türlere göre değişmekle birlikte çoğu kelebek 1–2 hafta yaşar.</p>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
-            <figure class="reveal">
-                <div class="img-container">
-                    <picture>
-                        <source srcset="img/mobil/69.webp" media="(max-width: 768px)">
-                        <img src="img/69.webp" alt="Tırtıl evresi" class="h-[400px] object-cover">
-                    </picture>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16 items-start">
+            <div class="flex flex-col gap-8 reveal">
+                <figure>
+                    <div class="img-container">
+                        <picture>
+                            <source srcset="img/mobil/69.webp" media="(max-width: 768px)">
+                            <img src="img/69.webp" alt="Tırtıl evresi" class="h-[400px] object-cover">
+                        </picture>
+                    </div>
+                    <figcaption class="image-caption">Tırtıl evresi</figcaption>
+                </figure>
+                
+                <div class="text-gray-400 font-light leading-relaxed">
+                    <p class="text-white font-medium mb-4">Kelebekler tam başkalaşım (holometabol) geçirir ve iki kritik ara evreleri vardır:</p>
+                    <h3 class="!mt-0 !mb-2">Tırtıl (larva) evresi:</h3>
+                    <p>Yumurtadan çıkan tırtılın temel görevi beslenmek ve büyümektir. Yapraklarla yoğun şekilde beslenir, birkaç kez deri değiştirir (gömlek atar) ve kısa sürede kütlesini katlayarak artırır. Bu evre enerji depolama safhasıdır.</p>
+                    
+                    <h3 class="!mt-6 !mb-2">Pupa (koza/krizalit) evresi:</h3>
+                    <p>Tırtıl, kendini sabitleyip pupa hâline geçer. Dışarıdan hareketsiz görünse de içeride yoğun bir biyolojik dönüşüm gerçekleşir; larval dokular çözünür, ergin kelebeğin kanat, anten ve diğer organları yeniden yapılandırılır. Süre sonunda pupa kabuğu çatlar ve ergin kelebek çıkar.</p>
                 </div>
-                <figcaption class="image-caption">Tırtıl evresi</figcaption>
-            </figure>
+            </div>
+            
             <figure class="reveal" style="transition-delay: 0.2s;">
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/68.webp" media="(max-width: 768px)">
-                        <img src="img/68.webp" alt="Pupa evresi" class="h-[400px] object-cover">
+                        <img src="img/68.webp" alt="Pupa evresi" class="md:h-[800px] h-[500px] object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Pupa evresi</figcaption>
