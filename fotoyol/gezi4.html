@@ -136,6 +136,16 @@
         .hover-whatsapp:hover { color: #25D366 !important; }
         .hover-facebook:hover { color: #1877F2 !important; }
         .hover-x:hover { color: #ffffff !important; }
+
+        /* Harita Nokta Animasyonu */
+        .map-dot {
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(2); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body class="text-gray-300 font-sans antialiased flex flex-col min-h-screen">
@@ -170,7 +180,6 @@
             </div>
         </nav>
 
-        <!-- MOBİL MENÜ -->
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen bg-brand-dark z-[120] flex flex-col pt-32 px-8 text-left md:hidden border-l border-white/5">
             <div class="menu-line"></div>
             <button id="close-menu-btn" class="absolute top-8 right-6 text-white hover:text-brand-orange transition-colors"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
@@ -190,10 +199,10 @@
                 ARTVİN / YUSUFELİ
             </div>
             <h1 class="text-5xl md:text-8xl font-thin text-white tracking-tighter leading-tight uppercase font-display">
-                Pepela <br>
+                Pepela... <br>
                 <span class="font-bold italic text-brand-gold lowercase tracking-normal">kelebeğin izinde</span>
             </h1>
-            <p class="mt-10 text-[10px] tracking-[0.5em] text-gray-500 uppercase font-light">Çoruh Vadisi • Yol Hikayesi No: 04 • 23 Şubat 2026</p>
+            <p class="mt-10 text-[10px] tracking-[0.5em] text-gray-500 uppercase font-light">Çoruh Vadisi • Yol Hikayesi No: 04 • 12 Şubat 2026</p>
         </div>
 
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-20 animate-pulse">
@@ -242,8 +251,8 @@
             <p class="text-white font-medium mb-8">Kelebekler tam başkalaşım (holometabol) geçirir ve iki kritik ara evreleri vardır:</p>
         </section>
 
+        <!-- DÖNGÜ GRİDİ - Tırtıl ve Pupa Dengesi -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16 items-start">
-            <!-- Sol Sütun: Tırtıl -->
             <div class="flex flex-col gap-6 reveal">
                 <figure>
                     <div class="img-container">
@@ -256,11 +265,10 @@
                 </figure>
                 <div class="text-gray-400 font-light leading-relaxed">
                     <h3 class="!mt-0 !mb-2">Tırtıl (larva) evresi:</h3>
-                    <p>Yumurtadan çıkan tırtılın temel görevi beslenmek ve büyümektir. Yapraklarla yoğun şekilde beslenir, birkaç kez deri değiştirir (gömlek atar) ve kısa sürede kütlesini katlayarak artırır. Bu evre enerji depolama safhasıdır.</p>
+                    <p>Yumurtadan çıkan tırtılın temel görevi beslenmek ve büyümektir. Yapraklarla yoğun şekilde beslenir, birkaç kez deri değiştirir ve kısa sürede kütlesini katlayarak artırır.</p>
                 </div>
             </div>
             
-            <!-- Sağ Sütun: Pupa -->
             <div class="flex flex-col gap-6 reveal" style="transition-delay: 0.2s;">
                 <figure>
                     <div class="img-container">
@@ -269,72 +277,122 @@
                             <img src="img/68.webp" alt="Pupa evresi" class="h-[450px] w-full object-cover">
                         </picture>
                     </div>
-                    <figcaption class="image-caption">Pupa evresi</figcaption>
+                    <figcaption class="image-caption">Pupa (Koza)</figcaption>
                 </figure>
                 <div class="text-gray-400 font-light leading-relaxed">
                     <h3 class="!mt-0 !mb-2">Pupa (koza/krizalit) evresi:</h3>
-                    <p>Tırtıl, kendini sabitleyip pupa hâline geçer. Dışarıdan hareketsiz görünse de içeride yoğun bir biyolojik dönüşüm gerçekleşir; larval dokular çözünür, ergin kelebeğin kanat, anten ve diğer organları yeniden yapılandırılır. Süre sonunda pupa kabuğu çatlar ve ergin kelebek çıkar.</p>
+                    <p>Tırtıl, kendini sabitleyip pupa hâline geçer. Dışarıdan hareketsiz görünse de içeride yoğun bir biyolojik dönüşüm gerçekleşir; ergin kelebek organları yeniden yapılandırılır.</p>
                 </div>
             </div>
         </div>
 
+        <!-- ÜREME VE ÇİFTLEŞME - Dengeli ve Büyük Görünüm -->
         <section class="reveal">
-            <h2>Beslenme ve Davranış Özellikleri</h2>
-            <p>Kelebeklerin ayaklarında tat alma reseptörleri bulunur. Bu sayede kondukları bitkinin uygun olup olmadığını anlayabilirler. Çiçek nektarını emmeye yarayan uzun hortum şeklindeki dilleri, kullanılmadığında sarmal biçimde kıvrılır.</p>
+            <h2>Doğanın Devamı: Çiftleşme</h2>
+            <p>Kelebekler için en kritik süreçlerden biri olan çiftleşme, türün devamlılığı için Yusufeli yaylalarında sıkça gözlemlenebilir. Bu anları belgelemek, doğanın en saf hallerinden birine tanıklık etmektir.</p>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
-            <figure class="reveal">
-                <div class="img-container">
-                    <picture>
-                        <source srcset="img/mobil/66.webp" media="(max-width: 768px)">
-                        <img src="img/66.webp" alt="Beslenme hazırlığı yapan bir İparhan" class="h-[400px] object-cover">
-                    </picture>
-                </div>
-                <figcaption class="image-caption">Beslenme hazırlığı yapan bir İparhan</figcaption>
-            </figure>
-            <figure class="reveal" style="transition-delay: 0.1s;">
-                <div class="img-container">
-                    <picture>
-                        <source srcset="img/mobil/67.webp" media="(max-width: 768px)">
-                        <img src="img/67.webp" alt="Kebeğin çiftleşmesi" class="h-[400px] object-cover">
-                    </picture>
-                </div>
-                <figcaption class="image-caption">Kebeğin çiftleşmesi</figcaption>
-            </figure>
-        </div>
+        <figure class="my-16 reveal">
+            <div class="img-container">
+                <picture>
+                    <source srcset="img/mobil/67.webp" media="(max-width: 768px)">
+                    <img src="img/67.webp" alt="Kelebeğin Çiftleşmesi" class="w-full object-cover">
+                </picture>
+            </div>
+            <figcaption class="image-caption">Kelebeğin Çiftleşmesi</figcaption>
+        </figure>
+
+        <section class="reveal">
+            <h2>Beslenme ve Davranış Özellikleri</h2>
+            <p>Kelebeklerin ayaklarında tat alma reseptörleri bulunur. Çiçek nektarını emmeye yarayan uzun hortum şeklindeki dilleri, kullanılmadığında sarmal biçimde kıvrılır.</p>
+        </section>
+
+        <figure class="my-16 reveal">
+            <div class="img-container">
+                <picture>
+                    <source srcset="img/mobil/66.webp" media="(max-width: 768px)">
+                    <img src="img/66.webp" alt="Beslenme hazırlığı yapan bir İparhan">
+                </picture>
+            </div>
+            <figcaption class="image-caption">Beslenme hazırlığı yapan bir İparhan</figcaption>
+        </figure>
 
         <section class="reveal">
             <h2>Yaşam Alanları ve Yusufeli Zenginliği</h2>
-            <p>Yusufeli’nin kendine özgü mikrokliması ve zengin bitki örtüsü, kelebekler için hem nektar hem de konukçu bitki çeşitliliği sağlar. Özellikle Yusufeli Yaylalar Köyü Olgunlar Mahallesi çevresi, tür çeşitliliği açısından dikkat çekicidir.</p>
+            <p>Yusufeli’nin kendine özgü mikrokliması ve zengin bitki örtüsü, kelebekler için hem nektar hem de konukçu bitki çeşitliliği sağlar.</p>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16">
+        <!-- GÖZLEM ALANLARI VE HARİTA KARTI - GÜNCELLENMİŞ VE DENGELİ -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16 items-start">
             <figure class="reveal">
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/70.webp" media="(max-width: 768px)">
-                        <img src="img/70.webp" alt="Kelebeklerin yaşaması için ideal ortam" class="h-[400px] object-cover">
+                        <img src="img/70.webp" alt="Kelebeklerin yaşaması için ideal ortam" class="w-full object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Kelebeklerin yaşaması için ideal ortam</figcaption>
             </figure>
-            <div class="flex flex-col justify-center reveal">
-                <div class="bg-brand-dark p-8 border border-white/5 rounded-sm shadow-2xl">
-                    <h4 class="text-[10px] tracking-[0.4em] uppercase text-brand-orange font-bold mb-4">Gözlem Alanları</h4>
-                    <ul class="text-sm space-y-2 text-gray-400 font-light tracking-wide">
-                        <li>• Altıparmak & Yaylalar</li>
-                        <li>• Tekkale & Çevreli</li>
-                        <li>• Çeltikdüzü & Dokumacılar</li>
-                        <li>• Ormandibi & Boyalı</li>
-                        <li>• Balalan & Serinsu</li>
-                    </ul>
+            <div class="flex flex-col reveal">
+                <div class="bg-brand-dark p-8 md:p-10 border border-white/5 rounded-sm shadow-2xl relative overflow-hidden group min-h-full">
+                    <!-- Stilize Harita ve Lokasyon İşaretleri -->
+                    <div class="absolute inset-0 opacity-15 pointer-events-none group-hover:opacity-25 transition-opacity duration-1000">
+                        <svg viewBox="0 0 400 400" fill="none" class="w-full h-full text-brand-gold stroke-current">
+                            <path d="M50,150 Q100,80 200,120 T350,150 Q380,250 250,350 T80,300 Q20,200 50,150" stroke-width="0.8" fill="none" opacity="0.3"/>
+                            <path d="M120,180 L180,220 L250,200 L300,260" stroke-width="0.3" stroke-dasharray="4 4" opacity="0.4"/>
+                            <g class="map-point">
+                                <circle cx="180" cy="220" r="5" fill="#ff8c00" class="map-dot"/>
+                                <circle cx="180" cy="220" r="1.5" fill="white"/>
+                            </g>
+                            <g class="map-point">
+                                <circle cx="250" cy="200" r="5" fill="#ff8c00" class="map-dot" style="animation-delay: 0.5s"/>
+                                <circle cx="250" cy="200" r="1.5" fill="white"/>
+                            </g>
+                            <g class="map-point">
+                                <circle cx="120" cy="180" r="5" fill="#ff8c00" class="map-dot" style="animation-delay: 1.2s"/>
+                                <circle cx="120" cy="180" r="1.5" fill="white"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-start">
+                        <div class="mb-8 w-full">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-8 h-[1px] bg-brand-orange"></div>
+                                <span class="text-[11px] tracking-[0.5em] text-brand-gold uppercase font-bold">ARTVİN / YUSUFELİ</span>
+                            </div>
+                            <h4 class="text-3xl tracking-tighter text-white font-light font-display leading-none">Gözlem Alanları</h4>
+                        </div>
+
+                        <ul class="text-[14px] md:text-[15px] space-y-4 text-gray-400 font-light tracking-wide border-l border-brand-orange/20 pl-6 w-full">
+                            <li class="hover:text-white transition-all cursor-default flex items-center gap-3 group/item">
+                                <span class="w-1.5 h-1.5 bg-brand-orange rounded-full shadow-[0_0_10px_#ff8c00]"></span> 
+                                <span>Altıparmak & Yaylalar</span>
+                            </li>
+                            <li class="hover:text-white transition-all cursor-default flex items-center gap-3 group/item">
+                                <span class="w-1.5 h-1.5 bg-brand-orange rounded-full shadow-[0_0_10px_#ff8c00]"></span> 
+                                <span>Tekkale & Çevreli</span>
+                            </li>
+                            <li class="hover:text-white transition-all cursor-default flex items-center gap-3 group/item">
+                                <span class="w-1.5 h-1.5 bg-brand-orange rounded-full shadow-[0_0_10px_#ff8c00]"></span> 
+                                <span>Çeltikdüzü & Dokumacılar</span>
+                            </li>
+                            <li class="hover:text-white transition-all cursor-default flex items-center gap-3 group/item">
+                                <span class="w-1.5 h-1.5 bg-brand-orange rounded-full shadow-[0_0_10px_#ff8c00]"></span> 
+                                <span>Ormandibi & Boyalı</span>
+                            </li>
+                            <li class="hover:text-white transition-all cursor-default flex items-center gap-3 group/item">
+                                <span class="w-1.5 h-1.5 bg-brand-orange rounded-full shadow-[0_0_10px_#ff8c00]"></span> 
+                                <span>Balalan & Serinsu</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <section class="reveal">
-            <p>Geleneksel yöntemlerle yapılan orak ve tırpanla ot biçme ile kontrollü hayvan otlatma, bitki çeşitliliğini artırarak kelebekler için ideal habitat oluşturur. Modern yoğun tarımın aksine bu yöntemler doğal dengeyi korur.</p>
+            <p>Geleneksel yöntemlerle yapılan orak ve tırpanla ot biçme ile kontrollü hayvan otlatma, bitki çeşitliliğini artırarak kelebekler için ideal habitat oluşturur.</p>
         </section>
 
         <figure class="my-16 reveal">
@@ -349,10 +407,10 @@
 
         <section class="reveal">
             <h2>Tür Çeşitliliği ve Tehditler</h2>
-            <p>Türkiye’de yaklaşık 410 kelebek türü bulunduğu kabul edilmektedir. Bunun yaklaşık 200 türü Yusufeli bölgesinde kayıt altına alınmıştır. Ancak baraj projeleri, küresel iklim değişikliği ve kelebek kaçakçılığı bu zenginliği tehdit etmektedir.</p>
+            <p>Türkiye’de yaklaşık 410 kelebek türü bulunduğu kabul edilmektedir. Bunun yaklaşık 200 türü Yusufeli bölgesinde kayıt altına alınmıştır.</p>
         </section>
 
-        <!-- KELEBEK KATALOĞU GRID -->
+        <!-- KATALOG GRİDİ -->
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 my-16">
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/43.webp" media="(max-width: 768px)"><img src="img/43.webp" alt="Akdeniz Hanımeli Kelebeği" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Akdeniz Hanımeli Kelebeği</figcaption></figure>
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/44.webp" media="(max-width: 768px)"><img src="img/44.webp" alt="Alıçbeyazı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Alıçbeyazı - Aporia crataegi</figcaption></figure>
@@ -366,7 +424,7 @@
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/52.webp" media="(max-width: 768px)"><img src="img/52.webp" alt="Ege Zıpzıpı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Ege Zıpzıpı - Pyrgus melotis</figcaption></figure>
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/53.webp" media="(max-width: 768px)"><img src="img/53.webp" alt="Dikenkelebeği" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Dikenkelebeği - Vanessa cardui</figcaption></figure>
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/54.webp" media="(max-width: 768px)"><img src="img/54.webp" alt="Siyah Antenli Zıpzıp" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Siyah Antenli Zıpzıp</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/55.webp" media="(max-width: 768px)"><img src="img/55.webp" alt="Apollo" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Apollo</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/55.webp" alt="Apollo" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Apollo</figcaption></figure>
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/56.webp" media="(max-width: 768px)"><img src="img/56.webp" alt="Esmer Korubeni" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Esmer Korubeni (Phengaris nausithous)</figcaption></figure>
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/57.webp" media="(max-width: 768px)"><img src="img/57.webp" alt="Funda İparhanı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Funda İparhanı - Melitaea diamina</figcaption></figure>
             <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/58.webp" media="(max-width: 768px)"><img src="img/58.webp" alt="Güzel İparhan" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Güzel İparhan - Melitaea fascelis</figcaption></figure>
@@ -381,7 +439,7 @@
 
         <section class="reveal">
             <h2>Fotoğraflama ve Sonuç</h2>
-            <p>Sadece Çoruh Havzası’nda yaşayan <i>Colias caucasica</i>, <i>Polyommatus artvinensis</i> ve <i>Polyommatus merhaba</i> gibi endemik türler bölgeyi uluslararası ölçekte önemli bir gözlem alanı haline getirmektedir. Ancak bu narin canlıları belgelemek büyük sabır ve doğa sevgisi gerektirir.</p>
+            <p>Endemik türler bölgeyi uluslararası ölçekte önemli bir gözlem alanı haline getirmektedir. Bu narin canlıları belgelemek büyük sabır ve doğa sevgisi gerektirir.</p>
         </section>
 
         <figure class="my-16 reveal">
@@ -394,16 +452,14 @@
             <figcaption class="image-caption">Kelebekleri fotoğraflamak sanıldığı gibi kolay bir iş değildir</figcaption>
         </figure>
 
-        <div class="mt-12 pt-8 border-t border-white/5 reveal">
-            <div class="flex flex-col items-center justify-center gap-6">
-                <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold">Bu Hikayeyi Paylaş</span>
-                <div class="flex items-center gap-12 text-[11px] font-bold uppercase tracking-widest">
-                    <a href="https://api.whatsapp.com/send?text=Pepela:%20Yusufeli'nin%20Kanatlı%20Mücevherleri%20https://umitozguler.com.tr/fotoyol/gezi4.html" target="_blank" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi4.html" target="_blank" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
-                    <a href="https://twitter.com/intent/tweet?text=Pepela:%20Yusufeli'nin%20Kanatlı%20Mücevherleri&url=https://umitozguler.com.tr/fotoyol/gezi4.html" target="_blank" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
-                </div>
+        <div class="mt-12 pt-8 border-t border-white/5 reveal text-center">
+            <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold block mb-8">Bu Hikayeyi Paylaş</span>
+            <div class="flex items-center justify-center gap-12 text-[11px] font-bold uppercase tracking-widest">
+                <a href="https://api.whatsapp.com/send?text=Pepela" target="_blank" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
+                <a href="https://www.facebook.com" target="_blank" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
+                <a href="https://twitter.com" target="_blank" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
             </div>
-            <div class="mt-10 text-center">
+            <div class="mt-10">
                 <a href="../fotoyol.html" class="text-[10px] uppercase tracking-[0.4em] text-gray-600 hover:text-brand-gold transition-colors font-bold">← Fotoyol Listesine Dön</a>
             </div>
         </div>
@@ -413,13 +469,8 @@
         <p class="text-[9px] tracking-[0.3em] text-gray-700 uppercase">© 2026 Ümit Özgüler Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <!-- MODERN LIGHTBOX -->
     <div id="lightbox">
-        <div class="close-lightbox" onclick="closeLightbox()">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </div>
+        <div class="close-lightbox" onclick="closeLightbox()"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg></div>
         <img id="lightbox-img" src="" alt="">
         <div id="lightbox-caption"></div>
     </div>
@@ -428,98 +479,25 @@
         const canvas = document.getElementById('fog-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         class FogParticle {
             constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 400 + 250;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.2 - 0.1;
-                this.opacity = Math.random() * 0.4;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x < -this.size) this.x = width + this.size;
-                if (this.x > width + this.size) this.x = -this.size;
-                if (this.y < -this.size) this.y = height + this.size;
-                if (this.y > height + this.size) this.y = -this.size;
-            }
-            draw() {
-                ctx.beginPath();
-                const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-                grad.addColorStop(0, `rgba(180, 180, 180, ${this.opacity})`);
-                grad.addColorStop(1, 'rgba(10, 10, 10, 0)');
-                ctx.fillStyle = grad;
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            reset() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 400 + 250; this.speedX = Math.random() * 0.4 - 0.2; this.speedY = Math.random() * 0.2 - 0.1; this.opacity = Math.random() * 0.4; }
+            update() { this.x += this.speedX; this.y += this.speedY; if (this.x < -this.size) this.x = width + this.size; if (this.x > width + this.size) this.x = -this.size; if (this.y < -this.size) this.y = height + this.size; if (this.y > height + this.size) this.y = -this.size; }
+            draw() { ctx.beginPath(); const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size); grad.addColorStop(0, `rgba(180, 180, 180, ${this.opacity})`); grad.addColorStop(1, 'rgba(10, 10, 10, 0)'); ctx.fillStyle = grad; ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
-
-        function initFog() {
-            resize();
-            particles = Array.from({length: 12}, () => new FogParticle());
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => { p.update(); p.draw(); });
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-        window.addEventListener('resize', resize);
-        initFog();
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
+        function initFog() { resize(); particles = Array.from({length: 12}, () => new FogParticle()); function animate() { ctx.clearRect(0, 0, width, height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); } animate(); }
+        window.addEventListener('resize', resize); initFog();
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        const mBtn = document.getElementById('mobile-menu-btn');
-        const cBtn = document.getElementById('close-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        const mBtn = document.getElementById('mobile-menu-btn'); const cBtn = document.getElementById('close-menu-btn'); const menu = document.getElementById('mobile-menu');
         mBtn.onclick = () => { menu.classList.add('active'); document.body.classList.add('no-scroll'); };
         cBtn.onclick = () => { menu.classList.remove('active'); document.body.classList.remove('no-scroll'); };
-
-        const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightbox-img');
-        const lbCap = document.getElementById('lightbox-caption');
-
-        document.querySelectorAll('.img-container img').forEach(img => {
-            img.onclick = (e) => {
-                e.stopPropagation();
-                lbImg.src = img.currentSrc || img.src;
-                lbCap.innerText = img.alt;
-                lb.style.display = 'flex';
-                lb.offsetHeight; 
-                lb.classList.add('active');
-                document.body.classList.add('no-scroll');
-            };
-        });
-
-        function closeLightbox() {
-            lb.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-            setTimeout(() => {
-                if (!lb.classList.contains('active')) {
-                    lb.style.display = 'none';
-                    lbImg.src = '';
-                }
-            }, 500);
-        }
-
+        const lb = document.getElementById('lightbox'); const lbImg = document.getElementById('lightbox-img'); const lbCap = document.getElementById('lightbox-caption');
+        document.querySelectorAll('.img-container img').forEach(img => { img.onclick = (e) => { e.stopPropagation(); lbImg.src = img.currentSrc || img.src; lbCap.innerText = img.alt; lb.style.display = 'flex'; lb.offsetHeight; lb.classList.add('active'); document.body.classList.add('no-scroll'); }; });
+        function closeLightbox() { lb.classList.remove('active'); document.body.classList.remove('no-scroll'); setTimeout(() => { if (!lb.classList.contains('active')) { lb.style.display = 'none'; lbImg.src = ''; } }, 500); }
         lb.onclick = (e) => { if (e.target === lb || e.target === lbImg) closeLightbox(); };
         document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
     </script>
 </body>
 </html>
-
-
-
