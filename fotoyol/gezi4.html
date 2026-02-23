@@ -59,10 +59,10 @@
         .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; }
         .img-container img {
             transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
-            filter: grayscale(100%) contrast(1.1);
             width: 100%; height: auto; display: block;
+            /* Grayscale filtresi kaldırıldı */
         }
-        .img-container:hover img { transform: scale(1.03); filter: grayscale(0%) contrast(1); }
+        .img-container:hover img { transform: scale(1.03); }
 
         .image-caption { 
             font-size: 11px; color: #555; margin-top: 15px; text-align: center; 
@@ -239,7 +239,7 @@
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/69.webp" media="(max-width: 768px)">
-                        <img src="img/69.webp" alt="Tırtıl evresi">
+                        <img src="img/69.webp" alt="Tırtıl evresi" class="h-[400px] object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Tırtıl evresi</figcaption>
@@ -248,7 +248,7 @@
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/68.webp" media="(max-width: 768px)">
-                        <img src="img/68.webp" alt="Pupa evresi">
+                        <img src="img/68.webp" alt="Pupa evresi" class="h-[400px] object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Pupa evresi</figcaption>
@@ -265,7 +265,7 @@
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/66.webp" media="(max-width: 768px)">
-                        <img src="img/66.webp" alt="Beslenme hazırlığı yapan bir İparhan">
+                        <img src="img/66.webp" alt="Beslenme hazırlığı yapan bir İparhan" class="h-[400px] object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Beslenme hazırlığı yapan bir İparhan</figcaption>
@@ -274,7 +274,7 @@
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/67.webp" media="(max-width: 768px)">
-                        <img src="img/67.webp" alt="Kebeğin çiftleşmesi">
+                        <img src="img/67.webp" alt="Kebeğin çiftleşmesi" class="h-[400px] object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Kebeğin çiftleşmesi</figcaption>
@@ -291,7 +291,7 @@
                 <div class="img-container">
                     <picture>
                         <source srcset="img/mobil/70.webp" media="(max-width: 768px)">
-                        <img src="img/70.webp" alt="Kelebek yaşaması için ideal ortam">
+                        <img src="img/70.webp" alt="Kelebek yaşaması için ideal ortam" class="h-[400px] object-cover">
                     </picture>
                 </div>
                 <figcaption class="image-caption">Kelebek yaşaması için ideal ortam</figcaption>
@@ -331,29 +331,29 @@
 
         <!-- KELEBEK KATALOĞU GRID -->
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 my-16">
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/43.webp" media="(max-width: 768px)"><img src="img/43.webp" alt="Akdeniz Hanımeli Kelebeği"></picture></div><figcaption class="image-caption">Akdeniz Hanımeli Kelebeği</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/44.webp" media="(max-width: 768px)"><img src="img/44.webp" alt="Alıçbeyazı"></picture></div><figcaption class="image-caption">Alıçbeyazı - Aporia crataegi</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/45.webp" media="(max-width: 768px)"><img src="img/45.webp" alt="Amannisa"></picture></div><figcaption class="image-caption">Amannisa - Melitaea athalia</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/46.webp" media="(max-width: 768px)"><img src="img/46.webp" alt="Atalanta"></picture></div><figcaption class="image-caption">Atalanta - Vanessa atalanta</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/47.webp" media="(max-width: 768px)"><img src="img/47.webp" alt="Balkankaplanı"></picture></div><figcaption class="image-caption">Balkankaplanı - Tarucus balkanicus</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/48.webp" media="(max-width: 768px)"><img src="img/48.webp" alt="Çitlembikkelebeği"></picture></div><figcaption class="image-caption">Çitlembikkelebeği - Libythea celtis</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/49.webp" media="(max-width: 768px)"><img src="img/49.webp" alt="Çokgözlü Balkanmavisi"></picture></div><figcaption class="image-caption">Çokgözlü Balkanmavisi - Aricia anteros</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/50.webp" media="(max-width: 768px)"><img src="img/50.webp" alt="Çokgözlü Esmer"></picture></div><figcaption class="image-caption">Çokgözlü Esmer - Plebeius agestis</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/51.webp" media="(max-width: 768px)"><img src="img/51.webp" alt="Çokgözlü Gökmavisi"></picture></div><figcaption class="image-caption">Çokgözlü Gökmavisi - Polyommatus bellargus</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/52.webp" media="(max-width: 768px)"><img src="img/52.webp" alt="Ege Zıpzıpı"></picture></div><figcaption class="image-caption">Ege Zıpzıpı - Pyrgus melotis</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/53.webp" media="(max-width: 768px)"><img src="img/53.webp" alt="Dikenkelebeği"></picture></div><figcaption class="image-caption">Dikenkelebeği - Vanessa cardui</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/54.webp" media="(max-width: 768px)"><img src="img/54.webp" alt="Siyah Antenli Zıpzıp"></picture></div><figcaption class="image-caption">Siyah Antenli Zıpzıp</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/55.webp" media="(max-width: 768px)"><img src="img/55.webp" alt="Apollo"></picture></div><figcaption class="image-caption">Apollo</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/56.webp" media="(max-width: 768px)"><img src="img/56.webp" alt="Esmer Korubeni"></picture></div><figcaption class="image-caption">Esmer Korubeni (Phengaris nausithous)</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/57.webp" media="(max-width: 768px)"><img src="img/57.webp" alt="Funda İparhanı"></picture></div><figcaption class="image-caption">Funda İparhanı - Melitaea diamina</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/58.webp" media="(max-width: 768px)"><img src="img/58.webp" alt="Güzel İparhan"></picture></div><figcaption class="image-caption">Güzel İparhan - Melitaea fascelis</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/59.webp" media="(max-width: 768px)"><img src="img/59.webp" alt="İspanyol Kraliçesi"></picture></div><figcaption class="image-caption">İspanyol Kraliçesi - Issoria lathonia</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/60.webp" media="(max-width: 768px)"><img src="img/60.webp" alt="Kafkasyalı İparhan"></picture></div><figcaption class="image-caption">Kafkasyalı İparhan - Melitaea interrupta</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/61.webp" media="(max-width: 768px)"><img src="img/61.webp" alt="Minik Sevbeni"></picture></div><figcaption class="image-caption">Minik Sevbeni - Satyrium acaciae</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/62.webp" media="(max-width: 768px)"><img src="img/62.webp" alt="Nazuğum"></picture></div><figcaption class="image-caption">Nazuğum - Euphydryas aurinia</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/63.webp" media="(max-width: 768px)"><img src="img/63.webp" alt="Orman Esmer Boncuk"></picture></div><figcaption class="image-caption">Orman Esmer Boncuk - Lasiommate petropolitana</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/64.webp" media="(max-width: 768px)"><img src="img/64.webp" alt="Rus Zıpzıp Perisi"></picture></div><figcaption class="image-caption">Rus Zıpzıp Perisi - Coenonympha leander</figcaption></figure>
-            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/65.webp" media="(max-width: 768px)"><img src="img/65.webp" alt="Sarı Antenli Zıpzıp"></picture></div><figcaption class="image-caption">Sarı Antenli Zıpzıp - Thymelicus sylvestris</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/43.webp" media="(max-width: 768px)"><img src="img/43.webp" alt="Akdeniz Hanımeli Kelebeği" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Akdeniz Hanımeli Kelebeği</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/44.webp" media="(max-width: 768px)"><img src="img/44.webp" alt="Alıçbeyazı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Alıçbeyazı - Aporia crataegi</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/45.webp" media="(max-width: 768px)"><img src="img/45.webp" alt="Amannisa" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Amannisa - Melitaea athalia</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/46.webp" media="(max-width: 768px)"><img src="img/46.webp" alt="Atalanta" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Atalanta - Vanessa atalanta</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/47.webp" media="(max-width: 768px)"><img src="img/47.webp" alt="Balkankaplanı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Balkankaplanı - Tarucus balkanicus</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/48.webp" media="(max-width: 768px)"><img src="img/48.webp" alt="Çitlembikkelebeği" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Çitlembikkelebeği - Libythea celtis</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/49.webp" media="(max-width: 768px)"><img src="img/49.webp" alt="Çokgözlü Balkanmavisi" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Çokgözlü Balkanmavisi - Aricia anteros</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/50.webp" media="(max-width: 768px)"><img src="img/50.webp" alt="Çokgözlü Esmer" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Çokgözlü Esmer - Plebeius agestis</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/51.webp" media="(max-width: 768px)"><img src="img/51.webp" alt="Çokgözlü Gökmavisi" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Çokgözlü Gökmavisi - Polyommatus bellargus</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/52.webp" media="(max-width: 768px)"><img src="img/52.webp" alt="Ege Zıpzıpı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Ege Zıpzıpı - Pyrgus melotis</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/53.webp" media="(max-width: 768px)"><img src="img/53.webp" alt="Dikenkelebeği" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Dikenkelebeği - Vanessa cardui</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/54.webp" media="(max-width: 768px)"><img src="img/54.webp" alt="Siyah Antenli Zıpzıp" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Siyah Antenli Zıpzıp</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/55.webp" media="(max-width: 768px)"><img src="img/55.webp" alt="Apollo" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Apollo</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/56.webp" media="(max-width: 768px)"><img src="img/56.webp" alt="Esmer Korubeni" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Esmer Korubeni (Phengaris nausithous)</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/57.webp" media="(max-width: 768px)"><img src="img/57.webp" alt="Funda İparhanı" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Funda İparhanı - Melitaea diamina</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/58.webp" media="(max-width: 768px)"><img src="img/58.webp" alt="Güzel İparhan" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Güzel İparhan - Melitaea fascelis</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/59.webp" media="(max-width: 768px)"><img src="img/59.webp" alt="İspanyol Kraliçesi" class="h-64 object-cover"></picture></div><figcaption class="image-caption">İspanyol Kraliçesi - Issoria lathonia</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/60.webp" media="(max-width: 768px)"><img src="img/60.webp" alt="Kafkasyalı İparhan" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Kafkasyalı İparhan - Melitaea interrupta</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/61.webp" media="(max-width: 768px)"><img src="img/61.webp" alt="Minik Sevbeni" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Minik Sevbeni - Satyrium acaciae</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/62.webp" media="(max-width: 768px)"><img src="img/62.webp" alt="Nazuğum" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Nazuğum - Euphydryas aurinia</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/63.webp" media="(max-width: 768px)"><img src="img/63.webp" alt="Orman Esmer Boncuk" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Orman Esmer Boncuk - Lasiommate petropolitana</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/64.webp" media="(max-width: 768px)"><img src="img/64.webp" alt="Rus Zıpzıp Perisi" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Rus Zıpzıp Perisi - Coenonympha leander</figcaption></figure>
+            <figure class="reveal"><div class="img-container"><picture><source srcset="img/mobil/65.webp" media="(max-width: 768px)"><img src="img/65.webp" alt="Sarı Antenli Zıpzıp" class="h-64 object-cover"></picture></div><figcaption class="image-caption">Sarı Antenli Zıpzıp - Thymelicus sylvestris</figcaption></figure>
         </div>
 
         <section class="reveal">
