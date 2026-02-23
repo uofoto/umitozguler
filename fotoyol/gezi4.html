@@ -64,6 +64,7 @@
         .img-container img {
             transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
             width: 100%; height: auto; display: block;
+            /* Fotoğrafların orijinal renkleri ile görünmesi için grayscale filtresi kaldırılmıştır */
         }
         .img-container:hover img { transform: scale(1.03); }
 
@@ -235,39 +236,43 @@
         <section class="reveal">
             <h2>Kelebeğin Yaşam Döngüsü ve Ömrü</h2>
             <p>Kelebekler dört evrede gelişimlerini tamamlar: <strong>yumurta, tırtıl, koza (pupa) ve ergin kelebek.</strong> Toplumda yaygın olan “Kelebekler bir gün yaşar” inanışı doğru değildir. Türlere göre değişmekle birlikte çoğu kelebek 1–2 hafta yaşar.</p>
+            <p class="text-white font-medium mb-8">Kelebekler tam başkalaşım (holometabol) geçirir ve iki kritik ara evreleri vardır:</p>
         </section>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-16 items-start">
-            <div class="flex flex-col gap-8 reveal">
+            <!-- Sol Sütun: Tırtıl -->
+            <div class="flex flex-col gap-6 reveal">
                 <figure>
                     <div class="img-container">
                         <picture>
                             <source srcset="img/mobil/69.webp" media="(max-width: 768px)">
-                            <img src="img/69.webp" alt="Tırtıl evresi" class="h-[400px] object-cover">
+                            <img src="img/69.webp" alt="Tırtıl evresi" class="h-[450px] w-full object-cover">
                         </picture>
                     </div>
                     <figcaption class="image-caption">Tırtıl evresi</figcaption>
                 </figure>
-                
                 <div class="text-gray-400 font-light leading-relaxed">
-                    <p class="text-white font-medium mb-4">Kelebekler tam başkalaşım (holometabol) geçirir ve iki kritik ara evreleri vardır:</p>
                     <h3 class="!mt-0 !mb-2">Tırtıl (larva) evresi:</h3>
                     <p>Yumurtadan çıkan tırtılın temel görevi beslenmek ve büyümektir. Yapraklarla yoğun şekilde beslenir, birkaç kez deri değiştirir (gömlek atar) ve kısa sürede kütlesini katlayarak artırır. Bu evre enerji depolama safhasıdır.</p>
-                    
-                    <h3 class="!mt-6 !mb-2">Pupa (koza/krizalit) evresi:</h3>
-                    <p>Tırtıl, kendini sabitleyip pupa hâline geçer. Dışarıdan hareketsiz görünse de içeride yoğun bir biyolojik dönüşüm gerçekleşir; larval dokular çözünür, ergin kelebeğin kanat, anten ve diğer organları yeniden yapılandırılır. Süre sonunda pupa kabuğu çatlar ve ergin kelebek çıkar.</p>
                 </div>
             </div>
             
-            <figure class="reveal" style="transition-delay: 0.2s;">
-                <div class="img-container">
-                    <picture>
-                        <source srcset="img/mobil/68.webp" media="(max-width: 768px)">
-                        <img src="img/68.webp" alt="Pupa evresi" class="md:h-[800px] h-[500px] object-cover">
-                    </picture>
+            <!-- Sağ Sütun: Pupa -->
+            <div class="flex flex-col gap-6 reveal" style="transition-delay: 0.2s;">
+                <figure>
+                    <div class="img-container">
+                        <picture>
+                            <source srcset="img/mobil/68.webp" media="(max-width: 768px)">
+                            <img src="img/68.webp" alt="Pupa evresi" class="h-[450px] w-full object-cover">
+                        </picture>
+                    </div>
+                    <figcaption class="image-caption">Pupa evresi</figcaption>
+                </figure>
+                <div class="text-gray-400 font-light leading-relaxed">
+                    <h3 class="!mt-0 !mb-2">Pupa (koza/krizalit) evresi:</h3>
+                    <p>Tırtıl, kendini sabitleyip pupa hâline geçer. Dışarıdan hareketsiz görünse de içeride yoğun bir biyolojik dönüşüm gerçekleşir; larval dokular çözünür, ergin kelebeğin kanat, anten ve diğer organları yeniden yapılandırılır. Süre sonunda pupa kabuğu çatlar ve ergin kelebek çıkar.</p>
                 </div>
-                <figcaption class="image-caption">Pupa evresi</figcaption>
-            </figure>
+            </div>
         </div>
 
         <section class="reveal">
