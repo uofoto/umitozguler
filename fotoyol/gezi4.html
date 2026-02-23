@@ -64,7 +64,6 @@
         .img-container img {
             transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
             width: 100%; height: auto; display: block;
-            /* Fotoğrafların orijinal renkleri ile görünmesi için grayscale filtresi kaldırılmıştır */
         }
         .img-container:hover img { transform: scale(1.03); }
 
@@ -133,6 +132,10 @@
             transition: all 0.3s ease;
         }
         .close-lightbox:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+
+        .hover-whatsapp:hover { color: #25D366 !important; }
+        .hover-facebook:hover { color: #1877F2 !important; }
+        .hover-x:hover { color: #ffffff !important; }
     </style>
 </head>
 <body class="text-gray-300 font-sans antialiased flex flex-col min-h-screen">
@@ -395,9 +398,9 @@
             <div class="flex flex-col items-center justify-center gap-6">
                 <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold">Bu Hikayeyi Paylaş</span>
                 <div class="flex items-center gap-12 text-[11px] font-bold uppercase tracking-widest">
-                    <a href="#" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
-                    <a href="#" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
-                    <a href="#" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
+                    <a href="https://api.whatsapp.com/send?text=Pepela:%20Yusufeli'nin%20Kanatlı%20Mücevherleri%20https://umitozguler.com.tr/fotoyol/gezi4.html" target="_blank" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol/gezi4.html" target="_blank" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
+                    <a href="https://twitter.com/intent/tweet?text=Pepela:%20Yusufeli'nin%20Kanatlı%20Mücevherleri&url=https://umitozguler.com.tr/fotoyol/gezi4.html" target="_blank" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
                 </div>
             </div>
             <div class="mt-10 text-center">
