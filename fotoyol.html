@@ -1,285 +1,381 @@
 <!DOCTYPE html>
 <html lang="tr">
-    <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag("js", new Date());
-            gtag("config", "G-QW3FEBRP69");
-        </script>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Fotoyol | Ümit Özgüler</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: { 
-                            "brand-black": "#121212", 
-                            "brand-dark": "#1a1a1a", 
-                            "brand-gold": "#c5a059",
-                            "brand-orange": "#ff8c00" 
-                        },
-                        fontFamily: { sans: ['"Inter"', "sans-serif"] },
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QW3FEBRP69');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolyo | Ümit Özgüler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        'brand-black': '#121212', 
+                        'brand-dark': '#1a1a1a', 
+                        'brand-gold': '#c5a059',
+                        'brand-orange': '#ff8c00' 
                     },
-                },
-            };
-        </script>
-        <style>
-            @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-            .page-animate { animation: fadeInPage 1s ease-in forwards; }
-            .glass {
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                transition: all 0.4s ease;
+                    fontFamily: { sans: ['"Inter"', 'sans-serif'] }
+                }
             }
-            .glass:hover {
-                border-color: rgba(255, 140, 0, 0.5);
-                background: rgba(255, 255, 255, 0.05);
-                transform: translateY(-5px);
-            }
-            .nav-link-custom { position: relative; }
-            .nav-link-custom::after {
-                content: ''; position: absolute; width: 0; height: 1.5px; bottom: 0; left: 0;
-                background-color: #ff8c00; transition: width 0.3s ease;
-            }
-            .nav-link-custom:hover::after { width: 100%; }
-
-            #mobile-menu {
-                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                transform: translateX(100%);
-            }
-            #mobile-menu.active { transform: translateX(0); }
-            
-            @keyframes lineDown { from { height: 0; } to { height: 100%; } }
-            .menu-line {
-                position: absolute; left: 0; top: 0; width: 1.5px;
-                background-color: #ff8c00; height: 0;
-            }
-            #mobile-menu.active .menu-line {
-                animation: lineDown 0.8s ease-out forwards;
-                animation-delay: 0.3s;
-            }
-            .pagination-btn.active {
-                background: #ff8c00; color: #050505; border-color: #ff8c00;
-            }
-            .no-scroll { overflow: hidden; }
-
-            /* PAYLAŞIM BUTONLARI RENKLERİ */
-            .share-link { transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
-            .share-link:hover { transform: translateY(-2px); }
-            .hover-whatsapp:hover { color: #25D366 !important; }
-            .hover-facebook:hover { color: #1877F2 !important; }
-            .hover-x:hover { color: #ffffff !important; }
-        </style>
-    </head>
-    <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+        }
+    </script>
+    <style>
+        .page-animate { animation: fadeIn 1s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex justify-between items-center h-24">
-                    <a href="index.html" class="flex flex-col items-center group relative z-40">
-                        <div class="text-2xl tracking-widest text-white transition-colors leading-none uppercase">
-                            <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
-                        </div>
-                        <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-                            FINE ART PHOTOGRAPHY
-                        </span>
-                    </a>
-                    
-                    <div class="hidden md:flex space-x-10 text-white">
-                        <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Ana Sayfa</a>
-                        <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Hakkımda</a>
-                        <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Portfolyo</a>
-                        <a href="analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Analizler</a>
-                        <a href="dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Düşünceler</a>
-                        <a href="fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1">Fotoyol</a>
-                        <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">İletişim</a>
-                    </div>
+        .masonry-grid { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        
+        .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; }
+        .filter-btn.active { color: #ff8c00; border-bottom: 1px solid #ff8c00; }
+        
+        .photo-card img { filter: grayscale(100%); transition: all 0.6s ease; }
+        .photo-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        
+        .nav-link-custom { position: relative; }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ff8c00;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after { width: 100%; }
 
-                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[110]">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active { transform: translateX(0); }
+        
+        @keyframes lineDown {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+        .menu-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            background-color: #ff8c00;
+            height: 0;
+        }
+        #mobile-menu.active .menu-line {
+            animation: lineDown 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        #lightbox { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.9); }
+        .nav-area { z-index: 2200; transition: all 0.3s ease; height: 300px; margin-top: auto; margin-bottom: auto; }
+        .nav-area:hover { color: #ff8c00; }
+        .no-scroll { overflow: hidden; }
+
+        /* Müzik Paneli Stilleri */
+        #music-player-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            width: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #music-player-container.minimized {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+
+    <!-- Müzik Paneli -->
+    <div id="music-player-container">
+        <div class="bg-brand-dark/80 backdrop-blur-md p-2 flex justify-between items-center border border-white/10 rounded-t-lg">
+            <span class="text-[9px] uppercase tracking-widest text-brand-gold ml-2 opacity-70">Sergi Müziği</span>
+            <button onclick="toggleMusicPlayer()" class="text-white/50 hover:text-brand-orange transition-colors px-2">
+                <svg id="toggle-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+        </div>
+        <div id="player-iframe-wrapper">
+            <!-- Spotify Embed buraya JS ile yüklenecek -->
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="../index.html" class="flex flex-col items-center group relative z-40">
+                <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </div>
+                <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                    FINE ART PHOTOGRAPHY
+                </span>
+            </a>
+            
+            <div class="hidden md:flex space-x-10">
+                <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Ana Sayfa</a>
+                <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Hakkımda</a>
+                <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1">Portfolyo</a>
+                <a href="analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Analizler</a>
+                <a href="dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Düşünceler</a>
+                <a href="fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Fotoyol</a>
+                <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">İletişim</a>
             </div>
 
-            <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark z-[100] shadow-2xl md:hidden flex flex-col pt-32 px-6">
-                <div class="menu-line"></div>
-                <div class="space-y-4 flex flex-col text-white">
-                    <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
-                    <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
-                    <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Portfolyo</a>
-                    <a href="analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Analizler</a>
-                    <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
-                    <a href="fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Fotoyol</a>
-                    <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">İletişim</a>
-                </div>
+            <button id="hamburger-btn" class="md:hidden text-white focus:outline-none relative z-[110]">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark border-l border-white/10 md:hidden flex flex-col pt-32 px-6 z-[100]">
+            <div class="menu-line"></div>
+            <div class="flex flex-col space-y-4 text-left">
+                <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Portfolyo</a>
+                <a href="analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Analizler</a>
+                <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
+                <a href="fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Fotoyol</a>
+                <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">İletişim</a>
             </div>
-            <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
-        </nav>
+        </div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
+    </nav>
 
-        <section class="pt-40 pb-12 text-center px-4 relative z-10">
-            <div class="relative inline-block mb-8">
-                <div class="absolute top-0 left-[-20px] w-4 h-4 border-t-2 border-l-2 border-brand-orange"></div>
-                <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase px-2">Fotoyol</h1>
-                <div class="absolute bottom-[-10px] right-[-10px] w-4 h-4 border-b-2 border-r-2 border-brand-orange"></div>
-            </div>
-            <p class="max-w-2xl mx-auto text-gray-400 text-sm tracking-wide leading-relaxed">
-                Yolculuk günlükleri, keşif rotaları ve kültürel dokular; sana, bana ve insana dair düşülmüş görsel notlar.
-            </p>
-        </section>
+    <section class="pt-40 pb-12 text-center px-4">
+        <div class="relative inline-block mb-10">
+            <div class="absolute top-0 left-[-20px] w-4 h-4 border-t-2 border-l-2 border-brand-orange"></div>
+            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase leading-none px-2">Koleksiyon</h1>
+            <div class="absolute bottom-[-10px] right-[-10px] w-4 h-4 border-b-2 border-r-2 border-brand-orange"></div>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 border-b border-white/5 pb-6">
+            <button id="btn-makro" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('makro', this)">Makro</button>
+            <button id="btn-portre" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('portre', this)">Portre</button>
+            <button id="btn-renkli_doga" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('renkli_doga', this)">Doğa</button>
+            <button id="btn-sokak" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('sokak', this)">Sokak</button>
+            <button id="btn-hayvan" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('hayvan', this)">Uyum</button>
+            <button id="btn-kulturel" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('kulturel', this)">Kültür</button>
+            <button id="btn-soyut" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('soyut', this)">Soyut</button>
+        </div>
+    </section>
 
-        <section class="pb-24 px-6 relative z-10">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-12 text-center font-bold">Yolculuk Hikayeleri</h2>
-                <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-white">
-                    
-                    <!-- gezi3.html (Apollo) -->
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-21">
-                        <div class="h-60 overflow-hidden relative" onclick="window.location.href='fotoyol/gezi3.html'">
-                            <img src="fotoyol/img/24.webp" alt="Parnassius Apollo" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
-                        </div>
-                        <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Yol Hikayesi</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Zirvelerin Soylu Beyazı: Parnassius Apollo</h3>
-                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>21 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span> <span>ARTVİN</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                Kafkasya’nın sarp kayalıklarından Anadolu’nun göğe değen platolarına kadar, bulutların hemen altında asil bir ruh kanat çırpar: Parnassius Apollo.
-                            </p>
-                            <a href="fotoyol/gezi3.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yazının Tamamını Oku</a>
-                        </div>
-                    </article>
+    <section class="pb-24 px-6">
+        <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
+        <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
+    </section>
 
-                    <!-- gezi4.html (Kelebekler) -->
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-23">
-                        <div class="h-60 overflow-hidden relative" onclick="window.location.href='fotoyol/gezi4.html'">
-                            <img src="fotoyol/img/72.webp" alt="Pepela Yusufeli" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
-                        </div>
-                        <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Yol Hikayesi</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Pepela: Yusufeli'nin Kanatlı Mücevherleri</h3>
-                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>23 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span> <span>ARTVİN</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                Çoruh Vadisi’nin narin sakinleri, Yusufeli’nin gökyüzündeki mücevherleri. Kelebeğin izinde, doğanın en hassas dengesine tutulan bir ışık.
-                            </p>
-                            <a href="fotoyol/gezi4.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yazının Tamamını Oku</a>
-                        </div>
-                    </article>
+    <footer class="mt-auto py-12 border-t border-white/5 text-center">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500 font-light">
+            © 2026 ÜMİT ÖZGÜLER. TÜM HAKLARI SAKLIDIR.
+        </p>
+    </footer>
 
-                    <!-- gezi2.html (Tonya) -->
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-12">
-                        <div class="h-60 overflow-hidden relative" onclick="window.location.href='fotoyol/gezi2.html'">
-                            <img src="fotoyol/img/18.webp" alt="Tonya Çayıriçi" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
-                        </div>
-                        <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Yol Hikayesi</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Sisin Şiire Dönüştüğü Yer: Tonya Çayıriçi</h3>
-                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>12 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span> <span>TRABZON</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                Karadeniz’in bulutlara komşu plato köylerinden biri olan Anabedama. Geniş ufukları, sisle harmanlanmış doğası ve modernleşen yüzüyle bir Tonya anlatısı.
-                            </p>
-                            <a href="fotoyol/gezi2.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yazının Tamamını Oku</a>
-                        </div>
-                    </article>
+    <!-- Işık Kutusu (Lightbox) -->
+    <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white hover:text-brand-orange z-[3000] transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.5"></path></svg>
+        </button>
+        
+        <div onclick="changePhoto(event, -1)" class="nav-area left-0 absolute inset-y-0 w-[20%] flex items-center justify-start pl-4 md:pl-12 cursor-pointer">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-width="1.5"></path></svg>
+        </div>
 
-                    <!-- gezi1.html (Öküz Dağı) -->
-                    <article class="glass rounded-sm overflow-hidden flex flex-col h-full group cursor-pointer" data-date="2026-02-11">
-                        <div class="h-60 overflow-hidden relative" onclick="window.location.href='fotoyol/gezi1.html'">
-                            <img src="fotoyol/img/7.webp" alt="Yusufeli Öküz Dağı" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700" />
-                        </div>
-                        <div class="p-8 flex flex-col flex-1 text-gray-300">
-                            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-orange mb-3 font-bold">Kültür & Yaşam</span>
-                            <h3 class="text-xl text-white font-medium mb-3 group-hover:text-brand-orange transition-colors">Yusufeli’nde Bir Öküz Dağı Hikayesi</h3>
-                            <div class="flex items-center text-[10px] tracking-widest uppercase text-brand-orange/80 mb-4">
-                                <span>11 Şubat 2026</span> <span class="mx-2 text-gray-600">|</span> <span>ARTVİN</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                                2500 metre rakımda, rüzgarın fısıltısını ve otun büyümesini bir dua gibi ezbere bilenlerin coğrafyası. Kaçkarlar'ın gölgesinde, yeryüzünün kadim hafızasına tutulan bir ışık.
-                            </p>
-                            <a href="fotoyol/gezi1.html" class="text-xs uppercase tracking-[0.2em] border-b border-white/30 pb-1 self-start hover:border-brand-orange transition-colors font-medium">Yazının Tamamını Oku</a>
-                        </div>
-                    </article>
-
-                </div>
-                <div id="pagination" class="mt-20 flex justify-center items-center space-x-4"></div>
-            </div>
-        </section>
-
-        <div class="pb-20 pt-10 border-t border-white/5 text-center relative z-10">
-            <h3 class="text-[10px] uppercase tracking-[0.3em] text-brand-orange mb-8 font-bold">Bu Sayfayı Paylaş</h3>
-            <div class="flex justify-center items-center space-x-12">
-                <a href="https://wa.me/?text=Ümit%20Özgüler%20-%20Fotoyol%20Hikayeleri%20https://umitozguler.com.tr/fotoyol.html" target="_blank" class="share-link hover-whatsapp text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">WhatsApp</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=https://umitozguler.com.tr/fotoyol.html" target="_blank" class="share-link hover-facebook text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Facebook</a>
-                <a href="https://twitter.com/intent/tweet?text=Ümit%20Özgüler%20-%20Fotoyol%20Hikayeleri%20&url=https://umitozguler.com.tr/fotoyol.html" target="_blank" class="share-link hover-x text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 transition-colors">Twitter (X)</a>
+        <div class="relative max-w-[85vw] md:max-w-[75vw] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" class="max-h-[80vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-300">
+            <div class="w-full mt-6">
+                <p id="photo-label" class="py-2 text-center text-brand-orange uppercase tracking-[0.6em] text-[10px] font-light"></p>
             </div>
         </div>
 
-        <footer class="bg-brand-black py-16 border-t border-white/5 mt-auto text-center relative z-10">
-            <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
-        </footer>
+        <div onclick="changePhoto(event, 1)" class="nav-area right-0 absolute inset-y-0 w-[20%] flex items-center justify-end pr-4 md:pr-12 cursor-pointer">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-width="1.5"></path></svg>
+        </div>
+    </div>
 
-        <script>
-            const menuBtn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            const overlay = document.getElementById('menu-overlay');
+    <script>
+        // MÜZİK AYARLARI
+        const classicalTracks = [
+            "2T6hS579x07f4o9f96K9C2", // Satie - Gymnopédie No.1 (Ruhani)
+            "39vA0p9UIsS6GfT947H4Y6", // Chopin - Nocturne No. 2 (Zarif)
+            "0fUIn7G9SIsY6GfT947H4Y", // Debussy - Clair de Lune
+            "1R0vA0p9UIsS6GfT947H4Y", // Bach - Cello Suite No. 1
+            "4voS579x07f4o9f96K9C2f"  // Beethoven - Moonlight Sonata
+        ];
+
+        function initMusic() {
+            const randomTrack = classicalTracks[Math.floor(Math.random() * classicalTracks.length)];
+            const wrapper = document.getElementById('player-iframe-wrapper');
+            wrapper.innerHTML = `
+                <iframe 
+                    style="border-radius:0 0 12px 12px" 
+                    src="https://open.spotify.com/embed/track/${randomTrack}?utm_source=generator&theme=0" 
+                    width="100%" 
+                    height="80" 
+                    frameBorder="0" 
+                    allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+                </iframe>
+            `;
+        }
+
+        function toggleMusicPlayer() {
+            const container = document.getElementById('music-player-container');
+            const icon = document.getElementById('toggle-icon');
+            if (container.style.height === "40px") {
+                container.style.height = "auto";
+                icon.style.transform = "rotate(0deg)";
+            } else {
+                container.style.height = "40px";
+                icon.style.transform = "rotate(180deg)";
+            }
+        }
+
+        const config = [
+            { category: 'makro', label: 'Makro Doğa Detayları', images: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
+            { category: 'portre', label: 'Siyah Beyaz Portreler', images: [25,29,30,32,34,36,42,43,81] },
+            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları', images: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103,105,110,111] },
+            { category: 'sokak', label: 'Sokak Hikayeleri', images: [1,2,4,5,12,27,28,31,51,52,65,67,72,80,88,89,93,102,107,108] },
+            { category: 'hayvan', label: 'Uyum', images: [3,18,44,45,46,47,48,49,50,68,99,100] },
+            { category: 'kulturel', label: 'Kültürel Yaşam', images: [6,11,26,33,35,60,61,62,63,66,73,74,92,106] },
+            { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59,64,71,90] }
+        ];
+
+        const randomConfig = config[Math.floor(Math.random() * config.length)];
+        let currentCategory = randomConfig.category;
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let activeImages = [];
+        let currentIndex = 0;
+
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('no-scroll');
             const icon = document.getElementById('menu-icon');
-
-            function toggleMenu() {
-                menu.classList.toggle('active');
-                overlay.classList.toggle('hidden');
-                document.body.classList.toggle('no-scroll');
-                if (menu.classList.contains('active')) {
-                    icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                } else {
-                    icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                }
+            if (mobileMenu.classList.contains('active')) {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
             }
-            menuBtn.onclick = toggleMenu;
-            overlay.onclick = toggleMenu;
+        }
 
-            const itemsPerPage = 6;
-            let currentPage = 1;
-            const container = document.getElementById("yazi-listesi");
-            const paginationContainer = document.getElementById("pagination");
-            const items = Array.from(container.children);
-            
-            items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
-            items.forEach(item => container.appendChild(item));
+        hamburgerBtn.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
 
-            function displayPage(page) {
-                currentPage = page;
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                items.forEach((item, index) => {
-                    item.style.display = (index >= start && index < end) ? "flex" : "none";
-                });
-                updatePaginationButtons();
+        function loadGallery() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${currentCategory}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            const group = config.find(g => g.category === currentCategory);
+            activeImages = [...group.images].reverse();
+            const displayImages = activeImages.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+            displayImages.forEach((id, index) => {
+                const item = document.createElement('div');
+                item.className = "masonry-item photo-card cursor-pointer";
+                item.onclick = () => openLightbox((currentPage - 1) * itemsPerPage + index);
+                item.innerHTML = `
+                    <div class="overflow-hidden bg-brand-dark rounded-sm">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="imgmobil/${id}.webp">
+                            <img src="img/${id}.webp" loading="lazy" class="w-full block">
+                        </picture>
+                    </div>`;
+                container.appendChild(item);
+            });
+            renderPagination(Math.ceil(activeImages.length / itemsPerPage));
+        }
+
+        function renderPagination(total) {
+            const ctrl = document.getElementById('pagination-controls');
+            ctrl.innerHTML = '';
+            if (total <= 1) return;
+            for (let i = 1; i <= total; i++) {
+                const b = document.createElement('button');
+                b.innerText = i;
+                b.className = `w-10 h-10 border border-white/10 text-xs transition-colors ${i === currentPage ? 'bg-brand-orange text-black font-bold' : 'text-brand-orange hover:bg-white/5'}`;
+                b.onclick = () => { currentPage = i; loadGallery(); window.scrollTo({top: 350, behavior: 'smooth'}); };
+                ctrl.appendChild(b);
             }
+        }
 
-            function updatePaginationButtons() {
-                const totalPages = Math.ceil(items.length / itemsPerPage);
-                paginationContainer.innerHTML = "";
-                if (totalPages <= 1) return;
-                for (let i = 1; i <= totalPages; i++) {
-                    const btn = document.createElement("button");
-                    btn.innerText = i;
-                    btn.className = `pagination-btn px-4 py-2 border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:border-brand-orange transition-colors ${i === currentPage ? 'active' : ''}`;
-                    btn.onclick = () => { displayPage(i); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-                    paginationContainer.appendChild(btn);
-                }
-            }
-            displayPage(1);
-        </script>
-    </body>
+        function filterGallery(cat, btn) {
+            currentCategory = cat; currentPage = 1;
+            loadGallery();
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const lb = document.getElementById('lightbox');
+            updateLightboxContent();
+            lb.classList.remove('hidden');
+            setTimeout(() => lb.style.opacity = "1", 50);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.style.opacity = "0";
+            setTimeout(() => { lb.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
+        }
+
+        function updateLightboxContent() {
+            const id = activeImages[currentIndex];
+            const img = document.getElementById('lightbox-img');
+            img.style.opacity = "0";
+            setTimeout(() => {
+                img.src = `img/${id}.webp`;
+                img.onload = () => img.style.opacity = "1";
+            }, 150);
+            const group = config.find(g => g.category === currentCategory);
+            document.getElementById('photo-label').innerText = group.label;
+        }
+
+        function changePhoto(event, dir) {
+            if (event) event.stopPropagation();
+            currentIndex = (currentIndex + dir + activeImages.length) % activeImages.length;
+            updateLightboxContent();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const lb = document.getElementById('lightbox');
+            if (lb.classList.contains('hidden')) return;
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowRight") changePhoto(null, 1);
+            if (e.key === "ArrowLeft") changePhoto(null, -1);
+        });
+
+        // Sayfa yüklendiğinde hem galeriyi hem müziği başlat
+        window.onload = () => {
+            loadGallery();
+            initMusic();
+        };
+    </script>
+</body>
 </html>
