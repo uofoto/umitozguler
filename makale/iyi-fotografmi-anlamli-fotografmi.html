@@ -55,7 +55,6 @@
         #mobile-menu.active { transform: translateX(0); }
         .no-scroll { overflow: hidden; }
 
-        /* Metin içi şık link tasarımı */
         .hpg-inline-link {
             color: #ff8c00;
             border-bottom: 1px solid rgba(255, 140, 0, 0.2);
@@ -67,7 +66,6 @@
             color: white;
         }
 
-        /* Şık Yönlendirme Butonu Tasarımı */
         .hpg-link-btn { 
             display: inline-flex;
             align-items: center;
@@ -127,7 +125,6 @@
             </div>
         </div>
 
-        <!-- Orijinal w-36 Menü Şablonu -->
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
@@ -142,7 +139,10 @@
     <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden"></div>
 
     <article class="pt-48 pb-20 px-6 flex-grow">
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto relative px-8 md:px-0">
+            <!-- SÜTUN KENARINDA İNEN ÇİZGİLER (Desktop & Mobile) -->
+            <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-brand-orange/20 hidden md:block"></div>
+            <div class="absolute left-4 top-0 bottom-0 w-[1px] bg-brand-orange/20 md:hidden"></div>
             
             <div class="text-center mb-10">
                 <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
@@ -159,7 +159,7 @@
             </div>
 
             <div class="mb-12 group">
-                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
+                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl text-center">
                     <img src="img/hpg1988.webp" alt="Hans-Peter Grumpe, Diyarbakır, 1988" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
                 </div>
                 <div class="mt-4 text-center">
@@ -170,14 +170,13 @@
                 </div>
             </div>
 
-            <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
+            <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed px-0 md:pl-12">
                 <p>
                     Alman bir fotoğrafçının 1978, 1988 ve 1990 yıllarında Türkiye’nin farklı şehirlerinde çektiği fotoğraflara bakıyorum. Öyle kareler var ki dakikalarca izliyorum; göz yorulmuyor. İnsan görüntünün içinde kalıyor, hatta görüntü insanı alıp başka bir zamana sürüklüyor. 
                     <a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="hpg-inline-link">Hans-Peter Grumpe’nin Türkiye fotoğraflarına</a> 
                     baktığımda şunu fark ediyorum: Bu karelerin birçoğu bize adeta bir inanç metni gibi ezberletilen “fotoğraf kurallarına” tam olarak uymuyor. Ne kusursuz bir simetri var, ne abartılı bir dramatik ışık, ne de yarışmalarda görmeye alıştığımız gösterişli kompozisyonlar… Ama bakmaya doyamıyorum.
                 </p>
 
-                <!-- Şık Yönlendirme Butonu -->
                 <div class="flex justify-center md:justify-start">
                     <a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="hpg-link-btn">
                         Grumpe Türkiye Arşivini İncele <span class="ml-2">↗</span>
@@ -191,7 +190,7 @@
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Bu Fotoğraflardaki Sır Ne?</h3>
                 <p>
-                    Grumpe’nin karelerinde ilk dikkat çeken şey teknik gösterişten uzak duruş. Kadrajlar çoğu zaman sade, hatta ilk bakışta sıradan görünüyor. Fakat o sıradanlık içinde yoğun bir hayat var. Bu fotoğraflar “bakın ne kadar iyi çektim” demiyor; “bakın burada ne vardı” diyor.
+                    Grumpe’nin karelerinde ilk dikkat chken şey teknik gösterişten uzak duruş. Kadrajlar çoğu zaman sade, hatta ilk bakışta sıradan görünüyor. Fakat o sıradanlık içinde yoğun bir hayat var. Bu fotoğraflar “bakın ne kadar iyi çektim” demiyor; “bakın burada ne vardı” diyor.
                 </p>
 
                 <p>
@@ -212,7 +211,7 @@
                 </p>
 
                 <blockquote class="border-l-2 border-brand-orange pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
-                    <p class="mb-4 not-italic font-semibold text-white text-sm uppercase tracking-widest">
+                    <p class="mb-4 not-italic font-semibold text-white text-sm tracking-wide">
                         Tam bu noktada <span class="text-brand-orange">Orhan Cem Çetin</span>’in şu sözü meseleyi berraklaştırıyor:
                     </p>
                     “Benim derdim iyi fotoğraf değil, anlamlı fotoğraf yapmak.”
@@ -257,7 +256,11 @@
                     Çünkü kural öğretmek kolaydır. Ölçülebilir. Denetlenebilir. Puanlanabilir. Bakış açısı öğretmek ise zordur.
                 </p>
                 <p>
-                    Yarışma kültürü bu durumu daha da güçlendirir. Jüriler yüzlerce fotoğraf arasından hızla seçim yapar. İlk bakışta çarpıcı olan, teknik olarak parlak görünen kare öne çıkar. Derin ama sessiz fotoğraf çoğu zaman gözden kaçar. Böyle bir ortamda fotoğrafçı dünyayı anlamaya değil, jüriyi etkilemeye yönelir. Kadraj, gerçeğin içinden değil, ödül beklentisinin içinden kurulur. Bu da zamanla tek tip bir estetik üretir.
+                    Yarışma kültürü bu durumu daha da güçlendirir. Jüriler yüzlerce fotoğraf arasından hızla seçim yapar. İlk bakışta çarpıcı olan, teknik olarak parlak görünen kare öne çıkar. Derin ama sessiz fotoğraf çoğu zaman gözden kaçar.
+                </p>
+                
+                <p>
+                    Böyle bir ortamda fotoğrafçı dünyayı anlamaya değil, jüriyi etkilemeye yönelir. Kadraj, gerçeğin içinden değil, ödül beklentisinin içinden kurulur. Bu da zamanla tek tip bir estetik üretir.
                 </p>
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Gözün Yorulmaması Ne Anlama Gelir?</h3>
