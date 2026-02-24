@@ -34,9 +34,8 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
-        .article-content ul { list-style-type: none; margin-bottom: 1.5rem; padding-left: 1.5rem; }
-        .article-content ul li { position: relative; margin-bottom: 0.5rem; }
-        .article-content ul li::before { content: "•"; color: #ff8c00; position: absolute; left: -1.5rem; font-weight: bold; }
+        .article-content ul { list-style-type: disc; margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .article-content ul li { margin-bottom: 0.5rem; }
 
         .nav-link-custom { position: relative; transition: color 0.3s ease; }
         .nav-link-custom::after {
@@ -56,6 +55,19 @@
         #mobile-menu.active { transform: translateX(0); }
         .no-scroll { overflow: hidden; }
 
+        /* Metin içi şık link tasarımı */
+        .hpg-inline-link {
+            color: #ff8c00;
+            border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+        .hpg-inline-link:hover {
+            border-bottom-color: #ff8c00;
+            color: white;
+        }
+
+        /* Şık Yönlendirme Butonu Tasarımı */
         .hpg-link-btn { 
             display: inline-flex;
             align-items: center;
@@ -86,59 +98,60 @@
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 md:px-6">
-            <div class="flex justify-between items-center h-20 md:h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-[120]">
-                    <div class="text-xl md:text-2xl tracking-widest text-white transition-colors leading-none">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-24">
+                <a href="../index.html" class="flex flex-col items-center group relative z-40">
+                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
                         <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                     </div>
-                    <span style="font-size: 7px; letter-spacing: 4px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; text-align: center; margin-top: 2px; width: 100%;">
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
                         FINE ART PHOTOGRAPHY
                     </span>
                 </a>
                 
-                <div class="hidden md:flex space-x-10">
-                    <a href="../index.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
-                    <a href="../about.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
-                    <a href="../portfolio.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
-                    <a href="../analizler.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] py-1">Analizler</a>
-                    <a href="../dusunceler.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] text-brand-orange py-1">Düşünceler</a>
-                    <a href="../fotoyol.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
-                    <a href="../contact.html" class="nav-link-custom text-[10px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
+                <div class="hidden md:flex space-x-12">
+                    <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
+                    <a href="../analizler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Analizler</a>
+                    <a href="../dusunceler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] text-brand-orange py-1">Düşünceler</a>
+                    <a href="../fotoyol.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
+                    <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
                 </div>
 
-                <button id="menu-toggle-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[130] p-2">
+                <button id="menu-toggle-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
                 </button>
             </div>
         </div>
+
+        <!-- Orijinal w-36 Menü Şablonu -->
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
+            <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
+            <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
+            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
+            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Analizler</a>
+            <a href="../dusunceler.html" class="text-brand-orange font-bold py-1 text-[11px] uppercase tracking-[0.15em]">Düşünceler</a>
+            <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Fotoyol</a>
+            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
+        </div>
     </nav>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] hidden"></div>
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden"></div>
 
-    <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-64 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-8 space-y-4 z-[120] shadow-2xl md:hidden">
-        <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white text-[12px] font-medium uppercase tracking-[0.2em]">Ana Sayfa</a>
-        <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white text-[12px] font-medium uppercase tracking-[0.2em]">Hakkımda</a>
-        <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white text-[12px] font-medium uppercase tracking-[0.2em]">Portfolyo</a>
-        <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-2 text-white text-[12px] font-medium uppercase tracking-[0.2em]">Analizler</a>
-        <a href="../dusunceler.html" class="text-brand-orange font-bold py-2 text-[12px] uppercase tracking-[0.2em]">Düşünceler</a>
-        <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-2 text-white text-[12px] font-medium uppercase tracking-[0.2em]">Fotoyol</a>
-        <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white text-[12px] font-medium uppercase tracking-[0.2em]">İletişim</a>
-    </div>
-
-    <article class="pt-32 md:pt-48 pb-20 px-4 md:px-6 flex-grow">
+    <article class="pt-48 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto">
             
             <div class="text-center mb-10">
-                <a href="../dusunceler.html" class="inline-block mb-6 text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
+                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
                     ← Tüm Düşünceler
                 </a>
-                <h1 class="text-2xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
+                <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
                     İyi Fotoğraf mı, Anlamlı Fotoğraf mı?
                 </h1>
-                <div class="flex justify-center items-center text-[9px] md:text-[10px] tracking-widest uppercase text-brand-orange space-x-3 md:space-x-4">
+                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-orange space-x-4">
                     <span>25 ŞUBAT 2026</span>
                     <span class="text-gray-600">|</span>
                     <span>Analiz & Eleştiri</span>
@@ -146,24 +159,25 @@
             </div>
 
             <div class="mb-12 group">
-                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl text-center">
-                    <!-- Görsel yolu kullanıcının GitHub dizin yapısına göre tam olarak ayarlandı -->
-                    <img src="makale/img/hpg1988.webp" alt="Hans-Peter Grumpe Diyarbakır" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
+                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
+                    <img src="img/hpg1988.webp" alt="Hans-Peter Grumpe, Diyarbakır, 1988" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
                 </div>
                 <div class="mt-4 text-center">
-                    <p class="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium">Hans-Peter Grumpe, Diyarbakır, 1988</p>
+                    <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500 italic">Hans-Peter Grumpe, Diyarbakır, 1988</p>
                 </div>
-                <div class="mt-10 md:mt-14 mb-10 md:mb-14">
+                <div class="mt-14 mb-14">
                     <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-orange/60 to-transparent"></div>
                 </div>
             </div>
 
             <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
-                
                 <p>
-                    Alman bir fotoğrafçının 1978, 1988 ve 1990 yıllarında Türkiye’nin farklı şehirlerinde çektiği fotoğraflara bakıyorum. Öyle kareler var ki dakikalarca izliyorum; göz yorulmuyor. İnsan görüntünün içinde kalıyor, hatta görüntü insanı alıp başka bir zamana sürüklüyor. Hans-Peter Grumpe’nin Türkiye fotoğraflarına (<a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="text-brand-orange border-b border-brand-orange/30 hover:border-brand-orange transition-all">http://www.hpgrumpe.de/tuerkei/index.html</a>) baktığımda şunu fark ediyorum: Bu karelerin birçoğu bize adeta bir inanç metni gibi ezberletilen “fotoğraf kurallarına” tam olarak uymuyor. Ne kusursuz bir simetri var, ne abartılı bir dramatik ışık, ne de yarışmalarda görmeye alıştığımız gösterişli kompozisyonlar… Ama bakmaya doyamıyorum.
+                    Alman bir fotoğrafçının 1978, 1988 ve 1990 yıllarında Türkiye’nin farklı şehirlerinde çektiği fotoğraflara bakıyorum. Öyle kareler var ki dakikalarca izliyorum; göz yorulmuyor. İnsan görüntünün içinde kalıyor, hatta görüntü insanı alıp başka bir zamana sürüklüyor. 
+                    <a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="hpg-inline-link">Hans-Peter Grumpe’nin Türkiye fotoğraflarına</a> 
+                    baktığımda şunu fark ediyorum: Bu karelerin birçoğu bize adeta bir inanç metni gibi ezberletilen “fotoğraf kurallarına” tam olarak uymuyor. Ne kusursuz bir simetri var, ne abartılı bir dramatik ışık, ne de yarışmalarda görmeye alıştığımız gösterişli kompozisyonlar… Ama bakmaya doyamıyorum.
                 </p>
 
+                <!-- Şık Yönlendirme Butonu -->
                 <div class="flex justify-center md:justify-start">
                     <a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="hpg-link-btn">
                         Grumpe Türkiye Arşivini İncele <span class="ml-2">↗</span>
@@ -177,7 +191,7 @@
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Bu Fotoğraflardaki Sır Ne?</h3>
                 <p>
-                    Grumpe’nin Türkiye fotoğraflarında ilk dikkat çeken şey teknik gösterişten uzak duruş. Kadrajlar çoğu zaman sade, hatta sıradan görünüyor. Fakat o sıradanlık içinde yoğun bir hayat var. Fotoğraflar “bakın ne kadar iyi çektim” demiyor; “bakın burada ne vardı” diyor.
+                    Grumpe’nin karelerinde ilk dikkat çeken şey teknik gösterişten uzak duruş. Kadrajlar çoğu zaman sade, hatta ilk bakışta sıradan görünüyor. Fakat o sıradanlık içinde yoğun bir hayat var. Bu fotoğraflar “bakın ne kadar iyi çektim” demiyor; “bakın burada ne vardı” diyor.
                 </p>
 
                 <p>
@@ -185,7 +199,7 @@
                     <br>Onun karelerinde:
                 </p>
 
-                <ul class="space-y-2">
+                <ul class="article-content space-y-2">
                     <li>Zaman akıyor.</li>
                     <li>Mekân nefes alıyor.</li>
                     <li>İnsanlar rol yapmıyor.</li>
@@ -197,24 +211,19 @@
                     İzleyiciyi yormamasının nedeni de bu. Çünkü göz, teknik ustalığın kanıtlarını aramak zorunda kalmıyor. Görüntüyle doğrudan ilişki kurar. Bir estetik sınavdan geçmiyor; bir hayat anına tanıklık ediyor.
                 </p>
 
-                <!-- Orhan Cem Çetin Bloğu - Kullanıcı Metni ile Birebir -->
-                <div class="bg-brand-dark/80 border-l-4 border-brand-orange p-6 md:p-8 my-10 italic shadow-xl">
-                    <p class="text-white/90 mb-4 not-italic font-normal">
-                        Tam bu noktada <strong>Orhan Cem Çetin</strong>’in şu sözü meseleyi berraklaştırıyor:
-                    </p>
-                    <p class="text-xl md:text-2xl text-brand-orange font-medium mb-4 leading-snug">
-                        “Benim derdim iyi fotoğraf değil, anlamlı fotoğraf yapmak.”
-                    </p>
-                    <p class="text-sm md:text-base leading-relaxed text-gray-400 not-italic">
+                <blockquote class="border-l-2 border-brand-orange pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
+                    <p class="mb-4 not-italic font-semibold text-brand-orange text-sm uppercase tracking-widest">Orhan Cem Çetin:</p>
+                    “Benim derdim iyi fotoğraf değil, anlamlı fotoğraf yapmak.”
+                    <p class="mt-4 text-sm md:text-base text-gray-400 not-italic font-light">
                         Bu cümle teknik başarı ile içerik gücü arasındaki farkı net biçimde ortaya koyar. “İyi fotoğraf” çoğu zaman net, dengeli, kurallara uygun, estetik açıdan kusursuz görüntü demektir. “Anlamlı fotoğraf” ise bir dönemi, bir ruh hâlini, bir toplumsal gerçeği görünür kılan; izleyiciyi düşünmeye zorlayan görüntüdür. İyi fotoğraf gözle ilişki kurar. Anlamlı fotoğraf ise hafıza ve vicdanla ilişki kurar. Çetin’in vurgusu, tekniği küçümsemek değil; tekniği merkeze koyarak anlamı arka plana itme alışkanlığına itirazdır.
                     </p>
-                </div>
+                </blockquote>
 
                 <p>
                     Grumpe’nin Türkiye fotoğraflarına baktığımızda tam da bu yaklaşımı görürüz. Teknik kusursuzluk değil, zamanın ruhu öne çıkar. Fotoğraflarda:
                 </p>
 
-                <ul class="space-y-2">
+                <ul class="article-content space-y-2">
                     <li>Mekân nefes alır.</li>
                     <li>İnsanlar rol yapmaz.</li>
                     <li>Hayat düzenlenmiş gibi durmaz.</li>
@@ -226,23 +235,16 @@
                 <p>
                     Türkiye’de fotoğraf eğitimi çoğunlukla teknik ilkeler üzerinden yürür:
                 </p>
-
-                <ul class="space-y-2">
+                <ul class="article-content space-y-2">
                     <li>Üçler kuralı</li>
                     <li>Altın oran</li>
                     <li>Diyagonal denge</li>
                     <li>Temiz arka plan</li>
                     <li>Yüksek netlik</li>
                 </ul>
-
                 <p>
-                    Bunlar gereksiz değildir. Ancak sorun, bu ilkelerin araç olmaktan çıkıp amaç hâline gelmesidir.
+                    Bunlar gereksiz değildir. Ancak sorun, bu ilkelerin araç olmaktan çıkıp amaç hâline gelmesidir. Fotoğraf kurslarında çoğu zaman “nasıl daha etkileyici görünür?” sorusu öğretilir; “nasıl daha anlamlı olur?” sorusu yeterince işlenmez. Sonuçta öğrenciler düzgün, teknik olarak sağlam kareler üretir; fakat o kareler çoğu zaman uzun süre akılda kalmaz.
                 </p>
-                
-                <p>
-                    Fotoğraf kurslarında çoğu zaman “nasıl daha etkileyici görünür?” sorusu öğretilir; “nasıl daha anlamlı olur?” sorusu yeterince işlenmez. Sonuçta öğrenciler düzgün, teknik olarak sağlam kareler üretir; fakat o kareler çoğu zaman uzun süre akılda kalmaz.
-                </p>
-
                 <p>
                     Grumpe’nin fotoğrafları ise bize şunu hatırlatır:
                     <br>Hayat grafik tasarım değildir. Sokaklar her zaman dengeli değildir. İnsan yüzleri her zaman ideal ışıkta değildir. Ama gerçek tam da o düzensizliğin içindedir.
@@ -250,39 +252,20 @@
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Neden Böyle Öğretilmedi?</h3>
                 <p>
-                    Çünkü kural öğretmek kolaydır. Ölçülebilir. Denetlenebilir. Puanlanabilir.
-                    <br>Bakış açısı öğretmek ise zordur.
+                    Çünkü kural öğretmek kolaydır. Ölçülebilir. Denetlenebilir. Puanlanabilir. Bakış açısı öğretmek ise zordur.
                 </p>
-
                 <p>
-                    Yarışma kültürü bu durumu daha da güçlendirir. Jüriler yüzlerce fotoğraf arasından hızla seçim yapar. İlk bakışta çarpıcı olan, teknik olarak parlak görünen kare öne çıkar. Derin ama sessiz fotoğraf çoğu zaman gözden kaçar.
-                </p>
-                
-                <p>
-                    Böyle bir ortamda fotoğrafçı dünyayı anlamaya değil, jüriyi etkilemeye yönelir. Kadraj, gerçeğin içinden değil, ödül beklentisinin içinden kurulur. Bu da zamanla tek tip bir estetik üretir.
+                    Yarışma kültürü bu durumu daha da güçlendirir. Jüriler yüzlerce fotoğraf arasından hızla seçim yapar. İlk bakışta çarpıcı olan, teknik olarak parlak görünen kare öne çıkar. Derin ama sessiz fotoğraf çoğu zaman gözden kaçar. Böyle bir ortamda fotoğrafçı dünyayı anlamaya değil, jüriyi etkilemeye yönelir. Kadraj, gerçeğin içinden değil, ödül beklentisinin içinden kurulur. Bu da zamanla tek tip bir estetik üretir.
                 </p>
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Gözün Yorulmaması Ne Anlama Gelir?</h3>
                 <p>
-                    Grumpe’nin fotoğraflarına bakarken göz yorulmaz; çünkü görüntü bağırmaz. Aşırı kontrast, aşırı dramatik etki, aşırı düzenleme yoktur. İzleyici teknik çözümleme yapmak zorunda kalmaz. Doğrudan sahnenin içine girer.
-                </p>
-                
-                <p>
-                    Bu fotoğraflar izleyiciyi etkilemeye çalışmaz; onu davet eder.
-                    <br>Zorlamaz; sürükler.
-                    <br>Ve belki de bu yüzden dakikalarca bakılabilir.
+                    Grumpe’nin fotoğraflarına bakarken göz yorulmaz; çünkü görüntü bağırmaz. Aşırı kontrast, aşırı dramatik etki, aşırı düzenleme yoktur. İzleyici teknik çözümleme yapmak zorunda kalmaz. Doğrudan sahnenin içine girer. Bu fotoğraflar izleyiciyi etkilemeye çalışmaz; onu davet eder. Zorlamaz; sürükler. Ve belki de bu yüzden dakikalarca bakılabilir.
                 </p>
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Türk Fotoğrafçılığına Dair Bir Soru</h3>
                 <p>
-                    Bizde çoğu zaman fotoğraf “iyi çekilmiş mi?” diye değerlendirilir.
-                    <br>Oysa asıl soru “iyi bakılmış mı?” olmalıdır.
-                    <br>Teknik doğruluk fotoğrafı düzgün yapar.
-                    <br>Derinlik onu kalıcı yapar.
-                </p>
-                
-                <p>
-                    Belki de mesele şudur:
+                    Bizde çoğu zaman fotoğraf “iyi çekilmiş mi?” diye değerlendirilir. Oysa asıl soru “iyi bakılmış mı?” olmalıdır. Teknik doğruluk fotoğrafı düzgün yapar. Derinlik onu kalıcı yapar. Belki de mesele şudur:
                     <br>Kuralları ezberledik ama bakmayı yeterince öğrenmedik.
                     <br>Netliği ölçtük ama zamanı hissetmeyi öğretmedik.
                     <br>Kompozisyonu anlattık ama anlamı yeterince tartışmadık.
@@ -292,36 +275,27 @@
                 <p>
                     Hans-Peter Grumpe’nin Türkiye fotoğraflarına uzun uzun bakabilmemizin nedeni, onların kusursuz olması değil; sahici olmasıdır. O fotoğraflar teknik bir gösteri sunmaz; bir dönemle temas kurmamızı sağlar.
                 </p>
-
                 <p>
                     Ve Orhan Cem Çetin’in sözü burada yeniden anlam kazanır:
                     <br><strong>“İyi fotoğraf”</strong> gözle ilgilidir.
                     <br><strong>“Anlamlı fotoğraf”</strong> insanla ilgilidir.
-                </p>
-                
-                <p>
-                    Eğer fotoğraf yalnızca kurallara uymak için çekiliyorsa, görsel bir egzersizdir. Ama bir şeyi gerçekten görünür kılmak için çekiliyorsa, işte o zaman sanattır.
-                </p>
-                
-                <p>
-                    Belki de fotoğraf eğitiminin yeniden sorması gereken soru şudur:
-                    <br>Daha düzgün kareler mi yetiştiriyoruz, yoksa daha dikkatli bakan insanlar mı? Mesele budur.
+                    <br>Eğer fotoğraf yalnızca kurallara uymak için çekiliyorsa, görsel bir egzersizdir. Ama bir şeyi gerçekten görünür kılmak için çekiliyorsa, işte o zaman sanattır. Belki de fotoğraf eğitiminin yeniden sorması gereken soru şudur: Daha düzgün kareler mi yetiştiriyoruz, yoksa daha dikkatli bakan insanlar mı? Mesele budur.
                 </p>
             </div>
 
             <div class="mt-12 mb-8 pt-8 border-t border-white/5 text-center">
                 <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6">Bu Yazıyı Paylaş</p>
-                <div class="flex justify-center space-x-6 md:space-x-8">
-                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-medium">Whatsapp</a>
-                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-medium">Facebook</a>
-                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-medium">Twitter</a>
+                <div class="flex justify-center space-x-8">
+                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors text-xs uppercase tracking-widest font-medium">Whatsapp</a>
+                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors text-xs uppercase tracking-widest font-medium">Facebook</a>
+                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-widest font-medium">Twitter</a>
                 </div>
             </div>
         </div>
     </article>
 
-    <footer class="bg-brand-black py-12 md:py-16 border-t border-white/5 text-center mt-auto">
-        <p class="text-[9px] md:text-[10px] tracking-[0.2em] text-gray-500 uppercase px-4">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+    <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
+        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
     <script>
@@ -333,19 +307,15 @@
         const line3 = document.getElementById('line3');
 
         function toggleMenu() {
-            const isActive = menu.classList.toggle('active');
+            menu.classList.toggle('active');
             overlay.classList.toggle('hidden');
             document.body.classList.toggle('no-scroll');
             
-            if(isActive) {
-                line1.style.transform = "translateY(8px) rotate(45deg)";
-                line2.style.opacity = "0";
-                line3.style.transform = "translateY(-8px) rotate(-45deg)";
-            } else {
-                line1.style.transform = "none";
-                line2.style.opacity = "1";
-                line3.style.transform = "none";
-            }
+            line1.classList.toggle('rotate-45');
+            line1.classList.toggle('translate-y-2');
+            line2.classList.toggle('opacity-0');
+            line3.classList.toggle('-rotate-45');
+            line3.classList.toggle('-translate-y-2');
         }
 
         if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
@@ -356,7 +326,7 @@
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    mesaj: "Paylaşım yapıldı",
+                    mesaj: "Bir okuyucu düşünce yazınızı paylaştı!",
                     makale: document.title,
                     url: window.location.href,
                     platform: platform
@@ -379,5 +349,3 @@
     </script>
 </body>
 </html>
-
-
