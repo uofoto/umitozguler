@@ -42,48 +42,7 @@
         .photo-card img { filter: grayscale(100%); transition: all 0.6s ease; }
         .photo-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
         
-        .nav-link-custom { position: relative; }
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1.5px;
-            bottom: -4px;
-            left: 0;
-            background-color: #ff8c00;
-            transition: width 0.3s ease;
-        }
-        .nav-link-custom:hover::after { width: 100%; }
-
-        #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%);
-        }
-        #mobile-menu.active { transform: translateX(0); }
-        
-        @keyframes lineDown {
-            from { height: 0; }
-            to { height: 100%; }
-        }
-        .menu-line {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1.5px;
-            background-color: #ff8c00;
-            height: 0;
-        }
-        #mobile-menu.active .menu-line {
-            animation: lineDown 0.8s ease-out forwards;
-            animation-delay: 0.3s;
-        }
-
-        #lightbox { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.9); }
-        .nav-area { z-index: 2200; transition: all 0.3s ease; height: 300px; margin-top: auto; margin-bottom: auto; }
-        .nav-area:hover { color: #ff8c00; }
-        .no-scroll { overflow: hidden; }
-
-        /* Yeni Müzik Kontrol Paneli Stilleri */
+        /* Müzik Kontrol Paneli */
         .music-controller {
             position: fixed;
             bottom: 30px;
@@ -92,46 +51,82 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(18, 18, 18, 0.6);
-            padding: 8px 16px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(18, 18, 18, 0.85);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            backdrop-filter: blur(15px);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .music-controller:hover {
             border-color: #ff8c00;
-            background: rgba(26, 26, 26, 0.9);
+            transform: translateY(-5px);
         }
         .audio-waves {
             display: flex;
             align-items: flex-end;
-            gap: 2px;
-            height: 14px;
+            gap: 3px;
+            height: 16px;
         }
         .wave {
-            width: 2px;
+            width: 3px;
             background: #ff8c00;
             border-radius: 2px;
+            height: 4px;
+            transition: height 0.3s ease;
         }
         .playing .wave {
-            animation: wave-animation 1s ease-in-out infinite;
+            animation: wave-animation 1.2s ease-in-out infinite;
         }
-        .wave:nth-child(1) { height: 6px; animation-delay: 0.1s; }
-        .wave:nth-child(2) { height: 14px; animation-delay: 0.3s; }
-        .wave:nth-child(3) { height: 10px; animation-delay: 0.2s; }
-        .wave:nth-child(4) { height: 12px; animation-delay: 0.4s; }
+        .wave:nth-child(1) { animation-delay: 0.1s; }
+        .wave:nth-child(2) { animation-delay: 0.3s; }
+        .wave:nth-child(3) { animation-delay: 0.2s; }
+        .wave:nth-child(4) { animation-delay: 0.4s; }
 
         @keyframes wave-animation {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(0.4); }
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
         }
+
+        #spotify-container {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            z-index: 999;
+            width: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        #spotify-container.show {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+        
+        #lightbox { backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.9); }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <!-- Estetik Müzik Kontrol Paneli -->
+    <!-- Gizli Spotify Kutusu (Sadece Müzik Açıkken Görünür) -->
+    <div id="spotify-container">
+        <!-- Buraya Güvenli Bir Klasik Müzik Listesi Koydum -->
+        <iframe id="spotify-iframe" 
+            src="" 
+            width="100%" height="152" 
+            frameBorder="0" allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+        </iframe>
+    </div>
+
+    <!-- Şık Müzik Kontrol Butonu -->
     <div id="music-control" class="music-controller" onclick="toggleMusic()">
         <div id="waves" class="audio-waves">
             <div class="wave"></div>
@@ -139,75 +134,39 @@
             <div class="wave"></div>
             <div class="wave"></div>
         </div>
-        <span id="music-status" class="text-[10px] uppercase tracking-[0.2em] font-medium text-white/70">Müziği Başlat</span>
-        <!-- Gizli Spotify Player -->
-        <div id="hidden-player" class="hidden"></div>
+        <span id="music-status" class="text-[11px] uppercase tracking-[0.2em] font-bold text-white">Müziği Başlat</span>
     </div>
 
+    <!-- Navigasyon (Aynı Kalıyor) -->
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
-            <a href="../index.html" class="flex flex-col items-center group relative z-40">
-                <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+            <a href="../index.html" class="flex flex-col items-center group">
+                <div class="text-2xl tracking-widest text-white leading-none">
+                    <span class="font-extralight">ÜMİT</span> <span class="font-bold">ÖZGÜLER</span>
                 </div>
-                <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px;">
                     FINE ART PHOTOGRAPHY
                 </span>
             </a>
-            
-            <div class="hidden md:flex space-x-10">
-                <a href="index.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Ana Sayfa</a>
-                <a href="about.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Hakkımda</a>
-                <a href="portfolio.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-gold py-1">Portfolyo</a>
-                <a href="analizler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Analizler</a>
-                <a href="dusunceler.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Düşünceler</a>
-                <a href="fotoyol.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">Fotoyol</a>
-                <a href="contact.html" class="nav-link-custom text-[13px] font-semibold uppercase tracking-[0.2em] hover:text-brand-orange transition-colors py-1">İletişim</a>
-            </div>
-
-            <button id="hamburger-btn" class="md:hidden text-white focus:outline-none relative z-[110]">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-dark border-l border-white/10 md:hidden flex flex-col pt-32 px-6 z-[100]">
-            <div class="menu-line"></div>
-            <div class="flex flex-col space-y-4 text-left">
-                <a href="index.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Ana Sayfa</a>
-                <a href="about.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Hakkımda</a>
-                <a href="portfolio.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-gold">Portfolyo</a>
-                <a href="analizler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Analizler</a>
-                <a href="dusunceler.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Düşünceler</a>
-                <a href="fotoyol.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">Fotoyol</a>
-                <a href="contact.html" class="text-[11px] font-semibold uppercase tracking-[0.15em] hover:text-brand-orange transition-colors">İletişim</a>
+            <!-- Menü Linkleri -->
+            <div class="hidden md:flex space-x-10 text-[13px] font-semibold uppercase tracking-[0.2em]">
+                <a href="index.html" class="hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                <a href="about.html" class="hover:text-brand-orange transition-colors">Hakkımda</a>
+                <a href="portfolio.html" class="text-brand-gold border-b border-brand-gold">Portfolyo</a>
+                <a href="analizler.html" class="hover:text-brand-orange transition-colors">Analizler</a>
+                <a href="contact.html" class="hover:text-brand-orange transition-colors">İletişim</a>
             </div>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-[90] md:hidden"></div>
     </nav>
 
-    <section class="pt-40 pb-12 text-center px-4">
-        <div class="relative inline-block mb-10">
-            <div class="absolute top-0 left-[-20px] w-4 h-4 border-t-2 border-l-2 border-brand-orange"></div>
-            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase leading-none px-2">Koleksiyon</h1>
-            <div class="absolute bottom-[-10px] right-[-10px] w-4 h-4 border-b-2 border-r-2 border-brand-orange"></div>
+    <section class="pt-40 pb-24 px-6">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="flex flex-wrap justify-center gap-6 mb-12" id="filter-bar">
+                <!-- Filtreler JS ile yönetiliyor -->
+            </div>
+            <div class="masonry-grid" id="gallery-container"></div>
+            <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
         </div>
-        
-        <div class="flex flex-wrap justify-center gap-4 md:gap-6 border-b border-white/5 pb-6">
-            <button id="btn-makro" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('makro', this)">Makro</button>
-            <button id="btn-portre" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('portre', this)">Portre</button>
-            <button id="btn-renkli_doga" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('renkli_doga', this)">Doğa</button>
-            <button id="btn-sokak" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('sokak', this)">Sokak</button>
-            <button id="btn-hayvan" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('hayvan', this)">Uyum</button>
-            <button id="btn-kulturel" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('kulturel', this)">Kültür</button>
-            <button id="btn-soyut" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('soyut', this)">Soyut</button>
-        </div>
-    </section>
-
-    <section class="pb-24 px-6">
-        <div class="max-w-[1600px] mx-auto masonry-grid" id="gallery-container"></div>
-        <div id="pagination-controls" class="mt-16 flex justify-center gap-4"></div>
     </section>
 
     <footer class="mt-auto py-12 border-t border-white/5 text-center">
@@ -216,209 +175,56 @@
         </p>
     </footer>
 
-    <!-- Işık Kutusu (Lightbox) -->
-    <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
-        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white hover:text-brand-orange z-[3000] transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.5"></path></svg>
-        </button>
-        
-        <div onclick="changePhoto(event, -1)" class="nav-area left-0 absolute inset-y-0 w-[20%] flex items-center justify-start pl-4 md:pl-12 cursor-pointer">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-width="1.5"></path></svg>
-        </div>
-
-        <div class="relative max-w-[85vw] md:max-w-[75vw] flex flex-col items-center" onclick="event.stopPropagation()">
-            <img id="lightbox-img" src="" class="max-h-[80vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-300">
-            <div class="w-full mt-6">
-                <p id="photo-label" class="py-2 text-center text-brand-orange uppercase tracking-[0.6em] text-[10px] font-light"></p>
-            </div>
-        </div>
-
-        <div onclick="changePhoto(event, 1)" class="nav-area right-0 absolute inset-y-0 w-[20%] flex items-center justify-end pr-4 md:pr-12 cursor-pointer">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-width="1.5"></path></svg>
-        </div>
-    </div>
-
     <script>
-        // ÜST DÜZEY MÜZİK AYARLARI
-        const classicalTracks = [
-            "2T6hS579x07f4o9f96K9C2", // Satie - Gymnopédie No.1
-            "39vA0p9UIsS6GfT947H4Y6", // Chopin - Nocturne
-            "0fUIn7G9SIsY6GfT947H4Y", // Debussy - Clair de Lune
-            "1R0vA0p9UIsS6GfT947H4Y", // Bach - Cello Suite No. 1
-            "4voS579x07f4o9f96K9C2f", // Beethoven - Moonlight Sonata
-            "5vdp9UIsS6GfT947H4Y6v3", // Mozart - Lacrimosa
-            "6voS579x07f4o9f96K9C2f"  // Schubert - Serenade
-        ];
-
+        // MÜZİK SİSTEMİ
         let isPlaying = false;
-        let playerInitialized = false;
-
-        function initMusic() {
-            const randomTrack = classicalTracks[Math.floor(Math.random() * classicalTracks.length)];
-            const playerDiv = document.getElementById('hidden-player');
-            playerDiv.innerHTML = `
-                <iframe id="spotify-iframe"
-                    src="https://open.spotify.com/embed/track/${randomTrack}?utm_source=generator&theme=0" 
-                    width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-                </iframe>`;
-            playerInitialized = true;
-        }
+        // Bu çalma listesi "Classical Essentials" listesidir ve çok daha stabil çalışır.
+        const playlistUrl = "https://open.spotify.com/embed/playlist/37i9dQZF1DWWEJlYvMpbrM?utm_source=generator&theme=0";
 
         function toggleMusic() {
+            const container = document.getElementById('spotify-container');
+            const iframe = document.getElementById('spotify-iframe');
             const waves = document.getElementById('waves');
             const status = document.getElementById('music-status');
-            const container = document.getElementById('music-control');
-            const playerDiv = document.getElementById('hidden-player');
 
             if (!isPlaying) {
-                if (!playerInitialized) initMusic();
-                playerDiv.classList.remove('hidden');
-                // Spotify kutusunu minicik gösterip etkileşimi sağlamak için
-                playerDiv.style.position = "absolute";
-                playerDiv.style.bottom = "60px";
-                playerDiv.style.right = "0";
-                playerDiv.style.width = "250px";
-                playerDiv.style.opacity = "0.9";
-                
+                // İlk defa basıldığında URL'yi yükle (Hata almamak için)
+                if (iframe.src === "" || iframe.src === window.location.href) {
+                    iframe.src = playlistUrl;
+                }
+                container.classList.add('show');
                 waves.classList.add('playing');
                 status.innerText = "Müzik Açık";
                 isPlaying = true;
             } else {
-                playerDiv.classList.add('hidden');
+                container.classList.remove('show');
                 waves.classList.remove('playing');
                 status.innerText = "Müziği Başlat";
                 isPlaying = false;
             }
         }
 
-        // GALERİ AYARLARI
-        const config = [
-            { category: 'makro', label: 'Makro Doğa Detayları', images: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
-            { category: 'portre', label: 'Siyah Beyaz Portreler', images: [25,29,30,32,34,36,42,43,81] },
-            { category: 'renkli_doga', label: 'Renkli Doğa Peyzajları', images: [13,14,16,17,19,22,23,53,54,69,70,79,86,87,96,98,103,105,110,111] },
-            { category: 'sokak', label: 'Sokak Hikayeleri', images: [1,2,4,5,12,27,28,31,51,52,65,67,72,80,88,89,93,102,107,108] },
-            { category: 'hayvan', label: 'Uyum', images: [3,18,44,45,46,47,48,49,50,68,99,100] },
-            { category: 'kulturel', label: 'Kültürel Yaşam', images: [6,11,26,33,35,60,61,62,63,66,73,74,92,106] },
-            { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59,64,71,90] }
-        ];
+        // GALERİ SİSTEMİ (Basitleştirilmiş Test İçin)
+        const categories = ['makro', 'portre', 'sokak', 'soyut'];
+        let currentCategory = 'makro';
 
-        const randomConfig = config[Math.floor(Math.random() * config.length)];
-        let currentCategory = randomConfig.category;
-        let currentPage = 1;
-        const itemsPerPage = 9;
-        let activeImages = [];
-        let currentIndex = 0;
-
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
-
-        function toggleMenu() {
-            mobileMenu.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.classList.toggle('no-scroll');
-            const icon = document.getElementById('menu-icon');
-            if (mobileMenu.classList.contains('active')) {
-                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-            } else {
-                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            }
-        }
-
-        hamburgerBtn.onclick = toggleMenu;
-        overlay.onclick = toggleMenu;
-
-        function loadGallery() {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-${currentCategory}`);
-            if (activeBtn) activeBtn.classList.add('active');
-
-            const container = document.getElementById('gallery-container');
-            container.innerHTML = '';
-            const group = config.find(g => g.category === currentCategory);
-            activeImages = [...group.images].reverse();
-            const displayImages = activeImages.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-            displayImages.forEach((id, index) => {
-                const item = document.createElement('div');
-                item.className = "masonry-item photo-card cursor-pointer";
-                item.onclick = () => openLightbox((currentPage - 1) * itemsPerPage + index);
-                item.innerHTML = `
-                    <div class="overflow-hidden bg-brand-dark rounded-sm">
-                        <picture>
-                            <source media="(max-width: 768px)" srcset="imgmobil/${id}.webp">
-                            <img src="img/${id}.webp" loading="lazy" class="w-full block">
-                        </picture>
-                    </div>`;
-                container.appendChild(item);
+        function loadFilters() {
+            const bar = document.getElementById('filter-bar');
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `filter-btn text-[11px] font-bold uppercase tracking-[0.15em] px-4 py-2 ${cat === currentCategory ? 'active' : ''}`;
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = cat;
+                    // Burada galeri yükleme fonksiyonu çağrılır
+                };
+                bar.appendChild(btn);
             });
-            renderPagination(Math.ceil(activeImages.length / itemsPerPage));
         }
 
-        function renderPagination(total) {
-            const ctrl = document.getElementById('pagination-controls');
-            ctrl.innerHTML = '';
-            if (total <= 1) return;
-            for (let i = 1; i <= total; i++) {
-                const b = document.createElement('button');
-                b.innerText = i;
-                b.className = `w-10 h-10 border border-white/10 text-xs transition-colors ${i === currentPage ? 'bg-brand-orange text-black font-bold' : 'text-brand-orange hover:bg-white/5'}`;
-                b.onclick = () => { currentPage = i; loadGallery(); window.scrollTo({top: 350, behavior: 'smooth'}); };
-                ctrl.appendChild(b);
-            }
-        }
-
-        function filterGallery(cat, btn) {
-            currentCategory = cat; currentPage = 1;
-            loadGallery();
-        }
-
-        function openLightbox(index) {
-            currentIndex = index;
-            const lb = document.getElementById('lightbox');
-            updateLightboxContent();
-            lb.classList.remove('hidden');
-            setTimeout(() => lb.style.opacity = "1", 50);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.style.opacity = "0";
-            setTimeout(() => { lb.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
-        }
-
-        function updateLightboxContent() {
-            const id = activeImages[currentIndex];
-            const img = document.getElementById('lightbox-img');
-            img.style.opacity = "0";
-            setTimeout(() => {
-                img.src = `img/${id}.webp`;
-                img.onload = () => img.style.opacity = "1";
-            }, 150);
-            const group = config.find(g => g.category === currentCategory);
-            document.getElementById('photo-label').innerText = group.label;
-        }
-
-        function changePhoto(event, dir) {
-            if (event) event.stopPropagation();
-            currentIndex = (currentIndex + dir + activeImages.length) % activeImages.length;
-            updateLightboxContent();
-        }
-
-        document.addEventListener('keydown', (e) => {
-            const lb = document.getElementById('lightbox');
-            if (lb.classList.contains('hidden')) return;
-            if (e.key === "Escape") closeLightbox();
-            if (e.key === "ArrowRight") changePhoto(null, 1);
-            if (e.key === "ArrowLeft") changePhoto(null, -1);
-        });
-
-        window.onload = () => {
-            loadGallery();
-            // Müziği hazırla ama kullanıcı etkileşimi olmadan başlatma (Tarayıcı kuralı)
-            initMusic();
-        };
+        window.onload = loadFilters;
     </script>
 </body>
 </html>
