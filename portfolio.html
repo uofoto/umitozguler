@@ -82,9 +82,39 @@
         .nav-area { z-index: 2200; transition: all 0.3s ease; height: 300px; margin-top: auto; margin-bottom: auto; }
         .nav-area:hover { color: #ff8c00; }
         .no-scroll { overflow: hidden; }
+
+        /* Müzik Paneli Stilleri */
+        #music-player-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            width: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #music-player-container.minimized {
+            width: 50px;
+            height: 50px;
+        }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
+
+    <!-- Müzik Paneli -->
+    <div id="music-player-container">
+        <div class="bg-brand-dark/80 backdrop-blur-md p-2 flex justify-between items-center border border-white/10 rounded-t-lg">
+            <span class="text-[9px] uppercase tracking-widest text-brand-gold ml-2 opacity-70">Sergi Müziği</span>
+            <button onclick="toggleMusicPlayer()" class="text-white/50 hover:text-brand-orange transition-colors px-2">
+                <svg id="toggle-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+        </div>
+        <div id="player-iframe-wrapper">
+            <!-- Spotify Embed buraya JS ile yüklenecek -->
+        </div>
+    </div>
 
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
@@ -158,6 +188,7 @@
         </p>
     </footer>
 
+    <!-- Işık Kutusu (Lightbox) -->
     <div id="lightbox" class="fixed inset-0 z-[2000] hidden flex items-center justify-center opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
         <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white hover:text-brand-orange z-[3000] transition-colors">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.5"></path></svg>
@@ -180,6 +211,44 @@
     </div>
 
     <script>
+        // MÜZİK AYARLARI
+        const classicalTracks = [
+            "2T6hS579x07f4o9f96K9C2", // Satie - Gymnopédie No.1 (Ruhani)
+            "39vA0p9UIsS6GfT947H4Y6", // Chopin - Nocturne No. 2 (Zarif)
+            "0fUIn7G9SIsY6GfT947H4Y", // Debussy - Clair de Lune
+            "1R0vA0p9UIsS6GfT947H4Y", // Bach - Cello Suite No. 1
+            "4voS579x07f4o9f96K9C2f"  // Beethoven - Moonlight Sonata
+        ];
+
+        function initMusic() {
+            const randomTrack = classicalTracks[Math.floor(Math.random() * classicalTracks.length)];
+            const wrapper = document.getElementById('player-iframe-wrapper');
+            wrapper.innerHTML = `
+                <iframe 
+                    style="border-radius:0 0 12px 12px" 
+                    src="https://open.spotify.com/embed/track/${randomTrack}?utm_source=generator&theme=0" 
+                    width="100%" 
+                    height="80" 
+                    frameBorder="0" 
+                    allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+                </iframe>
+            `;
+        }
+
+        function toggleMusicPlayer() {
+            const container = document.getElementById('music-player-container');
+            const icon = document.getElementById('toggle-icon');
+            if (container.style.height === "40px") {
+                container.style.height = "auto";
+                icon.style.transform = "rotate(0deg)";
+            } else {
+                container.style.height = "40px";
+                icon.style.transform = "rotate(180deg)";
+            }
+        }
+
         const config = [
             { category: 'makro', label: 'Makro Doğa Detayları', images: [10,15,21,24,37,38,39,40,41,76,77,78,82,83,84,85,91,94,95,97,101,104] },
             { category: 'portre', label: 'Siyah Beyaz Portreler', images: [25,29,30,32,34,36,42,43,81] },
@@ -190,10 +259,8 @@
             { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59,64,71,90] }
         ];
 
-        // Rastgele bir kategori seçimi
         const randomConfig = config[Math.floor(Math.random() * config.length)];
         let currentCategory = randomConfig.category;
-        
         let currentPage = 1;
         const itemsPerPage = 9;
         let activeImages = [];
@@ -219,7 +286,6 @@
         overlay.onclick = toggleMenu;
 
         function loadGallery() {
-            // Aktif buton görselini güncelle
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById(`btn-${currentCategory}`);
             if (activeBtn) activeBtn.classList.add('active');
@@ -305,8 +371,11 @@
             if (e.key === "ArrowLeft") changePhoto(null, -1);
         });
 
-        // İlk yükleme
-        loadGallery();
+        // Sayfa yüklendiğinde hem galeriyi hem müziği başlat
+        window.onload = () => {
+            loadGallery();
+            initMusic();
+        };
     </script>
 </body>
 </html>
