@@ -14,7 +14,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
-        
         tailwind.config = {
             theme: {
                 extend: {
@@ -34,7 +33,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .masonry-grid { column-count: 1; column-gap: 1.5rem; }
-        @media (min-width: 640px) { masonry-grid { column-count: 2; } }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
         
         .masonry-item { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 1.5rem; }
@@ -56,7 +55,6 @@
         }
         .nav-link-custom:hover::after { width: 100%; }
 
-        /* MENÜ DÜZENLEMESİ */
         #mobile-menu {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
@@ -81,7 +79,6 @@
         }
 
         #lightbox { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.9); }
-        /* Nav-area artık tüm ekranı değil, sadece fotoğrafın yanlarını kaplayacak */
         .nav-area { z-index: 2200; transition: all 0.3s ease; height: 300px; margin-top: auto; margin-bottom: auto; }
         .nav-area:hover { color: #ff8c00; }
         .no-scroll { overflow: hidden; }
@@ -140,13 +137,13 @@
         </div>
         
         <div class="flex flex-wrap justify-center gap-4 md:gap-6 border-b border-white/5 pb-6">
-            <button class="filter-btn active text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('makro', this)">Makro</button>
-            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('portre', this)">Portre</button>
-            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('renkli_doga', this)">Doğa</button>
-            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('sokak', this)">Sokak</button>
-            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('hayvan', this)">Uyum</button>
-            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('kulturel', this)">Kültür</button>
-            <button class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('soyut', this)">Soyut</button>
+            <button id="btn-makro" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('makro', this)">Makro</button>
+            <button id="btn-portre" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('portre', this)">Portre</button>
+            <button id="btn-renkli_doga" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('renkli_doga', this)">Doğa</button>
+            <button id="btn-sokak" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('sokak', this)">Sokak</button>
+            <button id="btn-hayvan" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('hayvan', this)">Uyum</button>
+            <button id="btn-kulturel" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('kulturel', this)">Kültür</button>
+            <button id="btn-soyut" class="filter-btn text-[11px] font-bold uppercase tracking-[0.15em] mb-2" onclick="filterGallery('soyut', this)">Soyut</button>
         </div>
     </section>
 
@@ -193,7 +190,10 @@
             { category: 'soyut', label: 'Soyut Atmosfer', images: [7,8,9,20,55,56,57,58,59,64,71,90] }
         ];
 
-        let currentCategory = 'makro';
+        // Rastgele bir kategori seçimi
+        const randomConfig = config[Math.floor(Math.random() * config.length)];
+        let currentCategory = randomConfig.category;
+        
         let currentPage = 1;
         const itemsPerPage = 9;
         let activeImages = [];
@@ -219,6 +219,11 @@
         overlay.onclick = toggleMenu;
 
         function loadGallery() {
+            // Aktif buton görselini güncelle
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${currentCategory}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
             const container = document.getElementById('gallery-container');
             container.innerHTML = '';
             const group = config.find(g => g.category === currentCategory);
@@ -256,8 +261,6 @@
 
         function filterGallery(cat, btn) {
             currentCategory = cat; currentPage = 1;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
             loadGallery();
         }
 
@@ -302,15 +305,8 @@
             if (e.key === "ArrowLeft") changePhoto(null, -1);
         });
 
+        // İlk yükleme
         loadGallery();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
