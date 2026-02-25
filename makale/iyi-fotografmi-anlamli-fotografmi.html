@@ -13,8 +13,8 @@
     <title>İyi Fotoğraf mı, Anlamlı Fotoğraf mı? | Ümit Özgüler</title>
     
     <meta property="og:title" content="İyi Fotoğraf mı, Anlamlı Fotoğraf mı? | Ümit Özgüler">
-    <meta property="og:description" content="Hans-Peter Grumpe'nin Türkiye fotoğrafları üzerinden kurallara, yarışmalara ve anlama dair bir eleştiri.">
-    <meta property="og:image" content="img/hpg1988.webp">
+    <meta property="og:description" content="Fotoğrafçılıkta teknik başarı ile içerik gücü arasındaki fark üzerine bir analiz.">
+    <meta property="og:image" content="../img/108.webp">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -34,8 +34,6 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
-        .article-content ul { list-style-type: disc; margin-bottom: 1.5rem; padding-left: 1.5rem; }
-        .article-content ul li { margin-bottom: 0.5rem; }
 
         .nav-link-custom { position: relative; transition: color 0.3s ease; }
         .nav-link-custom::after {
@@ -53,45 +51,10 @@
 
         #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
         #mobile-menu.active { transform: translateX(0); }
+        
+        #menu-line { height: 0; transition: height 0.6s ease-out 0.3s; }
+        #mobile-menu.active #menu-line { height: 100%; }
         .no-scroll { overflow: hidden; }
-
-        .hpg-inline-link {
-            color: #ff8c00;
-            border-bottom: 1px solid rgba(255, 140, 0, 0.2);
-            transition: all 0.3s ease;
-            font-weight: 400;
-        }
-        .hpg-inline-link:hover {
-            border-bottom-color: #ff8c00;
-            color: white;
-        }
-
-        /* Grumpe Buton Tasarımı */
-        .hpg-link-btn { 
-            display: inline-flex;
-            align-items: center;
-            border: 1px solid rgba(255, 140, 0, 0.4);
-            padding: 12px 24px;
-            border-radius: 2px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ff8c00;
-            transition: all 0.3s ease;
-            margin-bottom: 2.5rem;
-            width: 100%;
-            justify-content: center;
-            font-weight: 500;
-        }
-        @media (min-width: 768px) {
-            .hpg-link-btn { width: auto; }
-        }
-        .hpg-link-btn:hover {
-            background: #ff8c00;
-            color: white;
-            border-color: #ff8c00;
-            box-shadow: 0 10px 20px -10px rgba(255, 140, 0, 0.5);
-        }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -118,7 +81,7 @@
                     <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
                 </div>
 
-                <button id="menu-toggle-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
+                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
@@ -126,8 +89,8 @@
             </div>
         </div>
 
-        <!-- Orijinal w-36 Menü Şablonu -->
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
+            <div id="menu-line" class="absolute left-0 top-0 w-[1.5px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
             <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
@@ -138,11 +101,8 @@
         </div>
     </nav>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden"></div>
-
     <article class="pt-48 pb-20 px-6 flex-grow">
-        <!-- Orijinal Sütun Yapısı ve YUKARIDAN AŞAĞIYA İNEN TURUNCU ÇİZGİ -->
-        <div class="max-w-3xl mx-auto border-l border-brand-orange/30 pl-8 md:pl-16 relative">
+        <div class="max-w-3xl mx-auto">
             
             <div class="text-center mb-10">
                 <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
@@ -159,12 +119,17 @@
             </div>
 
             <div class="mb-12 group">
-                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl text-center">
-                    <img src="img/hpg1988.webp" alt="Hans-Peter Grumpe, Diyarbakır, 1988" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
+                <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
+                    <picture>
+                        <source srcset="../imgmobil/hpg1988.webp" media="(max-width: 768px)">
+                        <img src="../img/hpg1988.webp" alt="İyi Fotoğraf mı, Anlamlı Fotoğraf mı?" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
+                    </picture>
                 </div>
-                <div class="mt-4 text-center">
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500 italic">Hans-Peter Grumpe, Diyarbakır, 1988</p>
+                <!-- Telif Bilgisi Başlangıç -->
+                <div class="mt-3 text-right">
+                    <span class="text-[9px] uppercase tracking-[0.2em] text-gray-500">Hans-Peter Grumpe</span>
                 </div>
+                <!-- Telif Bilgisi Bitiş -->
                 <div class="mt-14 mb-14">
                     <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-orange/60 to-transparent"></div>
                 </div>
@@ -172,19 +137,16 @@
 
             <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
                 <p>
-                    Alman bir fotoğrafçının 1978, 1988 ve 1990 yıllarında Türkiye’nin farklı şehirlerinde çektiği fotoğraflara bakıyorum. Öyle kareler var ki dakikalarca izliyorum; göz yorulmuyor. İnsan görüntünün içinde kalıyor, hatta görüntü insanı alıp başka bir zamana sürüklüyor. 
-                    <a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="hpg-inline-link">Hans-Peter Grumpe</a>'nin Türkiye fotoğraflarına baktığımda şunu fark ediyorum: Bu karelerin birçoğu bize adeta bir inanç metni gibi ezberletilen “fotoğraf kurallarına” tam olarak uymuyor. Ne kusursuz bir simetri var, ne abartılı bir dramatik ışık, ne de yarışmalarda görmeye alıştığımız gösterişli kompozisyonlar… Ama bakmaya doyamıyorum.
+                    Alman bir fotoğrafçının 1978, 1988 ve 1990 yıllarında Türkiye’nin farklı şehirlerinde çektiği fotoğraflara bakıyorum. Öyle kareler var ki dakikalarca izliyorum; göz yorulmuyor. İnsan görüntünün içinde kalıyor, hatta görüntü insanı alıp başka bir zamana sürüklüyor. Hans-Peter Grumpe'nin Türkiye fotoğraflarına baktığımda şunu fark ediyorum: Bu karelerin birçoğu bize adeta bir inanç metni gibi ezberletilen “fotoğraf kurallarına” tam olarak uymuyor. Ne kusursuz bir simetri var, ne abartılı bir dramatik ışık, ne de yarışmalarda görmeye alıştığımız gösterişli kompozisyonlar… Ama bakmaya doyamıyorum.
+                </p>
+                
+                <p>
+                    <a href="http://www.hpgrumpe.de/tuerkei/index.html" class="text-brand-orange border-b border-brand-orange/30 hover:border-brand-orange transition-colors">Grumpe Türkiye Arşivini İncele↗</a>
                 </p>
 
-                <div class="flex justify-center md:justify-start">
-                    <a href="http://www.hpgrumpe.de/tuerkei/index.html" target="_blank" class="hpg-link-btn">
-                        Grumpe Türkiye Arşivini İncele <span class="ml-2">↗</span>
-                    </a>
-                </div>
-
                 <p>
-                    Peki bu fotoğrafların sırrı nedir?
-                    <br>Ve daha önemlisi: Bize neden böyle öğretilmedi? Fotoğraf kurslarında neden bu bakış açısı yeterince anlatılmıyor?
+                    Peki bu fotoğrafların sırrı nedir?<br>
+                    Ve daha önemlisi: Bize neden böyle öğretilmedi? Fotoğraf kurslarında neden bu bakış açısı yeterince anlatılmıyor?
                 </p>
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Bu Fotoğraflardaki Sır Ne?</h3>
@@ -193,66 +155,62 @@
                 </p>
 
                 <p>
-                    Bu fark çok önemli. Onun karelerinde:
+                    Bu fark çok önemli. Onun karelerinde:<br>
+                    Zaman akıyor.<br>
+                    Mekân nefes alıyor.<br>
+                    İnsanlar rol yapmıyor.<br>
+                    Hayat düzenlenmiş gibi duruyor.
                 </p>
 
-                <ul class="article-content space-y-2">
-                    <li>Zaman akıyor.</li>
-                    <li>Mekân nefes alıyor.</li>
-                    <li>İnsanlar rol yapmıyor.</li>
-                    <li>Hayat düzenlenmiş gibi duruyor.</li>
-                    <li>Bu fotoğraflar kompozisyonun yokluğundan değil, kompozisyonun görünmezliğinden güç alıyor. Kurgu bağırmıyor. Fotoğrafçı geri çekilmiş; sahne öne çıkmış.</li>
-                </ul>
+                <p>
+                    Bu fotoğraflar kompozisyonun yokluğundan değil, kompozisyonun görünmezliğinden güç alıyor. Kurgu bağırmıyor. Fotoğrafçı geri çekilmiş; sahne öne çıkmış.
+                </p>
 
                 <p>
                     İzleyiciyi yormamasının nedeni de bu. Çünkü göz, teknik ustalığın kanıtlarını aramak zorunda kalmıyor. Görüntüyle doğrudan ilişki kurar. Bir estetik sınavdan geçmiyor; bir hayat anına tanıklık ediyor.
                 </p>
+                
+                <p>
+                    Tam bu noktada Orhan Cem Çetin’in şu sözü meseleyi berraklaştırıyor:
+                </p>
 
                 <blockquote class="border-l-2 border-brand-orange pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
-                    <p class="mb-4 not-italic font-semibold text-white text-sm">
-                        Tam bu noktada <span class="text-brand-orange">Orhan Cem Çetin</span>’in şu sözü meseleyi berraklaştırıyor:
-                    </p>
                     “Benim derdim iyi fotoğraf değil, anlamlı fotoğraf yapmak.”
-                    <p class="mt-4 text-sm md:text-base text-gray-400 not-italic font-light">
-                        Bu cümle teknik başarı ile içerik gücü arasındaki farkı net biçimde ortaya koyar. “İyi fotoğraf” çoğu zaman net, dengeli, kurallara uygun, estetik açıdan kusursuz görüntü demektir. “Anlamlı fotoğraf” ise bir dönemi, bir ruh hâlini, bir toplumsal gerçeği görünür kılan; izleyiciyi düşünmeye zorlayan görüntüdür. İyi fotoğraf gözle ilişki kurar. Anlamlı fotoğraf ise hafıza ve vicdanla ilişki kurar. Çetin’in vurgusu, tekniği küçümsemek değil; tekniği merkeze koyarak anlamı arka plana itme alışkanlığına itirazdır.
-                    </p>
                 </blockquote>
 
                 <p>
-                    Grumpe’nin Türkiye fotoğraflarına baktığımızda tam da bu yaklaşımı görürüz. Teknik kusursuzluk değil, zamanın ruhu öne çıkar. Fotoğraflarda:
+                    Bu cümle teknik başarı ile içerik gücü arasındaki farkı net biçimde ortaya koyar. “İyi fotoğraf” çoğu zaman net, dengeli, kurallara uygun, estetik açıdan kusursuz görüntü demektir. “Anlamlı fotoğraf” ise bir dönemi, bir ruh hâlini, bir toplumsal gerçeği görünür kılan; izleyiciyi düşünmeye zorlayan görüntüdür. İyi fotoğraf gözle ilişki kurar. Anlamlı fotoğraf ise hafıza ve vicdanla ilişki kurar. Çetin’in vurgusu, tekniği küçümsemek değil; tekniği merkeze koyarak anlamı arka plana itme alışkanlığına itirazdır.
                 </p>
 
-                <ul class="article-content space-y-2">
-                    <li>Mekân nefes alır.</li>
-                    <li>İnsanlar rol yapmaz.</li>
-                    <li>Hayat düzenlenmiş gibi durmaz.</li>
-                    <li>Görüntü estetik gösteri yapmaz.</li>
-                    <li>Kompozisyon vardır ama kendini belli etmez. Fotoğrafçı geri çekilmiş, hayat öne çıkmıştır.</li>
-                </ul>
+                <p>
+                    Grumpe’nin Türkiye fotoğraflarına baktığımızda tam da bu yaklaşımı görürüz. Teknik kusursuzluk değil, zamanın ruhu öne çıkar. Fotoğraflarda:<br>
+                    Mekân nefes alır.<br>
+                    İnsanlar rol yapmaz.<br>
+                    Hayat düzenlenmiş gibi durmaz.<br>
+                    Görüntü estetik gösteri yapmaz.<br>
+                    Kompozisyon vardır ama kendini belli etmez. Fotoğrafçı geri çekilmiş, hayat öne çıkmıştır.
+                </p>
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Kurallara Uymamak mı, Kuralları Aşmak mı?</h3>
                 <p>
-                    Türkiye’de fotoğraf eğitimi çoğunlukla teknik ilkeler üzerinden yürür:
-                </p>
-                <ul class="article-content space-y-2">
-                    <li>Üçler kuralı</li>
-                    <li>Altın oran</li>
-                    <li>Diyagonal denge</li>
-                    <li>Temiz arka plan</li>
-                    <li>Yüksek netlik</li>
-                </ul>
-                <p>
+                    Türkiye’de fotoğraf eğitimi çoğunlukla teknik ilkeler üzerinden yürür:<br>
+                    Üçler kuralı<br>
+                    Altın oran<br>
+                    Diyagonal denge<br>
+                    Temiz arka plan<br>
+                    Yüksek netlik<br>
                     Bunlar gereksiz değildir. Ancak sorun, bu ilkelerin araç olmaktan çıkıp amaç hâline gelmesidir. Fotoğraf kurslarında çoğu zaman “nasıl daha etkileyici görünür?” sorusu öğretilir; “nasıl daha anlamlı olur?” sorusu yeterince işlenmez. Sonuçta öğrenciler düzgün, teknik olarak sağlam kareler üretir; fakat o kareler çoğu zaman uzun süre akılda kalmaz.
                 </p>
+
                 <p>
-                    Grumpe’nin fotoğrafları ise bize şunu hatırlatır:
-                    Hayat grafik tasarım değildir. Sokaklar her zaman dengeli değildir. İnsan yüzleri her zaman ideal ışıkta değildir. Ama gerçek tam da o düzensizliğin içindedir.
+                    Grumpe’nin fotoğrafları ise bize şunu hatırlatır: Hayat grafik tasarım değildir. Sokaklar her zaman dengeli değildir. İnsan yüzleri her zaman ideal ışıkta değildir. Ama gerçek tam da o düzensizliğin içindedir.
                 </p>
 
                 <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Neden Böyle Öğretilmedi?</h3>
                 <p>
-                    Çünkü kural öğretmek kolaydır. Ölçülebilir. Denetlenebilir. Puanlanabilir. Bakış açısı öğretmek ise zordur. Yarışma kültürü bu durumu daha da güçlendirir. Jüriler yüzlerce fotoğraf arasından hızla seçim yapar. İlk bakışta çarpıcı olan, teknik olarak parlak görünen kare öne çıkar. Derin ama sessiz fotoğraf çoğu zaman gözden kaçar. 
+                    Çünkü kural öğretmek kolaydır. Ölçülebilir. Denetlenebilir. Puanlanabilir. Bakış açısı öğretmek ise zordur. Yarışma kültürü bu durumu daha da güçlendirir. Jüriler yüzlerce fotoğraf arasından hızla seçim yapar. İlk bakışta çarpıcı olan, teknik olarak parlak görünen kare öne çıkar. Derin ama sessiz fotoğraf çoğu zaman gözden kaçar.
                 </p>
+
                 <p>
                     Böyle bir ortamda fotoğrafçı dünyayı anlamaya değil, jüriyi etkilemeye yönelir. Kadraj, gerçeğin içinden değil, ödül beklentisinin içinden kurulur. Bu da zamanla tek tip bir estetik üretir.
                 </p>
@@ -266,11 +224,15 @@
                 <p>
                     Hans-Peter Grumpe’nin Türkiye fotoğraflarına uzun uzun bakabilmemizin nedeni, onun kusursuz olması değil; sahici olmasıdır. O fotoğraflar teknik bir gösteri sunmaz; bir dönemle temas kurmamızı sağlar.
                 </p>
+
                 <p>
-                    Ve Orhan Cem Çetin’in sözü burada yeniden anlam kazanır:
-                    <br><strong>“İyi fotoğraf”</strong> gözle ilgilidir.
-                    <br><strong>“Anlamlı fotoğraf”</strong> insanla ilgilidir.
-                    <br>Eğer fotoğraf yalnızca kurallara uymak için çekiliyorsa, görsel bir egzersizdir. Ama bir şeyi gerçekten görünür kılmak için çekiliyorsa, işte o zaman sanattır. Belki de fotoğraf eğitiminin yeniden sorması gereken soru şudur: Daha düzgün kareler mi yetiştiriyoruz, yoksa daha dikkatli bakan insanlar mı? Mesele budur.
+                    Ve Orhan Cem Çetin’in sözü burada yeniden anlam kazanır:<br>
+                    “İyi fotoğraf” gözle ilgilidir.<br>
+                    “Anlamlı fotoğraf” insanla ilgilidir.
+                </p>
+
+                <p>
+                    Eğer fotoğraf yalnızca kurallara uymak için çekiliyorsa, görsel bir egzersizdir. Ama bir şeyi gerçekten görünür kılmak için çekiliyorsa, işte o zaman sanattır. Belki de fotoğraf eğitiminin yeniden sorması gereken soru şudur: Daha düzgün kareler mi yetiştiriyoruz, yoksa daha dikkatli bakan insanlar mı? Mesele budur.
                 </p>
             </div>
 
@@ -290,34 +252,28 @@
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('menu-toggle-btn');
-        const menu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
         const line1 = document.getElementById('line1');
         const line2 = document.getElementById('line2');
         const line3 = document.getElementById('line3');
 
-        function toggleMenu() {
-            menu.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.classList.toggle('no-scroll');
-            
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
             line1.classList.toggle('rotate-45');
             line1.classList.toggle('translate-y-2');
             line2.classList.toggle('opacity-0');
             line3.classList.toggle('-rotate-45');
             line3.classList.toggle('-translate-y-2');
-        }
-
-        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-        if (overlay) overlay.addEventListener('click', toggleMenu);
+            document.body.classList.toggle('no-scroll');
+        });
 
         function paylasimiBildir(platform) {
             fetch("https://formspree.io/f/xgolegaa", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    mesaj: "Bir okuyucu düşünce yazınızı paylaştı!",
+                    mesaj: "Bir okuyucu makalenizi paylaştı!",
                     makale: document.title,
                     url: window.location.href,
                     platform: platform
