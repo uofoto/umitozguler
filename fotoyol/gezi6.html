@@ -233,25 +233,23 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
-        // KESİN ÇÖZÜM: Parametrelerden arındırılmış saf YouTube Embed
+        // SAF ÇÖZÜM: Karmaşık parametrelerden arındırılmış YouTube Embed Fonksiyonu
         function formatYoutubeUrl(url) {
             if (!url) return '';
             
-            // iframe kodu içindeki src'yi çek
+            // iframe kodu içinden src ayıklama
             if (url.includes('<iframe')) {
                 const srcMatch = url.match(/src=["']([^"']+)["']/);
                 if (srcMatch) url = srcMatch[1];
             }
 
-            // En güvenilir Video ID ayıklama regex'i
-            const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube-nocookie\.com|youtube\.com)\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=|shorts\/)?([a-zA-Z0-9_-]{11})/;
+            // Video ID'sini bulmak için en sade regex
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
-            const videoId = (match && match[1]) ? match[1] : null;
 
-            if (videoId) {
-                // "Hata 153"ü önlemek için tüm JS API ve Origin parametrelerini sildik.
-                // Sadece temel rel=0 (ilgili videoları kapatma) bıraktık.
-                return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
+            if (match && match[2].length == 11) {
+                // SADECE Video ID'sini alıyoruz ve hiçbir ekstra parametre (origin, api vb) eklemiyoruz
+                return `https://www.youtube.com/embed/${match[2]}`;
             }
             
             return url;
@@ -290,7 +288,7 @@
                 if (item.type === 'video' && item.src) {
                     const embedUrl = formatYoutubeUrl(item.src);
                     
-                    // Yedek link için orijinal adresi temizle
+                    // Yedek link için orijinal linki temizle
                     let rawLink = item.src;
                     if (rawLink.includes('<iframe')) {
                         const srcMatch = rawLink.match(/src=["']([^"']+)["']/);
@@ -305,8 +303,7 @@
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen
-                                referrerpolicy="no-referrer"
-                                loading="lazy">
+                                referrerpolicy="no-referrer">
                             </iframe>
                         </div>
                         <figcaption class="image-caption flex flex-col items-center gap-4">
