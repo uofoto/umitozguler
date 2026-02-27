@@ -219,6 +219,227 @@
             },
             content: [
                 { type: 'text', value: 'Gezi rotamızın en can alıcı noktalarından birini aşağıdaki videoda izleyebilirsiniz.' },
+                { type: 'video', src: '
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", "G-QW3FEBRP69");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Ümit Özgüler | FotoYol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        "brand-black": "#0a0a0a", 
+                        "brand-dark": "#121212", 
+                        "brand-gold": "#c5a059", 
+                        "brand-orange": "#ff8c00" 
+                    },
+                    fontFamily: { 
+                        sans: ['"Plus Jakarta Sans"', "sans-serif"], 
+                        display: ['"Outfit"', "sans-serif"] 
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #0a0a0a; overflow-x: hidden; font-family: "Plus Jakarta Sans", sans-serif; }
+        #fog-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.5; }
+        
+        #progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: #ff8c00; width: 0%; z-index: 2000; transition: width 0.1s ease; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .article-content p { margin-bottom: 1.75rem; line-height: 2; color: #b0b0b0; font-size: 1.1rem; font-weight: 300; }
+        .article-content h2 { font-family: 'Outfit', sans-serif; color: #ffffff; font-size: 2.5rem; margin: 4rem 0 1.5rem; font-weight: 300; }
+        
+        .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; }
+        .img-container img { transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1); width: 100%; height: auto; display: block; }
+        .img-container:hover img { transform: scale(1.03); }
+        .image-caption { font-size: 10px; color: #666; margin-top: 15px; text-align: center; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; }
+        
+        .exif-tag { font-size: 8px; color: #444; margin-top: 4px; text-align: center; letter-spacing: 0.1em; font-family: monospace; }
+
+        .custom-quote { border-left: 1px solid #c5a059; padding: 2.5rem; margin: 3rem 0; font-size: 1.45rem; font-weight: 200; font-style: italic; color: #f0f0f0; background: linear-gradient(90deg, rgba(197, 160, 89, 0.07) 0%, transparent 100%); line-height: 1.7; }
+        
+        .tip-box { background: #111; border: 1px solid rgba(197, 160, 89, 0.2); padding: 2rem; border-radius: 8px; margin: 3rem 0; position: relative; overflow: hidden; }
+        .tip-box::before { content: 'İPUCU'; position: absolute; top: 0; right: 0; background: #c5a059; color: black; font-size: 9px; font-weight: 800; padding: 4px 12px; letter-spacing: 2px; }
+
+        .map-container, .video-container { 
+            position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; 
+            filter: grayscale(1) contrast(1.2) invert(0.9); transition: filter 0.5s ease; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .video-container { filter: none; background: #000; }
+        .map-container:hover { filter: grayscale(0.5) contrast(1.1) invert(0); }
+        .map-container iframe, .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .nav-link-custom { position: relative; }
+        .nav-link-custom::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0; background-color: #ff8c00; transition: width 0.4s ease; }
+        .nav-link-custom:hover::after { width: 100%; }
+
+        #mobile-menu { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); transform: translateX(100%); width: 180px; }
+        #mobile-menu.active { transform: translateX(0); }
+        .menu-line { position: absolute; left: 0; top: 0; width: 1.5px; height: 0; background: #ff8c00; transition: height 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s; }
+        #mobile-menu.active .menu-line { height: 100%; }
+
+        #admin-panel { position: fixed; right: 0; top: 0; height: 100vh; width: 420px; background: #141414; z-index: 3000; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; }
+        #admin-panel.active { transform: translateX(0); box-shadow: -30px 0 60px rgba(0,0,0,0.6); }
+        .admin-input { background: #080808; border: 1px solid #2a2a2a; color: #e0e0e0; padding: 10px; width: 100%; margin-bottom: 12px; font-size: 13px; border-radius: 6px; }
+        .admin-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #c5a059; display: block; margin-bottom: 5px; font-weight: 700; }
+        .admin-btn { background: #c5a059; color: black; padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; }
+        .item-card { background: #1d1d1d; border: 1px solid #2a2a2a; padding: 15px; margin-bottom: 12px; border-radius: 8px; position: relative; }
+        .delete-btn { position: absolute; top: 12px; right: 12px; color: #ff5555; font-size: 9px; font-weight: bold; cursor: pointer; }
+        
+        #lightbox { position: fixed; inset: 0; z-index: 2000; background-color: rgba(0, 0, 0, 0.97); backdrop-filter: blur(20px); display: none; opacity: 0; transition: opacity 0.5s; align-items: center; justify-content: center; }
+        #lightbox.active { display: flex; opacity: 1; }
+        #lightbox-img { max-width: 90%; max-height: 80vh; object-fit: contain; }
+
+        .no-scroll { overflow: hidden; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #141414; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        /* Kayıt Yardım Kutusu */
+        .save-help { background: #1a1a1a; border: 1px dashed #c5a059; padding: 15px; margin-top: 20px; border-radius: 8px; }
+        .save-help p { font-size: 10px; color: #aaa; line-height: 1.5; margin-bottom: 8px; }
+        .save-help strong { color: #ff8c00; }
+
+        /* Custom Notification */
+        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #c5a059; color: black; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body class="text-gray-300 antialiased flex flex-col min-h-screen">
+
+    <div id="progress-bar"></div>
+    <div id="custom-alert">İşlem Başarılı</div>
+
+    <!-- HERO SECTION -->
+    <div id="hero-section" class="relative h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black">
+        <canvas id="fog-canvas"></canvas>
+        <nav class="absolute top-0 w-full z-[100] bg-transparent">
+            <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-24">
+                <a href="../index.html" class="flex flex-col items-center z-40">
+                    <div class="text-2xl tracking-widest text-white leading-none uppercase font-extralight">ÜMİT <span class="font-bold">ÖZGÜLER</span></div>
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-top: 2px;">FINE ART PHOTOGRAPHY</span>
+                </a>
+                <div class="hidden md:flex space-x-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">
+                    <a href="../index.html" class="nav-link-custom">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom">Portfolyo</a>
+                    <a href="../analizler.html" class="nav-link-custom">Analizler</a>
+                    <a href="../dusunceler.html" class="nav-link-custom">Düşünceler</a>
+                    <a href="../fotoyol.html" class="text-brand-gold">Fotoyol</a>
+                    <a href="../contact.html" class="nav-link-custom">İletişim</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white p-2 z-[110]">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="hero-content" class="relative z-10 text-center px-6 reveal"></div>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 opacity-20 animate-pulse"><div class="w-[1px] h-16 bg-white"></div></div>
+    </div>
+
+    <!-- MOBİL MENÜ -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-screen bg-brand-dark z-[1000] flex flex-col pt-32 px-10 text-left md:hidden border-l border-white/5 shadow-2xl">
+        <div class="menu-line"></div>
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-white p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="space-y-6 flex flex-col text-white/70 text-[11px] uppercase tracking-[0.25em] font-bold">
+            <a href="../index.html">Ana Sayfa</a>
+            <a href="../about.html">Hakkımda</a>
+            <a href="../portfolio.html">Portfolyo</a>
+            <a href="../analizler.html">Analizler</a>
+            <a href="../dusunceler.html">Düşünceler</a>
+            <a href="../fotoyol.html" class="text-brand-gold">Fotoyol</a>
+            <a href="../contact.html">İletişim</a>
+        </div>
+    </div>
+
+    <!-- ANA İÇERİK -->
+    <main id="article-main" class="max-w-4xl mx-auto px-6 py-16 w-full article-content"></main>
+
+    <footer class="bg-brand-black py-12 border-t border-white/5 text-center mt-auto">
+        <p class="text-[9px] tracking-[0.3em] text-gray-700 uppercase">© 2026 Ümit Özgüler Tüm Hakları Saklıdır.</p>    </footer>
+
+    <!-- DÜZENLEME PANELİ -->
+    <div id="admin-panel">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center">
+            <h2 class="text-white font-display text-xl tracking-widest uppercase">Yazar Paneli</h2>
+            <button onclick="toggleAdmin()" class="text-brand-gold text-[10px] uppercase font-bold border border-brand-gold/30 px-3 py-1 rounded-full hover:bg-brand-gold hover:text-black transition-all">Kapat</button>
+        </div>
+        <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
+            <div id="meta-fields" class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">Makale Başlığı</label>
+                <input type="text" id="meta-title" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Konum</label>
+                <input type="text" id="meta-location" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Hero Başlık</label>
+                <input type="text" id="meta-h1" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Hero Alt Başlık</label>
+                <input type="text" id="meta-h2" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Alt Bilgi</label>
+                <input type="text" id="meta-info" class="admin-input" oninput="updateMeta()">
+            </div>
+            <div id="item-list"></div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <button onclick="addItem('text')" class="admin-btn">Metin</button>
+                <button onclick="addItem('image')" class="admin-btn">Görsel</button>
+                <button onclick="addItem('heading')" class="admin-btn">Başlık</button>
+                <button onclick="addItem('quote')" class="admin-btn">Alıntı</button>
+                <button onclick="addItem('tip')" class="admin-btn">İpucu Notu</button>
+                <button onclick="addItem('video')" class="admin-btn">Video Ekle</button>
+                <button onclick="addItem('map')" class="admin-btn col-span-2 !bg-brand-orange !text-black">Rota Haritası</button>
+            </div>
+            
+            <div class="save-help">
+                <p><strong>NASIL KAYDEDİLİR?</strong></p>
+                <p>1. Aşağıdaki butona basarak verilerinizi kopyalayın.<br>
+                2. HTML dosyanızı Not Defteri ile açın.<br>
+                3. <strong>articleConfig</strong> değişkeninin içine yapıştırın ve kaydedin.</p>
+                <button onclick="copyCode()" class="admin-btn w-full !bg-white !text-black mt-2 shadow-lg">Yapılandırmayı Kopyala</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL TETİKLEYİCİ -->
+    <button id="admin-trigger" onclick="toggleAdmin()" style="display: none;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
+        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" alt=""></div>
+
+    <script>
+        /**
+         * ======================================================
+         * VERİ MERKEZİ (Sizin istediğiniz video buraya eklendi!)
+         * ======================================================
+         */
+        let articleConfig = {
+            meta: {
+                title: "FotoYol Gezi Yazısı",
+                location: "YENİ ROTA / TÜRKİYE",
+                heroTitle: "Bir Yolculuk Hikayesi",
+                heroSubtitle: "Doğa ve Fotoğraf",
+                info: "Fine Art Photography • 2026"
+            },
+            content: [
+                { type: 'text', value: 'Gezi rotamızın en can alıcı noktalarından birini aşağıdaki videoda izleyebilirsiniz.' },
                 { type: 'video', src: 'https://www.youtube.com/watch?v=fo8peC2oguk', caption: "Gezi Rotası Video Kaydı" },
                 { type: 'heading', value: 'Gezi Notları' },
                 { type: 'text', value: 'Bu yazının devamını panel üzerinden düzenleyerek oluşturabilirsiniz.' }
@@ -413,4 +634,199 @@
         window.onresize = rsz;
     </script>
 </body>
+</html>', caption: "Gezi Rotası Video Kaydı" },
+                { type: 'heading', value: 'Gezi Notları' },
+                { type: 'text', value: 'Bu yazının devamını panel üzerinden düzenleyerek oluşturabilirsiniz.' }
+            ]
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
+
+        // EN SAF ÇÖZÜM: Karmaşık güvenlik duvarlarını aşan YouTube Temizleyici
+        function formatYoutubeUrl(url) {
+            if (!url) return '';
+            if (url.includes('<iframe')) {
+                const srcMatch = url.match(/src=["']([^"']+)["']/);
+                if (srcMatch) url = srcMatch[1];
+            }
+            // ID Yakalama Regex
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            if (match && match[2].length == 11) {
+                // Hiçbir ekstra parametre (origin, enablejsapi vb.) eklemiyoruz çünkü hatayı bunlar tetikliyor
+                return `https://www.youtube.com/embed/${match[2]}?rel=0`;
+            }
+            return url;
+        }
+
+        function showMsg(txt) {
+            const el = document.getElementById('custom-alert');
+            el.innerText = txt; el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
+        }
+
+        function renderArticle() {
+            document.title = articleConfig.meta.title + " | Ümit Özgüler";
+            const hero = document.getElementById('hero-content');
+            hero.innerHTML = `
+                <div class="inline-flex items-center text-[10px] tracking-[0.5em] uppercase text-brand-gold mb-8 font-bold opacity-80 border-b border-brand-gold/20 pb-3">${articleConfig.meta.location}</div>
+                <h1 class="text-5xl md:text-8xl font-thin text-white tracking-tighter leading-tight uppercase font-display">${articleConfig.meta.heroTitle} <br><span class="font-bold italic text-brand-gold lowercase tracking-normal">${articleConfig.meta.heroSubtitle}</span></h1>
+                <p class="mt-10 text-[10px] tracking-[0.5em] text-gray-500 uppercase font-light">${articleConfig.meta.info}</p>
+            `;
+            hero.classList.add('active');
+
+            const main = document.getElementById('article-main');
+            main.innerHTML = '';
+            articleConfig.content.forEach((item) => {
+                let html = '';
+                if (item.type === 'text') html = `<p class="reveal active">${item.value}</p>`;
+                if (item.type === 'heading') html = `<h2 class="reveal active">${item.value}</h2>`;
+                if (item.type === 'quote') html = `<div class="custom-quote reveal active">${item.value}</div>`;
+                if (item.type === 'tip') html = `<div class="tip-box reveal active">${item.value}</div>`;
+                
+                if (item.type === 'image') {
+                    const mobileSource = item.mobile ? `<source srcset="${item.mobile}" media="(max-width: 768px)">` : '';
+                    const exifHtml = item.exif ? `<div class="exif-tag">${item.exif}</div>` : '';
+                    html = `
+                    <figure class="my-16 reveal active">
+                        <div class="img-container"><picture>${mobileSource}<img src="${item.src}" alt="${item.caption}" onclick="openLightbox(this)"></picture></div>
+                        <figcaption class="image-caption">${item.caption}</figcaption>
+                        ${exifHtml}
+                    </figure>`;
+                }
+                
+                if (item.type === 'video' && item.src) {
+                    const embedUrl = formatYoutubeUrl(item.src);
+                    let rawLink = item.src;
+                    if (rawLink.includes('<iframe')) {
+                        const srcMatch = rawLink.match(/src=["']([^"']+)["']/);
+                        if (srcMatch) rawLink = srcMatch[1];
+                    }
+
+                    html = `
+                    <figure class="my-24 reveal active text-center">
+                        <div class="video-container shadow-2xl">
+                            <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <figcaption class="image-caption mt-6 flex flex-col items-center gap-4">
+                            <span class="opacity-50 italic">${item.caption || 'Video'}</span>
+                            <a href="${rawLink}" target="_blank" class="text-[9px] border border-brand-gold/30 px-6 py-2 rounded-full hover:bg-brand-gold hover:text-black transition-all uppercase tracking-widest font-bold">YouTube'da İzle</a>
+                        </figcaption>
+                    </figure>`;
+                }
+
+                if (item.type === 'map' && item.src) {
+                    let mapUrl = item.src;
+                    if (!mapUrl.startsWith('http')) {
+                        if (mapUrl.includes(' > ')) {
+                            const pts = mapUrl.split(' > ').map(p => p.trim());
+                            const waypoints = pts.length > 2 ? pts.slice(1, -1).map(p => "+to:" + encodeURIComponent(p)).join('') : "";
+                            mapUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(pts[0])}&daddr=${encodeURIComponent(pts[pts.length-1])}${waypoints}&ie=UTF8&output=embed`;
+                        } else {
+                            mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapUrl)}&ie=UTF8&output=embed`;
+                        }
+                    }
+                    html = `<figure class="my-16 reveal active"><div class="map-container"><iframe src="${mapUrl}" allowfullscreen loading="lazy"></iframe></div><figcaption class="image-caption">${item.caption}</figcaption></figure>`;
+                }
+                main.innerHTML += html;
+            });
+
+            main.innerHTML += `
+                <div class="mt-20 pt-10 border-t border-white/5 reveal active text-center">
+                    <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold block mb-10">Bu Hikayeyi Paylaş</span>
+                    <div class="flex items-center justify-center gap-12 text-[11px] font-bold uppercase tracking-widest text-gray-500">
+                        <a href="javascript:void(0);" onclick="share('wa')" class="hover:text-[#25D366]">Whatsapp</a>
+                        <a href="javascript:void(0);" onclick="share('fb')" class="hover:text-[#1877F2]">Facebook</a>
+                        <a href="javascript:void(0);" onclick="share('x')" class="hover:text-white">X</a>
+                    </div>
+                    <div class="mt-12">
+                        <a href="../fotoyol.html" class="text-[10px] uppercase tracking-[0.4em] text-gray-600 hover:text-brand-gold transition-colors font-bold">← Fotoyol Listesine Dön</a>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        function share(p) {
+            const u = encodeURIComponent(window.location.href), t = encodeURIComponent(document.title);
+            if(p==='wa') window.open(`https://api.whatsapp.com/send?text=${t}%20${u}`);
+            if(p==='fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}`);
+            if(p==='x') window.open(`https://twitter.com/intent/tweet?text=${t}&url=${u}`);
+        }
+
+        document.addEventListener('keydown', (e) => { if (e.shiftKey && e.altKey && e.code === 'KeyA') { const t = document.getElementById('admin-trigger'); t.style.display = t.style.display === 'none' ? 'flex' : 'none'; } });
+
+        const mBtn = document.getElementById('mobile-menu-btn'), cBtn = document.getElementById('close-menu-btn'), menu = document.getElementById('mobile-menu');
+        mBtn.onclick = () => menu.classList.add('active');
+        cBtn.onclick = () => menu.classList.remove('active');
+
+        function toggleAdmin() { document.getElementById('admin-panel').classList.toggle('active'); renderAdminPanel(); }
+
+        function renderAdminPanel() {
+            document.getElementById('meta-title').value = articleConfig.meta.title;
+            document.getElementById('meta-location').value = articleConfig.meta.location;
+            document.getElementById('meta-h1').value = articleConfig.meta.heroTitle;
+            document.getElementById('meta-h2').value = articleConfig.meta.heroSubtitle;
+            document.getElementById('meta-info').value = articleConfig.meta.info;
+
+            const list = document.getElementById('item-list');
+            list.innerHTML = '';
+            articleConfig.content.forEach((item, i) => {
+                let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type}</label>`;
+                if (item.type === 'image') {
+                    card += `<input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i}, 'mobile', this.value)">                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${item.exif||''}" oninput="editItem(${i}, 'exif', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
+                } else if (item.type === 'map' || item.type === 'video') {
+                    card += `<input type="text" placeholder="Link veya Rota" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                } else {
+                    card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value}</textarea>`;
+                }
+                card += `</div>`;
+                list.innerHTML += card;
+            });
+        }
+
+        function updateMeta() {
+            articleConfig.meta = { title: document.getElementById('meta-title').value, location: document.getElementById('meta-location').value, heroTitle: document.getElementById('meta-h1').value, heroSubtitle: document.getElementById('meta-h2').value, info: document.getElementById('meta-info').value };
+            renderArticle();
+        }
+
+        function addItem(type) {
+            if (type === 'image') articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
+            else if (type === 'map' || type === 'video') articleConfig.content.push({ type, src: '', caption: '' });
+            else articleConfig.content.push({ type, value: 'Yeni içerik...' });
+            renderAdminPanel(); renderArticle();
+        }
+
+        function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
+        function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
+        
+        function copyCode() { 
+            const configStr = JSON.stringify(articleConfig, null, 2);
+            navigator.clipboard.writeText(configStr).then(() => {
+                showMsg("Veri Kopyalandı!");
+            });
+        }
+
+        function openLightbox(img) { document.getElementById('lightbox-img').src = img.currentSrc || img.src; document.getElementById('lightbox').classList.add('active'); document.body.classList.add('no-scroll'); }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.classList.remove('no-scroll'); }
+
+        const c = document.getElementById('fog-canvas'), cx = c.getContext('2d');
+        let w, h, pArr = [];
+        function rsz() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
+        class P { constructor() { this.rs(); } rs() { this.x = Math.random()*w; this.y = Math.random()*h; this.s = Math.random()*400+200; this.vx = Math.random()*0.2-0.1; this.o = Math.random()*0.3; } up() { this.x+=this.vx; if(this.x<-this.s)this.x=w+this.s; } dr() { cx.beginPath(); let g = cx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.s); g.addColorStop(0,`rgba(150,150,150,${this.o})`); g.addColorStop(1,'transparent'); cx.fillStyle=g; cx.arc(this.x,this.y,this.s,0,Math.PI*2); cx.fill(); } }
+        function anim() { cx.clearRect(0,0,w,h); pArr.forEach(p=>{ p.up(); p.dr(); }); requestAnimationFrame(anim); }
+        window.onload = () => { renderArticle(); rsz(); pArr = Array.from({length:10},()=>new P()); anim(); };
+        window.onresize = rsz;
+    </script>
+</body>
 </html>
+
