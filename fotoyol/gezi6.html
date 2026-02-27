@@ -61,7 +61,7 @@
             position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; 
             filter: grayscale(1) contrast(1.2) invert(0.9); transition: filter 0.5s ease; border: 1px solid rgba(255,255,255,0.05);
         }
-        .video-container { filter: none; }
+        .video-container { filter: none; background: #000; }
         .map-container:hover { filter: grayscale(0.5) contrast(1.1) invert(0); }
         .map-container iframe, .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
@@ -233,29 +233,27 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
+        // KESİN ÇÖZÜM: Parametrelerden arındırılmış saf YouTube Embed
         function formatYoutubeUrl(url) {
             if (!url) return '';
             
-            // Eğer kullanıcı iframe kodunun tamamını yapıştırdıysa src'yi ayıkla
+            // iframe kodu içindeki src'yi çek
             if (url.includes('<iframe')) {
                 const srcMatch = url.match(/src=["']([^"']+)["']/);
                 if (srcMatch) url = srcMatch[1];
             }
 
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+            // En güvenilir Video ID ayıklama regex'i
+            const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube-nocookie\.com|youtube\.com)\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=|shorts\/)?([a-zA-Z0-9_-]{11})/;
             const match = url.match(regExp);
-            
-            if (match && match[2].length == 11) {
-                const videoId = match[2];
-                // enablejsapi=1 ve origin ekleyerek daha stabil hale getiriyoruz
-                let embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0`;
-                
-                // Eğer sayfa bir sunucudaysa origin eklemek güvenliği artırır
-                if (window.location.origin && window.location.origin !== 'null') {
-                    embedUrl += `&origin=${window.location.origin}`;
-                }
-                return embedUrl;
+            const videoId = (match && match[1]) ? match[1] : null;
+
+            if (videoId) {
+                // "Hata 153"ü önlemek için tüm JS API ve Origin parametrelerini sildik.
+                // Sadece temel rel=0 (ilgili videoları kapatma) bıraktık.
+                return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
             }
+            
             return url;
         }
 
@@ -291,20 +289,30 @@
                 
                 if (item.type === 'video' && item.src) {
                     const embedUrl = formatYoutubeUrl(item.src);
+                    
+                    // Yedek link için orijinal adresi temizle
+                    let rawLink = item.src;
+                    if (rawLink.includes('<iframe')) {
+                        const srcMatch = rawLink.match(/src=["']([^"']+)["']/);
+                        if (srcMatch) rawLink = srcMatch[1];
+                    }
+
                     html = `
-                    <figure class="my-16 reveal active">
-                        <div class="video-container">
+                    <figure class="my-24 reveal active">
+                        <div class="video-container shadow-2xl">
                             <iframe 
                                 src="${embedUrl}" 
-                                title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen
-                                referrerpolicy="no-referrer-when-downgrade"
+                                referrerpolicy="no-referrer"
                                 loading="lazy">
                             </iframe>
                         </div>
-                        <figcaption class="image-caption">${item.caption || 'Video İzle'}</figcaption>
+                        <figcaption class="image-caption flex flex-col items-center gap-4">
+                            <span class="opacity-60">${item.caption || 'Video İçeriği'}</span>
+                            <a href="${rawLink}" target="_blank" class="text-[9px] border border-brand-gold/20 px-6 py-2 rounded-full hover:bg-brand-gold hover:text-black transition-all uppercase tracking-widest font-bold bg-brand-gold/5">YouTube'da İzle</a>
+                        </figcaption>
                     </figure>`;
                 }
 
@@ -394,7 +402,6 @@
         function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
         
         function copyCode() { 
-            // Tüm veriyi JSON olarak kopyala
             const configStr = JSON.stringify(articleConfig, null, 2);
             navigator.clipboard.writeText(configStr).then(() => {
                 alert("İçerik Verisi Kopyalandı!\n\nŞimdi Not Defteri ile açtığınız dosyadaki 'articleConfig' kısmına bu veriyi yapıştırın.");
