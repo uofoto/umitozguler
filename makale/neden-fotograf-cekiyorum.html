@@ -72,6 +72,10 @@
             width: 100%;
         }
         .no-scroll { overflow: hidden; }
+
+        /* Hamburger Animasyon Sınıfları */
+        .rotate-45 { transform: translateY(8px) rotate(45deg); }
+        .-rotate-45 { transform: translateY(-8px) rotate(-45deg); }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -80,13 +84,13 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
-    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-    </div>
-    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-        FINE ART PHOTOGRAPHY
-    </span>
-</a>
+                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                    </div>
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                        FINE ART PHOTOGRAPHY
+                    </span>
+                </a>
                 <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
                     <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
@@ -211,24 +215,25 @@
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menuToggle = document.getElementById('menu-toggle');
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('menu-overlay');
-        const icon = document.getElementById('menu-icon');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
 
         function toggleMenu() {
             menu.classList.toggle('active');
             if (overlay) overlay.classList.toggle('hidden');
             document.body.classList.toggle('no-scroll');
             
-            if (menu.classList.contains('active')) {
-                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-            } else {
-                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            }
+            // Hamburger ikon animasyonu
+            line1.classList.toggle('rotate-45');
+            line2.classList.toggle('opacity-0');
+            line3.classList.toggle('-rotate-45');
         }
 
-        menuBtn.onclick = toggleMenu;
+        if (menuToggle) menuToggle.onclick = toggleMenu;
         if (overlay) overlay.onclick = toggleMenu;
 
         function shareOnWhatsApp() {
@@ -242,7 +247,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
