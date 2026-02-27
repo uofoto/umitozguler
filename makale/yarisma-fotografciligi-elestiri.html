@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QW3FEBRP69');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yarışma Fotoğrafçılığı: Bir Sanat mı, Bir Şablon mu? | Ümit Özgüler</title>
@@ -23,7 +16,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'brand-black': '#121212', 'brand-dark': '#1a1a1a', 'brand-gold': '#c5a059', 'brand-orange': '#ff8c00' },
+                    colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059' },
                     fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
                 }
             }
@@ -34,118 +27,121 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.5rem; line-height: 1.8; }
         .article-content strong { color: white; font-weight: 600; }
-
-        .nav-link-custom { position: relative; transition: color 0.3s ease; }
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
-            background-color: #ff8c00;
-            transition: width 0.3s ease;
-        }
-        .nav-link-custom:hover::after { width: 100%; }
-        .nav-link-custom:hover { color: #ff8c00; }
-
-        #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
-        #mobile-menu.active { transform: translateX(0); }
-        .no-scroll { overflow: hidden; }
+        #mobile-menu { transition: all 0.3s ease-in-out; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
 
-    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
+    <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-40">
-                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-                    </div>
-                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-                        FINE ART PHOTOGRAPHY
-                    </span>
+                <a href="../index.html" class="text-2xl tracking-widest text-white transition-colors">
+                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                 </a>
-                
                 <div class="hidden md:flex space-x-12">
-                    <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
-                    <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
-                    <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
-                    <a href="../analizler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Analizler</a>
-                    <a href="../dusunceler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] text-brand-orange py-1">Düşünceler</a>
-                    <a href="../fotoyol.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
-                    <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
+                    <a href="../index.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Ana Sayfa</a>
+                    <a href="../about.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Hakkımda</a>
+                    <a href="../portfolio.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">Portfolyo</a>
+                    <a href="../dusunceler.html" class="text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Düşünceler</a>
+                    <a href="../contact.html" class="text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-gold py-1">İletişim</a>
                 </div>
-
-                <button id="menu-toggle-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
-                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
-                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
-                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-gold p-2 focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
-
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
-            <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
-            <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
-            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
-            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Analizler</a>
-            <a href="../dusunceler.html" class="text-brand-orange font-bold py-1 text-[11px] uppercase tracking-[0.15em]">Düşünceler</a>
-            <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Fotoyol</a>
-            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
+        <div id="mobile-menu" class="hidden bg-brand-dark border-b border-white/5 w-full md:hidden">
+            <div class="px-6 py-8 space-y-4 flex flex-col items-start text-xs font-semibold uppercase tracking-[0.2em]">
+                <a href="../index.html" class="hover:text-brand-gold">Ana Sayfa</a>
+                <a href="../about.html" class="hover:text-brand-gold">Hakkımda</a>
+                <a href="../portfolio.html" class="hover:text-brand-gold">Portfolyo</a>
+                <a href="../dusunceler.html" class="text-brand-gold">Düşünceler</a>
+                <a href="../contact.html" class="hover:text-brand-gold">İletişim</a>
+            </div>
         </div>
     </nav>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden"></div>
-
-    <article class="pt-48 pb-20 px-6 flex-grow">
+    <article class="pt-32 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto">
             
             <div class="text-center mb-10">
-                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
-                    ← Tüm Düşünceler
+                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors border-b border-transparent hover:border-brand-gold pb-1">
+                    ← Tüm Yazılar
                 </a>
                 <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-                    Yarışma Fotoğrafçılığı: Bir Sanat mı, Bir Şablon mu?
+                    Yarışma Fotoğrafçılığı: <br> Bir Sanat mı, Bir Şablon mu?
                 </h1>
-                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-orange space-x-4">
-                    <span>12 OCAK 2026</span>
+                <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-gold space-x-4">
+                    <span>25 Ocak 2026</span>
                     <span class="text-gray-600">|</span>
-                    <span>Eleştirel Analiz</span>
+                    <span>Eleştiri & Deneme</span>
                 </div>
             </div>
 
             <div class="mb-12 group">
                 <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
-                    <img src="../img/28.webp" alt="Yarışma Fotoğrafçılığı Eleştirisi" class="w-full h-auto grayscale transition-all duration-1000 ease-in-out group-hover:grayscale-0 group-hover:scale-[1.01]">
+                    <img src="../img/28.webp" alt="Yarışma Fotoğrafçılığı Eleştirisi" class="w-full h-auto grayscale opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:scale-[1.01]">
+                    
+                    <div class="absolute bottom-6 right-6 hidden md:flex space-x-6 text-[9px] tracking-[0.2em] text-white/70 bg-black/70 backdrop-blur-lg px-6 py-4 rounded-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 uppercase">
+                        <div class="flex flex-col">
+                            <span class="text-brand-gold mb-1 font-bold">Telif</span>
+                            <span>&copy; Ümit Özgüler</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10 pl-6">
+                            <span class="text-brand-gold mb-1 font-bold">Çekim Yeri</span>
+                            <span>Artvin / Yusufeli</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10 pl-6">
+                            <span class="text-brand-gold mb-1 font-bold">Kategori</span>
+                            <span>Sokaklar</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10 pl-6">
+                            <span class="text-brand-gold mb-1 font-bold">Çekim Tarihi</span>
+                            <span>2009</span>
+                        </div>
+                    </div>
                 </div>
+                
+                <div class="flex flex-col items-center mt-8 md:hidden">
+                    <p class="text-[11px] text-gray-400 mb-6 tracking-[0.5em] uppercase font-medium">
+                        &copy; Ümit Özgüler
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 w-full text-center uppercase tracking-[0.1em]">
+                        <div class="flex flex-col">
+                            <span class="text-[7px] text-gray-500 mb-1">Çekim Yeri</span>
+                            <span class="text-[9px] text-brand-gold font-medium">Artvin</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10">
+                            <span class="text-[7px] text-gray-500 mb-1">Kategori</span>
+                            <span class="text-[9px] text-brand-gold font-medium">Sokaklar</span>
+                        </div>
+                        <div class="flex flex-col border-l border-white/10">
+                            <span class="text-[7px] text-gray-500 mb-1">Tarih</span>
+                            <span class="text-[9px] text-brand-gold font-medium">2008</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mt-14 mb-14">
-                    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-orange/60 to-transparent"></div>
+                    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div>
                 </div>
             </div>
 
             <div class="article-content text-gray-300 font-light text-base md:text-lg text-left leading-relaxed">
                 <p>
-                    Son yıllarda düzenlenen fotoğraf yarışmalarına gönderilen karelere baktığımızda, garip bir tek tipleşme ve <strong>"kurgu"</strong> merakı göze çarpıyor. Fotoğrafçının tanıklık etme sorumluluğu, yerini ödül alma hırsıyla şekillenen sahne tasarımcılığına bırakmış durumda.
+                    <span class="text-4xl float-left mr-2 mt-[-10px] text-brand-gold font-serif">Ü</span>lkemizde fotoğraf yarışmaları, ne yazık ki sanatsal bir keşif alanından çok, belirli görsel şablonların tekrarlandığı birer "onay mekanizmasına" dönüştü. Kabul edelim; bugün herhangi bir yarışma sonucuna baktığınızda birbirinin kopyası sahneler görürsünüz. Benzer ışık hileleri, aynı kompozisyon matematiği ve artık klişeleşmiş konular... Fotoğrafçı artık hayatın peşinde koşan bir avcı değil, ödül getiren formülün memuru haline gelmiş durumda.
                 </p>
-
-                <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Ojeli Tırnaklar ve Köylü Kadınlar</h3>
                 <p>
-                    En çok eleştirilen konulardan biri; tarlada çalışan, hamur açan veya odun taşıyan teyzelerin/kadınların ellerindeki <strong>modern ojelerdir.</strong> Ödül avcısı fotoğrafçı, o anki ışığı ve kompozisyonu o kadar dert edinmiştir ki; kurguladığı sahnenin gerçeklikle olan bağının kopukluğunu fark etmez bile. Bu, fotoğrafın belgesel gücüne indirilmiş bir darbedir.
+                    Bu "fabrikasyon" estetiğin en acıklı tarafı ise <strong>kurgunun gerçekliği öldürmesidir.</strong> Tarlada çalışıyormuş gibi poz verdirilen ama parmaklarındaki ojeleri gizlenememiş modeller, o coğrafyanın dokusuna ait olmayan yapay kıyafetler ve her köşesi "ayarlanmış" sahneler... Gerçeği eğip bükmek, fotoğrafın en temel gücünü; yani tanıklık etme özelliğini yok saymaktır. Siz bu kaydı mizanpajla, aşırı müdahaleyle ve plastik duygularla bozduğunuzda geriye dürüst bir kare değil, sadece iyi bir grafik uygulaması kalıyor.
                 </p>
-
-                <h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide">Şablonlaşmış Başarı</h3>
-                <p>
-                    Belirli konuların (tandır başında dumanlar, yaşlı amca portreleri, ağ atan balıkçılar) garanti ödül getireceği inancı, fotoğrafçıları yeni bir şey denemekten alıkoyuyor. Yarışma jürilerinin de bu kalıpları ödüllendirmeye devam etmesi, süreci bir kısır döngüye sokuyor. Sanat, şablonlara sığmaz; <strong>sanat, o şablonları yırtıp atmaktır.</strong>
-                </p>
-
-                <blockquote class="border-l-2 border-brand-orange pl-6 my-10 italic text-white/80 text-lg md:text-xl leading-relaxed">
-                    "Bir fotoğrafçı, yarışma şartnamesine göre değil, vicdanına ve gözünün gördüğü hakikate göre deklanşöre basmalıdır."
+                <blockquote class="border-l-2 border-brand-gold pl-6 my-10 italic text-white/80 text-lg md:text-xl">
+                    “Sanat olmasına gerek yoktur fotoğrafın. Fotoğraf tarih olayıdır. Tarihi zaptediyorsun. Bir makina ile tarihi durduruyorsun.”
                 </blockquote>
-
                 <p>
-                    Özetle, yarışmalar fotoğrafın tanıtımı için önemli olabilir; ancak bir amaç değil, sadece bir araç olarak kalmalıdır. Fotoğrafın asıl ödülü, duvarda asılı duran bir kupa değil, izleyicinin zihninde ve kalbinde bıraktığı o silinmez izdir.
+                    <strong>Cartier-Bresson</strong>'un o meşhur "karar anı" ilkesi, yerini "kurgu anına" bıraktı. Hayatın kendi doğal akışında saklı olan o mucizevi anları yakalamak yerine, sahneyi manipüle ederek mükemmelliği inşa etmeye çalışıyoruz. Oysa fotoğrafın gücü, o sahteliği aşan dürüstlüğündedir. Bir köylünün nasırlı elini çekmek yerine, ona nasır taklidi yaptırdığınızda izleyicinin ruhuna dokunamazsınız. <strong>Ara Güler</strong>'in dediği gibi, fotoğraf bir tarih olayıdır ve tarih kurguyla değil, gerçekle yazılır.
+                </p>
+                <p>
+                    Artık bu madalya sevdasını bir kenara bırakıp hakikate dönmenin vakti geldi. Benim için bir fotoğrafın değeri, jürinin altına attığı imzayla değil, hayatın o doğal ve kusurlu akışını ne kadar dürüstçe mühürlediğiyle ölçülür vesselam. 
                 </p>
             </div>
 
@@ -157,62 +153,36 @@
                     <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-widest font-medium">Twitter</a>
                 </div>
             </div>
+
+            <div class="mb-12 pt-8 border-t border-white/10 flex justify-between items-center text-xs text-gray-500 tracking-widest uppercase text-center font-medium">
+                <span class="w-full text-center">Yazar: Ümit Özgüler</span>
+            </div>
         </div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
-        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+        <p class="text-[10px] tracking-[0.2em] text-gray-700 uppercase">
+            &copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
+        </p>
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('menu-toggle-btn');
-        const menu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
-        const line1 = document.getElementById('line1');
-        const line2 = document.getElementById('line2');
-        const line3 = document.getElementById('line3');
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-        function toggleMenu() {
-            menu.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.classList.toggle('no-scroll');
-            
-            line1.classList.toggle('rotate-45');
-            line1.classList.toggle('translate-y-2');
-            line2.classList.toggle('opacity-0');
-            line3.classList.toggle('-rotate-45');
-            line3.classList.toggle('-translate-y-2');
+        function shareOnWhatsApp() {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank');
         }
-
-        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-        if (overlay) overlay.addEventListener('click', toggleMenu);
-
-        // Bildirim gönderme fonksiyonu
-        function paylasimiBildir(platform) {
-            fetch("https://formspree.io/f/xgolegaa", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    mesaj: "Bir okuyucu düşünce yazınızı paylaştı!",
-                    makale: document.title,
-                    url: window.location.href,
-                    platform: platform
-                })
-            }).catch(error => console.log('Bildirim gönderilemedi.'));
+        function shareOnFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600');
         }
-
-        function shareOnWhatsApp() { 
-            paylasimiBildir('WhatsApp');
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank'); 
-        }
-        function shareOnFacebook() { 
-            paylasimiBildir('Facebook');
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 'facebook-share-dialog', 'width=800,height=600'); 
-        }
-        function shareOnTwitter() { 
-            paylasimiBildir('Twitter');
-            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); 
+        function shareOnTwitter() {
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank');
         }
     </script>
 </body>
 </html>
+
