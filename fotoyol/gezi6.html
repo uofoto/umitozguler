@@ -149,8 +149,7 @@
     <main id="article-main" class="max-w-4xl mx-auto px-6 py-16 w-full article-content"></main>
 
     <footer class="bg-brand-black py-12 border-t border-white/5 text-center mt-auto">
-        <p class="text-[9px] tracking-[0.3em] text-gray-700 uppercase">© 2026 Ümit Özgüler Tüm Hakları Saklıdır.</p>
-    </footer>
+        <p class="text-[9px] tracking-[0.3em] text-gray-700 uppercase">© 2026 Ümit Özgüler Tüm Hakları Saklıdır.</p>    </footer>
 
     <!-- DÜZENLEME PANELİ -->
     <div id="admin-panel">
@@ -236,10 +235,26 @@
 
         function formatYoutubeUrl(url) {
             if (!url) return '';
+            
+            // Eğer kullanıcı iframe kodunun tamamını yapıştırdıysa src'yi ayıkla
+            if (url.includes('<iframe')) {
+                const srcMatch = url.match(/src=["']([^"']+)["']/);
+                if (srcMatch) url = srcMatch[1];
+            }
+
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
             const match = url.match(regExp);
+            
             if (match && match[2].length == 11) {
-                return `https://www.youtube.com/embed/${match[2]}?rel=0&showinfo=0&autoplay=0`;
+                const videoId = match[2];
+                // enablejsapi=1 ve origin ekleyerek daha stabil hale getiriyoruz
+                let embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0`;
+                
+                // Eğer sayfa bir sunucudaysa origin eklemek güvenliği artırır
+                if (window.location.origin && window.location.origin !== 'null') {
+                    embedUrl += `&origin=${window.location.origin}`;
+                }
+                return embedUrl;
             }
             return url;
         }
@@ -281,8 +296,11 @@
                         <div class="video-container">
                             <iframe 
                                 src="${embedUrl}" 
+                                title="YouTube video player"
+                                frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen
+                                referrerpolicy="no-referrer-when-downgrade"
                                 loading="lazy">
                             </iframe>
                         </div>
@@ -349,13 +367,9 @@
             articleConfig.content.forEach((item, i) => {
                 let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type}</label>`;
                 if (item.type === 'image') {
-                    card += `<input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">
-                             <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i}, 'mobile', this.value)">
-                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${item.exif||''}" oninput="editItem(${i}, 'exif', this.value)">
-                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i}, 'mobile', this.value)">                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${item.exif||''}" oninput="editItem(${i}, 'exif', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else if (item.type === 'map' || item.type === 'video') {
-                    card += `<input type="text" placeholder="Link veya Rota" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">
-                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="Link veya Rota" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else {
                     card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value}</textarea>`;
                 }
