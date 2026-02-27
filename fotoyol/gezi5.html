@@ -178,9 +178,9 @@
         <div class="mt-12 pt-8 border-t border-white/5 reveal text-center">
             <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold block mb-8">Bu Hikayeyi Paylaş</span>
             <div class="flex items-center justify-center gap-12 text-[11px] font-bold uppercase tracking-widest">
-                <a href="https://api.whatsapp.com/send?text=Bursa" target="_blank" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
-                <a href="https://www.facebook.com" target="_blank" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
-                <a href="https://twitter.com" target="_blank" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
+                <a href="javascript:void(0);" onclick="shareOnWhatsApp()" class="text-gray-500 hover-whatsapp transition-colors">Whatsapp</a>
+                <a href="javascript:void(0);" onclick="shareOnFacebook()" class="text-gray-500 hover-facebook transition-colors">Facebook</a>
+                <a href="javascript:void(0);" onclick="shareOnX()" class="text-gray-500 hover-x transition-colors">Twitter (X)</a>
             </div>
             <div class="mt-10">
                 <a href="../fotoyol.html" class="text-[10px] uppercase tracking-[0.4em] text-gray-600 hover:text-brand-gold transition-colors font-bold">← Fotoyol Listesine Dön</a>
@@ -221,14 +221,22 @@
         function closeLightbox() { lb.classList.remove('active'); lb.style.opacity = '0'; document.body.classList.remove('no-scroll'); setTimeout(() => { if (!lb.classList.contains('active')) { lb.style.display = 'none'; lbImg.src = ''; } }, 500); }
         lb.onclick = (e) => { if (e.target === lb || e.target === lbImg) closeLightbox(); };
         document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLightbox(); });
+
+        // SOSYAL MEDYA PAYLAŞIM FONKSİYONLARI
+        function shareOnWhatsApp() {
+            const pageUrl = encodeURIComponent(window.location.href);
+            const pageTitle = encodeURIComponent(document.title);
+            window.open(`https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`, '_blank');
+        }
+        function shareOnFacebook() {
+            const pageUrl = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`, '_blank');
+        }
+        function shareOnX() {
+            const pageUrl = encodeURIComponent(window.location.href);
+            const pageTitle = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`, '_blank');
+        }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
