@@ -95,11 +95,15 @@
         .save-help { background: #1a1a1a; border: 1px dashed #c5a059; padding: 15px; margin-top: 20px; border-radius: 8px; }
         .save-help p { font-size: 10px; color: #aaa; line-height: 1.5; margin-bottom: 8px; }
         .save-help strong { color: #ff8c00; }
+
+        /* Custom Notification */
+        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #c5a059; color: black; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body class="text-gray-300 antialiased flex flex-col min-h-screen">
 
     <div id="progress-bar"></div>
+    <div id="custom-alert">İşlem Başarılı</div>
 
     <!-- HERO SECTION -->
     <div id="hero-section" class="relative h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black">
@@ -181,7 +185,6 @@
                 <button onclick="addItem('map')" class="admin-btn col-span-2 !bg-brand-orange !text-black">Rota Haritası</button>
             </div>
             
-            <!-- KAYIT YARDIM BÖLÜMÜ -->
             <div class="save-help">
                 <p><strong>NASIL KAYDEDİLİR?</strong></p>
                 <p>1. Aşağıdaki butona basarak verilerinizi kopyalayın.<br>
@@ -193,7 +196,7 @@
     </div>
 
     <!-- PANEL TETİKLEYİCİ -->
-    <button id="admin-trigger" onclick="toggleAdmin()" style="display: none;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center shadow-2xl">
+    <button id="admin-trigger" onclick="toggleAdmin()" style="display: none;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
         <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </button>
 
@@ -203,22 +206,22 @@
     <script>
         /**
          * ======================================================
-         * VERİLERİ BURAYA YAPIŞTIRIN (articleConfig)
+         * VERİ MERKEZİ (Sizin istediğiniz video buraya eklendi!)
          * ======================================================
          */
         let articleConfig = {
             meta: {
-                title: "Profesyonel Gezi Taslağı",
-                location: "KEŞİF ROTASI",
-                heroTitle: "Hikayenizi Burada Başlatın",
-                heroSubtitle: "Yolculuğun Ruhu",
+                title: "FotoYol Gezi Yazısı",
+                location: "YENİ ROTA / TÜRKİYE",
+                heroTitle: "Bir Yolculuk Hikayesi",
+                heroSubtitle: "Doğa ve Fotoğraf",
                 info: "Fine Art Photography • 2026"
             },
             content: [
-                { type: 'text', value: 'Bu modül artık EXIF verisi, ilerleme çubuğu ve video desteği gibi profesyonel araçlarla donatıldı.' },
-                { type: 'image', src: 'img/8.webp', mobile: '', caption: "Yusufeli Dağları", exif: "Sony A7R IV • 24mm • f/8 • 1/250s • ISO 100" },
-                { type: 'tip', value: 'Bölgeye sabah saatlerinde giderseniz sis efektini daha iyi yakalayabilirsiniz.' },
-                { type: 'map', src: 'Erzurum > Yusufeli', caption: "Gezi Güzergahı" }
+                { type: 'text', value: 'Gezi rotamızın en can alıcı noktalarından birini aşağıdaki videoda izleyebilirsiniz.' },
+                { type: 'video', src: 'https://www.youtube.com/watch?v=fo8peC2oguk', caption: "Gezi Rotası Video Kaydı" },
+                { type: 'heading', value: 'Gezi Notları' },
+                { type: 'text', value: 'Bu yazının devamını panel üzerinden düzenleyerek oluşturabilirsiniz.' }
             ]
         };
 
@@ -233,30 +236,27 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
-        // EN STABİL ÇÖZÜM: Parametrelerden arındırılmış, ham YouTube Embed Mantığı
+        // EN SAF ÇÖZÜM: Karmaşık güvenlik duvarlarını aşan YouTube Temizleyici
         function formatYoutubeUrl(url) {
             if (!url) return '';
-            
-            // Eğer tüm iframe kodu yapıştırılmışsa, src değerini çek
             if (url.includes('<iframe')) {
                 const srcMatch = url.match(/src=["']([^"']+)["']/);
                 if (srcMatch) url = srcMatch[1];
             }
-
-            // Video ID'sini her türlü linkten (shorts, mobil, web, embed) ayıklayan regex
-            const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=([\w-]{11})|v\/([\w-]{11})|embed\/([\w-]{11})|shorts\/([\w-]{11})|([\w-]{11}))/;
+            // ID Yakalama Regex
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
-            
-            // Eşleşen ID'yi bul (regex gruplarından biri dolu olacaktır)
-            const videoId = match ? (match[1] || match[2] || match[3] || match[4] || match[5]) : null;
-
-            if (videoId) {
-                // "Hata 153"ü önlemek için tüm JS API, Origin ve karmaşık parametreleri sildik.
-                // Sadece temel 'rel=0' parametresini ekliyoruz.
-                return `https://www.youtube.com/embed/${videoId}?rel=0`;
+            if (match && match[2].length == 11) {
+                // Hiçbir ekstra parametre (origin, enablejsapi vb.) eklemiyoruz çünkü hatayı bunlar tetikliyor
+                return `https://www.youtube.com/embed/${match[2]}?rel=0`;
             }
-            
             return url;
+        }
+
+        function showMsg(txt) {
+            const el = document.getElementById('custom-alert');
+            el.innerText = txt; el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
         }
 
         function renderArticle() {
@@ -291,30 +291,20 @@
                 
                 if (item.type === 'video' && item.src) {
                     const embedUrl = formatYoutubeUrl(item.src);
-                    
-                    // Yedek (Fallback) Link için ham URL'yi hazırla
-                    let cleanUrl = item.src;
-                    if (cleanUrl.includes('<iframe')) {
-                        const srcMatch = cleanUrl.match(/src=["']([^"']+)["']/);
-                        if (srcMatch) cleanUrl = srcMatch[1];
+                    let rawLink = item.src;
+                    if (rawLink.includes('<iframe')) {
+                        const srcMatch = rawLink.match(/src=["']([^"']+)["']/);
+                        if (srcMatch) rawLink = srcMatch[1];
                     }
 
                     html = `
-                    <figure class="my-24 reveal active">
+                    <figure class="my-24 reveal active text-center">
                         <div class="video-container shadow-2xl">
-                            <iframe 
-                                src="${embedUrl}" 
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen
-                                referrerpolicy="strict-origin-when-cross-origin">
-                            </iframe>
+                            <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
                         </div>
-                        <figcaption class="image-caption flex flex-col items-center gap-4">
-                            <span class="opacity-60">${item.caption || 'Video İzle'}</span>
-                            <a href="${cleanUrl}" target="_blank" class="text-[9px] border border-brand-gold/20 px-6 py-2 rounded-full hover:bg-brand-gold hover:text-black transition-all uppercase tracking-widest font-bold bg-brand-gold/5">
-                                Video Açılmazsa YouTube'da İzle
-                            </a>
+                        <figcaption class="image-caption mt-6 flex flex-col items-center gap-4">
+                            <span class="opacity-50 italic">${item.caption || 'Video'}</span>
+                            <a href="${rawLink}" target="_blank" class="text-[9px] border border-brand-gold/30 px-6 py-2 rounded-full hover:bg-brand-gold hover:text-black transition-all uppercase tracking-widest font-bold">YouTube'da İzle</a>
                         </figcaption>
                     </figure>`;
                 }
@@ -407,7 +397,7 @@
         function copyCode() { 
             const configStr = JSON.stringify(articleConfig, null, 2);
             navigator.clipboard.writeText(configStr).then(() => {
-                alert("İçerik Verisi Kopyalandı!\n\nŞimdi Not Defteri ile açtığınız dosyadaki 'articleConfig' kısmına bu veriyi yapıştırın.");
+                showMsg("Veri Kopyalandı!");
             });
         }
 
