@@ -16,7 +16,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'brand-black': '#050505', 'brand-dark': '#0f0f0f', 'brand-gold': '#c5a059' },
+                    colors: { 'brand-black': '#121212', 'brand-dark': '#1a1a1a', 'brand-gold': '#c5a059', 'brand-orange': '#ff8c00' },
                     fontFamily: { sans: ['"Montserrat"', 'sans-serif'] }
                 }
             }
@@ -27,7 +27,51 @@
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
         .article-content p { margin-bottom: 1.8rem; line-height: 1.9; }
         .article-content strong { color: white; font-weight: 600; }
-        #mobile-menu { transition: all 0.3s ease-in-out; }
+        
+        /* Sağdan Açılan Menü Konfigürasyonu */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        @keyframes lineDown {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+        .menu-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            background-color: #ff8c00;
+            height: 0;
+        }
+        #mobile-menu.active .menu-line {
+            animation: lineDown 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        /* Üst Menü Linkleri İçin Alt Çizgi Efekti */
+        .nav-link-custom {
+            position: relative;
+        }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: 0;
+            left: 0;
+            background-color: #ff8c00;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -35,45 +79,47 @@
     <nav class="fixed w-full z-50 bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="text-2xl tracking-widest text-white transition-colors">
-                    <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-                </a>
-                 <div class="hidden md:flex space-x-12">
-                    <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
-                    <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
-                    <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
-                    <a href="../analizler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Analizler</a>
-                    <a href="../dusunceler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] text-brand-orange py-1">Düşünceler</a>
-                    <a href="../fotoyol.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
-                    <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
+                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
+    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+    </div>
+    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+        FINE ART PHOTOGRAPHY
+    </span>
+</a>
+                <div class="hidden md:flex space-x-12">
+                    <a href="../index.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">Portfolyo</a>
+                    <a href="../dusunceler.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] text-brand-gold border-b border-brand-gold py-1">Düşünceler</a>
+                    <a href="../contact.html" class="nav-link-custom text-xs font-medium uppercase tracking-[0.2em] hover:text-brand-orange py-1 transition-colors">İletişim</a>
                 </div>
-
-                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
-                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
-                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
-                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-orange p-2 relative z-[60]">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
             </div>
         </div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
-            <div id="menu-line" class="absolute left-0 top-0 w-[1.5px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
-            <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
-            <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
-            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
-            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Analizler</a>
-            <a href="../dusunceler.html" class="text-brand-orange font-bold py-1 text-[11px] uppercase tracking-[0.15em]">Düşünceler</a>
-            <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Fotoyol</a>
-            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-dark z-50 shadow-2xl md:hidden flex flex-col pt-32 px-8">
+            <div class="menu-line"></div>
+            <div class="space-y-4 flex flex-col items-start text-xs font-semibold uppercase tracking-[0.2em]">
+                <a href="../index.html" class="hover:text-brand-orange transition-colors">Ana Sayfa</a>
+                <a href="../about.html" class="hover:text-brand-orange transition-colors">Hakkımda</a>
+                <a href="../portfolio.html" class="hover:text-brand-orange transition-colors">Portfolyo</a>
+                <a href="../dusunceler.html" class="text-brand-gold">Düşünceler</a>
+                <a href="../contact.html" class="hover:text-brand-orange transition-colors">İletişim</a>
+            </div>
         </div>
-        </div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
     </nav>
 
     <article class="pt-32 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto">
             
             <div class="text-center mb-10">
-                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-gold transition-colors border-b border-transparent hover:border-brand-gold pb-1">
+                <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
                     ← Tüm Yazılar
                 </a>
                 <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
@@ -110,26 +156,6 @@
                     </div>
                 </div>
                 
-                <div class="flex flex-col items-center mt-8 md:hidden">
-                    <p class="text-[11px] text-gray-400 mb-6 tracking-[0.5em] uppercase font-medium">
-                        &copy; Ümit Özgüler
-                    </p>
-                    <div class="grid grid-cols-3 gap-2 w-full text-center uppercase tracking-[0.1em]">
-                        <div class="flex flex-col">
-                            <span class="text-[7px] text-gray-500 mb-1">Çekim Yeri</span>
-                            <span class="text-[9px] text-brand-gold font-medium">Bilecik</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10">
-                            <span class="text-[7px] text-gray-500 mb-1">Kategori</span>
-                            <span class="text-[9px] text-brand-gold font-medium">Soyut</span>
-                        </div>
-                        <div class="flex flex-col border-l border-white/10">
-                            <span class="text-[7px] text-gray-500 mb-1">Tarih</span>
-                            <span class="text-[9px] text-brand-gold font-medium">2016</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="mt-14 mb-14">
                     <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div>
                 </div>
@@ -184,10 +210,24 @@
 
     <script>
         const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+        const icon = document.getElementById('menu-icon');
+
+        function toggleMenu() {
+            menu.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('hidden');
+            document.body.classList.toggle('no-scroll');
+            
+            if (menu.classList.contains('active')) {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        }
+
+        menuBtn.onclick = toggleMenu;
+        if (overlay) overlay.onclick = toggleMenu;
 
         function shareOnWhatsApp() {
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank');
@@ -200,6 +240,6 @@
         }
     </script>
 </body>
-</html>
 
+</html>
 
