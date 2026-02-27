@@ -72,6 +72,11 @@
             width: 100%;
         }
         .no-scroll { overflow: hidden; }
+
+        /* Hamburger Animasyonu Sınıfları */
+        .menu-open #line1 { transform: translateY(8px) rotate(45deg); }
+        .menu-open #line2 { opacity: 0; }
+        .menu-open #line3 { transform: translateY(-8px) rotate(-45deg); }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 font-sans antialiased flex flex-col min-h-screen page-animate">
@@ -80,14 +85,14 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
                 <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
-    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
-        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
-    </div>
-    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-        FINE ART PHOTOGRAPHY
-    </span>
-</a>
-               <div class="hidden md:flex space-x-12">
+                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                    </div>
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                        FINE ART PHOTOGRAPHY
+                    </span>
+                </a>
+                <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
                     <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
                     <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
@@ -106,7 +111,7 @@
         </div>
 
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-6 space-y-2 z-[100] shadow-2xl md:hidden">
-            <div id="menu-line" class="absolute left-0 top-0 w-[1.5px] bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
+            <div id="menu-line" class="menu-line"></div>
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Hakkımda</a>
             <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Portfolyo</a>
@@ -115,13 +120,11 @@
             <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">Fotoyol</a>
             <a href="../contact.html" class="hover:text-brand-orange transition-colors py-1 text-white text-[11px] font-semibold uppercase tracking-[0.15em]">İletişim</a>
         </div>
-          </div>
         <div id="menu-overlay" class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
     </nav>
 
     <article class="pt-32 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto">
-            
             <div class="text-center mb-10">
                 <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
                     ← Tüm Yazılar
@@ -139,7 +142,6 @@
             <div class="mb-12 group">
                 <div class="relative overflow-hidden rounded-sm bg-brand-dark shadow-2xl">
                     <img src="../img/28.webp" alt="Yarışma Fotoğrafçılığı Eleştirisi" class="w-full h-auto grayscale opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:scale-[1.01]">
-                    
                     <div class="absolute bottom-6 right-6 hidden md:flex space-x-6 text-[9px] tracking-[0.2em] text-white/70 bg-black/70 backdrop-blur-lg px-6 py-4 rounded-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 uppercase">
                         <div class="flex flex-col">
                             <span class="text-brand-gold mb-1 font-bold">Telif</span>
@@ -159,7 +161,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="mt-14 mb-14">
                     <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/90 to-transparent"></div>
                 </div>
@@ -205,24 +206,18 @@
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menuBtn = document.getElementById('menu-toggle');
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('menu-overlay');
-        const icon = document.getElementById('menu-icon');
 
         function toggleMenu() {
             menu.classList.toggle('active');
             if (overlay) overlay.classList.toggle('hidden');
             document.body.classList.toggle('no-scroll');
-            
-            if (menu.classList.contains('active')) {
-                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-            } else {
-                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            }
+            menuBtn.classList.toggle('menu-open');
         }
 
-        menuBtn.onclick = toggleMenu;
+        if (menuBtn) menuBtn.onclick = toggleMenu;
         if (overlay) overlay.onclick = toggleMenu;
 
         function shareOnWhatsApp() {
@@ -236,9 +231,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
-
-
