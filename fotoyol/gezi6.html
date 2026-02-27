@@ -233,23 +233,27 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
-        // SAF ÇÖZÜM: Karmaşık parametrelerden arındırılmış YouTube Embed Fonksiyonu
+        // EN STABİL ÇÖZÜM: Parametrelerden arındırılmış, ham YouTube Embed Mantığı
         function formatYoutubeUrl(url) {
             if (!url) return '';
             
-            // iframe kodu içinden src ayıklama
+            // Eğer tüm iframe kodu yapıştırılmışsa, src değerini çek
             if (url.includes('<iframe')) {
                 const srcMatch = url.match(/src=["']([^"']+)["']/);
                 if (srcMatch) url = srcMatch[1];
             }
 
-            // Video ID'sini bulmak için en sade regex
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            // Video ID'sini her türlü linkten (shorts, mobil, web, embed) ayıklayan regex
+            const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=([\w-]{11})|v\/([\w-]{11})|embed\/([\w-]{11})|shorts\/([\w-]{11})|([\w-]{11}))/;
             const match = url.match(regExp);
+            
+            // Eşleşen ID'yi bul (regex gruplarından biri dolu olacaktır)
+            const videoId = match ? (match[1] || match[2] || match[3] || match[4] || match[5]) : null;
 
-            if (match && match[2].length == 11) {
-                // SADECE Video ID'sini alıyoruz ve hiçbir ekstra parametre (origin, api vb) eklemiyoruz
-                return `https://www.youtube.com/embed/${match[2]}`;
+            if (videoId) {
+                // "Hata 153"ü önlemek için tüm JS API, Origin ve karmaşık parametreleri sildik.
+                // Sadece temel 'rel=0' parametresini ekliyoruz.
+                return `https://www.youtube.com/embed/${videoId}?rel=0`;
             }
             
             return url;
@@ -288,11 +292,11 @@
                 if (item.type === 'video' && item.src) {
                     const embedUrl = formatYoutubeUrl(item.src);
                     
-                    // Yedek link için orijinal linki temizle
-                    let rawLink = item.src;
-                    if (rawLink.includes('<iframe')) {
-                        const srcMatch = rawLink.match(/src=["']([^"']+)["']/);
-                        if (srcMatch) rawLink = srcMatch[1];
+                    // Yedek (Fallback) Link için ham URL'yi hazırla
+                    let cleanUrl = item.src;
+                    if (cleanUrl.includes('<iframe')) {
+                        const srcMatch = cleanUrl.match(/src=["']([^"']+)["']/);
+                        if (srcMatch) cleanUrl = srcMatch[1];
                     }
 
                     html = `
@@ -303,12 +307,14 @@
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen
-                                referrerpolicy="no-referrer">
+                                referrerpolicy="strict-origin-when-cross-origin">
                             </iframe>
                         </div>
                         <figcaption class="image-caption flex flex-col items-center gap-4">
-                            <span class="opacity-60">${item.caption || 'Video İçeriği'}</span>
-                            <a href="${rawLink}" target="_blank" class="text-[9px] border border-brand-gold/20 px-6 py-2 rounded-full hover:bg-brand-gold hover:text-black transition-all uppercase tracking-widest font-bold bg-brand-gold/5">YouTube'da İzle</a>
+                            <span class="opacity-60">${item.caption || 'Video İzle'}</span>
+                            <a href="${cleanUrl}" target="_blank" class="text-[9px] border border-brand-gold/20 px-6 py-2 rounded-full hover:bg-brand-gold hover:text-black transition-all uppercase tracking-widest font-bold bg-brand-gold/5">
+                                Video Açılmazsa YouTube'da İzle
+                            </a>
                         </figcaption>
                     </figure>`;
                 }
