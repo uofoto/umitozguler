@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -210,23 +209,52 @@
     <script>
         /**
          * ======================================================
-         * VERİ YAPISI
+         * VERİ YAPISI (Yeni veriler buraya yapıştırıldı)
          * ======================================================
          */
         let articleConfig = {
-            meta: {
-                title: "Rota: Kaçkar Dağları",
-                location: "KAÇKAR / RİZE",
-                heroTitle: "Sisin İçinde",
-                heroSubtitle: "bir zirve yolculuğu",
-                info: "Ümit Özgüler • Belgesel Fotoğrafçılığı • 2026"
+          "meta": {
+            "title": "Rota: Kaçkar Dağları",
+            "location": "KAÇKAR / RİZE",
+            "heroTitle": "Sisin İçinde",
+            "heroSubtitle": "bir zirve yolculuğu",
+            "info": "Ümit Özgüler • Belgesel Fotoğrafçılığı • 2026"
+          },
+          "content": [
+            {
+              "type": "text",
+              "value": "Kaçkar Dağları'nın eteğinde, sisin henüz dağılmadığı o erken saatlerde yolculuk başlar. Her adım, doğanın sessiz gücünü biraz daha hissettirir."
             },
-            content: [
-                { type: 'text', value: 'Kaçkar Dağları\'nın eteğinde, sisin henüz dağılmadığı o erken saatlerde yolculuk başlar. Her adım, doğanın sessiz gücünü biraz daha hissettirir.' },
-                { type: 'heading', value: 'Işığın Peşinde' },
-                { type: 'text', value: 'Aşağıdaki videoda, bu yolculuğun atmosferini panel üzerinden ekleyerek canlı olarak görebilirsiniz.' },
-                { type: 'video', src: 'https://www.youtube.com/watch?v=ScMzIvxBSi4', caption: 'Dağların Sessizliği - Belgesel Kısa Kesit' }
-            ]
+            {
+              "type": "heading",
+              "value": "Işığın Peşinde"
+            },
+            {
+              "type": "text",
+              "value": "Aşağıdaki videoda, bu yolculuğun atmosferini panel üzerinden ekleyerek canlı olarak görebilirsiniz."
+            },
+            {
+              "type": "video",
+              "src": "https://www.youtube.com/watch?v=Y7aUojvYFr4",
+              "caption": ""
+            },
+            {
+              "type": "image",
+              "src": "img/6.webp",
+              "mobile": "",
+              "exif": "",
+              "caption": ""
+            },
+            {
+              "type": "video",
+              "src": "https://www.youtube.com/watch?v=Ed47itqebbo",
+              "caption": "hüner"
+            },
+            {
+              "type": "tip",
+              "value": "bu bir denemedir"
+            }
+          ]
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -243,24 +271,16 @@
         // GELİŞMİŞ YOUTUBE LİNK DÖNÜŞTÜRÜCÜ
         function formatYoutubeUrl(url) {
             if (!url) return '';
-            
-            // Eğer iframe kodu yapıştırıldıysa içindeki src'yi ayıkla
             if (url.includes('<iframe')) {
                 const srcMatch = url.match(/src=["']([^"']+)["']/);
                 if (srcMatch) url = srcMatch[1];
             }
-            
-            // Farklı YouTube formatlarını tanıyan regex
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
-            
             if (match && match[2].length == 11) {
                 return `https://www.youtube.com/embed/${match[2]}?rel=0&autoplay=0`;
             }
-            
-            // Link zaten embed formatındaysa dokunma
             if (url.includes('youtube.com/embed/')) return url;
-            
             return url;
         }
 
@@ -345,7 +365,6 @@
                 main.innerHTML += html;
             });
 
-            // Alt Kısım
             main.innerHTML += `
                 <div class="mt-20 pt-10 border-t border-white/5 reveal active text-center">
                     <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold block mb-10">Paylaş</span>
@@ -369,7 +388,6 @@
             if(p==='x') window.open(`https://twitter.com/intent/tweet?text=${t}&url=${u}`);
         }
 
-        // Klavye Kısayolu (Panel Görünürlüğü)
         document.addEventListener('keydown', (e) => { if (e.shiftKey && e.altKey && e.code === 'KeyA') { const t = document.getElementById('admin-trigger'); t.style.display = t.style.display === 'none' ? 'flex' : 'none'; } });
 
         const mBtn = document.getElementById('mobile-menu-btn'), cBtn = document.getElementById('close-menu-btn'), menu = document.getElementById('mobile-menu');
@@ -391,13 +409,13 @@
                 let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type.toUpperCase()}</label>`;
                 
                 if (item.type === 'image') {
-                    card += `<input type="text" placeholder="Görsel Yolu (Masaüstü)" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Görsel Yolu (Mobil - Opsiyonel)" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i}, 'mobile', this.value)">                             <input type="text" placeholder="EXIF Verisi (Örn: 35mm f/1.4 1/250s)" class="admin-input" value="${item.exif||''}" oninput="editItem(${i}, 'exif', this.value)">                             <input type="text" placeholder="Görsel Açıklaması" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="Görsel Yolu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i}, 'mobile', this.value)">                             <input type="text" placeholder="EXIF Verisi" class="admin-input" value="${item.exif||''}" oninput="editItem(${i}, 'exif', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else if (item.type === 'video') {
-                    card += `<input type="text" placeholder="YouTube Linki veya Iframe Kodu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Video Başlığı/Açıklaması" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="YouTube Linki" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Başlık" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else if (item.type === 'map') {
-                    card += `<input type="text" placeholder="Konum veya Rota (Nokta1 > Nokta2)" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Harita Açıklaması" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="Konum" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else if (item.type === 'heading') {
-                    card += `<input type="text" placeholder="Başlık Metni" class="admin-input" value="${item.value}" oninput="editItem(${i}, 'value', this.value)">`;
+                    card += `<input type="text" placeholder="Başlık" class="admin-input" value="${item.value}" oninput="editItem(${i}, 'value', this.value)">`;
                 } else {
                     card += `<textarea placeholder="Metin içeriği..." class="admin-input h-32" oninput="editItem(${i}, 'value', this.value)">${item.value}</textarea>`;
                 }
@@ -415,25 +433,14 @@
             if (type === 'image') articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
             else if (type === 'video' || type === 'map') articleConfig.content.push({ type, src: '', caption: '' });
             else if (type === 'heading') articleConfig.content.push({ type, value: 'Yeni Başlık' });
-            else articleConfig.content.push({ type, value: 'Yeni metin paragrafı buraya gelecek...' });
-            
-            renderAdminPanel(); 
-            renderArticle();
-            // Yeni eklenen öğeye odaklanmak için sona kaydır
+            else articleConfig.content.push({ type, value: 'Yeni metin paragrafı...' });
+            renderAdminPanel(); renderArticle();
             const list = document.getElementById('item-list');
             list.scrollTop = list.scrollHeight;
         }
 
-        function editItem(i, k, v) { 
-            articleConfig.content[i][k] = v; 
-            renderArticle(); 
-        }
-        
-        function deleteItem(i) { 
-            articleConfig.content.splice(i, 1); 
-            renderAdminPanel(); 
-            renderArticle(); 
-        }
+        function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
+        function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
         
         function copyCode() { 
             const configStr = "let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";";
@@ -445,19 +452,12 @@
         function openLightbox(img) { document.getElementById('lightbox-img').src = img.currentSrc || img.src; document.getElementById('lightbox').classList.add('active'); document.body.classList.add('no-scroll'); }
         function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.classList.remove('no-scroll'); }
 
-        // SİS EFEKTİ KODLARI
         const c = document.getElementById('fog-canvas'), cx = c.getContext('2d');
         let w, h, pArr = [];
         function rsz() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
         class P { constructor() { this.rs(); } rs() { this.x = Math.random()*w; this.y = Math.random()*h; this.s = Math.random()*400+200; this.vx = Math.random()*0.2-0.1; this.o = Math.random()*0.3; } up() { this.x+=this.vx; if(this.x<-this.s)this.x=w+this.s; } dr() { cx.beginPath(); let g = cx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.s); g.addColorStop(0,`rgba(150,150,150,${this.o})`); g.addColorStop(1,'transparent'); cx.fillStyle=g; cx.arc(this.x,this.y,this.s,0,Math.PI*2); cx.fill(); } }
         function anim() { cx.clearRect(0,0,w,h); pArr.forEach(p=>{ p.up(); p.dr(); }); requestAnimationFrame(anim); }
-        
-        window.onload = () => { 
-            renderArticle(); 
-            rsz(); 
-            pArr = Array.from({length:10},()=>new P()); 
-            anim(); 
-        };
+        window.onload = () => { renderArticle(); rsz(); pArr = Array.from({length:10},()=>new P()); anim(); };
         window.onresize = rsz;
     </script>
 </body>
