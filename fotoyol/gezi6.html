@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -188,6 +189,7 @@
                 <button onclick="addItem('quote')" class="admin-btn">Alıntı Ekle</button>
                 <button onclick="addItem('tip')" class="admin-btn">İpucu Ekle</button>
                 <button onclick="addItem('video')" class="admin-btn !bg-brand-orange !text-black">Video Ekle</button>
+                <button onclick="addItem('gallery')" class="admin-btn col-span-2 !bg-brand-gold !text-black">Galeri Ekle (3'lü)</button>
                 <button onclick="addItem('map')" class="admin-btn col-span-2 !bg-gray-700 !text-white">Rota Haritası</button>
             </div>
             
@@ -209,7 +211,7 @@
     <script>
         /**
          * ======================================================
-         * VERİ YAPISI (Yeni veriler buraya yapıştırıldı)
+         * VERİ YAPISI
          * ======================================================
          */
         let articleConfig = {
@@ -230,29 +232,21 @@
               "value": "Işığın Peşinde"
             },
             {
+              "type": "gallery",
+              "images": [
+                { "src": "img/1.webp", "caption": "Sabah Işığı", "exif": "35mm f/2.8" },
+                { "src": "img/2.webp", "caption": "Yolculuk", "exif": "50mm f/1.8" },
+                { "src": "img/3.webp", "caption": "Zirveye Doğru", "exif": "24mm f/4.0" }
+              ]
+            },
+            {
               "type": "text",
               "value": "Aşağıdaki videoda, bu yolculuğun atmosferini panel üzerinden ekleyerek canlı olarak görebilirsiniz."
             },
             {
               "type": "video",
               "src": "https://www.youtube.com/watch?v=Y7aUojvYFr4",
-              "caption": ""
-            },
-            {
-              "type": "image",
-              "src": "img/6.webp",
-              "mobile": "",
-              "exif": "",
-              "caption": ""
-            },
-            {
-              "type": "video",
-              "src": "https://www.youtube.com/watch?v=Ed47itqebbo",
-              "caption": "hüner"
-            },
-            {
-              "type": "tip",
-              "value": "bu bir denemedir"
+              "caption": "Doğa Belgeseli"
             }
           ]
         };
@@ -268,7 +262,6 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
-        // GELİŞMİŞ YOUTUBE LİNK DÖNÜŞTÜRÜCÜ
         function formatYoutubeUrl(url) {
             if (!url) return '';
             if (url.includes('<iframe')) {
@@ -319,20 +312,30 @@
                         ${exifHtml}
                     </figure>`;
                 }
+
+                if (item.type === 'gallery') {
+                    html = `<div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-16 reveal active">`;
+                    item.images.forEach(img => {
+                        const exifHtml = img.exif ? `<div class="exif-tag">${img.exif}</div>` : '';
+                        html += `
+                        <figure class="flex flex-col">
+                            <div class="img-container h-full"><img src="${img.src || 'https://via.placeholder.com/600x400?text=Gorsel+Yok'}" alt="${img.caption}" onclick="openLightbox(this)"></div>
+                            <figcaption class="image-caption">${img.caption || ''}</figcaption>
+                            ${exifHtml}
+                        </figure>`;
+                    });
+                    html += `</div>`;
+                }
                 
                 if (item.type === 'video') {
                     const embedUrl = formatYoutubeUrl(item.src);
                     const hasUrl = item.src && item.src.length > 5;
-
                     html = `
                     <figure class="my-24 reveal active text-center">
                         <div class="video-container shadow-2xl">
                             ${hasUrl 
                                 ? `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-                                : `<div class="video-placeholder">
-                                    <svg class="w-12 h-12 mb-4 opacity-30" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/></svg>
-                                    <span class="text-[10px] uppercase tracking-widest font-bold">LÜTFEN YOUTUBE LİNKİ GİRİNİZ</span>
-                                   </div>`
+                                : `<div class="video-placeholder"><span class="text-[10px] uppercase tracking-widest font-bold">LÜTFEN YOUTUBE LİNKİ GİRİNİZ</span></div>`
                             }
                         </div>
                         <figcaption class="image-caption mt-6 flex flex-col items-center gap-4">
@@ -354,30 +357,12 @@
                             mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapUrl)}&ie=UTF8&output=embed`;
                         }
                     }
-                    html = `
-                    <figure class="my-16 reveal active">
-                        <div class="map-container">
-                            ${hasSrc ? `<iframe src="${mapUrl}" allowfullscreen loading="lazy"></iframe>` : '<div class="video-placeholder"><span class="text-[10px] tracking-widest font-bold">HARİTA KONUMU VEYA ROTA GİRİNİZ</span></div>'}
-                        </div>
-                        <figcaption class="image-caption">${item.caption || 'Konum Bilgisi'}</figcaption>
-                    </figure>`;
+                    html = `<figure class="my-16 reveal active"><div class="map-container">${hasSrc ? `<iframe src="${mapUrl}" allowfullscreen loading="lazy"></iframe>` : '<div class="video-placeholder"><span class="text-[10px] tracking-widest font-bold">HARİTA KONUMU VEYA ROTA GİRİNİZ</span></div>'}</div><figcaption class="image-caption">${item.caption || 'Konum Bilgisi'}</figcaption></figure>`;
                 }
                 main.innerHTML += html;
             });
 
-            main.innerHTML += `
-                <div class="mt-20 pt-10 border-t border-white/5 reveal active text-center">
-                    <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold block mb-10">Paylaş</span>
-                    <div class="flex items-center justify-center gap-12 text-[11px] font-bold uppercase tracking-widest text-gray-500">
-                        <a href="javascript:void(0);" onclick="share('wa')" class="hover:text-[#25D366]">Whatsapp</a>
-                        <a href="javascript:void(0);" onclick="share('fb')" class="hover:text-[#1877F2]">Facebook</a>
-                        <a href="javascript:void(0);" onclick="share('x')" class="hover:text-white">X</a>
-                    </div>
-                    <div class="mt-12">
-                        <a href="../fotoyol.html" class="text-[10px] uppercase tracking-[0.4em] text-gray-600 hover:text-brand-gold transition-colors font-bold">← Fotoyol Listesine Dön</a>
-                    </div>
-                </div>
-            `;
+            main.innerHTML += `<div class="mt-20 pt-10 border-t border-white/5 reveal active text-center"><span class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold block mb-10">Paylaş</span><div class="flex items-center justify-center gap-12 text-[11px] font-bold uppercase tracking-widest text-gray-500"><a href="javascript:void(0);" onclick="share('wa')" class="hover:text-[#25D366]">Whatsapp</a><a href="javascript:void(0);" onclick="share('fb')" class="hover:text-[#1877F2]">Facebook</a><a href="javascript:void(0);" onclick="share('x')" class="hover:text-white">X</a></div><div class="mt-12"><a href="../fotoyol.html" class="text-[10px] uppercase tracking-[0.4em] text-gray-600 hover:text-brand-gold transition-colors font-bold">← Fotoyol Listesine Dön</a></div></div>`;
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
@@ -409,19 +394,30 @@
                 let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type.toUpperCase()}</label>`;
                 
                 if (item.type === 'image') {
-                    card += `<input type="text" placeholder="Görsel Yolu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i}, 'mobile', this.value)">                             <input type="text" placeholder="EXIF Verisi" class="admin-input" value="${item.exif||''}" oninput="editItem(${i}, 'exif', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="Görsel Yolu" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption}" oninput="editItem(${i}, 'caption', this.value)">`;
+                } else if (item.type === 'gallery') {
+                    item.images.forEach((img, imgIdx) => {
+                        card += `<div class="mb-4 p-3 bg-black/30 rounded">
+                                    <label class="text-[8px] text-gray-500 block mb-1">FOTOĞRAF ${imgIdx+1}</label>
+                                    <input type="text" placeholder="Yol" class="admin-input !mb-1" value="${img.src}" oninput="editGalleryItem(${i}, ${imgIdx}, 'src', this.value)">
+                                    <input type="text" placeholder="Açıklama" class="admin-input !mb-0" value="${img.caption}" oninput="editGalleryItem(${i}, ${imgIdx}, 'caption', this.value)">
+                                 </div>`;
+                    });
                 } else if (item.type === 'video') {
                     card += `<input type="text" placeholder="YouTube Linki" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Başlık" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
-                } else if (item.type === 'map') {
-                    card += `<input type="text" placeholder="Konum" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else if (item.type === 'heading') {
-                    card += `<input type="text" placeholder="Başlık" class="admin-input" value="${item.value}" oninput="editItem(${i}, 'value', this.value)">`;
+                    card += `<input type="text" placeholder="Başlık Metni" class="admin-input" value="${item.value}" oninput="editItem(${i}, 'value', this.value)">`;
                 } else {
-                    card += `<textarea placeholder="Metin içeriği..." class="admin-input h-32" oninput="editItem(${i}, 'value', this.value)">${item.value}</textarea>`;
+                    card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value}</textarea>`;
                 }
                 card += `</div>`;
                 list.innerHTML += card;
             });
+        }
+
+        function editGalleryItem(itemIdx, imgIdx, key, val) {
+            articleConfig.content[itemIdx].images[imgIdx][key] = val;
+            renderArticle();
         }
 
         function updateMeta() {
@@ -430,13 +426,12 @@
         }
 
         function addItem(type) {
-            if (type === 'image') articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
+            if (type === 'image') articleConfig.content.push({ type, src: '', caption: '', exif: '' });
+            else if (type === 'gallery') articleConfig.content.push({ type, images: [{src:'', caption:'', exif:''}, {src:'', caption:'', exif:''}, {src:'', caption:'', exif:''}] });
             else if (type === 'video' || type === 'map') articleConfig.content.push({ type, src: '', caption: '' });
             else if (type === 'heading') articleConfig.content.push({ type, value: 'Yeni Başlık' });
             else articleConfig.content.push({ type, value: 'Yeni metin paragrafı...' });
             renderAdminPanel(); renderArticle();
-            const list = document.getElementById('item-list');
-            list.scrollTop = list.scrollHeight;
         }
 
         function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
@@ -444,9 +439,7 @@
         
         function copyCode() { 
             const configStr = "let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";";
-            navigator.clipboard.writeText(configStr).then(() => {
-                showMsg("Veri Kopyalandı!");
-            });
+            navigator.clipboard.writeText(configStr).then(() => { showMsg("Veri Kopyalandı!"); });
         }
 
         function openLightbox(img) { document.getElementById('lightbox-img').src = img.currentSrc || img.src; document.getElementById('lightbox').classList.add('active'); document.body.classList.add('no-scroll'); }
