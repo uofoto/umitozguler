@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotoğraf Akademisi | Küratöryel Analiz Rehberi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#0f0f0f',
+                        'brand-dark': '#1a1a1a',
+                        'brand-gold': '#c5a059',
+                        'brand-orange': '#ff8c00'
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0f0f0f; color: #d1d1d1; scroll-behavior: smooth; }
+        .section-title { font-family: 'Playfair Display', serif; }
+        .accent-line { width: 40px; height: 1px; background: #ff8c00; margin-bottom: 1.5rem; }
+        .card-hover { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .card-hover:hover { transform: translateY(-5px); border-color: rgba(255, 140, 0, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .rule-box { border-left: 2px solid #ff8c00; padding-left: 1.5rem; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- HEADER -->
+    <header class="py-24 border-b border-white/5 bg-gradient-to-b from-brand-dark to-brand-black">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <span class="text-[10px] uppercase tracking-[0.5em] text-brand-orange font-bold mb-4 block">Enstitü & Akademi</span>
+            <h1 class="section-title text-4xl md:text-6xl text-white mb-8">Üst Düzey Fotoğraf Küratörlüğü</h1>
+            <p class="max-w-2xl mx-auto text-lg font-light leading-relaxed text-gray-400 italic">
+                "Bir fotoğrafın sadece nasıl çekildiğini değil, neden var olduğunu ve ne söylediğini açıklama sanatıdır."
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-20 space-y-32">
+
+        <!-- SECTION 1: DÜNYADAN ÖRNEKLER -->
+        <section id="world-examples">
+            <div class="mb-12">
+                <div class="accent-line"></div>
+                <h2 class="section-title text-3xl text-white">01. Dünyadan Öncü Yaklaşımlar</h2>
+                <p class="text-xs uppercase tracking-widest text-gray-500 mt-2">Global Standartlar ve Metodolojiler</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-hover p-8 bg-brand-dark border border-white/5 rounded-sm">
+                    <h4 class="text-brand-gold font-bold text-sm mb-4 tracking-widest">MAGNUM PHOTOS</h4>
+                    <p class="text-sm leading-relaxed font-light text-gray-400"><strong>Contact Sheets:</strong> Nihai halden ziyade karar verme sürecini ve çekim rulosundaki evrimi analiz eder.</p>
+                </div>
+                <div class="card-hover p-8 bg-brand-dark border border-white/5 rounded-sm">
+                    <h4 class="text-brand-gold font-bold text-sm mb-4 tracking-widest">APERTURE FOUNDATION</h4>
+                    <p class="text-sm leading-relaxed font-light text-gray-400"><strong>Critical Essay:</strong> Fotoğrafı sosyal, kültürel ve tarihsel bağlamıyla ele alan derinlemesine denemeler.</p>
+                </div>
+                <div class="card-hover p-8 bg-brand-dark border border-white/5 rounded-sm">
+                    <h4 class="text-brand-gold font-bold text-sm mb-4 tracking-widest">BRITISH JOURNAL (BJP)</h4>
+                    <p class="text-sm leading-relaxed font-light text-gray-400"><strong>Visual Discourse:</strong> Görsel dili çağdaş sanat teorileriyle harmanlayarak eleştirel süzgeçten geçirir.</p>
+                </div>
+                <div class="card-hover p-8 bg-brand-dark border border-white/5 rounded-sm">
+                    <h4 class="text-brand-gold font-bold text-sm mb-4 tracking-widest">LENSCULTURE</h4>
+                    <p class="text-sm leading-relaxed font-light text-gray-400"><strong>Emotional Impact:</strong> Kompozisyonu kuralların ötesinde duygu aktarımı ve punctum üzerinden puanlar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ANALİZ KATMANLARI -->
+        <section id="analysis-layers">
+            <div class="mb-12">
+                <div class="accent-line"></div>
+                <h2 class="section-title text-3xl text-white">02. Analiz Katmanları (Sac Ayağı)</h2>
+                <p class="text-xs uppercase tracking-widest text-gray-500 mt-2">Teknik, Sanatsal ve Felsefi Derinlik</p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- A. Estetik -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="md:col-span-1">
+                        <span class="text-5xl font-serif text-brand-orange opacity-20">A</span>
+                        <h3 class="section-title text-xl text-white mt-2">Estetik Analiz</h3>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Görsel Dil & Gramer</p>
+                    </div>
+                    <div class="md:col-span-2 grid grid-cols-1 gap-6">
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Ritim ve Denge</h5>
+                            <p class="text-sm font-light text-gray-400">Gözün fotoğraf içindeki yolculuğu (lineer, dairesel, spiral) ve ağırlık merkezlerinin dağılımı.</p>
+                        </div>
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Ton Aralığı (Luminosity)</h5>
+                            <p class="text-sm font-light text-gray-400">Kontrastın dramatik gücü veya yumuşak geçişlerin (high-key/low-key) yarattığı psikolojik atmosfer.</p>
+                        </div>
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Renk Teorisi</h5>
+                            <p class="text-sm font-light text-gray-400">Tamamlayıcı (complementary) uyum mu yoksa gerilim yaratan (discordant) renk çatışmaları mı?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B. Sanatsal -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="md:col-span-1">
+                        <span class="text-5xl font-serif text-brand-orange opacity-20">B</span>
+                        <h3 class="section-title text-xl text-white mt-2">Sanatsal Analiz</h3>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Küratöryel Bakış & Sembolizm</p>
+                    </div>
+                    <div class="md:col-span-2 grid grid-cols-1 gap-6">
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Semantik Okuma</h5>
+                            <p class="text-sm font-light text-gray-400">Nesnelerin simgesel anlamları. Bir gölge sadece bir karanlık mıdır yoksa bir bilinmezlik mi?</p>
+                        </div>
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Üslup ve Ekol</h5>
+                            <p class="text-sm font-light text-gray-400">Minimalizm, Piktoryalizm veya Belgesel Gerçekçilik; sanatçının tarihteki duruşu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Felsefi -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="md:col-span-1">
+                        <span class="text-5xl font-serif text-brand-orange opacity-20">C</span>
+                        <h3 class="section-title text-xl text-white mt-2">Felsefi Analiz</h3>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Varlık, Zaman & Hakikat</p>
+                    </div>
+                    <div class="md:col-span-2 grid grid-cols-1 gap-6">
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Studium ve Punctum (Barthes)</h5>
+                            <p class="text-sm font-light text-gray-400">Genel konu (Studium) ile izleyiciyi kalbinden vuran o tesadüfi detay (Punctum) arasındaki gerilim.</p>
+                        </div>
+                        <div class="rule-box">
+                            <h5 class="text-white text-sm font-semibold mb-2">Anın Ontolojisi</h5>
+                            <p class="text-sm font-light text-gray-400">Fotoğraf anı donduran bir kanıt mıdır yoksa kurgulanmış bir yeni hakikat mi?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: AKADEMİ BÖLÜMLERİ -->
+        <section id="academy-sections" class="bg-brand-dark p-12 rounded-sm border border-brand-gold/10">
+            <div class="mb-12 text-center">
+                <h2 class="section-title text-3xl text-white uppercase tracking-widest">Akademi Paneli Yapısı</h2>
+                <div class="h-[1px] w-24 bg-brand-gold mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <span class="text-brand-orange font-bold font-serif italic text-xl">01.</span>
+                        <div>
+                            <h5 class="text-white text-sm font-bold uppercase tracking-widest">Bağlamsal Çerçeve</h5>
+                            <p class="text-xs text-gray-500 mt-1">Zeitgeist (Dönemin Ruhu) ve lokasyonun tarihsel önemi.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <span class="text-brand-orange font-bold font-serif italic text-xl">02.</span>
+                        <div>
+                            <h5 class="text-white text-sm font-bold uppercase tracking-widest">Küratöryel Deneme</h5>
+                            <p class="text-xs text-gray-500 mt-1">Akademik referanslar içeren 3-4 paragraflık derin okuma.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <span class="text-brand-orange font-bold font-serif italic text-xl">03.</span>
+                        <div>
+                            <h5 class="text-white text-sm font-bold uppercase tracking-widest">Görsel Antropoloji</h5>
+                            <p class="text-xs text-gray-500 mt-1">İnsan ve mekanın toplumsal yaşamla olan organik bağı.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <span class="text-brand-orange font-bold font-serif italic text-xl">04.</span>
+                        <div>
+                            <h5 class="text-white text-sm font-bold uppercase tracking-widest">Okuma Önerileri</h5>
+                            <p class="text-xs text-gray-500 mt-1">Tarkovski, Barthes veya Sontag gibi entelektüel eşleşmeler.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: ALTIN KURALLAR -->
+        <section id="golden-rules" class="pb-20 text-center">
+            <div class="max-w-3xl mx-auto border-t border-white/10 pt-20">
+                <h2 class="section-title text-2xl text-white mb-12">Küratörün Altın Kuralları</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-[11px] uppercase tracking-[0.2em]">
+                    <div class="space-y-4">
+                        <div class="text-brand-orange text-2xl font-serif">Az & Öz</div>
+                        <p class="text-gray-500 leading-relaxed">Haftalık 1 derin analiz,<br>10 yüzeysel paylaşımdan değerlidir.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="text-brand-orange text-2xl font-serif">Soru Sor</div>
+                        <p class="text-gray-500 leading-relaxed">Analizi cevabı olmayan<br>felsefi bir soruyla bitir.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="text-brand-orange text-2xl font-serif">Sadelik</div>
+                        <p class="text-gray-500 leading-relaxed">Tasarım fotoğrafın<br>sessizliğini bozmamalıdır.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-12 border-t border-white/5 text-center text-[10px] tracking-[0.4em] text-gray-600 uppercase">
+        © 2026 Fotoğraf Akademisi | Enstitü Standartları
+    </footer>
+
+</body>
+</html>
