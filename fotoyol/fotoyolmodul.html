@@ -88,6 +88,41 @@
         .save-help strong { color: #ff8c00; }
 
         #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #c5a059; color: black; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        /* Mobil Menü Kenar Çizgisi Animasyonu */
+        #mobile-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 0;
+            background: #ff8c00;
+            transition: height 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.4s;
+            z-index: 10;
+        }
+        #mobile-menu:not(.translate-x-full)::before {
+            height: 100%;
+        }
+
+        /* Nav Link Hover Efekti */
+        .nav-link-custom { position: relative; transition: color 0.3s ease; }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #ff8c00;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+        .nav-link-custom:hover {
+            color: #ffffff;
+        }
     </style>
 </head>
 <body class="text-gray-300 antialiased flex flex-col min-h-screen">
@@ -129,7 +164,7 @@
     </footer>
 
     <!-- MOBILE MENU -->
-    <div id="mobile-menu" class="fixed top-0 right-0 h-screen bg-brand-dark z-[1000] flex flex-col pt-32 px-10 text-left md:hidden border-l border-white/5 shadow-2xl transition-transform translate-x-full">
+    <div id="mobile-menu" class="fixed top-0 right-0 h-screen bg-brand-dark z-[1000] flex flex-col pt-32 px-10 text-left md:hidden shadow-2xl transition-transform translate-x-full">
         <button id="close-menu-btn" class="absolute top-8 right-8 text-white p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
