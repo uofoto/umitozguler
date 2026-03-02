@@ -151,6 +151,20 @@
         }
         .highlight-label { font-size: 9px; font-weight: 800; color: #ff8c00; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; display: block; }
 
+        /* KİTAP TAVSİYE BÖLÜMÜ */
+        .book-section-header { position: relative; display: flex; align-items: center; justify-content: center; margin: 6rem 0 3rem 0; }
+        .book-section-header::before, .book-section-header::after { content: ''; flex: 1; height: 1px; background: #c5a059; opacity: 0.3; }
+        .book-section-header h3 { padding: 0 1.5rem; color: #c5a059; font-size: 0.65rem; letter-spacing: 0.5em; text-transform: uppercase; font-weight: 600; }
+        
+        .book-card { background: #181818; border: 1px solid rgba(197, 160, 89, 0.1); padding: 1.5rem; border-radius: 4px; transition: all 0.4s ease; display: flex; gap: 1.5rem; align-items: center; }
+        .book-card:hover { border-color: #c5a059; background: #1c1c1c; transform: translateY(-3px); }
+        .book-cover { width: 70px; height: 100px; background: #0a0a0a; flex-shrink: 0; border-radius: 2px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        .book-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .book-info h4 { color: #fff; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .book-info p { color: #888; font-size: 0.75rem; margin-bottom: 0.75rem; font-style: italic; }
+        .book-link { font-size: 9px; color: #c5a059; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid transparent; transition: all 0.3s; }
+        .book-card:hover .book-link { border-color: #c5a059; }
+
         /* Admin Panel Styles */
         #admin-panel { position: fixed; right: 0; top: 0; height: 100vh; width: 420px; background: #141414; z-index: 3000; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; font-family: sans-serif; }
         #admin-panel.active { transform: translateX(0); box-shadow: -30px 0 60px rgba(0,0,0,0.6); }
@@ -190,6 +204,18 @@
         #mobile-menu.active #menu-line { 
             height: 100%; 
         }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        /* KİTAP ARAMA SONUÇLARI */
+        .search-book-item { background: #0a0a0a; border: 1px solid #222; padding: 8px; border-radius: 4px; display: flex; align-items: center; gap: 10px; margin-top: 8px; transition: all 0.3s; }
+        .search-book-item:hover { border-color: #c5a059; }
+        .search-book-item img { width: 30px; height: 45px; object-fit: cover; border-radius: 2px; }
+        .search-book-item .info { flex: 1; overflow: hidden; }
+        .search-book-item .info h5 { color: #fff; font-size: 9px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .search-book-item .info p { color: #666; font-size: 8px; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 antialiased flex flex-col min-h-screen page-animate">
@@ -272,11 +298,25 @@
                 <button onclick="addItem('highlight')" class="admin-btn !bg-brand-gold !text-black">Vurgu Ekle</button>
                 <button onclick="addItem('heading')" class="admin-btn">Başlık Ekle</button>
                 <button onclick="addItem('quote')" class="admin-btn">Alıntı Ekle</button>
-                <button onclick="addItem('gallery')" class="admin-btn col-span-2 !bg-gray-700 !text-white">Galeri (3'lü)</button>
+                <button onclick="addItem('gallery')" class="admin-btn !bg-gray-700 !text-white">Galeri (3'lü)</button>
+            </div>
+
+            <!-- KİTAP TAVSİYE PANELİ (GELİŞMİŞ) -->
+            <div class="mt-8 pt-8 border-t border-brand-gold/20">
+                <label class="admin-label !text-brand-gold">Tavsiye Kitaplar (Google Books Arama)</label>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="book-search-input" placeholder="Yazar veya Kitap Adı..." class="admin-input !mb-0 flex-1">
+                    <button onclick="searchBooks()" id="book-search-btn" class="admin-btn !px-4">ARA</button>
+                </div>
+                <div id="book-search-results" class="mb-6"></div>
+
+                <label class="admin-label !text-brand-gold/50">Seçili Tavsiyeler</label>
+                <div id="book-list-admin"></div>
+                <button onclick="addBookManual()" class="admin-btn w-full !bg-brand-dark !text-brand-gold border border-brand-gold/30 mt-2">MANUEL KİTAP EKLE</button>
             </div>
 
             <!-- OTOMATİK LİNK EKLEME -->
-            <div class="mt-8 pt-8 border-t border-brand-gold/20">
+            <div class="mt-8 pt-8 border-t border-brand-orange/20">
                 <label class="admin-label !text-brand-orange">Linkten İlgili Yazı Ekle (Otomatik)</label>
                 <div class="flex gap-2">
                     <input type="text" id="auto-link-input" placeholder="Yazı URL (Örn: analiz-52.html)" class="admin-input !mb-0 flex-1">
@@ -298,7 +338,7 @@
     </button>
 
     <script>
-        const apiKey = ""; // API key execution environment tarafından sağlanır.
+        const apiKey = ""; 
 
         let articleConfig = {
           "meta": {
@@ -314,6 +354,9 @@
             { "type": "heading", "value": "Felsefi Derinlik ve Kuramsal Okuma" },
             { "type": "text", "value": "Bu kare, insanın bilinmez bir boşluğa bırakılmışlığını ve zamanın her şeyi aşındıran amansız akışına karşı sergilediği o sessiz direnişi anlatan görsel bir meditasyon olarak okunabilir." }
           ],
+          "books": [
+            { "title": "Görmek Üzerine", "author": "John Berger", "img": "https://i.dr.com.tr/cache/600x600-0/originals/0000000062400-1.jpg", "link": "#" }
+          ],
           "related": []
         };
 
@@ -324,7 +367,8 @@
         window.addEventListener('scroll', () => {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progress-bar").style.width = (winScroll / height * 100) + "%";
+            const pb = document.getElementById("progress-bar");
+            if(pb) pb.style.width = (winScroll / height * 100) + "%";
         });
 
         function renderArticle() {
@@ -421,7 +465,7 @@
                 }
             });
 
-            // SOSYAL PAYLAŞIM VE İLGİLİ ANALİZLER
+            // SOSYAL PAYLAŞIM
             html += `
                 <div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active">
                     <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p>
@@ -433,6 +477,32 @@
                 </div>
             `;
 
+            // TAVSİYE KİTAPLAR BÖLÜMÜ
+            if (articleConfig.books && articleConfig.books.length > 0) {
+                html += `
+                    <div class="reveal active">
+                        <div class="book-section-header">
+                            <h3>Tavsiye Kitaplar</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">`;
+                articleConfig.books.forEach(book => {
+                    html += `
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="${book.img || 'https://via.placeholder.com/150x220'}" alt="${book.title}">
+                            </div>
+                            <div class="book-info">
+                                <h4>${book.title}</h4>
+                                <p>${book.author}</p>
+                                <a href="${book.link}" target="_blank" class="book-link">Detayları İncele →</a>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `</div></div>`;
+            }
+
+            // İLGİLİ ANALİZLER
             if (articleConfig.related && articleConfig.related.length > 0) {
                 html += `
                 <div class="reveal active">
@@ -466,7 +536,7 @@
 
         function toggleGrid(i) {
             const grid = document.getElementById(`grid-${i}`);
-            grid.classList.toggle('active');
+            if(grid) grid.classList.toggle('active');
         }
 
         function share(p) {
@@ -515,13 +585,93 @@
                 list.innerHTML += card;
             });
 
-            // İlgili Yazılar Listesini Güncelle
+            renderBookListAdmin();
             renderRelatedListAdmin();
+        }
+
+        // GOOGLE BOOKS ARAMA (Geliştirilmiş)
+        async function searchBooks() {
+            const queryField = document.getElementById('book-search-input');
+            const searchBtn = document.getElementById('book-search-btn');
+            const query = queryField.value.trim();
+            
+            if(!query) return showMsg("Lütfen bir isim yazın");
+            
+            const resultsBox = document.getElementById('book-search-results');
+            resultsBox.innerHTML = '<p class="text-[9px] text-gray-500 uppercase tracking-widest text-center py-4">Sorgulanıyor...</p>';
+            searchBtn.disabled = true;
+
+            try {
+                // Yerel dosya kısıtlamalarına karşı URL'i tam encode ediyoruz
+                const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=5&printType=books`;
+                const response = await fetch(url);
+                
+                if (!response.ok) throw new Error("API Yanıt Vermedi");
+                
+                const data = await response.json();
+                
+                resultsBox.innerHTML = '';
+                if(data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        const info = item.volumeInfo;
+                        const title = info.title || "Başlıksız";
+                        const author = info.authors ? info.authors.join(', ') : 'Bilinmeyen Yazar';
+                        // Resim varsa https olduğundan emin oluyoruz
+                        let thumb = 'https://via.placeholder.com/150x220?text=Kapak+Yok';
+                        if (info.imageLinks && info.imageLinks.thumbnail) {
+                            thumb = info.imageLinks.thumbnail.replace('http:', 'https:');
+                        }
+                        const link = info.infoLink || "#";
+
+                        resultsBox.innerHTML += `
+                            <div class="search-book-item">
+                                <img src="${thumb}">
+                                <div class="info">
+                                    <h5>${title}</h5>
+                                    <p>${author}</p>
+                                </div>
+                                <button onclick="selectBook('${title.replace(/'/g, "\\'")}', '${author.replace(/'/g, "\\'")}', '${thumb}', '${link}')" class="bg-brand-gold text-black text-[8px] font-bold px-3 py-1 rounded">EKLE</button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    resultsBox.innerHTML = '<p class="text-[9px] text-red-500 text-center py-4 uppercase font-bold tracking-widest">Veri bulunamadı. Lütfen farklı anahtar kelimeler deneyin.</p>';
+                }
+            } catch (err) {
+                console.error("API Error:", err);
+                resultsBox.innerHTML = `<p class="text-[9px] text-red-500 text-center py-4 uppercase font-bold tracking-widest">Hata: İnternet bağlantınızı veya yerel dosya kısıtlamalarınızı kontrol edin.</p>`;
+            } finally {
+                searchBtn.disabled = false;
+            }
+        }
+
+        function selectBook(title, author, img, link) {
+            articleConfig.books.push({ title, author, img, link });
+            renderBookListAdmin();
+            renderArticle();
+            showMsg("Kitap Listeye Eklendi");
+        }
+
+        function renderBookListAdmin() {
+            const list = document.getElementById('book-list-admin');
+            list.innerHTML = '';
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.forEach((book, bi) => {
+                list.innerHTML += `
+                <div class="item-card bg-brand-gold/5 border-brand-gold/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteBook(${bi})">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-1 !text-[10px]" value="${book.title}" oninput="editBook(${bi}, 'title', this.value)">
+                    <input type="text" placeholder="Yazar" class="admin-input !mb-1 !text-[10px]" value="${book.author}" oninput="editBook(${bi}, 'author', this.value)">
+                    <input type="text" placeholder="Kapak URL" class="admin-input !mb-1 !text-[10px]" value="${book.img}" oninput="editBook(${bi}, 'img', this.value)">
+                    <input type="text" placeholder="Link" class="admin-input !mb-0 !text-[10px]" value="${book.link}" oninput="editBook(${bi}, 'link', this.value)">
+                </div>`;
+            });
         }
 
         function renderRelatedListAdmin() {
             const list = document.getElementById('related-list-admin');
             list.innerHTML = '';
+            if(!articleConfig.related) articleConfig.related = [];
             articleConfig.related.forEach((rel, ri) => {
                 list.innerHTML += `
                 <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
@@ -570,7 +720,6 @@
 
             } catch (err) {
                 showMsg("Hata: " + err.message);
-                console.error(err);
             }
         }
 
@@ -589,6 +738,10 @@
         function editGalleryItem(i, gi, k, v) { articleConfig.content[i].images[gi][k] = v; renderArticle(); }
         function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
         
+        function editBook(bi, k, v) { articleConfig.books[bi][k] = v; renderArticle(); }
+        function deleteBook(bi) { articleConfig.books.splice(bi, 1); renderAdminPanel(); renderArticle(); }
+        function addBookManual() { if(!articleConfig.books) articleConfig.books = []; articleConfig.books.push({title: 'Yeni Kitap', author: 'Yazar', img: '', link: '#'}); renderAdminPanel(); renderArticle(); }
+
         function editRelated(ri, k, v) { articleConfig.related[ri][k] = v; renderArticle(); }
         function deleteRelated(ri) { articleConfig.related.splice(ri, 1); renderAdminPanel(); renderArticle(); }
 
