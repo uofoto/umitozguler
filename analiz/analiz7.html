@@ -141,6 +141,9 @@
         .related-img-box { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0a0a0a; }
         .related-img-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.6); transition: all 1.2s ease; }
         .related-card:hover .related-img-box img { filter: grayscale(0) brightness(1); transform: scale(1.05); }
+
+        #admin-panel { position: fixed; right: 0; top: 0; height: 100vh; width: 420px; background: #141414; z-index: 3000; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; font-family: sans-serif; }
+        #admin-panel.active { transform: translateX(0); box-shadow: -30px 0 60px rgba(0,0,0,0.6); }
         .admin-input { background: #080808; border: 1px solid #2a2a2a; color: #e0e0e0; padding: 10px; width: 100%; margin-bottom: 12px; font-size: 13px; border-radius: 6px; }
         .admin-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #c5a059; display: block; margin-bottom: 5px; font-weight: 700; }
         .admin-btn { background: #c5a059; color: black; padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s; }
@@ -194,9 +197,8 @@
                 font-size: 1.1rem !important;
                 letter-spacing: 0.12em !important;
             }
-            .nav-logo-wrap span[style] {
+            #logo-sub {
                 font-size: 6px !important;
-                letter-spacing: 3px !important;
             }
         }
     </style>
@@ -214,7 +216,7 @@
                     <div id="logo-main" class="text-2xl tracking-widest text-white transition-colors leading-none whitespace-nowrap">
                         <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                     </div>
-                    <div id="logo-sub" style="font-size: 8px; opacity: 0.9; font-weight: 300; color: rgb(255, 255, 255); display: flex; justify-content: space-between; margin-top: 5px; width: 211px; letter-spacing: 0.01em;">
+                    <div id="logo-sub" style="font-size: 8px; opacity: 0.9; font-weight: 300; color: rgb(255, 255, 255); display: flex; justify-content: space-between; margin-top: 5px; width: 100%; letter-spacing: 0.01em;">
                         <span>F</span><span>I</span><span>N</span><span>E</span><span style="width:0.6em"></span><span>A</span><span>R</span><span>T</span><span style="width:0.6em"></span><span>P</span><span>H</span><span>O</span><span>T</span><span>O</span><span>G</span><span>R</span><span>A</span><span>P</span><span>H</span><span>Y</span>
                     </div>
                 </a>
@@ -259,16 +261,16 @@
                         <span>09 ŞUBAT 2026 | Küratör Analizi</span>
                     </div>
                 </div>
-            <div class="my-16 reveal active"><div class="analysis-img-container" id="img-container-0"><button class="analysis-toggle-btn" onclick="toggleGrid(0)">Analiz Modu</button><div class="composition-grid" id="grid-0"><div class="composition-line-h" style="top: 33.33%"></div><div class="composition-line-h" style="top: 66.66%"></div><div class="composition-line-v" style="left: 33.33%"></div><div class="composition-line-v" style="left: 66.66%"></div></div><picture><source srcset="../imgmobil/1.webp" media="(max-width: 768px)"><img src="../img/1.webp" alt="süpüren kadın"></picture></div><div class="text-center mt-4 opacity-50 text-[10px] tracking-widest uppercase">süpüren kadın</div><div class="exif-info-strip"><div class="exif-item"><span class="exif-label">TEKNİK VERİLER</span><span class="exif-val">Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500</span></div></div><div class="mt-14 mb-14"><div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"></div></div></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="drop-cap">Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">Teknik Yetkinlik</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.<br><br>Işık Yönetimi:<br>Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.<br><br>Kompozisyon ve Denge:<br>Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.<br><br>Netlik ve Alan Derinliği:<br>Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor.</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">İçerik ve Kavramsal Derinlik</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.<br><br>Özgünlük:<br>Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, "mekana aidiyet" ve "evini sokağa taşıma" kavramları üzerinden okuyorum.<br><br>Katmanlı Anlatım:<br>Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.<br><br>Bağlam:<br>Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.<br><br>Üslup Tutarlılığı:<br>Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.<br><br>Duygusal Etki (Punctum):<br>Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor.</p></div><div class="custom-quote reveal active"><p>Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor.</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">Anlatı ve Hikaye Anlatıcılığı</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Görsel Antropoloji:<br>Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.<br><br>Ritim:<br>Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor.</p></div><div class="highlight-box reveal active"><span class="highlight-label">Kritik Detay</span><p class="text-white italic font-light leading-relaxed m-0">Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim.</p></div><div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active"><p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p><div class="flex justify-center space-x-12"><a href="javascript:void(0)" onclick="share('wa')" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a><a href="javascript:void(0)" onclick="share('fb')" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a><a href="javascript:void(0)" onclick="share('x')" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a></div></div><div class="reveal active"><div class="book-section-header"><h3>Tavsiye Kitaplar</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"><div class="book-card"><div class="book-cover"><img src="https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c" alt="Karar Anı"></div><div class="book-info"><h4>Karar Anı</h4><p>Henri Cartier-Bresson</p><a href="https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw" target="_blank" class="book-link">Detayları İncele →</a></div></div></div></div><div class="reveal active"><div class="related-section-header"><h3>İlginizi Çekebilir</h3></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"><a href="https://www.umitozguler.com.tr/analiz/analiz5.html" class="related-card group"><div class="related-img-box"><img src="../img/51.webp" alt="
+            <div class="my-16 reveal active"><div class="analysis-img-container" id="img-container-0"><button class="analysis-toggle-btn" onclick="toggleGrid(0)">Analiz Modu</button><div class="composition-grid" id="grid-0"><div class="composition-line-h" style="top: 33.33%"></div><div class="composition-line-h" style="top: 66.66%"></div><div class="composition-line-v" style="left: 33.33%"></div><div class="composition-line-v" style="left: 66.66%"></div></div><picture><source srcset="../imgmobil/1.webp" media="(max-width: 768px)"><img src="../img/1.webp" alt="süpüren kadın"></picture></div><div class="text-center mt-4 opacity-50 text-[10px] tracking-widest uppercase">süpüren kadın</div><div class="exif-info-strip"><div class="exif-item"><span class="exif-label">TEKNİK VERİLER</span><span class="exif-val">Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500</span></div></div><div class="mt-14 mb-14"><div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"></div></div></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="drop-cap">Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">Teknik Yetkinlik</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.<br><br>Işık Yönetimi:<br>Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.<br><br>Kompozisyon ve Denge:<br>Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.<br><br>Netlik ve Alan Derinliği:<br>Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor.</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">İçerik ve Kavramsal Derinlik</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.<br><br>Özgünlük:<br>Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, "mekana aidiyet" ve "evini sokağa taşıma" kavramları üzerinden okuyorum.<br><br>Katmanlı Anlatım:<br>Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.<br><br>Bağlam:<br>Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.<br><br>Üslup Tutarlılığı:<br>Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.<br><br>Duygusal Etki (Punctum):<br>Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor.</p></div><div class="custom-quote reveal active"><p>Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor.</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">Anlatı ve Hikaye Anlatıcılığı</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Görsel Antropoloji:<br>Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.<br><br>Ritim:<br>Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor.</p></div><div class="highlight-box reveal active"><span class="highlight-label">Kritik Detay</span><p class="text-white italic font-light leading-relaxed m-0">Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim.</p></div><div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active"><p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p><div class="flex justify-center space-x-12"><a href="javascript:void(0)" onclick="share('wa')" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a><a href="javascript:void(0)" onclick="share('fb')" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a><a href="javascript:void(0)" onclick="share('x')" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a></div></div><div class="reveal active"><div class="book-section-header"><h3>Tavsiye Kitaplar</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"><div class="book-card"><div class="book-cover"><img src="https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c" alt="Karar Anı"></div><div class="book-info"><h4>Karar Anı</h4><p>Henri Cartier-Bresson</p><a href="https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw" target="_blank" class="book-link">Detayları İncele →</a></div></div></div></div><div class="reveal active"><div class="related-section-header"><h3>İlginizi Çekebilir</h3></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"><a href="https://www.umitozguler.com.tr/analiz/analiz5.html" class="related-card group"><div class="related-img-box"><img src="file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/51.webp" alt="
                     Fotoğraf Okuma No: 5
                 "></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
                     Fotoğraf Okuma No: 5
-                </h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. S...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a><a href="https://www.umitozguler.com.tr/analiz/analiz2.html" class="related-card group"><div class="related-img-box"><img src="../img/102.webp" alt="
+                </h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. S...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a><a href="https://www.umitozguler.com.tr/analiz/analiz2.html" class="related-card group"><div class="related-img-box"><img src="file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/102.webp" alt="
                     Fotoğraf Okuma No: 2
                 "></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
                     Fotoğraf Okuma No: 2
                 </h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">
-                    Bu karede parıldayan ıslak yolun yarattığı S-eğrisi (S-curve) kompozisyonun ana...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a><a href="https://www.umitozguler.com.tr/analiz/analiz1.html" class="related-card group"><div class="related-img-box"><img src="../img/48.webp" alt="
+                    Bu karede parıldayan ıslak yolun yarattığı S-eğrisi (S-curve) kompozisyonun ana...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a><a href="https://www.umitozguler.com.tr/analiz/analiz1.html" class="related-card group"><div class="related-img-box"><img src="file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/48.webp" alt="
                     Fotoğraf Okuma No: 1
                 "></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
                     Fotoğraf Okuma No: 1
@@ -280,7 +282,123 @@
         <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
+    <div id="admin-panel" class="active">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center">
+            <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Analiz Paneli</h2>
+            <button onclick="toggleAdmin()" class="text-brand-gold text-[10px] uppercase font-bold border border-brand-gold/30 px-3 py-1 rounded-full hover:bg-brand-gold hover:text-black transition-all">Kapat</button>
+        </div>
+        <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
+            <div class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">Analiz Başlığı (No: X)</label>
+                <input type="text" id="meta-title" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Tarih | Kategori</label>
+                <input type="text" id="meta-location" class="admin-input" oninput="updateMeta()">
+            </div>
+            
+            <div id="item-list"><div class="item-card"><span class="delete-btn" onclick="deleteItem(0)">SİL</span><label class="admin-label">IMAGE</label><input type="text" placeholder="Masaüstü Görsel Yolu" class="admin-input" value="../img/1.webp" oninput="editItem(0, 'src', this.value)">
+                             <input type="text" placeholder="Mobil Görsel Yolu" class="admin-input" value="../imgmobil/1.webp" oninput="editItem(0, 'mobile', this.value)">
+                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500" oninput="editItem(0, 'exif', this.value)">
+                             <input type="text" placeholder="Görsel Açıklaması" class="admin-input" value="süpüren kadın" oninput="editItem(0, 'caption', this.value)"></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(1)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(1, 'value', this.value)">Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(2)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(2, 'value', this.value)">Teknik Yetkinlik</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(3)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(3, 'value', this.value)">Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.
 
+Işık Yönetimi:
+Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.
+
+Kompozisyon ve Denge:
+Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.
+
+Netlik ve Alan Derinliği:
+Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(4)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(4, 'value', this.value)">İçerik ve Kavramsal Derinlik</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(5)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(5, 'value', this.value)">Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.
+
+Özgünlük:
+Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, "mekana aidiyet" ve "evini sokağa taşıma" kavramları üzerinden okuyorum.
+
+Katmanlı Anlatım:
+Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.
+
+Bağlam:
+Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.
+
+Üslup Tutarlılığı:
+Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.
+
+Duygusal Etki (Punctum):
+Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(6)">SİL</span><label class="admin-label">QUOTE</label><textarea class="admin-input h-24" oninput="editItem(6, 'value', this.value)">Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(7)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(7, 'value', this.value)">Anlatı ve Hikaye Anlatıcılığı</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(8)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(8, 'value', this.value)">Görsel Antropoloji:
+Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.
+
+Ritim:
+Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(9)">SİL</span><label class="admin-label">HIGHLIGHT</label><textarea class="admin-input h-24" oninput="editItem(9, 'value', this.value)">Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim.</textarea></div></div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <button onclick="addItem('text')" class="admin-btn">Metin Ekle</button>
+                <button onclick="addItem('image')" class="admin-btn">Görsel Ekle</button>
+                <button onclick="addItem('highlight')" class="admin-btn !bg-brand-gold !text-black">Vurgu Ekle</button>
+                <button onclick="addItem('heading')" class="admin-btn">Başlık Ekle</button>
+                <button onclick="addItem('quote')" class="admin-btn">Alıntı Ekle</button>
+                <button onclick="addItem('gallery')" class="admin-btn !bg-gray-700 !text-white">Galeri (3'lü)</button>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-brand-gold/20">
+                <label class="admin-label !text-brand-gold">Tavsiye Kitaplar (Google Books Arama)</label>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="book-search-input" placeholder="Yazar veya Kitap Adı..." class="admin-input !mb-0 flex-1">
+                    <button onclick="searchBooks()" id="book-search-btn" class="admin-btn !px-4">ARA</button>
+                </div>
+                <div id="book-search-results" class="mb-6"></div>
+                
+                <label class="admin-label !text-brand-gold/50">Seçili Tavsiyeler</label>
+                <div id="book-list-admin">
+                <div class="item-card bg-brand-gold/5 border-brand-gold/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteBook(0)">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-1 !text-[10px]" value="Karar Anı" oninput="editBook(0, 'title', this.value)">
+                    <input type="text" placeholder="Yazar" class="admin-input !mb-1 !text-[10px]" value="Henri Cartier-Bresson" oninput="editBook(0, 'author', this.value)">
+                    <input type="text" placeholder="Kapak URL" class="admin-input !mb-1 !text-[10px]" value="https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c" oninput="editBook(0, 'img', this.value)">
+                    <input type="text" placeholder="Link" class="admin-input !mb-0 !text-[10px]" value="https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw" oninput="editBook(0, 'link', this.value)">
+                </div></div>
+                <button onclick="addBookManual()" class="admin-btn w-full !bg-brand-dark !text-brand-gold border border-brand-gold/30 mt-2">MANUEL KİTAP EKLE</button>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-brand-orange/20">
+                <label class="admin-label !text-brand-orange">Linkten İlgili Yazı Ekle (Otomatik)</label>
+                <div class="flex gap-2">
+                    <input type="text" id="auto-link-input" placeholder="Yazı URL (Örn: analiz-52.html)" class="admin-input !mb-0 flex-1">
+                    <button onclick="autoScrapeArticle()" class="admin-btn !bg-brand-orange !text-black h-[38px] !px-4">Çek</button>
+                </div>
+                <div id="scrape-preview"></div>
+                <div id="related-list-admin" class="mt-4">
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(0)">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
+                    Fotoğraf Okuma No: 5
+                " oninput="editRelated(0, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz5.html" oninput="editRelated(0, 'link', this.value)">
+                </div>
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(1)">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
+                    Fotoğraf Okuma No: 2
+                " oninput="editRelated(1, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz2.html" oninput="editRelated(1, 'link', this.value)">
+                </div>
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(2)">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
+                    Fotoğraf Okuma No: 1
+                " oninput="editRelated(2, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz1.html" oninput="editRelated(2, 'link', this.value)">
+                </div></div>
+            </div>
+
+            <!-- Sayfayı İndir butonu -->
+            <div class="save-help mt-8 p-4 bg-brand-dark rounded border border-white/5 text-center">
+                <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-3">Veri girişi tamamlandıktan sonra</p>
+                <button onclick="downloadPage()" class="admin-btn w-full !bg-brand-orange !text-black" style="font-size:13px;padding:14px;">⬇ SAYFAYI İNDİR</button>
+                <p class="text-[8px] text-gray-600 mt-3 leading-relaxed">İndirilen .html dosyasını doğrudan<br>sunucunuza yükleyebilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="admin-trigger" onclick="toggleAdmin()" style="display: flex;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-orange rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
 
     <script>
         let articleConfig = {
@@ -345,19 +463,19 @@
     {
       "title": "\n                    Fotoğraf Okuma No: 5\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz5.html",
-      "img": "../img/51.webp",
+      "img": "file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/51.webp",
       "summary": "Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. S..."
     },
     {
       "title": "\n                    Fotoğraf Okuma No: 2\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz2.html",
-      "img": "f../img/102.webp",
+      "img": "file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/102.webp",
       "summary": "\n                    Bu karede parıldayan ıslak yolun yarattığı S-eğrisi (S-curve) kompozisyonun ana..."
     },
     {
       "title": "\n                    Fotoğraf Okuma No: 1\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz1.html",
-      "img": "../img/48.webp",
+      "img": "file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/48.webp",
       "summary": "\n                    Fotoğraf, izleyiciyi öznenin hemen arkasına yerleştirerek katılımcı bir gözlemc..."
     }
   ]
@@ -456,53 +574,230 @@
         function toggleGrid(i) { const grid = document.getElementById(`grid-${i}`); if(grid) grid.classList.toggle('active'); }
         function share(p) { const u = encodeURIComponent(window.location.href), t = encodeURIComponent(document.title); if(p==='wa') window.open(`https://api.whatsapp.com/send?text=${t}%20${u}`); if(p==='fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}`); if(p==='x') window.open(`https://twitter.com/intent/tweet?text=${t}&url=${u}`); }
 
+        function toggleAdmin() { const panel = document.getElementById('admin-panel'); panel.classList.toggle('active'); if (panel.classList.contains('active')) renderAdminPanel(); }
+        function showMsg(t) { const el = document.getElementById('custom-alert'); el.innerText = t; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 3000); }
+
+        function renderAdminPanel() {
+            document.getElementById('meta-title').value = articleConfig.meta.title;
+            document.getElementById('meta-location').value = articleConfig.meta.location;
+            const list = document.getElementById('item-list');
+            list.innerHTML = '';
+            articleConfig.content.forEach((item, i) => {
+                let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type.toUpperCase()}</label>`;
                 
-        
+                if (item.type === 'image') {
+                    card += `<input type="text" placeholder="Masaüstü Görsel Yolu" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
+                             <input type="text" placeholder="Mobil Görsel Yolu" class="admin-input" value="${item.mobile || ''}" oninput="editItem(${i}, 'mobile', this.value)">
+                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${item.exif || ''}" oninput="editItem(${i}, 'exif', this.value)">
+                             <input type="text" placeholder="Görsel Açıklaması" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                } 
+                else if (item.type === 'gallery') {
+                    item.images.forEach((img, gi) => {
+                        card += `<div class="p-4 bg-black/40 rounded border border-brand-orange/10 mb-4">
+                                    <label class="admin-label !text-brand-orange">GÖRSEL ${gi+1}</label>
+                                    <input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${img.src || ''}" oninput="editGalleryItem(${i}, ${gi}, 'src', this.value)">
+                                    <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${img.mobile || ''}" oninput="editGalleryItem(${i}, ${gi}, 'mobile', this.value)">
+                                    <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${img.exif || ''}" oninput="editGalleryItem(${i}, ${gi}, 'exif', this.value)">
+                                    <input type="text" placeholder="Açıklama" class="admin-input !mb-0" value="${img.caption || ''}" oninput="editGalleryItem(${i}, ${gi}, 'caption', this.value)">
+                                 </div>`;
+                    });
+                } else {
+                    card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value || ''}</textarea>`;
+                }
+                card += `</div>`;
+                list.innerHTML += card;
+            });
+            renderBookListAdmin();
+            renderRelatedListAdmin();
+        }
 
-        
+        async function searchBooks() {
+            const queryField = document.getElementById('book-search-input');
+            const searchBtn = document.getElementById('book-search-btn');
+            const query = queryField.value.trim();
+            if(!query) return showMsg("Lütfen bir isim yazın");
+            const resultsBox = document.getElementById('book-search-results');
+            resultsBox.innerHTML = '<p class="text-[9px] text-gray-500 text-center py-4">Sorgulanıyor...</p>';
+            searchBtn.disabled = true;
+            try {
+                const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=5&printType=books`;
+                const response = await fetch(url);
+                const data = await response.json();
+                resultsBox.innerHTML = '';
+                if(data.items) {
+                    data.items.forEach(item => {
+                        const info = item.volumeInfo;
+                        const title = info.title || "Başlıksız";
+                        const author = info.authors ? info.authors.join(', ') : 'Bilinmeyen Yazar';
+                        let thumb = info.imageLinks ? info.imageLinks.thumbnail.replace('http:', 'https:') : 'https://via.placeholder.com/150x220';
+                        resultsBox.innerHTML += `<div class="search-book-item"><img src="${thumb}"><div class="info"><h5>${title}</h5><p>${author}</p></div><button onclick="selectBook('${title.replace(/'/g, "\\'")}', '${author.replace(/'/g, "\\'")}', '${thumb}', '${info.infoLink}')" class="bg-brand-gold text-black text-[8px] font-bold px-3 py-1 rounded">EKLE</button></div>`;
+                    });
+                }
+            } catch (err) { showMsg("Hata."); } finally { searchBtn.disabled = false; }
+        }
 
-                    if(!articleConfig.books) articleConfig.books = [];
+        function selectBook(title, author, img, link) { 
+            if(!articleConfig.books) articleConfig.books = [];
             articleConfig.books.push({ title, author, img, link }); 
             renderBookListAdmin(); 
             renderArticle(); 
             showMsg("Kitap Eklendi"); 
         }
 
-        
+        function renderBookListAdmin() {
+            const list = document.getElementById('book-list-admin');
+            list.innerHTML = '';
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.forEach((book, bi) => {
+                list.innerHTML += `
+                <div class="item-card bg-brand-gold/5 border-brand-gold/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteBook(${bi})">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-1 !text-[10px]" value="${book.title}" oninput="editBook(${bi}, 'title', this.value)">
+                    <input type="text" placeholder="Yazar" class="admin-input !mb-1 !text-[10px]" value="${book.author}" oninput="editBook(${bi}, 'author', this.value)">
+                    <input type="text" placeholder="Kapak URL" class="admin-input !mb-1 !text-[10px]" value="${book.img}" oninput="editBook(${bi}, 'img', this.value)">
+                    <input type="text" placeholder="Link" class="admin-input !mb-0 !text-[10px]" value="${book.link}" oninput="editBook(${bi}, 'link', this.value)">
+                </div>`;
+            });
+        }
 
-        
+        function renderRelatedListAdmin() {
+            const list = document.getElementById('related-list-admin');
+            list.innerHTML = '';
+            if(!articleConfig.related) articleConfig.related = [];
+            articleConfig.related.forEach((rel, ri) => {
+                list.innerHTML += `
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(${ri})">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="${rel.title}" oninput="editRelated(${ri}, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="${rel.link}" oninput="editRelated(${ri}, 'link', this.value)">
+                </div>`;
+            });
+        }
 
-                                
-                        
-                
-                
-        
+        async function autoScrapeArticle() {
+            const url = document.getElementById('auto-link-input').value;
+            if(!url) return showMsg("Link girin");
+            showMsg("Analiz ediliyor...");
+            try {
+                const response = await fetch(url);
+                const htmlText = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, 'text/html');
+                const title = doc.querySelector('h1')?.innerText || doc.title || "Analiz";
+                const img = doc.querySelector('img')?.src || "../img/placeholder.webp";
+                const summary = doc.querySelector('p')?.innerText.substring(0, 100) + "...";
+                articleConfig.related.push({ title, link: url, img, summary });
+                renderArticle(); renderAdminPanel(); showMsg("Veri Eklendi");
+            } catch (err) { showMsg("Hata."); }
+        }
 
+        function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
+        function editGalleryItem(i, gi, k, v) { articleConfig.content[i].images[gi][k] = v; renderArticle(); }
+        function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
         
+        function editBook(bi, k, v) { articleConfig.books[bi][k] = v; renderArticle(); }
+        function deleteBook(bi) { articleConfig.books.splice(bi, 1); renderAdminPanel(); renderArticle(); }
+        function addBookManual() { if(!articleConfig.books) articleConfig.books = []; articleConfig.books.push({title: 'Yeni Kitap', author: 'Yazar', img: '', link: '#'}); renderAdminPanel(); renderArticle(); }
+
+        function editRelated(ri, k, v) { articleConfig.related[ri][k] = v; renderArticle(); }
+        function deleteRelated(ri) { articleConfig.related.splice(ri, 1); renderAdminPanel(); renderArticle(); }
+
+        function updateMeta() { articleConfig.meta.title = document.getElementById('meta-title').value; articleConfig.meta.location = document.getElementById('meta-location').value; renderArticle(); }
+        
+        function addItem(type) { 
+            if (type === 'image') {
+                articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' }); 
+            } else if (type === 'gallery') {
+                articleConfig.content.push({type, images: [
+                    {src:'', mobile:'', exif:'', caption:''},
+                    {src:'', mobile:'', exif:'', caption:''},
+                    {src:'', mobile:'', exif:'', caption:''}
+                ]});
+            } else {
+                articleConfig.content.push({ type, value: '' }); 
+            }
+            renderAdminPanel(); renderArticle(); 
+        }
+
+        function downloadPage() {
+            // Güncel articleConfig'i stringe çevir - görsel yollarını temizle
+            const cleanConfig = JSON.parse(JSON.stringify(articleConfig));
+            function fixImgPath(p) {
+                if (!p) return p;
+                // file:// veya yerel klasör yollarından sadece dosya adını al
+                // Örn: file:///D:/site/img/41.webp -> 41.webp
+                // Örn: ../img/41.webp -> 41.webp
+                const match = p.match(/([^\/\\]+\.(?:webp|jpg|jpeg|png|gif|avif|svg))(?:\?.*)?$/i);
+                return match ? 'https://www.umitozguler.com.tr/img/' + match[1] : p;
+            }
+            cleanConfig.content.forEach(item => {
+                if (item.type === 'image') {
+                    item.src = fixImgPath(item.src);
+                    item.mobile = fixImgPath(item.mobile);
+                } else if (item.type === 'gallery' && item.images) {
+                    item.images.forEach(img => {
+                        img.src = fixImgPath(img.src);
+                        img.mobile = fixImgPath(img.mobile);
+                    });
+                }
+            });
+            const configStr = "let articleConfig = " + JSON.stringify(cleanConfig, null, 2) + ";";
+            // Sayfanın tam HTML'ini al
+            let fullHtml = document.documentElement.outerHTML;
+            // articleConfig'i temizlenmiş veriyle değiştir
+            fullHtml = fullHtml.replace(/let articleConfig = \{[\s\S]*?\};(?=\s*const observer)/, configStr);
+            // Dosya adını başlıktan üret
+            const safeTitle = articleConfig.meta.title
+                .toLowerCase()
+                .replace(/[^a-z0-9ğüşıöçĞÜŞİÖÇ\s]/g, '')
+                .trim()
+                .replace(/\s+/g, '-')
+                .substring(0, 40);
+            const fileName = safeTitle + '.html';
+            // Blob oluştur ve indir
+            const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showMsg("İndiriliyor: " + fileName);
+        }
         
         function syncLogoWidth() {
-            const main = document.getElementById('logo-main');
-            const sub = document.getElementById('logo-sub');
-            if (main && sub) {
-                sub.style.width = main.offsetWidth + 'px';
-            }
+            requestAnimationFrame(() => {
+                const main = document.getElementById('logo-main');
+                const sub = document.getElementById('logo-sub');
+                if (main && sub) sub.style.width = main.offsetWidth + 'px';
+            });
         }
 
         window.onload = () => { 
-            renderArticle();
             syncLogoWidth();
             window.addEventListener('resize', syncLogoWidth); 
             const toggle = document.getElementById('menu-toggle');
             if (toggle) {
                 toggle.onclick = () => {
                     const menu = document.getElementById('mobile-menu');
-                    menu.classList.toggle('active'); menu.classList.toggle('translate-x-full');
+                    const isOpen = menu.classList.contains('active');
+                    if (isOpen) {
+                        menu.classList.remove('active');
+                        menu.classList.add('translate-x-full');
+                    } else {
+                        menu.classList.add('active');
+                        menu.classList.remove('translate-x-full');
+                    }
                     document.getElementById('line1').classList.toggle('rotate-45'); document.getElementById('line1').classList.toggle('translate-y-2');
                     document.getElementById('line2').classList.toggle('opacity-0');
                     document.getElementById('line3').classList.toggle('-rotate-45'); document.getElementById('line3').classList.toggle('-translate-y-2');
                 };
             }
         };
+        
+        document.addEventListener('keydown', (e) => { if (e.shiftKey && e.altKey && e.code === 'KeyA') { const t = document.getElementById('admin-trigger'); t.style.display = t.style.display === 'none' ? 'flex' : 'none'; } });
     </script>
 
 </body></html>
