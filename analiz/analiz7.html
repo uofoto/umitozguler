@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+<html lang="tr"><head>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag("js", new Date());
         gtag("config", "G-QW3FEBRP69");
     </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Ümit Özgüler | Fotoğraf Analizleri</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Gemini yazı fontu olarak modern 'Outfit' fontu ve Montserrat entegre edildi -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:italic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&amp;family=Montserrat:wght@200;300;400;500;600&amp;family=Playfair+Display:italic&amp;display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -25,7 +22,6 @@
                         'brand-orange': '#ff8c00' 
                     },
                     fontFamily: { 
-                        // Ana font Gemini fontu (Outfit) ve Montserrat olarak ayarlandı
                         sans: ['"Outfit"', '"Montserrat"', 'sans-serif'],
                         serif: ['"Playfair Display"', 'serif']
                     }
@@ -39,9 +35,9 @@
         body { background-color: #121212; overflow-x: hidden; scroll-behavior: smooth; }
         #progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: #ff8c00; width: 0%; z-index: 2000; transition: width 0.1s ease; }
         
-        /* MAKALE METİN AYARLARI */
         .article-content p { 
-            margin-bottom: 2rem; 
+            margin-top: 0;
+            margin-bottom: 0.8rem; 
             line-height: 2; 
             color: #b5b5b5; 
             font-weight: 300; 
@@ -50,36 +46,33 @@
         }
         @media (min-width: 768px) { .article-content p { font-size: 1.15rem; } }
 
-        /* --- TEXT İÇİNDEKİ ARA BAŞLIKLAR (BELİRGİN RENK) --- */
         .inner-title { 
-            color: #ff8c00 !important; /* Belirgin turuncu renk */
+            color: #ff8c00 !important;
             display: block; 
             font-weight: 700; 
             font-size: 1.25rem; 
-            margin-top: 2.8rem; 
-            margin-bottom: 1.2rem; 
+            margin-top: 1rem; 
+            margin-bottom: 0.3rem; 
             letter-spacing: 0.05em;
-            text-transform: capitalize; /* Kelimelerin ilk harfleri büyük */
+            text-transform: capitalize;
             font-family: '"Outfit"', sans-serif;
-            border-left: 3px solid #ff8c00;
-            padding-left: 15px;
+            padding-left: 0;
         }
 
         .article-content strong { color: white; font-weight: 500; border-bottom: 1px solid rgba(255,140,0,0.3); padding-bottom: 1px; }
         
-        /* ANA BAŞLIK AYARI - Orijinal boyutu korumak için punto sınırlaması kaldırıldı */
         h1 { 
             font-family: '"Outfit"', sans-serif !important;
             text-align: center;
         }
 
-        /* ARA BAŞLIKLARDA GEMINI FONTU VE ÖZEL STİL */
+        /* FIX 2: Başlık (h2/h3) üst/alt margin sıfırlandı, boşluklar kaldırıldı */
         .article-content h2, .article-content h3 { 
             color: #ffffff !important; 
             font-weight: 600 !important; 
             font-size: 1.4rem !important; 
-            margin-top: 4rem !important; 
-            margin-bottom: 1.5rem !important; 
+            margin-top: 0 !important; 
+            margin-bottom: 0.5rem !important; 
             letter-spacing: 0.1em !important; 
             text-transform: capitalize; 
             font-family: '"Outfit"', sans-serif !important;
@@ -88,6 +81,13 @@
             gap: 15px;
         }
         .article-content h3::before { content: ''; width: 20px; height: 1px; background: #ff8c00; }
+        /* Başlık wrapper div'inin kendi margin/padding'ini sıfırla */
+        .article-content-heading { margin-top: 0 !important; margin-bottom: 0 !important; padding: 0 !important; }
+        .article-content-heading .article-content { margin: 0 !important; padding: 0 !important; }
+        /* Başlığın hemen ardından gelen metin paragrafının üst boşluğunu sıfırla */
+        .article-content p { 
+            margin-top: 0;
+        }
         
         .drop-cap::first-letter { float: left; font-size: 4.5rem; line-height: 0.85; margin-top: 8px; margin-right: 1rem; color: #ff8c00; font-family: 'Playfair Display', serif; font-style: normal; }
         .nav-link-custom { position: relative; transition: color 0.3s ease; }
@@ -114,7 +114,7 @@
 
         .custom-quote { position: relative; padding: 4rem 0; margin: 4rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .custom-quote p { color: #fff; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-style: italic; line-height: 1.6; max-width: 80%; margin: 0 auto; }
-        .custom-quote::before { content: '“'; position: absolute; top: 1rem; left: 50%; transform: translateX(-50%); color: #ff8c00; font-size: 4rem; opacity: 0.3; font-family: serif; }
+        .custom-quote::before { content: '"'; position: absolute; top: 1rem; left: 50%; transform: translateX(-50%); color: #ff8c00; font-size: 4rem; opacity: 0.3; font-family: serif; }
 
         .highlight-box { background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%); border: 1px solid rgba(255,140,0,0.15); padding: 2.5rem; border-radius: 4px; margin: 4rem 0; position: relative; overflow: hidden; }
         .highlight-box::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #ff8c00; }
@@ -156,10 +156,24 @@
         .scraped-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
         .scraped-item div { font-size: 10px; color: #fff; flex: 1; }
 
+        /* YENİ MENÜ ÇİZGİSİ VE ANİMASYONU */
+        @keyframes menuLineDown { from { height: 0; } to { height: 100%; } }
+        .menu-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            background-color: #ff8c00;
+            height: 0;
+            z-index: 205;
+        }
+        #mobile-menu.active .menu-line {
+            animation: menuLineDown 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
         #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         #mobile-menu.active { transform: translateX(0); }
-        #menu-line { height: 0; transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s; }
-        #mobile-menu.active #menu-line { height: 100%; }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -171,24 +185,41 @@
         .search-book-item .info { flex: 1; overflow: hidden; }
         .search-book-item .info h5 { color: #fff; font-size: 9px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .search-book-item .info p { color: #666; font-size: 8px; }
+
+        /* FIX 3: Mobil navbar logo - alt satıra geçmeyi engelle */
+        .nav-logo-wrap {
+            white-space: nowrap;
+            overflow: visible;
+            flex-shrink: 0;
+        }
+        @media (max-width: 767px) {
+            .nav-logo-wrap .text-2xl {
+                font-size: 1.1rem !important;
+                letter-spacing: 0.12em !important;
+            }
+            .nav-logo-wrap span[style] {
+                font-size: 6px !important;
+                letter-spacing: 3px !important;
+            }
+        }
     </style>
-</head>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Outfit", "Montserrat", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.relative{position:relative}.bottom-6{bottom:1.5rem}.right-0{right:0px}.right-6{right:1.5rem}.top-0{top:0px}.z-\[100\]{z-index:100}.z-\[110\]{z-index:110}.z-\[200\]{z-index:200}.z-\[210\]{z-index:210}.z-\[4000\]{z-index:4000}.m-0{margin:0px}.mx-auto{margin-left:auto;margin-right:auto}.my-16{margin-top:4rem;margin-bottom:4rem}.\!mb-0{margin-bottom:0px !important}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.mt-auto{margin-top:auto}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-14{margin-bottom:3.5rem}.mb-16{margin-bottom:4rem}.mt-14{margin-top:3.5rem}.mt-20{margin-top:5rem}.\!mb-1{margin-bottom:0.25rem !important}.mb-2{margin-bottom:0.5rem}.line-clamp-2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-0\.5{height:0.125rem}.h-14{height:3.5rem}.h-24{height:6rem}.h-6{height:1.5rem}.h-\[38px\]{height:38px}.h-screen{height:100vh}.h-\[1px\]{height:1px}.min-h-screen{min-height:100vh}.w-14{width:3.5rem}.w-6{width:1.5rem}.w-\[calc\(100\%-240px\)\]{width:calc(100% - 240px)}.w-full{width:100%}.max-w-3xl{max-width:48rem}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.translate-x-full{--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-6{gap:1.5rem}.space-x-12 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(3rem * var(--tw-space-x-reverse));margin-left:calc(3rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-brand-gold\/20{border-color:rgb(197 160 89 / 0.2)}.border-brand-gold\/30{border-color:rgb(197 160 89 / 0.3)}.border-brand-orange\/20{border-color:rgb(255 140 0 / 0.2)}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/5{border-color:rgb(255 255 255 / 0.05)}.border-transparent{border-color:transparent}.\!bg-brand-dark{--tw-bg-opacity:1 !important;background-color:rgb(26 26 26 / var(--tw-bg-opacity, 1)) !important}.\!bg-brand-gold{--tw-bg-opacity:1 !important;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1)) !important}.\!bg-brand-orange{--tw-bg-opacity:1 !important;background-color:rgb(255 140 0 / var(--tw-bg-opacity, 1)) !important}.\!bg-gray-700{--tw-bg-opacity:1 !important;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1)) !important}.bg-brand-black{--tw-bg-opacity:1;background-color:rgb(18 18 18 / var(--tw-bg-opacity, 1))}.bg-brand-black\/95{background-color:rgb(18 18 18 / 0.95)}.bg-brand-dark{--tw-bg-opacity:1;background-color:rgb(26 26 26 / var(--tw-bg-opacity, 1))}.bg-brand-orange{--tw-bg-opacity:1;background-color:rgb(255 140 0 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-brand-gold\/5{background-color:rgb(197 160 89 / 0.05)}.bg-brand-orange\/5{background-color:rgb(255 140 0 / 0.05)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-transparent{--tw-gradient-from:transparent var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-brand-gold\/40{--tw-gradient-to:rgb(197 160 89 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(197 160 89 / 0.4) var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-3{padding:0.75rem}.\!px-4{padding-left:1rem !important;padding-right:1rem !important}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pb-20{padding-bottom:5rem}.pb-8{padding-bottom:2rem}.pt-32{padding-top:8rem}.pt-48{padding-top:12rem}.pt-8{padding-top:2rem}.pb-1{padding-bottom:0.25rem}.pt-12{padding-top:3rem}.pb-0\.5{padding-bottom:0.125rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[8px\]{font-size:8px}.text-\[9px\]{font-size:9px}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.\!text-\[10px\]{font-size:10px !important}.text-\[0\.75rem\]{font-size:0.75rem}.text-\[7px\]{font-size:7px}.font-bold{font-weight:700}.font-extralight{font-weight:200}.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-light{font-weight:300}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.leading-snug{line-height:1.375}.tracking-\[0\.2em\]{letter-spacing:0.2em}.tracking-widest{letter-spacing:0.1em}.tracking-\[0\.4em\]{letter-spacing:0.4em}.tracking-tight{letter-spacing:-0.025em}.\!text-black{--tw-text-opacity:1 !important;color:rgb(0 0 0 / var(--tw-text-opacity, 1)) !important}.\!text-brand-gold{--tw-text-opacity:1 !important;color:rgb(197 160 89 / var(--tw-text-opacity, 1)) !important}.\!text-brand-gold\/50{color:rgb(197 160 89 / 0.5) !important}.\!text-brand-orange{--tw-text-opacity:1 !important;color:rgb(255 140 0 / var(--tw-text-opacity, 1)) !important}.\!text-white{--tw-text-opacity:1 !important;color:rgb(255 255 255 / var(--tw-text-opacity, 1)) !important}.text-brand-gold{--tw-text-opacity:1;color:rgb(197 160 89 / var(--tw-text-opacity, 1))}.text-brand-orange{--tw-text-opacity:1;color:rgb(255 140 0 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-white\/30{color:rgb(255 255 255 / 0.3)}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-50{opacity:0.5}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-brand-orange:hover{--tw-border-opacity:1;border-color:rgb(255 140 0 / var(--tw-border-opacity, 1))}.hover\:bg-brand-gold:hover{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.hover\:text-brand-orange:hover{--tw-text-opacity:1;color:rgb(255 140 0 / var(--tw-text-opacity, 1))}.hover\:text-blue-600:hover{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.hover\:text-green-500:hover{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:border-brand-orange{--tw-border-opacity:1;border-color:rgb(255 140 0 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:text-brand-orange{--tw-text-opacity:1;color:rgb(255 140 0 / var(--tw-text-opacity, 1))}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:text-5xl{font-size:3rem;line-height:1}}</style></head>
 <body class="bg-brand-black text-gray-300 antialiased flex flex-col min-h-screen page-animate">
 
-    <div id="progress-bar"></div>
-    <div id="custom-alert">İşlem Başarılı</div>
+    <div id="progress-bar" style="width: 86.6186%;"></div>
+    <div id="custom-alert" style="display: none;">İndiriliyor: fotoğraf-okuma-no-7.html</div>
 
-    <!-- NAVIGATION -->
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
-                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                <!-- FIX 3: nav-logo-wrap eklendi -->
+                <a href="../index.html" class="nav-logo-wrap flex flex-col items-start group relative z-[110] flex-shrink-0">
+                    <div id="logo-main" class="text-2xl tracking-widest text-white transition-colors leading-none whitespace-nowrap">
                         <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                     </div>
-                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
-                        FINE ART PHOTOGRAPHY
-                    </span>
+                    <div id="logo-sub" style="font-size: 8px; opacity: 0.9; font-weight: 300; color: rgb(255, 255, 255); display: flex; justify-content: space-between; margin-top: 5px; width: 211px; letter-spacing: 0.01em;">
+                        <span>F</span><span>I</span><span>N</span><span>E</span><span style="width:0.6em"></span><span>A</span><span>R</span><span>T</span><span style="width:0.6em"></span><span>P</span><span>H</span><span>O</span><span>T</span><span>O</span><span>G</span><span>R</span><span>A</span><span>P</span><span>H</span><span>Y</span>
+                    </div>
                 </a>
                 <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
@@ -199,15 +230,15 @@
                     <a href="../fotoyol.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
                     <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
                 </div>
-                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
+                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[210] p-2">
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl translate-x-full">
-            <div id="menu-line" class="absolute left-0 top-0 w-[2px] h-0 bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-[calc(100%-240px)] bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl translate-x-full z-[200]">
+            <div class="menu-line"></div>
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white">Ana Sayfa</a>
             <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white">Hakkımda</a>
             <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white">Portfolyo</a>
@@ -218,19 +249,41 @@
         </div>
     </nav>
 
-    <!-- CONTENT -->
     <article class="pt-48 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto" id="article-container">
-            <!-- Dinamik Analiz İçeriği -->
-        </div>
+                <div class="text-center mb-16 reveal active">
+                    <a href="../analizler.html" class="inline-block mb-10 text-[10px] uppercase tracking-[0.4em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
+                        ← Tüm Analizler
+                    </a>
+                    <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
+                        Fotoğraf Okuma No: 7
+                    </h1>
+                    <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-gold space-x-6">
+                        <span>09 ŞUBAT 2026 | Küratör Analizi</span>
+                    </div>
+                </div>
+            <div class="my-16 reveal active"><div class="analysis-img-container" id="img-container-0"><button class="analysis-toggle-btn" onclick="toggleGrid(0)">Analiz Modu</button><div class="composition-grid" id="grid-0"><div class="composition-line-h" style="top: 33.33%"></div><div class="composition-line-h" style="top: 66.66%"></div><div class="composition-line-v" style="left: 33.33%"></div><div class="composition-line-v" style="left: 66.66%"></div></div><picture><source srcset="../imgmobil/1.webp" media="(max-width: 768px)"><img src="../img/1.webp" alt="süpüren kadın"></picture></div><div class="text-center mt-4 opacity-50 text-[10px] tracking-widest uppercase">süpüren kadın</div><div class="exif-info-strip"><div class="exif-item"><span class="exif-label">TEKNİK VERİLER</span><span class="exif-val">Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500</span></div></div><div class="mt-14 mb-14"><div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"></div></div></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="drop-cap">Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">Teknik Yetkinlik</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.<br><br>Işık Yönetimi:<br>Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.<br><br>Kompozisyon ve Denge:<br>Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.<br><br>Netlik ve Alan Derinliği:<br>Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor.</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">İçerik ve Kavramsal Derinlik</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.<br><br>Özgünlük:<br>Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, "mekana aidiyet" ve "evini sokağa taşıma" kavramları üzerinden okuyorum.<br><br>Katmanlı Anlatım:<br>Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.<br><br>Bağlam:<br>Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.<br><br>Üslup Tutarlılığı:<br>Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.<br><br>Duygusal Etki (Punctum):<br>Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor.</p></div><div class="custom-quote reveal active"><p>Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor.</p></div><div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">Anlatı ve Hikaye Anlatıcılığı</h3></div><div class="article-content reveal active" style="margin:0;padding:0;"><p class="">Görsel Antropoloji:<br>Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.<br><br>Ritim:<br>Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor.</p></div><div class="highlight-box reveal active"><span class="highlight-label">Kritik Detay</span><p class="text-white italic font-light leading-relaxed m-0">Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim.</p></div><div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active"><p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p><div class="flex justify-center space-x-12"><a href="javascript:void(0)" onclick="share('wa')" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a><a href="javascript:void(0)" onclick="share('fb')" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a><a href="javascript:void(0)" onclick="share('x')" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a></div></div><div class="reveal active"><div class="book-section-header"><h3>Tavsiye Kitaplar</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"><div class="book-card"><div class="book-cover"><img src="https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c" alt="Karar Anı"></div><div class="book-info"><h4>Karar Anı</h4><p>Henri Cartier-Bresson</p><a href="https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw" target="_blank" class="book-link">Detayları İncele →</a></div></div></div></div><div class="reveal active"><div class="related-section-header"><h3>İlginizi Çekebilir</h3></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"><a href="https://www.umitozguler.com.tr/analiz/analiz5.html" class="related-card group"><div class="related-img-box"><img src="file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/51.webp" alt="
+                    Fotoğraf Okuma No: 5
+                "></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
+                    Fotoğraf Okuma No: 5
+                </h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. S...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a><a href="https://www.umitozguler.com.tr/analiz/analiz2.html" class="related-card group"><div class="related-img-box"><img src="file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/102.webp" alt="
+                    Fotoğraf Okuma No: 2
+                "></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
+                    Fotoğraf Okuma No: 2
+                </h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">
+                    Bu karede parıldayan ıslak yolun yarattığı S-eğrisi (S-curve) kompozisyonun ana...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a><a href="https://www.umitozguler.com.tr/analiz/analiz1.html" class="related-card group"><div class="related-img-box"><img src="file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/48.webp" alt="
+                    Fotoğraf Okuma No: 1
+                "></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
+                    Fotoğraf Okuma No: 1
+                </h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">
+                    Fotoğraf, izleyiciyi öznenin hemen arkasına yerleştirerek katılımcı bir gözlemc...</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a></div></div></div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
-        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <!-- ADMIN PANEL -->
-    <div id="admin-panel">
+    <div id="admin-panel" class="active">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
             <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Analiz Paneli</h2>
             <button onclick="toggleAdmin()" class="text-brand-gold text-[10px] uppercase font-bold border border-brand-gold/30 px-3 py-1 rounded-full hover:bg-brand-gold hover:text-black transition-all">Kapat</button>
@@ -243,7 +296,38 @@
                 <input type="text" id="meta-location" class="admin-input" oninput="updateMeta()">
             </div>
             
-            <div id="item-list"></div>
+            <div id="item-list"><div class="item-card"><span class="delete-btn" onclick="deleteItem(0)">SİL</span><label class="admin-label">IMAGE</label><input type="text" placeholder="Masaüstü Görsel Yolu" class="admin-input" value="../img/1.webp" oninput="editItem(0, 'src', this.value)">
+                             <input type="text" placeholder="Mobil Görsel Yolu" class="admin-input" value="../imgmobil/1.webp" oninput="editItem(0, 'mobile', this.value)">
+                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500" oninput="editItem(0, 'exif', this.value)">
+                             <input type="text" placeholder="Görsel Açıklaması" class="admin-input" value="süpüren kadın" oninput="editItem(0, 'caption', this.value)"></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(1)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(1, 'value', this.value)">Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(2)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(2, 'value', this.value)">Teknik Yetkinlik</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(3)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(3, 'value', this.value)">Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.
+
+Işık Yönetimi:
+Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.
+
+Kompozisyon ve Denge:
+Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.
+
+Netlik ve Alan Derinliği:
+Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(4)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(4, 'value', this.value)">İçerik ve Kavramsal Derinlik</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(5)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(5, 'value', this.value)">Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.
+
+Özgünlük:
+Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, "mekana aidiyet" ve "evini sokağa taşıma" kavramları üzerinden okuyorum.
+
+Katmanlı Anlatım:
+Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.
+
+Bağlam:
+Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.
+
+Üslup Tutarlılığı:
+Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.
+
+Duygusal Etki (Punctum):
+Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(6)">SİL</span><label class="admin-label">QUOTE</label><textarea class="admin-input h-24" oninput="editItem(6, 'value', this.value)">Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(7)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(7, 'value', this.value)">Anlatı ve Hikaye Anlatıcılığı</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(8)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(8, 'value', this.value)">Görsel Antropoloji:
+Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.
+
+Ritim:
+Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(9)">SİL</span><label class="admin-label">HIGHLIGHT</label><textarea class="admin-input h-24" oninput="editItem(9, 'value', this.value)">Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim.</textarea></div></div>
             <div class="grid grid-cols-2 gap-3 mt-4">
                 <button onclick="addItem('text')" class="admin-btn">Metin Ekle</button>
                 <button onclick="addItem('image')" class="admin-btn">Görsel Ekle</button>
@@ -253,7 +337,6 @@
                 <button onclick="addItem('gallery')" class="admin-btn !bg-gray-700 !text-white">Galeri (3'lü)</button>
             </div>
 
-            <!-- KİTAP TAVSİYE PANELİ (Orijinal Detaylı Yapı Geri Getirildi) -->
             <div class="mt-8 pt-8 border-t border-brand-gold/20">
                 <label class="admin-label !text-brand-gold">Tavsiye Kitaplar (Google Books Arama)</label>
                 <div class="flex gap-2 mb-4">
@@ -263,11 +346,17 @@
                 <div id="book-search-results" class="mb-6"></div>
                 
                 <label class="admin-label !text-brand-gold/50">Seçili Tavsiyeler</label>
-                <div id="book-list-admin"></div>
+                <div id="book-list-admin">
+                <div class="item-card bg-brand-gold/5 border-brand-gold/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteBook(0)">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-1 !text-[10px]" value="Karar Anı" oninput="editBook(0, 'title', this.value)">
+                    <input type="text" placeholder="Yazar" class="admin-input !mb-1 !text-[10px]" value="Henri Cartier-Bresson" oninput="editBook(0, 'author', this.value)">
+                    <input type="text" placeholder="Kapak URL" class="admin-input !mb-1 !text-[10px]" value="https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c" oninput="editBook(0, 'img', this.value)">
+                    <input type="text" placeholder="Link" class="admin-input !mb-0 !text-[10px]" value="https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw" oninput="editBook(0, 'link', this.value)">
+                </div></div>
                 <button onclick="addBookManual()" class="admin-btn w-full !bg-brand-dark !text-brand-gold border border-brand-gold/30 mt-2">MANUEL KİTAP EKLE</button>
             </div>
 
-            <!-- OTOMATİK LİNK EKLEME -->
             <div class="mt-8 pt-8 border-t border-brand-orange/20">
                 <label class="admin-label !text-brand-orange">Linkten İlgili Yazı Ekle (Otomatik)</label>
                 <div class="flex gap-2">
@@ -275,30 +364,54 @@
                     <button onclick="autoScrapeArticle()" class="admin-btn !bg-brand-orange !text-black h-[38px] !px-4">Çek</button>
                 </div>
                 <div id="scrape-preview"></div>
-                <div id="related-list-admin" class="mt-4"></div>
+                <div id="related-list-admin" class="mt-4">
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(0)">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
+                    Fotoğraf Okuma No: 5
+                " oninput="editRelated(0, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz5.html" oninput="editRelated(0, 'link', this.value)">
+                </div>
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(1)">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
+                    Fotoğraf Okuma No: 2
+                " oninput="editRelated(1, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz2.html" oninput="editRelated(1, 'link', this.value)">
+                </div>
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(2)">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
+                    Fotoğraf Okuma No: 1
+                " oninput="editRelated(2, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz1.html" oninput="editRelated(2, 'link', this.value)">
+                </div></div>
             </div>
 
+            <!-- Sayfayı İndir butonu -->
             <div class="save-help mt-8 p-4 bg-brand-dark rounded border border-white/5 text-center">
-                <button onclick="copyCode()" class="admin-btn w-full !bg-white !text-black mt-2">Yapılandırmayı Kopyala</button>
+                <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-3">Veri girişi tamamlandıktan sonra</p>
+                <button onclick="downloadPage()" class="admin-btn w-full !bg-brand-orange !text-black" style="font-size:13px;padding:14px;">⬇ SAYFAYI İNDİR</button>
+                <p class="text-[8px] text-gray-600 mt-3 leading-relaxed">İndirilen .html dosyasını doğrudan<br>sunucunuza yükleyebilirsiniz.</p>
             </div>
         </div>
     </div>
 
-    <button id="admin-trigger" onclick="toggleAdmin()" style="display: none;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-orange rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
+    <button id="admin-trigger" onclick="toggleAdmin()" style="display: flex;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-orange rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </button>
 
     <script>
-       let articleConfig = {
+        let articleConfig = {
   "meta": {
     "title": "Fotoğraf Okuma No: 7",
-    "location": "04 mart 2026 | Küratör Analizi"
+    "location": "09 ŞUBAT 2026 | Küratör Analizi"
   },
   "content": [
     {
       "type": "image",
-      "src": "../img/1.webp",
-      "mobile": "../imgmobil/1.webp",
+      "src": "https://www.umitozguler.com.tr/img/1.webp",
+      "mobile": "https://www.umitozguler.com.tr/img/1.webp",
       "exif": "Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500",
       "caption": "süpüren kadın"
     },
@@ -312,7 +425,7 @@
     },
     {
       "type": "text",
-      "value": "Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.\n\n[Işık Yönetimi:] Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.\n\n[Kompozisyon ve Denge:] Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.\n\n[Netlik ve Alan Derinliği:] Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor."
+      "value": "Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.\n\nIşık Yönetimi:\nSiyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.\n\nKompozisyon ve Denge:\nSokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.\n\nNetlik ve Alan Derinliği:\nGeniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor."
     },
     {
       "type": "heading",
@@ -320,15 +433,11 @@
     },
     {
       "type": "text",
-      "value": "Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.\n\n[Özgünlük: ]Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, \"mekana aidiyet\" ve \"evini sokağa taşıma\" kavramları üzerinden okuyorum.\n\n[Katmanlı Anlatım:] Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.\n\n[Bağlam:] Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor."
+      "value": "Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.\n\nÖzgünlük:\nSokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, \"mekana aidiyet\" ve \"evini sokağa taşıma\" kavramları üzerinden okuyorum.\n\nKatmanlı Anlatım:\nBir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.\n\nBağlam:\nMekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.\n\nÜslup Tutarlılığı:\nYüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.\n\nDuygusal Etki (Punctum):\nBenim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor."
     },
     {
       "type": "quote",
       "value": "Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor."
-    },
-    {
-      "type": "text",
-      "value": "[Üslup Tutarlılığı:] Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.\n\n[Duygusal Etki (Punctum):] Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor."
     },
     {
       "type": "heading",
@@ -336,7 +445,7 @@
     },
     {
       "type": "text",
-      "value": "[Görsel Antropoloji: ]Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.\n\n[Ritim: ]Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor."
+      "value": "Görsel Antropoloji:\nFotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.\n\nRitim:\nYolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor."
     },
     {
       "type": "highlight",
@@ -346,7 +455,7 @@
   "books": [
     {
       "title": "Karar Anı",
-      "author": "Henri Cartier-Bresson ",
+      "author": "Henri Cartier-Bresson",
       "img": "https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c",
       "link": "https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw"
     }
@@ -355,19 +464,19 @@
     {
       "title": "\n                    Fotoğraf Okuma No: 5\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz5.html",
-      "img": "../img/51.webp",
+      "img": "file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/51.webp",
       "summary": "Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. S..."
     },
     {
       "title": "\n                    Fotoğraf Okuma No: 2\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz2.html",
-      "img": "../img/102.webp",
+      "img": "file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/102.webp",
       "summary": "\n                    Bu karede parıldayan ıslak yolun yarattığı S-eğrisi (S-curve) kompozisyonun ana..."
     },
     {
       "title": "\n                    Fotoğraf Okuma No: 1\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz1.html",
-      "img": "../img/48.webp",
+      "img": "file:///D:/UMITOZGULER.COM.TR/umitozguler-YEN%C4%B0LENM%C4%B0%C5%9E%20A%C3%87ILI%C5%9E/en%20son%20-g%C3%BCncel/img/48.webp",
       "summary": "\n                    Fotoğraf, izleyiciyi öznenin hemen arkasına yerleştirerek katılımcı bir gözlemc..."
     }
   ]
@@ -407,17 +516,15 @@
             articleConfig.content.forEach((item, i) => {
                 if (item.type === 'text') {
                     const dropCapClass = (!textItemFound) ? 'drop-cap' : '';
-                    
-                    // MONTE EDİLEN MANTIK: [BAŞLIK] -> Belirgin Ara Başlık
                     let formattedValue = item.value
                         .replace(/\n/g, '<br>')
                         .replace(/\[(.*?)\]/g, '<span class="inner-title">$1</span>');
                     
-                    html += `<div class="article-content reveal active"><p class="${dropCapClass}">${formattedValue}</p></div>`;
+                    html += `<div class="article-content reveal active" style="margin:0;padding:0;"><p class="${dropCapClass}">${formattedValue}</p></div>`;
                     textItemFound = true;
                 }
                 else if (item.type === 'heading') {
-                    html += `<div class="article-content reveal active"><h3 class="text-white">${item.value}</h3></div>`;
+                    html += `<div class="article-content article-content-heading reveal active" style="margin-top:1.2rem;margin-bottom:0;padding:0;"><h3 class="text-white" style="margin-top:0!important;margin-bottom:0.25rem!important;">${item.value}</h3></div>`;
                 }
                 else if (item.type === 'quote') {
                     html += `<div class="custom-quote reveal active"><p>${item.value}</p></div>`;
@@ -443,10 +550,8 @@
                 }
             });
 
-            // SOSYAL PAYLAŞIM
             html += `<div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active"><p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p><div class="flex justify-center space-x-12"><a href="javascript:void(0)" onclick="share('wa')" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a><a href="javascript:void(0)" onclick="share('fb')" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a><a href="javascript:void(0)" onclick="share('x')" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a></div></div>`;
 
-            // TAVSİYE KİTAPLAR
             if (articleConfig.books && articleConfig.books.length > 0) {
                 html += `<div class="reveal active"><div class="book-section-header"><h3>Tavsiye Kitaplar</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">`;
                 articleConfig.books.forEach(book => {
@@ -455,7 +560,6 @@
                 html += `</div></div>`;
             }
 
-            // İLGİNİZİ ÇEKEBİLİR
             if (articleConfig.related && articleConfig.related.length > 0) {
                 html += `<div class="reveal active"><div class="related-section-header"><h3>İlginizi Çekebilir</h3></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">`;
                 articleConfig.related.forEach(rel => {
@@ -541,7 +645,6 @@
             showMsg("Kitap Eklendi"); 
         }
 
-        // ORİJİNAL KİTAP ADMİN PANELİ (Girdi alanları geri getirildi)
         function renderBookListAdmin() {
             const list = document.getElementById('book-list-admin');
             list.innerHTML = '';
@@ -617,10 +720,66 @@
             renderAdminPanel(); renderArticle(); 
         }
 
-        function copyCode() { navigator.clipboard.writeText("let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";").then(() => showMsg("Kopyalandı")); }
+        function downloadPage() {
+            // Güncel articleConfig'i stringe çevir - görsel yollarını temizle
+            const cleanConfig = JSON.parse(JSON.stringify(articleConfig));
+            function fixImgPath(p) {
+                if (!p) return p;
+                // file:// veya yerel klasör yollarından sadece dosya adını al
+                // Örn: file:///D:/site/img/41.webp -> 41.webp
+                // Örn: ../img/41.webp -> 41.webp
+                const match = p.match(/([^\/\\]+\.(?:webp|jpg|jpeg|png|gif|avif|svg))(?:\?.*)?$/i);
+                return match ? 'https://www.umitozguler.com.tr/img/' + match[1] : p;
+            }
+            cleanConfig.content.forEach(item => {
+                if (item.type === 'image') {
+                    item.src = fixImgPath(item.src);
+                    item.mobile = fixImgPath(item.mobile);
+                } else if (item.type === 'gallery' && item.images) {
+                    item.images.forEach(img => {
+                        img.src = fixImgPath(img.src);
+                        img.mobile = fixImgPath(img.mobile);
+                    });
+                }
+            });
+            const configStr = "let articleConfig = " + JSON.stringify(cleanConfig, null, 2) + ";";
+            // Sayfanın tam HTML'ini al
+            let fullHtml = document.documentElement.outerHTML;
+            // articleConfig'i temizlenmiş veriyle değiştir
+            fullHtml = fullHtml.replace(/let articleConfig = \{[\s\S]*?\};(?=\s*const observer)/, configStr);
+            // Dosya adını başlıktan üret
+            const safeTitle = articleConfig.meta.title
+                .toLowerCase()
+                .replace(/[^a-z0-9ğüşıöçĞÜŞİÖÇ\s]/g, '')
+                .trim()
+                .replace(/\s+/g, '-')
+                .substring(0, 40);
+            const fileName = safeTitle + '.html';
+            // Blob oluştur ve indir
+            const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showMsg("İndiriliyor: " + fileName);
+        }
         
+        function syncLogoWidth() {
+            const main = document.getElementById('logo-main');
+            const sub = document.getElementById('logo-sub');
+            if (main && sub) {
+                sub.style.width = main.offsetWidth + 'px';
+            }
+        }
+
         window.onload = () => { 
-            renderArticle(); 
+            renderArticle();
+            syncLogoWidth();
+            window.addEventListener('resize', syncLogoWidth); 
             const toggle = document.getElementById('menu-toggle');
             if (toggle) {
                 toggle.onclick = () => {
@@ -635,7 +794,5 @@
         
         document.addEventListener('keydown', (e) => { if (e.shiftKey && e.altKey && e.code === 'KeyA') { const t = document.getElementById('admin-trigger'); t.style.display = t.style.display === 'none' ? 'flex' : 'none'; } });
     </script>
-</body>
-</html>
 
-
+</body></html>
