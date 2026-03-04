@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -13,7 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="page-title">Ümit Özgüler | Fotoğraf Analizleri</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:italic&display=swap" rel="stylesheet">
+    <!-- Gemini yazı fontu olarak modern 'Outfit' fontu ve Montserrat entegre edildi -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:italic&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -25,7 +25,8 @@
                         'brand-orange': '#ff8c00' 
                     },
                     fontFamily: { 
-                        sans: ['"Montserrat"', 'sans-serif'],
+                        // Ana font Gemini fontu (Outfit) ve Montserrat olarak ayarlandı
+                        sans: ['"Outfit"', '"Montserrat"', 'sans-serif'],
                         serif: ['"Playfair Display"', 'serif']
                     }
                 }
@@ -35,27 +36,44 @@
     <style>
         @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
         .page-animate { animation: fadeInPage 1s ease-in forwards; }
-        
         body { background-color: #121212; overflow-x: hidden; scroll-behavior: smooth; }
-        
         #progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: #ff8c00; width: 0%; z-index: 2000; transition: width 0.1s ease; }
         
-        /* Makale İçerik Stilleri */
+        /* MAKALE METİN AYARLARI */
         .article-content p { 
             margin-bottom: 2rem; 
             line-height: 2; 
             color: #b5b5b5; 
             font-weight: 300; 
             font-size: 1.05rem; 
-            letter-spacing: 0.01em;
+            letter-spacing: 0.01em; 
         }
-        @media (min-width: 768px) {
-            .article-content p { font-size: 1.15rem; }
+        @media (min-width: 768px) { .article-content p { font-size: 1.15rem; } }
+
+        /* --- TEXT İÇİNDEKİ ARA BAŞLIKLAR (BELİRGİN RENK) --- */
+        .inner-title { 
+            color: #ff8c00 !important; /* Belirgin turuncu renk */
+            display: block; 
+            font-weight: 700; 
+            font-size: 1.25rem; 
+            margin-top: 2.8rem; 
+            margin-bottom: 1.2rem; 
+            letter-spacing: 0.05em;
+            text-transform: capitalize; /* Kelimelerin ilk harfleri büyük */
+            font-family: '"Outfit"', sans-serif;
+            border-left: 3px solid #ff8c00;
+            padding-left: 15px;
         }
 
         .article-content strong { color: white; font-weight: 500; border-bottom: 1px solid rgba(255,140,0,0.3); padding-bottom: 1px; }
         
-        /* ARA BAŞLIKLAR */
+        /* ANA BAŞLIK AYARI - Orijinal boyutu korumak için punto sınırlaması kaldırıldı */
+        h1 { 
+            font-family: '"Outfit"', sans-serif !important;
+            text-align: center;
+        }
+
+        /* ARA BAŞLIKLARDA GEMINI FONTU VE ÖZEL STİL */
         .article-content h2, .article-content h3 { 
             color: #ffffff !important; 
             font-weight: 600 !important; 
@@ -63,99 +81,48 @@
             margin-top: 4rem !important; 
             margin-bottom: 1.5rem !important; 
             letter-spacing: 0.1em !important; 
-            text-transform: capitalize;
-            font-family: 'Montserrat', sans-serif !important;
+            text-transform: capitalize; 
+            font-family: '"Outfit"', sans-serif !important;
             display: flex;
             align-items: center;
             gap: 15px;
         }
         .article-content h3::before { content: ''; width: 20px; height: 1px; background: #ff8c00; }
-
-        .drop-cap::first-letter {
-            float: left;
-            font-size: 4.5rem; 
-            line-height: 0.85;
-            margin-top: 8px;
-            margin-right: 1rem; 
-            color: #ff8c00;
-            font-family: 'Playfair Display', serif;
-            font-style: normal;
-        }
-
+        
+        .drop-cap::first-letter { float: left; font-size: 4.5rem; line-height: 0.85; margin-top: 8px; margin-right: 1rem; color: #ff8c00; font-family: 'Playfair Display', serif; font-style: normal; }
         .nav-link-custom { position: relative; transition: color 0.3s ease; }
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
-            background-color: #ff8c00;
-            transition: width 0.3s ease;
-        }
+        .nav-link-custom::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0; background-color: #ff8c00; transition: width 0.3s ease; }
         .nav-link-custom:hover::after { width: 100%; }
         .nav-link-custom:hover { color: #ff8c00; }
 
-        /* ANALİZ GÖRSEL VE EXIF STİLLERİ */
         .analysis-img-container { position: relative; border-radius: 4px; overflow: hidden; background: #1a1a1a; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
         .analysis-img-container img { width: 100%; height: auto; display: block; transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1); }
         .analysis-img-container:hover img { transform: scale(1.04); }
 
-        /* KOMPOZİSYON OVERLAY */
         .composition-grid { position: absolute; inset: 0; pointer-events: none; display: none; z-index: 30; opacity: 0.5; }
         .composition-grid.active { display: block; }
         .composition-line-h { position: absolute; left: 0; right: 0; height: 1px; background: #ff8c00; box-shadow: 0 0 10px rgba(255,140,0,0.5); }
         .composition-line-v { position: absolute; top: 0; bottom: 0; width: 1px; background: #ff8c00; box-shadow: 0 0 10px rgba(255,140,0,0.5); }
 
-        .analysis-toggle-btn {
-            position: absolute; top: 20px; right: 20px; z-index: 40;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,140,0,0.3); color: white;
-            padding: 8px 16px; font-size: 9px; font-weight: bold; letter-spacing: 2px;
-            text-transform: uppercase; border-radius: 50px; cursor: pointer; transition: all 0.3s;
-        }
+        .analysis-toggle-btn { position: absolute; top: 20px; right: 20px; z-index: 40; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,140,0,0.3); color: white; padding: 8px 16px; font-size: 9px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border-radius: 50px; cursor: pointer; transition: all 0.3s; }
         .analysis-toggle-btn:hover { background: #ff8c00; color: black; border-color: white; }
 
-        /* EXIF Alt Bilgi Stili */
-        .exif-info-strip {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 15px;
-            border-top: 1px solid rgba(255,140,0,0.1);
-            background: rgba(255,255,255,0.02);
-            border-radius: 4px;
-        }
-        
+        .exif-info-strip { margin-top: 20px; display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 15px; border-top: 1px solid rgba(255,140,0,0.1); background: rgba(255,255,255,0.02); border-radius: 4px; }
         .exif-item { display: flex; flex-direction: column; align-items: center; }
         .exif-label { font-size: 7px; color: #ff8c00; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
         .exif-val { font-size: 10px; color: #fff; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 300; }
 
-        .custom-quote { 
-            position: relative; padding: 4rem 0; margin: 4rem 0; text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+        .custom-quote { position: relative; padding: 4rem 0; margin: 4rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .custom-quote p { color: #fff; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-style: italic; line-height: 1.6; max-width: 80%; margin: 0 auto; }
         .custom-quote::before { content: '“'; position: absolute; top: 1rem; left: 50%; transform: translateX(-50%); color: #ff8c00; font-size: 4rem; opacity: 0.3; font-family: serif; }
 
-        /* VURGU KARTI */
-        .highlight-box {
-            background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%);
-            border: 1px solid rgba(255,140,0,0.15);
-            padding: 2.5rem; border-radius: 4px; margin: 4rem 0;
-            position: relative; overflow: hidden;
-        }
-        .highlight-box::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #ff8c00;
-        }
+        .highlight-box { background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%); border: 1px solid rgba(255,140,0,0.15); padding: 2.5rem; border-radius: 4px; margin: 4rem 0; position: relative; overflow: hidden; }
+        .highlight-box::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #ff8c00; }
         .highlight-label { font-size: 9px; font-weight: 800; color: #ff8c00; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; display: block; }
 
-        /* KİTAP TAVSİYE BÖLÜMÜ */
         .book-section-header { position: relative; display: flex; align-items: center; justify-content: center; margin: 6rem 0 3rem 0; }
         .book-section-header::before, .book-section-header::after { content: ''; flex: 1; height: 1px; background: #c5a059; opacity: 0.3; }
-        .book-section-header h3 { padding: 0 1.5rem; color: #c5a059; font-size: 0.65rem; letter-spacing: 0.5em; text-transform: uppercase; font-weight: 600; }
+        .book-section-header h3 { padding: 0 1.5rem; color: #ffffff !important; font-size: 0.65rem; letter-spacing: 0.5em; text-transform: capitalize; font-weight: 600; font-family: '"Outfit"', sans-serif; }
         
         .book-card { background: #181818; border: 1px solid rgba(197, 160, 89, 0.1); padding: 1.5rem; border-radius: 4px; transition: all 0.4s ease; display: flex; gap: 1.5rem; align-items: center; }
         .book-card:hover { border-color: #c5a059; background: #1c1c1c; transform: translateY(-3px); }
@@ -164,24 +131,10 @@
         .book-info h4 { color: #fff; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
         .book-info p { color: #888; font-size: 0.75rem; margin-bottom: 0.75rem; font-style: italic; }
         .book-link { font-size: 9px; color: #c5a059; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid transparent; transition: all 0.3s; }
-        .book-card:hover .book-link { border-color: #c5a059; }
 
-        /* Admin Panel Styles */
-        #admin-panel { position: fixed; right: 0; top: 0; height: 100vh; width: 420px; background: #141414; z-index: 3000; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; font-family: sans-serif; }
-        #admin-panel.active { transform: translateX(0); box-shadow: -30px 0 60px rgba(0,0,0,0.6); }
-        .admin-input { background: #080808; border: 1px solid #2a2a2a; color: #e0e0e0; padding: 10px; width: 100%; margin-bottom: 12px; font-size: 13px; border-radius: 6px; }
-        .admin-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #c5a059; display: block; margin-bottom: 5px; font-weight: 700; }
-        .admin-btn { background: #c5a059; color: black; padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s; }
-        .admin-btn:hover { background: #d4b478; }
-        
-        .item-card { background: #1d1d1d; border: 1px solid #2a2a2a; padding: 15px; margin-bottom: 12px; border-radius: 8px; position: relative; }
-        .delete-btn { position: absolute; top: 12px; right: 12px; color: #ff5555; font-size: 9px; font-weight: bold; cursor: pointer; opacity: 0.6; }
-
-        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff8c00; color: white; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
         .related-section-header { position: relative; display: flex; align-items: center; justify-content: center; margin: 8rem 0 3rem 0; }
         .related-section-header::before, .related-section-header::after { content: ''; flex: 1; height: 1px; background: #ff8c00; opacity: 0.4; }
-        .related-section-header h3 { padding: 0 1.5rem; margin: 0 !important; color: #fff; font-size: 0.65rem !important; letter-spacing: 0.6em !important; text-transform: uppercase; font-weight: 500; opacity: 0.8; }
+        .related-section-header h3 { padding: 0 1.5rem; color: #ffffff !important; font-size: 0.65rem !important; letter-spacing: 0.6em !important; text-transform: capitalize; font-weight: 500; font-family: '"Outfit"', sans-serif; }
         
         .related-card { background: #161616; border: 1px solid rgba(255,255,255,0.02); transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; }
         .related-card:hover { border-color: rgba(255,140,0,0.3); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
@@ -189,28 +142,29 @@
         .related-img-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.6); transition: all 1.2s ease; }
         .related-card:hover .related-img-box img { filter: grayscale(0) brightness(1); transform: scale(1.05); }
 
-        /* Searchbox Stil */
+        #admin-panel { position: fixed; right: 0; top: 0; height: 100vh; width: 420px; background: #141414; z-index: 3000; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; font-family: sans-serif; }
+        #admin-panel.active { transform: translateX(0); box-shadow: -30px 0 60px rgba(0,0,0,0.6); }
+        .admin-input { background: #080808; border: 1px solid #2a2a2a; color: #e0e0e0; padding: 10px; width: 100%; margin-bottom: 12px; font-size: 13px; border-radius: 6px; }
+        .admin-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #c5a059; display: block; margin-bottom: 5px; font-weight: 700; }
+        .admin-btn { background: #c5a059; color: black; padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s; }
+        .admin-btn:hover { background: #d4b478; }
+        .item-card { background: #1d1d1d; border: 1px solid #2a2a2a; padding: 15px; margin-bottom: 12px; border-radius: 8px; position: relative; }
+        .delete-btn { position: absolute; top: 12px; right: 12px; color: #ff5555; font-size: 9px; font-weight: bold; cursor: pointer; opacity: 0.6; }
+
+        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff8c00; color: white; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .scraped-item { background: #0a0a0a; border: 1px solid #333; padding: 10px; border-radius: 6px; margin-top: 10px; display: flex; align-items: center; gap: 10px; }
         .scraped-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
         .scraped-item div { font-size: 10px; color: #fff; flex: 1; }
 
-        /* MOBİL MENÜ VE TURUNCU ÇİZGİ ANİMASYONU */
         #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         #mobile-menu.active { transform: translateX(0); }
-        
-        #menu-line { 
-            height: 0; 
-            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s; 
-        }
-        #mobile-menu.active #menu-line { 
-            height: 100%; 
-        }
+        #menu-line { height: 0; transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s; }
+        #mobile-menu.active #menu-line { height: 100%; }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
-        /* KİTAP ARAMA SONUÇLARI */
         .search-book-item { background: #0a0a0a; border: 1px solid #222; padding: 8px; border-radius: 4px; display: flex; align-items: center; gap: 10px; margin-top: 8px; transition: all 0.3s; }
         .search-book-item:hover { border-color: #c5a059; }
         .search-book-item img { width: 30px; height: 45px; object-fit: cover; border-radius: 2px; }
@@ -236,7 +190,6 @@
                         FINE ART PHOTOGRAPHY
                     </span>
                 </a>
-                
                 <div class="hidden md:flex space-x-12">
                     <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
                     <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
@@ -246,7 +199,6 @@
                     <a href="../fotoyol.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
                     <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
                 </div>
-
                 <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
                     <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
@@ -254,7 +206,6 @@
                 </button>
             </div>
         </div>
-
         <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl translate-x-full">
             <div id="menu-line" class="absolute left-0 top-0 w-[2px] h-0 bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
             <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white">Ana Sayfa</a>
@@ -302,7 +253,7 @@
                 <button onclick="addItem('gallery')" class="admin-btn !bg-gray-700 !text-white">Galeri (3'lü)</button>
             </div>
 
-            <!-- KİTAP TAVSİYE PANELİ (GELİŞMİŞ) -->
+            <!-- KİTAP TAVSİYE PANELİ (Orijinal Detaylı Yapı Geri Getirildi) -->
             <div class="mt-8 pt-8 border-t border-brand-gold/20">
                 <label class="admin-label !text-brand-gold">Tavsiye Kitaplar (Google Books Arama)</label>
                 <div class="flex gap-2 mb-4">
@@ -310,7 +261,7 @@
                     <button onclick="searchBooks()" id="book-search-btn" class="admin-btn !px-4">ARA</button>
                 </div>
                 <div id="book-search-results" class="mb-6"></div>
-
+                
                 <label class="admin-label !text-brand-gold/50">Seçili Tavsiyeler</label>
                 <div id="book-list-admin"></div>
                 <button onclick="addBookManual()" class="admin-btn w-full !bg-brand-dark !text-brand-gold border border-brand-gold/30 mt-2">MANUEL KİTAP EKLE</button>
@@ -328,7 +279,6 @@
             </div>
 
             <div class="save-help mt-8 p-4 bg-brand-dark rounded border border-white/5 text-center">
-                <p class="text-[10px] text-gray-400"><strong>NASIL KAYDEDİLİR?</strong><br>Butona basıp veriyi kopyalayın ve dosyadaki <strong>articleConfig</strong> alanına yapıştırın.</p>
                 <button onclick="copyCode()" class="admin-btn w-full !bg-white !text-black mt-2">Yapılandırmayı Kopyala</button>
             </div>
         </div>
@@ -339,9 +289,7 @@
     </button>
 
     <script>
-        const apiKey = ""; 
-
- let articleConfig = {
+       let articleConfig = {
   "meta": {
     "title": "Fotoğraf Okuma No: 7",
     "location": "04 mart 2026 | Küratör Analizi"
@@ -355,74 +303,72 @@
       "caption": "süpüren kadın"
     },
     {
+      "type": "text",
+      "value": "Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:"
+    },
+    {
       "type": "heading",
-      "value": "Kompozisyon ve Teknik Atmosfer"
+      "value": "Teknik Yetkinlik"
     },
     {
       "type": "text",
-      "value": "Fotoğraf, Anadolu'nun tarihi dokusunu bünyesinde barındıran bir mahalleyi belgeleyen siyah-beyaz bir sokak karesinden ibarettir. Ahşap hatıllar, sıvası dökülmüş cepheler ve kaldırım taşlarını kaplayan çatlaklar, Osmanlı geleneğinden Cumhuriyet dönemine uzanan mimari katmanlaşmanın izlerini taşır. Arka planda belirginleşen yeni yapılar ise dönüşümün kaçınılmaz baskısını imler; eski ile yeni arasındaki sürtüşme fotoğrafın mekânsal kurgusu içinde görsel bir çatışmaya dönüşür."
+      "value": "Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.\n\n[Işık Yönetimi:] Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.\n\n[Kompozisyon ve Denge:] Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.\n\n[Netlik ve Alan Derinliği:] Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor."
     },
     {
-      "type": "highlight",
-      "value": "Dönemin ruhu - çerçeve içinde iki katmanda kendini gösterir: önde yıpranmış ve terk edilmişliğin eşiğindeki geleneksel konutlar, arkada yükselen beton. Bu gerilim, yalnızca mimari bir sorun değil; Türkiye'nin hızla modernleşen kentsel alanlarında yaşanan kültürel bellek kaybının somutlaşmış hâlidir. Bu anı seçmem tesadüf değildir —bir mahallenin fotoğraflanmak için hâlâ var olduğu o kırılgan zaman dilimine tanıklık etmek istedim."
+      "type": "heading",
+      "value": "İçerik ve Kavramsal Derinlik"
+    },
+    {
+      "type": "text",
+      "value": "Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.\n\n[Özgünlük: ]Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, \"mekana aidiyet\" ve \"evini sokağa taşıma\" kavramları üzerinden okuyorum.\n\n[Katmanlı Anlatım:] Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.\n\n[Bağlam:] Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor."
     },
     {
       "type": "quote",
-      "value": "Fotoğraf ölümü durdurma sanatıdır; ama bu kare bir şeyi daha yapar — hareketi durdurmadan, yaşamın tam ortasında onu ele geçirir.\n\nRoland Barthes, Camera Lucida'dan ilham"
-    },
-    {
-      "type": "heading",
-      "value": "Estetik açıdan"
+      "value": "Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor."
     },
     {
       "type": "text",
-      "value": "Sokağın her iki yanındaki binalar perspektif tüneli oluşturarak gözü derinliğe doğru çeker; bu yapı izleyiciyi kareye içeriden yaşayan bir tanık konumuna sokar. Ancak kareyi sıradan bir perspektif egzersizinden ayıran şey, merkezdeki kadın figürünün konumunun tünelin tam geometrik odağını kırmış olmasıdır. Eğilmiş bedeniyle simetriyi bozan kadın, kompozisyona matematiksel bir mükemmellik yerine yaşayan bir titreşim kazandırır."
+      "value": "[Üslup Tutarlılığı:] Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.\n\n[Duygusal Etki (Punctum):] Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor."
     },
     {
       "type": "heading",
-      "value": "Ton aralığı "
+      "value": "Anlatı ve Hikaye Anlatıcılığı"
     },
     {
       "type": "text",
-      "value": "Ustalıkla yönetilmiştir. Bulutlu gökyüzünün yarattığı diffüz ışık, hem açık hem koyu alanlarda detayı korumuştur. Siyah-beyaz tercih salt estetik değil işlevseldir; renk olsaydı mimari doku ve insan figürü arasındaki duygusal bütünlük kırılabilirdi. Gri tonların geniş aralığı melankoli ile direnç arasındaki gerilimi destekler."
+      "value": "[Görsel Antropoloji: ]Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.\n\n[Ritim: ]Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor."
     },
     {
-      "type": "heading",
-      "value": "Sanatsal Bağlam"
-    },
-    {
-      "type": "text",
-      "value": "Fotoğraf, Belgesel Gerçekçilik geleneğini —Cartier-Bresson'un \"belirleyici an\" anlayışı, Sebastião Salgado'nun sosyal belge etiği— kendi mütevazı ölçeğinde yankılar. Figür sahneye sonradan eklenmiş gibi durmaz; mekânın organik bir parçasıdır. Kadın ve sokak, birbirini var eder. Araba, elektrik telleri, çöp poşeti —bu detaylar rastlantı değil, yaşanmış coğrafyanın dili."
-    },
-    {
-      "type": "heading",
-      "value": "İnsan · Mekân · Toplumsal Bağ"
-    },
-    {
-      "type": "text",
-      "value": "Kadın ve mahalle arasındaki ilişki sembolik değil gerçektir. Sokaklarını süpüren, temizleyen, orada yaşayan bir insan; mekânın sahibi ve koruyucusu. Modernleşmenin baskısıyla çeperlere sıkışmış geleneksel mahallelerde bu tip figürler direniş sembolleri hâline gelir —bilinçsiz ama kalıcı. Kentsel dönüşüm projeleri belirli bir sosyolojik türü yok eder: yaşlı, kök salmış, yerinden edilmeye direnen bedenler.\n\nArka fondaki modern binalar bu okumanın kanıtıdır. Kadının arkasında yükselen beton, onun öne doğru eğilen sırtıyla görsel bir diyaloğa girer. Biri dikilir —yeni, soğuk, adsız; diğeri eğilir —eski, sıcak, kişisel. Sokak bu iki dünyanın çizgisidir; kadın o çizginin üzerinde durur ve süpürür."
+      "type": "highlight",
+      "value": "Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim."
     }
   ],
   "books": [
     {
-      "title": "Camera Lucida",
-      "author": "Roland Barthes ",
-      "img": "https://img.kitapyurdu.com/v1/getImage/fn:5728379/wi:220/wh:a15faf94d",
-      "link": "https://www.kitapyurdu.com/kitap/camera-lucida-fotograf-uzerine-dusunceler/24929.html?srsltid=AfmBOoonKSbyXGzwrJLwvKpHc_iw0D1OTNhYtxLCHB5zrgY1lC58swrY"
-    },
-    {
       "title": "Karar Anı",
-      "author": "Henri Cartier-Bresson",
+      "author": "Henri Cartier-Bresson ",
       "img": "https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c",
-      "link": "https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html"
+      "link": "https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw"
     }
   ],
   "related": [
     {
       "title": "\n                    Fotoğraf Okuma No: 5\n                ",
       "link": "https://www.umitozguler.com.tr/analiz/analiz5.html",
-      "img": "../img/51.webp",
-      "summary": "Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. Sokağın haf..."
+      "img": "file:///G:/WEB%20S%C4%B0TEM/UM%C4%B0TOZGULER/en%20son%20g%C3%BCncelleme/en%20son%20G%C3%9CNCEL%20olan/img/51.webp",
+      "summary": "Kompozisyon ve Teknik Atmosfer: Görüntüde, izleyiciyi içeri çeken güçlü bir derinlik algısı hakim. S..."
+    },
+    {
+      "title": "\n                    Fotoğraf Okuma No: 2\n                ",
+      "link": "https://www.umitozguler.com.tr/analiz/analiz2.html",
+      "img": "file:///G:/WEB%20S%C4%B0TEM/UM%C4%B0TOZGULER/en%20son%20g%C3%BCncelleme/en%20son%20G%C3%9CNCEL%20olan/img/102.webp",
+      "summary": "\n                    Bu karede parıldayan ıslak yolun yarattığı S-eğrisi (S-curve) kompozisyonun ana..."
+    },
+    {
+      "title": "\n                    Fotoğraf Okuma No: 1\n                ",
+      "link": "https://www.umitozguler.com.tr/analiz/analiz1.html",
+      "img": "file:///G:/WEB%20S%C4%B0TEM/UM%C4%B0TOZGULER/en%20son%20g%C3%BCncelleme/en%20son%20G%C3%9CNCEL%20olan/img/48.webp",
+      "summary": "\n                    Fotoğraf, izleyiciyi öznenin hemen arkasına yerleştirerek katılımcı bir gözlemc..."
     }
   ]
 };
@@ -461,7 +407,13 @@
             articleConfig.content.forEach((item, i) => {
                 if (item.type === 'text') {
                     const dropCapClass = (!textItemFound) ? 'drop-cap' : '';
-                    html += `<div class="article-content reveal active"><p class="${dropCapClass}">${item.value}</p></div>`;
+                    
+                    // MONTE EDİLEN MANTIK: [BAŞLIK] -> Belirgin Ara Başlık
+                    let formattedValue = item.value
+                        .replace(/\n/g, '<br>')
+                        .replace(/\[(.*?)\]/g, '<span class="inner-title">$1</span>');
+                    
+                    html += `<div class="article-content reveal active"><p class="${dropCapClass}">${formattedValue}</p></div>`;
                     textItemFound = true;
                 }
                 else if (item.type === 'heading') {
@@ -475,57 +427,16 @@
                 }
                 else if (item.type === 'image') {
                     const mobileSource = item.mobile ? `<source srcset="${item.mobile}" media="(max-width: 768px)">` : '';
-                    
-                    let exifBlock = '';
-                    if(item.exif) {
-                        exifBlock = `
-                        <div class="exif-info-strip">
-                            <div class="exif-item"><span class="exif-label">TEKNİK VERİLER</span><span class="exif-val">${item.exif}</span></div>
-                        </div>`;
-                    }
-
-                    html += `
-                    <div class="my-16 reveal active">
-                        <div class="analysis-img-container" id="img-container-${i}">
-                            <button class="analysis-toggle-btn" onclick="toggleGrid(${i})">Analiz Modu</button>
-                            <div class="composition-grid" id="grid-${i}">
-                                <div class="composition-line-h" style="top: 33.33%"></div>
-                                <div class="composition-line-h" style="top: 66.66%"></div>
-                                <div class="composition-line-v" style="left: 33.33%"></div>
-                                <div class="composition-line-v" style="left: 66.66%"></div>
-                            </div>
-                            <picture>
-                                ${mobileSource}
-                                <img src="${item.src || 'https://via.placeholder.com/1200x800'}" alt="${item.caption || ''}">
-                            </picture>
-                        </div>
-                        <div class="text-center mt-4 opacity-50 text-[10px] tracking-widest uppercase">${item.caption || ''}</div>
-                        ${exifBlock}
-                        <div class="mt-14 mb-14"><div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"></div></div>
-                    </div>`;
+                    let exifBlock = item.exif ? `<div class="exif-info-strip"><div class="exif-item"><span class="exif-label">TEKNİK VERİLER</span><span class="exif-val">${item.exif}</span></div></div>` : '';
+                    html += `<div class="my-16 reveal active"><div class="analysis-img-container" id="img-container-${i}"><button class="analysis-toggle-btn" onclick="toggleGrid(${i})">Analiz Modu</button><div class="composition-grid" id="grid-${i}"><div class="composition-line-h" style="top: 33.33%"></div><div class="composition-line-h" style="top: 66.66%"></div><div class="composition-line-v" style="left: 33.33%"></div><div class="composition-line-v" style="left: 66.66%"></div></div><picture>${mobileSource}<img src="${item.src || 'https://via.placeholder.com/1200x800'}" alt="${item.caption || ''}"></picture></div><div class="text-center mt-4 opacity-50 text-[10px] tracking-widest uppercase">${item.caption || ''}</div>${exifBlock}<div class="mt-14 mb-14"><div class="w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"></div></div></div>`;
                 }
                 else if (item.type === 'gallery') {
                     html += `<div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-16 reveal active">`;
                     if (item.images) {
                         item.images.forEach(img => {
                             const mobileSource = img.mobile ? `<source srcset="${img.mobile}" media="(max-width: 768px)">` : '';
-                            let exifBlock = img.exif ? `
-                            <div class="mt-2 text-center">
-                                <span class="text-[7px] text-brand-orange uppercase tracking-[0.2em] font-bold">TEKNİK:</span>
-                                <span class="text-[8px] text-white/50 uppercase ml-1">${img.exif}</span>
-                            </div>` : '';
-                            
-                            html += `
-                            <div class="flex flex-col">
-                                <div class="img-container h-full shadow-lg">
-                                    <picture>
-                                        ${mobileSource}
-                                        <img src="${img.src || 'https://via.placeholder.com/600x400'}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                                    </picture>
-                                </div>
-                                <div class="image-caption text-[8px] mt-4 opacity-40 uppercase tracking-widest">${img.caption || ''}</div>
-                                ${exifBlock}
-                            </div>`;
+                            let exifBlock = img.exif ? `<div class="mt-2 text-center"><span class="text-[7px] text-brand-orange uppercase tracking-[0.2em] font-bold">TEKNİK:</span><span class="text-[8px] text-white/50 uppercase ml-1">${img.exif}</span></div>` : '';
+                            html += `<div class="flex flex-col"><div class="img-container h-full shadow-lg"><picture>${mobileSource}<img src="${img.src || 'https://via.placeholder.com/600x400'}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"></picture></div><div class="image-caption text-[8px] mt-4 opacity-40 uppercase tracking-widest">${img.caption || ''}</div>${exifBlock}</div>`;
                         });
                     }
                     html += `</div>`;
@@ -533,66 +444,22 @@
             });
 
             // SOSYAL PAYLAŞIM
-            html += `
-                <div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active">
-                    <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p>
-                    <div class="flex justify-center space-x-12">
-                        <a href="javascript:void(0)" onclick="share('wa')" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a>
-                        <a href="javascript:void(0)" onclick="share('fb')" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a>
-                        <a href="javascript:void(0)" onclick="share('x')" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a>
-                    </div>
-                </div>
-            `;
+            html += `<div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active"><p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Analizi Paylaş</p><div class="flex justify-center space-x-12"><a href="javascript:void(0)" onclick="share('wa')" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a><a href="javascript:void(0)" onclick="share('fb')" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a><a href="javascript:void(0)" onclick="share('x')" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a></div></div>`;
 
-            // TAVSİYE KİTAPLAR BÖLÜMÜ
+            // TAVSİYE KİTAPLAR
             if (articleConfig.books && articleConfig.books.length > 0) {
-                html += `
-                    <div class="reveal active">
-                        <div class="book-section-header">
-                            <h3>Tavsiye Kitaplar</h3>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">`;
+                html += `<div class="reveal active"><div class="book-section-header"><h3>Tavsiye Kitaplar</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">`;
                 articleConfig.books.forEach(book => {
-                    html += `
-                        <div class="book-card">
-                            <div class="book-cover">
-                                <img src="${book.img || 'https://via.placeholder.com/150x220'}" alt="${book.title}">
-                            </div>
-                            <div class="book-info">
-                                <h4>${book.title}</h4>
-                                <p>${book.author}</p>
-                                <a href="${book.link}" target="_blank" class="book-link">Detayları İncele →</a>
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="book-card"><div class="book-cover"><img src="${book.img || 'https://via.placeholder.com/150x220'}" alt="${book.title}"></div><div class="book-info"><h4>${book.title}</h4><p>${book.author}</p><a href="${book.link}" target="_blank" class="book-link">Detayları İncele →</a></div></div>`;
                 });
                 html += `</div></div>`;
             }
 
-            // İLGİLİ ANALİZLER
+            // İLGİNİZİ ÇEKEBİLİR
             if (articleConfig.related && articleConfig.related.length > 0) {
-                html += `
-                <div class="reveal active">
-                    <div class="related-section-header">
-                        <h3>İlginizi Çekebilir</h3>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">`;
+                html += `<div class="reveal active"><div class="related-section-header"><h3>İlginizi Çekebilir</h3></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">`;
                 articleConfig.related.forEach(rel => {
-                    html += `
-                        <a href="${rel.link}" class="related-card group">
-                            <div class="related-img-box">
-                                <img src="${rel.img}" alt="${rel.title}">
-                            </div>
-                            <div class="p-4">
-                                <span class="related-tag">Analiz</span>
-                                <h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">${rel.title}</h4>
-                                <p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">${rel.summary || ''}</p>
-                                <div class="flex items-center">
-                                    <span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
+                    html += `<a href="${rel.link}" class="related-card group"><div class="related-img-box"><img src="${rel.img}" alt="${rel.title}"></div><div class="p-4"><span class="related-tag">Analiz</span><h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">${rel.title}</h4><p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">${rel.summary || ''}</p><div class="flex items-center"><span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">İncele →</span></div></div></a>`;
                 });
                 html += `</div></div>`;
             }
@@ -601,48 +468,34 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        function toggleGrid(i) {
-            const grid = document.getElementById(`grid-${i}`);
-            if(grid) grid.classList.toggle('active');
-        }
+        function toggleGrid(i) { const grid = document.getElementById(`grid-${i}`); if(grid) grid.classList.toggle('active'); }
+        function share(p) { const u = encodeURIComponent(window.location.href), t = encodeURIComponent(document.title); if(p==='wa') window.open(`https://api.whatsapp.com/send?text=${t}%20${u}`); if(p==='fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}`); if(p==='x') window.open(`https://twitter.com/intent/tweet?text=${t}&url=${u}`); }
 
-        function share(p) {
-            const u = encodeURIComponent(window.location.href), t = encodeURIComponent(document.title);
-            if(p==='wa') window.open(`https://api.whatsapp.com/send?text=${t}%20${u}`);
-            if(p==='fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}`);
-            if(p==='x') window.open(`https://twitter.com/intent/tweet?text=${t}&url=${u}`);
-        }
-
-        // ADMIN PANEL
-        function toggleAdmin() { 
-            const panel = document.getElementById('admin-panel');
-            panel.classList.toggle('active'); 
-            if (panel.classList.contains('active')) renderAdminPanel(); 
-        }
+        function toggleAdmin() { const panel = document.getElementById('admin-panel'); panel.classList.toggle('active'); if (panel.classList.contains('active')) renderAdminPanel(); }
         function showMsg(t) { const el = document.getElementById('custom-alert'); el.innerText = t; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 3000); }
 
         function renderAdminPanel() {
             document.getElementById('meta-title').value = articleConfig.meta.title;
             document.getElementById('meta-location').value = articleConfig.meta.location;
-            
             const list = document.getElementById('item-list');
             list.innerHTML = '';
             articleConfig.content.forEach((item, i) => {
                 let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type.toUpperCase()}</label>`;
                 
                 if (item.type === 'image') {
-                    card += `<input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
-                             <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${item.mobile || ''}" oninput="editItem(${i}, 'mobile', this.value)">
+                    card += `<input type="text" placeholder="Masaüstü Görsel Yolu" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
+                             <input type="text" placeholder="Mobil Görsel Yolu" class="admin-input" value="${item.mobile || ''}" oninput="editItem(${i}, 'mobile', this.value)">
                              <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${item.exif || ''}" oninput="editItem(${i}, 'exif', this.value)">
                              <input type="text" placeholder="Görsel Açıklaması" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
-                } else if (item.type === 'gallery') {
-                    item.images.forEach((img, imgIdx) => {
-                        card += `<div class="mb-4 p-4 bg-black/40 rounded border border-brand-orange/20">
-                                    <label class="admin-label !text-brand-orange">GÖRSEL ${imgIdx+1}</label>
-                                    <input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${img.src || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'src', this.value)">
-                                    <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${img.mobile || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'mobile', this.value)">
-                                    <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${img.exif || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'exif', this.value)">
-                                    <input type="text" placeholder="Görsel Açıklaması" class="admin-input !mb-0" value="${img.caption || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'caption', this.value)">
+                } 
+                else if (item.type === 'gallery') {
+                    item.images.forEach((img, gi) => {
+                        card += `<div class="p-4 bg-black/40 rounded border border-brand-orange/10 mb-4">
+                                    <label class="admin-label !text-brand-orange">GÖRSEL ${gi+1}</label>
+                                    <input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${img.src || ''}" oninput="editGalleryItem(${i}, ${gi}, 'src', this.value)">
+                                    <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${img.mobile || ''}" oninput="editGalleryItem(${i}, ${gi}, 'mobile', this.value)">
+                                    <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="${img.exif || ''}" oninput="editGalleryItem(${i}, ${gi}, 'exif', this.value)">
+                                    <input type="text" placeholder="Açıklama" class="admin-input !mb-0" value="${img.caption || ''}" oninput="editGalleryItem(${i}, ${gi}, 'caption', this.value)">
                                  </div>`;
                     });
                 } else {
@@ -651,74 +504,44 @@
                 card += `</div>`;
                 list.innerHTML += card;
             });
-
             renderBookListAdmin();
             renderRelatedListAdmin();
         }
 
-        // GOOGLE BOOKS ARAMA (Geliştirilmiş)
         async function searchBooks() {
             const queryField = document.getElementById('book-search-input');
             const searchBtn = document.getElementById('book-search-btn');
             const query = queryField.value.trim();
-            
             if(!query) return showMsg("Lütfen bir isim yazın");
-            
             const resultsBox = document.getElementById('book-search-results');
-            resultsBox.innerHTML = '<p class="text-[9px] text-gray-500 uppercase tracking-widest text-center py-4">Sorgulanıyor...</p>';
+            resultsBox.innerHTML = '<p class="text-[9px] text-gray-500 text-center py-4">Sorgulanıyor...</p>';
             searchBtn.disabled = true;
-
             try {
-                // Yerel dosya kısıtlamalarına karşı URL'i tam encode ediyoruz
                 const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=5&printType=books`;
                 const response = await fetch(url);
-                
-                if (!response.ok) throw new Error("API Yanıt Vermedi");
-                
                 const data = await response.json();
-                
                 resultsBox.innerHTML = '';
-                if(data.items && data.items.length > 0) {
+                if(data.items) {
                     data.items.forEach(item => {
                         const info = item.volumeInfo;
                         const title = info.title || "Başlıksız";
                         const author = info.authors ? info.authors.join(', ') : 'Bilinmeyen Yazar';
-                        // Resim varsa https olduğundan emin oluyoruz
-                        let thumb = 'https://via.placeholder.com/150x220?text=Kapak+Yok';
-                        if (info.imageLinks && info.imageLinks.thumbnail) {
-                            thumb = info.imageLinks.thumbnail.replace('http:', 'https:');
-                        }
-                        const link = info.infoLink || "#";
-
-                        resultsBox.innerHTML += `
-                            <div class="search-book-item">
-                                <img src="${thumb}">
-                                <div class="info">
-                                    <h5>${title}</h5>
-                                    <p>${author}</p>
-                                </div>
-                                <button onclick="selectBook('${title.replace(/'/g, "\\'")}', '${author.replace(/'/g, "\\'")}', '${thumb}', '${link}')" class="bg-brand-gold text-black text-[8px] font-bold px-3 py-1 rounded">EKLE</button>
-                            </div>
-                        `;
+                        let thumb = info.imageLinks ? info.imageLinks.thumbnail.replace('http:', 'https:') : 'https://via.placeholder.com/150x220';
+                        resultsBox.innerHTML += `<div class="search-book-item"><img src="${thumb}"><div class="info"><h5>${title}</h5><p>${author}</p></div><button onclick="selectBook('${title.replace(/'/g, "\\'")}', '${author.replace(/'/g, "\\'")}', '${thumb}', '${info.infoLink}')" class="bg-brand-gold text-black text-[8px] font-bold px-3 py-1 rounded">EKLE</button></div>`;
                     });
-                } else {
-                    resultsBox.innerHTML = '<p class="text-[9px] text-red-500 text-center py-4 uppercase font-bold tracking-widest">Veri bulunamadı. Lütfen farklı anahtar kelimeler deneyin.</p>';
                 }
-            } catch (err) {
-                console.error("API Error:", err);
-                resultsBox.innerHTML = `<p class="text-[9px] text-red-500 text-center py-4 uppercase font-bold tracking-widest">Hata: İnternet bağlantınızı veya yerel dosya kısıtlamalarınızı kontrol edin.</p>`;
-            } finally {
-                searchBtn.disabled = false;
-            }
+            } catch (err) { showMsg("Hata."); } finally { searchBtn.disabled = false; }
         }
 
-        function selectBook(title, author, img, link) {
-            articleConfig.books.push({ title, author, img, link });
-            renderBookListAdmin();
-            renderArticle();
-            showMsg("Kitap Listeye Eklendi");
+        function selectBook(title, author, img, link) { 
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title, author, img, link }); 
+            renderBookListAdmin(); 
+            renderArticle(); 
+            showMsg("Kitap Eklendi"); 
         }
 
+        // ORİJİNAL KİTAP ADMİN PANELİ (Girdi alanları geri getirildi)
         function renderBookListAdmin() {
             const list = document.getElementById('book-list-admin');
             list.innerHTML = '';
@@ -749,56 +572,21 @@
             });
         }
 
-        let lastScrapedArticle = null;
-
         async function autoScrapeArticle() {
-            const urlInput = document.getElementById('auto-link-input');
-            const url = urlInput.value;
-            if(!url) return showMsg("Lütfen bir link girin");
-
+            const url = document.getElementById('auto-link-input').value;
+            if(!url) return showMsg("Link girin");
             showMsg("Analiz ediliyor...");
-
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error("Dosyaya ulaşılamadı");
                 const htmlText = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
-                
-                const title = doc.querySelector('h1')?.innerText || doc.title || "Başlıksız Analiz";
+                const title = doc.querySelector('h1')?.innerText || doc.title || "Analiz";
                 const img = doc.querySelector('img')?.src || "../img/placeholder.webp";
-                const paragraphs = Array.from(doc.querySelectorAll('p'));
-                const firstP = paragraphs.find(p => p.innerText.trim().length > 40);
-                const summary = firstP ? firstP.innerText.trim().substring(0, 110) + "..." : "";
-
-                lastScrapedArticle = { title, link: url, img, summary };
-                
-                document.getElementById('scrape-preview').innerHTML = `
-                    <div class="scraped-item border-brand-orange border">
-                        <img src="${img}">
-                        <div>
-                            <strong>${title}</strong><br>
-                            <span class="opacity-50">${summary}</span>
-                        </div>
-                        <button onclick="confirmAutoAdd()" class="bg-brand-orange text-black px-3 py-1 rounded text-[9px] font-bold hover:bg-white transition-colors">EKLE</button>
-                    </div>
-                `;
-                showMsg("Veri Hazır");
-
-            } catch (err) {
-                showMsg("Hata: " + err.message);
-            }
-        }
-
-        function confirmAutoAdd() {
-            if (!lastScrapedArticle) { showMsg("Önce veri çekmelisiniz"); return; }
-            articleConfig.related.push({...lastScrapedArticle});
-            renderArticle();
-            document.getElementById('scrape-preview').innerHTML = '';
-            document.getElementById('auto-link-input').value = '';
-            lastScrapedArticle = null;
-            showMsg("Makale Eklendi");
-            renderAdminPanel();
+                const summary = doc.querySelector('p')?.innerText.substring(0, 100) + "...";
+                articleConfig.related.push({ title, link: url, img, summary });
+                renderArticle(); renderAdminPanel(); showMsg("Veri Eklendi");
+            } catch (err) { showMsg("Hata."); }
         }
 
         function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
@@ -813,23 +601,26 @@
         function deleteRelated(ri) { articleConfig.related.splice(ri, 1); renderAdminPanel(); renderArticle(); }
 
         function updateMeta() { articleConfig.meta.title = document.getElementById('meta-title').value; articleConfig.meta.location = document.getElementById('meta-location').value; renderArticle(); }
-
-        function addItem(type) {
-            if (type === 'image') articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
-            else if (type === 'gallery') articleConfig.content.push({ type, images: [
-                {src:'', mobile: '', exif: '', caption: ''},
-                {src:'', mobile: '', exif: '', caption: ''},
-                {src:'', mobile: '', exif: '', caption: ''}
-            ] });
-            else if (type === 'highlight') articleConfig.content.push({ type, value: 'Kritik detayı buraya yazın...' });
-            else articleConfig.content.push({ type, value: 'Yeni içerik...' });
-            renderAdminPanel(); renderArticle();
+        
+        function addItem(type) { 
+            if (type === 'image') {
+                articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' }); 
+            } else if (type === 'gallery') {
+                articleConfig.content.push({type, images: [
+                    {src:'', mobile:'', exif:'', caption:''},
+                    {src:'', mobile:'', exif:'', caption:''},
+                    {src:'', mobile:'', exif:'', caption:''}
+                ]});
+            } else {
+                articleConfig.content.push({ type, value: '' }); 
+            }
+            renderAdminPanel(); renderArticle(); 
         }
 
-        function copyCode() { navigator.clipboard.writeText("let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";").then(() => showMsg("Yapılandırma Kopyalandı")); }
-
-        window.onload = () => {
-            renderArticle();
+        function copyCode() { navigator.clipboard.writeText("let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";").then(() => showMsg("Kopyalandı")); }
+        
+        window.onload = () => { 
+            renderArticle(); 
             const toggle = document.getElementById('menu-toggle');
             if (toggle) {
                 toggle.onclick = () => {
@@ -841,7 +632,7 @@
                 };
             }
         };
-
+        
         document.addEventListener('keydown', (e) => { if (e.shiftKey && e.altKey && e.code === 'KeyA') { const t = document.getElementById('admin-trigger'); t.style.display = t.style.display === 'none' ? 'flex' : 'none'; } });
     </script>
 </body>
