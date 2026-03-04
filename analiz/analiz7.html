@@ -282,111 +282,6 @@
         <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <div id="admin-panel" class="active">
-        <div class="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Analiz Paneli</h2>
-            <button onclick="toggleAdmin()" class="text-brand-gold text-[10px] uppercase font-bold border border-brand-gold/30 px-3 py-1 rounded-full hover:bg-brand-gold hover:text-black transition-all">Kapat</button>
-        </div>
-        <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
-            <div class="mb-8 pb-8 border-b border-white/5">
-                <label class="admin-label">Analiz Başlığı (No: X)</label>
-                <input type="text" id="meta-title" class="admin-input" oninput="updateMeta()">
-                <label class="admin-label">Tarih | Kategori</label>
-                <input type="text" id="meta-location" class="admin-input" oninput="updateMeta()">
-            </div>
-            
-            <div id="item-list"><div class="item-card"><span class="delete-btn" onclick="deleteItem(0)">SİL</span><label class="admin-label">IMAGE</label><input type="text" placeholder="Masaüstü Görsel Yolu" class="admin-input" value="../img/1.webp" oninput="editItem(0, 'src', this.value)">
-                             <input type="text" placeholder="Mobil Görsel Yolu" class="admin-input" value="../imgmobil/1.webp" oninput="editItem(0, 'mobile', this.value)">
-                             <input type="text" placeholder="EXIF Bilgisi" class="admin-input" value="Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500" oninput="editItem(0, 'exif', this.value)">
-                             <input type="text" placeholder="Görsel Açıklaması" class="admin-input" value="süpüren kadın" oninput="editItem(0, 'caption', this.value)"></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(1)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(1, 'value', this.value)">Bu fotoğrafı, kendi kriterlerim ve bakış açımla, bir küratör gözüyle şu şekilde değerlendirebilirim:</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(2)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(2, 'value', this.value)">Teknik Yetkinlik</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(3)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(3, 'value', this.value)">Fotoğrafımda teknik, hikayenin önüne geçmek yerine ona hizmet eden bir altyapı oluşturuyor.
-
-Işık Yönetimi:
-Siyah-beyaz tercihimle beraber gökyüzündeki yumuşak ışık, binaların üzerindeki yıpranmış dokuyu ve sıva dökülmelerini vurgulayarak zamanın izlerini belirginleştiriyor.
-
-Kompozisyon ve Denge:
-Sokağın kaçış noktası tam merkezde yer alarak izleyiciyi derinliğe davet ediyor. Sağ alt köşede süpüren kadın figürü, sol taraftaki ağır römork ile görsel bir denge kurarak kompozisyonu dinamik tutuyor.
-
-Netlik ve Alan Derinliği:
-Geniş bir alan derinliği kullanarak sokağın sonundaki araçlara kadar her detayı net tuttum; bu da izleyicinin mahalle yaşamının her katmanını incelemesine olanak tanıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(4)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(4, 'value', this.value)">İçerik ve Kavramsal Derinlik</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(5)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(5, 'value', this.value)">Fotoğrafın en güçlü olduğu yer, sunduğu alt metinlerdir.
-
-Özgünlük:
-Sokak süpüren bir kadın imgesi tanıdık gelse de, bu kareyi sadece bir temizlik anı değil, "mekana aidiyet" ve "evini sokağa taşıma" kavramları üzerinden okuyorum.
-
-Katmanlı Anlatım:
-Bir yanda modernleşmenin simgesi olan çanak antenler ve elektrik telleri, diğer yanda kadim bir gelenek gibi duran süpürme eylemi... Bu tezatlık, toplumsal bir dönüşümün sessiz tanıklığını yapıyor.
-
-Bağlam:
-Mekanın dokusu ve mimari yapısı, Anadolu'nun köklü mahalle kültürüne işaret ediyor. Benim bu konuyla kurduğum ilişki, bir gözlemciden ziyade o anın parçası olan bir anlatıcı kimliği taşıyor.
-
-Üslup Tutarlılığı:
-Yüksek kontrastlı olmayan, gri tonların zenginliğini koruyan siyah-beyaz dilim, nostalji duygusunu melankoliyle birleştiriyor.
-
-Duygusal Etki (Punctum):
-Benim için bu fotoğrafın punctum noktası, kadının elindeki süpürgenin hareketi ve o saniyedeki eğilme biçimidir. O hareket, sokağın statik ve yorgun binaları arasında yaşamın devam ettiğini bize söylüyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(6)">SİL</span><label class="admin-label">QUOTE</label><textarea class="admin-input h-24" oninput="editItem(6, 'value', this.value)">Görsel tercihlerim, fotoğrafın duygusal yükünü taşıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(7)">SİL</span><label class="admin-label">HEADING</label><textarea class="admin-input h-24" oninput="editItem(7, 'value', this.value)">Anlatı ve Hikaye Anlatıcılığı</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(8)">SİL</span><label class="admin-label">TEXT</label><textarea class="admin-input h-24" oninput="editItem(8, 'value', this.value)">Görsel Antropoloji:
-Fotoğrafım, 21. yüzyılın başında değişen kentsel dokuyu ve geleneksel yaşam biçimlerinin modern detaylarla (antenler, arabalar) nasıl iç içe geçtiğini belgeleyen antropolojik bir veri niteliği taşıyor.
-
-Ritim:
-Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, izleyicinin gözünü sokağın içinde gezdirip en sonunda kadın figüründe sabitlemesini sağlıyor.</textarea></div><div class="item-card"><span class="delete-btn" onclick="deleteItem(9)">SİL</span><label class="admin-label">HIGHLIGHT</label><textarea class="admin-input h-24" oninput="editItem(9, 'value', this.value)">Özetle: Bu karede teknik kusursuzluktan ziyade, yaşamın sıradan bir anındaki kutsallığı ve mekanla insan arasındaki o kopmaz bağı yakalamayı hedefledim.</textarea></div></div>
-            <div class="grid grid-cols-2 gap-3 mt-4">
-                <button onclick="addItem('text')" class="admin-btn">Metin Ekle</button>
-                <button onclick="addItem('image')" class="admin-btn">Görsel Ekle</button>
-                <button onclick="addItem('highlight')" class="admin-btn !bg-brand-gold !text-black">Vurgu Ekle</button>
-                <button onclick="addItem('heading')" class="admin-btn">Başlık Ekle</button>
-                <button onclick="addItem('quote')" class="admin-btn">Alıntı Ekle</button>
-                <button onclick="addItem('gallery')" class="admin-btn !bg-gray-700 !text-white">Galeri (3'lü)</button>
-            </div>
-
-            <div class="mt-8 pt-8 border-t border-brand-gold/20">
-                <label class="admin-label !text-brand-gold">Tavsiye Kitaplar (Google Books Arama)</label>
-                <div class="flex gap-2 mb-4">
-                    <input type="text" id="book-search-input" placeholder="Yazar veya Kitap Adı..." class="admin-input !mb-0 flex-1">
-                    <button onclick="searchBooks()" id="book-search-btn" class="admin-btn !px-4">ARA</button>
-                </div>
-                <div id="book-search-results" class="mb-6"></div>
-                
-                <label class="admin-label !text-brand-gold/50">Seçili Tavsiyeler</label>
-                <div id="book-list-admin">
-                <div class="item-card bg-brand-gold/5 border-brand-gold/20 p-3 mb-2">
-                    <span class="delete-btn" onclick="deleteBook(0)">SİL</span>
-                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-1 !text-[10px]" value="Karar Anı" oninput="editBook(0, 'title', this.value)">
-                    <input type="text" placeholder="Yazar" class="admin-input !mb-1 !text-[10px]" value="Henri Cartier-Bresson" oninput="editBook(0, 'author', this.value)">
-                    <input type="text" placeholder="Kapak URL" class="admin-input !mb-1 !text-[10px]" value="https://img.kitapyurdu.com/v1/getImage/fn:135645/wi:220/wh:fd38ba21c" oninput="editBook(0, 'img', this.value)">
-                    <input type="text" placeholder="Link" class="admin-input !mb-0 !text-[10px]" value="https://www.kitapyurdu.com/kitap/henri-cartierbresson-karar-ani/76912.html?srsltid=AfmBOooRVXGEAhgOXbyfLKZYUj28nAiu13tDx1YLoiW-YRPOsqFmlKDw" oninput="editBook(0, 'link', this.value)">
-                </div></div>
-                <button onclick="addBookManual()" class="admin-btn w-full !bg-brand-dark !text-brand-gold border border-brand-gold/30 mt-2">MANUEL KİTAP EKLE</button>
-            </div>
-
-            <div class="mt-8 pt-8 border-t border-brand-orange/20">
-                <label class="admin-label !text-brand-orange">Linkten İlgili Yazı Ekle (Otomatik)</label>
-                <div class="flex gap-2">
-                    <input type="text" id="auto-link-input" placeholder="Yazı URL (Örn: analiz-52.html)" class="admin-input !mb-0 flex-1">
-                    <button onclick="autoScrapeArticle()" class="admin-btn !bg-brand-orange !text-black h-[38px] !px-4">Çek</button>
-                </div>
-                <div id="scrape-preview"></div>
-                <div id="related-list-admin" class="mt-4">
-                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
-                    <span class="delete-btn" onclick="deleteRelated(0)">SİL</span>
-                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
-                    Fotoğraf Okuma No: 5
-                " oninput="editRelated(0, 'title', this.value)">
-                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz5.html" oninput="editRelated(0, 'link', this.value)">
-                </div>
-                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
-                    <span class="delete-btn" onclick="deleteRelated(1)">SİL</span>
-                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
-                    Fotoğraf Okuma No: 2
-                " oninput="editRelated(1, 'title', this.value)">
-                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz2.html" oninput="editRelated(1, 'link', this.value)">
-                </div>
-                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
-                    <span class="delete-btn" onclick="deleteRelated(2)">SİL</span>
-                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="
-                    Fotoğraf Okuma No: 1
-                " oninput="editRelated(2, 'title', this.value)">
-                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="https://www.umitozguler.com.tr/analiz/analiz1.html" oninput="editRelated(2, 'link', this.value)">
-                </div></div>
-            </div>
-
             <!-- Sayfayı İndir butonu -->
             <div class="save-help mt-8 p-4 bg-brand-dark rounded border border-white/5 text-center">
                 <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-3">Veri girişi tamamlandıktan sonra</p>
@@ -395,10 +290,6 @@ Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, 
             </div>
         </div>
     </div>
-
-    <button id="admin-trigger" onclick="toggleAdmin()" style="display: flex;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-orange rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-    </button>
 
     <script>
         let articleConfig = {
@@ -796,8 +687,6 @@ Yolun ortasındaki boşluk ile kenarlardaki doku yoğunluğu arasındaki ritim, 
                 };
             }
         };
-        
-        document.addEventListener('keydown', (e) => { if (e.shiftKey && e.altKey && e.code === 'KeyA') { const t = document.getElementById('admin-trigger'); t.style.display = t.style.display === 'none' ? 'flex' : 'none'; } });
     </script>
 
 </body></html>
