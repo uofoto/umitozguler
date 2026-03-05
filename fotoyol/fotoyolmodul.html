@@ -123,6 +123,9 @@
         .nav-link-custom:hover {
             color: #ffffff;
         }
+
+        /* HATA ÇÖZÜMÜ 1: KAYMAYI ENGELLEYEN CLASS EKLENDİ */
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
 <body class="text-gray-300 antialiased flex flex-col min-h-screen">
@@ -130,7 +133,6 @@
     <div id="progress-bar"></div>
     <div id="custom-alert">İşlem Başarılı</div>
 
-    <!-- HERO SECTION -->
     <div id="hero-section" class="relative h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black">
         <canvas id="fog-canvas"></canvas>
         <nav class="absolute top-0 w-full z-[100] bg-transparent">
@@ -163,7 +165,6 @@
         <p class="text-[9px] tracking-[0.3em] text-gray-700 uppercase">© 2026 Ümit Özgüler Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <!-- MOBILE MENU -->
     <div id="mobile-menu" class="fixed top-0 right-0 h-screen bg-brand-dark z-[1000] flex flex-col pt-32 px-10 text-left md:hidden shadow-2xl transition-transform translate-x-full">
         <button id="close-menu-btn" class="absolute top-8 right-8 text-white p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -179,7 +180,6 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL -->
     <div id="admin-panel">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
             <h2 class="text-white font-display text-xl tracking-widest uppercase">Yazar Paneli</h2>
@@ -354,6 +354,7 @@
                             if (mapUrl.includes(' > ')) {
                                 const pts = mapUrl.split(' > ').map(p => p.trim());
                                 const waypoints = pts.length > 2 ? pts.slice(1, -1).map(p => "+to:" + encodeURIComponent(p)).join('') : "";
+                                // HATA ÇÖZÜMÜ 2: HARİTA URL FORMATI DÜZELTİLDİ
                                 mapUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(pts[0])}&daddr=${encodeURIComponent(pts[pts.length-1])}${waypoints}&ie=UTF8&output=embed`;
                             } else {
                                 mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapUrl)}&ie=UTF8&output=embed`;
@@ -397,7 +398,6 @@
                 const el = document.getElementById(f);
                 if (el) {
                     const key = f.split('-')[1];
-                    // meta key handling
                     if (key === 'title') el.value = articleConfig.meta.title;
                     if (key === 'location') el.value = articleConfig.meta.location;
                     if (key === 'h1') el.value = articleConfig.meta.heroTitle;
@@ -433,7 +433,7 @@
                             <input type="text" placeholder="Rota (Örn: Artvin > Yusufeli > Boyalı)" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">
                             <input type="text" placeholder="Harita Açıklaması" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
                     } else if (item.type === 'video') {
-                        card += `<input type="text" placeholder="YouTube Linki" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                        card += `<input type="text" placeholder="YouTube Linki" class="admin-input" value="${item.src}" oninput="editItem(${i}, 'src', this.value)">             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption||''}" oninput="editItem(${i}, 'caption', this.value)">`;
                     } else if (item.type === 'heading') {
                         card += `<input type="text" placeholder="Başlık" class="admin-input" value="${item.value}" oninput="editItem(${i}, 'value', this.value)">`;
                     } else {
@@ -542,7 +542,6 @@
                 anim(); 
             }
 
-            // Mobil menü olay dinleyicilerini burada güvenli bir şekilde tanımlıyoruz
             const mBtn = document.getElementById('mobile-menu-btn');
             const cBtn = document.getElementById('close-menu-btn');
             const menu = document.getElementById('mobile-menu');
