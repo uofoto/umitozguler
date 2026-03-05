@@ -91,8 +91,9 @@
         .nav-link-custom:hover { color: #ff8c00; }
 
         .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; border-radius: 2px; }
-        .img-container img { transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1); width: 100%; height: auto; display: block; grayscale: 20%; }
-        .img-container:hover img { transform: scale(1.02); grayscale: 0%; }
+        /* CSS HATASI DÜZELTİLDİ: filter eklendi */
+        .img-container img { transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.5s; width: 100%; height: auto; display: block; filter: grayscale(20%); }
+        .img-container:hover img { transform: scale(1.02); filter: grayscale(0%); }
         
         .image-caption { font-size: 10px; color: #666; margin-top: 12px; text-align: center; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; }
         .exif-tag { font-size: 8px; color: #444; margin-top: 4px; text-align: center; letter-spacing: 0.1em; font-family: monospace; opacity: 0.8; }
@@ -177,6 +178,9 @@
         .scraped-item { background: #0a0a0a; border: 1px solid #333; padding: 10px; border-radius: 6px; margin-top: 10px; display: flex; align-items: center; gap: 10px; }
         .scraped-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
         .scraped-item div { font-size: 10px; color: #fff; flex: 1; }
+
+        /* LIGHTBOX ARKA PLAN KAYMASINI ENGELLEME EKLENDİ */
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 antialiased flex flex-col min-h-screen page-animate">
@@ -184,15 +188,14 @@
     <div id="progress-bar"></div>
     <div id="custom-alert">İşlem Başarılı</div>
 
-    <!-- NAVIGATION -->
     <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-24">
-                <a href="../index.html" class="flex flex-col items-center group relative z-[110]">
-                    <div class="text-2xl tracking-widest text-white transition-colors leading-none">
+                <a href="../index.html" class="flex flex-col items-center group relative z-[110] min-w-[140px]">
+                    <div class="text-2xl tracking-widest text-white transition-colors leading-none whitespace-nowrap">
                         <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
                     </div>
-                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;">
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;" class="whitespace-nowrap">
                         FINE ART PHOTOGRAPHY
                     </span>
                 </a>
@@ -215,30 +218,27 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-48 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-10 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl translate-x-full">
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-8 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl translate-x-full">
             <div id="menu-line" class="absolute left-0 top-0 w-[2px] h-full bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
-            <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white">Ana Sayfa</a>
-            <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white">Hakkımda</a>
-            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white">Portfolyo</a>
-            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-2 text-white">Analizler</a>
-            <a href="../dusunceler.html" class="text-brand-orange font-bold py-2">Düşünceler</a>
-            <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-2 text-white">Fotoyol</a>
-            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white">İletişim</a>
+            <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Ana Sayfa</a>
+            <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Hakkımda</a>
+            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Portfolyo</a>
+            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Analizler</a>
+            <a href="../dusunceler.html" class="text-brand-orange font-bold py-2 whitespace-nowrap">Düşünceler</a>
+            <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Fotoyol</a>
+            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">İletişim</a>
         </div>
     </nav>
 
-    <!-- CONTENT -->
     <article class="pt-48 pb-20 px-6 flex-grow">
         <div class="max-w-3xl mx-auto" id="article-container">
-            <!-- Dinamik İçerik -->
-        </div>
+            </div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
         <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <!-- ADMIN PANEL -->
     <div id="admin-panel">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
             <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Yazar Paneli</h2>
@@ -254,7 +254,6 @@
                 <input type="text" id="meta-info" class="admin-input" oninput="updateMeta()">
             </div>
             
-            <!-- OTOMATİK İLGİLİ YAZI EKLEME -->
             <div class="mb-8 pb-8 border-b border-white/5">
                 <label class="admin-label">Linkten İlgili Yazı Ekle (Otomatik)</label>
                 <div class="flex gap-2">
@@ -262,6 +261,7 @@
                     <button onclick="autoScrapeArticle()" class="admin-btn !py-2 !px-4">Veri Çek</button>
                 </div>
                 <div id="scrape-preview"></div>
+                <div id="related-list-admin" class="mt-4"></div>
             </div>
 
             <div id="item-list"></div>
@@ -474,6 +474,7 @@
             if (!lastScrapedArticle) { showMsg("Eklemek için önce veri çekmelisiniz"); return; }
             articleConfig.related.push({...lastScrapedArticle});
             renderArticle();
+            renderAdminPanel();
             document.getElementById('scrape-preview').innerHTML = '';
             document.getElementById('auto-link-input').value = '';
             lastScrapedArticle = null;
@@ -519,14 +520,36 @@
                         });
                     }
                 } else if (item.type === 'video') {
-                    card += `<input type="text" placeholder="YouTube Link" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">`;
+                    // YOUTUBE AÇIKLAMA INPUT'U EKLENDİ
+                    card += `<input type="text" placeholder="YouTube Link" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
+                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
                 } else {
                     card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value || ''}</textarea>`;
                 }
                 card += `</div>`;
                 list.innerHTML += card;
             });
+
+            renderRelatedListAdmin();
         }
+
+        // PANELDE İLGİLİ YAZILARI GÖSTERME/SİLME FONKSİYONU
+        function renderRelatedListAdmin() {
+            const list = document.getElementById('related-list-admin');
+            if(!list) return;
+            list.innerHTML = '';
+            if(!articleConfig.related) articleConfig.related = [];
+            articleConfig.related.forEach((rel, ri) => {
+                list.innerHTML += `
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(${ri})">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="${rel.title}" oninput="editRelated(${ri}, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="${rel.link}" oninput="editRelated(${ri}, 'link', this.value)">
+                </div>`;
+            });
+        }
+        function editRelated(ri, k, v) { articleConfig.related[ri][k] = v; renderArticle(); }
+        function deleteRelated(ri) { articleConfig.related.splice(ri, 1); renderAdminPanel(); renderArticle(); }
 
         function editGalleryItem(itemIdx, imgIdx, key, val) { 
             articleConfig.content[itemIdx].images[imgIdx][key] = val; 
