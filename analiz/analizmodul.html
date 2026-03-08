@@ -10,7 +10,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Ümit Özgüler | Fotoğraf Analileri</title>
+    <title id="page-title">Ümit Özgüler | Fotoğraf Analizleri</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <script>
@@ -181,6 +181,21 @@
 
         /* LIGHTBOX ARKA PLAN KAYMASINI ENGELLEME EKLENDİ */
         .no-scroll { overflow: hidden; }
+
+        /* ANALİZ ÇİZGİLERİ (3'LER KURALI VE ALTIN ORAN) */
+        .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; z-index: 10; }
+        .grid-overlay.active { opacity: 1; }
+        .rot-line-h, .rot-line-v { position: absolute; background: rgba(255, 140, 0, 0.8); box-shadow: 0 0 3px rgba(0,0,0,0.8); }
+        .rot-line-h { width: 100%; height: 1px; left: 0; }
+        .rot-line-v { height: 100%; width: 1px; top: 0; }
+        .rot-h1 { top: 33.33%; } .rot-h2 { top: 66.66%; }
+        .rot-v1 { left: 33.33%; } .rot-v2 { left: 66.66%; }
+        .phi-h1 { top: 38.2%; } .phi-h2 { top: 61.8%; }
+        .phi-v1 { left: 38.2%; } .phi-v2 { left: 61.8%; }
+
+        .analysis-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #888; padding: 6px 16px; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; font-weight: 600; }
+        .analysis-btn:hover { border-color: rgba(255, 140, 0, 0.5); color: #fff; }
+        .analysis-btn.active { color: #ff8c00; border-color: #ff8c00; background: rgba(255, 140, 0, 0.1); }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 antialiased flex flex-col min-h-screen page-animate">
@@ -372,23 +387,48 @@
                 else if (item.type === 'image') {
                     const mobileSource = item.mobile ? `<source srcset="${item.mobile}" media="(max-width: 768px)">` : '';
                     let exifHtml = '';
+                    let overlays = '';
+                    let toggleHtml = '';
+                    
+                    if (isFirstStandaloneImage) {
+                        overlays = `
+                        <div id="overlay-rot" class="grid-overlay">
+                            <div class="rot-line-h rot-h1"></div><div class="rot-line-h rot-h2"></div>
+                            <div class="rot-line-v rot-v1"></div><div class="rot-line-v rot-v2"></div>
+                        </div>
+                        <div id="overlay-phi" class="grid-overlay">
+                            <div class="rot-line-h phi-h1"></div><div class="rot-line-h phi-h2"></div>
+                            <div class="rot-line-v phi-v1"></div><div class="rot-line-v phi-v2"></div>
+                        </div>`;
+                        
+                        toggleHtml = `
+                        <div class="flex justify-center gap-4 mt-6">
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-rot', this)">3'LER KURALI</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-phi', this)">ALTIN ORAN</button>
+                        </div>`;
+                    }
                     
                     if (item.exif) {
                         if (isFirstStandaloneImage) {
                             exifHtml = `
-                            <div class="mt-8 bg-[#111111] py-8 text-center rounded-sm">
+                            ${toggleHtml}
+                            <div class="mt-6 bg-[#111111] py-8 text-center rounded-sm">
                                 <div class="text-[9px] text-brand-orange font-semibold tracking-[0.3em] uppercase mb-3">TEKNİK VERİLER</div>
                                 <div class="text-[11px] text-gray-400 tracking-[0.2em] uppercase font-light">${item.exif}</div>
                             </div>`;
                         } else {
                             exifHtml = `<div class="exif-tag">${item.exif}</div>`;
                         }
+                    } else if (isFirstStandaloneImage) {
+                        exifHtml = toggleHtml;
                     }
+                    
                     isFirstStandaloneImage = false;
                     
                     html += `
                     <figure class="my-16 reveal active">
-                        <div class="img-container shadow-2xl">
+                        <div class="img-container shadow-2xl relative">
+                            ${overlays}
                             <picture>${mobileSource}<img src="${item.src || 'https://via.placeholder.com/1200x800'}" alt="${item.caption || ''}" onclick="openLightbox(this)"></picture>
                         </div>
                         <figcaption class="image-caption">${item.caption || ''}</figcaption>
@@ -485,6 +525,22 @@
 
             container.innerHTML = html;
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // ANALİZ ÇİZGİSİ GÖSTER/GİZLE FONKSİYONU
+        function toggleOverlay(id, btn) {
+            const overlay = document.getElementById(id);
+            if(overlay) {
+                if(overlay.classList.contains('active')) {
+                    overlay.classList.remove('active');
+                    btn.classList.remove('active');
+                } else {
+                    document.querySelectorAll('.grid-overlay').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('.analysis-btn').forEach(el => el.classList.remove('active'));
+                    overlay.classList.add('active');
+                    btn.classList.add('active');
+                }
+            }
         }
 
         // OTOMATİK VERİ ÇEKME VE EKLEME MANTIĞI
