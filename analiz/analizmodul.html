@@ -10,7 +10,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Ümit Özgüler | Fotoğraf Analizleri</title>
+    <title id="page-title">Ümit Özgüler | Fotoğraf Analileri</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <script>
@@ -91,7 +91,6 @@
         .nav-link-custom:hover { color: #ff8c00; }
 
         .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; border-radius: 2px; }
-        /* CSS HATASI DÜZELTİLDİ: filter eklendi */
         .img-container img { transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.5s; width: 100%; height: auto; display: block; filter: grayscale(20%); }
         .img-container:hover img { transform: scale(1.02); filter: grayscale(0%); }
         
@@ -182,9 +181,11 @@
         /* LIGHTBOX ARKA PLAN KAYMASINI ENGELLEME EKLENDİ */
         .no-scroll { overflow: hidden; }
 
-        /* ANALİZ ÇİZGİLERİ (3'LER KURALI VE ALTIN ORAN) */
+        /* ANALİZ ÇİZGİLERİ (3'LER KURALI VE ALTIN ORAN VE YENİ ÖZELLİKLER) */
         .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; z-index: 10; }
         .grid-overlay.active { opacity: 1; }
+        
+        /* 3'ler ve Altın Oran */
         .rot-line-h, .rot-line-v { position: absolute; background: rgba(255, 140, 0, 0.8); box-shadow: 0 0 3px rgba(0,0,0,0.8); }
         .rot-line-h { width: 100%; height: 1px; left: 0; }
         .rot-line-v { height: 100%; width: 1px; top: 0; }
@@ -193,7 +194,16 @@
         .phi-h1 { top: 38.2%; } .phi-h2 { top: 61.8%; }
         .phi-v1 { left: 38.2%; } .phi-v2 { left: 61.8%; }
 
-        .analysis-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #888; padding: 6px 16px; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; font-weight: 600; }
+        /* Odak Noktaları (Hotspots) */
+        .hotspot-pin { position: absolute; width: 24px; height: 24px; transform: translate(-50%, -50%); background: rgba(255, 140, 0, 0.8); border: 2px solid #fff; border-radius: 50%; cursor: pointer; z-index: 30; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease; pointer-events: auto; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hotspot-pin:hover { transform: translate(-50%, -50%) scale(1.1); background: #fff; }
+        .hotspot-pin::after { content: '+'; color: #fff; font-size: 18px; font-weight: 400; line-height: 1; }
+        .hotspot-pin:hover::after { color: #ff8c00; }
+        .hotspot-tooltip { position: absolute; bottom: 120%; left: 50%; transform: translate(-50%, 10px); background: #111; color: #fff; font-size: 11px; font-weight: 300; padding: 10px 14px; border: 1px solid #ff8c00; border-radius: 4px; width: 200px; text-align: left; opacity: 0; pointer-events: none; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.8); line-height: 1.6; z-index: 40; }
+        .hotspot-pin:hover .hotspot-tooltip { opacity: 1; transform: translate(-50%, 0); }
+
+        /* Buton Stilleri */
+        .analysis-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #888; padding: 6px 16px; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; font-weight: 600; margin-bottom: 8px; }
         .analysis-btn:hover { border-color: rgba(255, 140, 0, 0.5); color: #fff; }
         .analysis-btn.active { color: #ff8c00; border-color: #ff8c00; background: rgba(255, 140, 0, 0.1); }
     </style>
@@ -329,7 +339,17 @@
           "content": [
             { "type": "text", "value": "Bu platform, yan yana dizilmiş fotoğraflardan oluşan bir galeri değildir. Dünyaya bakışımın görsel bir ifadesidir. “Fine Art Photography” anlayışıyla kurgulanan bu alan, tasarımındaki bilinçli boşluklar ve monokrom diliyle tek bir amaca hizmet eder: Görsel gürültüden arınmış bir karşılaşma anı yaratmak." },
             { "type": "heading", "value": "Bilinçli Sadeliğin Tercihi" },
-            { "type": "image", "src": "../img/90.webp", "mobile": "", "exif": "Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500", "caption": "Işığın Anatomisi" },
+            { 
+              "type": "image", 
+              "src": "../img/90.webp", 
+              "mobile": "", 
+              "exif": "Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 500", 
+              "caption": "Işığın Anatomisi",
+              "hotspots": [
+                { "x": 35, "y": 40, "text": "Işığın kırılma noktası: Kontrastın en yüksek olduğu ve dikkati ilk çeken odak alanı." },
+                { "x": 65, "y": 70, "text": "Negatif boşluk: Çerçevede dengeyi sağlayan ve ana objeye nefes aldıran karanlık bölge." }
+              ]
+            },
             { "type": "gallery", "images": [
                 { "src": "img/1.webp", "mobile": "", "exif": "LEICA M11", "caption": "Detay I" },
                 { "src": "img/2.webp", "mobile": "", "exif": "LEICA M11", "caption": "Detay II" },
@@ -359,7 +379,7 @@
             let html = `
                 <div class="text-center mb-10 reveal active">
                     <a href="../dusunceler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
-                        ← Diğer Fotoğraf Analizleri 
+                        ← Diğer Fotoğraf Analizleri
                     </a>
                     <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
                         ${articleConfig.meta.title}
@@ -391,36 +411,59 @@
                     let toggleHtml = '';
                     
                     if (isFirstStandaloneImage) {
+                        // ODAK NOKTALARI (HOTSPOTS) OLUŞTURMA
+                        let hotspotsHtml = '';
+                        if (item.hotspots && item.hotspots.length > 0) {
+                            item.hotspots.forEach(spot => {
+                                hotspotsHtml += `
+                                <div class="hotspot-pin" style="top: ${spot.y}%; left: ${spot.x}%;">
+                                    <div class="hotspot-tooltip">${spot.text}</div>
+                                </div>`;
+                            });
+                        }
+
                         overlays = `
+                        <!-- 3'ler Kuralı -->
                         <div id="overlay-rot" class="grid-overlay">
                             <div class="rot-line-h rot-h1"></div><div class="rot-line-h rot-h2"></div>
                             <div class="rot-line-v rot-v1"></div><div class="rot-line-v rot-v2"></div>
                         </div>
+                        <!-- Altın Oran -->
                         <div id="overlay-phi" class="grid-overlay">
                             <div class="rot-line-h phi-h1"></div><div class="rot-line-h phi-h2"></div>
                             <div class="rot-line-v phi-v1"></div><div class="rot-line-v phi-v2"></div>
-                        </div>`;
+                        </div>
+                        <!-- Altın Üçgenler -->
+                        <svg id="overlay-tri" class="grid-overlay" width="100%" height="100%" preserveAspectRatio="none">
+                            <line x1="0" y1="100%" x2="100%" y2="0" stroke="rgba(255,140,0,0.8)" stroke-width="1.5" />
+                            <line x1="0" y1="0" x2="61.8%" y2="61.8%" stroke="rgba(255,140,0,0.8)" stroke-width="1.5" />
+                            <line x1="100%" y1="100%" x2="38.2%" y2="38.2%" stroke="rgba(255,140,0,0.8)" stroke-width="1.5" />
+                        </svg>
+                        <!-- Odak Noktaları -->
+                        <div id="overlay-hotspots" class="grid-overlay">
+                            ${hotspotsHtml}
+                        </div>
+                        <!-- Krop: 1:1 -->
+                        <div id="overlay-crop-sq" class="grid-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.85) 15%, transparent 15%, transparent 85%, rgba(0,0,0,0.85) 85%); border-left: 1px solid rgba(255,140,0,0.3); border-right: 1px solid rgba(255,140,0,0.3);"></div>
+                        `;
                         
                         toggleHtml = `
-                        <div class="flex justify-center gap-4 mt-6">
+                        <div class="flex justify-center flex-wrap gap-2 mt-6 max-w-xl mx-auto">
                             <button class="analysis-btn" onclick="toggleOverlay('overlay-rot', this)">3'LER KURALI</button>
                             <button class="analysis-btn" onclick="toggleOverlay('overlay-phi', this)">ALTIN ORAN</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-tri', this)">ALTIN ÜÇGENLER</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-hotspots', this)">ODAK NOKTALARI</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-crop-sq', this)">1:1 KROP</button>
                         </div>`;
-                    }
-                    
-                    if (item.exif) {
-                        if (isFirstStandaloneImage) {
-                            exifHtml = `
-                            ${toggleHtml}
-                            <div class="mt-6 bg-[#111111] py-8 text-center rounded-sm">
-                                <div class="text-[9px] text-brand-orange font-semibold tracking-[0.3em] uppercase mb-3">TEKNİK VERİLER</div>
-                                <div class="text-[11px] text-gray-400 tracking-[0.2em] uppercase font-light">${item.exif}</div>
-                            </div>`;
-                        } else {
-                            exifHtml = `<div class="exif-tag">${item.exif}</div>`;
-                        }
-                    } else if (isFirstStandaloneImage) {
-                        exifHtml = toggleHtml;
+
+                        exifHtml = `
+                        ${toggleHtml}
+                        <div class="mt-6 bg-[#111111] py-8 text-center rounded-sm border border-white/5">
+                            <div class="text-[9px] text-brand-orange font-semibold tracking-[0.3em] uppercase mb-3">TEKNİK VERİLER</div>
+                            <div class="text-[11px] text-gray-400 tracking-[0.2em] uppercase font-light">${item.exif || 'Belirtilmemiş'}</div>
+                        </div>`;
+                    } else if (item.exif) {
+                        exifHtml = `<div class="exif-tag">${item.exif}</div>`;
                     }
                     
                     isFirstStandaloneImage = false;
@@ -851,4 +894,3 @@
     </script>
 </body>
 </html>
-
