@@ -241,7 +241,7 @@
 
     <div id="admin-panel">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Makale Yazar Paneli</h2>
+            <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Yazar Paneli</h2>
             <button onclick="toggleAdmin()" class="text-brand-gold text-[10px] uppercase font-bold border border-brand-gold/30 px-3 py-1 rounded-full hover:bg-brand-gold hover:text-black transition-all">Kapat</button>
         </div>
         <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
@@ -263,6 +263,23 @@
                 <div id="scrape-preview"></div>
                 <div id="related-list-admin" class="mt-4"></div>
             </div>
+
+            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BAŞLANGIÇ -->
+            <div class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">TAVSİYE KİTAPLAR (GOOGLE BOOKS ARAMA)</label>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="book-search-input" placeholder="Yazar veya Kitap Adı..." class="admin-input !mb-0 flex-1">
+                    <button onclick="searchBooks()" class="admin-btn !py-2 !px-4">Ara</button>
+                </div>
+                <div id="book-search-results" class="flex flex-col gap-2 mb-4"></div>
+                
+                <label class="admin-label mt-6">SEÇİLİ TAVSİYELER</label>
+                <div id="selected-books-list" class="mt-2 flex flex-col gap-2"></div>
+                
+                <!-- MANUEL KİTAP EKLE BUTONU -->
+                <button onclick="addManualBook()" class="admin-btn w-full mt-2 !bg-[#111111] !text-[#c5a059] border !border-[#2a2a2a] hover:!bg-[#1a1a1a]">MANUEL KİTAP EKLE</button>
+            </div>
+            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BİTİŞ -->
 
             <div id="item-list"></div>
             <div class="grid grid-cols-2 gap-3 mt-4">
@@ -304,7 +321,8 @@
                 { "src": "img/3.webp", "mobile": "", "exif": "LEICA M11", "caption": "Detay III" }
             ]}
           ],
-          "related": []
+          "related": [],
+          "books": [] 
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -414,6 +432,31 @@
                 html += `</div></div>`;
             }
 
+            // TAVSİYE KİTAPLAR BÖLÜMÜ (UI GÖSTERİMİ)
+            if (articleConfig.books && articleConfig.books.length > 0) {
+                html += `
+                <div class="reveal active mt-16">
+                    <div class="related-section-header">
+                        <h3>Tavsiye Kitaplar</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">`;
+                articleConfig.books.forEach(book => {
+                    html += `
+                        <a href="${book.link}" target="_blank" class="related-card group flex flex-row p-0 h-24 overflow-hidden items-center border-brand-orange/20 hover:border-brand-orange/50 transition-colors">
+                            <div class="w-16 h-full flex-shrink-0 bg-brand-dark border-r border-white/5 relative">
+                                <img src="${book.thumbnail}" alt="${book.title}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div class="p-4 flex-1 flex flex-col justify-center">
+                                <span class="related-tag mb-1">Kitap</span>
+                                <h4 class="text-[0.75rem] font-medium text-white mb-1 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">${book.title}</h4>
+                                <p class="text-[10px] text-gray-500 font-light line-clamp-1">${book.authors}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+                html += `</div></div>`;
+            }
+
             html += `
                 <div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active">
                     <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Yazıyı Paylaş</p>
@@ -481,6 +524,115 @@
             showMsg("Makale Eklendi");
         }
 
+        // TAVSİYE KİTAP GOOGLE BOOKS ARAMA MANTIĞI
+        async function searchBooks() {
+            const query = document.getElementById('book-search-input').value;
+            if(!query) { showMsg("Lütfen arama kelimesi girin"); return; }
+            
+            const resultsContainer = document.getElementById('book-search-results');
+            resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Aranıyor...</div>';
+            
+            try {
+                const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=4`);
+                const data = await res.json();
+                
+                // YENİ EKLENEN HATA KONTROLÜ: API limitine veya yasağa takılıp takılmadığımızı denetler
+                if (!res.ok) {
+                    const errorMessage = data.error?.message || `Bağlantı Hatası (${res.status})`;
+                    resultsContainer.innerHTML = `<div class="text-[10px] text-[#ff5555] leading-tight"><strong>API Hatası:</strong> ${errorMessage}<br><br><span style="opacity:0.7">Not: Ücretsiz Google Books API kullanım limitine takılmış olabilirsiniz. Lütfen biraz bekleyin veya manuel kitap ekleme alanını kullanın.</span></div>`;
+                    return;
+                }
+                
+                if(!data.items || data.items.length === 0) {
+                    resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Sonuç bulunamadı.</div>';
+                    return;
+                }
+                
+                let html = '';
+                data.items.forEach(item => {
+                    const vol = item.volumeInfo;
+                    const title = vol.title || 'Başlıksız';
+                    const authors = vol.authors ? vol.authors.join(', ') : 'Yazar bilinmiyor';
+                    // thumbnail kontrolü ve https'ye çevirme
+                    let thumbnail = vol.imageLinks ? vol.imageLinks.smallThumbnail : 'https://via.placeholder.com/50x70?text=Kapak';
+                    thumbnail = thumbnail.replace(/^http:\/\//i, 'https://');
+                    const link = vol.infoLink || '#';
+                    
+                    const safeTitle = title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    const safeAuthors = authors.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    
+                    html += `
+                    <div class="scraped-item border-brand-orange/30 border !mt-0 mb-1">
+                        <img src="${thumbnail}" class="w-8 h-12 object-cover rounded-sm" alt="kapak">
+                        <div class="overflow-hidden flex-1">
+                            <strong class="truncate block text-white text-[11px]">${safeTitle}</strong>
+                            <span class="opacity-50 text-[9px] truncate block text-gray-300 mt-1">${safeAuthors}</span>
+                        </div>
+                        <button onclick="addBook('${safeTitle}', '${safeAuthors}', '${thumbnail}', '${link}')" class="bg-brand-orange text-black px-3 py-1.5 rounded text-[9px] font-bold hover:bg-white transition-colors ml-auto flex-shrink-0">EKLE</button>
+                    </div>
+                    `;
+                });
+                resultsContainer.innerHTML = html;
+            } catch(err) {
+                resultsContainer.innerHTML = '<div class="text-[10px] text-[#ff5555]">Bağlantı hatası oluştu.</div>';
+            }
+        }
+
+        function addBook(title, authors, thumbnail, link) {
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title, authors, thumbnail, link });
+            renderBooksAdmin();
+            renderArticle();
+            document.getElementById('book-search-results').innerHTML = '';
+            document.getElementById('book-search-input').value = '';
+            showMsg("Kitap Eklendi");
+        }
+
+        // YENİ: MANUEL KİTAP EKLEME FONKSİYONU
+        function addManualBook() {
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title: '', authors: '', thumbnail: '', link: '#' });
+            renderBooksAdmin();
+            renderArticle();
+            showMsg("Manuel Kitap Alanı Eklendi");
+        }
+
+        function removeBook(index) {
+            if(!articleConfig.books) return;
+            articleConfig.books.splice(index, 1);
+            renderBooksAdmin();
+            renderArticle();
+        }
+
+        // KİTAP ALANINI EDİTLEME
+        function editBook(index, key, value) {
+            if(!articleConfig.books) return;
+            articleConfig.books[index][key] = value;
+            renderArticle();
+        }
+
+        // SEÇİLİ KİTAPLARIN İNPUT OLARAK LİSTELENMESİ
+        function renderBooksAdmin() {
+            const container = document.getElementById('selected-books-list');
+            if(!container) return;
+            container.innerHTML = '';
+            if(!articleConfig.books || articleConfig.books.length === 0) {
+                return;
+            }
+            
+            articleConfig.books.forEach((book, i) => {
+                container.innerHTML += `
+                <div class="item-card !p-3 !mb-2">
+                    <span class="delete-btn" onclick="removeBook(${i})">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-2" value="${book.title || ''}" oninput="editBook(${i}, 'title', this.value)">
+                    <input type="text" placeholder="Yazar Adı" class="admin-input !mb-2" value="${book.authors || ''}" oninput="editBook(${i}, 'authors', this.value)">
+                    <input type="text" placeholder="Görsel URL" class="admin-input !mb-2" value="${book.thumbnail || ''}" oninput="editBook(${i}, 'thumbnail', this.value)">
+                    <input type="text" placeholder="Link URL" class="admin-input !mb-0" value="${book.link || ''}" oninput="editBook(${i}, 'link', this.value)">
+                </div>
+                `;
+            });
+        }
+
         // UI Handlers
         function toggleAdmin() { 
             const panel = document.getElementById('admin-panel');
@@ -531,6 +683,7 @@
             });
 
             renderRelatedListAdmin();
+            renderBooksAdmin(); // YENİ EKLENEN KİTAPLARI LİSTELEME ÇAĞRISI
         }
 
         // PANELDE İLGİLİ YAZILARI GÖSTERME/SİLME FONKSİYONU
@@ -634,4 +787,3 @@
     </script>
 </body>
 </html>
-
