@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -265,6 +264,23 @@
                 <div id="related-list-admin" class="mt-4"></div>
             </div>
 
+            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BAŞLANGIÇ -->
+            <div class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">TAVSİYE KİTAPLAR (GOOGLE BOOKS ARAMA)</label>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="book-search-input" placeholder="Yazar veya Kitap Adı..." class="admin-input !mb-0 flex-1">
+                    <button onclick="searchBooks()" class="admin-btn !py-2 !px-4">Ara</button>
+                </div>
+                <div id="book-search-results" class="flex flex-col gap-2 mb-4"></div>
+                
+                <label class="admin-label mt-6">SEÇİLİ TAVSİYELER</label>
+                <div id="selected-books-list" class="mt-2 flex flex-col gap-2"></div>
+                
+                <!-- MANUEL KİTAP EKLE BUTONU -->
+                <button onclick="addManualBook()" class="admin-btn w-full mt-2 !bg-[#111111] !text-[#c5a059] border !border-[#2a2a2a] hover:!bg-[#1a1a1a]">MANUEL KİTAP EKLE</button>
+            </div>
+            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BİTİŞ -->
+
             <div id="item-list"></div>
             <div class="grid grid-cols-2 gap-3 mt-4">
                 <button onclick="addItem('text')" class="admin-btn">Metin Ekle</button>
@@ -287,140 +303,118 @@
     </button>
 
     <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" alt=""></div>
-
     <script>
         let articleConfig = {
-  "meta": {
-    "title": "Bir Fotoğraf Ne Anlatır?",
-    "location": "9 mart 2026 | Sanat & Felsefe",
-    "info": "Ümit Özgüler • Bir Fotoğraf Ne Anlatır?"
-  },
-  "content": [
-    {
-      "type": "text",
-      "value": "Bir fotoğrafa bakmak, aslında artık var olmayan bir ana misafir olmak gibidir. Deklanşöre basıldığı o salise, zamanın akışından koparılmış ve bir çerçeveye hapsedilmiş bir \"hayalet\" yaratır. Kamera o an sadece ışığı değil, bir insanın bakış açısını da kaydeder: Neyi önemli bulduğunu, neyi hatırlamak veya neyi unutturmak istediğini.\n\nPeki, bir fotoğraf sadece gördüğümüzün bir kopyası mıdır, yoksa başlı başına yeni bir gerçeklik mi yaratır? Sosyoloji bize fotoğrafın toplumdaki gücünü, psikoloji hafızamızdaki oyunlarını, felsefe ise varlık sancılarını anlatır. Ama asıl soru şudur: Fotoğraf mı bize bir şey anlatır, yoksa biz mi ona bir anlam yükleriz?"
-    },
-    {
-      "type": "image",
-      "src": "../img/7.webp",
-      "mobile": "../imgmobil/7.webp",
-      "exif": "Bursa | 2023 | Siyah Beyaz",
-      "caption": "ışık varsa fotoğraf vardır"
-    },
-    {
-      "type": "heading",
-      "value": "Fotoğrafın Kendi Dili"
-    },
-    {
-      "type": "text",
-      "value": "Tıpkı kelimeleri yan yana getirip cümle kurduğumuz gibi, fotoğraf da ışık, gölge ve bakış açısını kullanarak kendi dilini oluşturur. Ancak bu dil biraz \"oynak\"tır. Bir kelimenin sözlük anlamı bellidir ama bir fotoğrafın ne hissettireceği, ona bakan kişinin kültürüne ve o anki moraline göre değişir."
-    },
-    {
-      "type": "tip",
-      "value": "Düşünür Roland Barthes bunu iki kavramla açıklar:\n\nGenel Bakış (Studium): Fotoğraftaki herkesin ilk bakışta gördüğü ortak bilgi; savaş, mutluluk ya da bir manzara gibi.\n\nSarsıcı Detay (Punctum): Sizi aniden kalbinizden vuran o küçük ayrıntı; birinin el duruşu, eski bir ayakkabı ya da tanıdık bir bakış. Biri toplumsal bir bilgidir, diğeri ise tamamen size özel bir yaradır."
-    },
-    {
-      "type": "heading",
-      "value": "Toplumun ve Gücün Aynası"
-    },
-    {
-      "type": "text",
-      "value": "Fotoğrafın tarihi, aslında biraz da gücü elinde tutanların tarihidir. Eskiden fotoğraf makinesi, sömürgeci devletlerin \"yabancı\" halkları sınıflandırmak ve kontrol etmek için kullandığı bir araçtı. Yani makine hiçbir zaman tamamen tarafsız olmadı; hep bir \"bakış açısını\" temsil etti.\n\nBugün ise durum daha farklı. Sosyal medya ile hepimiz hem model hem de fotoğrafçı olduk. Ancak \"beğeni\" algoritmaları yüzünden aslında yeni bir baskı altındayız. Artık anılarımızı değil, sergilemek istediğimiz \"performansları\" fotoğraflıyoruz. Aile albümlerimiz bile gerçek hayatımızı değil, \"mutlu görünme\" çabamızı kanıtlayan birer arşiv gibi. Acıyı ve sıradanlığı genelde kadrajın dışında bırakıyoruz."
-    },
-    {
-      "type": "heading",
-      "value": "Fotoğraf Hafızamızı mı Çalıyor?"
-    },
-    {
-      "type": "text",
-      "value": "Psikolojik araştırmalar ilginç bir gerçeği fısıldıyor: Bir olayın fotoğrafını ne kadar çok çekersek, o anı o kadar az hatırlıyoruz. Sanki beyin, \"Nasılsa makine kaydetti, benim hatırlamama gerek yok\" diyerek yükü üzerinden atıyor.\n\nÖte yandan, fotoğraflar bazen tarihin akışını değiştiren birer kanıta dönüşür. Travmatik bir olayı belgeleyen tek bir kare, kitleleri harekete geçirebilir. Ayrıca çocukluk fotoğraflarımız, aslında hatırlamadığımız anları bize \"gerçek anılarımızmış gibi\" kabul ettirir. Kim olduğumuza dair hikâyemizi, bizi çeken kişilerin seçimleri üzerinden kurarız."
-    },
-    {
-      "type": "heading",
-      "value": "Felsefi Bir Bakış: Ölüm ve Yaşam"
-    },
-    {
-      "type": "text",
-      "value": "Her fotoğraf aslında bir kayıp ilanıdır. Fotoğraftaki kişi o an yaşıyordur ama o \"an\" çoktan ölmüştür. Bir tablonun önünde durduğunuzda onun tek ve eşsiz olduğunu bilirsiniz; ancak bir fotoğraf sonsuza kadar çoğaltılabilir. Bu onu demokratikleştirir ama o \"tek olma\" büyüsünü de biraz bozar.\n\nNesnel (objektif) görünen her kare, aslında öznel bir kararın sonucudur. Hangi ışıkta, hangi açıyla ve ne zaman çekileceğine bir insan karar verir. Bu yüzden fotoğraf gerçekliğin kendisi değil, gerçeğin \"birinin gözünden\" nasıl göründüğünün kanıtıdır."
-    },
-    {
-      "type": "heading",
-      "value": "Acının Estetiği ve Etik"
-    },
-    {
-      "type": "text",
-      "value": "Fotoğrafın en tartışmalı tarafı ise etik kısmıdır. Bir trajediyi fotoğraflamak mı daha önemlidir, yoksa kamerayı bırakıp yardıma koşmak mı? "
-    },
-    {
-      "type": "quote",
-      "value": "Susan Sontag’ın dediği gibi; sürekli acı ve savaş fotoğrafları görmek bizi daha duyarlı yapmaz, aksine bir süre sonra bizi uyuşturup tepkisizleştirebilir. Görmek, bazen bir şey yapmamanın bahanesi haline gelir."
-    },
-    {
-      "type": "heading",
-      "value": "Sonuç Olarak;"
-    },
-    {
-      "type": "text",
-      "value": "Bir fotoğraf tek başına hiçbir şey anlatmaz. Anlam, sizin o fotoğrafla kurduğunuz bağda gizlidir. O, dünyanın bize söylemediği şeyleri sormak için tuttuğumuz bir aynadır. Cevap vermez, sadece soru sorar. Ve o sorular, tıpkı filmin banyo edilmesi gibi, içimizde bir yerlerde yeni düşünceler uyandırır."
-    }
-  ],
-  "related": [
-    {
-      "title": "\n                    Gözün Ardındaki Zihin: Bir Fotoğraf Yolculuğu\n                ",
-      "link": "https://www.umitozguler.com.tr/makale/gozun-ardindaki-zihin.html",
-      "img": "../img/kitaplar.webp",
-      "summary": "Fotoğrafla olan ünsiyetimiz, çoğunlukla bir makineyi dizginleme arzusuyla, ışığın ve gölgenin o teknik alfabes..."
-    },
-    {
-      "title": "\n                    Fotoğraf Neyi Anlatmalı?  Anın Gücü ve Doğallık\n                ",
-      "link": "https://www.umitozguler.com.tr/makale/fotograf-neyi-anlatmali.html",
-      "img": "../img/46.webp",
-      "summary": "Fotoğraf, sadece bir görüntüyü kaydetmekten çok daha fazlasıdır; o, anın ruhunu yakalayan, zamanı donduran ve ..."
-    },
-    {
-      "title": "\n                    Türkiye'de Fotoğrafın Çıkmazı: Biçim mi, Ruh mu?\n                ",
-      "link": "https://www.umitozguler.com.tr/makale/turkiye-fotograf-tabulari.html",
-      "img": "../img/27.webp",
-      "summary": "Ülkemizde fotoğraf sanatı üzerine yapılan tartışmalarda sıkça rastladığım, beni derinden düşündüren bir durum ..."
-    }
-  ],
-  "books": [
-    {
-      "title": "Camera Lucida: Fotoğraf Üzerine Düşünceler",
-      "authors": "Roland Barthes",
-      "thumbnail": "https://m.media-amazon.com/images/I/61C2FfSXqnL._SY385_.jpg",
-      "link": "https://www.amazon.com.tr/Camera-Lucida-Foto%C4%9Fraf-%C3%9Czerine-D%C3%BC%C5%9F%C3%BCnceler/dp/6055532603/ref=sr_1_1?dib=eyJ2IjoiMSJ9.tkXCDxHmKPLvaOhRKwgNPtbOkzrOnS4cOPXb_wIC7DtxsTHzKnhWVHe8Esea0u17LX8ttgZGaV5pTP0pfT2KCJiVn6s0R0tHP5klRWKVt7c.l5m1JGaThB6flRs8yOjRuGx7ZVpNmd3xNpXQ2BYwSbM&dib_tag=se&keywords=camera+lucida+roland+barthes&qid=1773079855&sr=8-1"
-    },
-    {
-      "title": "Fotoğraf Üzerine",
-      "authors": "Susan Sontag",
-      "thumbnail": "https://m.media-amazon.com/images/I/41PQVooT2ZL._SY445_SX342_ML2_.jpg",
-      "link": "https://www.amazon.com.tr/Foto%C4%9Fraf-%C3%9Czerine-Susan-Sontag/dp/9750757467/ref=sr_1_1?adgrpid=123628051401&dib=eyJ2IjoiMSJ9.g0AIRWZo3jQSSwPiaRZqZDdvSVqsYDD8f4gYVcQM8BFzfF-8VYCVTt2okOpexa5APILJmnlX1dLnsRcDICOjdU8BByZ62ey3lxQFv8b2bKj7CqjuNakD6i7_FVJ8MDAOztuzOl9Y_UKJO9MVJ-MONUx8n9qUJy3VlW57leuWmLoh8I_DesDFgMlistGBpGkci8-abKVgUlOuu80prS2HWMWqq-RoHSa2nESytbXORsmbo5klexebyTnODKFAMUSTDPLinrvc7ydHiY47WqqbR75PuL-DQ69qKJM1U_Zsmk4.vuH1x5ojpOzR0pB3uuiLIsg0nbolWHlsw7Q-LtcY5Y8&dib_tag=se&hvadid=599795445562&hvdev=c&hvlocphy=9212693&hvnetw=g&hvqmt=e&hvrand=7167583796492493957&hvtargid=kwd-346717959794&hydadcr=20771_2231341&keywords=foto%C4%9Fraf+%C3%BCzerine&mcid=01961d9d136f39e2afdb13240509caed&qid=1773079927&sr=8-1"
-    }
-  ]
-};
-  ],
-  "related": [
-    {
-      "title": "\n                    Gözün Ardındaki Zihin: Bir Fotoğraf Yolculuğu\n                ",
-      "link": "https://www.umitozguler.com.tr/makale/gozun-ardindaki-zihin.html",
-      "img": "../img/kitaplar.webp",
-      "summary": "Fotoğrafla olan ünsiyetimiz, çoğunlukla bir makineyi dizginleme arzusuyla, ışığın ve gölgenin o teknik alfabes..."
-    },
-    {
-      "title": "\n                    Fotoğraf Neyi Anlatmalı?  Anın Gücü ve Doğallık\n                ",
-      "link": "https://www.umitozguler.com.tr/makale/fotograf-neyi-anlatmali.html",
-      "img": "../img/46.webp",
-      "summary": "Fotoğraf, sadece bir görüntüyü kaydetmekten çok daha fazlasıdır; o, anın ruhunu yakalayan, zamanı donduran ve ..."
-    },
-    {
-      "title": "\n                    Türkiye'de Fotoğrafın Çıkmazı: Biçim mi, Ruh mu?\n                ",
-      "link": "https://www.umitozguler.com.tr/makale/turkiye-fotograf-tabulari.html",
-      "img": "../img/27.webp",
-      "summary": "Ülkemizde fotoğraf sanatı üzerine yapılan tartışmalarda sıkça rastladığım, beni derinden düşündüren bir durum ..."
-    }
-  ]
-};
+          "meta": {
+            "title": "Bir Fotoğraf Ne Anlatır?",
+            "location": "9 mart 2026 | Sanat & Felsefe",
+            "info": "Ümit Özgüler • Bir Fotoğraf Ne Anlatır?"
+          },
+          "content": [
+            {
+              "type": "text",
+              "value": "Bir fotoğrafa bakmak, aslında artık var olmayan bir ana misafir olmak gibidir. Deklanşöre basıldığı o salise, zamanın akışından koparılmış ve bir çerçeveye hapsedilmiş bir \"hayalet\" yaratır. Kamera o an sadece ışığı değil, bir insanın bakış açısını da kaydeder: Neyi önemli bulduğunu, neyi hatırlamak veya neyi unutturmak istediğini.\n\nPeki, bir fotoğraf sadece gördüğümüzün bir kopyası mıdır, yoksa başlı başına yeni gerçeklik mi yaratır? Sosyoloji bize fotoğrafın toplumdaki gücünü, psikoloji hafızamızdaki oyunlarını, felsefe ise varlık sancılarını anlatır. Ama asıl soru şudur: Fotoğraf mı bize bir şey anlatır, yoksa biz mi ona bir anlam yükleriz?"
+            },
+            {
+              "type": "image",
+              "src": "../img/7.webp",
+              "mobile": "../imgmobil/7.webp",
+              "exif": "Bursa | 2023 | Siyah Beyaz",
+              "caption": "ışık varsa fotoğraf vardır"
+            },
+            {
+              "type": "heading",
+              "value": "Fotoğrafın Kendi Dili"
+            },
+            {
+              "type": "text",
+              "value": "Tıpkı kelimeleri yan yana getirip cümle kurduğumuz gibi, fotoğraf da ışık, gölge ve bakış açısını kullanarak kendi dilini oluşturur. Ancak bu dil biraz \"oynak\"tır. Bir kelimenin sözlük anlamı bellidir ama bir fotoğrafın ne hissettireceği, ona bakan kişinin kültürüne ve o anki moraline göre değişir."
+            },
+            {
+              "type": "tip",
+              "value": "Düşünür Roland Barthes bunu iki kavramla açıklar:\n\nGenel Bakış (Studium): Fotoğraftaki herkesin ilk bakışta gördüğü ortak bilgi; savaş, mutluluk ya da bir manzara gibi.\n\nSarsıcı Detay (Punctum): Sizi aniden kalbinizden vuran o küçük ayrıntı; birinin el duruşu, eski bir ayakkabı ya da tanıdık bir bakış. Biri toplumsal bir bilgidir, diğeri ise tamamen size özel bir yaradır."
+            },
+            {
+              "type": "heading",
+              "value": "Toplumun ve Gücün Aynası"
+            },
+            {
+              "type": "text",
+              "value": "Fotoğrafın tarihi, aslında biraz da gücü elinde tutanların tarihidir. Eskiden fotoğraf makinesi, sömürgeci devletlerin \"yabancı\" halkları sınıflandırmak ve kontrol etmek için kullandığı bir araçtı. Yani makine hiçbir zaman tamamen tarafsız olmadı; hep bir \"bakış açısını\" temsil etti.\n\nBugün ise durum daha farklı. Sosyal medya ile hepimiz hem model hem de fotoğrafçı olduk. Ancak \"beğeni\" algoritmaları yüzünden aslında yeni bir baskı altındayız. Artık anılarımızı değil, sergilemek istediğimiz \"performansları\" fotoğraflıyoruz. Aile albümlerimiz bile gerçek hayatımızı değil, \"mutlu görünme\" çabamızı kanıtlayan birer arşiv gibi. Acıyı ve sıradanlığı genelde kadrajın dışında bırakıyoruz."
+            },
+            {
+              "type": "heading",
+              "value": "Fotoğraf Hafızamızı mı Çalıyor?"
+            },
+            {
+              "type": "text",
+              "value": "Psikolojik araştırmalar ilginç bir gerçeği fısıldıyor: Bir olayın fotoğrafını ne kadar çok çekersek, o anı o kadar az hatırlıyoruz. Sanki beyin, \"Nasılsa makine kaydetti, benim hatırlamama gerek yok\" diyerek yükü üzerinden atıyor.\n\nÖte yandan, fotoğraflar bazen tarihin akışını değiştiren birer kanıta dönüşür. Travmatik bir olayı belgeleyen tek bir kare, kitleleri harekete geçirebilir. Ayrıca çocukluk fotoğraflarımız, aslında hatırlamadığımız anları bize \"gerçek anılarımızmış gibi\" kabul ettirir. Kim olduğumuza dair hikâyemizi, bizi çeken kişilerin seçimleri üzerinden kurarız."
+            },
+            {
+              "type": "heading",
+              "value": "Felsefi Bir Bakış: Ölüm ve Yaşam"
+            },
+            {
+              "type": "text",
+              "value": "Her fotoğraf aslında bir kayıp ilanıdır. Fotoğraftaki kişi o an yaşıyordur ama o \"an\" çoktan ölmüştür. Bir tablonun önünde durduğunuzda onun tek ve eşsiz olduğunu bilirsiniz; ancak bir fotoğraf sonsuza kadar çoğaltılabilir. Bu onu demokratikleştirir ama o \"tek olma\" büyüsünü de biraz bozar.\n\nNesnel (objektif) görünen her kare, aslında öznel bir kararın sonucudur. Hangi ışıkta, hangi açıyla ve ne zaman çekileceğine bir insan karar verir. Bu yüzden fotoğraf gerçekliğin kendisi değil, gerçeğin \"birinin gözünden\" nasıl göründüğünün kanıtıdır."
+            },
+            {
+              "type": "heading",
+              "value": "Acının Estetiği ve Etik"
+            },
+            {
+              "type": "text",
+              "value": "Fotoğrafın en tartışmalı tarafı ise etik kısmıdır. Bir trajediyi fotoğraflamak mı daha önemlidir, yoksa kamerayı bırakıp yardıma koşmak mı? "
+            },
+            {
+              "type": "quote",
+              "value": "Susan Sontag’ın dediği gibi; sürekli acı ve savaş fotoğrafları görmek bizi daha duyarlı yapmaz, aksine bir süre sonra bizi uyuşturup tepkisizleştirebilir. Görmek, bazen bir şey yapmamanın bahanesi haline gelir."
+            },
+            {
+              "type": "heading",
+              "value": "Sonuç Olarak;"
+            },
+            {
+              "type": "text",
+              "value": "Bir fotoğraf tek başına hiçbir şey anlatmaz. Anlam, sizin o fotoğrafla kurduğunuz bağda gizlidir. O, dünyanın bize söylemediği şeyleri sormak için tuttuğumuz bir aynadır. Cevap vermez, sadece soru sorar. Ve o sorular, tıpkı filmin banyo edilmesi gibi, içimizde bir yerlerde yeni düşünceler uyandırır."
+            }
+          ],
+          "related": [
+            {
+              "title": "Gözün Ardındaki Zihin: Bir Fotoğraf Yolculuğu",
+              "link": "https://www.umitozguler.com.tr/makale/gozun-ardindaki-zihin.html",
+              "img": "../img/kitaplar.webp",
+              "summary": "Fotoğrafla olan ünsiyetimiz, çoğunlukla bir makineyi dizginleme arzusuyla, ışığın ve gölgenin o teknik alfabes..."
+            },
+            {
+              "title": "Fotoğraf Neyi Anlatmalı?  Anın Gücü ve Doğallık",
+              "link": "https://www.umitozguler.com.tr/makale/fotograf-neyi-anlatmali.html",
+              "img": "../img/46.webp",
+              "summary": "Fotoğraf, sadece bir görüntüyü kaydetmekten çok daha fazlasıdır; o, anın ruhunu yakalayan, zamanı donduran ve ..."
+            },
+            {
+              "title": "Türkiye'de Fotoğrafın Çıkmazı: Biçim mi, Ruh mu?",
+              "link": "https://www.umitozguler.com.tr/makale/turkiye-fotograf-tabulari.html",
+              "img": "../img/27.webp",
+              "summary": "Ülkemizde fotoğraf sanatı üzerine yapılan tartışmalarda sıkça rastladığım, beni derinden düşündüren bir durum ..."
+            }
+          ],
+          "books": [
+            {
+              "title": "Camera Lucida: Fotoğraf Üzerine Düşünceler",
+              "authors": "Roland Barthes",
+              "thumbnail": "https://m.media-amazon.com/images/I/61C2FfSXqnL._SY385_.jpg",
+              "link": "https://www.amazon.com.tr/Camera-Lucida-Foto%C4%9Fraf-%C3%9Czerine-D%C3%BC%C5%9F%C3%BCnceler/dp/6055532603/ref=sr_1_1?dib=eyJ2IjoiMSJ9.tkXCDxHmKPLvaOhRKwgNPtbOkzrOnS4cOPXb_wIC7DtxsTHzKnhWVHe8Esea0u17LX8ttgZGaV5pTP0pfT2KCJiVn6s0R0tHP5klRWKVt7c.l5m1JGaThB6flRs8yOjRuGx7ZVpNmd3xNpXQ2BYwSbM&dib_tag=se&keywords=camera+lucida+roland+barthes&qid=1773079855&sr=8-1"
+            },
+            {
+              "title": "Fotoğraf Üzerine",
+              "authors": "Susan Sontag",
+              "thumbnail": "https://m.media-amazon.com/images/I/41PQVooT2ZL._SY445_SX342_ML2_.jpg",
+              "link": "https://www.amazon.com.tr/Foto%C4%9Fraf-%C3%9Czerine-Susan-Sontag/dp/9750757467/ref=sr_1_1?adgrpid=123628051401&dib=eyJ2IjoiMSJ9.g0AIRWZo3jQSSwPiaRZqZDdvSVqsYDD8f4gYVcQM8BFzfF-8VYCVTt2okOpexa5APILJmnlX1dLnsRcDICOjdU8BByZ62ey3lxQFv8b2bKj7CqjuNakD6i7_FVJ8MDAOztuzOl9Y_UKJO9MVJ-MONUx8n9qUJy3VlW57leuWmLoh8I_DesDFgMlistGBpGkci8-abKVgUlOuu80prS2HWMWqq-RoHSa2nESytbXORsmbo5klexebyTnODKFAMUSTDPLinrvc7ydHiY47WqqbR75PuL-DQ69qKJM1U_Zsmk4.vuH1x5ojpOzR0pB3uuiLIsg0nbolWHlsw7Q-LtcY5Y8&dib_tag=se&hvadid=599795445562&hvdev=c&hvlocphy=9212693&hvnetw=g&hvqmt=e&hvrand=7167583796492493957&hvtargid=kwd-346717959794&hydadcr=20771_2231341&keywords=foto%C4%9Fraf+%C3%BCzerine&mcid=01961d9d136f39e2afdb13240509caed&qid=1773079927&sr=8-1"
+            }
+          ]
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
@@ -528,6 +522,31 @@
                 html += `</div></div>`;
             }
 
+            // TAVSİYE KİTAPLAR BÖLÜMÜ (UI GÖSTERİMİ)
+            if (articleConfig.books && articleConfig.books.length > 0) {
+                html += `
+                <div class="reveal active mt-16">
+                    <div class="related-section-header">
+                        <h3>Tavsiye Kitaplar</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">`;
+                articleConfig.books.forEach(book => {
+                    html += `
+                        <a href="${book.link}" target="_blank" class="related-card group flex flex-row p-0 h-24 overflow-hidden items-center border-brand-orange/20 hover:border-brand-orange/50 transition-colors">
+                            <div class="w-16 h-full flex-shrink-0 bg-brand-dark border-r border-white/5 relative">
+                                <img src="${book.thumbnail}" alt="${book.title}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div class="p-4 flex-1 flex flex-col justify-center">
+                                <span class="related-tag mb-1">Kitap</span>
+                                <h4 class="text-[0.75rem] font-medium text-white mb-1 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">${book.title}</h4>
+                                <p class="text-[10px] text-gray-500 font-light line-clamp-1">${book.authors}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+                html += `</div></div>`;
+            }
+
             html += `
                 <div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active">
                     <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Yazıyı Paylaş</p>
@@ -595,6 +614,114 @@
             showMsg("Makale Eklendi");
         }
 
+        // TAVSİYE KİTAP GOOGLE BOOKS ARAMA MANTIĞI
+        async function searchBooks() {
+            const query = document.getElementById('book-search-input').value;
+            if(!query) { showMsg("Lütfen arama kelimesi girin"); return; }
+            
+            const resultsContainer = document.getElementById('book-search-results');
+            resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Aranıyor...</div>';
+            
+            try {
+                const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=4`);
+                const data = await res.json();
+                
+                // YENİ EKLENEN HATA KONTROLÜ
+                if (!res.ok) {
+                    resultsContainer.innerHTML = `<div class="text-[10px] text-[#ff5555] leading-tight"><strong>Arama limiti aşıldı.</strong><br><br><span style="opacity:0.7">Şu an otomatik arama yapılamıyor. Lütfen aşağıdaki <strong>MANUEL KİTAP EKLE</strong> butonunu kullanarak kitabınızı ekleyin.</span></div>`;
+                    return;
+                }
+                
+                if(!data.items || data.items.length === 0) {
+                    resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Sonuç bulunamadı.</div>';
+                    return;
+                }
+                
+                let html = '';
+                data.items.forEach(item => {
+                    const vol = item.volumeInfo;
+                    const title = vol.title || 'Başlıksız';
+                    const authors = vol.authors ? vol.authors.join(', ') : 'Yazar bilinmiyor';
+                    // thumbnail kontrolü ve https'ye çevirme
+                    let thumbnail = vol.imageLinks ? vol.imageLinks.smallThumbnail : 'https://via.placeholder.com/50x70?text=Kapak';
+                    thumbnail = thumbnail.replace(/^http:\/\//i, 'https://');
+                    const link = vol.infoLink || '#';
+                    
+                    const safeTitle = title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    const safeAuthors = authors.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    
+                    html += `
+                    <div class="scraped-item border-brand-orange/30 border !mt-0 mb-1">
+                        <img src="${thumbnail}" class="w-8 h-12 object-cover rounded-sm" alt="kapak">
+                        <div class="overflow-hidden flex-1">
+                            <strong class="truncate block text-white text-[11px]">${safeTitle}</strong>
+                            <span class="opacity-50 text-[9px] truncate block text-gray-300 mt-1">${safeAuthors}</span>
+                        </div>
+                        <button onclick="addBook('${safeTitle}', '${safeAuthors}', '${thumbnail}', '${link}')" class="bg-brand-orange text-black px-3 py-1.5 rounded text-[9px] font-bold hover:bg-white transition-colors ml-auto flex-shrink-0">EKLE</button>
+                    </div>
+                    `;
+                });
+                resultsContainer.innerHTML = html;
+            } catch(err) {
+                resultsContainer.innerHTML = '<div class="text-[10px] text-[#ff5555]">Bağlantı hatası oluştu.</div>';
+            }
+        }
+
+        function addBook(title, authors, thumbnail, link) {
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title, authors, thumbnail, link });
+            renderBooksAdmin();
+            renderArticle();
+            document.getElementById('book-search-results').innerHTML = '';
+            document.getElementById('book-search-input').value = '';
+            showMsg("Kitap Eklendi");
+        }
+
+        // YENİ: MANUEL KİTAP EKLEME FONKSİYONU
+        function addManualBook() {
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title: '', authors: '', thumbnail: '', link: '#' });
+            renderBooksAdmin();
+            renderArticle();
+            showMsg("Manuel Kitap Alanı Eklendi");
+        }
+
+        function removeBook(index) {
+            if(!articleConfig.books) return;
+            articleConfig.books.splice(index, 1);
+            renderBooksAdmin();
+            renderArticle();
+        }
+
+        // KİTAP ALANINI EDİTLEME
+        function editBook(index, key, value) {
+            if(!articleConfig.books) return;
+            articleConfig.books[index][key] = value;
+            renderArticle();
+        }
+
+        // SEÇİLİ KİTAPLARIN İNPUT OLARAK LİSTELENMESİ
+        function renderBooksAdmin() {
+            const container = document.getElementById('selected-books-list');
+            if(!container) return;
+            container.innerHTML = '';
+            if(!articleConfig.books || articleConfig.books.length === 0) {
+                return;
+            }
+            
+            articleConfig.books.forEach((book, i) => {
+                container.innerHTML += `
+                <div class="item-card !p-3 !mb-2">
+                    <span class="delete-btn" onclick="removeBook(${i})">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-2" value="${book.title || ''}" oninput="editBook(${i}, 'title', this.value)">
+                    <input type="text" placeholder="Yazar Adı" class="admin-input !mb-2" value="${book.authors || ''}" oninput="editBook(${i}, 'authors', this.value)">
+                    <input type="text" placeholder="Görsel URL" class="admin-input !mb-2" value="${book.thumbnail || ''}" oninput="editBook(${i}, 'thumbnail', this.value)">
+                    <input type="text" placeholder="Link URL" class="admin-input !mb-0" value="${book.link || ''}" oninput="editBook(${i}, 'link', this.value)">
+                </div>
+                `;
+            });
+        }
+
         // UI Handlers
         function toggleAdmin() { 
             const panel = document.getElementById('admin-panel');
@@ -645,6 +772,7 @@
             });
 
             renderRelatedListAdmin();
+            renderBooksAdmin(); // YENİ EKLENEN KİTAPLARI LİSTELEME ÇAĞRISI
         }
 
         // PANELDE İLGİLİ YAZILARI GÖSTERME/SİLME FONKSİYONU
@@ -747,7 +875,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
