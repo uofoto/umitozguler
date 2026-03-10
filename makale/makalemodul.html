@@ -18,14 +18,14 @@
             theme: {
                 extend: {
                     colors: { 
-                        'brand-black': '#121212', 
-                        'brand-dark': '#1a1a1a', 
-                        'brand-gold': '#c5a059', 
-                        'brand-orange': '#ff8c00' 
-                    },
+                         'brand-black': '#121212', 
+                         'brand-dark': '#1a1a1a', 
+                         'brand-gold': '#c5a059', 
+                         'brand-orange': '#ff8c00' 
+                     },
                     fontFamily: { 
-                        sans: ['"Montserrat"', 'sans-serif'] 
-                    }
+                         sans: ['"Montserrat"', 'sans-serif'] 
+                     }
                 }
             }
         }
@@ -91,27 +91,6 @@
         .nav-link-custom:hover { color: #ff8c00; }
 
         .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; border-radius: 2px; }
-        .video-container { border-radius: 2px; overflow: hidden; position: relative; }
-        
-        /* ÇİZGİ GÖRSEL İÇİNDEN ÇIKARTILIP, EXİF/AÇIKLAMA ALTINA (TÜM BLOĞUN ALTINA) TAŞINDI */
-        figure.my-16, div.grid.my-16 {
-            position: relative;
-            padding-bottom: 3.5rem; /* Exif ile çizgi arasına estetik bir boşluk bırakır */
-        }
-        
-        figure.my-16::after, div.grid.my-16::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            /* Gönderdiğiniz tasarımdaki "via-brand-orange/60" ayarının birebir aynısı eklendi (ışıma kaldırıldı) */
-            background: linear-gradient(to right, transparent, rgba(255, 140, 0, 0.6), transparent);
-            pointer-events: none;
-        }
-
-        /* CSS HATASI DÜZELTİLDİ: filter eklendi */
         .img-container img { transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.5s; width: 100%; height: auto; display: block; filter: grayscale(20%); }
         .img-container:hover img { transform: scale(1.02); filter: grayscale(0%); }
         
@@ -142,51 +121,49 @@
 
         #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff8c00; color: white; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* MOBİL MENÜ VE TURUNCU ÇİZGİ ANİMASYONU */
         #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         #mobile-menu.active { transform: translateX(0); }
         
         #menu-line { 
-            height: 0; 
-            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s; 
-        }
+             height: 0; 
+             transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s; 
+         }
         #mobile-menu.active #menu-line { 
-            height: 100%; 
-        }
+             height: 100%; 
+         }
 
-        /* İLGİLİ YAZILAR STİLLERİ - TURUNCU ÇİZGİ VE KÜÇÜK KARTLAR */
         .related-section-header { position: relative; display: flex; align-items: center; justify-content: center; margin: 8rem 0 3rem 0; }
         .related-section-header::before, .related-section-header::after { 
-            content: ''; 
-            flex: 1; 
-            height: 1px; 
-            background: #ff8c00; 
-            opacity: 0.5; 
-        }
+             content: ''; 
+             flex: 1; 
+             height: 1px; 
+             background: #ff8c00; 
+             opacity: 0.5; 
+         }
         .related-section-header h3 { 
-            padding: 0 1.5rem; 
-            margin: 0 !important; 
-            color: #fff; 
-            font-size: 0.6rem !important; 
-            letter-spacing: 0.5em !important; 
-            text-transform: uppercase; 
-            font-weight: 500; 
-            opacity: 0.9;
+             padding: 0 1.5rem; 
+             margin: 0 !important; 
+             color: #fff; 
+             font-size: 0.6rem !important; 
+             letter-spacing: 0.5em !important; 
+             text-transform: uppercase; 
+             font-weight: 500; 
+             opacity: 0.9;
         }
         
         .related-card { 
-            background: #161616; 
-            border: 1px solid rgba(255,255,255,0.02); 
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
-            border-radius: 2px;
+             background: #161616; 
+             border: 1px solid rgba(255,255,255,0.02); 
+             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+             border-radius: 2px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
         .related-card:hover { 
-            border-color: rgba(255,140,0,0.3); 
-            transform: translateY(-4px); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+             border-color: rgba(255,140,0,0.3); 
+             transform: translateY(-4px); 
+             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
         .related-img-box { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0a0a0a; }
         .related-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease, filter 1.2s ease; filter: grayscale(1) brightness(0.6); }
@@ -194,17 +171,14 @@
         
         .related-tag { font-size: 6px; letter-spacing: 2px; color: #ff8c00; font-weight: 700; text-transform: uppercase; margin-bottom: 0.4rem; display: block; opacity: 0.7; }
         
-        /* SEARCHBOX STİL */
         .scraped-item { background: #0a0a0a; border: 1px solid #333; padding: 10px; border-radius: 6px; margin-top: 10px; display: flex; align-items: center; gap: 10px; }
         .scraped-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
         .scraped-item div { font-size: 10px; color: #fff; flex: 1; }
 
-        /* LIGHTBOX ARKA PLAN KAYMASINI ENGELLEME EKLENDİ */
         .no-scroll { overflow: hidden; }
     </style>
 </head>
 <body class="bg-brand-black text-gray-300 antialiased flex flex-col min-h-screen page-animate">
-
     <div id="progress-bar"></div>
     <div id="custom-alert">İşlem Başarılı</div>
 
@@ -251,8 +225,7 @@
     </nav>
 
     <article class="pt-48 pb-20 px-6 flex-grow">
-        <div class="max-w-3xl mx-auto" id="article-container">
-            </div>
+        <div class="max-w-3xl mx-auto" id="article-container"></div>
     </article>
 
     <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
@@ -284,7 +257,6 @@
                 <div id="related-list-admin" class="mt-4"></div>
             </div>
 
-            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BAŞLANGIÇ -->
             <div class="mb-8 pb-8 border-b border-white/5">
                 <label class="admin-label">TAVSİYE KİTAPLAR (GOOGLE BOOKS ARAMA)</label>
                 <div class="flex gap-2 mb-3">
@@ -296,11 +268,8 @@
                 <label class="admin-label mt-6">SEÇİLİ TAVSİYELER</label>
                 <div id="selected-books-list" class="mt-2 flex flex-col gap-2"></div>
                 
-                <!-- MANUEL KİTAP EKLE BUTONU -->
                 <button onclick="addManualBook()" class="admin-btn w-full mt-2 !bg-[#111111] !text-[#c5a059] border !border-[#2a2a2a] hover:!bg-[#1a1a1a]">MANUEL KİTAP EKLE</button>
             </div>
-            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BİTİŞ -->
-
             <div id="item-list"></div>
             <div class="grid grid-cols-2 gap-3 mt-4">
                 <button onclick="addItem('text')" class="admin-btn">Metin Ekle</button>
@@ -323,6 +292,7 @@
     </button>
 
     <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" alt=""></div>
+
     <script>
         let articleConfig = {
           "meta": {
@@ -333,106 +303,11 @@
           "content": [
             {
               "type": "text",
-              "value": "Bir fotoğrafa bakmak, aslında artık var olmayan bir ana misafir olmak gibidir. Deklanşöre basıldığı o salise, zamanın akışından koparılmış ve bir çerçeveye hapsedilmiş bir \"hayalet\" yaratır. Kamera o an sadece ışığı değil, bir insanın bakış açısını da kaydeder: Neyi önemli bulduğunu, neyi hatırlamak veya neyi unutturmak istediğini.\n\nPeki, bir fotoğraf sadece gördüğümüzün bir kopyası mıdır, yoksa başlı başına yeni gerçeklik mi yaratır? Sosyoloji bize fotoğrafın toplumdaki gücünü, psikoloji hafızamızdaki oyunlarını, felsefe ise varlık sancılarını anlatır. Ama asıl soru şudur: Fotoğraf mı bize bir şey anlatır, yoksa biz mi ona bir anlam yükleriz?"
-            },
-            {
-              "type": "image",
-              "src": "../img/7.webp",
-              "mobile": "../imgmobil/7.webp",
-              "exif": "Bursa | 2023 | Siyah Beyaz",
-              "caption": "ışık varsa fotoğraf vardır"
-            },
-            {
-              "type": "heading",
-              "value": "Fotoğrafın Kendi Dili"
-            },
-            {
-              "type": "text",
-              "value": "Tıpkı kelimeleri yan yana getirip cümle kurduğumuz gibi, fotoğraf da ışık, gölge ve bakış açısını kullanarak kendi dilini oluşturur. Ancak bu dil biraz \"oynak\"tır. Bir kelimenin sözlük anlamı bellidir ama bir fotoğrafın ne hissettireceği, ona bakan kişinin kültürüne ve o anki moraline göre değişir."
-            },
-            {
-              "type": "tip",
-              "value": "Düşünür Roland Barthes bunu iki kavramla açıklar:\n\nGenel Bakış (Studium): Fotoğraftaki herkesin ilk bakışta gördüğü ortak bilgi; savaş, mutluluk ya da bir manzara gibi.\n\nSarsıcı Detay (Punctum): Sizi aniden kalbinizden vuran o küçük ayrıntı; birinin el duruşu, eski bir ayakkabı ya da tanıdık bir bakış. Biri toplumsal bir bilgidir, diğeri ise tamamen size özel bir yaradır."
-            },
-            {
-              "type": "heading",
-              "value": "Toplumun ve Gücün Aynası"
-            },
-            {
-              "type": "text",
-              "value": "Fotoğrafın tarihi, aslında biraz da gücü elinde tutanların tarihidir. Eskiden fotoğraf makinesi, sömürgeci devletlerin \"yabancı\" halkları sınıflandırmak ve kontrol etmek için kullandığı bir araçtı. Yani makine hiçbir zaman tamamen tarafsız olmadı; hep bir \"bakış açısını\" temsil etti.\n\nBugün ise durum daha farklı. Sosyal medya ile hepimiz hem model hem de fotoğrafçı olduk. Ancak \"beğeni\" algoritmaları yüzünden aslında yeni bir baskı altındayız. Artık anılarımızı değil, sergilemek istediğimiz \"performansları\" fotoğraflıyoruz. Aile albümlerimiz bile gerçek hayatımızı değil, \"mutlu görünme\" çabamızı kanıtlayan birer arşiv gibi. Acıyı ve sıradanlığı genelde kadrajın dışında bırakıyoruz."
-            },
-            {
-              "type": "heading",
-              "value": "Fotoğraf Hafızamızı mı Çalıyor?"
-            },
-            {
-              "type": "text",
-              "value": "Psikolojik araştırmalar ilginç bir gerçeği fısıldıyor: Bir olayın fotoğrafını ne kadar çok çekersek, o anı o kadar az hatırlıyoruz. Sanki beyin, \"Nasılsa makine kaydetti, benim hatırlamama gerek yok\" diyerek yükü üzerinden atıyor.\n\nÖte yandan, fotoğraflar bazen tarihin akışını değiştiren birer kanıta dönüşür. Travmatik bir olayı belgeleyen tek bir kare, kitleleri harekete geçirebilir. Ayrıca çocukluk fotoğraflarımız, aslında hatırlamadığımız anları bize \"gerçek anılarımızmış gibi\" kabul ettirir. Kim olduğumuza dair hikâyemizi, bizi çeken kişilerin seçimleri üzerinden kurarız."
-            },
-            {
-              "type": "heading",
-              "value": "Felsefi Bir Bakış: Ölüm ve Yaşam"
-            },
-            {
-              "type": "text",
-              "value": "Her fotoğraf aslında bir kayıp ilanıdır. Fotoğraftaki kişi o an yaşıyordur ama o \"an\" çoktan ölmüştür. Bir tablonun önünde durduğunuzda onun tek ve eşsiz olduğunu bilirsiniz; ancak bir fotoğraf sonsuza kadar çoğaltılabilir. Bu onu demokratikleştirir ama o \"tek olma\" büyüsünü de biraz bozar.\n\nNesnel (objektif) görünen her kare, aslında öznel bir kararın sonucudur. Hangi ışıkta, hangi açıyla ve ne zaman çekileceğine bir insan karar verir. Bu yüzden fotoğraf gerçekliğin kendisi değil, gerçeğin \"birinin gözünden\" nasıl göründüğünün kanıtıdır."
-            },
-            {
-              "type": "heading",
-              "value": "Acının Estetiği ve Etik"
-            },
-            {
-              "type": "text",
-              "value": "Fotoğrafın en tartışmalı tarafı ise etik kısmıdır. Bir trajediyi fotoğraflamak mı daha önemlidir, yoksa kamerayı bırakıp yardıma koşmak mı? "
-            },
-            {
-              "type": "quote",
-              "value": "Susan Sontag’ın dediği gibi; sürekli acı ve savaş fotoğrafları görmek bizi daha duyarlı yapmaz, aksine bir süre sonra bizi uyuşturup tepkisizleştirebilir. Görmek, bazen bir şey yapmamanın bahanesi haline gelir."
-            },
-            {
-              "type": "heading",
-              "value": "Sonuç Olarak;"
-            },
-            {
-              "type": "text",
-              "value": "Bir fotoğraf tek başına hiçbir şey anlatmaz. Anlam, sizin o fotoğrafla kurduğunuz bağda gizlidir. O, dünyanın bize söylemediği şeyleri sormak için tuttuğumuz bir aynadır. Cevap vermez, sadece soru sorar. Ve o sorular, tıpkı filmin banyo edilmesi gibi, içimizde bir yerlerde yeni düşünceler uyandırır."
+              "value": "Bir fotoğrafa bakmak, aslında artık var olmayan bir ana misafir olmak gibidir..."
             }
           ],
-          "related": [
-            {
-              "title": "Gözün Ardındaki Zihin: Bir Fotoğraf Yolculuğu",
-              "link": "https://www.umitozguler.com.tr/makale/gozun-ardindaki-zihin.html",
-              "img": "../img/kitaplar.webp",
-              "summary": "Fotoğrafla olan ünsiyetimiz, çoğunlukla bir makineyi dizginleme arzusuyla, ışığın ve gölgenin o teknik alfabes..."
-            },
-            {
-              "title": "Fotoğraf Neyi Anlatmalı?  Anın Gücü ve Doğallık",
-              "link": "https://www.umitozguler.com.tr/makale/fotograf-neyi-anlatmali.html",
-              "img": "../img/46.webp",
-              "summary": "Fotoğraf, sadece bir görüntüyü kaydetmekten çok daha fazlasıdır; o, anın ruhunu yakalayan, zamanı donduran ve ..."
-            },
-            {
-              "title": "Türkiye'de Fotoğrafın Çıkmazı: Biçim mi, Ruh mu?",
-              "link": "https://www.umitozguler.com.tr/makale/turkiye-fotograf-tabulari.html",
-              "img": "../img/27.webp",
-              "summary": "Ülkemizde fotoğraf sanatı üzerine yapılan tartışmalarda sıkça rastladığım, beni derinden düşündüren bir durum ..."
-            }
-          ],
-          "books": [
-            {
-              "title": "Camera Lucida: Fotoğraf Üzerine Düşünceler",
-              "authors": "Roland Barthes",
-              "thumbnail": "https://m.media-amazon.com/images/I/61C2FfSXqnL._SY385_.jpg",
-              "link": "https://www.amazon.com.tr/Camera-Lucida-Foto%C4%9Fraf-%C3%9Czerine-D%C3%BC%C5%9F%C3%BCnceler/dp/6055532603/ref=sr_1_1?dib=eyJ2IjoiMSJ9.tkXCDxHmKPLvaOhRKwgNPtbOkzrOnS4cOPXb_wIC7DtxsTHzKnhWVHe8Esea0u17LX8ttgZGaV5pTP0pfT2KCJiVn6s0R0tHP5klRWKVt7c.l5m1JGaThB6flRs8yOjRuGx7ZVpNmd3xNpXQ2BYwSbM&dib_tag=se&keywords=camera+lucida+roland+barthes&qid=1773079855&sr=8-1"
-            },
-            {
-              "title": "Fotoğraf Üzerine",
-              "authors": "Susan Sontag",
-              "thumbnail": "https://m.media-amazon.com/images/I/41PQVooT2ZL._SY445_SX342_ML2_.jpg",
-              "link": "https://www.amazon.com.tr/Foto%C4%9Fraf-%C3%9Czerine-Susan-Sontag/dp/9750757467/ref=sr_1_1?adgrpid=123628051401&dib=eyJ2IjoiMSJ9.g0AIRWZo3jQSSwPiaRZqZDdvSVqsYDD8f4gYVcQM8BFzfF-8VYCVTt2okOpexa5APILJmnlX1dLnsRcDICOjdU8BByZ62ey3lxQFv8b2bKj7CqjuNakD6i7_FVJ8MDAOztuzOl9Y_UKJO9MVJ-MONUx8n9qUJy3VlW57leuWmLoh8I_DesDFgMlistGBpGkci8-abKVgUlOuu80prS2HWMWqq-RoHSa2nESytbXORsmbo5klexebyTnODKFAMUSTDPLinrvc7ydHiY47WqqbR75PuL-DQ69qKJM1U_Zsmk4.vuH1x5ojpOzR0pB3uuiLIsg0nbolWHlsw7Q-LtcY5Y8&dib_tag=se&hvadid=599795445562&hvdev=c&hvlocphy=9212693&hvnetw=g&hvqmt=e&hvrand=7167583796492493957&hvtargid=kwd-346717959794&hydadcr=20771_2231341&keywords=foto%C4%9Fraf+%C3%BCzerine&mcid=01961d9d136f39e2afdb13240509caed&qid=1773079927&sr=8-1"
-            }
-          ]
+          "related": [],
+          "books": []
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -463,6 +338,7 @@
                         <span>${articleConfig.meta.location}</span>
                     </div>
                 </div>
+                <div class="article-content">
             `;
 
             let textItemFound = false;
@@ -513,8 +389,9 @@
                     html += `<figure class="my-16 reveal active text-center"><div class="video-container shadow-2xl"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div><figcaption class="image-caption mt-6 opacity-50 italic">${item.caption || 'Video'}</figcaption></figure>`;
                 }
             });
+            
+            html += `</div>`; // article-content end
 
-            // İLGİLİ YAZILAR BÖLÜMÜ - KOMPAKT TASARIM
             if (articleConfig.related && articleConfig.related.length > 0) {
                 html += `
                 <div class="reveal active">
@@ -542,7 +419,6 @@
                 html += `</div></div>`;
             }
 
-            // TAVSİYE KİTAPLAR BÖLÜMÜ (UI GÖSTERİMİ)
             if (articleConfig.books && articleConfig.books.length > 0) {
                 html += `
                 <div class="reveal active mt-16">
@@ -582,14 +458,13 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // OTOMATİK VERİ ÇEKME VE EKLEME MANTIĞI
-        let lastScrapedArticle = null;
+        // --- ADMIN / SCRAPE FUNCTIONS ---
 
+        let lastScrapedArticle = null;
         async function autoScrapeArticle() {
             const urlInput = document.getElementById('auto-link-input');
             const url = urlInput.value;
             if (!url) { showMsg("Lütfen link girin"); return; }
-            
             showMsg("Veri taranıyor...");
             try {
                 const response = await fetch(url);
@@ -597,157 +472,106 @@
                 const htmlText = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
-                
                 const title = doc.querySelector('h1')?.innerText || doc.title || "Başlıksız Yazı";
                 const img = doc.querySelector('article img')?.src || doc.querySelector('img')?.src || "../img/placeholder.webp";
-                const paragraphs = Array.from(doc.querySelectorAll('p'));
-                const firstP = paragraphs.find(p => p.innerText.trim().length > 40);
+                const firstP = Array.from(doc.querySelectorAll('p')).find(p => p.innerText.trim().length > 40);
                 const summary = firstP ? firstP.innerText.trim().substring(0, 110) + "..." : "";
-
                 lastScrapedArticle = { title, link: url, img, summary };
-                
                 document.getElementById('scrape-preview').innerHTML = `
                     <div class="scraped-item border-brand-orange border">
                         <img src="${img}">
-                        <div>
-                            <strong>${title}</strong><br>
-                            <span class="opacity-50">${summary}</span>
-                        </div>
-                        <button onclick="confirmAutoAdd()" class="bg-brand-orange text-black px-3 py-1 rounded text-[9px] font-bold hover:bg-white transition-colors">EKLE</button>
-                    </div>
-                `;
+                        <div><strong>${title}</strong><br><span class="opacity-50">${summary}</span></div>
+                        <button onclick="confirmAutoAdd()" class="bg-brand-orange text-black px-3 py-1 rounded text-[9px] font-bold">EKLE</button>
+                    </div>`;
                 showMsg("Veri Hazır");
-            } catch (err) {
-                showMsg("Hata: " + err.message);
-                console.error(err);
-            }
+            } catch (err) { showMsg("Hata: " + err.message); }
         }
 
         function confirmAutoAdd() {
-            if (!lastScrapedArticle) { showMsg("Eklemek için önce veri çekmelisiniz"); return; }
+            if (!lastScrapedArticle) return;
             articleConfig.related.push({...lastScrapedArticle});
-            renderArticle();
-            renderAdminPanel();
+            renderArticle(); renderAdminPanel();
             document.getElementById('scrape-preview').innerHTML = '';
             document.getElementById('auto-link-input').value = '';
-            lastScrapedArticle = null;
-            showMsg("Makale Eklendi");
+            lastScrapedArticle = null; showMsg("Makale Eklendi");
         }
 
-        // TAVSİYE KİTAP GOOGLE BOOKS ARAMA MANTIĞI
+        // --- GOOGLE BOOKS FUNCTIONS ---
+
         async function searchBooks() {
             const query = document.getElementById('book-search-input').value;
             if(!query) { showMsg("Lütfen arama kelimesi girin"); return; }
-            
             const resultsContainer = document.getElementById('book-search-results');
             resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Aranıyor...</div>';
-            
             try {
                 const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=4`);
                 const data = await res.json();
-                
-                // YENİ EKLENEN HATA KONTROLÜ
                 if (!res.ok) {
-                    resultsContainer.innerHTML = `<div class="text-[10px] text-[#ff5555] leading-tight"><strong>Arama limiti aşıldı.</strong><br><br><span style="opacity:0.7">Şu an otomatik arama yapılamıyor. Lütfen aşağıdaki <strong>MANUEL KİTAP EKLE</strong> butonunu kullanarak kitabınızı ekleyin.</span></div>`;
+                    resultsContainer.innerHTML = `<div class="text-[10px] text-[#ff5555]">Arama limiti aşıldı. Lütfen MANUEL EKLE kullanın.</div>`;
                     return;
                 }
-                
                 if(!data.items || data.items.length === 0) {
                     resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Sonuç bulunamadı.</div>';
                     return;
                 }
-                
                 let html = '';
                 data.items.forEach(item => {
                     const vol = item.volumeInfo;
                     const title = vol.title || 'Başlıksız';
                     const authors = vol.authors ? vol.authors.join(', ') : 'Yazar bilinmiyor';
-                    // thumbnail kontrolü ve https'ye çevirme
-                    let thumbnail = vol.imageLinks ? vol.imageLinks.smallThumbnail : 'https://via.placeholder.com/50x70?text=Kapak';
-                    thumbnail = thumbnail.replace(/^http:\/\//i, 'https://');
+                    let thumb = vol.imageLinks ? vol.imageLinks.smallThumbnail : 'https://via.placeholder.com/50x70?text=Kapak';
+                    thumb = thumb.replace(/^http:\/\//i, 'https://');
                     const link = vol.infoLink || '#';
-                    
-                    const safeTitle = title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-                    const safeAuthors = authors.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-                    
+                    const sT = title.replace(/"/g, '&quot;');
+                    const sA = authors.replace(/"/g, '&quot;');
                     html += `
-                    <div class="scraped-item border-brand-orange/30 border !mt-0 mb-1">
-                        <img src="${thumbnail}" class="w-8 h-12 object-cover rounded-sm" alt="kapak">
-                        <div class="overflow-hidden flex-1">
-                            <strong class="truncate block text-white text-[11px]">${safeTitle}</strong>
-                            <span class="opacity-50 text-[9px] truncate block text-gray-300 mt-1">${safeAuthors}</span>
-                        </div>
-                        <button onclick="addBook('${safeTitle}', '${safeAuthors}', '${thumbnail}', '${link}')" class="bg-brand-orange text-black px-3 py-1.5 rounded text-[9px] font-bold hover:bg-white transition-colors ml-auto flex-shrink-0">EKLE</button>
-                    </div>
-                    `;
+                    <div class="scraped-item border-brand-orange/30 border">
+                        <img src="${thumb}" class="w-8 h-12 object-cover rounded-sm">
+                        <div class="overflow-hidden flex-1"><strong class="truncate block text-white text-[11px]">${sT}</strong><span class="opacity-50 text-[9px] truncate block mt-1">${sA}</span></div>
+                        <button onclick="addBook('${sT}', '${sA}', '${thumb}', '${link}')" class="bg-brand-orange text-black px-3 py-1.5 rounded text-[9px] font-bold ml-auto">EKLE</button>
+                    </div>`;
                 });
                 resultsContainer.innerHTML = html;
-            } catch(err) {
-                resultsContainer.innerHTML = '<div class="text-[10px] text-[#ff5555]">Bağlantı hatası oluştu.</div>';
-            }
+            } catch(err) { resultsContainer.innerHTML = '<div class="text-[10px] text-[#ff5555]">Hata oluştu.</div>'; }
         }
 
         function addBook(title, authors, thumbnail, link) {
             if(!articleConfig.books) articleConfig.books = [];
             articleConfig.books.push({ title, authors, thumbnail, link });
-            renderBooksAdmin();
-            renderArticle();
+            renderBooksAdmin(); renderArticle();
             document.getElementById('book-search-results').innerHTML = '';
             document.getElementById('book-search-input').value = '';
             showMsg("Kitap Eklendi");
         }
 
-        // YENİ: MANUEL KİTAP EKLEME FONKSİYONU
         function addManualBook() {
             if(!articleConfig.books) articleConfig.books = [];
             articleConfig.books.push({ title: '', authors: '', thumbnail: '', link: '#' });
-            renderBooksAdmin();
-            renderArticle();
-            showMsg("Manuel Kitap Alanı Eklendi");
+            renderBooksAdmin(); renderArticle();
         }
 
-        function removeBook(index) {
-            if(!articleConfig.books) return;
-            articleConfig.books.splice(index, 1);
-            renderBooksAdmin();
-            renderArticle();
-        }
+        function removeBook(i) { articleConfig.books.splice(i, 1); renderBooksAdmin(); renderArticle(); }
+        function editBook(i, k, v) { articleConfig.books[i][k] = v; renderArticle(); }
 
-        // KİTAP ALANINI EDİTLEME
-        function editBook(index, key, value) {
-            if(!articleConfig.books) return;
-            articleConfig.books[index][key] = value;
-            renderArticle();
-        }
-
-        // SEÇİLİ KİTAPLARIN İNPUT OLARAK LİSTELENMESİ
         function renderBooksAdmin() {
             const container = document.getElementById('selected-books-list');
-            if(!container) return;
-            container.innerHTML = '';
-            if(!articleConfig.books || articleConfig.books.length === 0) {
-                return;
-            }
-            
+            if(!container) return; container.innerHTML = '';
+            if(!articleConfig.books) return;
             articleConfig.books.forEach((book, i) => {
                 container.innerHTML += `
                 <div class="item-card !p-3 !mb-2">
                     <span class="delete-btn" onclick="removeBook(${i})">SİL</span>
-                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-2" value="${book.title || ''}" oninput="editBook(${i}, 'title', this.value)">
-                    <input type="text" placeholder="Yazar Adı" class="admin-input !mb-2" value="${book.authors || ''}" oninput="editBook(${i}, 'authors', this.value)">
-                    <input type="text" placeholder="Görsel URL" class="admin-input !mb-2" value="${book.thumbnail || ''}" oninput="editBook(${i}, 'thumbnail', this.value)">
-                    <input type="text" placeholder="Link URL" class="admin-input !mb-0" value="${book.link || ''}" oninput="editBook(${i}, 'link', this.value)">
-                </div>
-                `;
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-2" value="${book.title}" oninput="editBook(${i}, 'title', this.value)">
+                    <input type="text" placeholder="Yazar" class="admin-input !mb-2" value="${book.authors}" oninput="editBook(${i}, 'authors', this.value)">
+                    <input type="text" placeholder="Görsel URL" class="admin-input !mb-2" value="${book.thumbnail}" oninput="editBook(${i}, 'thumbnail', this.value)">
+                    <input type="text" placeholder="Link" class="admin-input !mb-0" value="${book.link}" oninput="editBook(${i}, 'link', this.value)">
+                </div>`;
             });
         }
 
-        // UI Handlers
-        function toggleAdmin() { 
-            const panel = document.getElementById('admin-panel');
-            panel.classList.toggle('active'); 
-            if (panel.classList.contains('active')) renderAdminPanel(); 
-        }
+        // --- GENERAL ADMIN HANDLERS ---
+
+        function toggleAdmin() { const p = document.getElementById('admin-panel'); p.classList.toggle('active'); if (p.classList.contains('active')) renderAdminPanel(); }
         function openLightbox(img) { document.getElementById('lightbox-img').src = img.src; document.getElementById('lightbox').classList.add('active'); document.body.classList.add('no-scroll'); }
         function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.classList.remove('no-scroll'); }
         function showMsg(txt) { const el = document.getElementById('custom-alert'); el.innerText = txt; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 3000); }
@@ -756,144 +580,77 @@
             document.getElementById('meta-title').value = articleConfig.meta.title;
             document.getElementById('meta-location').value = articleConfig.meta.location;
             document.getElementById('meta-info').value = articleConfig.meta.info;
-            
             const list = document.getElementById('item-list');
             list.innerHTML = '';
             articleConfig.content.forEach((item, i) => {
                 let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type.toUpperCase()}</label>`;
-                
                 if (item.type === 'image') {
-                    card += `
-                        <input type="text" placeholder="Görsel Yolu (Masaüstü)" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
-                        <input type="text" placeholder="Görsel Yolu (Mobil)" class="admin-input" value="${item.mobile || ''}" oninput="editItem(${i}, 'mobile', this.value)">
-                        <input type="text" placeholder="EXIF Verisi" class="admin-input" value="${item.exif || ''}" oninput="editItem(${i}, 'exif', this.value)">
-                        <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                    card += `<input type="text" placeholder="Desktop" class="admin-input" value="${item.src||''}" oninput="editItem(${i},'src',this.value)">
+                             <input type="text" placeholder="Mobile" class="admin-input" value="${item.mobile||''}" oninput="editItem(${i},'mobile',this.value)">
+                             <input type="text" placeholder="EXIF" class="admin-input" value="${item.exif||''}" oninput="editItem(${i},'exif',this.value)">
+                             <input type="text" placeholder="Caption" class="admin-input" value="${item.caption||''}" oninput="editItem(${i},'caption',this.value)">`;
                 } else if (item.type === 'gallery') {
-                    if (item.images) {
-                        item.images.forEach((img, imgIdx) => {
-                            card += `<div class="mb-6 p-4 bg-black/40 rounded-lg border border-white/5">
-                                        <label class="text-[9px] text-brand-gold font-bold block mb-2 uppercase tracking-tighter">GÖRSEL ${imgIdx+1}</label>
-                                        <input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${img.src || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'src', this.value)">
-                                        <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${img.mobile || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'mobile', this.value)">
-                                        <input type="text" placeholder="EXIF Verisi" class="admin-input" value="${img.exif || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'exif', this.value)">
-                                        <input type="text" placeholder="Açıklama" class="admin-input !mb-0" value="${img.caption || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'caption', this.value)">
-                                     </div>`;
-                        });
-                    }
+                    item.images.forEach((img, gI) => {
+                        card += `<div class="mb-4 p-2 bg-black/20 rounded"><input type="text" placeholder="Img ${gI+1}" class="admin-input !mb-1" value="${img.src}" oninput="editGalleryItem(${i},${gI},'src',this.value)"></div>`;
+                    });
                 } else if (item.type === 'video') {
-                    // YOUTUBE AÇIKLAMA INPUT'U EKLENDİ
-                    card += `<input type="text" placeholder="YouTube Link" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
-                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
-                } else {
-                    card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value || ''}</textarea>`;
-                }
-                card += `</div>`;
-                list.innerHTML += card;
+                    card += `<input type="text" class="admin-input" value="${item.src}" oninput="editItem(${i},'src',this.value)">
+                             <input type="text" class="admin-input" value="${item.caption}" oninput="editItem(${i},'caption',this.value)">`;
+                } else { card += `<textarea class="admin-input h-24" oninput="editItem(${i},'value',this.value)">${item.value}</textarea>`; }
+                list.innerHTML += card + `</div>`;
             });
-
-            renderRelatedListAdmin();
-            renderBooksAdmin(); // YENİ EKLENEN KİTAPLARI LİSTELEME ÇAĞRISI
+            renderRelatedListAdmin(); renderBooksAdmin();
         }
 
-        // PANELDE İLGİLİ YAZILARI GÖSTERME/SİLME FONKSİYONU
         function renderRelatedListAdmin() {
             const list = document.getElementById('related-list-admin');
-            if(!list) return;
             list.innerHTML = '';
-            if(!articleConfig.related) articleConfig.related = [];
             articleConfig.related.forEach((rel, ri) => {
-                list.innerHTML += `
-                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
-                    <span class="delete-btn" onclick="deleteRelated(${ri})">SİL</span>
-                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="${rel.title}" oninput="editRelated(${ri}, 'title', this.value)">
-                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="${rel.link}" oninput="editRelated(${ri}, 'link', this.value)">
-                </div>`;
+                list.innerHTML += `<div class="item-card p-2 !mb-1"><span class="delete-btn" onclick="deleteRelated(${ri})">SİL</span><div class="text-[10px] text-white truncate">${rel.title}</div></div>`;
             });
         }
-        function editRelated(ri, k, v) { articleConfig.related[ri][k] = v; renderArticle(); }
         function deleteRelated(ri) { articleConfig.related.splice(ri, 1); renderAdminPanel(); renderArticle(); }
-
-        function editGalleryItem(itemIdx, imgIdx, key, val) { 
-            articleConfig.content[itemIdx].images[imgIdx][key] = val; 
-            renderArticle(); 
-        }
-
-        function updateMeta() { 
-            articleConfig.meta.title = document.getElementById('meta-title').value; 
-            articleConfig.meta.location = document.getElementById('meta-location').value; 
-            articleConfig.meta.info = document.getElementById('meta-info').value; 
-            renderArticle(); 
-        }
-
-        function addItem(type) {
-            if (type === 'image') {
-                articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
-            } else if (type === 'gallery') {
-                articleConfig.content.push({ 
-                    type, 
-                    images: [
-                        {src:'', mobile:'', exif:'', caption:''}, 
-                        {src:'', mobile:'', exif:'', caption:''}, 
-                        {src:'', mobile:'', exif:'', caption:''}
-                    ] 
-                });
-            } else if (type === 'video') {
-                articleConfig.content.push({ type, src: '', caption: '' });
-            } else if (type === 'heading') {
-                articleConfig.content.push({ type, value: 'Yeni Başlık' });
-            } else if (type === 'text') {
-                articleConfig.content.push({ type, value: 'Yeni İçerik...' });
-            } else if (type === 'quote') {
-                articleConfig.content.push({ type, value: 'Alıntı metni...' });
-            } else if (type === 'tip') {
-                articleConfig.content.push({ type, value: 'Bilgi notu...' });
-            }
-            
-            renderAdminPanel(); 
-            renderArticle();
-            showMsg(type.toUpperCase() + " EKLENDİ");
-        }
-
+        function editGalleryItem(i, gI, k, v) { articleConfig.content[i].images[gI][k] = v; renderArticle(); }
+        function updateMeta() { articleConfig.meta.title = document.getElementById('meta-title').value; articleConfig.meta.location = document.getElementById('meta-location').value; articleConfig.meta.info = document.getElementById('meta-info').value; renderArticle(); }
         function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
         function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
+        function addItem(type) {
+            if (type === 'image') articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
+            else if (type === 'gallery') articleConfig.content.push({ type, images: [{src:''},{src:''},{src:''}] });
+            else if (type === 'video') articleConfig.content.push({ type, src: '', caption: '' });
+            else articleConfig.content.push({ type, value: 'Yeni İçerik...' });
+            renderAdminPanel(); renderArticle();
+        }
         function copyCode() { const code = "let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";"; navigator.clipboard.writeText(code).then(() => showMsg("Yapılandırma Kopyalandı!")); }
-
         function formatYoutubeUrl(url) {
             if (!url) return '';
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            if (match && match[2].length == 11) return `https://www.youtube.com/embed/${match[2]}?rel=0&autoplay=0`;
-            return url;
+            const match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+            return (match && match[2].length == 11) ? `https://www.youtube.com/embed/${match[2]}?rel=0` : url;
         }
-
         function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`); }
         function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`); }
         function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`); }
 
         window.onload = () => {
             renderArticle();
-            const toggle = document.getElementById('menu-toggle');
-            const menu = document.getElementById('mobile-menu');
-            if (toggle && menu) {
-                toggle.onclick = () => {
-                    menu.classList.toggle('active');
-                    menu.classList.toggle('translate-x-full');
-                    document.getElementById('line1').classList.toggle('rotate-45');
-                    document.getElementById('line1').classList.toggle('translate-y-2');
-                    document.getElementById('line2').classList.toggle('opacity-0');
-                    document.getElementById('line3').classList.toggle('-rotate-45');
-                    document.getElementById('line3').classList.toggle('-translate-y-2');
-                };
-            }
+            const t = document.getElementById('menu-toggle');
+            const m = document.getElementById('mobile-menu');
+            if (t) t.onclick = () => {
+                m.classList.toggle('active'); m.classList.toggle('translate-x-full');
+                document.getElementById('line1').classList.toggle('rotate-45');
+                document.getElementById('line1').classList.toggle('translate-y-2');
+                document.getElementById('line2').classList.toggle('opacity-0');
+                document.getElementById('line3').classList.toggle('-rotate-45');
+                document.getElementById('line3').classList.toggle('-translate-y-2');
+            };
         };
 
         document.addEventListener('keydown', (e) => { 
             if (e.shiftKey && e.altKey && e.code === 'KeyA') { 
                 const t = document.getElementById('admin-trigger');
-                if (t) t.style.display = t.style.display === 'none' ? 'flex' : 'none'; 
+                t.style.display = t.style.display === 'none' ? 'flex' : 'none'; 
             } 
         });
     </script>
 </body>
 </html>
-
