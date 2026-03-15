@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW3FEBRP69"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", "G-QW3FEBRP69");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Ümit Özgüler | Fotoğraf Analileri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        'brand-black': '#121212', 
+                        'brand-dark': '#1a1a1a', 
+                        'brand-gold': '#c5a059', 
+                        'brand-orange': '#ff8c00' 
+                    },
+                    fontFamily: { 
+                        sans: ['"Montserrat"', 'sans-serif'] 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+        .page-animate { animation: fadeInPage 1s ease-in forwards; }
+        
+        body { background-color: #121212; overflow-x: hidden; }
+        
+        #progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: #ff8c00; width: 0%; z-index: 2000; transition: width 0.1s ease; }
+        
+        /* Makale İçerik Stilleri */
+        .article-content p { 
+            margin-bottom: 1.5rem; 
+            line-height: 1.8; 
+            color: #d1d5db; 
+            font-weight: 300; 
+            font-size: 1rem; 
+        }
+        @media (min-width: 768px) {
+            .article-content p { font-size: 1.125rem; }
+        }
+
+        .article-content strong { color: white; font-weight: 600; }
+        
+        /* ARA BAŞLIKLAR */
+        .article-content h2, .article-content h3 { 
+            color: #ffffff !important; 
+            font-weight: 600 !important; 
+            font-size: 1.25rem !important; 
+            margin-top: 2rem !important; 
+            margin-bottom: 1rem !important; 
+            letter-spacing: 0.025em !important; 
+            text-transform: none;
+            font-family: 'Montserrat', sans-serif !important;
+            line-height: 1.75rem;
+        }
+
+        /* Drop Cap */
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 2.25rem; 
+            line-height: 1;
+            margin-top: -10px;
+            margin-right: 0.5rem; 
+            color: #ff8c00;
+            font-family: serif;
+        }
+
+        .nav-link-custom { position: relative; transition: color 0.3s ease; }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ff8c00;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after { width: 100%; }
+        .nav-link-custom:hover { color: #ff8c00; }
+
+        .img-container { overflow: hidden; position: relative; cursor: zoom-in; background: #1a1a1a; border-radius: 2px; }
+        .img-container img { transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1.5s; width: 100%; height: auto; display: block; filter: grayscale(20%); }
+        .img-container:hover img { transform: scale(1.02); filter: grayscale(0%); }
+        
+        .image-caption { font-size: 10px; color: #666; margin-top: 12px; text-align: center; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; }
+        .exif-tag { font-size: 8px; color: #444; margin-top: 4px; text-align: center; letter-spacing: 0.1em; font-family: monospace; opacity: 0.8; }
+
+        .custom-quote { border-left: 2px solid #ff8c00; padding-left: 1.5rem; margin: 2.5rem 0; font-style: italic; color: rgba(255,255,255,0.8); font-size: 1.25rem; }
+
+        /* Admin Panel Styles */
+        #admin-panel { position: fixed; right: 0; top: 0; height: 100vh; width: 420px; background: #141414; z-index: 3000; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; font-family: sans-serif; }
+        #admin-panel.active { transform: translateX(0); box-shadow: -30px 0 60px rgba(0,0,0,0.6); }
+        .admin-input { background: #080808; border: 1px solid #2a2a2a; color: #e0e0e0; padding: 10px; width: 100%; margin-bottom: 12px; font-size: 13px; border-radius: 6px; }
+        .admin-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #c5a059; display: block; margin-bottom: 5px; font-weight: 700; }
+        .admin-btn { background: #c5a059; color: black; padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s; }
+        .admin-btn:hover { background: #d4b478; }
+        
+        .item-card { background: #1d1d1d; border: 1px solid #2a2a2a; padding: 15px; margin-bottom: 12px; border-radius: 8px; position: relative; }
+        .delete-btn { position: absolute; top: 12px; right: 12px; color: #ff5555; font-size: 9px; font-weight: bold; cursor: pointer; opacity: 0.6; }
+        .delete-btn:hover { opacity: 1; }
+        
+        #lightbox { position: fixed; inset: 0; z-index: 2000; background-color: rgba(0, 0, 0, 0.97); backdrop-filter: blur(20px); display: none; opacity: 0; transition: opacity 0.5s; align-items: center; justify-content: center; cursor: zoom-out; }
+        #lightbox.active { display: flex; opacity: 1; }
+        #lightbox-img { max-width: 90%; max-height: 80vh; object-fit: contain; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #141414; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff8c00; color: white; padding: 12px 24px; border-radius: 50px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 5000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* MOBİL MENÜ VE TURUNCU ÇİZGİ ANİMASYONU */
+        #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        #mobile-menu.active { transform: translateX(0); }
+        
+        #menu-line { 
+            height: 0; 
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s; 
+        }
+        #mobile-menu.active #menu-line { 
+            height: 100%; 
+        }
+
+        /* İLGİLİ YAZILAR STİLLERİ - TURUNCU ÇİZGİ VE KÜÇÜK KARTLAR */
+        .related-section-header { position: relative; display: flex; align-items: center; justify-content: center; margin: 8rem 0 3rem 0; }
+        .related-section-header::before, .related-section-header::after { 
+            content: ''; 
+            flex: 1; 
+            height: 1px; 
+            background: #ff8c00; 
+            opacity: 0.5; 
+        }
+        .related-section-header h3 { 
+            padding: 0 1.5rem; 
+            margin: 0 !important; 
+            color: #fff; 
+            font-size: 0.6rem !important; 
+            letter-spacing: 0.5em !important; 
+            text-transform: uppercase; 
+            font-weight: 500; 
+            opacity: 0.9;
+        }
+        
+        .related-card { 
+            background: #161616; 
+            border: 1px solid rgba(255,255,255,0.02); 
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .related-card:hover { 
+            border-color: rgba(255,140,0,0.3); 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .related-img-box { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0a0a0a; }
+        .related-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease, filter 1.2s ease; filter: grayscale(1) brightness(0.6); }
+        .related-card:hover .related-img-box img { transform: scale(1.04); filter: grayscale(0) brightness(1); }
+        
+        .related-tag { font-size: 6px; letter-spacing: 2px; color: #ff8c00; font-weight: 700; text-transform: uppercase; margin-bottom: 0.4rem; display: block; opacity: 0.7; }
+        
+        /* SEARCHBOX STİL */
+        .scraped-item { background: #0a0a0a; border: 1px solid #333; padding: 10px; border-radius: 6px; margin-top: 10px; display: flex; align-items: center; gap: 10px; }
+        .scraped-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
+        .scraped-item div { font-size: 10px; color: #fff; flex: 1; }
+
+        /* LIGHTBOX ARKA PLAN KAYMASINI ENGELLEME EKLENDİ */
+        .no-scroll { overflow: hidden; }
+
+        /* ANALİZ ÇİZGİLERİ (3'LER KURALI VE ALTIN ORAN VE YENİ ÖZELLİKLER) */
+        .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; z-index: 10; }
+        .grid-overlay.active { opacity: 1; }
+        
+        /* 3'ler ve Altın Oran */
+        .rot-line-h, .rot-line-v { position: absolute; background: rgba(255, 140, 0, 0.8); box-shadow: 0 0 3px rgba(0,0,0,0.8); }
+        .rot-line-h { width: 100%; height: 1px; left: 0; }
+        .rot-line-v { height: 100%; width: 1px; top: 0; }
+        .rot-h1 { top: 33.33%; } .rot-h2 { top: 66.66%; }
+        .rot-v1 { left: 33.33%; } .rot-v2 { left: 66.66%; }
+        .phi-h1 { top: 38.2%; } .phi-h2 { top: 61.8%; }
+        .phi-v1 { left: 38.2%; } .phi-v2 { left: 61.8%; }
+
+        /* Odak Noktaları (Hotspots) */
+        .hotspot-pin { position: absolute; width: 24px; height: 24px; transform: translate(-50%, -50%); background: rgba(255, 140, 0, 0.8); border: 2px solid #fff; border-radius: 50%; cursor: pointer; z-index: 30; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease; pointer-events: auto; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hotspot-pin:hover { transform: translate(-50%, -50%) scale(1.1); background: #fff; }
+        .hotspot-pin::after { content: '+'; color: #fff; font-size: 18px; font-weight: 400; line-height: 1; }
+        .hotspot-pin:hover::after { color: #ff8c00; }
+        .hotspot-tooltip { position: absolute; bottom: 120%; left: 50%; transform: translate(-50%, 10px); background: #111; color: #fff; font-size: 11px; font-weight: 300; padding: 10px 14px; border: 1px solid #ff8c00; border-radius: 4px; width: 200px; text-align: left; opacity: 0; pointer-events: none; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.8); line-height: 1.6; z-index: 40; }
+        .hotspot-pin:hover .hotspot-tooltip { opacity: 1; transform: translate(-50%, 0); }
+
+        /* Buton Stilleri */
+        .analysis-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #888; padding: 6px 16px; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; font-weight: 600; margin-bottom: 8px; }
+        .analysis-btn:hover { border-color: rgba(255, 140, 0, 0.5); color: #fff; }
+        .analysis-btn.active { color: #ff8c00; border-color: #ff8c00; background: rgba(255, 140, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-300 antialiased flex flex-col min-h-screen page-animate">
+
+    <div id="progress-bar"></div>
+    <div id="custom-alert">İşlem Başarılı</div>
+
+    <nav class="fixed w-full z-[100] bg-brand-black/95 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-24">
+                <a href="../index.html" class="flex flex-col items-center group relative z-[110] min-w-[140px]">
+                    <div class="text-2xl tracking-widest text-white transition-colors leading-none whitespace-nowrap">
+                        <span class="font-extralight text-white">ÜMİT</span> <span class="font-bold text-white">ÖZGÜLER</span>
+                    </div>
+                    <span style="font-size: 8px; letter-spacing: 5.3px; opacity: 0.9; font-weight: 300; color: #ffffff; display: block; margin-right: -5.3px; text-align: center; margin-top: 2px; width: 100%;" class="whitespace-nowrap">
+                        FINE ART PHOTOGRAPHY
+                    </span>
+                </a>
+                
+                <div class="hidden md:flex space-x-12">
+                    <a href="../index.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Ana Sayfa</a>
+                    <a href="../about.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Hakkımda</a>
+                    <a href="../portfolio.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Portfolyo</a>
+                    <a href="../analizler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Analizler</a>
+                    <a href="../dusunceler.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1 text-brand-orange">Düşünceler</a>
+                    <a href="../fotoyol.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">Fotoyol</a>
+                    <a href="../contact.html" class="nav-link-custom text-[11px] font-medium uppercase tracking-[0.2em] py-1">İletişim</a>
+                </div>
+
+                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-[110] p-2">
+                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
+                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
+                    <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="fixed top-0 right-0 h-screen w-36 bg-brand-black border-l border-white/5 flex flex-col pt-32 px-8 space-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] md:hidden shadow-2xl translate-x-full">
+            <div id="menu-line" class="absolute left-0 top-0 w-[2px] h-full bg-brand-orange shadow-[0_0_15px_rgba(255,140,0,0.5)]"></div>
+            <a href="../index.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Ana Sayfa</a>
+            <a href="../about.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Hakkımda</a>
+            <a href="../portfolio.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Portfolyo</a>
+            <a href="../analizler.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Analizler</a>
+            <a href="../dusunceler.html" class="text-brand-orange font-bold py-2 whitespace-nowrap">Düşünceler</a>
+            <a href="../fotoyol.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">Fotoyol</a>
+            <a href="../contact.html" class="hover:text-brand-orange transition-colors py-2 text-white whitespace-nowrap">İletişim</a>
+        </div>
+    </nav>
+
+    <article class="pt-48 pb-20 px-6 flex-grow">
+        <div class="max-w-3xl mx-auto" id="article-container">
+            </div>
+    </article>
+
+    <footer class="bg-brand-black py-16 border-t border-white/5 text-center mt-auto">
+        <p class="text-[10px] tracking-[0.2em] text-gray-500 uppercase">&copy; 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <div id="admin-panel">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center">
+            <h2 class="text-white font-semibold text-xl tracking-widest uppercase">Analiz Paneli</h2>
+            <button onclick="toggleAdmin()" class="text-brand-gold text-[10px] uppercase font-bold border border-brand-gold/30 px-3 py-1 rounded-full hover:bg-brand-gold hover:text-black transition-all">Kapat</button>
+        </div>
+        <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
+            <div id="meta-fields" class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">Makale Başlığı</label>
+                <input type="text" id="meta-title" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Kategori / Tarih Bilgisi</label>
+                <input type="text" id="meta-location" class="admin-input" oninput="updateMeta()">
+                <label class="admin-label">Alt Bilgi (Yazar vb.)</label>
+                <input type="text" id="meta-info" class="admin-input" oninput="updateMeta()">
+            </div>
+            
+            <div class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">Linkten İlgili Yazı Ekle (Otomatik)</label>
+                <div class="flex gap-2">
+                    <input type="text" id="auto-link-input" placeholder="../makale/diger-yazi.html" class="admin-input !mb-0 flex-1">
+                    <button onclick="autoScrapeArticle()" class="admin-btn !py-2 !px-4">Veri Çek</button>
+                </div>
+                <div id="scrape-preview"></div>
+                <div id="related-list-admin" class="mt-4"></div>
+            </div>
+
+            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BAŞLANGIÇ -->
+            <div class="mb-8 pb-8 border-b border-white/5">
+                <label class="admin-label">TAVSİYE KİTAPLAR (GOOGLE BOOKS ARAMA)</label>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="book-search-input" placeholder="Yazar veya Kitap Adı..." class="admin-input !mb-0 flex-1">
+                    <button onclick="searchBooks()" class="admin-btn !py-2 !px-4">Ara</button>
+                </div>
+                <div id="book-search-results" class="flex flex-col gap-2 mb-4"></div>
+                
+                <label class="admin-label mt-6">SEÇİLİ TAVSİYELER</label>
+                <div id="selected-books-list" class="mt-2 flex flex-col gap-2"></div>
+                
+                <!-- MANUEL KİTAP EKLE BUTONU -->
+                <button onclick="addManualBook()" class="admin-btn w-full mt-2 !bg-[#111111] !text-[#c5a059] border !border-[#2a2a2a] hover:!bg-[#1a1a1a]">MANUEL KİTAP EKLE</button>
+            </div>
+            <!-- TAVSİYE KİTAPLAR BÖLÜMÜ BİTİŞ -->
+
+            <div id="item-list"></div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <button onclick="addItem('text')" class="admin-btn">Metin Ekle</button>
+                <button onclick="addItem('image')" class="admin-btn">Görsel Ekle</button>
+                <button onclick="addItem('heading')" class="admin-btn">Başlık Ekle</button>
+                <button onclick="addItem('quote')" class="admin-btn">Alıntı Ekle</button>
+                <button onclick="addItem('tip')" class="admin-btn">Bilgi Ekle</button>
+                <button onclick="addItem('video')" class="admin-btn col-span-2 !bg-brand-orange !text-black">Video Ekle</button>
+                <button onclick="addItem('gallery')" class="admin-btn col-span-2 !bg-brand-gold !text-black">Galeri Ekle (3'lü)</button>
+            </div>
+            <div class="save-help mt-8 p-4 bg-brand-dark rounded border border-white/5">
+                <p class="text-[10px] text-gray-400"><strong>NASIL KAYDEDİLİR?</strong><br>Butona basıp veriyi kopyalayın ve dosyadaki <strong>articleConfig</strong> alanına yapıştırın.</p>
+                <button onclick="copyCode()" class="admin-btn w-full !bg-white !text-black mt-2">Yapılandırmayı Kopyala</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="admin-trigger" onclick="toggleAdmin()" style="display: none;" class="fixed bottom-6 right-6 z-[4000] w-14 h-14 bg-brand-orange rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+
+    <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" alt=""></div>
+
+    <script>
+        let articleConfig = {
+          "meta": {
+            "title": "Fotoğraf Okuma No: 8",
+            "location": "15 mart 2026 | Küratör Analizi",
+            "info": "Ümit Özgüler • Zamanın Tozlu Tezgâhında Bir Ömür Analizi"
+          },
+          "content": [
+            {
+              "type": "text",
+              "value": "Bazı fotoğraflar vardır; sadece bakıp geçemezsiniz, sizi durdurur ve anlatmaya başlar. Elimdeki bu kare, siyahın ve beyazın en samimi tonlarıyla yıkanmış bir hayat parçası aslında. Bir pazar yeri mi, bir dükkân önü mü yoksa doğrudan hayatın kendisi mi? Bu dekorun önünde üç farklı kuşak değil, üç ayrı \"insanlık hali\" yan yana gelmiş. Gelin, bu kareyi sadece bir fotoğraf olarak değil, bir hikâye olarak beraber okuyalım."
+            },
+            {
+              "type": "heading",
+              "value": "Zamanın Tozlu Tezgâhında Bir Ömür Analizi"
+            },
+            {
+              "type": "image",
+              "src": "../img/31.webp",
+              "mobile": "../imgmobil/31.webp",
+              "exif": "Fujifilm X-T3 | 18-55mm | ƒ/9 1/60 ISO 400",
+              "caption": "Zamanın Tezgâhı",
+              "hotspots": [
+                {
+                  "x": 35,
+                  "y": 40,
+                  "text": "Işığın kırılma noktası: Kontrastın en yüksek olduğu ve dikkati ilk çeken odak alanı."
+                },
+                {
+                  "x": 65,
+                  "y": 70,
+                  "text": "Negatif boşluk: Çerçevede dengeyi sağlayan ve ana objeye nefes aldıran karanlık bölge."
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "value": "Işık, Netlik ve O Anın Sessizliği"
+            },
+            {
+              "type": "text",
+              "value": "Işığı yönetmek, aslında duyguyu yönetmektir. Burada sağ taraftan süzülen ışık, amcanın yüzündeki her çizgiyi, ceketinin dokusunu ve elindeki bastonu adeta bir heykeltıraş titizliğiyle yontuyor. Işığın yüzdeki o sert gölgeleri, yaşanmışlığın haritasıdır benim için. Netliği amcanın o uzaklara dalan bakışlarına ve sigarasının dumanına mühürledim. Arka planı ise bilerek flulaştırdım; istedim ki izleyici sokağın kalabalığında kaybolmasın, doğrudan bu adamın iç dünyasına misafir olsun."
+            },
+            {
+              "type": "heading",
+              "value": "Kompozisyon: Kaosun İçindeki Düzen"
+            },
+            {
+              "type": "text",
+              "value": "Bu fotoğrafı üç ana katman üzerine kurdum. En ön planda hayatın yükünü omuzlamış, direnen bir figür var. Orta planda ise hayatı ve ticareti sadece izleyen bir başkası... En arkada ise tüm bunlara şahitlik eden o eski, yorgun kapı. Burada asıl mesele şu: Tezgâhtaki o yeni, plastik, ruhsuz eşyalar mı daha gerçek; yoksa yanlarındaki o bilge ve yorgun beden mi? Sanki bu karede sadece eşyalar değil, \"zaman\" da satılıyor."
+            },
+            {
+              "type": "heading",
+              "value": "Beni Vuran O Detay: Punctum"
+            },
+            {
+              "type": "text",
+              "value": "Hani bazı fotoğraflarda bir ayrıntı olur da kalbinize iğne gibi batar ya... İşte bu karede beni vuran şey, amcanın bastonu kavrayan o kemikli elleri. O el;  tüm geçmişini, ayakta kalma mücadelesini ve hayatın yükünü kavrıyor. İşte o parmaklardaki kararlılık, bu fotoğrafı sıradan bir sokak karesinden ayırıp bir anlatıya dönüştürüyor."
+            },
+            {
+              "type": "heading",
+              "value": "Hikâyenin Sonu ve Üslubum"
+            },
+            {
+              "type": "text",
+              "value": "Benim için iyi fotoğraf teknik olarak tam olandır ama anlamlı fotoğraf, size soru sordurtandır. Bu adam neyi bekliyor? Diğeri neden öylece bakıyor? Eğer size bu soruları sordurabiliyorsam, sokağın o sessiz cümlesini yakalamışım demektir. Bu kare, benim sokağa, insana ve zamana dair duruşumun, yani üslubumun bir özetidir aslında."
+            },
+            {
+              "type": "heading",
+              "value": "Okura Not:"
+            },
+            {
+              "type": "tip",
+              "value": "Bu fotoğrafa bir kez daha bakın. Orada gördüğünüz; bir gün hepimizin o sonsuz eşiğe varıp durduğunda, arkada bıraktığımız yola bakarken takınacağımız o dalgın maskenin bugünkü yankısıdır. Gördüğünüz o uzaklık, aslında sizin de henüz varmadığınız ama adımlarınızın her gün biraz daha yaklaştığı o mutlak sessizliğin ta kendisidir."
+            }
+          ],
+          "related": [
+            {
+              "title": "Fotoğraf Okuma No: 4",
+              "link": "https://www.umitozguler.com.tr/analiz/analiz4.html",
+              "img": "https://www.umitozguler.com.tr/img/89.webp",
+              "summary": "Kompozisyon ve Dinamik Eşitlik: Fotoğraf, diyagonal bir akışın merkezine yerleşmiş iki figür arasındaki gerili..."
+            },
+            {
+              "title": "Fotoğraf Okuma No: 1",
+              "link": "https://www.umitozguler.com.tr/analiz/analiz1.html",
+              "img": "https://www.umitozguler.com.tr/img/48.webp",
+              "summary": "Fotoğraf, izleyiciyi öznenin hemen arkasına yerleştirerek katılımcı bir gözlemci konumuna taşıyor. Düşük-orta ..."
+            },
+            {
+              "title": "Fotoğraf Okuma No: 3",
+              "link": "https://www.umitozguler.com.tr/analiz/analiz3.html",
+              "img": "https://www.umitozguler.com.tr/img/41.webp",
+              "summary": "Bu makro çalışmada, doğanın en küçük detaylarındaki fraktal benzeri yapılar ve kusursuz matematiksel düzen mer..."
+            }
+          ],
+          "books": [
+            {
+              "title": "Fotoğrafın Ötesi",
+              "authors": "Dursun Çiçek",
+              "thumbnail": "https://img.kitapyurdu.com/v1/getImage/fn:11449129/wi:220/wh:3cc3d6737",
+              "link": "https://www.kitapyurdu.com/kitap/fotografin-otesi/590500.html"
+            },
+            {
+              "title": "Fotoğrafçılar İçin Wabi-Sabi",
+              "authors": "Tarık Yurtgezer ",
+              "thumbnail": "https://img.kitapyurdu.com/v1/getImage/fn:11208933/wi:220/wh:a3f6e2d2e",
+              "link": "https://www.kitapyurdu.com/kitap/fotografcilar-icin-wabisabi/539389.html"
+            }
+          ]
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById("progress-bar");
+            if (progressBar) progressBar.style.width = scrolled + "%";
+        });
+
+        function renderArticle() {
+            const container = document.getElementById('article-container');
+            if (!container) return;
+
+            let html = `
+                <div class="text-center mb-10 reveal active">
+                    <a href="../analizler.html" class="inline-block mb-8 text-[10px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors border-b border-transparent hover:border-brand-orange pb-1">
+                        ← Diğer Fotoğraf Analizleri
+                    </a>
+                    <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
+                        ${articleConfig.meta.title}
+                    </h1>
+                    <div class="flex justify-center items-center text-[10px] tracking-widest uppercase text-brand-orange">
+                        <span>${articleConfig.meta.location}</span>
+                    </div>
+                </div>
+            `;
+
+            let textItemFound = false;
+            let isFirstStandaloneImage = true;
+
+            articleConfig.content.forEach((item, i) => {
+                if (item.type === 'text') {
+                    const dropCapClass = (!textItemFound) ? 'drop-cap' : '';
+                    html += `<p class="reveal active ${dropCapClass}">${item.value}</p>`;
+                    textItemFound = true;
+                }
+                else if (item.type === 'heading') {
+                    html += `<h3 class="text-white font-semibold text-xl mb-4 mt-8 tracking-wide reveal active">${item.value}</h3>`;
+                }
+                else if (item.type === 'quote') html += `<blockquote class="custom-quote reveal active">${item.value}</blockquote>`;
+                else if (item.type === 'tip') html += `<div class="tip-box bg-brand-dark/50 p-8 my-8 border border-white/5 reveal active text-[0.9rem] leading-relaxed text-gray-400 font-light italic">${item.value}</div>`;
+                else if (item.type === 'image') {
+                    const mobileSource = item.mobile ? `<source srcset="${item.mobile}" media="(max-width: 768px)">` : '';
+                    let exifHtml = '';
+                    let overlays = '';
+                    let toggleHtml = '';
+                    
+                    if (isFirstStandaloneImage) {
+                        // ODAK NOKTALARI (HOTSPOTS) OLUŞTURMA
+                        let hotspotsHtml = '';
+                        if (item.hotspots && item.hotspots.length > 0) {
+                            item.hotspots.forEach(spot => {
+                                hotspotsHtml += `
+                                <div class="hotspot-pin" style="top: ${spot.y}%; left: ${spot.x}%;">
+                                    <div class="hotspot-tooltip">${spot.text}</div>
+                                </div>`;
+                            });
+                        }
+
+                        overlays = `
+                        <!-- 3'ler Kuralı -->
+                        <div id="overlay-rot" class="grid-overlay">
+                            <div class="rot-line-h rot-h1"></div><div class="rot-line-h rot-h2"></div>
+                            <div class="rot-line-v rot-v1"></div><div class="rot-line-v rot-v2"></div>
+                        </div>
+                        <!-- Altın Oran -->
+                        <div id="overlay-phi" class="grid-overlay">
+                            <div class="rot-line-h phi-h1"></div><div class="rot-line-h phi-h2"></div>
+                            <div class="rot-line-v phi-v1"></div><div class="rot-line-v phi-v2"></div>
+                        </div>
+                        <!-- Altın Üçgenler -->
+                        <svg id="overlay-tri" class="grid-overlay" width="100%" height="100%" preserveAspectRatio="none">
+                            <line x1="0" y1="100%" x2="100%" y2="0" stroke="rgba(255,140,0,0.8)" stroke-width="1.5" />
+                            <line x1="0" y1="0" x2="61.8%" y2="61.8%" stroke="rgba(255,140,0,0.8)" stroke-width="1.5" />
+                            <line x1="100%" y1="100%" x2="38.2%" y2="38.2%" stroke="rgba(255,140,0,0.8)" stroke-width="1.5" />
+                        </svg>
+                        <!-- Odak Noktaları -->
+                        <div id="overlay-hotspots" class="grid-overlay">
+                            ${hotspotsHtml}
+                        </div>
+                        <!-- Krop: 1:1 -->
+                        <div id="overlay-crop-sq" class="grid-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.85) 15%, transparent 15%, transparent 85%, rgba(0,0,0,0.85) 85%); border-left: 1px solid rgba(255,140,0,0.3); border-right: 1px solid rgba(255,140,0,0.3);"></div>
+                        `;
+                        
+                        toggleHtml = `
+                        <div class="flex justify-center flex-wrap gap-2 mt-6 max-w-xl mx-auto">
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-rot', this)">3'LER KURALI</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-phi', this)">ALTIN ORAN</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-tri', this)">ALTIN ÜÇGENLER</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-hotspots', this)">ODAK NOKTALARI</button>
+                            <button class="analysis-btn" onclick="toggleOverlay('overlay-crop-sq', this)">1:1 KROP</button>
+                        </div>`;
+
+                        exifHtml = `
+                        ${toggleHtml}
+                        <div class="mt-6 bg-[#111111] py-8 text-center rounded-sm border border-white/5">
+                            <div class="text-[9px] text-brand-orange font-semibold tracking-[0.3em] uppercase mb-3">TEKNİK VERİLER</div>
+                            <div class="text-[11px] text-gray-400 tracking-[0.2em] uppercase font-light">${item.exif || 'Belirtilmemiş'}</div>
+                        </div>`;
+                    } else if (item.exif) {
+                        exifHtml = `<div class="exif-tag">${item.exif}</div>`;
+                    }
+                    
+                    isFirstStandaloneImage = false;
+                    
+                    html += `
+                    <figure class="my-16 reveal active">
+                        <div class="img-container shadow-2xl relative">
+                            ${overlays}
+                            <picture>${mobileSource}<img src="${item.src || 'https://via.placeholder.com/1200x800'}" alt="${item.caption || ''}" onclick="openLightbox(this)"></picture>
+                        </div>
+                        <figcaption class="image-caption">${item.caption || ''}</figcaption>
+                        ${exifHtml}
+                    </figure>`;
+                }
+                else if (item.type === 'gallery') {
+                    html += `<div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-16 reveal active">`;
+                    if (item.images && item.images.length > 0) {
+                        item.images.forEach(img => {
+                            const mobileSource = img.mobile ? `<source srcset="${img.mobile}" media="(max-width: 768px)">` : '';
+                            const exifHtml = img.exif ? `<div class="exif-tag">${img.exif}</div>` : '';
+                            html += `
+                            <figure class="flex flex-col">
+                                <div class="img-container h-full">
+                                    <picture>${mobileSource}<img src="${img.src || 'https://via.placeholder.com/600x400'}" alt="${img.caption || ''}" onclick="openLightbox(this)"></picture>
+                                </div>
+                                <figcaption class="image-caption">${img.caption || ''}</figcaption>
+                                ${exifHtml}
+                            </figure>`;
+                        });
+                    }
+                    html += `</div>`;
+                }
+                else if (item.type === 'video') {
+                    const embedUrl = formatYoutubeUrl(item.src);
+                    html += `<figure class="my-16 reveal active text-center"><div class="video-container shadow-2xl"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div><figcaption class="image-caption mt-6 opacity-50 italic">${item.caption || 'Video'}</figcaption></figure>`;
+                }
+            });
+
+            // İLGİLİ YAZILAR BÖLÜMÜ - KOMPAKT TASARIM
+            if (articleConfig.related && articleConfig.related.length > 0) {
+                html += `
+                <div class="reveal active">
+                    <div class="related-section-header">
+                        <h3>İlginizi Çekebilir</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">`;
+                articleConfig.related.forEach(rel => {
+                    html += `
+                        <a href="${rel.link}" class="related-card group">
+                            <div class="related-img-box">
+                                <img src="${rel.img}" alt="${rel.title}">
+                            </div>
+                            <div class="p-4">
+                                <span class="related-tag">Analiz</span>
+                                <h4 class="text-[0.75rem] font-medium text-white mb-2 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">${rel.title}</h4>
+                                <p class="text-[8px] text-gray-500 mb-4 line-clamp-2 leading-relaxed font-light">${rel.summary || ''}</p>
+                                <div class="flex items-center">
+                                    <span class="text-[7px] uppercase tracking-[0.2em] text-white/30 border-b border-white/5 pb-0.5 group-hover:border-brand-orange group-hover:text-brand-orange transition-all duration-300">Detay →</span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+                html += `</div></div>`;
+            }
+
+            // TAVSİYE KİTAPLAR BÖLÜMÜ (UI GÖSTERİMİ)
+            if (articleConfig.books && articleConfig.books.length > 0) {
+                html += `
+                <div class="reveal active mt-16">
+                    <div class="related-section-header">
+                        <h3>Tavsiye Kitaplar</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">`;
+                articleConfig.books.forEach(book => {
+                    html += `
+                        <a href="${book.link}" target="_blank" class="related-card group flex flex-row p-0 h-24 overflow-hidden items-center border-brand-orange/20 hover:border-brand-orange/50 transition-colors">
+                            <div class="w-16 h-full flex-shrink-0 bg-brand-dark border-r border-white/5 relative">
+                                <img src="${book.thumbnail}" alt="${book.title}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div class="p-4 flex-1 flex flex-col justify-center">
+                                <span class="related-tag mb-1">Kitap</span>
+                                <h4 class="text-[0.75rem] font-medium text-white mb-1 leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">${book.title}</h4>
+                                <p class="text-[10px] text-gray-500 font-light line-clamp-1">${book.authors}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+                html += `</div></div>`;
+            }
+
+            html += `
+                <div class="mt-20 mb-8 pt-12 border-t border-white/5 text-center reveal active">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 font-semibold">Bu Yazıyı Paylaş</p>
+                    <div class="flex justify-center space-x-12">
+                        <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="text-gray-400 hover:text-green-500 transition-colors text-[10px] uppercase tracking-widest font-bold">Whatsapp</a>
+                        <a href="javascript:void(0)" onclick="shareOnFacebook()" class="text-gray-400 hover:text-blue-600 transition-colors text-[10px] uppercase tracking-widest font-bold">Facebook</a>
+                        <a href="javascript:void(0)" onclick="shareOnTwitter()" class="text-gray-400 hover:text-white transition-colors text-[10px] uppercase tracking-widest font-bold">Twitter</a>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // ANALİZ ÇİZGİSİ GÖSTER/GİZLE FONKSİYONU
+        function toggleOverlay(id, btn) {
+            const overlay = document.getElementById(id);
+            if(overlay) {
+                if(overlay.classList.contains('active')) {
+                    overlay.classList.remove('active');
+                    btn.classList.remove('active');
+                } else {
+                    document.querySelectorAll('.grid-overlay').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('.analysis-btn').forEach(el => el.classList.remove('active'));
+                    overlay.classList.add('active');
+                    btn.classList.add('active');
+                }
+            }
+        }
+
+        // OTOMATİK VERİ ÇEKME VE EKLEME MANTIĞI
+        let lastScrapedArticle = null;
+
+        async function autoScrapeArticle() {
+            const urlInput = document.getElementById('auto-link-input');
+            const url = urlInput.value;
+            if (!url) { showMsg("Lütfen link girin"); return; }
+            
+            showMsg("Veri taranıyor...");
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Dosyaya ulaşılamadı");
+                const htmlText = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, 'text/html');
+                
+                const title = doc.querySelector('h1')?.innerText || doc.title || "Başlıksız Yazı";
+                const img = doc.querySelector('article img')?.src || doc.querySelector('img')?.src || "../img/placeholder.webp";
+                const paragraphs = Array.from(doc.querySelectorAll('p'));
+                const firstP = paragraphs.find(p => p.innerText.trim().length > 40);
+                const summary = firstP ? firstP.innerText.trim().substring(0, 110) + "..." : "";
+
+                lastScrapedArticle = { title, link: url, img, summary };
+                
+                document.getElementById('scrape-preview').innerHTML = `
+                    <div class="scraped-item border-brand-orange border">
+                        <img src="${img}">
+                        <div>
+                            <strong>${title}</strong><br>
+                            <span class="opacity-50">${summary}</span>
+                        </div>
+                        <button onclick="confirmAutoAdd()" class="bg-brand-orange text-black px-3 py-1 rounded text-[9px] font-bold hover:bg-white transition-colors">EKLE</button>
+                    </div>
+                `;
+                showMsg("Veri Hazır");
+            } catch (err) {
+                showMsg("Hata: " + err.message);
+                console.error(err);
+            }
+        }
+
+        function confirmAutoAdd() {
+            if (!lastScrapedArticle) { showMsg("Eklemek için önce veri çekmelisiniz"); return; }
+            articleConfig.related.push({...lastScrapedArticle});
+            renderArticle();
+            renderAdminPanel();
+            document.getElementById('scrape-preview').innerHTML = '';
+            document.getElementById('auto-link-input').value = '';
+            lastScrapedArticle = null;
+            showMsg("Makale Eklendi");
+        }
+
+        // TAVSİYE KİTAP GOOGLE BOOKS ARAMA MANTIĞI
+        async function searchBooks() {
+            const query = document.getElementById('book-search-input').value;
+            if(!query) { showMsg("Lütfen arama kelimesi girin"); return; }
+            
+            const resultsContainer = document.getElementById('book-search-results');
+            resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Aranıyor...</div>';
+            
+            try {
+                const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=4`);
+                const data = await res.json();
+                
+                if(!data.items || data.items.length === 0) {
+                    resultsContainer.innerHTML = '<div class="text-[10px] text-gray-500">Sonuç bulunamadı.</div>';
+                    return;
+                }
+                
+                let html = '';
+                data.items.forEach(item => {
+                    const vol = item.volumeInfo;
+                    const title = vol.title || 'Başlıksız';
+                    const authors = vol.authors ? vol.authors.join(', ') : 'Yazar bilinmiyor';
+                    // thumbnail kontrolü ve https'ye çevirme
+                    let thumbnail = vol.imageLinks ? vol.imageLinks.smallThumbnail : 'https://via.placeholder.com/50x70?text=Kapak';
+                    thumbnail = thumbnail.replace(/^http:\/\//i, 'https://');
+                    const link = vol.infoLink || '#';
+                    
+                    const safeTitle = title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    const safeAuthors = authors.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    
+                    html += `
+                    <div class="scraped-item border-brand-orange/30 border !mt-0 mb-1">
+                        <img src="${thumbnail}" class="w-8 h-12 object-cover rounded-sm" alt="kapak">
+                        <div class="overflow-hidden flex-1">
+                            <strong class="truncate block text-white text-[11px]">${safeTitle}</strong>
+                            <span class="opacity-50 text-[9px] truncate block text-gray-300 mt-1">${safeAuthors}</span>
+                        </div>
+                        <button onclick="addBook('${safeTitle}', '${safeAuthors}', '${thumbnail}', '${link}')" class="bg-brand-orange text-black px-3 py-1.5 rounded text-[9px] font-bold hover:bg-white transition-colors ml-auto flex-shrink-0">EKLE</button>
+                    </div>
+                    `;
+                });
+                resultsContainer.innerHTML = html;
+            } catch(err) {
+                resultsContainer.innerHTML = '<div class="text-[10px] text-[#ff5555]">Bağlantı hatası oluştu.</div>';
+            }
+        }
+
+        function addBook(title, authors, thumbnail, link) {
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title, authors, thumbnail, link });
+            renderBooksAdmin();
+            renderArticle();
+            document.getElementById('book-search-results').innerHTML = '';
+            document.getElementById('book-search-input').value = '';
+            showMsg("Kitap Eklendi");
+        }
+
+        // YENİ: MANUEL KİTAP EKLEME FONKSİYONU
+        function addManualBook() {
+            if(!articleConfig.books) articleConfig.books = [];
+            articleConfig.books.push({ title: '', authors: '', thumbnail: '', link: '#' });
+            renderBooksAdmin();
+            renderArticle();
+            showMsg("Manuel Kitap Alanı Eklendi");
+        }
+
+        function removeBook(index) {
+            if(!articleConfig.books) return;
+            articleConfig.books.splice(index, 1);
+            renderBooksAdmin();
+            renderArticle();
+        }
+
+        // KİTAP ALANINI EDİTLEME
+        function editBook(index, key, value) {
+            if(!articleConfig.books) return;
+            articleConfig.books[index][key] = value;
+            renderArticle();
+        }
+
+        // YENİDEN DÜZENLENDİ: SEÇİLİ KİTAPLARIN GÖRSELDEKİ GİBİ INPUT OLARAK LİSTELENMESİ
+        function renderBooksAdmin() {
+            const container = document.getElementById('selected-books-list');
+            if(!container) return;
+            container.innerHTML = '';
+            if(!articleConfig.books || articleConfig.books.length === 0) {
+                return; // Boş bırak
+            }
+            
+            articleConfig.books.forEach((book, i) => {
+                container.innerHTML += `
+                <div class="item-card !p-3 !mb-2">
+                    <span class="delete-btn" onclick="removeBook(${i})">SİL</span>
+                    <input type="text" placeholder="Kitap Adı" class="admin-input !mb-2" value="${book.title || ''}" oninput="editBook(${i}, 'title', this.value)">
+                    <input type="text" placeholder="Yazar Adı" class="admin-input !mb-2" value="${book.authors || ''}" oninput="editBook(${i}, 'authors', this.value)">
+                    <input type="text" placeholder="Görsel URL" class="admin-input !mb-2" value="${book.thumbnail || ''}" oninput="editBook(${i}, 'thumbnail', this.value)">
+                    <input type="text" placeholder="Link URL" class="admin-input !mb-0" value="${book.link || ''}" oninput="editBook(${i}, 'link', this.value)">
+                </div>
+                `;
+            });
+        }
+
+        // UI Handlers
+        function toggleAdmin() { 
+            const panel = document.getElementById('admin-panel');
+            panel.classList.toggle('active'); 
+            if (panel.classList.contains('active')) renderAdminPanel(); 
+        }
+        function openLightbox(img) { document.getElementById('lightbox-img').src = img.src; document.getElementById('lightbox').classList.add('active'); document.body.classList.add('no-scroll'); }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.classList.remove('no-scroll'); }
+        function showMsg(txt) { const el = document.getElementById('custom-alert'); el.innerText = txt; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 3000); }
+
+        function renderAdminPanel() {
+            document.getElementById('meta-title').value = articleConfig.meta.title;
+            document.getElementById('meta-location').value = articleConfig.meta.location;
+            document.getElementById('meta-info').value = articleConfig.meta.info;
+            
+            const list = document.getElementById('item-list');
+            list.innerHTML = '';
+            articleConfig.content.forEach((item, i) => {
+                let card = `<div class="item-card"><span class="delete-btn" onclick="deleteItem(${i})">SİL</span><label class="admin-label">${item.type.toUpperCase()}</label>`;
+                
+                if (item.type === 'image') {
+                    card += `
+                        <input type="text" placeholder="Görsel Yolu (Masaüstü)" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
+                        <input type="text" placeholder="Görsel Yolu (Mobil)" class="admin-input" value="${item.mobile || ''}" oninput="editItem(${i}, 'mobile', this.value)">
+                        <input type="text" placeholder="EXIF Verisi" class="admin-input" value="${item.exif || ''}" oninput="editItem(${i}, 'exif', this.value)">
+                        <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                } else if (item.type === 'gallery') {
+                    if (item.images) {
+                        item.images.forEach((img, imgIdx) => {
+                            card += `<div class="mb-6 p-4 bg-black/40 rounded-lg border border-white/5">
+                                        <label class="text-[9px] text-brand-gold font-bold block mb-2 uppercase tracking-tighter">GÖRSEL ${imgIdx+1}</label>
+                                        <input type="text" placeholder="Masaüstü Yolu" class="admin-input" value="${img.src || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'src', this.value)">
+                                        <input type="text" placeholder="Mobil Yolu" class="admin-input" value="${img.mobile || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'mobile', this.value)">
+                                        <input type="text" placeholder="EXIF Verisi" class="admin-input" value="${img.exif || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'exif', this.value)">
+                                        <input type="text" placeholder="Açıklama" class="admin-input !mb-0" value="${img.caption || ''}" oninput="editGalleryItem(${i}, ${imgIdx}, 'caption', this.value)">
+                                     </div>`;
+                        });
+                    }
+                } else if (item.type === 'video') {
+                    // YOUTUBE AÇIKLAMA INPUT'U EKLENDİ
+                    card += `<input type="text" placeholder="YouTube Link" class="admin-input" value="${item.src || ''}" oninput="editItem(${i}, 'src', this.value)">
+                             <input type="text" placeholder="Açıklama" class="admin-input" value="${item.caption || ''}" oninput="editItem(${i}, 'caption', this.value)">`;
+                } else {
+                    card += `<textarea class="admin-input h-24" oninput="editItem(${i}, 'value', this.value)">${item.value || ''}</textarea>`;
+                }
+                card += `</div>`;
+                list.innerHTML += card;
+            });
+
+            renderRelatedListAdmin();
+            renderBooksAdmin(); // YENİ: Kitapları panele çizdirir (Input şeklinde)
+        }
+
+        // PANELDE İLGİLİ YAZILARI GÖSTERME/SİLME FONKSİYONU
+        function renderRelatedListAdmin() {
+            const list = document.getElementById('related-list-admin');
+            if(!list) return;
+            list.innerHTML = '';
+            if(!articleConfig.related) articleConfig.related = [];
+            articleConfig.related.forEach((rel, ri) => {
+                list.innerHTML += `
+                <div class="item-card bg-brand-orange/5 border-brand-orange/20 p-3 mb-2">
+                    <span class="delete-btn" onclick="deleteRelated(${ri})">SİL</span>
+                    <input type="text" class="admin-input !mb-1 !text-[10px]" value="${rel.title}" oninput="editRelated(${ri}, 'title', this.value)">
+                    <input type="text" class="admin-input !mb-0 !text-[10px]" value="${rel.link}" oninput="editRelated(${ri}, 'link', this.value)">
+                </div>`;
+            });
+        }
+        function editRelated(ri, k, v) { articleConfig.related[ri][k] = v; renderArticle(); }
+        function deleteRelated(ri) { articleConfig.related.splice(ri, 1); renderAdminPanel(); renderArticle(); }
+
+        function editGalleryItem(itemIdx, imgIdx, key, val) { 
+            articleConfig.content[itemIdx].images[imgIdx][key] = val; 
+            renderArticle(); 
+        }
+
+        function updateMeta() { 
+            articleConfig.meta.title = document.getElementById('meta-title').value; 
+            articleConfig.meta.location = document.getElementById('meta-location').value; 
+            articleConfig.meta.info = document.getElementById('meta-info').value; 
+            renderArticle(); 
+        }
+
+        function addItem(type) {
+            if (type === 'image') {
+                articleConfig.content.push({ type, src: '', mobile: '', exif: '', caption: '' });
+            } else if (type === 'gallery') {
+                articleConfig.content.push({ 
+                    type, 
+                    images: [
+                        {src:'', mobile:'', exif:'', caption:''}, 
+                        {src:'', mobile:'', exif:'', caption:''}, 
+                        {src:'', mobile:'', exif:'', caption:''}
+                    ] 
+                });
+            } else if (type === 'video') {
+                articleConfig.content.push({ type, src: '', caption: '' });
+            } else if (type === 'heading') {
+                articleConfig.content.push({ type, value: 'Yeni Başlık' });
+            } else if (type === 'text') {
+                articleConfig.content.push({ type, value: 'Yeni İçerik...' });
+            } else if (type === 'quote') {
+                articleConfig.content.push({ type, value: 'Alıntı metni...' });
+            } else if (type === 'tip') {
+                articleConfig.content.push({ type, value: 'Bilgi notu...' });
+            }
+            
+            renderAdminPanel(); 
+            renderArticle();
+            showMsg(type.toUpperCase() + " EKLENDİ");
+        }
+
+        function editItem(i, k, v) { articleConfig.content[i][k] = v; renderArticle(); }
+        function deleteItem(i) { articleConfig.content.splice(i, 1); renderAdminPanel(); renderArticle(); }
+        function copyCode() { const code = "let articleConfig = " + JSON.stringify(articleConfig, null, 2) + ";"; navigator.clipboard.writeText(code).then(() => showMsg("Yapılandırma Kopyalandı!")); }
+
+        function formatYoutubeUrl(url) {
+            if (!url) return '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            if (match && match[2].length == 11) return `https://www.youtube.com/embed/${match[2]}?rel=0&autoplay=0`;
+            return url;
+        }
+
+        function shareOnWhatsApp() { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`); }
+        function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`); }
+        function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`); }
+
+        window.onload = () => {
+            renderArticle();
+            const toggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('mobile-menu');
+            if (toggle && menu) {
+                toggle.onclick = () => {
+                    menu.classList.toggle('active');
+                    menu.classList.toggle('translate-x-full');
+                    document.getElementById('line1').classList.toggle('rotate-45');
+                    document.getElementById('line1').classList.toggle('translate-y-2');
+                    document.getElementById('line2').classList.toggle('opacity-0');
+                    document.getElementById('line3').classList.toggle('-rotate-45');
+                    document.getElementById('line3').classList.toggle('-translate-y-2');
+                };
+            }
+        };
+
+        document.addEventListener('keydown', (e) => { 
+            if (e.shiftKey && e.altKey && e.code === 'KeyA') { 
+                const t = document.getElementById('admin-trigger');
+                if (t) t.style.display = t.style.display === 'none' ? 'flex' : 'none'; 
+            } 
+        });
+    </script>
+</body>
+</html>
