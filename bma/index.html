@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Bursa Manevi Atlası — Ümit Özgüler</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0C3A32">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" href="icons/icon-192.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- HEIC/HEIF (iPhone kamera formatı) dönüştürücü -->
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+
+  <style>
+    :root{
+      --paper:#FAF7EF; --paper-deep:#F2ECDD;
+      --ink:#241F17; --ink-soft:#5B5445; --ink-faint:#A7A08E;
+      --teal-950:#082B25; --teal-900:#0C3A32; --teal-700:#155A4C; --teal-500:#1F7A65;
+      --gold:#C39A45; --gold-soft:#E7D4A0; --gold-deep:#8C6A22;
+      --brick:#A85631; --brick-soft:#E3A17E; --brick-deep:#7A3C1E;
+      --line:#E5DEC9;
+    }
+    html, body{ height:100%; overscroll-behavior-y:none; }
+    body{
+      font-family:'Manrope', sans-serif;
+      background-color:var(--paper); color:var(--ink);
+      -webkit-tap-highlight-color:transparent;
+    }
+    .font-display{ font-family:'Playfair Display', serif; }
+    .font-ledger{ font-family:'JetBrains Mono', monospace; letter-spacing:0.02em; }
+
+    .safe-padding-top{ padding-top:env(safe-area-inset-top, 0px); }
+    .safe-padding-bottom{ padding-bottom:calc(0.75rem + env(safe-area-inset-bottom, 10px)); }
+
+    .tab-viewport{ display:flex; width:500%; transition:transform 0.32s cubic-bezier(0.22,1,0.36,1); will-change:transform; }
+    .tab-panel{ width:20%; flex-shrink:0; }
+    .nav-indicator{ transition:left 0.32s cubic-bezier(0.22,1,0.36,1); }
+
+    .hero-panel{
+      background:
+        radial-gradient(120% 140% at 100% 0%, rgba(195,154,69,0.16) 0%, rgba(195,154,69,0) 45%),
+        linear-gradient(160deg, var(--teal-950) 0%, var(--teal-900) 55%, var(--teal-700) 130%);
+      border:1px solid rgba(195,154,69,0.35);
+    }
+    .arch-watermark{ position:absolute; right:-14px; bottom:-22px; opacity:0.10; pointer-events:none; }
+    .gold-line{ background:linear-gradient(90deg, transparent, var(--gold-soft), transparent); height:1px; }
+
+    .paper-card{ background:#fff; border:1px solid var(--line); box-shadow:0 1px 2px rgba(36,31,23,0.04); }
+    .arch-badge{ border-radius:50% 50% 6px 6px; display:flex; align-items:center; justify-content:center; }
+    .district-rail{ width:4px; border-radius:4px 0 0 4px; }
+    .sicil-tag{ font-family:'JetBrains Mono', monospace; font-size:9px; letter-spacing:0.03em; padding:1px 6px; border-radius:5px; border:1px solid var(--line); color:var(--ink-soft); background:var(--paper-deep); }
+
+    .prayer-btn{ border:1px solid var(--line); color:var(--ink-soft); background:#fff; transition:all .15s ease; }
+    .prayer-btn.active{ background:var(--teal-900); color:#fff; border-color:var(--teal-900); }
+
+    input:focus, textarea:focus, select:focus{
+      outline:none; border-color:var(--gold-deep) !important;
+      box-shadow:0 0 0 3px rgba(195,154,69,0.18);
+    }
+    .field{ background:var(--paper-deep); border:1px solid var(--line); }
+
+    .nav-item.active{ color:var(--teal-900); }
+    .nav-item{ color:var(--ink-faint); }
+    .btn-primary{ background:var(--teal-900); color:#fff; }
+    .btn-primary:active{ background:var(--teal-950); transform:scale(0.98); }
+    .btn-primary:disabled{ opacity:0.6; }
+
+    .badge-osmangazi{ color:var(--teal-900); background:rgba(21,90,76,0.10); }
+    .badge-yildirim{ color:var(--brick-deep); background:rgba(168,86,49,0.12); }
+    .bar-osmangazi{ background:var(--teal-700); }
+    .bar-yildirim{ background:var(--brick); }
+
+    ::-webkit-scrollbar{ display:none; }
+
+    @keyframes spin-slow{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+    .animate-spin-slow{ animation:spin-slow 6s linear infinite; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col select-none overflow-x-hidden">
+
+  <!-- Üst Bar -->
+  <header class="text-white shadow-lg sticky top-0 z-40 safe-padding-top" style="background:linear-gradient(135deg, var(--teal-950), var(--teal-900)); border-bottom:1px solid rgba(195,154,69,0.3);">
+    <div class="px-4 py-3.5 max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="arch-badge w-10 h-10 transition-transform active:scale-95" style="background:var(--gold); color:var(--teal-950); border:2px solid var(--gold-soft);">
+          <span class="font-display font-bold text-xs tracking-tighter">ÜÖ</span>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm leading-tight tracking-wide font-display" style="color:var(--gold-soft);">Bursa Manevi Atlası</h1>
+          <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:rgba(231,212,160,0.65);">Seyyah: Ümit Özgüler</p>
+        </div>
+      </div>
+      <span id="syncStatus" class="text-[9px] px-2.5 py-1 rounded-full flex items-center space-x-1" style="background:rgba(195,154,69,0.14); border:1px solid rgba(195,154,69,0.35); color:var(--gold-soft);">
+        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:var(--gold);"></span>
+        <span id="syncStatusText" class="font-medium">Hazırlanıyor...</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- UYGULAMA OLARAK YÜKLEME BANDI -->
+  <div id="installBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-30 w-[92%] max-w-md">
+    <div class="paper-card rounded-2xl px-4 py-3 flex items-center justify-between shadow-lg" style="border:1px solid var(--gold-soft);">
+      <div class="flex items-center space-x-2.5">
+        <div class="arch-badge w-8 h-8 flex-shrink-0" style="background:var(--gold); color:var(--teal-950);">
+          <i class="fa-solid fa-arrow-down text-xs"></i>
+        </div>
+        <p class="text-[11px] font-semibold leading-tight" style="color:var(--ink);">Uygulamayı ana ekranınıza yükleyin</p>
+      </div>
+      <div class="flex items-center space-x-2 flex-shrink-0">
+        <button id="installBtn" class="text-[10px] font-bold px-3 py-1.5 rounded-lg text-white" style="background:var(--teal-900);">Yükle</button>
+        <button id="installDismissBtn" class="text-[10px] px-1" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPLASH -->
+  <div id="authLoader" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-6" style="background:var(--teal-950);">
+    <div class="arch-badge w-20 h-20 mb-6" style="background:var(--gold); color:var(--teal-950); border:3px solid var(--gold-soft);">
+      <span class="font-display font-bold text-2xl tracking-tighter">ÜÖ</span>
+    </div>
+    <h2 class="text-xl font-bold font-display text-center tracking-wide" style="color:var(--gold-soft);">Bursa Manevi Atlası</h2>
+    <p class="text-[10px] uppercase tracking-widest mt-1 font-semibold" style="color:rgba(231,212,160,0.6);">Seyyah Defteri</p>
+    <div class="relative w-9 h-9 mt-10">
+      <div class="absolute inset-0 rounded-full border-2" style="border-color:rgba(255,255,255,0.15);"></div>
+      <div class="absolute inset-0 rounded-full border-2 animate-spin" style="border-color:var(--gold); border-top-color:transparent;"></div>
+    </div>
+    <p class="font-medium text-xs mt-4" style="color:rgba(231,212,160,0.55);">Kayıtlarınız hazırlanıyor...</p>
+  </div>
+
+  <!-- KAYDIRILABİLİR ANA ALAN -->
+  <main id="swipeContainer" class="flex-grow overflow-hidden w-full max-w-md mx-auto relative">
+    <div id="tabViewport" class="tab-viewport h-full">
+
+      <!-- PANEL 1: ANA SAYFA -->
+      <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
+
+        <div class="hero-panel text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+          <svg class="arch-watermark" width="130" height="130" viewBox="0 0 100 100" fill="none">
+            <path d="M20 90 V45 A30 30 0 0 1 80 45 V90" stroke="#E7D4A0" stroke-width="2"/>
+            <path d="M32 90 V50 A18 18 0 0 1 68 50 V90" stroke="#E7D4A0" stroke-width="1.4"/>
+          </svg>
+          <div class="relative z-10 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest" style="background:rgba(195,154,69,0.16); color:var(--gold-soft); border:1px solid rgba(195,154,69,0.4);">
+                Bursa Mihrapları
+              </span>
+              <span id="overallBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="background:var(--gold); color:var(--teal-950);">%0 Tamamlandı</span>
+            </div>
+            <div>
+              <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldin Seyyah,</h2>
+              <p class="text-2xl font-bold font-display tracking-wide mt-1">Ümit Özgüler</p>
+              <p class="text-[11px] mt-1.5 leading-relaxed font-light" style="color:rgba(255,255,255,0.72);">
+                Osmangazi ve Yıldırım'daki tescilli 70 tarihi cami ve mescidi ihya etme yolculuğun.
+              </p>
+            </div>
+            <div class="gold-line"></div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:var(--gold-soft);">Mevcut Seviye</p>
+                <p id="userTitle" class="font-bold text-xs mt-0.5 truncate" style="color:var(--gold);">Yola Hazır Seyyah 🧭</p>
+              </div>
+              <div>
+                <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:var(--gold-soft);">Toplam Vakit</p>
+                <p id="totalVisitsCount" class="font-bold text-xs mt-0.5 font-ledger">0 Vakit Namaz</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="paper-card rounded-2xl p-4 space-y-3">
+          <h3 class="font-bold text-[11px] flex items-center space-x-2" style="color:var(--ink);">
+            <i class="fa-solid fa-chart-line" style="color:var(--teal-700);"></i>
+            <span class="uppercase tracking-wider" style="color:var(--ink-faint);">İlçelere Göre İlerleme</span>
+          </h3>
+          <div class="space-y-1">
+            <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
+              <span>Osmangazi Tarihi Camileri</span>
+              <span id="osmangaziProgressTxt" class="font-bold font-ledger">0 / 35</span>
+            </div>
+            <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+              <div id="osmangaziProgressBar" class="bar-osmangazi h-full transition-all duration-500" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
+              <span>Yıldırım Tarihi Camileri</span>
+              <span id="yildirimProgressTxt" class="font-bold font-ledger">0 / 35</span>
+            </div>
+            <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+              <div id="yildirimProgressBar" class="bar-yildirim h-full transition-all duration-500" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-4 flex items-start space-x-3" style="background:rgba(195,154,69,0.08); border:1px solid rgba(195,154,69,0.3);">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(195,154,69,0.18); color:var(--gold-deep);">
+            <i class="fa-solid fa-compass text-xs animate-spin-slow"></i>
+          </div>
+          <div class="space-y-0.5">
+            <h4 class="font-bold text-xs" style="color:var(--gold-deep);">Manevi Seyahat Önerisi</h4>
+            <p id="recommendationText" class="text-[11px] leading-relaxed font-light" style="color:var(--ink-soft);">Namaz kaydı ekledikçe size özel ziyaret rotaları burada görüntülenecek.</p>
+          </div>
+        </div>
+
+        <div class="paper-card rounded-2xl p-4 space-y-2.5">
+          <h3 class="font-bold text-[11px] flex items-center space-x-2" style="color:var(--ink);">
+            <i class="fa-solid fa-clock-rotate-left" style="color:var(--teal-700);"></i>
+            <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Son İbadet Kaydı</span>
+          </h3>
+          <div id="latestVisitContainer">
+            <p class="text-xs py-3 text-center" style="color:var(--ink-faint);">Henüz bir vakit namazı kaydı girmediniz.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2: CAMİ LİSTESİ -->
+      <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-3">
+        <div class="paper-card rounded-2xl p-3 space-y-2.5 sticky top-0 z-10">
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3" style="color:var(--ink-faint);">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </span>
+            <input id="mosqueSearchInput" type="text" placeholder="70 tarihi mabet arasından ara..." class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
+          </div>
+          <div class="grid grid-cols-3 gap-1.5">
+            <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi (70)</button>
+            <button onclick="filterDistrict('Osmangazi')" id="btn-filter-osmangazi" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Osmangazi</button>
+            <button onclick="filterDistrict('Yıldırım')" id="btn-filter-yildirim" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Yıldırım</button>
+          </div>
+        </div>
+        <div id="mosquesList" class="space-y-2.5"></div>
+      </div>
+
+      <!-- PANEL 3: KAYIT EKLE -->
+      <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)]">
+        <div class="paper-card rounded-3xl p-4 space-y-4">
+          <div class="pb-2.5" style="border-bottom:1px solid var(--line);">
+            <h2 class="text-base font-bold flex items-center space-x-2 font-display" style="color:var(--ink);">
+              <i class="fa-solid fa-circle-plus" style="color:var(--teal-700);"></i>
+              <span>Namaz Vakti Kaydet</span>
+            </h2>
+            <p class="text-[10px] mt-0.5" style="color:var(--ink-faint);">Tarihi camide kıldığınız namazı günlüğünüze işleyin.</p>
+          </div>
+
+          <form id="visitForm" class="space-y-3.5" onsubmit="handleVisitSubmit(event)">
+            <div class="space-y-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Cami / Mescid Seçimi *</label>
+              <select id="formMosqueSelect" class="field w-full rounded-xl px-3 py-2.5 text-xs" onchange="toggleCustomMosqueInput()" required></select>
+            </div>
+
+            <div id="customMosqueSection" class="hidden space-y-2.5 p-3 rounded-xl" style="background:rgba(195,154,69,0.08); border:1px solid rgba(195,154,69,0.3);">
+              <h4 class="text-[10px] font-bold uppercase" style="color:var(--gold-deep);">Mevcut Olmayan Tarihi Cami Girişi</h4>
+              <input id="formCustomName" type="text" placeholder="Cami veya Mescid Adı *" class="w-full bg-white rounded-xl px-3 py-2 text-xs" style="border:1px solid var(--line);">
+              <div class="space-y-1">
+                <label class="block text-[10px] font-semibold" style="color:var(--ink-soft);">Hangi İlçede? *</label>
+                <div class="flex space-x-4">
+                  <label class="inline-flex items-center text-xs">
+                    <input type="radio" name="formCustomDistrict" value="Osmangazi" checked>
+                    <span class="ml-2 font-medium" style="color:var(--ink);">Osmangazi</span>
+                  </label>
+                  <label class="inline-flex items-center text-xs">
+                    <input type="radio" name="formCustomDistrict" value="Yıldırım">
+                    <span class="ml-2 font-medium" style="color:var(--ink);">Yıldırım</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Kılınan Namaz Vakti *</label>
+              <div class="grid grid-cols-5 gap-1">
+                <button type="button" onclick="selectPrayer('Sabah')" id="btn-p-Sabah" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">Sabah</button>
+                <button type="button" onclick="selectPrayer('Öğle')" id="btn-p-Öğle" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">Öğle</button>
+                <button type="button" onclick="selectPrayer('İkindi')" id="btn-p-İkindi" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">İkindi</button>
+                <button type="button" onclick="selectPrayer('Akşam')" id="btn-p-Akşam" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">Akşam</button>
+                <button type="button" onclick="selectPrayer('Yatsı')" id="btn-p-Yatsı" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">Yatsı</button>
+              </div>
+              <input type="hidden" id="formPrayerSelected" required>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Açık Adres veya Konum Bilgisi</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3" style="color:var(--ink-faint);">
+                  <i class="fa-solid fa-map-location-dot text-xs"></i>
+                </span>
+                <input id="formAddress" type="text" placeholder="Adres veya harita linki yapıştırın" class="field w-full rounded-xl pl-9 pr-4 py-2.5 text-xs">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div class="space-y-1">
+                <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Ziyaret Tarihi</label>
+                <input id="formDate" type="date" class="field w-full rounded-xl px-2.5 py-2 text-xs">
+              </div>
+              <div class="space-y-1">
+                <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Ziyaret Saati</label>
+                <input id="formTime" type="time" class="field w-full rounded-xl px-2.5 py-2 text-xs">
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Seyyah Notları / Tefekkür</label>
+              <textarea id="formNotes" rows="2" placeholder="O günkü dualarınız, manevi hissiyatınız..." class="field w-full rounded-xl px-3 py-2 text-xs"></textarea>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Hatıra Fotoğrafları (En Fazla 2 Adet)</label>
+              <p class="text-[9px]" style="color:var(--ink-faint);">JPG, PNG, WEBP, GIF ve iPhone HEIC/HEIF dahil her fotoğraf formatı desteklenir.</p>
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="relative rounded-xl h-24 flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-all" id="photoContainer1" style="border:2px dashed var(--line); background:var(--paper-deep);">
+                  <input type="file" id="photoInput1" accept="image/*,.heic,.heif" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="processAndPreviewImage(this, 1)">
+                  <div id="photoPlaceholder1" class="text-center p-2 pointer-events-none">
+                    <i class="fa-solid fa-camera text-lg mb-0.5" style="color:var(--ink-faint);"></i>
+                    <p class="text-[9px] font-semibold" style="color:var(--ink-soft);">Fotoğraf 1</p>
+                  </div>
+                  <img id="photoPreview1" class="hidden w-full h-full object-cover">
+                  <button type="button" onclick="removePhoto(1)" id="btnRemovePhoto1" class="hidden absolute top-1 right-1 text-white w-5 h-5 rounded-full flex items-center justify-center shadow z-20" style="background:var(--brick);">
+                    <i class="fa-solid fa-times text-[10px]"></i>
+                  </button>
+                </div>
+                <div class="relative rounded-xl h-24 flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-all" id="photoContainer2" style="border:2px dashed var(--line); background:var(--paper-deep);">
+                  <input type="file" id="photoInput2" accept="image/*,.heic,.heif" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="processAndPreviewImage(this, 2)">
+                  <div id="photoPlaceholder2" class="text-center p-2 pointer-events-none">
+                    <i class="fa-solid fa-camera text-lg mb-0.5" style="color:var(--ink-faint);"></i>
+                    <p class="text-[9px] font-semibold" style="color:var(--ink-soft);">Fotoğraf 2</p>
+                  </div>
+                  <img id="photoPreview2" class="hidden w-full h-full object-cover">
+                  <button type="button" onclick="removePhoto(2)" id="btnRemovePhoto2" class="hidden absolute top-1 right-1 text-white w-5 h-5 rounded-full flex items-center justify-center shadow z-20" style="background:var(--brick);">
+                    <i class="fa-solid fa-times text-[10px]"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="btnSubmitForm" class="btn-primary w-full font-bold py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 text-xs">
+              <i class="fa-solid fa-heart-circle-check"></i>
+              <span>Vakti Deftere İşle</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- PANEL 4: DEFTER / GEÇMİŞ -->
+      <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
+        <div class="flex items-center justify-between pb-1" style="border-bottom:1px solid var(--line);">
+          <h2 class="text-base font-bold flex items-center space-x-2 font-display" style="color:var(--ink);">
+            <i class="fa-solid fa-journal-whills" style="color:var(--teal-700);"></i>
+            <span>Manevi Günlük</span>
+          </h2>
+          <span id="historyTotalCount" class="text-[10px] font-bold px-2 py-0.5 rounded-full font-ledger" style="background:rgba(21,90,76,0.1); color:var(--teal-900);">0 Kayıt</span>
+        </div>
+        <div id="historyFeed" class="space-y-3.5"></div>
+      </div>
+
+      <!-- PANEL 5: PROFİL -->
+      <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
+        <div class="paper-card rounded-3xl p-5 text-center space-y-3">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-md font-display font-bold" style="background:var(--gold-soft); color:var(--teal-950); border:2px solid var(--gold);">
+            ÜÖ
+          </div>
+          <div>
+            <h3 class="font-bold text-lg font-display" style="color:var(--ink);">Ümit Özgüler</h3>
+            <p class="text-[10px] font-semibold uppercase tracking-widest" style="color:var(--teal-700);">Bursa Miras Seyyahı</p>
+          </div>
+          <div class="rounded-xl p-3 text-[10px] text-left space-y-1.5" style="background:var(--paper-deep);">
+            <p class="flex justify-between"><strong style="color:var(--ink);">Kayıt Modu:</strong> <span id="appModeBadge" class="font-bold" style="color:var(--teal-700);">Yükleniyor...</span></p>
+            <p class="flex justify-between"><strong style="color:var(--ink);">Kullanıcı:</strong> <span class="font-bold" style="color:var(--ink);">Ümit Özgüler</span></p>
+            <p class="flex justify-between"><strong style="color:var(--ink);">Sürüm:</strong> <span class="font-ledger" style="color:var(--ink-faint);">v5.0 — Mobil Uygulama</span></p>
+          </div>
+        </div>
+
+        <div class="paper-card rounded-3xl p-4 space-y-3">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">Makam ve Unvan Dereceleri</h4>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-2.5 text-[11px]">
+              <span class="sicil-tag min-w-[76px] text-center">Siftah</span>
+              <p style="color:var(--ink-soft);">İlk namaz kaydını gerçekleştiren acemi seyyah.</p>
+            </div>
+            <div class="flex items-start space-x-2.5 text-[11px]">
+              <span class="sicil-tag min-w-[76px] text-center" style="color:var(--teal-700);">Manevi</span>
+              <p style="color:var(--ink-soft);">En az 1 vakit ibadeti tescillemiş seyyah.</p>
+            </div>
+            <div class="flex items-start space-x-2.5 text-[11px]">
+              <span class="sicil-tag min-w-[76px] text-center" style="color:var(--teal-700);">Türbedar</span>
+              <p style="color:var(--ink-soft);">Bursa genelinde 5 farklı tarihi camide ibadet etmiş kişi.</p>
+            </div>
+            <div class="flex items-start space-x-2.5 text-[11px]">
+              <span class="sicil-tag min-w-[76px] text-center" style="color:var(--brick-deep);">Mihrap</span>
+              <p style="color:var(--ink-soft);">Osmangazi ya da Yıldırım ilçelerinden birindeki tüm camileri tamamlayan.</p>
+            </div>
+            <div class="flex items-start space-x-2.5 text-[11px]">
+              <span class="sicil-tag min-w-[76px] text-center" style="color:var(--gold-deep);">Fatih 👑</span>
+              <p style="color:var(--ink-soft);">Envanterdeki 70 mabet ve mescidin tamamını tamamlayan baş seyyah.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ALT NAVİGASYON -->
+  <nav class="backdrop-blur-lg fixed bottom-0 left-0 right-0 z-40 shadow-lg safe-padding-bottom" style="background:rgba(255,255,255,0.94); border-top:1px solid var(--line);">
+    <div class="max-w-md mx-auto grid grid-cols-5 h-14 relative pt-1">
+      <div id="navIndicator" class="nav-indicator absolute top-0 h-0.5 w-1/5 left-0" style="background:var(--teal-900);"></div>
+
+      <button onclick="switchTab(0)" id="nav-btn-0" class="nav-item active flex flex-col items-center justify-center transition-colors">
+        <i class="fa-solid fa-compass text-base"></i>
+        <span class="text-[9px] font-bold mt-1">Keşfet</span>
+      </button>
+      <button onclick="switchTab(1)" id="nav-btn-1" class="nav-item flex flex-col items-center justify-center transition-colors">
+        <i class="fa-solid fa-mosque text-base"></i>
+        <span class="text-[9px] font-bold mt-1">Mabetler</span>
+      </button>
+      <button onclick="switchTab(2)" id="nav-btn-2" class="nav-item flex flex-col items-center justify-center relative">
+        <div class="absolute -top-3.5 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-md border-4 border-white transition-transform active:scale-95" style="background:var(--teal-900);">
+          <i class="fa-solid fa-plus text-base"></i>
+        </div>
+        <span class="text-[9px] font-bold mt-7">Deftere İşle</span>
+      </button>
+      <button onclick="switchTab(3)" id="nav-btn-3" class="nav-item flex flex-col items-center justify-center transition-colors">
+        <i class="fa-solid fa-scroll text-base"></i>
+        <span class="text-[9px] font-bold mt-1">Defter</span>
+      </button>
+      <button onclick="switchTab(4)" id="nav-btn-4" class="nav-item flex flex-col items-center justify-center transition-colors">
+        <i class="fa-solid fa-user-gear text-base"></i>
+        <span class="text-[9px] font-bold mt-1">Profil</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ONAY MODALI -->
+  <div id="customConfirmModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-5 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl w-full max-w-xs p-5 shadow-2xl space-y-4 transform scale-95 transition-transform duration-200">
+      <div class="text-center space-y-1.5">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl" style="background:rgba(168,86,49,0.1); color:var(--brick);">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 id="confirmTitle" class="font-bold text-sm" style="color:var(--ink);">Emin misiniz?</h3>
+        <p id="confirmMessage" class="text-xs" style="color:var(--ink-soft);">Bu işlem geri alınamaz.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button id="confirmCancelBtn" class="py-2.5 rounded-xl text-xs font-semibold transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">İptal</button>
+        <button id="confirmOkBtn" class="text-white py-2.5 rounded-xl text-xs font-semibold transition-all" style="background:var(--brick);">Sil</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl">
+      <i class="fa-solid fa-times"></i>
+    </button>
+    <img id="lightboxImage" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl">
+  </div>
+
+  <!-- TOAST -->
+  <div id="toastNotification" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 backdrop-blur text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center space-x-2 w-max max-w-[85vw] pointer-events-none opacity-0 transform -translate-y-4 transition-all duration-300" style="background:rgba(8,43,37,0.96);">
+    <div id="toastIcon" class="flex-shrink-0" style="color:var(--gold);">
+      <i class="fa-solid fa-circle-check text-base"></i>
+    </div>
+    <p id="toastMessage" class="text-[11px] font-semibold leading-snug"></p>
+  </div>
+
+
+  <!-- ==================== LOGIC & DATA SCRIPT ==================== -->
+  <script>
+    // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI (70 ADET)
+    const PRESET_MOSQUES = [
+      // OSMANGAZİ - 35 ADET
+      { id: "ulu-cami", name: "Bursa Ulu Cami", district: "Osmangazi", address: "Nalbantoğlu, Atatürk Cd., Osmangazi/Bursa", mapsSearch: "Bursa Ulu Cami" },
+      { id: "orhan-gazi", name: "Orhan Gazi Camii", district: "Osmangazi", address: "Nalbantoğlu, Tarihi Çarşı, Osmangazi/Bursa", mapsSearch: "Orhan Gazi Camii Bursa" },
+      { id: "hudavendigar", name: "I. Murad Hüdavendigar Camii", district: "Osmangazi", address: "Çekirge, 1. Murat Sk., Osmangazi/Bursa", mapsSearch: "Hüdavendigar Camii Bursa" },
+      { id: "muradiye", name: "Muradiye Camii (II. Murad)", district: "Osmangazi", address: "Muradiye, Prf. Dr. Halil İnalcık Sk., Osmangazi/Bursa", mapsSearch: "Muradiye Camii Bursa" },
+      { id: "sehadet-camii", name: "Şehadet Camii", district: "Osmangazi", address: "Yiğitler, Tophane Parkı İçi, Osmangazi/Bursa", mapsSearch: "Şehadet Camii Bursa" },
+      { id: "uftade-camii", name: "Üftade Camii ve Mescidi", district: "Osmangazi", address: "Kavaklı, Üftade Sk., Osmangazi/Bursa", mapsSearch: "Üftade Camii Bursa" },
+      { id: "yigit-kohne", name: "Yiğit Köhne Camii", district: "Osmangazi", address: "Alacahırka, Kiremitçi Sk., Osmangazi/Bursa", mapsSearch: "Yiğit Köhne Camii" },
+      { id: "alaaddin-bey", name: "Alaaddin Bey Camii", district: "Osmangazi", address: "Alaaddin, Alaaddin Sk., Osmangazi/Bursa", mapsSearch: "Alaaddin Bey Camii Bursa" },
+      { id: "abdal-camii", name: "Abdal Camii", district: "Osmangazi", address: "Abdal, Abdal Cd., Osmangazi/Bursa", mapsSearch: "Abdal Camii Bursa" },
+      { id: "haci-ozbek", name: "Hacı Özbek Camii", district: "Osmangazi", address: "Reyhan, Tarihi Çarşı, Osmangazi/Bursa", mapsSearch: "Hacı Özbek Camii Bursa" },
+      { id: "reyhan-camii", name: "Reyhan Camii", district: "Osmangazi", address: "Reyhan, Reyhan Cd., Osmangazi/Bursa", mapsSearch: "Reyhan Camii Bursa" },
+      { id: "kavakli-camii", name: "Kavaklı Camii", district: "Osmangazi", address: "Kavaklı, Kavaklı Cd., Osmangazi/Bursa", mapsSearch: "Kavaklı Camii Bursa" },
+      { id: "alacahirka-camii", name: "Alacahırka Camii", district: "Osmangazi", address: "Alacahırka, Alacahırka Cd., Osmangazi/Bursa", mapsSearch: "Alacahırka Camii Bursa" },
+      { id: "sekerhoca-camii", name: "Şekerhoca Camii", district: "Osmangazi", address: "Şekerhoca, Şekerhoca Sk., Osmangazi/Bursa", mapsSearch: "Şekerhoca Camii Bursa" },
+      { id: "karabas-i-veli", name: "Karabaş-i Veli Camii", district: "Osmangazi", address: "Maksem, Karabaş Sk., Osmangazi/Bursa", mapsSearch: "Karabaş-i Veli Kültür Merkezi" },
+      { id: "tahtakale-camii", name: "Tahtakale Camii", district: "Osmangazi", address: "Tahtakale, Tahtakale Mh., Osmangazi/Bursa", mapsSearch: "Tahtakale Camii Bursa" },
+      { id: "kiremitci-camii", name: "Kiremitçi Camii", district: "Osmangazi", address: "Kiremitçi, Kiremitçi Mh., Osmangazi/Bursa", mapsSearch: "Kiremitçi Camii Bursa" },
+      { id: "kayhan-camii", name: "Kayhan Camii", district: "Osmangazi", address: "Kayhan, Kayhan Cd., Osmangazi/Bursa", mapsSearch: "Kayhan Camii Bursa" },
+      { id: "tuzpazari-camii", name: "Tuzpazarı Camii", district: "Osmangazi", address: "Tuzpazarı, Çarşı İçi, Osmangazi/Bursa", mapsSearch: "Tuzpazarı Camii Bursa" },
+      { id: "serefuddin-camii", name: "Şerefüddin Camii", district: "Osmangazi", address: "Hocaalizade, Şerefüddin Sk., Osmangazi/Bursa", mapsSearch: "Şerefüddin Camii" },
+      { id: "hoca-alizade", name: "Hoca Alizade Camii", district: "Osmangazi", address: "Hocaalizade, Hocaalizade Cd., Osmangazi/Bursa", mapsSearch: "Hoca Alizade Camii Bursa" },
+      { id: "veled-i-sarban", name: "Veled-i Sarban Camii", district: "Osmangazi", address: "Reyhan Mh., Sarban Sk., Osmangazi/Bursa", mapsSearch: "Veled-i Sarban Camii" },
+      { id: "karaseyh-camii", name: "Karaşeyh Camii", district: "Osmangazi", address: "Karaşeyh Mh., Osmangazi/Bursa", mapsSearch: "Karaşeyh Camii Bursa" },
+      { id: "seyh-muftu", name: "Şeyh Müftü Camii", district: "Osmangazi", address: "Şeyhmüftü Mh., Osmangazi/Bursa", mapsSearch: "Şeyh Müftü Camii" },
+      { id: "somuncu-baba-firini", name: "Somuncu Baba Mescidi", district: "Osmangazi", address: "Mollafenari, Somuncu Baba Sk., Osmangazi/Bursa", mapsSearch: "Somuncu Baba Camii" },
+      { id: "ishakpasa-camii", name: "İshakpaşa Camii", district: "Osmangazi", address: "Muradiye, İshakpaşa Sk., Osmangazi/Bursa", mapsSearch: "İshakpaşa Camii Bursa" },
+      { id: "bedrettin-camii", name: "Bedrettin Camii", district: "Osmangazi", address: "Bedrettin Mh., Osmangazi/Bursa", mapsSearch: "Bedrettin Camii Bursa" },
+      { id: "yerkapi-camii", name: "Yerkapı Camii", district: "Osmangazi", address: "Yerkapı Mh., Osmangazi/Bursa", mapsSearch: "Yerkapı Camii Bursa" },
+      { id: "demirkapi-mescidi", name: "Demirkapı Mescidi", district: "Osmangazi", address: "Demirkapı Sk., Osmangazi/Bursa", mapsSearch: "Demirkapı Mescidi" },
+      { id: "basci-ibrahim", name: "Başçı İbrahim Camii", district: "Osmangazi", address: "Maksem Mh., Başçı İbrahim Sk., Osmangazi/Bursa", mapsSearch: "Başçı İbrahim Camii" },
+      { id: "zafer-camii", name: "Zafer Camii", district: "Osmangazi", address: "Zafer Mh., Osmangazi/Bursa", mapsSearch: "Zafer Camii Osmangazi" },
+      { id: "sehrekustu-camii", name: "Şehreküstü Camii", district: "Osmangazi", address: "Şehreküstü, Osmangazi/Bursa", mapsSearch: "Şehreküstü Camii" },
+      { id: "maksem-camii", name: "Maksem Camii", district: "Osmangazi", address: "Maksem, Osmangazi/Bursa", mapsSearch: "Maksem Camii" },
+      { id: "dayioglu-camii", name: "Dayıoğlu Camii", district: "Osmangazi", address: "Tahtakale, Osmangazi/Bursa", mapsSearch: "Dayıoğlu Camii" },
+      { id: "hamzabey-camii", name: "Hamzabey Camii", district: "Osmangazi", address: "Hamzabey Mh., Osmangazi/Bursa", mapsSearch: "Hamzabey Camii Bursa" },
+
+      // YILDIRIM - 35 ADET
+      { id: "yesil-cami", name: "Yeşil Cami", district: "Yıldırım", address: "Yeşil, Yıldırım/Bursa", mapsSearch: "Yeşil Cami Bursa" },
+      { id: "emir-sultan", name: "Emir Sultan Camii", district: "Yıldırım", address: "Emirsultan, Yıldırım/Bursa", mapsSearch: "Emir Sultan Camii Bursa" },
+      { id: "yildirim-bayezid", name: "Yıldırım Bayezid Camii", district: "Yıldırım", address: "Yıldırım, Yıldırım/Bursa", mapsSearch: "Yıldırım Bayezid Camii" },
+      { id: "ali-pasa", name: "Ali Paşa Camii", district: "Yıldırım", address: "Namazgah, Ali Paşa Sk., Yıldırım/Bursa", mapsSearch: "Ali Paşa Camii Bursa" },
+      { id: "namazgah", name: "Bursa Tarihi Namazgah", district: "Yıldırım", address: "Namazgah, Yıldırım/Bursa", mapsSearch: "Namazgah Bursa" },
+      { id: "molla-yegan", name: "Molla Yegan Camii", district: "Yıldırım", address: "Yıldırım Mh., Yıldırım/Bursa", mapsSearch: "Molla Yegan" },
+      { id: "selimzade-camii", name: "Selimzade Camii", district: "Yıldırım", address: "Selimzade, Yıldırım/Bursa", mapsSearch: "Selimzade Camii Bursa" },
+      { id: "davutkadi-camii", name: "Davutkadı Camii", district: "Yıldırım", address: "Davutkadı Mh., Yıldırım/Bursa", mapsSearch: "Davutkadı Camii Bursa" },
+      { id: "musababa-camii", name: "Musababa Camii", district: "Yıldırım", address: "Musababa Mh., Yıldırım/Bursa", mapsSearch: "Musababa Camii" },
+      { id: "meydancik-camii", name: "Meydancık Camii", district: "Yıldırım", address: "Meydancık Mh., Yıldırım/Bursa", mapsSearch: "Meydancık Camii" },
+      { id: "piremir-camii", name: "Piremir Camii", district: "Yıldırım", address: "Piremir Mh., Yıldırım/Bursa", mapsSearch: "Piremir Camii" },
+      { id: "teferruc-camii", name: "Teferrüç Camii", district: "Yıldırım", address: "Teferrüç, Yıldırım/Bursa", mapsSearch: "Teferrüç Camii" },
+      { id: "karaagac-camii", name: "Karaağaç Camii", district: "Yıldırım", address: "Karaağaç Mh., Yıldırım/Bursa", mapsSearch: "Karaağaç Camii" },
+      { id: "zeyniler-camii", name: "Zeyniler Köyü Mescidi", district: "Yıldırım", address: "Zeyniler Köyü, Yıldırım/Bursa", mapsSearch: "Zeyniler Mescidi" },
+      { id: "molla-arap", name: "Molla Arap Camii", district: "Yıldırım", address: "Mollaarap Mh., Yıldırım/Bursa", mapsSearch: "Molla Arap Camii" },
+      { id: "isabey-camii", name: "İsabey Camii", district: "Yıldırım", address: "İsabey Mh., Yıldırım/Bursa", mapsSearch: "İsabey Camii Yıldırım" },
+      { id: "karamazak-camii", name: "Karamazak Camii", district: "Yıldırım", address: "Karamazak Mh., Yıldırım/Bursa", mapsSearch: "Karamazak Camii" },
+      { id: "haci-seyfettin", name: "Hacı Seyfettin Camii", district: "Yıldırım", address: "Hacı Seyfettin Mh., Yıldırım/Bursa", mapsSearch: "Hacı Seyfettin Camii" },
+      { id: "umurbey-camii", name: "Umurbey Camii", district: "Yıldırım", address: "Umurbey Mh., Yıldırım/Bursa", mapsSearch: "Umurbey Camii" },
+      { id: "esenyurt-camii", name: "Esenyurt Mescidi", district: "Yıldırım", address: "Esenyurt Mh., Yıldırım/Bursa", mapsSearch: "Esenyurt Camii" },
+      { id: "seker-hoca-yildirim", name: "Şeker Hoca Camii (Yıldırım)", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Şeker Hoca Camii Yıldırım" },
+      { id: "yesil-mescidi", name: "Yeşil Türbe Mescidi", district: "Yıldırım", address: "Yeşil, Yıldırım/Bursa", mapsSearch: "Yeşil Türbe" },
+      { id: "selcuk-hatun", name: "Selçuk Hatun Camii", district: "Yıldırım", address: "Selçuk Hatun Mh., Yıldırım/Bursa", mapsSearch: "Selçuk Hatun Camii" },
+      { id: "kaplikaya-camii", name: "Kaplıkaya Mescidi", district: "Yıldırım", address: "Kaplıkaya, Yıldırım/Bursa", mapsSearch: "Kaplıkaya Camii" },
+      { id: "haci-ilyas-camii", name: "Hacı İlyas Camii", district: "Yıldırım", address: "Hacı İlyas Mh., Yıldırım/Bursa", mapsSearch: "Hacı İlyas Camii" },
+      { id: "degirmenlikizik-camii", name: "Değirmenlikızık Camii", district: "Yıldırım", address: "Değirmenlikızık, Yıldırım/Bursa", mapsSearch: "Değirmenlikızık Camii" },
+      { id: "temenyeri-mescidi", name: "Temenyeri Mescidi", district: "Yıldırım", address: "Temenyeri, Yıldırım/Bursa", mapsSearch: "Temenyeri" },
+      { id: "fidyekizik-camii", name: "Fidyekızık Tarihi Camii", district: "Yıldırım", address: "Fidyekızık, Yıldırım/Bursa", mapsSearch: "Fidyekızık Camii" },
+      { id: "sirinevler-mescidi", name: "Şirinevler Mescidi", district: "Yıldırım", address: "Şirinevler, Yıldırım/Bursa", mapsSearch: "Şirinevler Camii Yıldırım" },
+      { id: "ramazanbey-camii", name: "Ramazanbey Camii", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Ramazanbey Camii Yıldırım" },
+      { id: "gokdere-camii", name: "Gökdere Camii", district: "Yıldırım", address: "Meydancık, Yıldırım/Bursa", mapsSearch: "Gökdere Camii" },
+      { id: "celebi-mehmet", name: "Çelebi Mehmet Camii", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Çelebi Mehmet Camii Yıldırım" },
+      { id: "emirsultan-nisanci", name: "Emirsultan Nişancı Mescidi", district: "Yıldırım", address: "Emirsultan, Yıldırım/Bursa", mapsSearch: "Nişancı Mescidi Bursa" },
+      { id: "sitti-hatun", name: "Sitti Hatun Mescidi", district: "Yıldırım", address: "Umurbey, Yıldırım/Bursa", mapsSearch: "Sitti Hatun Camii" },
+      { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" }
+    ];
+
+    const DISTRICT_CODE = { "Osmangazi": "OSG", "Yıldırım": "YLD" };
+    function getSicilNo(mosque) {
+      const sameDistrict = PRESET_MOSQUES.filter(m => m.district === mosque.district);
+      const idx = sameDistrict.findIndex(m => m.id === mosque.id) + 1;
+      return `${DISTRICT_CODE[mosque.district]}-${String(idx).padStart(2, '0')}`;
+    }
+
+    window.escapeHtml = function(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    };
+
+    // Bozuk/desteklenmeyen görsellerde harici servise bağımlı olmayan yerel bir yer tutucu
+    const FALLBACK_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="%23F2ECDD"/><text x="50%" y="50%" font-family="sans-serif" font-size="12" fill="%235B5445" text-anchor="middle" dy=".3em">Önizleme yok</text></svg>'
+    );
+    window.__imgFallback = function(el) { el.onerror = null; el.src = FALLBACK_IMG; };
+
+    // 2. HER FORMATTA FOTOĞRAF DESTEKLEYEN SIKIŞTIRMA SİSTEMİ
+    // HEIC/HEIF (iPhone kamerası) önce heic2any ile JPEG'e çevrilir, ardından
+    // tüm formatlar (jpg/png/webp/gif/bmp...) aynı Canvas sıkıştırma akışından geçer.
+    window.compressImage = function(file) {
+      return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => reject(new Error('TIMEOUT')), 20000);
+        const finishReject = (err) => { clearTimeout(timeoutId); reject(err); };
+        const finishResolve = (val) => { clearTimeout(timeoutId); resolve(val); };
+
+        const runCompression = (blobLike) => {
+          const reader = new FileReader();
+          reader.onerror = () => finishReject(new Error('READ_ERROR'));
+          reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+              try {
+                const canvas = document.createElement('canvas');
+                const maxDimension = 320;
+                let width = img.width, height = img.height;
+                if (width > height) { if (width > maxDimension) { height = Math.round((height * maxDimension) / width); width = maxDimension; } }
+                else { if (height > maxDimension) { width = Math.round((width * maxDimension) / height); height = maxDimension; } }
+                canvas.width = width; canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                finishResolve(canvas.toDataURL('image/jpeg', 0.5));
+              } catch (err) { finishReject(err); }
+            };
+            img.onerror = () => finishReject(new Error('DECODE_ERROR'));
+            img.src = event.target.result;
+          };
+          reader.readAsDataURL(blobLike);
+        };
+
+        const lowerName = (file.name || '').toLowerCase();
+        const looksHeic = ['image/heic', 'image/heif'].includes((file.type || '').toLowerCase())
+          || lowerName.endsWith('.heic') || lowerName.endsWith('.heif');
+
+        if (looksHeic) {
+          if (typeof heic2any === 'undefined') { finishReject(new Error('HEIC_LIB_MISSING')); return; }
+          heic2any({ blob: file, toType: 'image/jpeg', quality: 0.85 })
+            .then((converted) => runCompression(Array.isArray(converted) ? converted[0] : converted))
+            .catch(() => finishReject(new Error('HEIC_CONVERT_ERROR')));
+        } else {
+          runCompression(file);
+        }
+      });
+    };
+
+    // 3. KİŞİSEL KALICI DEPOLAMA (window.storage — hesabınıza özel, shared:false)
+    const STORAGE_KEY = 'bursa-cami-ziyaretleri-umit-v1';
+    let visitsData = [];
+    let activeFilterDistrict = 'HEPSİ';
+    let currentActiveTab = 0;
+    window.uploadedPhotos = { 1: null, 2: null };
+
+    function getVisitTimestamp(v) {
+      if (v.date) {
+        const d = new Date(`${v.date}T${v.time || '00:00'}`);
+        if (!isNaN(d.getTime())) return d.getTime();
+      }
+      const c = v.createdAt ? new Date(v.createdAt).getTime() : NaN;
+      return isNaN(c) ? 0 : c;
+    }
+    function sortVisitsInMemory() {
+      visitsData.sort((a, b) => getVisitTimestamp(b) - getVisitTimestamp(a));
+    }
+
+    async function loadVisits() {
+      try {
+        const result = await window.storage.get(STORAGE_KEY, false);
+        visitsData = (result && result.value) ? JSON.parse(result.value) : [];
+      } catch (e) {
+        visitsData = [];
+      }
+      sortVisitsInMemory();
+    }
+
+    async function persistVisits() {
+      try {
+        const result = await window.storage.set(STORAGE_KEY, JSON.stringify(visitsData), false);
+        if (!result) throw new Error('SET_FAILED');
+        return true;
+      } catch (e) {
+        showToast("Kayıt saklanırken bir sorun oluştu. Lütfen tekrar deneyin.", "error");
+        return false;
+      }
+    }
+
+    async function initApp() {
+      await loadVisits();
+      document.getElementById('appModeBadge').innerHTML = '<span style="color:var(--teal-700);">Hesabınıza Kayıtlı</span>';
+      document.getElementById('authLoader').classList.add('hidden');
+      document.getElementById('syncStatus').innerHTML = `
+        <span class="w-1.5 h-1.5 rounded-full" style="background:var(--gold);"></span>
+        <span>Kayıtlar Hazır</span>
+      `;
+      triggerAllUIUpdates();
+    }
+
+    function triggerAllUIUpdates() {
+      updateDashboardUI();
+      updateMosquesListUI();
+      updateHistoryFeedUI();
+    }
+
+    // 4. DASHBOARD + SEYAHAT ÖNERİSİ
+    function updateDashboardUI() {
+      document.getElementById('totalVisitsCount').textContent = `${visitsData.length} Vakit`;
+      const visitedMosqueIds = new Set(visitsData.map(v => v.mosqueId));
+      const osmangaziTotal = PRESET_MOSQUES.filter(m => m.district === 'Osmangazi');
+      const yildirimTotal = PRESET_MOSQUES.filter(m => m.district === 'Yıldırım');
+      const osmangaziVisited = osmangaziTotal.filter(m => visitedMosqueIds.has(m.id)).length;
+      const yildirimVisited = yildirimTotal.filter(m => visitedMosqueIds.has(m.id)).length;
+
+      document.getElementById('osmangaziProgressTxt').textContent = `${osmangaziVisited} / ${osmangaziTotal.length}`;
+      document.getElementById('yildirimProgressTxt').textContent = `${yildirimVisited} / ${yildirimTotal.length}`;
+      document.getElementById('osmangaziProgressBar').style.width = `${osmangaziTotal.length > 0 ? (osmangaziVisited / osmangaziTotal.length) * 100 : 0}%`;
+      document.getElementById('yildirimProgressBar').style.width = `${yildirimTotal.length > 0 ? (yildirimVisited / yildirimTotal.length) * 100 : 0}%`;
+
+      const totalUniquePresetVisited = PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length;
+      const overallPerc = Math.round((totalUniquePresetVisited / PRESET_MOSQUES.length) * 100);
+      document.getElementById('overallBadge').textContent = `%${overallPerc} Tamamlandı`;
+
+      const recText = document.getElementById('recommendationText');
+      if (visitsData.length === 0) {
+        recText.textContent = "Manevi seyahatinize başlamak için ilk namazınızı tescilli Ulu Cami veya Yeşil Cami'de kılabilirsiniz!";
+      } else {
+        const unvisitedOsmangazi = osmangaziTotal.filter(m => !visitedMosqueIds.has(m.id));
+        const unvisitedYildirim = yildirimTotal.filter(m => !visitedMosqueIds.has(m.id));
+        if (unvisitedOsmangazi.length > 0 && osmangaziVisited <= yildirimVisited) {
+          recText.textContent = `Sıradaki Osmangazi rotanız için önerilen mabet: "${unvisitedOsmangazi[0].name}".`;
+        } else if (unvisitedYildirim.length > 0) {
+          recText.textContent = `Yıldırım ilçesindeki tescilli mabetlerden "${unvisitedYildirim[0].name}" ziyaretinizi bekliyor.`;
+        } else {
+          recText.textContent = "Harika! Bursa'daki tescilli 70 caminin tamamında ibadet ettiniz. Allah kabul etsin.";
+        }
+      }
+
+      let userTitle = "Seyyah 🧭";
+      if (visitsData.length === 0) userTitle = "Yola Hazır Seyyah 🧭";
+      else if (overallPerc === 100) userTitle = "Bursa Fatihi 👑";
+      else if (osmangaziVisited === osmangaziTotal.length || yildirimVisited === yildirimTotal.length) userTitle = "Mihrap Fatihi 🌟";
+      else if (totalUniquePresetVisited >= 5) userTitle = "Manevi Türbedar 🕌";
+      else if (visitsData.length >= 1) userTitle = "Manevi Seyyah 👣";
+      document.getElementById('userTitle').textContent = userTitle;
+
+      const latestVisitDiv = document.getElementById('latestVisitContainer');
+      if (visitsData.length > 0) {
+        const last = visitsData[0];
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = last.date ? new Date(last.date).toLocaleDateString('tr-TR', options) : '';
+        latestVisitDiv.innerHTML = `
+          <div class="rounded-xl p-3 flex items-center justify-between" style="background:var(--paper-deep); border:1px solid var(--line);">
+            <div class="space-y-0.5">
+              <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded font-ledger" style="color:var(--teal-900); background:rgba(21,90,76,0.12);">${escapeHtml(last.prayerTime)} Namazı</span>
+              <h4 class="font-bold text-xs mt-1 truncate max-w-[200px]" style="color:var(--ink);">${escapeHtml(last.mosqueName)}</h4>
+              <p class="text-[10px]" style="color:var(--ink-faint);">${formattedDate} - Saat ${escapeHtml(last.time) || '--:--'}</p>
+            </div>
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(21,90,76,0.12); color:var(--teal-700);">
+              <i class="fa-solid fa-check text-sm"></i>
+            </div>
+          </div>
+        `;
+      } else {
+        latestVisitDiv.innerHTML = `<p class="text-xs py-3 text-center" style="color:var(--ink-faint);">Namaz kaydı bulunamadı.</p>`;
+      }
+    }
+
+    // 5. CAMİ LİSTESİ
+    function updateMosquesListUI() {
+      const container = document.getElementById('mosquesList');
+      const searchVal = document.getElementById('mosqueSearchInput').value.toLowerCase();
+      const mosqueStats = {};
+      PRESET_MOSQUES.forEach(m => { mosqueStats[m.id] = { Sabah: 0, Öğle: 0, İkindi: 0, Akşam: 0, Yatsı: 0, total: 0 }; });
+      visitsData.forEach(v => {
+        if (mosqueStats[v.mosqueId]) {
+          mosqueStats[v.mosqueId][v.prayerTime] = (mosqueStats[v.mosqueId][v.prayerTime] || 0) + 1;
+          mosqueStats[v.mosqueId].total += 1;
+        }
+      });
+
+      const filtered = PRESET_MOSQUES.filter(m => {
+        const matchesSearch = m.name.toLowerCase().includes(searchVal) || m.address.toLowerCase().includes(searchVal);
+        const matchesDistrict = activeFilterDistrict === 'HEPSİ' || m.district === activeFilterDistrict;
+        return matchesSearch && matchesDistrict;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="paper-card rounded-2xl p-6 text-center"><p class="text-xs" style="color:var(--ink-faint);">Aradığınız mabet bulunamadı.</p></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(m => {
+        const stats = mosqueStats[m.id];
+        const isVisited = stats.total > 0;
+        const isOsmangazi = m.district === 'Osmangazi';
+        const railClass = isOsmangazi ? 'bar-osmangazi' : 'bar-yildirim';
+        const badgeClass = isOsmangazi ? 'badge-osmangazi' : 'badge-yildirim';
+
+        const times = ['Sabah', 'Öğle', 'İkindi', 'Akşam', 'Yatsı'];
+        const timeBadgesHTML = times.map(time => {
+          const count = stats[time] || 0;
+          const style = count > 0
+            ? `background:${isOsmangazi ? 'var(--teal-900)' : 'var(--brick)'}; color:#fff; font-weight:700;`
+            : `background:var(--paper-deep); color:var(--ink-faint);`;
+          return `<span class="w-6 h-6 rounded-full text-[9px] flex items-center justify-center transition-all" style="${style}" title="${time}">${time[0]}</span>`;
+        }).join('');
+
+        return `
+          <div class="paper-card rounded-2xl p-3.5 relative overflow-hidden transition-all">
+            <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}"></div>
+            <div class="flex justify-between items-start pl-1.5">
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[9px] font-bold ${badgeClass} px-2 py-0.5 rounded-full uppercase">${m.district}</span>
+                  <span class="sicil-tag">${getSicilNo(m)}</span>
+                </div>
+                <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${m.name}</h3>
+                <p class="text-[10px] truncate max-w-[210px] mt-0.5 flex items-center gap-1" style="color:var(--ink-faint);">
+                  <i class="fa-solid fa-location-dot"></i><span>${m.address}</span>
+                </p>
+              </div>
+              <div>
+                ${isVisited
+                  ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-0.5" style="background:rgba(21,90,76,0.12); color:var(--teal-900);"><i class="fa-solid fa-check"></i> <span>İhya Edildi</span></span>`
+                  : `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full" style="background:var(--paper-deep); color:var(--ink-faint);">Kılınmadı</span>`}
+              </div>
+            </div>
+            <div class="pl-1.5 pt-2.5 flex items-center justify-between mt-2.5" style="border-top:1px solid var(--line);">
+              <div class="flex items-center space-x-1">${timeBadgesHTML}</div>
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch)}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg font-bold flex items-center space-x-1 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
+                <i class="fa-solid fa-map-location-dot"></i><span>Harita</span>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 6. GÜNLÜK / GEÇMİŞ AKIŞI
+    function updateHistoryFeedUI() {
+      const container = document.getElementById('historyFeed');
+      document.getElementById('historyTotalCount').textContent = `${visitsData.length} Kayıt`;
+
+      if (visitsData.length === 0) {
+        container.innerHTML = `<div class="paper-card rounded-2xl p-6 text-center"><p class="text-xs" style="color:var(--ink-faint);">Manevi günlüğünüz henüz boş.</p></div>`;
+        return;
+      }
+
+      container.innerHTML = visitsData.map(v => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+        const formattedDate = v.date ? new Date(v.date).toLocaleDateString('tr-TR', options) : 'Tarih Yok';
+
+        let photosHTML = '';
+        if (v.photos && v.photos.length > 0) {
+          photosHTML = `
+            <div class="grid grid-cols-2 gap-2 mt-2">
+              ${v.photos.map(p => `
+                <div class="relative rounded-xl overflow-hidden h-24 cursor-pointer" style="background:var(--paper-deep); border:1px solid var(--line);" onclick="openLightbox(this.dataset.src)" data-src="${p}">
+                  <img src="${p}" class="w-full h-full object-cover" onerror="window.__imgFallback(this)">
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        let mapBtnHTML = '';
+        if (v.address) {
+          const isUrl = v.address.startsWith('http') || v.address.includes('google.com/maps');
+          const targetUrl = isUrl ? v.address : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.mosqueName + ' ' + v.address)}`;
+          mapBtnHTML = `
+            <a href="${targetUrl}" target="_blank" rel="noopener" class="inline-flex items-center space-x-1 text-[10px] font-bold px-2 py-1 rounded-lg mt-2 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
+              <i class="fa-solid fa-compass"></i><span class="truncate max-w-[150px]">${isUrl ? 'Konumu Görüntüle' : escapeHtml(v.address)}</span>
+            </a>
+          `;
+        }
+
+        return `
+          <div class="paper-card rounded-2xl p-4 relative">
+            <button onclick="triggerDelete('${v.id}')" class="absolute top-4 right-4 p-1" style="color:#D8D2C0;">
+              <i class="fa-solid fa-trash-can text-xs"></i>
+            </button>
+            <div class="space-y-1">
+              <div class="flex items-center space-x-1.5">
+                <span class="text-[9px] font-bold text-white px-2 py-0.5 rounded font-ledger" style="background:var(--teal-900);">${escapeHtml(v.prayerTime)} Namazı</span>
+                <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">${escapeHtml(v.district)}</span>
+              </div>
+              <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${escapeHtml(v.mosqueName)}</h3>
+              <p class="text-[10px]" style="color:var(--ink-faint);">${formattedDate} - Saat: ${escapeHtml(v.time) || '--:--'}</p>
+            </div>
+            ${v.notes ? `<p class="text-[11px] p-2.5 rounded-lg italic mt-2" style="color:var(--ink-soft); background:var(--paper-deep); border-left:2px solid var(--teal-700);">"${escapeHtml(v.notes)}"</p>` : ''}
+            ${mapBtnHTML}
+            ${photosHTML}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 7. SİLME ONAY MODALI
+    let pendingDeleteId = null;
+    window.triggerDelete = function(docId) {
+      pendingDeleteId = docId;
+      document.getElementById('confirmTitle').textContent = "Kaydı Siliyoruz";
+      document.getElementById('confirmMessage').textContent = "Bu namaz ibadeti kaydı günlüğünüzden silinecektir. Emin misiniz?";
+      const modal = document.getElementById('customConfirmModal');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.firstElementChild.classList.remove('scale-95');
+        modal.firstElementChild.classList.add('scale-100');
+      }, 10);
+    };
+
+    document.getElementById('confirmCancelBtn').addEventListener('click', () => closeConfirmModal());
+    document.getElementById('confirmOkBtn').addEventListener('click', async () => {
+      if (pendingDeleteId) {
+        await executeDeleteLog(pendingDeleteId);
+        closeConfirmModal();
+      }
+    });
+
+    function closeConfirmModal() {
+      const modal = document.getElementById('customConfirmModal');
+      modal.firstElementChild.classList.remove('scale-100');
+      modal.firstElementChild.classList.add('scale-95');
+      setTimeout(() => { modal.classList.add('hidden'); pendingDeleteId = null; }, 150);
+    }
+
+    async function executeDeleteLog(docId) {
+      const backup = visitsData;
+      visitsData = visitsData.filter(v => v.id !== docId);
+      const ok = await persistVisits();
+      if (ok) {
+        triggerAllUIUpdates();
+        showToast("Kayıt günlükten silindi.", "success");
+      } else {
+        visitsData = backup;
+      }
+    }
+
+    // 8. YENİ İBADET KAYDETME
+    window.handleVisitSubmit = async function(event) {
+      event.preventDefault();
+
+      const selectElem = document.getElementById('formMosqueSelect');
+      const selectedOptionId = selectElem.value;
+      const prayerTime = document.getElementById('formPrayerSelected').value;
+      const address = document.getElementById('formAddress').value.trim();
+      const date = document.getElementById('formDate').value;
+      const time = document.getElementById('formTime').value;
+      const notes = document.getElementById('formNotes').value.trim();
+
+      if (!selectedOptionId) { showToast("Lütfen ibadet edilen mabedi seçin.", "error"); return; }
+      if (!prayerTime) { showToast("Lütfen kılınan namaz vaktini belirtin.", "error"); return; }
+
+      let mosqueName = "", mosqueId = selectedOptionId, district = "Osmangazi";
+      if (selectedOptionId === "custom") {
+        const customName = document.getElementById('formCustomName').value.trim();
+        if (!customName) { showToast("Mabet ismi boş bırakılamaz.", "error"); return; }
+        mosqueName = customName;
+        mosqueId = "custom-" + Date.now();
+        district = document.querySelector('input[name="formCustomDistrict"]:checked').value;
+      } else {
+        const matched = PRESET_MOSQUES.find(m => m.id === selectedOptionId);
+        if (matched) { mosqueName = matched.name; district = matched.district; }
+      }
+
+      const photosArray = [];
+      if (window.uploadedPhotos[1]) photosArray.push(window.uploadedPhotos[1]);
+      if (window.uploadedPhotos[2]) photosArray.push(window.uploadedPhotos[2]);
+
+      const btn = document.getElementById('btnSubmitForm');
+      const origText = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Defter Yazılıyor...</span>`;
+      btn.disabled = true;
+
+      const newRecord = {
+        id: "v-" + Date.now(), mosqueId, mosqueName, district, prayerTime,
+        address: address || (PRESET_MOSQUES.find(m => m.id === selectedOptionId)?.address || ''),
+        date, time, notes, photos: photosArray, createdAt: new Date().toISOString()
+      };
+
+      visitsData.push(newRecord);
+      sortVisitsInMemory();
+      const ok = await persistVisits();
+
+      if (ok) {
+        showToast("İbadet kaydınız deftere işlendi. Allah kabul etsin!", "success");
+        document.getElementById('visitForm').reset();
+        window.uploadedPhotos = { 1: null, 2: null };
+        resetPhotoPreview(1);
+        resetPhotoPreview(2);
+        document.querySelectorAll('.prayer-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('formPrayerSelected').value = "";
+        toggleCustomMosqueInput();
+        setTodayDateTime();
+        triggerAllUIUpdates();
+        switchTab(3);
+      } else {
+        visitsData = visitsData.filter(v => v.id !== newRecord.id);
+      }
+
+      btn.innerHTML = origText;
+      btn.disabled = false;
+    };
+
+    // 9. FOTOĞRAF ÖN İZLEME VE İŞLEME
+    window.processAndPreviewImage = async function(input, index) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const placeholder = document.getElementById(`photoPlaceholder${index}`);
+        const origContent = placeholder.innerHTML;
+        placeholder.innerHTML = `<i class="fa-solid fa-spinner animate-spin" style="color:var(--teal-700);"></i><p class="text-[8px] mt-0.5" style="color:var(--ink-soft);">İşleniyor...</p>`;
+
+        try {
+          const base64Data = await window.compressImage(file);
+          window.uploadedPhotos[index] = base64Data;
+          const preview = document.getElementById(`photoPreview${index}`);
+          preview.src = base64Data;
+          preview.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+          document.getElementById(`btnRemovePhoto${index}`).classList.remove('hidden');
+        } catch (err) {
+          const messages = {
+            HEIC_LIB_MISSING: "HEIC dönüştürücü yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.",
+            HEIC_CONVERT_ERROR: "Bu HEIC fotoğraf dönüştürülemedi. Galeriden JPG/PNG olarak paylaşmayı deneyin.",
+            READ_ERROR: "Dosya okunamadı. Lütfen tekrar deneyin.",
+            DECODE_ERROR: "Bu görsel açılamadı. Farklı bir fotoğraf deneyin.",
+            TIMEOUT: "Fotoğraf işlenemedi (zaman aşımı). Daha küçük bir fotoğraf deneyin."
+          };
+          showToast(messages[err?.message] || "Görsel işlenemedi. Lütfen başka bir fotoğraf deneyin.", "error");
+          placeholder.innerHTML = origContent;
+          input.value = '';
+        }
+      }
+    };
+
+    window.removePhoto = function(index) {
+      window.uploadedPhotos[index] = null;
+      resetPhotoPreview(index);
+    };
+
+    function resetPhotoPreview(index) {
+      const input = document.getElementById(`photoInput${index}`);
+      if (input) input.value = '';
+      const preview = document.getElementById(`photoPreview${index}`);
+      if (preview) { preview.removeAttribute('src'); preview.classList.add('hidden'); }
+      const placeholder = document.getElementById(`photoPlaceholder${index}`);
+      if (placeholder) placeholder.classList.remove('hidden');
+      const removeBtn = document.getElementById(`btnRemovePhoto${index}`);
+      if (removeBtn) removeBtn.classList.add('hidden');
+    }
+
+    // 10. NAMAZ SEÇİMİ
+    window.selectPrayer = function(prayer) {
+      document.querySelectorAll('.prayer-btn').forEach(btn => btn.classList.remove('active'));
+      const selectedBtn = document.getElementById(`btn-p-${prayer}`);
+      if (selectedBtn) selectedBtn.classList.add('active');
+      document.getElementById('formPrayerSelected').value = prayer;
+    };
+
+    // 11. DROPDOWN DOLDURUCU
+    function populateMosquesDropdown() {
+      const select = document.getElementById('formMosqueSelect');
+      let optionsHTML = `<option value="" disabled selected>--- Cami Seçin ---</option>`;
+      optionsHTML += `<optgroup label="Osmangazi Tarihi Camileri (35)">`;
+      PRESET_MOSQUES.filter(m => m.district === 'Osmangazi').forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
+      optionsHTML += `</optgroup><optgroup label="Yıldırım Tarihi Camileri (35)">`;
+      PRESET_MOSQUES.filter(m => m.district === 'Yıldırım').forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
+      optionsHTML += `</optgroup><optgroup label="Diğer"><option value="custom">+ Listede Olmayan Tarihi Cami Ekle</option></optgroup>`;
+      select.innerHTML = optionsHTML;
+    }
+
+    window.toggleCustomMosqueInput = function() {
+      const select = document.getElementById('formMosqueSelect');
+      const customSection = document.getElementById('customMosqueSection');
+      if (select.value === 'custom') {
+        customSection.classList.remove('hidden');
+        document.getElementById('formCustomName').required = true;
+      } else {
+        customSection.classList.add('hidden');
+        document.getElementById('formCustomName').required = false;
+      }
+    };
+
+    function setTodayDateTime() {
+      const now = new Date();
+      document.getElementById('formDate').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      document.getElementById('formTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }
+
+    // 12. MOBİL SEKME GEÇİŞİ (Kaydırma)
+    window.switchTab = function(index) {
+      currentActiveTab = index;
+      document.getElementById('tabViewport').style.transform = `translateX(-${index * 20}%)`;
+      document.getElementById('navIndicator').style.left = `${index * 20}%`;
+
+      for (let i = 0; i < 5; i++) {
+        const btn = document.getElementById(`nav-btn-${i}`);
+        btn.classList.toggle('active', i === index);
+      }
+
+      if (index === 1) updateMosquesListUI();
+
+      const panels = document.querySelectorAll('.tab-panel');
+      if (panels[index]) panels[index].scrollTo({ top: 0, behavior: 'instant' });
+    };
+
+    // 13. PARMAK KAYDIRMA (SWIPE)
+    let touchStartX = 0, touchEndX = 0;
+    const swipeContainer = document.getElementById('swipeContainer');
+    swipeContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    swipeContainer.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
+
+    function handleSwipe() {
+      const threshold = 75;
+      const diff = touchStartX - touchEndX;
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      if (diff > threshold && currentActiveTab < 4) switchTab(currentActiveTab + 1);
+      else if (diff < -threshold && currentActiveTab > 0) switchTab(currentActiveTab - 1);
+    }
+
+    // 14. İLÇE FİLTRELEME
+    window.filterDistrict = function(district) {
+      activeFilterDistrict = district;
+      const btnAll = document.getElementById('btn-filter-all');
+      const btnOsmangazi = document.getElementById('btn-filter-osmangazi');
+      const btnYildirim = document.getElementById('btn-filter-yildirim');
+      const baseStyle = "background:var(--paper-deep); color:var(--ink-soft);";
+      const activeStyle = "background:var(--teal-900); color:#fff;";
+      [btnAll, btnOsmangazi, btnYildirim].forEach(btn => btn.setAttribute('style', baseStyle));
+      if (district === 'HEPSİ') btnAll.setAttribute('style', activeStyle);
+      else if (district === 'Osmangazi') btnOsmangazi.setAttribute('style', activeStyle);
+      else if (district === 'Yıldırım') btnYildirim.setAttribute('style', activeStyle);
+      updateMosquesListUI();
+    };
+
+    document.getElementById('mosqueSearchInput').addEventListener('input', () => updateMosquesListUI());
+
+    // 15. TOAST
+    window.showToast = function(message, type = "success") {
+      const toast = document.getElementById('toastNotification');
+      const msgEl = document.getElementById('toastMessage');
+      const iconEl = document.getElementById('toastIcon');
+      msgEl.textContent = message;
+      iconEl.innerHTML = type === "success"
+        ? `<i class="fa-solid fa-circle-check text-base" style="color:var(--gold);"></i>`
+        : `<i class="fa-solid fa-circle-xmark text-base" style="color:var(--brick-soft);"></i>`;
+      toast.classList.remove('opacity-0', '-translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-4');
+      }, 3000);
+    };
+
+    // 16. LIGHTBOX
+    window.openLightbox = function(src) {
+      document.getElementById('lightboxImage').src = src;
+      document.getElementById('lightboxModal').classList.remove('hidden');
+    };
+    window.closeLightbox = function() { document.getElementById('lightboxModal').classList.add('hidden'); };
+    document.getElementById('lightboxModal').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+
+    // 17. UYGULAMA OLARAK YÜKLEME (PWA install prompt)
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      document.getElementById('installBanner').classList.remove('hidden');
+    });
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      document.getElementById('installBanner').classList.add('hidden');
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+    });
+    document.getElementById('installDismissBtn').addEventListener('click', () => {
+      document.getElementById('installBanner').classList.add('hidden');
+    });
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('installBanner').classList.add('hidden');
+      showToast('Uygulama ana ekranınıza yüklendi!', 'success');
+    });
+
+    // 18. SERVICE WORKER KAYDI (çevrimdışı açılış desteği)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+
+    // Başlat
+    populateMosquesDropdown();
+    setTodayDateTime();
+    initApp();
+  </script>
+</body>
+</html>
