@@ -125,12 +125,13 @@
   <header class="text-white sticky top-0 z-40 safe-padding-top" style="background:linear-gradient(135deg, var(--teal-950), var(--teal-900)); border-bottom:1px solid rgba(195,154,69,0.3); box-shadow:0 4px 18px -6px rgba(8,43,37,0.45);">
     <div class="px-4 py-3.5 max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <div class="arch-badge w-10 h-10 transition-transform active:scale-95" style="background:var(--gold); color:var(--teal-950); border:2px solid var(--gold-soft);">
-          <span class="font-display font-bold text-xs tracking-tighter">ÜÖ</span>
+        <div class="arch-badge w-10 h-10 transition-transform active:scale-95 relative overflow-hidden" style="background:var(--gold); color:var(--teal-950); border:2px solid var(--gold-soft);">
+          <span id="headerInitials" class="font-display font-bold text-xs tracking-tighter">ÜÖ</span>
+          <img id="headerProfileImg" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="Profil">
         </div>
         <div>
           <h1 class="font-bold text-sm leading-tight tracking-wide font-display" style="color:var(--gold-soft);">Bursa Manevi Atlası</h1>
-          <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:rgba(231,212,160,0.65);">Seyyah: Ümit Özgüler</p>
+          <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:rgba(231,212,160,0.65);">Seyyah: <span id="headerNameDisplay">Ümit Özgüler</span></p>
         </div>
       </div>
       <span id="syncStatus" class="text-[9px] px-2.5 py-1 rounded-full flex items-center space-x-1" style="background:rgba(195,154,69,0.14); border:1px solid rgba(195,154,69,0.35); color:var(--gold-soft);">
@@ -191,7 +192,7 @@
             </div>
             <div>
               <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldin Seyyah,</h2>
-              <p class="text-2xl font-bold font-display tracking-wide mt-1">Ümit Özgüler</p>
+              <p id="heroNameDisplay" class="text-2xl font-bold font-display tracking-wide mt-1">Ümit Özgüler</p>
               <p id="totalCountInfoText" class="text-[11px] mt-1.5 leading-relaxed font-light" style="color:rgba(255,255,255,0.72);">
                 Osmangazi ve Yıldırım'daki tescilli 70 tarihi cami ve mescidi ihya etme yolculuğun.
               </p>
@@ -398,17 +399,30 @@
 
       <!-- PANEL 5: PROFİL -->
       <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
-        <div class="paper-card rounded-3xl p-5 text-center space-y-3">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-md font-display font-bold" style="background:var(--gold-soft); color:var(--teal-950); border:2px solid var(--gold);">
-            ÜÖ
+        <div class="paper-card rounded-3xl p-5 text-center space-y-3 relative">
+          
+          <!-- Dinamik Fotoğraf Yükleme Alanı -->
+          <div class="relative w-20 h-20 mx-auto">
+            <input type="file" id="profilePhotoInput" accept="image/*,.heic,.heif" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="handleProfilePhotoUpload(this)" title="Profil fotoğrafı seç">
+            <div class="w-full h-full rounded-full flex items-center justify-center text-2xl shadow-md font-display font-bold overflow-hidden relative" style="background:var(--gold-soft); color:var(--teal-950); border:2px solid var(--gold);">
+              <span id="profileInitials">ÜÖ</span>
+              <img id="profilePhotoImg" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="Profil">
+            </div>
+            <!-- Kamera İkonu (Kullanıcıya tıklanabilir olduğunu hissettirmek için) -->
+            <div class="absolute bottom-0 right-0 w-6 h-6 rounded-full flex items-center justify-center shadow-md z-20 pointer-events-none" style="background:var(--teal-900); color:var(--gold-soft); border:2px solid #fff;">
+              <i class="fa-solid fa-camera text-[10px]"></i>
+            </div>
           </div>
-          <div>
-            <h3 class="font-bold text-lg font-display" style="color:var(--ink);">Ümit Özgüler</h3>
-            <p class="text-[10px] font-semibold uppercase tracking-widest" style="color:var(--teal-700);">Bursa Miras Seyyahı</p>
+
+          <!-- Dinamik İsim Girişi -->
+          <div class="px-4">
+            <input type="text" id="profileNameInput" value="Ümit Özgüler" placeholder="İsminizi girin..." class="w-full text-center font-bold text-lg font-display bg-transparent border-b border-dashed hover:border-[var(--line)] focus:border-[var(--gold)] transition-colors py-1 outline-none" style="color:var(--ink); border-color:transparent;" onchange="saveProfileName(this.value)">
+            <p class="text-[10px] font-semibold uppercase tracking-widest mt-1" style="color:var(--teal-700);">Bursa Miras Seyyahı</p>
           </div>
+
           <div class="rounded-xl p-3 text-[10px] text-left space-y-1.5" style="background:var(--paper-deep);">
             <p class="flex justify-between"><strong style="color:var(--ink);">Kayıt Modu:</strong> <span id="appModeBadge" class="font-bold" style="color:var(--teal-700);">Yükleniyor...</span></p>
-            <p class="flex justify-between"><strong style="color:var(--ink);">Kullanıcı:</strong> <span class="font-bold" style="color:var(--ink);">Ümit Özgüler</span></p>
+            <p class="flex justify-between"><strong style="color:var(--ink);">Kullanıcı:</strong> <span id="profileStatsName" class="font-bold truncate max-w-[120px] text-right" style="color:var(--ink);">Ümit Özgüler</span></p>
             <p class="flex justify-between"><strong style="color:var(--ink);">Sürüm:</strong> <span class="font-ledger" style="color:var(--ink-faint);">v5.1 — Cihazda Kalıcı Kayıt</span></p>
           </div>
         </div>
@@ -797,9 +811,79 @@
       }
     }
 
+    // === PROFIL FOTOGRAFI VE ISIM YONETIMI ===
+    function loadProfileData() {
+      const savedName = localStorage.getItem('manevi-atlas-username') || 'Ümit Özgüler';
+      const savedPhoto = localStorage.getItem('manevi-atlas-userphoto');
+
+      document.getElementById('profileNameInput').value = savedName;
+      updateNameDisplays(savedName);
+
+      if (savedPhoto) {
+        setProfileImages(savedPhoto);
+      } else {
+        updateInitials(savedName);
+      }
+    }
+
+    window.saveProfileName = function(name) {
+      const val = name.trim() || 'Seyyah';
+      localStorage.setItem('manevi-atlas-username', val);
+      updateNameDisplays(val);
+      if (!localStorage.getItem('manevi-atlas-userphoto')) {
+        updateInitials(val);
+      }
+      showToast("Profil ismi kaydedildi.", "success");
+    }
+
+    function updateNameDisplays(name) {
+      if(document.getElementById('headerNameDisplay')) document.getElementById('headerNameDisplay').textContent = name;
+      if(document.getElementById('heroNameDisplay')) document.getElementById('heroNameDisplay').textContent = name;
+      if(document.getElementById('profileStatsName')) document.getElementById('profileStatsName').textContent = name;
+    }
+
+    function updateInitials(name) {
+      let initials = "S";
+      if(name && name.trim() !== "") {
+         const parts = name.trim().split(' ');
+         if(parts.length > 1) initials = parts[0][0] + parts[parts.length-1][0];
+         else initials = parts[0].substring(0,2);
+      }
+      initials = initials.toUpperCase();
+      if(document.getElementById('headerInitials')) document.getElementById('headerInitials').textContent = initials;
+      if(document.getElementById('profileInitials')) document.getElementById('profileInitials').textContent = initials;
+    }
+
+    window.handleProfilePhotoUpload = async function(input) {
+      if (input.files && input.files[0]) {
+        try {
+          showToast("Fotoğraf işleniyor...", "success");
+          const base64Data = await window.compressImage(input.files[0]);
+          localStorage.setItem('manevi-atlas-userphoto', base64Data);
+          setProfileImages(base64Data);
+          showToast("Profil fotoğrafı güncellendi!", "success");
+        } catch (err) {
+          showToast("Fotoğraf yüklenemedi. Lütfen tekrar deneyin.", "error");
+        }
+      }
+    }
+
+    function setProfileImages(src) {
+      const headerImg = document.getElementById('headerProfileImg');
+      const profileImg = document.getElementById('profilePhotoImg');
+      const headerInitials = document.getElementById('headerInitials');
+      const profileInitials = document.getElementById('profileInitials');
+
+      if(headerImg) { headerImg.src = src; headerImg.classList.remove('hidden'); }
+      if(profileImg) { profileImg.src = src; profileImg.classList.remove('hidden'); }
+      if(headerInitials) headerInitials.classList.add('hidden');
+      if(profileInitials) profileInitials.classList.add('hidden');
+    }
+
     async function initApp() {
       loadCustomAddedMosques();
       await loadVisits();
+      loadProfileData(); // PROFİL BİLGİSİNİ YÜKLE
       document.getElementById('appModeBadge').innerHTML = useIndexedDB
         ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
         : '<span style="color:var(--teal-700);">Yerel Yedek Modu</span>';
