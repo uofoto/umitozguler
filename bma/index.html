@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -211,6 +212,19 @@
           </div>
         </div>
 
+        <!-- YENİ EKLENEN: GÜNÜN AYETİ KARTI -->
+        <div class="paper-card rounded-2xl p-4 space-y-2.5 relative overflow-hidden pop-in" style="animation-delay: 0.1s;">
+          <div class="absolute -right-4 -bottom-4 opacity-[0.04] pointer-events-none" style="color:var(--teal-900);">
+             <i class="fa-solid fa-book-open text-[5rem]"></i>
+          </div>
+          <h3 class="font-bold text-[11px] flex items-center space-x-2 relative z-10" style="color:var(--ink);">
+            <i class="fa-solid fa-book-quran" style="color:var(--gold-deep);"></i>
+            <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Günün Ayeti</span>
+          </h3>
+          <p id="dailyVerseText" class="text-[11px] leading-relaxed italic relative z-10 font-medium" style="color:var(--ink-soft);"></p>
+          <p id="dailyVerseSource" class="text-[9.5px] font-bold text-right relative z-10 mt-1" style="color:var(--teal-700);"></p>
+        </div>
+
         <div class="paper-card rounded-2xl p-4 space-y-3">
           <h3 class="font-bold text-[11px] flex items-center space-x-2" style="color:var(--ink);">
             <i class="fa-solid fa-chart-line" style="color:var(--teal-700);"></i>
@@ -264,10 +278,11 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3" style="color:var(--ink-faint);">
               <i class="fa-solid fa-magnifying-glass text-xs"></i>
             </span>
-            <input id="mosqueSearchInput" type="text" placeholder="70 tarihi mabet arasından ara..." class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
+            <input id="mosqueSearchInput" type="text" placeholder="Tarihi mabetler arasında ara..." class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
           </div>
-          <div class="grid grid-cols-3 gap-1.5">
-            <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi (70)</button>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi</button>
+            <button onclick="filterDistrict('KILINANLAR')" id="btn-filter-kilinanlar" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Kılınanlar</button>
             <button onclick="filterDistrict('Osmangazi')" id="btn-filter-osmangazi" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Osmangazi</button>
             <button onclick="filterDistrict('Yıldırım')" id="btn-filter-yildirim" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Yıldırım</button>
           </div>
@@ -408,7 +423,7 @@
               <span id="profileInitials">ÜÖ</span>
               <img id="profilePhotoImg" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="Profil">
             </div>
-            <!-- Kamera İkonu (Kullanıcıya tıklanabilir olduğunu hissettirmek için) -->
+            <!-- Kamera İkonu -->
             <div class="absolute bottom-0 right-0 w-6 h-6 rounded-full flex items-center justify-center shadow-md z-20 pointer-events-none" style="background:var(--teal-900); color:var(--gold-soft); border:2px solid #fff;">
               <i class="fa-solid fa-camera text-[10px]"></i>
             </div>
@@ -523,7 +538,7 @@
 
   <!-- ==================== LOGIC & DATA SCRIPT ==================== -->
   <script>
-    // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI (70 ADET + DINAMIK EKLENENLER)
+    // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI
     let PRESET_MOSQUES = [
       // OSMANGAZİ - 35 ADET
       { id: "ulu-cami", name: "Bursa Ulu Cami", district: "Osmangazi", address: "Nalbantoğlu, Atatürk Cd., Osmangazi/Bursa", mapsSearch: "Bursa Ulu Cami" },
@@ -600,6 +615,31 @@
       { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" }
     ];
 
+    // YENİ EKLENEN: GÜNÜN AYETLERİ DİZİSİ
+    const QURAN_VERSES = [
+      { text: "\"Onlar gaybe inanırlar, namazı dosdoğru kılarlar, kendilerine rızık olarak verdiğimizden de Allah yolunda harcarlar.\"", source: "Bakara Sûresi 3" },
+      { text: "\"Namazı kılın, zekâtı verin. Rükû edenlerle birlikte siz de rükû edin.\"", source: "Bakara Sûresi 43" },
+      { text: "\"Sabrederek ve namaz kılarak (Allah’tan) yardım dileyin. Şüphesiz namaz, Allah’a derinden saygı duyanlardan başkasına ağır gelir.\"", source: "Bakara Sûresi 45" },
+      { text: "\"Hani, biz İsrailoğulları’ndan, 'Allah’tan başkasına ibadet etmeyeceksiniz, anne babaya, yakınlara, yetimlere, yoksullara iyilik edeceksiniz, herkese güzel sözler söyleyeceksiniz, namazı kılacaksınız, zekâtı vereceksiniz' diye söz almıştık. Sonra pek azınız hariç, yüz çevirerek sözünüzden döndünüz.\"", source: "Bakara Sûresi 83" },
+      { text: "\"Namazı dosdoğru kılın, zekâtı verin. Kendiniz için her ne iyilik işlemiş olursanız, Allah katında onu bulursunuz. Şüphesiz Allah bütün yaptıklarınızı görür.\"", source: "Bakara Sûresi 110" },
+      { text: "\"Hani, biz Kâbe’yi insanlara toplantı ve güven yeri kılmıştık. Siz de Makam-ı İbrahim’den kendinize bir namaz yeri edinin. İbrahim ve İsmail’e şöyle emretmiştik: 'Tavaf edenler, kendini ibadete verenler, rükû ve secde edenler için evimi (Kâbe’yi) tertemiz tutun.'\"", source: "Bakara Sûresi 125" },
+      { text: "\"Ey iman edenler! Sabrederek ve namaz kılarak Allah’tan yardım dileyin. Şüphe yok ki, Allah sabredenlerle beraberdir.\"", source: "Bakara Sûresi 153" },
+      { text: "\"İyilik, yüzlerinizi doğu ve batı taraflarına çevirmeniz(den ibaret) değildir. Asıl iyilik, Allah’a, ahiret gününe, meleklere, kitap ve peygamberlere iman edenlerin; mala olan sevgilerine rağmen, onu yakınlara, yetimlere, yoksullara, yolda kalmışa, (ihtiyacından dolayı) isteyene ve (özgürlükleri için) kölelere verenlerin; namazı dosdoğru kılan, zekâtı veren, antlaşma yaptıklarında sözlerini yerine getirenlerin ve zorda, hastalıkta ve savaşın kızıştığı zamanlarda (direnip) sabredenlerin tutum ve davranışlarıdır. İşte bunlar, doğru olanlardır. İşte bunlar, Allah’a karşı gelmekten sakınanların ta kendileridir.\"", source: "Bakara Sûresi 177" },
+      { text: "\"Namazlara ve orta namaza devam edin. Allah’a gönülden boyun eğerek namaza durun. Eğer (bir tehlikeden) korkarsanız, namazı yaya olarak veya binek üzerinde kılın. Güvenliğe kavuşunca da, Allah’ı, daha önce bilmediğiniz ve onun size öğrettiği şekilde anın (namazı normal vakitlerdeki gibi kılın).\"", source: "Bakara Sûresi 238-239" }
+    ];
+
+    // YENİ EKLENEN: RASTGELE AYET GÖSTERME FONKSİYONU
+    function displayDailyVerse() {
+      const randomIndex = Math.floor(Math.random() * QURAN_VERSES.length);
+      const verse = QURAN_VERSES[randomIndex];
+      const verseEl = document.getElementById('dailyVerseText');
+      const sourceEl = document.getElementById('dailyVerseSource');
+      if (verseEl && sourceEl) {
+        verseEl.textContent = verse.text;
+        sourceEl.textContent = "— " + verse.source;
+      }
+    }
+
     // Bellekteki veya localStorage'daki yeni eklenen camileri yüklemek için fonksiyon
     function loadCustomAddedMosques() {
       const savedCustom = localStorage.getItem('manevi-atlas-custom-mosques');
@@ -607,7 +647,6 @@
         try {
           const list = JSON.parse(savedCustom);
           list.forEach(customMosque => {
-            // Eğer veritabanına önceden eklenmemişse ekle
             if (!PRESET_MOSQUES.some(m => m.id === customMosque.id)) {
               PRESET_MOSQUES.push(customMosque);
             }
@@ -883,7 +922,9 @@
     async function initApp() {
       loadCustomAddedMosques();
       await loadVisits();
-      loadProfileData(); // PROFİL BİLGİSİNİ YÜKLE
+      loadProfileData(); 
+      displayDailyVerse(); // <--- YENİ EKLENEN: AÇILIŞTA AYET GÖSTER
+
       document.getElementById('appModeBadge').innerHTML = useIndexedDB
         ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
         : '<span style="color:var(--teal-700);">Yerel Yedek Modu</span>';
@@ -910,12 +951,14 @@
       const osmangaziVisited = osmangaziTotal.filter(m => visitedMosqueIds.has(m.id)).length;
       const yildirimVisited = yildirimTotal.filter(m => visitedMosqueIds.has(m.id)).length;
 
-      // Toplam tescilli cami sayısını dinamik göstermek için
       const totalCount = PRESET_MOSQUES.length;
       document.getElementById('totalCountInfoText').textContent = `Osmangazi ve Yıldırım'daki tescilli ${totalCount} tarihi cami ve mescidi ihya etme yolculuğun.`;
       
-      // Dinamik filtre butonlarındaki sayıyı güncelle
-      document.getElementById('btn-filter-all').textContent = `Hepsi (${totalCount})`;
+      const allFilterBtn = document.getElementById('btn-filter-all');
+      if(allFilterBtn) allFilterBtn.textContent = `Hepsi`;
+
+      const kilinanlarFilterBtn = document.getElementById('btn-filter-kilinanlar');
+      if(kilinanlarFilterBtn) kilinanlarFilterBtn.textContent = `Kılınanlar (${visitedMosqueIds.size})`;
 
       document.getElementById('osmangaziProgressTxt').textContent = `${osmangaziVisited} / ${osmangaziTotal.length}`;
       document.getElementById('yildirimProgressTxt').textContent = `${yildirimVisited} / ${yildirimTotal.length}`;
@@ -986,7 +1029,17 @@
 
       const filtered = PRESET_MOSQUES.filter(m => {
         const matchesSearch = m.name.toLowerCase().includes(searchVal) || m.address.toLowerCase().includes(searchVal);
-        const matchesDistrict = activeFilterDistrict === 'HEPSİ' || m.district === activeFilterDistrict;
+        let matchesDistrict = false;
+        
+        if (activeFilterDistrict === 'HEPSİ') {
+          matchesDistrict = true;
+        } else if (activeFilterDistrict === 'KILINANLAR') {
+          const stats = mosqueStats[m.id] || { total: 0 };
+          matchesDistrict = stats.total > 0;
+        } else {
+          matchesDistrict = m.district === activeFilterDistrict;
+        }
+        
         return matchesSearch && matchesDistrict;
       });
 
@@ -1011,7 +1064,7 @@
           return `<span class="w-6 h-6 rounded-full text-[9px] flex items-center justify-center transition-all" style="${style}" title="${time}">${time[0]}</span>`;
         }).join('');
 
-        // Google Haritalar URL kurgusu (Adres veya arama parametresine bağlı)
+        // Google Haritalar URL kurgusu
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
 
         return `
@@ -1162,7 +1215,6 @@
 
       let mosqueName = "", mosqueId = selectedOptionId, district = "Osmangazi";
       
-      // Eğer listede olmayan yeni bir cami girişi yapılıyorsa
       if (selectedOptionId === "custom") {
         const customName = document.getElementById('formCustomName').value.trim();
         if (!customName) { showToast("Mabet ismi boş bırakılamaz.", "error"); return; }
@@ -1172,7 +1224,6 @@
         mosqueId = tempId;
         district = document.querySelector('input[name="formCustomDistrict"]:checked').value;
 
-        // Yeni eklenen camiyi dinamik bir nesne olarak oluşturup hafızaya alıyoruz
         const newCustomMosque = {
           id: tempId,
           name: customName,
@@ -1181,10 +1232,8 @@
           mapsSearch: customName + " " + district + " Bursa"
         };
 
-        // Mevcut listeye (PRESET_MOSQUES) katıyoruz
         PRESET_MOSQUES.push(newCustomMosque);
 
-        // Gelecek açılışlar için de tarayıcı hafızasına yazıyoruz
         const savedCustom = localStorage.getItem('manevi-atlas-custom-mosques');
         let customList = [];
         if (savedCustom) {
@@ -1193,7 +1242,6 @@
         customList.push(newCustomMosque);
         localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(customList));
 
-        // Seçim listesini tazeleyerek yeni camiyi listeye alıyoruz
         populateMosquesDropdown();
       } else {
         const matched = PRESET_MOSQUES.find(m => m.id === selectedOptionId);
@@ -1295,7 +1343,7 @@
       document.getElementById('formPrayerSelected').value = prayer;
     };
 
-    // 11. DROPDOWN DOLDURUCU (Osmangazi, Yıldırım ve Sonradan Eklenen Özel Tarihi Camiler)
+    // 11. DROPDOWN DOLDURUCU 
     function populateMosquesDropdown() {
       const select = document.getElementById('formMosqueSelect');
       let optionsHTML = `<option value="" disabled selected>--- Cami Seçin ---</option>`;
@@ -1332,7 +1380,7 @@
       document.getElementById('formTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     }
 
-    // 12. MOBİL SEKME GEÇİŞİ (Kaydırma)
+    // 12. MOBİL SEKME GEÇİŞİ 
     window.switchTab = function(index) {
       if (index !== currentActiveTab && navigator.vibrate) navigator.vibrate(6);
       currentActiveTab = index;
@@ -1368,14 +1416,22 @@
     window.filterDistrict = function(district) {
       activeFilterDistrict = district;
       const btnAll = document.getElementById('btn-filter-all');
+      const btnKilinanlar = document.getElementById('btn-filter-kilinanlar');
       const btnOsmangazi = document.getElementById('btn-filter-osmangazi');
       const btnYildirim = document.getElementById('btn-filter-yildirim');
+      
       const baseStyle = "background:var(--paper-deep); color:var(--ink-soft);";
       const activeStyle = "background:var(--teal-900); color:#fff;";
-      [btnAll, btnOsmangazi, btnYildirim].forEach(btn => btn.setAttribute('style', baseStyle));
+      
+      [btnAll, btnKilinanlar, btnOsmangazi, btnYildirim].forEach(btn => {
+        if(btn) btn.setAttribute('style', baseStyle);
+      });
+      
       if (district === 'HEPSİ') btnAll.setAttribute('style', activeStyle);
+      else if (district === 'KILINANLAR') btnKilinanlar.setAttribute('style', activeStyle);
       else if (district === 'Osmangazi') btnOsmangazi.setAttribute('style', activeStyle);
       else if (district === 'Yıldırım') btnYildirim.setAttribute('style', activeStyle);
+      
       updateMosquesListUI();
     };
 
