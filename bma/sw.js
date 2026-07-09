@@ -1,10 +1,12 @@
-// Bursa Manevi Atlası — Service Worker
-// Basit "cache-first" stratejisi: uygulama kabuğunu önbelleğe alır,
-// böylece telefona yüklendikten sonra internet olmadan da açılabilir.
-// NOT: Namaz kayıtlarınız bu dosyada değil, Claude hesabınıza bağlı
-// kalıcı depolamada tutulur; bu sadece uygulamanın açılışını hızlandırır.
+// Bursa Manevi Atlası — Service Worker (v2)
+// Sayfa kabuğu (HTML) için "ağ öncelikli" strateji kullanılır: internet varsa
+// her zaman en güncel sürüm indirilir; yoksa önbellekteki son sürüm açılır.
+// Statik dosyalar (ikonlar, manifest) için "önbellek öncelikli" çalışır.
+// NOT: Namaz kayıtlarınız bu dosyada değil, cihazınızın IndexedDB veritabanında
+// saklanır; bu servis çalışanı yalnızca uygulamanın açılış hızını ve çevrimdışı
+// erişimini yönetir.
 
-const CACHE_NAME = "bursa-manevi-atlas-v1";
+const CACHE_NAME = "bursa-manevi-atlas-v2";
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
@@ -30,10 +32,34 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+
+  const isNavigation = event.request.mode === "navigate" || event.request.destination === "document";
+
+  if (isNavigation) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          return response;
+        })
+        .catch(() =>
+          caches.match(event.request).then((cached) => cached || caches.match("./index.html"))
+        )
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
-      return fetch(event.request).catch(() => cached);
+      return fetch(event.request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          return response;
+        })
+        .catch(() => cached);
     })
   );
 });

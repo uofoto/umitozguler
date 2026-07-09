@@ -35,60 +35,94 @@
       background-color:var(--paper); color:var(--ink);
       -webkit-tap-highlight-color:transparent;
     }
+    body::before{
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image: repeating-linear-gradient(115deg, rgba(36,31,23,0.012) 0px, rgba(36,31,23,0.012) 1px, transparent 1px, transparent 5px);
+      opacity:0.6;
+    }
     .font-display{ font-family:'Playfair Display', serif; }
-    .font-ledger{ font-family:'JetBrains Mono', monospace; letter-spacing:0.02em; }
+    .font-ledger{ font-family:'JetBrains Mono', monospace; letter-spacing:0.02em; font-variant-numeric:tabular-nums; }
 
     .safe-padding-top{ padding-top:env(safe-area-inset-top, 0px); }
     .safe-padding-bottom{ padding-bottom:calc(0.75rem + env(safe-area-inset-bottom, 10px)); }
 
-    .tab-viewport{ display:flex; width:500%; transition:transform 0.32s cubic-bezier(0.22,1,0.36,1); will-change:transform; }
+    .tab-viewport{ display:flex; width:500%; transition:transform 0.38s cubic-bezier(0.22,1,0.36,1); will-change:transform; }
     .tab-panel{ width:20%; flex-shrink:0; }
-    .nav-indicator{ transition:left 0.32s cubic-bezier(0.22,1,0.36,1); }
+    .nav-indicator{ transition:left 0.38s cubic-bezier(0.22,1,0.36,1); box-shadow:0 0 8px rgba(195,154,69,0.6); }
 
     .hero-panel{
       background:
-        radial-gradient(120% 140% at 100% 0%, rgba(195,154,69,0.16) 0%, rgba(195,154,69,0) 45%),
+        radial-gradient(120% 140% at 100% 0%, rgba(195,154,69,0.18) 0%, rgba(195,154,69,0) 45%),
         linear-gradient(160deg, var(--teal-950) 0%, var(--teal-900) 55%, var(--teal-700) 130%);
       border:1px solid rgba(195,154,69,0.35);
+      box-shadow:0 14px 34px -12px rgba(8,43,37,0.55), 0 2px 6px rgba(8,43,37,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
     }
     .arch-watermark{ position:absolute; right:-14px; bottom:-22px; opacity:0.10; pointer-events:none; }
     .gold-line{ background:linear-gradient(90deg, transparent, var(--gold-soft), transparent); height:1px; }
 
-    .paper-card{ background:#fff; border:1px solid var(--line); box-shadow:0 1px 2px rgba(36,31,23,0.04); }
+    .paper-card{
+      background:#fff; border:1px solid var(--line);
+      box-shadow:0 1px 2px rgba(36,31,23,0.04), 0 8px 20px -14px rgba(36,31,23,0.18);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .paper-card.pressable{ cursor:pointer; }
+    .paper-card.pressable:active{ transform:scale(0.985); box-shadow:0 1px 2px rgba(36,31,23,0.05); }
+
     .arch-badge{ border-radius:50% 50% 6px 6px; display:flex; align-items:center; justify-content:center; }
     .district-rail{ width:4px; border-radius:4px 0 0 4px; }
     .sicil-tag{ font-family:'JetBrains Mono', monospace; font-size:9px; letter-spacing:0.03em; padding:1px 6px; border-radius:5px; border:1px solid var(--line); color:var(--ink-soft); background:var(--paper-deep); }
 
     .prayer-btn{ border:1px solid var(--line); color:var(--ink-soft); background:#fff; transition:all .15s ease; }
-    .prayer-btn.active{ background:var(--teal-900); color:#fff; border-color:var(--teal-900); }
+    .prayer-btn:active{ transform:scale(0.94); }
+    .prayer-btn.active{ background:var(--teal-900); color:#fff; border-color:var(--teal-900); box-shadow:0 4px 10px -4px rgba(12,58,50,0.6); }
 
     input:focus, textarea:focus, select:focus{
       outline:none; border-color:var(--gold-deep) !important;
       box-shadow:0 0 0 3px rgba(195,154,69,0.18);
     }
-    .field{ background:var(--paper-deep); border:1px solid var(--line); }
+    .field{ background:var(--paper-deep); border:1px solid var(--line); transition:box-shadow .15s ease; }
 
+    .nav-item{ color:var(--ink-faint); transition:color .2s ease, transform .15s ease; }
     .nav-item.active{ color:var(--teal-900); }
-    .nav-item{ color:var(--ink-faint); }
-    .btn-primary{ background:var(--teal-900); color:#fff; }
-    .btn-primary:active{ background:var(--teal-950); transform:scale(0.98); }
+    .nav-item:active{ transform:scale(0.9); }
+
+    .btn-primary{
+      background:linear-gradient(160deg, var(--teal-800, #124A3E), var(--teal-900));
+      color:#fff;
+      box-shadow:0 10px 22px -10px rgba(12,58,50,0.65), 0 0 0 1px rgba(195,154,69,0.25) inset;
+      transition:transform .12s ease, box-shadow .12s ease, background .15s ease;
+    }
+    .btn-primary:active{ background:var(--teal-950); transform:scale(0.98); box-shadow:0 4px 12px -6px rgba(12,58,50,0.5); }
     .btn-primary:disabled{ opacity:0.6; }
 
     .badge-osmangazi{ color:var(--teal-900); background:rgba(21,90,76,0.10); }
     .badge-yildirim{ color:var(--brick-deep); background:rgba(168,86,49,0.12); }
-    .bar-osmangazi{ background:var(--teal-700); }
-    .bar-yildirim{ background:var(--brick); }
+    .bar-osmangazi{ background:linear-gradient(90deg, var(--teal-700), var(--teal-500)); }
+    .bar-yildirim{ background:linear-gradient(90deg, var(--brick), var(--brick-soft)); }
 
     ::-webkit-scrollbar{ display:none; }
 
     @keyframes spin-slow{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
     .animate-spin-slow{ animation:spin-slow 6s linear infinite; }
+
+    @keyframes shimmer{ 0%{ background-position:-120% 0; } 100%{ background-position:220% 0; } }
+    .gold-shimmer{
+      background-image:linear-gradient(110deg, var(--gold) 30%, var(--gold-soft) 45%, #fff 50%, var(--gold-soft) 55%, var(--gold) 70%);
+      background-size:250% 100%;
+      animation:shimmer 3.2s ease-in-out infinite;
+    }
+
+    @keyframes pop-in{ 0%{ opacity:0; transform:scale(0.85) translateY(6px);} 100%{ opacity:1; transform:scale(1) translateY(0);} }
+    .pop-in{ animation:pop-in .45s cubic-bezier(0.22,1,0.36,1) both; }
+
+    @keyframes fade-in-up{ 0%{ opacity:0; transform:translateY(8px);} 100%{ opacity:1; transform:translateY(0);} }
+    .fade-in-up{ animation:fade-in-up .35s ease both; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col select-none overflow-x-hidden">
 
   <!-- Üst Bar -->
-  <header class="text-white shadow-lg sticky top-0 z-40 safe-padding-top" style="background:linear-gradient(135deg, var(--teal-950), var(--teal-900)); border-bottom:1px solid rgba(195,154,69,0.3);">
+  <header class="text-white sticky top-0 z-40 safe-padding-top" style="background:linear-gradient(135deg, var(--teal-950), var(--teal-900)); border-bottom:1px solid rgba(195,154,69,0.3); box-shadow:0 4px 18px -6px rgba(8,43,37,0.45);">
     <div class="px-4 py-3.5 max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="arch-badge w-10 h-10 transition-transform active:scale-95" style="background:var(--gold); color:var(--teal-950); border:2px solid var(--gold-soft);">
@@ -143,7 +177,7 @@
       <!-- PANEL 1: ANA SAYFA -->
       <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
 
-        <div class="hero-panel text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+        <div class="hero-panel text-white rounded-3xl p-5 relative overflow-hidden pop-in">
           <svg class="arch-watermark" width="130" height="130" viewBox="0 0 100 100" fill="none">
             <path d="M20 90 V45 A30 30 0 0 1 80 45 V90" stroke="#E7D4A0" stroke-width="2"/>
             <path d="M32 90 V50 A18 18 0 0 1 68 50 V90" stroke="#E7D4A0" stroke-width="1.4"/>
@@ -153,7 +187,7 @@
               <span class="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest" style="background:rgba(195,154,69,0.16); color:var(--gold-soft); border:1px solid rgba(195,154,69,0.4);">
                 Bursa Mihrapları
               </span>
-              <span id="overallBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="background:var(--gold); color:var(--teal-950);">%0 Tamamlandı</span>
+              <span id="overallBadge" class="gold-shimmer text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="color:var(--teal-950);">%0 Tamamlandı</span>
             </div>
             <div>
               <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldin Seyyah,</h2>
@@ -375,7 +409,7 @@
           <div class="rounded-xl p-3 text-[10px] text-left space-y-1.5" style="background:var(--paper-deep);">
             <p class="flex justify-between"><strong style="color:var(--ink);">Kayıt Modu:</strong> <span id="appModeBadge" class="font-bold" style="color:var(--teal-700);">Yükleniyor...</span></p>
             <p class="flex justify-between"><strong style="color:var(--ink);">Kullanıcı:</strong> <span class="font-bold" style="color:var(--ink);">Ümit Özgüler</span></p>
-            <p class="flex justify-between"><strong style="color:var(--ink);">Sürüm:</strong> <span class="font-ledger" style="color:var(--ink-faint);">v5.0 — Mobil Uygulama</span></p>
+            <p class="flex justify-between"><strong style="color:var(--ink);">Sürüm:</strong> <span class="font-ledger" style="color:var(--ink-faint);">v5.1 — Cihazda Kalıcı Kayıt</span></p>
           </div>
         </div>
 
@@ -410,7 +444,7 @@
   </main>
 
   <!-- ALT NAVİGASYON -->
-  <nav class="backdrop-blur-lg fixed bottom-0 left-0 right-0 z-40 shadow-lg safe-padding-bottom" style="background:rgba(255,255,255,0.94); border-top:1px solid var(--line);">
+  <nav class="backdrop-blur-lg fixed bottom-0 left-0 right-0 z-40 safe-padding-bottom" style="background:rgba(255,255,255,0.94); border-top:1px solid var(--line); box-shadow:0 -6px 20px -8px rgba(36,31,23,0.18);">
     <div class="max-w-md mx-auto grid grid-cols-5 h-14 relative pt-1">
       <div id="navIndicator" class="nav-indicator absolute top-0 h-0.5 w-1/5 left-0" style="background:var(--teal-900);"></div>
 
@@ -620,12 +654,74 @@
       });
     };
 
-    // 3. KİŞİSEL KALICI DEPOLAMA (window.storage — hesabınıza özel, shared:false)
-    const STORAGE_KEY = 'bursa-cami-ziyaretleri-umit-v1';
+    // 3. KİŞİSEL KALICI DEPOLAMA — IndexedDB (localStorage yedekli)
+    // ÖNEMLİ DÜZELTME: Bu uygulama artık telefona kurulan bağımsız bir PWA olarak
+    // çalıştığından, yalnızca Claude sohbet arayüzü içinde geçerli olan depolama
+    // API'si burada mevcut değildi ve tüm kayıtlar (özellikle listede olmayan cami
+    // girişleri ve fotoğraflar) sessizce kaybediliyordu. Artık veriler doğrudan
+    // telefonunuzun kendi tarayıcı veritabanında (IndexedDB) saklanıyor; internet
+    // gerekmiyor ve uygulamayı kapatıp açsanız da kayıtlarınız kalıyor.
+    const DB_NAME = 'BursaManeviAtlasDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'visits';
+    const LS_FALLBACK_KEY = 'bursa-manevi-atlas-visits-fallback-v1';
     let visitsData = [];
     let activeFilterDistrict = 'HEPSİ';
     let currentActiveTab = 0;
+    let useIndexedDB = true;
+    let dbInstance = null;
     window.uploadedPhotos = { 1: null, 2: null };
+
+    try { if (!window.indexedDB) useIndexedDB = false; } catch (e) { useIndexedDB = false; }
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (dbInstance) { resolve(dbInstance); return; }
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = () => { dbInstance = req.result; resolve(dbInstance); };
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function dbGetAll() {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const req = tx.objectStore(STORE_NAME).getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function dbPut(record) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(record);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    async function dbDelete(id) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(id);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    function saveFallbackToLocalStorage() {
+      localStorage.setItem(LS_FALLBACK_KEY, JSON.stringify(visitsData));
+    }
 
     function getVisitTimestamp(v) {
       if (v.date) {
@@ -641,28 +737,65 @@
 
     async function loadVisits() {
       try {
-        const result = await window.storage.get(STORAGE_KEY, false);
-        visitsData = (result && result.value) ? JSON.parse(result.value) : [];
+        if (useIndexedDB) {
+          visitsData = await dbGetAll();
+        } else {
+          const raw = localStorage.getItem(LS_FALLBACK_KEY);
+          visitsData = raw ? JSON.parse(raw) : [];
+        }
       } catch (e) {
-        visitsData = [];
+        useIndexedDB = false;
+        try {
+          const raw = localStorage.getItem(LS_FALLBACK_KEY);
+          visitsData = raw ? JSON.parse(raw) : [];
+        } catch (e2) {
+          visitsData = [];
+        }
       }
       sortVisitsInMemory();
     }
 
-    async function persistVisits() {
+    // Yeni bir ziyareti kalıcı hale getirir (ekleme).
+    async function persistNewVisit(record) {
       try {
-        const result = await window.storage.set(STORAGE_KEY, JSON.stringify(visitsData), false);
-        if (!result) throw new Error('SET_FAILED');
+        if (useIndexedDB) {
+          await dbPut(record);
+        } else {
+          saveFallbackToLocalStorage();
+        }
         return true;
       } catch (e) {
-        showToast("Kayıt saklanırken bir sorun oluştu. Lütfen tekrar deneyin.", "error");
-        return false;
+        try { saveFallbackToLocalStorage(); return true; }
+        catch (e2) {
+          showToast("Kayıt cihazınıza kaydedilemedi. Depolama alanınızı kontrol edin.", "error");
+          return false;
+        }
+      }
+    }
+
+    // Bir ziyareti kalıcı depodan siler.
+    async function persistDeleteVisit(id) {
+      try {
+        if (useIndexedDB) {
+          await dbDelete(id);
+        } else {
+          saveFallbackToLocalStorage();
+        }
+        return true;
+      } catch (e) {
+        try { saveFallbackToLocalStorage(); return true; }
+        catch (e2) {
+          showToast("Kayıt silinirken bir sorun oluştu.", "error");
+          return false;
+        }
       }
     }
 
     async function initApp() {
       await loadVisits();
-      document.getElementById('appModeBadge').innerHTML = '<span style="color:var(--teal-700);">Hesabınıza Kayıtlı</span>';
+      document.getElementById('appModeBadge').innerHTML = useIndexedDB
+        ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
+        : '<span style="color:var(--teal-700);">Yerel Yedek Modu</span>';
       document.getElementById('authLoader').classList.add('hidden');
       document.getElementById('syncStatus').innerHTML = `
         <span class="w-1.5 h-1.5 rounded-full" style="background:var(--gold);"></span>
@@ -781,7 +914,7 @@
         }).join('');
 
         return `
-          <div class="paper-card rounded-2xl p-3.5 relative overflow-hidden transition-all">
+          <div class="paper-card rounded-2xl p-3.5 relative overflow-hidden transition-all fade-in-up">
             <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}"></div>
             <div class="flex justify-between items-start pl-1.5">
               <div class="space-y-0.5">
@@ -850,7 +983,7 @@
         }
 
         return `
-          <div class="paper-card rounded-2xl p-4 relative">
+          <div class="paper-card rounded-2xl p-4 relative fade-in-up">
             <button onclick="triggerDelete('${v.id}')" class="absolute top-4 right-4 p-1" style="color:#D8D2C0;">
               <i class="fa-solid fa-trash-can text-xs"></i>
             </button>
@@ -902,7 +1035,7 @@
     async function executeDeleteLog(docId) {
       const backup = visitsData;
       visitsData = visitsData.filter(v => v.id !== docId);
-      const ok = await persistVisits();
+      const ok = await persistDeleteVisit(docId);
       if (ok) {
         triggerAllUIUpdates();
         showToast("Kayıt günlükten silindi.", "success");
@@ -955,9 +1088,10 @@
 
       visitsData.push(newRecord);
       sortVisitsInMemory();
-      const ok = await persistVisits();
+      const ok = await persistNewVisit(newRecord);
 
       if (ok) {
+        if (navigator.vibrate) navigator.vibrate(12);
         showToast("İbadet kaydınız deftere işlendi. Allah kabul etsin!", "success");
         document.getElementById('visitForm').reset();
         window.uploadedPhotos = { 1: null, 2: null };
@@ -1064,6 +1198,7 @@
 
     // 12. MOBİL SEKME GEÇİŞİ (Kaydırma)
     window.switchTab = function(index) {
+      if (index !== currentActiveTab && navigator.vibrate) navigator.vibrate(6);
       currentActiveTab = index;
       document.getElementById('tabViewport').style.transform = `translateX(-${index * 20}%)`;
       document.getElementById('navIndicator').style.left = `${index * 20}%`;
