@@ -192,7 +192,7 @@
             <div>
               <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldin Seyyah,</h2>
               <p class="text-2xl font-bold font-display tracking-wide mt-1">Ümit Özgüler</p>
-              <p class="text-[11px] mt-1.5 leading-relaxed font-light" style="color:rgba(255,255,255,0.72);">
+              <p id="totalCountInfoText" class="text-[11px] mt-1.5 leading-relaxed font-light" style="color:rgba(255,255,255,0.72);">
                 Osmangazi ve Yıldırım'daki tescilli 70 tarihi cami ve mescidi ihya etme yolculuğun.
               </p>
             </div>
@@ -509,8 +509,8 @@
 
   <!-- ==================== LOGIC & DATA SCRIPT ==================== -->
   <script>
-    // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI (70 ADET)
-    const PRESET_MOSQUES = [
+    // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI (70 ADET + DINAMIK EKLENENLER)
+    let PRESET_MOSQUES = [
       // OSMANGAZİ - 35 ADET
       { id: "ulu-cami", name: "Bursa Ulu Cami", district: "Osmangazi", address: "Nalbantoğlu, Atatürk Cd., Osmangazi/Bursa", mapsSearch: "Bursa Ulu Cami" },
       { id: "orhan-gazi", name: "Orhan Gazi Camii", district: "Osmangazi", address: "Nalbantoğlu, Tarihi Çarşı, Osmangazi/Bursa", mapsSearch: "Orhan Gazi Camii Bursa" },
@@ -586,11 +586,29 @@
       { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" }
     ];
 
+    // Bellekteki veya localStorage'daki yeni eklenen camileri yüklemek için fonksiyon
+    function loadCustomAddedMosques() {
+      const savedCustom = localStorage.getItem('manevi-atlas-custom-mosques');
+      if (savedCustom) {
+        try {
+          const list = JSON.parse(savedCustom);
+          list.forEach(customMosque => {
+            // Eğer veritabanına önceden eklenmemişse ekle
+            if (!PRESET_MOSQUES.some(m => m.id === customMosque.id)) {
+              PRESET_MOSQUES.push(customMosque);
+            }
+          });
+        } catch (e) {
+          console.error("Özel cami listesi yüklenemedi", e);
+        }
+      }
+    }
+
     const DISTRICT_CODE = { "Osmangazi": "OSG", "Yıldırım": "YLD" };
     function getSicilNo(mosque) {
       const sameDistrict = PRESET_MOSQUES.filter(m => m.district === mosque.district);
       const idx = sameDistrict.findIndex(m => m.id === mosque.id) + 1;
-      return `${DISTRICT_CODE[mosque.district]}-${String(idx).padStart(2, '0')}`;
+      return `${DISTRICT_CODE[mosque.district] || 'DLT'}-${String(idx > 0 ? idx : sameDistrict.length + 1).padStart(2, '0')}`;
     }
 
     window.escapeHtml = function(str) {
@@ -600,15 +618,11 @@
         .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     };
 
-    // Bozuk/desteklenmeyen görsellerde harici servise bağımlı olmayan yerel bir yer tutucu
     const FALLBACK_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
       '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="%23F2ECDD"/><text x="50%" y="50%" font-family="sans-serif" font-size="12" fill="%235B5445" text-anchor="middle" dy=".3em">Önizleme yok</text></svg>'
     );
     window.__imgFallback = function(el) { el.onerror = null; el.src = FALLBACK_IMG; };
 
-    // 2. HER FORMATTA FOTOĞRAF DESTEKLEYEN SIKIŞTIRMA SİSTEMİ
-    // HEIC/HEIF (iPhone kamerası) önce heic2any ile JPEG'e çevrilir, ardından
-    // tüm formatlar (jpg/png/webp/gif/bmp...) aynı Canvas sıkıştırma akışından geçer.
     window.compressImage = function(file) {
       return new Promise((resolve, reject) => {
         const timeoutId = setTimeout(() => reject(new Error('TIMEOUT')), 20000);
@@ -654,13 +668,7 @@
       });
     };
 
-    // 3. KİŞİSEL KALICI DEPOLAMA — IndexedDB (localStorage yedekli)
-    // ÖNEMLİ DÜZELTME: Bu uygulama artık telefona kurulan bağımsız bir PWA olarak
-    // çalıştığından, yalnızca Claude sohbet arayüzü içinde geçerli olan depolama
-    // API'si burada mevcut değildi ve tüm kayıtlar (özellikle listede olmayan cami
-    // girişleri ve fotoğraflar) sessizce kaybediliyordu. Artık veriler doğrudan
-    // telefonunuzun kendi tarayıcı veritabanında (IndexedDB) saklanıyor; internet
-    // gerekmiyor ve uygulamayı kapatıp açsanız da kayıtlarınız kalıyor.
+    // IndexedDB & Backup configurations
     const DB_NAME = 'BursaManeviAtlasDB';
     const DB_VERSION = 1;
     const STORE_NAME = 'visits';
@@ -755,7 +763,6 @@
       sortVisitsInMemory();
     }
 
-    // Yeni bir ziyareti kalıcı hale getirir (ekleme).
     async function persistNewVisit(record) {
       try {
         if (useIndexedDB) {
@@ -773,7 +780,6 @@
       }
     }
 
-    // Bir ziyareti kalıcı depodan siler.
     async function persistDeleteVisit(id) {
       try {
         if (useIndexedDB) {
@@ -792,6 +798,7 @@
     }
 
     async function initApp() {
+      loadCustomAddedMosques();
       await loadVisits();
       document.getElementById('appModeBadge').innerHTML = useIndexedDB
         ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
@@ -819,6 +826,13 @@
       const osmangaziVisited = osmangaziTotal.filter(m => visitedMosqueIds.has(m.id)).length;
       const yildirimVisited = yildirimTotal.filter(m => visitedMosqueIds.has(m.id)).length;
 
+      // Toplam tescilli cami sayısını dinamik göstermek için
+      const totalCount = PRESET_MOSQUES.length;
+      document.getElementById('totalCountInfoText').textContent = `Osmangazi ve Yıldırım'daki tescilli ${totalCount} tarihi cami ve mescidi ihya etme yolculuğun.`;
+      
+      // Dinamik filtre butonlarındaki sayıyı güncelle
+      document.getElementById('btn-filter-all').textContent = `Hepsi (${totalCount})`;
+
       document.getElementById('osmangaziProgressTxt').textContent = `${osmangaziVisited} / ${osmangaziTotal.length}`;
       document.getElementById('yildirimProgressTxt').textContent = `${yildirimVisited} / ${yildirimTotal.length}`;
       document.getElementById('osmangaziProgressBar').style.width = `${osmangaziTotal.length > 0 ? (osmangaziVisited / osmangaziTotal.length) * 100 : 0}%`;
@@ -839,7 +853,7 @@
         } else if (unvisitedYildirim.length > 0) {
           recText.textContent = `Yıldırım ilçesindeki tescilli mabetlerden "${unvisitedYildirim[0].name}" ziyaretinizi bekliyor.`;
         } else {
-          recText.textContent = "Harika! Bursa'daki tescilli 70 caminin tamamında ibadet ettiniz. Allah kabul etsin.";
+          recText.textContent = "Harika! Bursa'daki tescilli camilerin tamamında ibadet ettiniz. Allah kabul etsin.";
         }
       }
 
@@ -869,7 +883,7 @@
           </div>
         `;
       } else {
-        latestVisitDiv.innerHTML = `<p class="text-xs py-3 text-center" style="color:var(--ink-faint);">Namaz kaydı bulunamadı.</p>`;
+        latestVisitDiv.innerHTML = `<p class="text-xs py-3 text-center" style="color:var(--ink-faint);">Henüz bir vakit namazı kaydı girmediniz.</p>`;
       }
     }
 
@@ -898,7 +912,7 @@
       }
 
       container.innerHTML = filtered.map(m => {
-        const stats = mosqueStats[m.id];
+        const stats = mosqueStats[m.id] || { Sabah: 0, Öğle: 0, İkindi: 0, Akşam: 0, Yatsı: 0, total: 0 };
         const isVisited = stats.total > 0;
         const isOsmangazi = m.district === 'Osmangazi';
         const railClass = isOsmangazi ? 'bar-osmangazi' : 'bar-yildirim';
@@ -912,6 +926,9 @@
             : `background:var(--paper-deep); color:var(--ink-faint);`;
           return `<span class="w-6 h-6 rounded-full text-[9px] flex items-center justify-center transition-all" style="${style}" title="${time}">${time[0]}</span>`;
         }).join('');
+
+        // Google Haritalar URL kurgusu (Adres veya arama parametresine bağlı)
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
 
         return `
           <div class="paper-card rounded-2xl p-3.5 relative overflow-hidden transition-all fade-in-up">
@@ -935,8 +952,8 @@
             </div>
             <div class="pl-1.5 pt-2.5 flex items-center justify-between mt-2.5" style="border-top:1px solid var(--line);">
               <div class="flex items-center space-x-1">${timeBadgesHTML}</div>
-              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch)}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg font-bold flex items-center space-x-1 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
-                <i class="fa-solid fa-map-location-dot"></i><span>Harita</span>
+              <a href="${mapUrl}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg font-bold flex items-center space-x-1 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
+                <i class="fa-solid fa-map-location-dot"></i><span>Haritada Göster</span>
               </a>
             </div>
           </div>
@@ -1044,7 +1061,7 @@
       }
     }
 
-    // 8. YENİ İBADET KAYDETME
+    // 8. YENİ İBADET KAYDETME VE CAMI ONDERLIGINI LISTEYE KATMA
     window.handleVisitSubmit = async function(event) {
       event.preventDefault();
 
@@ -1060,12 +1077,40 @@
       if (!prayerTime) { showToast("Lütfen kılınan namaz vaktini belirtin.", "error"); return; }
 
       let mosqueName = "", mosqueId = selectedOptionId, district = "Osmangazi";
+      
+      // Eğer listede olmayan yeni bir cami girişi yapılıyorsa
       if (selectedOptionId === "custom") {
         const customName = document.getElementById('formCustomName').value.trim();
         if (!customName) { showToast("Mabet ismi boş bırakılamaz.", "error"); return; }
+        
         mosqueName = customName;
-        mosqueId = "custom-" + Date.now();
+        const tempId = "custom-" + Date.now();
+        mosqueId = tempId;
         district = document.querySelector('input[name="formCustomDistrict"]:checked').value;
+
+        // Yeni eklenen camiyi dinamik bir nesne olarak oluşturup hafızaya alıyoruz
+        const newCustomMosque = {
+          id: tempId,
+          name: customName,
+          district: district,
+          address: address || `${district}, Bursa`,
+          mapsSearch: customName + " " + district + " Bursa"
+        };
+
+        // Mevcut listeye (PRESET_MOSQUES) katıyoruz
+        PRESET_MOSQUES.push(newCustomMosque);
+
+        // Gelecek açılışlar için de tarayıcı hafızasına yazıyoruz
+        const savedCustom = localStorage.getItem('manevi-atlas-custom-mosques');
+        let customList = [];
+        if (savedCustom) {
+          try { customList = JSON.parse(savedCustom); } catch(e) {}
+        }
+        customList.push(newCustomMosque);
+        localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(customList));
+
+        // Seçim listesini tazeleyerek yeni camiyi listeye alıyoruz
+        populateMosquesDropdown();
       } else {
         const matched = PRESET_MOSQUES.find(m => m.id === selectedOptionId);
         if (matched) { mosqueName = matched.name; district = matched.district; }
@@ -1082,7 +1127,7 @@
 
       const newRecord = {
         id: "v-" + Date.now(), mosqueId, mosqueName, district, prayerTime,
-        address: address || (PRESET_MOSQUES.find(m => m.id === selectedOptionId)?.address || ''),
+        address: address || (PRESET_MOSQUES.find(m => m.id === mosqueId)?.address || ''),
         date, time, notes, photos: photosArray, createdAt: new Date().toISOString()
       };
 
@@ -1166,15 +1211,22 @@
       document.getElementById('formPrayerSelected').value = prayer;
     };
 
-    // 11. DROPDOWN DOLDURUCU
+    // 11. DROPDOWN DOLDURUCU (Osmangazi, Yıldırım ve Sonradan Eklenen Özel Tarihi Camiler)
     function populateMosquesDropdown() {
       const select = document.getElementById('formMosqueSelect');
       let optionsHTML = `<option value="" disabled selected>--- Cami Seçin ---</option>`;
-      optionsHTML += `<optgroup label="Osmangazi Tarihi Camileri (35)">`;
-      PRESET_MOSQUES.filter(m => m.district === 'Osmangazi').forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
-      optionsHTML += `</optgroup><optgroup label="Yıldırım Tarihi Camileri (35)">`;
-      PRESET_MOSQUES.filter(m => m.district === 'Yıldırım').forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
-      optionsHTML += `</optgroup><optgroup label="Diğer"><option value="custom">+ Listede Olmayan Tarihi Cami Ekle</option></optgroup>`;
+      
+      const osmangaziList = PRESET_MOSQUES.filter(m => m.district === 'Osmangazi');
+      optionsHTML += `<optgroup label="Osmangazi Tarihi Camileri (${osmangaziList.length})">`;
+      osmangaziList.forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
+      optionsHTML += `</optgroup>`;
+
+      const yildirimList = PRESET_MOSQUES.filter(m => m.district === 'Yıldırım');
+      optionsHTML += `<optgroup label="Yıldırım Tarihi Camileri (${yildirimList.length})">`;
+      yildirimList.forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
+      optionsHTML += `</optgroup>`;
+
+      optionsHTML += `<optgroup label="Diğer"><option value="custom">+ Listede Olmayan Tarihi Cami Ekle</option></optgroup>`;
       select.innerHTML = optionsHTML;
     }
 
