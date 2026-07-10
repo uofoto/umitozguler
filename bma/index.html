@@ -373,6 +373,11 @@
             <p class="text-[10px] mt-0.5" style="color:var(--ink-faint);">Tarihi camide kıldığınız namazı günlüğünüze işleyin.</p>
           </div>
 
+          <div id="editModeNotice" class="hidden rounded-xl p-2.5 flex items-center justify-between text-[10px]" style="background:rgba(195,154,69,0.1); border:1px solid rgba(195,154,69,0.3); color:var(--gold-deep);">
+            <span><i class="fa-solid fa-pen mr-1.5"></i>Mevcut bir kaydı düzenliyorsunuz</span>
+            <button type="button" onclick="cancelEditVisit()" class="font-bold underline underline-offset-2">Vazgeç</button>
+          </div>
+
           <form id="visitForm" class="space-y-3.5" onsubmit="handleVisitSubmit(event)">
             <div class="space-y-1">
               <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Cami / Mescid Seçimi *</label>
@@ -566,6 +571,17 @@
 
           <div class="settings-row">
             <div class="flex items-center space-x-2.5">
+              <div class="settings-icon" style="background:rgba(21,90,76,0.1); color:var(--teal-700);"><i class="fa-solid fa-clock-rotate-left"></i></div>
+              <div>
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Silinen Camiler</p>
+                <p class="text-[9.5px]" style="color:var(--ink-faint);">Listeden kaldırdığınız camileri geri getirin</p>
+              </div>
+            </div>
+            <button onclick="openDeletedMosquesModal()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex-shrink-0" style="background:var(--paper-deep); color:var(--ink-soft);"><span id="deletedMosquesCountBadge">0</span> Gör</button>
+          </div>
+
+          <div class="settings-row">
+            <div class="flex items-center space-x-2.5">
               <div class="settings-icon" style="background:rgba(168,86,49,0.14); color:var(--brick-deep);"><i class="fa-solid fa-trash-can"></i></div>
               <div>
                 <p class="text-[11px] font-bold" style="color:var(--ink);">Tüm Verileri Sıfırla</p>
@@ -672,12 +688,85 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX -->
-  <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4">
-    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl">
-      <i class="fa-solid fa-times"></i>
+  <!-- CAMİ DÜZENLEME MODALI -->
+  <div id="mosqueEditModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center backdrop-blur-sm">
+    <div class="rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 shadow-2xl space-y-3.5" style="background:var(--paper-card); max-height:88vh; overflow-y:auto;">
+      <div class="flex items-center justify-between pb-2" style="border-bottom:1px solid var(--line);">
+        <h3 class="font-bold text-sm font-display flex items-center space-x-2" style="color:var(--ink);">
+          <i class="fa-solid fa-pen-to-square" style="color:var(--teal-700);"></i><span>Cami Bilgisini Düzenle</span>
+        </h3>
+        <button onclick="closeMosqueEditModal()" class="icon-btn" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Cami / Mescid Adı *</label>
+        <input id="editMosqueName" type="text" class="field w-full rounded-xl px-3 py-2.5 text-xs">
+      </div>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">İlçe *</label>
+        <div class="flex space-x-4">
+          <label class="inline-flex items-center text-xs"><input type="radio" name="editMosqueDistrict" value="Osmangazi"><span class="ml-2 font-medium" style="color:var(--ink);">Osmangazi</span></label>
+          <label class="inline-flex items-center text-xs"><input type="radio" name="editMosqueDistrict" value="Yıldırım"><span class="ml-2 font-medium" style="color:var(--ink);">Yıldırım</span></label>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Açık Adres</label>
+        <input id="editMosqueAddress" type="text" class="field w-full rounded-xl px-3 py-2.5 text-xs">
+      </div>
+      <div id="editMosquePresetNotice" class="hidden rounded-xl p-3 items-start gap-2 text-[10px]" style="background:rgba(195,154,69,0.08); border:1px solid rgba(195,154,69,0.3); color:var(--gold-deep);">
+        <i class="fa-solid fa-circle-info mt-0.5 mr-1.5"></i><span>Bu mabet varsayılan tarihi cami envanterinde yer alır. Yaptığınız düzenleme yalnızca bu cihazda saklanır.</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button onclick="closeMosqueEditModal()" class="py-2.5 rounded-xl text-xs font-semibold" style="background:var(--paper-deep); color:var(--ink-soft);">Vazgeç</button>
+        <button onclick="saveMosqueEdit()" class="btn-primary py-2.5 rounded-xl text-xs font-semibold">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SİLİNEN CAMİLER / GERİ GETİRME MODALI -->
+  <div id="deletedMosquesModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center backdrop-blur-sm">
+    <div class="rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 shadow-2xl space-y-3" style="background:var(--paper-card); max-height:80vh; overflow-y:auto;">
+      <div class="flex items-center justify-between pb-2" style="border-bottom:1px solid var(--line);">
+        <h3 class="font-bold text-sm font-display flex items-center space-x-2" style="color:var(--ink);">
+          <i class="fa-solid fa-trash-can-arrow-up" style="color:var(--teal-700);"></i><span>Silinen Camiler</span>
+        </h3>
+        <button onclick="closeDeletedMosquesModal()" class="icon-btn" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="deletedMosquesList" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX (Fotoğraf Büyütme / Yakınlaştırma) -->
+  <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center">
+    <div class="absolute top-0 left-0 right-0 flex items-center justify-between p-4 z-10 safe-padding-top" style="background:linear-gradient(180deg, rgba(0,0,0,0.55), transparent);">
+      <span id="lightboxCounter" class="text-white/70 text-[11px] font-ledger"></span>
+      <div class="flex items-center gap-2">
+        <button onclick="lightboxZoom(-0.6)" class="text-white w-9 h-9 flex items-center justify-center rounded-full" style="background:rgba(255,255,255,0.12);" title="Uzaklaştır">
+          <i class="fa-solid fa-magnifying-glass-minus text-xs"></i>
+        </button>
+        <button onclick="lightboxZoom(0.6)" class="text-white w-9 h-9 flex items-center justify-center rounded-full" style="background:rgba(255,255,255,0.12);" title="Yakınlaştır">
+          <i class="fa-solid fa-magnifying-glass-plus text-xs"></i>
+        </button>
+        <button onclick="downloadLightboxImage()" class="text-white w-9 h-9 flex items-center justify-center rounded-full" style="background:rgba(255,255,255,0.12);" title="Fotoğrafı indir">
+          <i class="fa-solid fa-download text-xs"></i>
+        </button>
+        <button onclick="closeLightbox()" class="text-white w-9 h-9 flex items-center justify-center rounded-full" style="background:rgba(255,255,255,0.12);" title="Kapat">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+    </div>
+
+    <button id="lightboxPrevBtn" onclick="lightboxNav(-1)" class="hidden absolute left-2 top-1/2 -translate-y-1/2 text-white w-10 h-10 rounded-full flex items-center justify-center z-10" style="background:rgba(255,255,255,0.12);">
+      <i class="fa-solid fa-chevron-left"></i>
     </button>
-    <img id="lightboxImage" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl">
+    <button id="lightboxNextBtn" onclick="lightboxNav(1)" class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-white w-10 h-10 rounded-full flex items-center justify-center z-10" style="background:rgba(255,255,255,0.12);">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <div id="lightboxViewport" class="w-full h-full flex items-center justify-center overflow-hidden" style="touch-action:none;">
+      <img id="lightboxImage" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl select-none pointer-events-none" draggable="false">
+    </div>
+
+    <p class="text-white/45 text-[9.5px] absolute bottom-5 safe-padding-bottom text-center px-6">Yakınlaştırmak için çift dokunun veya iki parmağınızla açın</p>
   </div>
 
   <!-- TOAST -->
@@ -795,11 +884,14 @@
 
     // Bellekteki veya localStorage'daki yeni eklenen camileri yüklemek için fonksiyon
     function loadCustomAddedMosques() {
+      PRESET_MOSQUES.forEach(m => { if (m.isCustom === undefined) m.isCustom = false; });
+
       const savedCustom = localStorage.getItem('manevi-atlas-custom-mosques');
       if (savedCustom) {
         try {
           const list = JSON.parse(savedCustom);
           list.forEach(customMosque => {
+            customMosque.isCustom = true;
             if (!PRESET_MOSQUES.some(m => m.id === customMosque.id)) {
               PRESET_MOSQUES.push(customMosque);
             }
@@ -808,7 +900,189 @@
           console.error("Özel cami listesi yüklenemedi", e);
         }
       }
+
+      applyMosqueOverrides();
+
+      const deletedRaw = localStorage.getItem('manevi-atlas-deleted-presets');
+      if (deletedRaw) {
+        try {
+          const deletedIds = new Set(JSON.parse(deletedRaw).map(d => d.id));
+          PRESET_MOSQUES = PRESET_MOSQUES.filter(m => !deletedIds.has(m.id));
+        } catch (e) {
+          console.error("Silinen cami listesi okunamadı", e);
+        }
+      }
     }
+
+    // === CAMİ DÜZENLEME / SİLME / GERİ GETİRME YÖNETİMİ ===
+    function persistCustomMosqueList() {
+      const customList = PRESET_MOSQUES.filter(m => m.isCustom);
+      localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(customList));
+    }
+
+    function saveMosqueOverride(id, data) {
+      let overrides = {};
+      const raw = localStorage.getItem('manevi-atlas-mosque-overrides');
+      if (raw) { try { overrides = JSON.parse(raw); } catch (e) {} }
+      overrides[id] = data;
+      localStorage.setItem('manevi-atlas-mosque-overrides', JSON.stringify(overrides));
+    }
+
+    function applyMosqueOverrides() {
+      const raw = localStorage.getItem('manevi-atlas-mosque-overrides');
+      if (!raw) return;
+      try {
+        const overrides = JSON.parse(raw);
+        Object.keys(overrides).forEach(id => {
+          const m = PRESET_MOSQUES.find(x => x.id === id);
+          if (m) Object.assign(m, overrides[id]);
+        });
+      } catch (e) {
+        console.error("Cami düzenlemeleri okunamadı", e);
+      }
+    }
+
+    function getDeletedPresetMosques() {
+      const raw = localStorage.getItem('manevi-atlas-deleted-presets');
+      if (!raw) return [];
+      try { return JSON.parse(raw); } catch (e) { return []; }
+    }
+
+    function updateDeletedMosquesCount() {
+      const badge = document.getElementById('deletedMosquesCountBadge');
+      if (badge) badge.textContent = getDeletedPresetMosques().length;
+    }
+
+    window.openMosqueEditModal = function(id) {
+      const m = PRESET_MOSQUES.find(x => x.id === id);
+      if (!m) return;
+      editingMosqueId = id;
+      document.getElementById('editMosqueName').value = m.name;
+      document.getElementById('editMosqueAddress').value = m.address || '';
+      const radio = document.querySelector(`input[name="editMosqueDistrict"][value="${m.district}"]`);
+      if (radio) radio.checked = true;
+      const notice = document.getElementById('editMosquePresetNotice');
+      notice.classList.toggle('hidden', !!m.isCustom);
+      notice.classList.toggle('flex', !m.isCustom);
+      document.getElementById('mosqueEditModal').classList.remove('hidden');
+    };
+
+    window.closeMosqueEditModal = function() {
+      document.getElementById('mosqueEditModal').classList.add('hidden');
+      editingMosqueId = null;
+    };
+
+    window.saveMosqueEdit = function() {
+      if (!editingMosqueId) return;
+      const m = PRESET_MOSQUES.find(x => x.id === editingMosqueId);
+      if (!m) return;
+
+      const newName = document.getElementById('editMosqueName').value.trim();
+      const newAddress = document.getElementById('editMosqueAddress').value.trim();
+      const districtEl = document.querySelector('input[name="editMosqueDistrict"]:checked');
+      const newDistrict = districtEl ? districtEl.value : m.district;
+
+      if (!newName) { showToast("Cami ismi boş bırakılamaz.", "error"); return; }
+
+      const duplicate = PRESET_MOSQUES.some(x => x.id !== m.id && x.name.trim().toLowerCase() === newName.toLowerCase());
+      if (duplicate) { showToast("Bu isimde bir mabet zaten listenizde var.", "error"); return; }
+
+      m.name = newName;
+      m.address = newAddress || m.address;
+      m.district = newDistrict;
+      m.mapsSearch = `${newName} ${newDistrict} Bursa`;
+
+      if (m.isCustom) {
+        persistCustomMosqueList();
+      } else {
+        saveMosqueOverride(m.id, { name: m.name, address: m.address, district: m.district, mapsSearch: m.mapsSearch });
+      }
+
+      // Bu camiye ait mevcut defter kayıtlarındaki isim/ilçe bilgisini de güncelle
+      visitsData.forEach(v => {
+        if (v.mosqueId === m.id) { v.mosqueName = m.name; v.district = m.district; }
+      });
+
+      populateMosquesDropdown();
+      triggerAllUIUpdates();
+      closeMosqueEditModal();
+      showToast("Cami bilgileri güncellendi.", "success");
+    };
+
+    window.triggerDeleteMosque = function(id) {
+      const m = PRESET_MOSQUES.find(x => x.id === id);
+      if (!m) return;
+      pendingMosqueDeleteId = id;
+      pendingAction = 'deleteMosque';
+      const visitCount = visitsData.filter(v => v.mosqueId === id).length;
+      const msg = visitCount > 0
+        ? `"${m.name}" cami listenizden kaldırılacak. Bu mabette ${visitCount} adet namaz kaydınız var, defterinizdeki kayıtlar silinmeyecek. Devam edilsin mi?`
+        : `"${m.name}" cami listenizden kaldırılacak. Ayarlar > Silinen Camiler bölümünden istediğiniz zaman geri getirebilirsiniz.`;
+      openConfirmModal("Cami Listeden Kaldırılsın mı?", msg, "Kaldır");
+    };
+
+    function executeDeleteMosque(id) {
+      const idx = PRESET_MOSQUES.findIndex(m => m.id === id);
+      if (idx === -1) return;
+      const removed = PRESET_MOSQUES[idx];
+      PRESET_MOSQUES.splice(idx, 1);
+
+      if (removed.isCustom) {
+        persistCustomMosqueList();
+      } else {
+        const deletedList = getDeletedPresetMosques();
+        if (!deletedList.some(d => d.id === id)) deletedList.push(removed);
+        localStorage.setItem('manevi-atlas-deleted-presets', JSON.stringify(deletedList));
+      }
+
+      populateMosquesDropdown();
+      triggerAllUIUpdates();
+      updateDeletedMosquesCount();
+      showToast(`"${removed.name}" listeden kaldırıldı.`, "success");
+      pendingMosqueDeleteId = null;
+    }
+
+    window.openDeletedMosquesModal = function() {
+      renderDeletedMosquesList();
+      document.getElementById('deletedMosquesModal').classList.remove('hidden');
+    };
+
+    window.closeDeletedMosquesModal = function() {
+      document.getElementById('deletedMosquesModal').classList.add('hidden');
+    };
+
+    function renderDeletedMosquesList() {
+      const list = getDeletedPresetMosques();
+      const container = document.getElementById('deletedMosquesList');
+      if (list.length === 0) {
+        container.innerHTML = `<p class="text-xs text-center py-6" style="color:var(--ink-faint);">Silinmiş cami bulunmuyor.</p>`;
+        return;
+      }
+      container.innerHTML = list.map(m => `
+        <div class="flex items-center justify-between rounded-xl p-2.5" style="background:var(--paper-deep); border:1px solid var(--line);">
+          <div class="space-y-0.5 pr-2 min-w-0">
+            <p class="font-bold text-xs truncate" style="color:var(--ink);">${escapeHtml(m.name)}</p>
+            <p class="text-[10px]" style="color:var(--ink-faint);">${escapeHtml(m.district)}</p>
+          </div>
+          <button onclick="restoreDeletedMosque('${m.id}')" class="text-[10px] font-bold px-2.5 py-1.5 rounded-lg text-white flex-shrink-0" style="background:var(--teal-900);">Geri Getir</button>
+        </div>
+      `).join('');
+    }
+
+    window.restoreDeletedMosque = function(id) {
+      let list = getDeletedPresetMosques();
+      const restored = list.find(m => m.id === id);
+      list = list.filter(m => m.id !== id);
+      localStorage.setItem('manevi-atlas-deleted-presets', JSON.stringify(list));
+      if (restored && !PRESET_MOSQUES.some(m => m.id === id)) {
+        PRESET_MOSQUES.push(restored);
+      }
+      populateMosquesDropdown();
+      triggerAllUIUpdates();
+      updateDeletedMosquesCount();
+      renderDeletedMosquesList();
+      showToast(`"${restored ? restored.name : 'Cami'}" listeye geri eklendi.`, "success");
+    };
 
     const DISTRICT_CODE = { "Osmangazi": "OSG", "Yıldırım": "YLD" };
     function getSicilNo(mosque) {
@@ -885,6 +1159,10 @@
     let useIndexedDB = true;
     let dbInstance = null;
     window.uploadedPhotos = { 1: null, 2: null };
+    window.photoGalleries = {};
+    let editingVisitId = null;
+    let editingMosqueId = null;
+    let pendingMosqueDeleteId = null;
 
     try { if (!window.indexedDB) useIndexedDB = false; } catch (e) { useIndexedDB = false; }
 
@@ -1095,6 +1373,7 @@
       updateDashboardUI();
       updateMosquesListUI();
       updateHistoryFeedUI();
+      updateDeletedMosquesCount();
     }
 
     // 4. DASHBOARD + SEYAHAT ÖNERİSİ
@@ -1220,6 +1499,7 @@
         const isOsmangazi = m.district === 'Osmangazi';
         const railClass = isOsmangazi ? 'bar-osmangazi' : 'bar-yildirim';
         const badgeClass = isOsmangazi ? 'badge-osmangazi' : 'badge-yildirim';
+        const customTag = m.isCustom ? `<span class="text-[8.5px] font-bold px-1.5 py-0.5 rounded-full uppercase" style="background:rgba(195,154,69,0.16); color:var(--gold-deep);">Eklediğin</span>` : '';
 
         const times = ['Sabah', 'Öğle', 'İkindi', 'Akşam', 'Yatsı'];
         const timeBadgesHTML = times.map(time => {
@@ -1238,19 +1518,28 @@
             <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}"></div>
             <div class="flex justify-between items-start pl-1.5">
               <div class="space-y-0.5">
-                <div class="flex items-center gap-1.5">
+                <div class="flex items-center gap-1.5 flex-wrap">
                   <span class="text-[9px] font-bold ${badgeClass} px-2 py-0.5 rounded-full uppercase">${m.district}</span>
                   <span class="sicil-tag">${getSicilNo(m)}</span>
+                  ${customTag}
                 </div>
-                <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${m.name}</h3>
-                <p class="text-[10px] truncate max-w-[210px] mt-0.5 flex items-center gap-1" style="color:var(--ink-faint);">
-                  <i class="fa-solid fa-location-dot"></i><span>${m.address}</span>
+                <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${escapeHtml(m.name)}</h3>
+                <p class="text-[10px] truncate max-w-[190px] mt-0.5 flex items-center gap-1" style="color:var(--ink-faint);">
+                  <i class="fa-solid fa-location-dot"></i><span>${escapeHtml(m.address)}</span>
                 </p>
               </div>
-              <div>
+              <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
+                <div class="flex items-center gap-1">
+                  <button onclick="openMosqueEditModal('${m.id}')" class="icon-btn" style="background:rgba(21,90,76,0.08); color:var(--teal-700); width:26px; height:26px;" title="Düzenle">
+                    <i class="fa-solid fa-pen text-[10px]"></i>
+                  </button>
+                  <button onclick="triggerDeleteMosque('${m.id}')" class="icon-btn" style="background:rgba(168,86,49,0.08); color:var(--brick); width:26px; height:26px;" title="Listeden kaldır">
+                    <i class="fa-solid fa-trash-can text-[10px]"></i>
+                  </button>
+                </div>
                 ${isVisited
-                  ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-0.5" style="background:rgba(21,90,76,0.12); color:var(--teal-900);"><i class="fa-solid fa-check"></i> <span>İhya Edildi</span></span>`
-                  : `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full" style="background:var(--paper-deep); color:var(--ink-faint);">Kılınmadı</span>`}
+                  ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-0.5 whitespace-nowrap" style="background:rgba(21,90,76,0.12); color:var(--teal-900);"><i class="fa-solid fa-check"></i> <span>İhya Edildi</span></span>`
+                  : `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap" style="background:var(--paper-deep); color:var(--ink-faint);">Kılınmadı</span>`}
               </div>
             </div>
             <div class="pl-1.5 pt-2.5 flex items-center justify-between mt-2.5" style="border-top:1px solid var(--line);">
@@ -1286,11 +1575,15 @@
 
         let photosHTML = '';
         if (v.photos && v.photos.length > 0) {
+          window.photoGalleries[v.id] = v.photos;
           photosHTML = `
             <div class="grid grid-cols-2 gap-2 mt-2">
-              ${v.photos.map(p => `
-                <div class="relative rounded-xl overflow-hidden h-24 cursor-pointer" style="background:var(--paper-deep); border:1px solid var(--line);" onclick="openLightbox(this.dataset.src)" data-src="${p}">
+              ${v.photos.map((p, pIdx) => `
+                <div class="relative rounded-xl overflow-hidden h-24 cursor-pointer active:opacity-80 transition-opacity" style="background:var(--paper-deep); border:1px solid var(--line);" onclick="openLightboxFromRecord('${v.id}', ${pIdx})">
                   <img src="${p}" class="w-full h-full object-cover" onerror="window.__imgFallback(this)">
+                  <div class="absolute bottom-1 right-1 w-5 h-5 rounded-full flex items-center justify-center" style="background:rgba(0,0,0,0.5);">
+                    <i class="fa-solid fa-expand text-white text-[9px]"></i>
+                  </div>
                 </div>
               `).join('')}
             </div>
@@ -1314,10 +1607,15 @@
             ${!isLast ? `<div class="timeline-rail"></div>` : ''}
             <div class="absolute left-[15px] top-6 timeline-dot"></div>
             <div class="paper-card rounded-2xl p-4 relative">
-              <button onclick="triggerDelete('${v.id}')" class="absolute top-4 right-4 p-1" style="color:#D8D2C0;">
-                <i class="fa-solid fa-trash-can text-xs"></i>
-              </button>
-              <div class="space-y-1">
+              <div class="absolute top-4 right-4 flex items-center gap-2.5">
+                <button onclick="triggerEditVisit('${v.id}')" class="p-1" style="color:var(--ink-faint);" title="Kaydı düzenle">
+                  <i class="fa-solid fa-pen text-xs"></i>
+                </button>
+                <button onclick="triggerDelete('${v.id}')" class="p-1" style="color:var(--ink-faint);" title="Kaydı sil">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                </button>
+              </div>
+              <div class="space-y-1 pr-12">
                 <div class="flex items-center space-x-1.5">
                   <span class="text-[9px] font-bold text-white px-2 py-0.5 rounded font-ledger" style="background:var(--teal-900);">${escapeHtml(v.prayerTime)} Namazı</span>
                   <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">${escapeHtml(v.district)}</span>
@@ -1368,6 +1666,8 @@
         await executeDeleteLog(pendingDeleteId);
       } else if (pendingAction === 'resetAll') {
         await executeResetAll();
+      } else if (pendingAction === 'deleteMosque' && pendingMosqueDeleteId) {
+        executeDeleteMosque(pendingMosqueDeleteId);
       }
       closeConfirmModal();
     });
@@ -1377,7 +1677,7 @@
       modal.firstElementChild.classList.remove('scale-100');
       modal.firstElementChild.classList.add('scale-95');
       document.getElementById('confirmOkBtn').textContent = "Sil";
-      setTimeout(() => { modal.classList.add('hidden'); pendingDeleteId = null; pendingAction = null; }, 150);
+      setTimeout(() => { modal.classList.add('hidden'); pendingDeleteId = null; pendingMosqueDeleteId = null; pendingAction = null; }, 150);
     }
 
     async function executeResetAll() {
@@ -1568,31 +1868,31 @@
       if (selectedOptionId === "custom") {
         const customName = document.getElementById('formCustomName').value.trim();
         if (!customName) { showToast("Mabet ismi boş bırakılamaz.", "error"); return; }
-        
-        mosqueName = customName;
-        const tempId = "custom-" + Date.now();
-        mosqueId = tempId;
-        district = document.querySelector('input[name="formCustomDistrict"]:checked').value;
 
-        const newCustomMosque = {
-          id: tempId,
-          name: customName,
-          district: district,
-          address: address || `${district}, Bursa`,
-          mapsSearch: customName + " " + district + " Bursa"
-        };
+        const existingMatch = PRESET_MOSQUES.find(m => m.name.trim().toLowerCase() === customName.toLowerCase());
+        if (existingMatch && !(editingVisitId && existingMatch.id === visitsData.find(v => v.id === editingVisitId)?.mosqueId)) {
+          mosqueName = existingMatch.name;
+          mosqueId = existingMatch.id;
+          district = existingMatch.district;
+        } else {
+          mosqueName = customName;
+          const tempId = "custom-" + Date.now();
+          mosqueId = tempId;
+          district = document.querySelector('input[name="formCustomDistrict"]:checked').value;
 
-        PRESET_MOSQUES.push(newCustomMosque);
+          const newCustomMosque = {
+            id: tempId,
+            name: customName,
+            district: district,
+            address: address || `${district}, Bursa`,
+            mapsSearch: customName + " " + district + " Bursa",
+            isCustom: true
+          };
 
-        const savedCustom = localStorage.getItem('manevi-atlas-custom-mosques');
-        let customList = [];
-        if (savedCustom) {
-          try { customList = JSON.parse(savedCustom); } catch(e) {}
+          PRESET_MOSQUES.push(newCustomMosque);
+          persistCustomMosqueList();
+          populateMosquesDropdown();
         }
-        customList.push(newCustomMosque);
-        localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(customList));
-
-        populateMosquesDropdown();
       } else {
         const matched = PRESET_MOSQUES.find(m => m.id === selectedOptionId);
         if (matched) { mosqueName = matched.name; district = matched.district; }
@@ -1604,8 +1904,41 @@
 
       const btn = document.getElementById('btnSubmitForm');
       const origText = btn.innerHTML;
-      btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Defter Yazılıyor...</span>`;
+      const isEditing = !!editingVisitId;
+      btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>${isEditing ? 'Güncelleniyor...' : 'Defter Yazılıyor...'}</span>`;
       btn.disabled = true;
+
+      if (isEditing) {
+        const idx = visitsData.findIndex(v => v.id === editingVisitId);
+        if (idx === -1) {
+          showToast("Düzenlenecek kayıt bulunamadı.", "error");
+          btn.innerHTML = origText; btn.disabled = false;
+          return;
+        }
+        const backup = { ...visitsData[idx] };
+        const updatedRecord = {
+          ...visitsData[idx], mosqueId, mosqueName, district, prayerTime,
+          address: address || visitsData[idx].address || '',
+          date, time, notes, photos: photosArray
+        };
+        visitsData[idx] = updatedRecord;
+        sortVisitsInMemory();
+        const ok = await persistNewVisit(updatedRecord);
+
+        if (ok) {
+          if (window.hapticsEnabled && navigator.vibrate) navigator.vibrate(12);
+          showToast("Kaydınız güncellendi.", "success");
+          cancelEditVisit();
+          triggerAllUIUpdates();
+          switchTab(3);
+        } else {
+          const revertIdx = visitsData.findIndex(v => v.id === updatedRecord.id);
+          if (revertIdx !== -1) visitsData[revertIdx] = backup;
+        }
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        return;
+      }
 
       const newRecord = {
         id: "v-" + Date.now(), mosqueId, mosqueName, district, prayerTime,
@@ -1636,6 +1969,69 @@
 
       btn.innerHTML = origText;
       btn.disabled = false;
+    };
+
+    // === MEVCUT DEFTER KAYDINI DÜZENLEME ===
+    window.triggerEditVisit = function(id) {
+      const v = visitsData.find(x => x.id === id);
+      if (!v) return;
+      editingVisitId = id;
+
+      const select = document.getElementById('formMosqueSelect');
+      const hasOption = Array.from(select.options).some(o => o.value === v.mosqueId);
+      if (hasOption) {
+        select.value = v.mosqueId;
+        document.getElementById('customMosqueSection').classList.add('hidden');
+        document.getElementById('formCustomName').required = false;
+      } else {
+        select.value = 'custom';
+        document.getElementById('customMosqueSection').classList.remove('hidden');
+        document.getElementById('formCustomName').value = v.mosqueName;
+        document.getElementById('formCustomName').required = true;
+        const radio = document.querySelector(`input[name="formCustomDistrict"][value="${v.district}"]`);
+        if (radio) radio.checked = true;
+      }
+
+      selectPrayer(v.prayerTime);
+      document.getElementById('formAddress').value = v.address || '';
+      document.getElementById('formDate').value = v.date || '';
+      document.getElementById('formTime').value = v.time || '';
+      document.getElementById('formNotes').value = v.notes || '';
+
+      window.uploadedPhotos = {
+        1: (v.photos && v.photos[0]) || null,
+        2: (v.photos && v.photos[1]) || null
+      };
+      for (let i = 1; i <= 2; i++) {
+        if (window.uploadedPhotos[i]) {
+          const preview = document.getElementById(`photoPreview${i}`);
+          preview.src = window.uploadedPhotos[i];
+          preview.classList.remove('hidden');
+          document.getElementById(`photoPlaceholder${i}`).classList.add('hidden');
+          document.getElementById(`btnRemovePhoto${i}`).classList.remove('hidden');
+        } else {
+          resetPhotoPreview(i);
+        }
+      }
+
+      document.getElementById('btnSubmitForm').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Kaydı Güncelle</span>`;
+      document.getElementById('editModeNotice').classList.remove('hidden');
+
+      switchTab(2);
+    };
+
+    window.cancelEditVisit = function() {
+      editingVisitId = null;
+      document.getElementById('visitForm').reset();
+      window.uploadedPhotos = { 1: null, 2: null };
+      resetPhotoPreview(1);
+      resetPhotoPreview(2);
+      document.querySelectorAll('.prayer-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('formPrayerSelected').value = '';
+      toggleCustomMosqueInput();
+      setTodayDateTime();
+      document.getElementById('btnSubmitForm').innerHTML = `<i class="fa-solid fa-heart-circle-check"></i> <span>Vakti Deftere İşle</span>`;
+      document.getElementById('editModeNotice').classList.add('hidden');
     };
 
     // 9. FOTOĞRAF ÖN İZLEME VE İŞLEME
@@ -1804,13 +2200,161 @@
       }, 3000);
     };
 
-    // 16. LIGHTBOX
-    window.openLightbox = function(src) {
-      document.getElementById('lightboxImage').src = src;
+    // 16. LIGHTBOX (Fotoğraf Büyütme / Yakınlaştırma / Gezinme)
+    let lightboxPhotos = [];
+    let lightboxIndex = 0;
+    let lbScale = 1, lbX = 0, lbY = 0;
+    let lbLastTapTime = 0;
+    let lbPointers = new Map();
+    let lbStartDist = 0, lbStartScale = 1;
+    let lbDragging = false, lbDragStartX = 0, lbDragStartY = 0, lbStartX = 0, lbStartY = 0;
+
+    window.openLightbox = function(src, photosList, index) {
+      lightboxPhotos = (photosList && photosList.length) ? photosList : [src];
+      lightboxIndex = index || 0;
+      renderLightboxImage();
       document.getElementById('lightboxModal').classList.remove('hidden');
     };
-    window.closeLightbox = function() { document.getElementById('lightboxModal').classList.add('hidden'); };
+
+    window.openLightboxFromRecord = function(recordId, index) {
+      const photos = (window.photoGalleries && window.photoGalleries[recordId]) || [];
+      if (!photos.length) return;
+      openLightbox(photos[index], photos, index);
+    };
+
+    function renderLightboxImage() {
+      resetLightboxZoom();
+      const img = document.getElementById('lightboxImage');
+      img.onerror = () => window.__imgFallback(img);
+      img.src = lightboxPhotos[lightboxIndex];
+      const counter = document.getElementById('lightboxCounter');
+      const prevBtn = document.getElementById('lightboxPrevBtn');
+      const nextBtn = document.getElementById('lightboxNextBtn');
+      if (lightboxPhotos.length > 1) {
+        counter.textContent = `${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+        prevBtn.classList.toggle('hidden', lightboxIndex === 0);
+        nextBtn.classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
+      } else {
+        counter.textContent = '';
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+      }
+    }
+
+    window.lightboxNav = function(dir) {
+      const next = lightboxIndex + dir;
+      if (next < 0 || next >= lightboxPhotos.length) return;
+      lightboxIndex = next;
+      renderLightboxImage();
+    };
+
+    function resetLightboxZoom() {
+      lbScale = 1; lbX = 0; lbY = 0;
+      applyLightboxTransform(true);
+    }
+
+    function applyLightboxTransform(animated) {
+      const img = document.getElementById('lightboxImage');
+      img.style.transition = animated ? 'transform 0.18s ease' : 'none';
+      img.style.transform = `translate(${lbX}px, ${lbY}px) scale(${lbScale})`;
+    }
+
+    window.lightboxZoom = function(delta) {
+      lbScale = Math.min(4, Math.max(1, +(lbScale + delta).toFixed(2)));
+      if (lbScale === 1) { lbX = 0; lbY = 0; }
+      applyLightboxTransform(true);
+    };
+
+    window.downloadLightboxImage = function() {
+      try {
+        const img = document.getElementById('lightboxImage');
+        const a = document.createElement('a');
+        a.href = img.src;
+        a.download = `bursa-manevi-atlas-hatira-${Date.now()}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (e) {
+        showToast("Fotoğraf indirilemedi.", "error");
+      }
+    };
+
+    window.closeLightbox = function() {
+      document.getElementById('lightboxModal').classList.add('hidden');
+      resetLightboxZoom();
+    };
+
     document.getElementById('lightboxModal').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('lightboxModal').classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+    });
+
+    // Pinch-to-zoom, çift dokunma ve sürükleyerek gezinme (dokunmatik + fare)
+    const lbViewport = document.getElementById('lightboxViewport');
+
+    function lbDistance(p1, p2) { return Math.hypot(p1.x - p2.x, p1.y - p2.y); }
+
+    lbViewport.addEventListener('pointerdown', (e) => {
+      lbViewport.setPointerCapture(e.pointerId);
+      lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      if (lbPointers.size === 1) {
+        lbDragging = true;
+        lbDragStartX = e.clientX; lbDragStartY = e.clientY;
+        lbStartX = lbX; lbStartY = lbY;
+
+        const now = Date.now();
+        if (now - lbLastTapTime < 300) {
+          if (lbScale > 1) { resetLightboxZoom(); }
+          else { lbScale = 2.5; applyLightboxTransform(true); }
+          lbLastTapTime = 0;
+        } else {
+          lbLastTapTime = now;
+        }
+      } else if (lbPointers.size === 2) {
+        lbDragging = false;
+        const pts = Array.from(lbPointers.values());
+        lbStartDist = lbDistance(pts[0], pts[1]);
+        lbStartScale = lbScale;
+      }
+    });
+
+    lbViewport.addEventListener('pointermove', (e) => {
+      if (!lbPointers.has(e.pointerId)) return;
+      lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      if (lbPointers.size === 2) {
+        const pts = Array.from(lbPointers.values());
+        const dist = lbDistance(pts[0], pts[1]);
+        lbScale = Math.min(4, Math.max(1, lbStartScale * (dist / lbStartDist)));
+        applyLightboxTransform(false);
+      } else if (lbPointers.size === 1 && lbDragging && lbScale > 1) {
+        lbX = lbStartX + (e.clientX - lbDragStartX);
+        lbY = lbStartY + (e.clientY - lbDragStartY);
+        applyLightboxTransform(false);
+      }
+    });
+
+    function lbPointerEnd(e) {
+      lbPointers.delete(e.pointerId);
+      lbDragging = false;
+      if (lbScale < 1) resetLightboxZoom();
+      else applyLightboxTransform(true);
+    }
+    lbViewport.addEventListener('pointerup', lbPointerEnd);
+    lbViewport.addEventListener('pointercancel', lbPointerEnd);
+    lbViewport.addEventListener('pointerleave', lbPointerEnd);
+
+    lbViewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      lbScale = Math.min(4, Math.max(1, +(lbScale - e.deltaY * 0.0015 * lbScale).toFixed(2)));
+      if (lbScale === 1) { lbX = 0; lbY = 0; }
+      applyLightboxTransform(false);
+    }, { passive: false });
 
     // 17. UYGULAMA OLARAK YÜKLEME (PWA install prompt)
     let deferredInstallPrompt = null;
