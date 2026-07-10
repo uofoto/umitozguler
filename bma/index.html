@@ -250,7 +250,7 @@
           <div class="relative z-10 space-y-3">
             <div class="flex justify-between items-center">
               <span class="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest" style="background:rgba(195,154,69,0.16); color:var(--gold-soft); border:1px solid rgba(195,154,69,0.4);">
-                Bursa Camileri
+                Bursa Tarihi Camileri
               </span>
               <div class="flex items-center space-x-1.5">
                 <span id="overallBadge" class="gold-shimmer text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="color:var(--teal-950);">%0 Tamamlandı</span>
@@ -689,11 +689,11 @@
             </div>
             <div class="flex items-start space-x-2.5 text-[11px]">
               <span class="sicil-tag min-w-[76px] text-center" style="color:var(--brick-deep);">Mihrap</span>
-              <p style="color:var(--ink-soft);">Herhangi bir ilçedeki tüm tescilli camileri tamamlayan (Mihrap Fatihi).</p>
+              <p style="color:var(--ink-soft);">Bir ilçedeki tüm tescilli tarihi camileri tamamlayan (Mihrap Fatihi).</p>
             </div>
             <div class="flex items-start space-x-2.5 text-[11px]">
               <span class="sicil-tag min-w-[76px] text-center" style="color:var(--gold-deep);">Fatih 👑</span>
-              <p style="color:var(--ink-soft);">Envanterdeki tüm mabet ve mescidlerin tamamını tamamlayan baş seyyah (Bursa Fatihi).</p>
+              <p style="color:var(--ink-soft);">Envanterdeki tüm tescilli tarihi mabet ve mescidlerin tamamını tamamlayan baş seyyah (Bursa Fatihi).</p>
             </div>
           </div>
         </div>
@@ -966,7 +966,6 @@
   <script>
     // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI
     let PRESET_MOSQUES = [
-      // OSMANGAZİ (merkez + ek)
       { id: "ulu-cami", name: "Bursa Ulu Cami", district: "Osmangazi", address: "Nalbantoğlu, Atatürk Cd., Osmangazi/Bursa", mapsSearch: "Bursa Ulu Cami" },
       { id: "orhan-gazi", name: "Orhan Gazi Camii", district: "Osmangazi", address: "Nalbantoğlu, Tarihi Çarşı, Osmangazi/Bursa", mapsSearch: "Orhan Gazi Camii Bursa" },
       { id: "hudavendigar", name: "I. Murad Hüdavendigar Camii", district: "Osmangazi", address: "Çekirge, 1. Murat Sk., Osmangazi/Bursa", mapsSearch: "Hüdavendigar Camii Bursa" },
@@ -997,121 +996,48 @@
       { id: "yerkapi-camii", name: "Yerkapı Camii", district: "Osmangazi", address: "Yerkapı Mh., Osmangazi/Bursa", mapsSearch: "Yerkapı Camii Bursa" },
       { id: "demirkapi-mescidi", name: "Demirkapı Mescidi", district: "Osmangazi", address: "Demirkapı Sk., Osmangazi/Bursa", mapsSearch: "Demirkapı Mescidi" },
       { id: "basci-ibrahim", name: "Başçı İbrahim Camii", district: "Osmangazi", address: "Maksem Mh., Başçı İbrahim Sk., Osmangazi/Bursa", mapsSearch: "Başçı İbrahim Camii" },
-      { id: "zafer-camii", name: "Zafer Camii", district: "Osmangazi", address: "Zafer Mh., Osmangazi/Bursa", mapsSearch: "Zafer Camii Osmangazi" },
       { id: "sehrekustu-camii", name: "Şehreküstü Camii", district: "Osmangazi", address: "Şehreküstü, Osmangazi/Bursa", mapsSearch: "Şehreküstü Camii" },
       { id: "maksem-camii", name: "Maksem Camii", district: "Osmangazi", address: "Maksem, Osmangazi/Bursa", mapsSearch: "Maksem Camii" },
       { id: "dayioglu-camii", name: "Dayıoğlu Camii", district: "Osmangazi", address: "Tahtakale, Osmangazi/Bursa", mapsSearch: "Dayıoğlu Camii" },
       { id: "hamzabey-camii", name: "Hamzabey Camii", district: "Osmangazi", address: "Hamzabey Mh., Osmangazi/Bursa", mapsSearch: "Hamzabey Camii Bursa" },
-
-      // YILDIRIM (merkez + ek)
+      { id: "imaret-isabey", name: "İmaret-i İsabey Camii", district: "Osmangazi", address: "Alaaddin Mh., Kale içi, Osmangazi/Bursa", mapsSearch: "İmaret-i İsabey Camii Bursa" },
+      { id: "nilufer-hidirlik", name: "Nilüfer Hatun (Hıdırlık) Camii", district: "Osmangazi", address: "Pınarbaşı Meydanı, İvaz Paşa Mh., Osmangazi/Bursa", mapsSearch: "Nilüfer Hatun Hıdırlık Camii Bursa" },
+      { id: "armutkoy-camii", name: "Armutköy Camii", district: "Osmangazi", address: "Armutköy, Osmangazi/Bursa", mapsSearch: "Armutköy Camii Bursa" },
+      { id: "yaylacik-camii", name: "Yaylacık Camii", district: "Osmangazi", address: "Yaylacık, Osmangazi/Bursa", mapsSearch: "Yaylacık Camii Bursa" },
       { id: "yesil-cami", name: "Yeşil Cami", district: "Yıldırım", address: "Yeşil, Yıldırım/Bursa", mapsSearch: "Yeşil Cami Bursa" },
       { id: "emir-sultan", name: "Emir Sultan Camii", district: "Yıldırım", address: "Emirsultan, Yıldırım/Bursa", mapsSearch: "Emir Sultan Camii Bursa" },
       { id: "yildirim-bayezid", name: "Yıldırım Bayezid Camii", district: "Yıldırım", address: "Yıldırım, Yıldırım/Bursa", mapsSearch: "Yıldırım Bayezid Camii" },
       { id: "ali-pasa", name: "Ali Paşa Camii", district: "Yıldırım", address: "Namazgah, Ali Paşa Sk., Yıldırım/Bursa", mapsSearch: "Ali Paşa Camii Bursa" },
       { id: "namazgah", name: "Bursa Tarihi Namazgah", district: "Yıldırım", address: "Namazgah, Yıldırım/Bursa", mapsSearch: "Namazgah Bursa" },
       { id: "molla-yegan", name: "Molla Yegan Camii", district: "Yıldırım", address: "Yıldırım Mh., Yıldırım/Bursa", mapsSearch: "Molla Yegan" },
-      { id: "selimzade-camii", name: "Selimzade Camii", district: "Yıldırım", address: "Selimzade, Yıldırım/Bursa", mapsSearch: "Selimzade Camii Bursa" },
       { id: "davutkadi-camii", name: "Davutkadı Camii", district: "Yıldırım", address: "Davutkadı Mh., Yıldırım/Bursa", mapsSearch: "Davutkadı Camii Bursa" },
       { id: "musababa-camii", name: "Musababa Camii", district: "Yıldırım", address: "Musababa Mh., Yıldırım/Bursa", mapsSearch: "Musababa Camii" },
-      { id: "meydancik-camii", name: "Meydancık Camii", district: "Yıldırım", address: "Meydancık Mh., Yıldırım/Bursa", mapsSearch: "Meydancık Camii" },
       { id: "piremir-camii", name: "Piremir Camii", district: "Yıldırım", address: "Piremir Mh., Yıldırım/Bursa", mapsSearch: "Piremir Camii" },
       { id: "teferruc-camii", name: "Teferrüç Camii", district: "Yıldırım", address: "Teferrüç, Yıldırım/Bursa", mapsSearch: "Teferrüç Camii" },
       { id: "karaagac-camii", name: "Karaağaç Camii", district: "Yıldırım", address: "Karaağaç Mh., Yıldırım/Bursa", mapsSearch: "Karaağaç Camii" },
       { id: "zeyniler-camii", name: "Zeyniler Köyü Mescidi", district: "Yıldırım", address: "Zeyniler Köyü, Yıldırım/Bursa", mapsSearch: "Zeyniler Mescidi" },
       { id: "molla-arap", name: "Molla Arap Camii", district: "Yıldırım", address: "Mollaarap Mh., Yıldırım/Bursa", mapsSearch: "Molla Arap Camii" },
-      { id: "isabey-camii", name: "İsabey Camii", district: "Yıldırım", address: "İsabey Mh., Yıldırım/Bursa", mapsSearch: "İsabey Camii Yıldırım" },
-      { id: "karamazak-camii", name: "Karamazak Camii", district: "Yıldırım", address: "Karamazak Mh., Yıldırım/Bursa", mapsSearch: "Karamazak Camii" },
-      { id: "haci-seyfettin", name: "Hacı Seyfettin Camii", district: "Yıldırım", address: "Hacı Seyfettin Mh., Yıldırım/Bursa", mapsSearch: "Hacı Seyfettin Camii" },
       { id: "umurbey-camii", name: "Umurbey Camii", district: "Yıldırım", address: "Umurbey Mh., Yıldırım/Bursa", mapsSearch: "Umurbey Camii" },
-      { id: "esenyurt-camii", name: "Esenyurt Mescidi", district: "Yıldırım", address: "Esenyurt Mh., Yıldırım/Bursa", mapsSearch: "Esenyurt Camii" },
-      { id: "seker-hoca-yildirim", name: "Şeker Hoca Camii (Yıldırım)", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Şeker Hoca Camii Yıldırım" },
       { id: "yesil-mescidi", name: "Yeşil Türbe Mescidi", district: "Yıldırım", address: "Yeşil, Yıldırım/Bursa", mapsSearch: "Yeşil Türbe" },
       { id: "selcuk-hatun", name: "Selçuk Hatun Camii", district: "Yıldırım", address: "Selçuk Hatun Mh., Yıldırım/Bursa", mapsSearch: "Selçuk Hatun Camii" },
-      { id: "kaplikaya-camii", name: "Kaplıkaya Mescidi", district: "Yıldırım", address: "Kaplıkaya, Yıldırım/Bursa", mapsSearch: "Kaplıkaya Camii" },
       { id: "haci-ilyas-camii", name: "Hacı İlyas Camii", district: "Yıldırım", address: "Hacı İlyas Mh., Yıldırım/Bursa", mapsSearch: "Hacı İlyas Camii" },
       { id: "degirmenlikizik-camii", name: "Değirmenlikızık Camii", district: "Yıldırım", address: "Değirmenlikızık, Yıldırım/Bursa", mapsSearch: "Değirmenlikızık Camii" },
-      { id: "temenyeri-mescidi", name: "Temenyeri Mescidi", district: "Yıldırım", address: "Temenyeri, Yıldırım/Bursa", mapsSearch: "Temenyeri" },
       { id: "fidyekizik-camii", name: "Fidyekızık Tarihi Camii", district: "Yıldırım", address: "Fidyekızık, Yıldırım/Bursa", mapsSearch: "Fidyekızık Camii" },
-      { id: "sirinevler-mescidi", name: "Şirinevler Mescidi", district: "Yıldırım", address: "Şirinevler, Yıldırım/Bursa", mapsSearch: "Şirinevler Camii Yıldırım" },
-      { id: "ramazanbey-camii", name: "Ramazanbey Camii", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Ramazanbey Camii Yıldırım" },
-      { id: "gokdere-camii", name: "Gökdere Camii", district: "Yıldırım", address: "Meydancık, Yıldırım/Bursa", mapsSearch: "Gökdere Camii" },
-      { id: "celebi-mehmet", name: "Çelebi Mehmet Camii", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Çelebi Mehmet Camii Yıldırım" },
-      { id: "emirsultan-nisanci", name: "Emirsultan Nişancı Mescidi", district: "Yıldırım", address: "Emirsultan, Yıldırım/Bursa", mapsSearch: "Nişancı Mescidi Bursa" },
       { id: "sitti-hatun", name: "Sitti Hatun Mescidi", district: "Yıldırım", address: "Umurbey, Yıldırım/Bursa", mapsSearch: "Sitti Hatun Camii" },
       { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" },
-
-      // NİLÜFER
-      { id: "nilufer-hatun", name: "Nilüfer Hatun (Hıdırlık) Camii", district: "Nilüfer", address: "Pınarbaşı, İvaz Paşa Mh., Nilüfer/Bursa", mapsSearch: "Nilüfer Hatun Camii Bursa" },
-      { id: "golyazi-eski", name: "Gölyazı Eski Camii", district: "Nilüfer", address: "Gölyazı, Nilüfer/Bursa", mapsSearch: "Gölyazı Camii Bursa" },
-      { id: "misi-camii", name: "Misi Köyü Camii", district: "Nilüfer", address: "Misi, Nilüfer/Bursa", mapsSearch: "Misi Camii Bursa" },
-      { id: "alaaddinbey-nilufer", name: "Alaaddinbey Camii", district: "Nilüfer", address: "Alaaddinbey, Nilüfer/Bursa", mapsSearch: "Alaaddinbey Camii Nilüfer" },
-
-      // MUDANYA
-      { id: "halil-aga-eski", name: "Halil Ağa Camii (Eski Cami)", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Halil Ağa Camii Mudanya" },
-      { id: "tekke-i-atik", name: "Tekke-i Atik Camii", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Tekke-i Atik Camii Mudanya" },
-      { id: "tekke-i-cedid", name: "Tekke-i Cedid Camii", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Tekke-i Cedid Camii Mudanya" },
-      { id: "omer-bey-camii", name: "Ömer Bey Camii", district: "Mudanya", address: "Mudanya Merkez, Mudanya/Bursa", mapsSearch: "Ömer Bey Camii Mudanya" },
-      { id: "hasan-bey-camii", name: "Hasan Bey Camii", district: "Mudanya", address: "Mudanya, Mudanya/Bursa", mapsSearch: "Hasan Bey Camii Mudanya" },
-      { id: "mudanya-fatih", name: "Mudanya Fatih Camii", district: "Mudanya", address: "Mudanya, Bursa", mapsSearch: "Fatih Camii Mudanya" },
-
-      // İZNİK
+      { id: "cumalikizik-camii", name: "Cumalıkızık Camii", district: "Yıldırım", address: "Cumalıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Cumalıkızık Camii" },
+      { id: "bayezid-pasa-catal", name: "Bayezid Paşa (Çatal Mescit) Camii", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Bayezid Paşa Camii Bursa Çatal Mescit" },
       { id: "iznik-ayasofya", name: "İznik Ayasofya Orhan Camii", district: "İznik", address: "İznik Merkez, İznik/Bursa", mapsSearch: "İznik Ayasofya Camii" },
       { id: "iznik-yesil", name: "İznik Yeşil Camii", district: "İznik", address: "Lefke Kapı civarı, İznik/Bursa", mapsSearch: "İznik Yeşil Camii" },
       { id: "haci-ozbek-iznik", name: "Hacı Özbek Camii (Çarşı Mescidi)", district: "İznik", address: "Çarşı İçi, İznik/Bursa", mapsSearch: "Hacı Özbek Camii İznik" },
       { id: "mahmut-celebi", name: "Mahmut Çelebi Camii", district: "İznik", address: "Ayasofya civarı, İznik/Bursa", mapsSearch: "Mahmut Çelebi Camii İznik" },
       { id: "esrefzade", name: "Eşrefzade (Eşref-i Rumi) Camii", district: "İznik", address: "İznik Merkez, İznik/Bursa", mapsSearch: "Eşrefzade Camii İznik" },
       { id: "seyh-kutbuddin", name: "Şeyh Kutbuddin Camii", district: "İznik", address: "İznik, Bursa", mapsSearch: "Şeyh Kutbuddin Camii İznik" },
-      { id: "iznik-elmalı", name: "Elmalı Çivisiz Camii", district: "İznik", address: "İznik, Bursa", mapsSearch: "Elmalı Camii İznik" },
-
-      // GEMLİK
-      { id: "gemlik-yeni", name: "Gemlik Yeni Camii (Balıkpazarı)", district: "Gemlik", address: "Balıkpazarı, Gemlik/Bursa", mapsSearch: "Yeni Camii Gemlik" },
-      { id: "sinan-bey-gemlik", name: "Sinan Bey Camii", district: "Gemlik", address: "Gemlik Merkez, Gemlik/Bursa", mapsSearch: "Sinan Bey Camii Gemlik" },
+      { id: "halil-aga-eski", name: "Halil Ağa Camii (Eski Cami)", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Halil Ağa Camii Mudanya" },
+      { id: "tekke-i-atik", name: "Tekke-i Atik Camii", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Tekke-i Atik Camii Mudanya" },
       { id: "kursunlu-camii", name: "Kurşunlu Camii", district: "Gemlik", address: "Kurşunlu, Gemlik/Bursa", mapsSearch: "Kurşunlu Camii Gemlik" },
-
-      // İNEGÖL
       { id: "inegol-ishakpasa", name: "İshakpaşa Camii", district: "İnegöl", address: "İnegöl Merkez, İnegöl/Bursa", mapsSearch: "İshakpaşa Camii İnegöl" },
-      { id: "inegol-ulu", name: "İnegöl Ulu Camii", district: "İnegöl", address: "İnegöl, Bursa", mapsSearch: "Ulu Camii İnegöl" },
-      { id: "yenice-camii", name: "Yenice Camii", district: "İnegöl", address: "Yenice, İnegöl/Bursa", mapsSearch: "Yenice Camii İnegöl" },
-
-      // ORHANGAZİ
-      { id: "orhangazi-merkez", name: "Orhangazi Merkez Camii", district: "Orhangazi", address: "Orhangazi Merkez, Orhangazi/Bursa", mapsSearch: "Orhangazi Camii" },
-      { id: "orhangazi-yildirim", name: "Orhangazi Yıldırım Camii", district: "Orhangazi", address: "Orhangazi, Bursa", mapsSearch: "Yıldırım Camii Orhangazi" },
-
-      // YENİŞEHİR
-      { id: "yenisehir-ulu", name: "Yenişehir Ulu Camii", district: "Yenişehir", address: "Yenişehir Merkez, Yenişehir/Bursa", mapsSearch: "Yenişehir Ulu Camii" },
-      { id: "postinpus", name: "Postinpus Camii", district: "Yenişehir", address: "Yenişehir, Bursa", mapsSearch: "Postinpus Camii Yenişehir" },
-
-      // KARACABEY
-      { id: "karacabey-ulu", name: "Karacabey Ulu Camii", district: "Karacabey", address: "Karacabey Merkez, Karacabey/Bursa", mapsSearch: "Ulu Camii Karacabey" },
-      { id: "karacabey-yeni", name: "Karacabey Yeni Camii", district: "Karacabey", address: "Karacabey, Bursa", mapsSearch: "Yeni Camii Karacabey" },
-
-      // MUSTAFAKEMALPAŞA
-      { id: "mkp-ulu", name: "Mustafakemalpaşa Ulu Camii", district: "Mustafakemalpaşa", address: "Mustafakemalpaşa Merkez, Mustafakemalpaşa/Bursa", mapsSearch: "Ulu Camii Mustafakemalpaşa" },
-      { id: "mkp-hamidiye", name: "Hamidiye Camii", district: "Mustafakemalpaşa", address: "Mustafakemalpaşa, Bursa", mapsSearch: "Hamidiye Camii Mustafakemalpaşa" },
-
-      // KESTEL
-      { id: "kestel-merkez", name: "Kestel Merkez Camii", district: "Kestel", address: "Kestel Merkez, Kestel/Bursa", mapsSearch: "Kestel Camii" },
-      { id: "kestel-gursu-border", name: "Aksu Camii", district: "Kestel", address: "Kestel, Bursa", mapsSearch: "Aksu Camii Kestel" },
-
-      // GÜRSU
-      { id: "gursu-merkez", name: "Gürsu Merkez Camii", district: "Gürsu", address: "Gürsu Merkez, Gürsu/Bursa", mapsSearch: "Gürsu Camii" },
-
-      // ORHANELİ
-      { id: "orhaneli-merkez", name: "Orhaneli Merkez Camii", district: "Orhaneli", address: "Orhaneli Merkez, Orhaneli/Bursa", mapsSearch: "Orhaneli Camii" },
-
-      // KELES
-      { id: "keles-merkez", name: "Keles Merkez Camii", district: "Keles", address: "Keles Merkez, Keles/Bursa", mapsSearch: "Keles Camii" },
-
-      // BÜYÜKORHAN
-      { id: "buyukorhan-merkez", name: "Büyükorhan Merkez Camii", district: "Büyükorhan", address: "Büyükorhan Merkez, Büyükorhan/Bursa", mapsSearch: "Büyükorhan Camii" },
-
-      // HARMANCIK
-      { id: "harmancik-merkez", name: "Harmancık Merkez Camii", district: "Harmancık", address: "Harmancık Merkez, Harmancık/Bursa", mapsSearch: "Harmancık Camii" },
-
-      // EK TARİHİ MESCİTLER (kırsal / tescilli bilinenler)
-      { id: "cumalikizik-camii", name: "Cumalıkızık Camii", district: "Yıldırım", address: "Cumalıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Cumalıkızık Camii" },
-      { id: "armutkoy-camii", name: "Armutköy Camii", district: "Osmangazi", address: "Armutköy, Osmangazi/Bursa", mapsSearch: "Armutköy Camii Bursa" },
-      { id: "yaylacik-camii", name: "Yaylacık Camii", district: "Osmangazi", address: "Yaylacık, Osmangazi/Bursa", mapsSearch: "Yaylacık Camii Bursa" }
+      { id: "yenisehir-ulu", name: "Yenişehir Ulu Camii", district: "Yenişehir", address: "Yenişehir Merkez, Yenişehir/Bursa", mapsSearch: "Yenişehir Ulu Camii" }
     ];
 
     // 1b. CAMİ TARİHÇE / DETAY BİLGİSİ VERİ TABANI (yapılış tarihi, banisi, kısa bilgi notu)
@@ -1135,7 +1061,7 @@
       "mahmut-celebi": { period: "1442 (II. Murad Dönemi)", founder: "Mahmut Çelebi (Çandarlı İbrahim Paşa'nın oğlu)", info: "Ayasofya yakınında yer alan tek kubbeli, klasik erken Osmanlı mahalle camisidir." },
       "esrefzade": { period: "15. yüzyıl (Eşref-i Rumi dönemi)", founder: "Eşref-i Rumi (Eşrefzade) veya müritleri", info: "Ünlü mutasavvıf Eşref-i Rumi adına yapılan cami ve türbe kompleksidir. Yunan işgali sırasında büyük hasar görmüş, minaresi ve haziresi ayakta kalmıştır; sonradan yeniden inşa edilmiştir." },
       "halil-aga-eski": { period: "17. yüzyıl öncesi (1643-44 onarımı biliniyor)", founder: "Kethüda Halil Ağa (onarımcı)", info: "Mudanya'nın en eski camilerinden biri olup halk arasında Eski Cami olarak anılır. Kare planlı, tek kubbeli mahalle camisidir; haziresinde dönem mezar taşları bulunur." },
-      "nilufer-hatun": { period: "14. yüzyıl sonu / 15. yüzyıl başı (Nilüfer Hatun)", founder: "Nilüfer Hatun (I. Murad'ın eşi, Orhan Gazi'nin gelini)", info: "Nilüfer Hatun tarafından yaptırıldığı rivayet edilen, Pınarbaşı'nda Hıdırlık olarak da bilinen tarihi camidir. Nilüfer ilçesine adını veren hatunun manevi mirasıdır." },
+
       "cumalikizik-camii": { period: "Erken Osmanlı (Cumalıkızık vakıf köyü)", founder: "Orhan Gazi vakıfları", info: "UNESCO Dünya Mirası Listesi'ndeki Cumalıkızık köyünün tarihi camisidir. Osmanlı'nın kuruluş dönemi vakıf köyü dokusunun canlı örneğidir." }
     };
 
