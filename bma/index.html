@@ -263,7 +263,7 @@
               <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldiniz,</h2>
               <p id="heroNameDisplay" class="text-2xl font-bold font-display tracking-wide mt-1">Ümit Özgüler</p>
               <p id="totalCountInfoText" class="text-[11px] mt-1.5 leading-relaxed font-light" style="color:rgba(255,255,255,0.72);">
-                Osmangazi ve Yıldırım'daki tescilli 70 tarihi cami ve mescidi ihya etme yolculuğun.
+                Bursa'nın tüm ilçelerindeki tescilli tarihi cami ve mescidleri ihya etme yolculuğun.
               </p>
             </div>
             <div class="gold-line"></div>
@@ -352,8 +352,8 @@
           </h3>
           <div class="space-y-1">
             <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
-              <span>Osmangazi Tarihi Camileri</span>
-              <span id="osmangaziProgressTxt" class="font-bold font-ledger">0 / 35</span>
+              <span>Osmangazi</span>
+              <span id="osmangaziProgressTxt" class="font-bold font-ledger">0 / 0</span>
             </div>
             <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
               <div id="osmangaziProgressBar" class="bar-osmangazi h-full transition-all duration-500" style="width:0%"></div>
@@ -361,11 +361,20 @@
           </div>
           <div class="space-y-1">
             <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
-              <span>Yıldırım Tarihi Camileri</span>
-              <span id="yildirimProgressTxt" class="font-bold font-ledger">0 / 35</span>
+              <span>Yıldırım</span>
+              <span id="yildirimProgressTxt" class="font-bold font-ledger">0 / 0</span>
             </div>
             <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
               <div id="yildirimProgressBar" class="bar-yildirim h-full transition-all duration-500" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
+              <span>Diğer İlçeler</span>
+              <span id="digerProgressTxt" class="font-bold font-ledger">0 / 0</span>
+            </div>
+            <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+              <div id="digerProgressBar" class="h-full transition-all duration-500" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
             </div>
           </div>
         </div>
@@ -400,11 +409,15 @@
             </span>
             <input id="mosqueSearchInput" type="text" placeholder="Tarihi mabetler arasında ara..." class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
           </div>
-          <div class="grid grid-cols-2 gap-1.5">
+          <div class="grid grid-cols-3 gap-1.5">
             <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi</button>
             <button onclick="filterDistrict('KILINANLAR')" id="btn-filter-kilinanlar" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Kılınanlar</button>
             <button onclick="filterDistrict('Osmangazi')" id="btn-filter-osmangazi" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Osmangazi</button>
             <button onclick="filterDistrict('Yıldırım')" id="btn-filter-yildirim" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Yıldırım</button>
+            <button onclick="filterDistrict('Nilüfer')" id="btn-filter-nilufer" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Nilüfer</button>
+            <button onclick="filterDistrict('İznik')" id="btn-filter-iznik" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">İznik</button>
+            <button onclick="filterDistrict('Mudanya')" id="btn-filter-mudanya" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Mudanya</button>
+            <button onclick="filterDistrict('DIGER')" id="btn-filter-diger" class="text-[10px] font-bold py-2 rounded-lg transition-all col-span-2" style="background:var(--paper-deep); color:var(--ink-soft);">Diğer İlçeler</button>
           </div>
         </div>
         <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
@@ -447,16 +460,25 @@
               <input id="formCustomName" type="text" placeholder="Cami veya Mescid Adı *" class="w-full rounded-xl px-3 py-2 text-xs" style="border:1px solid var(--line); background:var(--paper-card); color:var(--ink);">
               <div class="space-y-1">
                 <label class="block text-[10px] font-semibold" style="color:var(--ink-soft);">Hangi İlçede? *</label>
-                <div class="flex space-x-4">
-                  <label class="inline-flex items-center text-xs">
-                    <input type="radio" name="formCustomDistrict" value="Osmangazi" checked>
-                    <span class="ml-2 font-medium" style="color:var(--ink);">Osmangazi</span>
-                  </label>
-                  <label class="inline-flex items-center text-xs">
-                    <input type="radio" name="formCustomDistrict" value="Yıldırım">
-                    <span class="ml-2 font-medium" style="color:var(--ink);">Yıldırım</span>
-                  </label>
-                </div>
+                <select id="formCustomDistrict" class="field w-full rounded-xl px-3 py-2 text-xs">
+                  <option value="Osmangazi">Osmangazi</option>
+                  <option value="Yıldırım">Yıldırım</option>
+                  <option value="Nilüfer">Nilüfer</option>
+                  <option value="Mudanya">Mudanya</option>
+                  <option value="İznik">İznik</option>
+                  <option value="Gemlik">Gemlik</option>
+                  <option value="İnegöl">İnegöl</option>
+                  <option value="Orhangazi">Orhangazi</option>
+                  <option value="Yenişehir">Yenişehir</option>
+                  <option value="Karacabey">Karacabey</option>
+                  <option value="Mustafakemalpaşa">Mustafakemalpaşa</option>
+                  <option value="Kestel">Kestel</option>
+                  <option value="Gürsu">Gürsu</option>
+                  <option value="Orhaneli">Orhaneli</option>
+                  <option value="Keles">Keles</option>
+                  <option value="Büyükorhan">Büyükorhan</option>
+                  <option value="Harmancık">Harmancık</option>
+                </select>
               </div>
             </div>
 
@@ -667,11 +689,11 @@
             </div>
             <div class="flex items-start space-x-2.5 text-[11px]">
               <span class="sicil-tag min-w-[76px] text-center" style="color:var(--brick-deep);">Mihrap</span>
-              <p style="color:var(--ink-soft);">Osmangazi ya da Yıldırım ilçelerinden birindeki tüm camileri tamamlayan.</p>
+              <p style="color:var(--ink-soft);">Herhangi bir ilçedeki tüm tescilli camileri tamamlayan (Mihrap Fatihi).</p>
             </div>
             <div class="flex items-start space-x-2.5 text-[11px]">
               <span class="sicil-tag min-w-[76px] text-center" style="color:var(--gold-deep);">Fatih 👑</span>
-              <p style="color:var(--ink-soft);">Envanterdeki 70 mabet ve mescidin tamamını tamamlayan baş seyyah.</p>
+              <p style="color:var(--ink-soft);">Envanterdeki tüm mabet ve mescidlerin tamamını tamamlayan baş seyyah (Bursa Fatihi).</p>
             </div>
           </div>
         </div>
@@ -685,7 +707,7 @@
             <div class="space-y-1">
               <h4 class="font-bold text-[10px] uppercase tracking-wider" style="color:var(--ink-faint);">Uygulama Hakkında</h4>
               <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">
-                <span class="font-bold" style="color:var(--ink);">Bursa Manevi Atlası</span>, Bursa'nın tescilli tarihi camilerini yaşatmak ve manevi bir seyahat günlüğü tutmak amacıyla
+                <span class="font-bold" style="color:var(--ink);">Bursa Manevi Atlası</span>, Bursa'nın tüm ilçelerindeki tescilli tarihi cami ve mescidlerini yaşatmak ve manevi bir seyahat günlüğü tutmak amacıyla
                 <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener" class="font-bold underline decoration-dotted underline-offset-2" style="color:var(--teal-700);">Ümit Özgüler</a> tarafından tasarlanmış bir fikir ve konseptin ürünüdür.
               </p>
               <p class="text-[9.5px] pt-0.5" style="color:var(--ink-faint);">Fikir, Konsept ve Proje Sahibi:
@@ -850,10 +872,25 @@
       </div>
       <div class="space-y-1">
         <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">İlçe *</label>
-        <div class="flex space-x-4">
-          <label class="inline-flex items-center text-xs"><input type="radio" name="editMosqueDistrict" value="Osmangazi"><span class="ml-2 font-medium" style="color:var(--ink);">Osmangazi</span></label>
-          <label class="inline-flex items-center text-xs"><input type="radio" name="editMosqueDistrict" value="Yıldırım"><span class="ml-2 font-medium" style="color:var(--ink);">Yıldırım</span></label>
-        </div>
+        <select id="editMosqueDistrict" class="field w-full rounded-xl px-3 py-2.5 text-xs">
+          <option value="Osmangazi">Osmangazi</option>
+          <option value="Yıldırım">Yıldırım</option>
+          <option value="Nilüfer">Nilüfer</option>
+          <option value="Mudanya">Mudanya</option>
+          <option value="İznik">İznik</option>
+          <option value="Gemlik">Gemlik</option>
+          <option value="İnegöl">İnegöl</option>
+          <option value="Orhangazi">Orhangazi</option>
+          <option value="Yenişehir">Yenişehir</option>
+          <option value="Karacabey">Karacabey</option>
+          <option value="Mustafakemalpaşa">Mustafakemalpaşa</option>
+          <option value="Kestel">Kestel</option>
+          <option value="Gürsu">Gürsu</option>
+          <option value="Orhaneli">Orhaneli</option>
+          <option value="Keles">Keles</option>
+          <option value="Büyükorhan">Büyükorhan</option>
+          <option value="Harmancık">Harmancık</option>
+        </select>
       </div>
       <div class="space-y-1">
         <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Açık Adres</label>
@@ -929,7 +966,7 @@
   <script>
     // 1. BURSA TARİHİ CAMİ VE MESCİD VERİ TABANI
     let PRESET_MOSQUES = [
-      // OSMANGAZİ - 35 ADET
+      // OSMANGAZİ (merkez + ek)
       { id: "ulu-cami", name: "Bursa Ulu Cami", district: "Osmangazi", address: "Nalbantoğlu, Atatürk Cd., Osmangazi/Bursa", mapsSearch: "Bursa Ulu Cami" },
       { id: "orhan-gazi", name: "Orhan Gazi Camii", district: "Osmangazi", address: "Nalbantoğlu, Tarihi Çarşı, Osmangazi/Bursa", mapsSearch: "Orhan Gazi Camii Bursa" },
       { id: "hudavendigar", name: "I. Murad Hüdavendigar Camii", district: "Osmangazi", address: "Çekirge, 1. Murat Sk., Osmangazi/Bursa", mapsSearch: "Hüdavendigar Camii Bursa" },
@@ -966,7 +1003,7 @@
       { id: "dayioglu-camii", name: "Dayıoğlu Camii", district: "Osmangazi", address: "Tahtakale, Osmangazi/Bursa", mapsSearch: "Dayıoğlu Camii" },
       { id: "hamzabey-camii", name: "Hamzabey Camii", district: "Osmangazi", address: "Hamzabey Mh., Osmangazi/Bursa", mapsSearch: "Hamzabey Camii Bursa" },
 
-      // YILDIRIM - 35 ADET
+      // YILDIRIM (merkez + ek)
       { id: "yesil-cami", name: "Yeşil Cami", district: "Yıldırım", address: "Yeşil, Yıldırım/Bursa", mapsSearch: "Yeşil Cami Bursa" },
       { id: "emir-sultan", name: "Emir Sultan Camii", district: "Yıldırım", address: "Emirsultan, Yıldırım/Bursa", mapsSearch: "Emir Sultan Camii Bursa" },
       { id: "yildirim-bayezid", name: "Yıldırım Bayezid Camii", district: "Yıldırım", address: "Yıldırım, Yıldırım/Bursa", mapsSearch: "Yıldırım Bayezid Camii" },
@@ -1001,7 +1038,80 @@
       { id: "celebi-mehmet", name: "Çelebi Mehmet Camii", district: "Yıldırım", address: "Yıldırım/Bursa", mapsSearch: "Çelebi Mehmet Camii Yıldırım" },
       { id: "emirsultan-nisanci", name: "Emirsultan Nişancı Mescidi", district: "Yıldırım", address: "Emirsultan, Yıldırım/Bursa", mapsSearch: "Nişancı Mescidi Bursa" },
       { id: "sitti-hatun", name: "Sitti Hatun Mescidi", district: "Yıldırım", address: "Umurbey, Yıldırım/Bursa", mapsSearch: "Sitti Hatun Camii" },
-      { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" }
+      { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" },
+
+      // NİLÜFER
+      { id: "nilufer-hatun", name: "Nilüfer Hatun (Hıdırlık) Camii", district: "Nilüfer", address: "Pınarbaşı, İvaz Paşa Mh., Nilüfer/Bursa", mapsSearch: "Nilüfer Hatun Camii Bursa" },
+      { id: "golyazi-eski", name: "Gölyazı Eski Camii", district: "Nilüfer", address: "Gölyazı, Nilüfer/Bursa", mapsSearch: "Gölyazı Camii Bursa" },
+      { id: "misi-camii", name: "Misi Köyü Camii", district: "Nilüfer", address: "Misi, Nilüfer/Bursa", mapsSearch: "Misi Camii Bursa" },
+      { id: "alaaddinbey-nilufer", name: "Alaaddinbey Camii", district: "Nilüfer", address: "Alaaddinbey, Nilüfer/Bursa", mapsSearch: "Alaaddinbey Camii Nilüfer" },
+
+      // MUDANYA
+      { id: "halil-aga-eski", name: "Halil Ağa Camii (Eski Cami)", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Halil Ağa Camii Mudanya" },
+      { id: "tekke-i-atik", name: "Tekke-i Atik Camii", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Tekke-i Atik Camii Mudanya" },
+      { id: "tekke-i-cedid", name: "Tekke-i Cedid Camii", district: "Mudanya", address: "Hasanbey, Mudanya/Bursa", mapsSearch: "Tekke-i Cedid Camii Mudanya" },
+      { id: "omer-bey-camii", name: "Ömer Bey Camii", district: "Mudanya", address: "Mudanya Merkez, Mudanya/Bursa", mapsSearch: "Ömer Bey Camii Mudanya" },
+      { id: "hasan-bey-camii", name: "Hasan Bey Camii", district: "Mudanya", address: "Mudanya, Mudanya/Bursa", mapsSearch: "Hasan Bey Camii Mudanya" },
+      { id: "mudanya-fatih", name: "Mudanya Fatih Camii", district: "Mudanya", address: "Mudanya, Bursa", mapsSearch: "Fatih Camii Mudanya" },
+
+      // İZNİK
+      { id: "iznik-ayasofya", name: "İznik Ayasofya Orhan Camii", district: "İznik", address: "İznik Merkez, İznik/Bursa", mapsSearch: "İznik Ayasofya Camii" },
+      { id: "iznik-yesil", name: "İznik Yeşil Camii", district: "İznik", address: "Lefke Kapı civarı, İznik/Bursa", mapsSearch: "İznik Yeşil Camii" },
+      { id: "haci-ozbek-iznik", name: "Hacı Özbek Camii (Çarşı Mescidi)", district: "İznik", address: "Çarşı İçi, İznik/Bursa", mapsSearch: "Hacı Özbek Camii İznik" },
+      { id: "mahmut-celebi", name: "Mahmut Çelebi Camii", district: "İznik", address: "Ayasofya civarı, İznik/Bursa", mapsSearch: "Mahmut Çelebi Camii İznik" },
+      { id: "esrefzade", name: "Eşrefzade (Eşref-i Rumi) Camii", district: "İznik", address: "İznik Merkez, İznik/Bursa", mapsSearch: "Eşrefzade Camii İznik" },
+      { id: "seyh-kutbuddin", name: "Şeyh Kutbuddin Camii", district: "İznik", address: "İznik, Bursa", mapsSearch: "Şeyh Kutbuddin Camii İznik" },
+      { id: "iznik-elmalı", name: "Elmalı Çivisiz Camii", district: "İznik", address: "İznik, Bursa", mapsSearch: "Elmalı Camii İznik" },
+
+      // GEMLİK
+      { id: "gemlik-yeni", name: "Gemlik Yeni Camii (Balıkpazarı)", district: "Gemlik", address: "Balıkpazarı, Gemlik/Bursa", mapsSearch: "Yeni Camii Gemlik" },
+      { id: "sinan-bey-gemlik", name: "Sinan Bey Camii", district: "Gemlik", address: "Gemlik Merkez, Gemlik/Bursa", mapsSearch: "Sinan Bey Camii Gemlik" },
+      { id: "kursunlu-camii", name: "Kurşunlu Camii", district: "Gemlik", address: "Kurşunlu, Gemlik/Bursa", mapsSearch: "Kurşunlu Camii Gemlik" },
+
+      // İNEGÖL
+      { id: "inegol-ishakpasa", name: "İshakpaşa Camii", district: "İnegöl", address: "İnegöl Merkez, İnegöl/Bursa", mapsSearch: "İshakpaşa Camii İnegöl" },
+      { id: "inegol-ulu", name: "İnegöl Ulu Camii", district: "İnegöl", address: "İnegöl, Bursa", mapsSearch: "Ulu Camii İnegöl" },
+      { id: "yenice-camii", name: "Yenice Camii", district: "İnegöl", address: "Yenice, İnegöl/Bursa", mapsSearch: "Yenice Camii İnegöl" },
+
+      // ORHANGAZİ
+      { id: "orhangazi-merkez", name: "Orhangazi Merkez Camii", district: "Orhangazi", address: "Orhangazi Merkez, Orhangazi/Bursa", mapsSearch: "Orhangazi Camii" },
+      { id: "orhangazi-yildirim", name: "Orhangazi Yıldırım Camii", district: "Orhangazi", address: "Orhangazi, Bursa", mapsSearch: "Yıldırım Camii Orhangazi" },
+
+      // YENİŞEHİR
+      { id: "yenisehir-ulu", name: "Yenişehir Ulu Camii", district: "Yenişehir", address: "Yenişehir Merkez, Yenişehir/Bursa", mapsSearch: "Yenişehir Ulu Camii" },
+      { id: "postinpus", name: "Postinpus Camii", district: "Yenişehir", address: "Yenişehir, Bursa", mapsSearch: "Postinpus Camii Yenişehir" },
+
+      // KARACABEY
+      { id: "karacabey-ulu", name: "Karacabey Ulu Camii", district: "Karacabey", address: "Karacabey Merkez, Karacabey/Bursa", mapsSearch: "Ulu Camii Karacabey" },
+      { id: "karacabey-yeni", name: "Karacabey Yeni Camii", district: "Karacabey", address: "Karacabey, Bursa", mapsSearch: "Yeni Camii Karacabey" },
+
+      // MUSTAFAKEMALPAŞA
+      { id: "mkp-ulu", name: "Mustafakemalpaşa Ulu Camii", district: "Mustafakemalpaşa", address: "Mustafakemalpaşa Merkez, Mustafakemalpaşa/Bursa", mapsSearch: "Ulu Camii Mustafakemalpaşa" },
+      { id: "mkp-hamidiye", name: "Hamidiye Camii", district: "Mustafakemalpaşa", address: "Mustafakemalpaşa, Bursa", mapsSearch: "Hamidiye Camii Mustafakemalpaşa" },
+
+      // KESTEL
+      { id: "kestel-merkez", name: "Kestel Merkez Camii", district: "Kestel", address: "Kestel Merkez, Kestel/Bursa", mapsSearch: "Kestel Camii" },
+      { id: "kestel-gursu-border", name: "Aksu Camii", district: "Kestel", address: "Kestel, Bursa", mapsSearch: "Aksu Camii Kestel" },
+
+      // GÜRSU
+      { id: "gursu-merkez", name: "Gürsu Merkez Camii", district: "Gürsu", address: "Gürsu Merkez, Gürsu/Bursa", mapsSearch: "Gürsu Camii" },
+
+      // ORHANELİ
+      { id: "orhaneli-merkez", name: "Orhaneli Merkez Camii", district: "Orhaneli", address: "Orhaneli Merkez, Orhaneli/Bursa", mapsSearch: "Orhaneli Camii" },
+
+      // KELES
+      { id: "keles-merkez", name: "Keles Merkez Camii", district: "Keles", address: "Keles Merkez, Keles/Bursa", mapsSearch: "Keles Camii" },
+
+      // BÜYÜKORHAN
+      { id: "buyukorhan-merkez", name: "Büyükorhan Merkez Camii", district: "Büyükorhan", address: "Büyükorhan Merkez, Büyükorhan/Bursa", mapsSearch: "Büyükorhan Camii" },
+
+      // HARMANCIK
+      { id: "harmancik-merkez", name: "Harmancık Merkez Camii", district: "Harmancık", address: "Harmancık Merkez, Harmancık/Bursa", mapsSearch: "Harmancık Camii" },
+
+      // EK TARİHİ MESCİTLER (kırsal / tescilli bilinenler)
+      { id: "cumalikizik-camii", name: "Cumalıkızık Camii", district: "Yıldırım", address: "Cumalıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Cumalıkızık Camii" },
+      { id: "armutkoy-camii", name: "Armutköy Camii", district: "Osmangazi", address: "Armutköy, Osmangazi/Bursa", mapsSearch: "Armutköy Camii Bursa" },
+      { id: "yaylacik-camii", name: "Yaylacık Camii", district: "Osmangazi", address: "Yaylacık, Osmangazi/Bursa", mapsSearch: "Yaylacık Camii Bursa" }
     ];
 
     // 1b. CAMİ TARİHÇE / DETAY BİLGİSİ VERİ TABANI (yapılış tarihi, banisi, kısa bilgi notu)
@@ -1018,7 +1128,15 @@
       "alaaddin-bey": { period: "1326 (Orhan Gazi Dönemi)", founder: "Alaaddin Bey (Osman Gazi'nin oğlu)", info: "Bursa'nın fethinin hemen ardından yaptırılan, şehrin ilk camisi olarak kabul edilir. Tuğla örgülü minaresi ve sade avlusuyla erken dönem Osmanlı mimarisinin ilk izlerini taşır." },
       "serefuddin-camii": { period: "1479 (II. Murad / Fatih Dönemi)", founder: "Şerafeddin Paşa", info: "Okçular Çarşısı içinde yer aldığı için halk arasında 'Okçular Camii' olarak da bilinir. Kare planlı, tek kubbeli, sade bir mahalle camisidir." },
       "uftade-camii": { period: "16. yüzyılın ikinci yarısı (Kanuni / II. Selim Dönemi)", founder: "Üftade Hazretleri (Mehmed Muhyiddin Üftade)", info: "Aziz Mahmud Hüdayi'nin hocası olan meşhur mutasavvıf Üftade Hazretleri tarafından yaptırılmıştır. Cami çeşitli depremlerde hasar görmüş, torunu İbrahim ve sonraki dönemde Rıza Paşa tarafından onarılmıştır; karşısındaki türbede Üftade Hazretleri medfundur." },
-      "karabas-i-veli": { period: "16. yüzyıl", founder: "Yakup Çelebi", info: "Aslen bir Mevlevi tekkesi olarak inşa edilmiş, adını burada uzun yıllar irşad faaliyeti yürüten Karabaş-i Veli Hazretleri'nden almıştır. Günümüzde ibadetin yanı sıra kültür merkezi olarak da kullanılmaktadır." }
+      "karabas-i-veli": { period: "16. yüzyıl", founder: "Yakup Çelebi", info: "Aslen bir Mevlevi tekkesi olarak inşa edilmiş, adını burada uzun yıllar irşad faaliyeti yürüten Karabaş-i Veli Hazretleri'nden almıştır. Günümüzde ibadetin yanı sıra kültür merkezi olarak da kullanılmaktadır." },
+      "iznik-ayasofya": { period: "1331 (Orhan Gazi Dönemi) — aslen Bizans bazilikası", founder: "Orhan Gazi (camiye dönüştüren)", info: "MS 7. yüzyılda inşa edilen basilikadan dönüştürülmüştür. 1331'de İznik'in fethiyle Orhan Gazi tarafından camiye çevrilmiştir. 2. Ekümenik Konsil'in (787) yapıldığı yer olarak Hristiyanlık tarihinde de büyük öneme sahiptir. Günümüzde ibadete açıktır." },
+      "iznik-yesil": { period: "1378 – 1392 (I. Murad / Yıldırım Bayezid Dönemi)", founder: "Çandarlı Hayreddin Paşa (başlatan), Ali Paşa (bitiren)", architect: "Hacı Musa", info: "İznik'in simgesi haline gelmiş, minaresindeki turkuaz ve yeşil çinileriyle ünlü erken Osmanlı camisidir. Selçuklu'dan Osmanlı'ya geçiş üslubunun en güzel örneklerinden biridir." },
+      "haci-ozbek-iznik": { period: "1333 (Orhan Gazi Dönemi)", founder: "Hacı Özbek", info: "Tarihi bilinen en eski kitabeli Osmanlı camisidir. İznik çarşısı içinde yer alır; tek kubbeli, sade planlı erken dönem mahalle camisi tipindedir. İlk Osmanlı hutbesinin okunduğu yerlerden biri olarak anılır." },
+      "mahmut-celebi": { period: "1442 (II. Murad Dönemi)", founder: "Mahmut Çelebi (Çandarlı İbrahim Paşa'nın oğlu)", info: "Ayasofya yakınında yer alan tek kubbeli, klasik erken Osmanlı mahalle camisidir." },
+      "esrefzade": { period: "15. yüzyıl (Eşref-i Rumi dönemi)", founder: "Eşref-i Rumi (Eşrefzade) veya müritleri", info: "Ünlü mutasavvıf Eşref-i Rumi adına yapılan cami ve türbe kompleksidir. Yunan işgali sırasında büyük hasar görmüş, minaresi ve haziresi ayakta kalmıştır; sonradan yeniden inşa edilmiştir." },
+      "halil-aga-eski": { period: "17. yüzyıl öncesi (1643-44 onarımı biliniyor)", founder: "Kethüda Halil Ağa (onarımcı)", info: "Mudanya'nın en eski camilerinden biri olup halk arasında Eski Cami olarak anılır. Kare planlı, tek kubbeli mahalle camisidir; haziresinde dönem mezar taşları bulunur." },
+      "nilufer-hatun": { period: "14. yüzyıl sonu / 15. yüzyıl başı (Nilüfer Hatun)", founder: "Nilüfer Hatun (I. Murad'ın eşi, Orhan Gazi'nin gelini)", info: "Nilüfer Hatun tarafından yaptırıldığı rivayet edilen, Pınarbaşı'nda Hıdırlık olarak da bilinen tarihi camidir. Nilüfer ilçesine adını veren hatunun manevi mirasıdır." },
+      "cumalikizik-camii": { period: "Erken Osmanlı (Cumalıkızık vakıf köyü)", founder: "Orhan Gazi vakıfları", info: "UNESCO Dünya Mirası Listesi'ndeki Cumalıkızık köyünün tarihi camisidir. Osmanlı'nın kuruluş dönemi vakıf köyü dokusunun canlı örneğidir." }
     };
 
     // Kullanıcının cami bilgi kartında yaptığı düzenlemeler / sıfırlamalar (yalnızca bu cihazda saklanır)
@@ -1409,8 +1527,12 @@
       editingMosqueId = id;
       document.getElementById('editMosqueName').value = m.name;
       document.getElementById('editMosqueAddress').value = m.address || '';
-      const radio = document.querySelector(`input[name="editMosqueDistrict"][value="${m.district}"]`);
-      if (radio) radio.checked = true;
+      const distSelect = document.getElementById('editMosqueDistrict');
+      if (distSelect) {
+        const opt = Array.from(distSelect.options).find(o => o.value === m.district);
+        if (opt) distSelect.value = m.district;
+        else distSelect.value = 'Osmangazi';
+      }
       const notice = document.getElementById('editMosquePresetNotice');
       notice.classList.toggle('hidden', !!m.isCustom);
       notice.classList.toggle('flex', !m.isCustom);
@@ -1429,8 +1551,8 @@
 
       const newName = document.getElementById('editMosqueName').value.trim();
       const newAddress = document.getElementById('editMosqueAddress').value.trim();
-      const districtEl = document.querySelector('input[name="editMosqueDistrict"]:checked');
-      const newDistrict = districtEl ? districtEl.value : m.district;
+      const distSelect = document.getElementById('editMosqueDistrict');
+      const newDistrict = distSelect ? distSelect.value : m.district;
 
       if (!newName) { showToast("Cami ismi boş bırakılamaz.", "error"); return; }
 
@@ -1837,11 +1959,13 @@
       const visitedMosqueIds = new Set(visitsData.map(v => v.mosqueId));
       const osmangaziTotal = PRESET_MOSQUES.filter(m => m.district === 'Osmangazi');
       const yildirimTotal = PRESET_MOSQUES.filter(m => m.district === 'Yıldırım');
+      const digerTotal = PRESET_MOSQUES.filter(m => m.district !== 'Osmangazi' && m.district !== 'Yıldırım');
       const osmangaziVisited = osmangaziTotal.filter(m => visitedMosqueIds.has(m.id)).length;
       const yildirimVisited = yildirimTotal.filter(m => visitedMosqueIds.has(m.id)).length;
+      const digerVisited = digerTotal.filter(m => visitedMosqueIds.has(m.id)).length;
 
       const totalCount = PRESET_MOSQUES.length;
-      document.getElementById('totalCountInfoText').textContent = `Osmangazi ve Yıldırım'daki tescilli ${totalCount} tarihi cami ve mescidi ihya etme yolculuğun.`;
+      document.getElementById('totalCountInfoText').textContent = `Bursa'nın tüm ilçelerindeki tescilli ${totalCount} tarihi cami ve mescidi ihya etme yolculuğun.`;
       
       const allFilterBtn = document.getElementById('btn-filter-all');
       if(allFilterBtn) allFilterBtn.textContent = `Hepsi`;
@@ -1851,32 +1975,44 @@
 
       document.getElementById('osmangaziProgressTxt').textContent = `${osmangaziVisited} / ${osmangaziTotal.length}`;
       document.getElementById('yildirimProgressTxt').textContent = `${yildirimVisited} / ${yildirimTotal.length}`;
+      const digerTxt = document.getElementById('digerProgressTxt');
+      if (digerTxt) digerTxt.textContent = `${digerVisited} / ${digerTotal.length}`;
       document.getElementById('osmangaziProgressBar').style.width = `${osmangaziTotal.length > 0 ? (osmangaziVisited / osmangaziTotal.length) * 100 : 0}%`;
       document.getElementById('yildirimProgressBar').style.width = `${yildirimTotal.length > 0 ? (yildirimVisited / yildirimTotal.length) * 100 : 0}%`;
+      const digerBar = document.getElementById('digerProgressBar');
+      if (digerBar) digerBar.style.width = `${digerTotal.length > 0 ? (digerVisited / digerTotal.length) * 100 : 0}%`;
 
       const totalUniquePresetVisited = PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length;
-      const overallPerc = Math.round((totalUniquePresetVisited / PRESET_MOSQUES.length) * 100);
+      const overallPerc = Math.round((totalUniquePresetVisited / PRESET_MOSQUES.length) * 100) || 0;
       document.getElementById('overallBadge').textContent = `%${overallPerc} Tamamlandı`;
 
       const recText = document.getElementById('recommendationText');
       if (visitsData.length === 0) {
-        recText.textContent = "Manevi seyahatinize başlamak için ilk namazınızı tescilli Ulu Cami veya Yeşil Cami'de kılabilirsiniz!";
+        recText.textContent = "Manevi seyahatinize başlamak için ilk namazınızı tescilli Ulu Cami, Yeşil Cami veya İznik Ayasofya'da kılabilirsiniz!";
       } else {
-        const unvisitedOsmangazi = osmangaziTotal.filter(m => !visitedMosqueIds.has(m.id));
-        const unvisitedYildirim = yildirimTotal.filter(m => !visitedMosqueIds.has(m.id));
-        if (unvisitedOsmangazi.length > 0 && osmangaziVisited <= yildirimVisited) {
-          recText.textContent = `Sıradaki Osmangazi rotanız için önerilen mabet: "${unvisitedOsmangazi[0].name}".`;
-        } else if (unvisitedYildirim.length > 0) {
-          recText.textContent = `Yıldırım ilçesindeki tescilli mabetlerden "${unvisitedYildirim[0].name}" ziyaretinizi bekliyor.`;
-        } else {
+        const unvisited = PRESET_MOSQUES.filter(m => !visitedMosqueIds.has(m.id));
+        if (unvisited.length === 0) {
           recText.textContent = "Harika! Bursa'daki tescilli camilerin tamamında ibadet ettiniz. Allah kabul etsin.";
+        } else {
+          // Prefer same district or main ones first
+          const lastVisit = visitsData[0];
+          let preferred = unvisited.filter(m => m.district === lastVisit.district);
+          if (!preferred.length) preferred = unvisited.filter(m => m.district === 'Osmangazi' || m.district === 'Yıldırım');
+          if (!preferred.length) preferred = unvisited;
+          const pick = preferred[0];
+          recText.textContent = `Sıradaki öneri (${pick.district}): "${pick.name}".`;
         }
       }
 
+      // Unvan: herhangi bir ilçeyi tamamlayan Mihrap, hepsini Fatih
+      const completedAnyDistrict = ['Osmangazi','Yıldırım','Nilüfer','Mudanya','İznik','Gemlik','İnegöl','Orhangazi','Yenişehir','Karacabey','Mustafakemalpaşa','Kestel','Gürsu','Orhaneli','Keles','Büyükorhan','Harmancık'].some(d => {
+        const list = PRESET_MOSQUES.filter(m => m.district === d);
+        return list.length > 0 && list.every(m => visitedMosqueIds.has(m.id));
+      });
       let userTitle = "Seyyah 🧭";
       if (visitsData.length === 0) userTitle = "Yola Hazır Seyyah 🧭";
       else if (overallPerc === 100) userTitle = "Bursa Fatihi 👑";
-      else if (osmangaziVisited === osmangaziTotal.length || yildirimVisited === yildirimTotal.length) userTitle = "Mihrap Fatihi 🌟";
+      else if (completedAnyDistrict) userTitle = "Mihrap Fatihi 🌟";
       else if (totalUniquePresetVisited >= 5) userTitle = "Manevi Türbedar 🕌";
       else if (visitsData.length >= 1) userTitle = "Manevi Seyyah 👣";
       document.getElementById('userTitle').textContent = userTitle;
@@ -1929,6 +2065,8 @@
         } else if (activeFilterDistrict === 'KILINANLAR') {
           const stats = mosqueStats[m.id] || { total: 0 };
           matchesDistrict = stats.total > 0;
+        } else if (activeFilterDistrict === 'DIGER') {
+          matchesDistrict = m.district !== 'Osmangazi' && m.district !== 'Yıldırım' && m.district !== 'Nilüfer' && m.district !== 'İznik' && m.district !== 'Mudanya';
         } else {
           matchesDistrict = m.district === activeFilterDistrict;
         }
@@ -1950,15 +2088,19 @@
         const stats = mosqueStats[m.id] || { Sabah: 0, Öğle: 0, İkindi: 0, Akşam: 0, Yatsı: 0, total: 0 };
         const isVisited = stats.total > 0;
         const isOsmangazi = m.district === 'Osmangazi';
-        const railClass = isOsmangazi ? 'bar-osmangazi' : 'bar-yildirim';
-        const badgeClass = isOsmangazi ? 'badge-osmangazi' : 'badge-yildirim';
+        const isYildirim = m.district === 'Yıldırım';
+        const railClass = isOsmangazi ? 'bar-osmangazi' : (isYildirim ? 'bar-yildirim' : '');
+        const railStyle = (!isOsmangazi && !isYildirim) ? 'background:linear-gradient(180deg, var(--gold-deep), var(--gold));' : '';
+        const badgeClass = isOsmangazi ? 'badge-osmangazi' : (isYildirim ? 'badge-yildirim' : '');
+        const badgeStyle = (!isOsmangazi && !isYildirim) ? 'color:var(--gold-deep); background:rgba(195,154,69,0.12);' : '';
         const customTag = m.isCustom ? `<span class="text-[8.5px] font-bold px-1.5 py-0.5 rounded-full uppercase" style="background:rgba(195,154,69,0.16); color:var(--gold-deep);">Eklediğin</span>` : '';
+        const activeColor = isOsmangazi ? 'var(--teal-900)' : (isYildirim ? 'var(--brick)' : 'var(--gold-deep)');
 
         const times = ['Sabah', 'Öğle', 'İkindi', 'Akşam', 'Yatsı'];
         const timeBadgesHTML = times.map(time => {
           const count = stats[time] || 0;
           const style = count > 0
-            ? `background:${isOsmangazi ? 'var(--teal-900)' : 'var(--brick)'}; color:#fff; font-weight:700;`
+            ? `background:${activeColor}; color:#fff; font-weight:700;`
             : `background:var(--paper-deep); color:var(--ink-faint);`;
           return `<span class="w-6 h-6 rounded-full text-[9px] flex items-center justify-center transition-all" style="${style}" title="${time}">${time[0]}</span>`;
         }).join('');
@@ -1968,11 +2110,11 @@
 
         return `
           <div class="paper-card pressable rounded-2xl p-3.5 relative overflow-hidden transition-all fade-in-up" onclick="openMosqueInfoModal('${m.id}')" title="Cami hakkında bilgi al">
-            <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}"></div>
+            <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}" style="${railStyle}"></div>
             <div class="flex justify-between items-start pl-1.5">
               <div class="space-y-0.5">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                  <span class="text-[9px] font-bold ${badgeClass} px-2 py-0.5 rounded-full uppercase">${m.district}</span>
+                  <span class="text-[9px] font-bold ${badgeClass} px-2 py-0.5 rounded-full uppercase" style="${badgeStyle}">${m.district}</span>
                   <span class="sicil-tag">${getSicilNo(m)}</span>
                   ${customTag}
                 </div>
@@ -2344,7 +2486,7 @@
           mosqueName = customName;
           const tempId = "custom-" + Date.now();
           mosqueId = tempId;
-          district = document.querySelector('input[name="formCustomDistrict"]:checked').value;
+          district = document.getElementById('formCustomDistrict').value;
 
           const newCustomMosque = {
             id: tempId,
@@ -2454,8 +2596,11 @@
         document.getElementById('customMosqueSection').classList.remove('hidden');
         document.getElementById('formCustomName').value = v.mosqueName;
         document.getElementById('formCustomName').required = true;
-        const radio = document.querySelector(`input[name="formCustomDistrict"][value="${v.district}"]`);
-        if (radio) radio.checked = true;
+        const distSel = document.getElementById('formCustomDistrict');
+        if (distSel) {
+          const opt = Array.from(distSel.options).find(o => o.value === v.district);
+          if (opt) distSel.value = v.district;
+        }
       }
 
       selectPrayer(v.prayerTime);
@@ -2560,15 +2705,21 @@
       const select = document.getElementById('formMosqueSelect');
       let optionsHTML = `<option value="" disabled selected>--- Cami Seçin ---</option>`;
       
-      const osmangaziList = PRESET_MOSQUES.filter(m => m.district === 'Osmangazi');
-      optionsHTML += `<optgroup label="Osmangazi Tarihi Camileri (${osmangaziList.length})">`;
-      osmangaziList.forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
-      optionsHTML += `</optgroup>`;
-
-      const yildirimList = PRESET_MOSQUES.filter(m => m.district === 'Yıldırım');
-      optionsHTML += `<optgroup label="Yıldırım Tarihi Camileri (${yildirimList.length})">`;
-      yildirimList.forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
-      optionsHTML += `</optgroup>`;
+      const districtOrder = ['Osmangazi', 'Yıldırım', 'Nilüfer', 'Mudanya', 'İznik', 'Gemlik', 'İnegöl', 'Orhangazi', 'Yenişehir', 'Karacabey', 'Mustafakemalpaşa', 'Kestel', 'Gürsu', 'Orhaneli', 'Keles', 'Büyükorhan', 'Harmancık'];
+      const byDistrict = {};
+      PRESET_MOSQUES.forEach(m => {
+        if (!byDistrict[m.district]) byDistrict[m.district] = [];
+        byDistrict[m.district].push(m);
+      });
+      // Prefer ordered, then any remaining
+      const ordered = districtOrder.filter(d => byDistrict[d] && byDistrict[d].length);
+      const remaining = Object.keys(byDistrict).filter(d => !districtOrder.includes(d)).sort();
+      [...ordered, ...remaining].forEach(d => {
+        const list = byDistrict[d];
+        optionsHTML += `<optgroup label="${d} (${list.length})">`;
+        list.forEach(m => { optionsHTML += `<option value="${m.id}">${m.name}</option>`; });
+        optionsHTML += `</optgroup>`;
+      });
 
       optionsHTML += `<optgroup label="Diğer"><option value="custom">+ Listede Olmayan Tarihi Cami Ekle</option></optgroup>`;
       select.innerHTML = optionsHTML;
@@ -2627,22 +2778,27 @@
     // 14. İLÇE FİLTRELEME
     window.filterDistrict = function(district) {
       activeFilterDistrict = district;
-      const btnAll = document.getElementById('btn-filter-all');
-      const btnKilinanlar = document.getElementById('btn-filter-kilinanlar');
-      const btnOsmangazi = document.getElementById('btn-filter-osmangazi');
-      const btnYildirim = document.getElementById('btn-filter-yildirim');
-      
+      const btnIds = ['btn-filter-all','btn-filter-kilinanlar','btn-filter-osmangazi','btn-filter-yildirim','btn-filter-nilufer','btn-filter-iznik','btn-filter-mudanya','btn-filter-diger'];
       const baseStyle = "background:var(--paper-deep); color:var(--ink-soft);";
       const activeStyle = "background:var(--teal-900); color:#fff;";
       
-      [btnAll, btnKilinanlar, btnOsmangazi, btnYildirim].forEach(btn => {
+      btnIds.forEach(id => {
+        const btn = document.getElementById(id);
         if(btn) btn.setAttribute('style', baseStyle);
       });
       
-      if (district === 'HEPSİ') btnAll.setAttribute('style', activeStyle);
-      else if (district === 'KILINANLAR') btnKilinanlar.setAttribute('style', activeStyle);
-      else if (district === 'Osmangazi') btnOsmangazi.setAttribute('style', activeStyle);
-      else if (district === 'Yıldırım') btnYildirim.setAttribute('style', activeStyle);
+      const map = {
+        'HEPSİ': 'btn-filter-all',
+        'KILINANLAR': 'btn-filter-kilinanlar',
+        'Osmangazi': 'btn-filter-osmangazi',
+        'Yıldırım': 'btn-filter-yildirim',
+        'Nilüfer': 'btn-filter-nilufer',
+        'İznik': 'btn-filter-iznik',
+        'Mudanya': 'btn-filter-mudanya',
+        'DIGER': 'btn-filter-diger'
+      };
+      const activeBtn = document.getElementById(map[district] || 'btn-filter-all');
+      if (activeBtn) activeBtn.setAttribute('style', activeStyle);
       
       updateMosquesListUI();
     };
