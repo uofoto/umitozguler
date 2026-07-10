@@ -407,6 +407,16 @@
             <button onclick="filterDistrict('Yıldırım')" id="btn-filter-yildirim" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Yıldırım</button>
           </div>
         </div>
+        <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--teal-900); color:#fff;">
+            <i class="fa-solid fa-hand-pointer text-xs"></i>
+          </div>
+          <div class="flex-1 space-y-0.5">
+            <p class="text-[11px] font-bold" style="color:var(--ink);">Cami hakkında bilgi alın</p>
+            <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Yapılış tarihi, banisi ve kısa tarihçesini görmek için listedeki bir camiye dokunmanız yeterli.</p>
+          </div>
+          <button onclick="dismissMosqueInfoHint()" class="icon-btn flex-shrink-0" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark text-xs"></i></button>
+        </div>
         <div id="mosquesList" class="space-y-2.5"></div>
       </div>
 
@@ -1021,6 +1031,22 @@
     function saveMosqueInfoOverrides() {
       localStorage.setItem('manevi-atlas-mosque-info-overrides', JSON.stringify(MOSQUE_INFO_OVERRIDES));
     }
+
+    // CAMİ LİSTESİ ÜSTÜNDEKİ "DOKUNARAK BİLGİ AL" İPUCU BANNER'I (bir kere gösterilir)
+    function initMosqueInfoHintBanner() {
+      const banner = document.getElementById('mosqueInfoHintBanner');
+      if (!banner) return;
+      const dismissed = localStorage.getItem('manevi-atlas-mosque-info-hint-dismissed');
+      if (!dismissed) {
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+      }
+    }
+    window.dismissMosqueInfoHint = function() {
+      localStorage.setItem('manevi-atlas-mosque-info-hint-dismissed', '1');
+      const banner = document.getElementById('mosqueInfoHintBanner');
+      if (banner) { banner.classList.add('hidden'); banner.classList.remove('flex'); }
+    };
 
     // Envanterde ayrıntılı kaydı bulunmayan mabetler için dürüst, genel bir tanıtım metni üretir
     function getMosqueInfo(m) {
@@ -1779,6 +1805,7 @@
       loadHapticsUI();
       loadCustomAddedMosques();
       loadMosqueInfoOverrides();
+      initMosqueInfoHintBanner();
       await loadVisits();
       loadProfileData(); 
       displayDailyVerse(); // <--- YENİ EKLENEN: AÇILIŞTA AYET GÖSTER
@@ -1952,6 +1979,9 @@
                 <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${escapeHtml(m.name)}</h3>
                 <p class="text-[10px] truncate max-w-[190px] mt-0.5 flex items-center gap-1" style="color:var(--ink-faint);">
                   <i class="fa-solid fa-location-dot"></i><span>${escapeHtml(m.address)}</span>
+                </p>
+                <p class="text-[9px] mt-1 flex items-center gap-1 font-semibold" style="color:var(--gold-deep);">
+                  <i class="fa-solid fa-circle-info"></i><span>Tarihçesi için dokunun</span>
                 </p>
               </div>
               <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
