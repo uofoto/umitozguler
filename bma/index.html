@@ -284,7 +284,55 @@
           </div>
         </div>
 
-        <!-- YENİ EKLENEN: GÜNÜN AYETİ KARTI -->
+        <!-- SONRAKİ NAMAZ VAKTİNE KALAN SÜRE -->
+        <div class="paper-card rounded-2xl p-4 space-y-3 relative overflow-hidden pop-in" style="animation-delay:0.05s;">
+          <div class="absolute -right-5 -top-5 opacity-[0.05] pointer-events-none" style="color:var(--teal-900);">
+            <i class="fa-solid fa-mosque text-[5.5rem]"></i>
+          </div>
+          <div class="flex items-center justify-between relative z-10">
+            <h3 class="font-bold text-[11px] flex items-center space-x-2" style="color:var(--ink);">
+              <i class="fa-solid fa-clock" style="color:var(--teal-700);"></i>
+              <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Sonraki Namaz Vaktine Kalan Süre</span>
+            </h3>
+            <span class="text-[9px] font-semibold flex items-center gap-1" style="color:var(--ink-faint);"><i class="fa-solid fa-location-dot text-[8px]"></i>Bursa</span>
+          </div>
+
+          <div id="prayerCountdownLoading" class="flex items-center justify-center py-3 space-x-2 relative z-10">
+            <i class="fa-solid fa-spinner animate-spin text-xs" style="color:var(--teal-700);"></i>
+            <span class="text-[11px]" style="color:var(--ink-faint);">Namaz vakitleri alınıyor...</span>
+          </div>
+
+          <div id="prayerCountdownError" class="hidden flex-col items-center text-center py-2 space-y-1.5 relative z-10">
+            <p class="text-[11px] max-w-[240px]" style="color:var(--ink-faint);">Namaz vakti bilgisi alınamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.</p>
+            <button onclick="initPrayerCountdown()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg text-white" style="background:var(--teal-900);">Tekrar Dene</button>
+          </div>
+
+          <div id="prayerCountdownContent" class="hidden space-y-3 relative z-10">
+            <div class="flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <p id="nextPrayerName" class="font-bold text-sm font-display truncate" style="color:var(--ink);">—</p>
+                <p class="text-[10px]" style="color:var(--ink-faint);">Vakit girişi: <span id="nextPrayerClock" class="font-ledger font-semibold">--:--</span></p>
+              </div>
+              <div class="flex items-end space-x-1 font-ledger flex-shrink-0">
+                <div class="text-center leading-none">
+                  <span id="prayerCountdownH" class="text-xl font-bold" style="color:var(--teal-900);">00</span>
+                  <p class="text-[8px] uppercase mt-0.5" style="color:var(--ink-faint);">sa</p>
+                </div>
+                <span class="text-lg font-bold pb-2.5" style="color:var(--ink-faint);">:</span>
+                <div class="text-center leading-none">
+                  <span id="prayerCountdownM" class="text-xl font-bold" style="color:var(--teal-900);">00</span>
+                  <p class="text-[8px] uppercase mt-0.5" style="color:var(--ink-faint);">dk</p>
+                </div>
+                <span class="text-lg font-bold pb-2.5" style="color:var(--ink-faint);">:</span>
+                <div class="text-center leading-none">
+                  <span id="prayerCountdownS" class="text-xl font-bold" style="color:var(--gold-deep);">00</span>
+                  <p class="text-[8px] uppercase mt-0.5" style="color:var(--ink-faint);">sn</p>
+                </div>
+              </div>
+            </div>
+            <div id="prayerTimesRow" class="flex items-center gap-1.5"></div>
+          </div>
+        </div>
         <div class="paper-card rounded-2xl p-4 space-y-2.5 relative overflow-hidden pop-in" style="animation-delay: 0.1s;">
           <div class="absolute -right-4 -bottom-4 opacity-[0.04] pointer-events-none" style="color:var(--teal-900);">
              <i class="fa-solid fa-book-open text-[5rem]"></i>
@@ -882,6 +930,151 @@
       }
     }
 
+    // YENİ EKLENEN: NAMAZ VAKTİ GERİ SAYIM SİSTEMİ (Bursa, Diyanet hesaplama metodu)
+    const PRAYER_COUNTDOWN_LAT = 40.1826, PRAYER_COUNTDOWN_LON = 29.0665;
+    const PRAYER_COUNTDOWN_MAP = [
+      { key: 'Fajr', label: 'Sabah' },
+      { key: 'Dhuhr', label: 'Öğle' },
+      { key: 'Asr', label: 'İkindi' },
+      { key: 'Maghrib', label: 'Akşam' },
+      { key: 'Isha', label: 'Yatsı' }
+    ];
+    let prayerCountdownInterval = null;
+    let prayerTimingsToday = null;
+    let prayerTimingsTomorrow = null;
+    let prayerTimingsDateKey = null;
+
+    function pcDateKey(d) {
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function pcFormatForApi(d) {
+      return `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
+    }
+
+    async function fetchPrayerTimingsForDate(dateObj) {
+      const url = `https://api.aladhan.com/v1/timings/${pcFormatForApi(dateObj)}?latitude=${PRAYER_COUNTDOWN_LAT}&longitude=${PRAYER_COUNTDOWN_LON}&method=13`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Namaz vakti servisi yanıt vermedi');
+      const data = await res.json();
+      if (!data || !data.data || !data.data.timings) throw new Error('Namaz vakti verisi hatalı');
+      return data.data.timings;
+    }
+
+    async function getPrayerTimingsCached(dateObj) {
+      const key = pcDateKey(dateObj);
+      let cache = {};
+      const raw = localStorage.getItem('manevi-atlas-prayertimes-cache');
+      if (raw) { try { cache = JSON.parse(raw); } catch (e) {} }
+      if (cache[key]) return cache[key];
+
+      const timings = await fetchPrayerTimingsForDate(dateObj);
+      cache[key] = timings;
+      const keys = Object.keys(cache).sort();
+      while (keys.length > 6) { delete cache[keys.shift()]; }
+      localStorage.setItem('manevi-atlas-prayertimes-cache', JSON.stringify(cache));
+      return timings;
+    }
+
+    function pcParseTimeOnDate(dateObj, hhmmRaw) {
+      const hhmm = (hhmmRaw || '00:00').split(' ')[0];
+      const [h, m] = hhmm.split(':').map(Number);
+      const d = new Date(dateObj);
+      d.setHours(h || 0, m || 0, 0, 0);
+      return d;
+    }
+
+    window.initPrayerCountdown = async function() {
+      document.getElementById('prayerCountdownLoading').classList.remove('hidden');
+      document.getElementById('prayerCountdownError').classList.add('hidden');
+      document.getElementById('prayerCountdownError').classList.remove('flex');
+      document.getElementById('prayerCountdownContent').classList.add('hidden');
+
+      const now = new Date();
+      const todayKey = pcDateKey(now);
+
+      try {
+        if (prayerTimingsDateKey !== todayKey || !prayerTimingsToday || !prayerTimingsTomorrow) {
+          const tomorrow = new Date(now);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          const [todayT, tomorrowT] = await Promise.all([
+            getPrayerTimingsCached(now),
+            getPrayerTimingsCached(tomorrow)
+          ]);
+          prayerTimingsToday = todayT;
+          prayerTimingsTomorrow = tomorrowT;
+          prayerTimingsDateKey = todayKey;
+        }
+
+        document.getElementById('prayerCountdownLoading').classList.add('hidden');
+        document.getElementById('prayerCountdownContent').classList.remove('hidden');
+
+        if (prayerCountdownInterval) clearInterval(prayerCountdownInterval);
+        tickPrayerCountdown();
+        prayerCountdownInterval = setInterval(tickPrayerCountdown, 1000);
+      } catch (e) {
+        console.error('Namaz vakti alınamadı:', e);
+        document.getElementById('prayerCountdownLoading').classList.add('hidden');
+        document.getElementById('prayerCountdownContent').classList.add('hidden');
+        const errBox = document.getElementById('prayerCountdownError');
+        errBox.classList.remove('hidden');
+        errBox.classList.add('flex');
+      }
+    };
+
+    function tickPrayerCountdown() {
+      if (!prayerTimingsToday) return;
+      const now = new Date();
+
+      // Gün değiştiyse verileri tazele
+      if (pcDateKey(now) !== prayerTimingsDateKey) {
+        initPrayerCountdown();
+        return;
+      }
+
+      const todayBase = new Date(now); todayBase.setHours(0, 0, 0, 0);
+      const tomorrowBase = new Date(todayBase); tomorrowBase.setDate(tomorrowBase.getDate() + 1);
+
+      const todaysTimes = PRAYER_COUNTDOWN_MAP.map(p => ({
+        key: p.key, label: p.label,
+        time: pcParseTimeOnDate(todayBase, prayerTimingsToday[p.key])
+      }));
+
+      let next = todaysTimes.find(p => p.time.getTime() > now.getTime());
+      let isTomorrow = false;
+      if (!next && prayerTimingsTomorrow) {
+        next = {
+          key: 'Fajr', label: 'Sabah',
+          time: pcParseTimeOnDate(tomorrowBase, prayerTimingsTomorrow['Fajr'])
+        };
+        isTomorrow = true;
+      }
+      if (!next) return;
+
+      const totalSec = Math.max(0, Math.floor((next.time.getTime() - now.getTime()) / 1000));
+      const hh = Math.floor(totalSec / 3600);
+      const mm = Math.floor((totalSec % 3600) / 60);
+      const ss = totalSec % 60;
+
+      document.getElementById('nextPrayerName').textContent = `${next.label} Namazı${isTomorrow ? ' (Yarın)' : ''}`;
+      document.getElementById('nextPrayerClock').textContent = `${String(next.time.getHours()).padStart(2, '0')}:${String(next.time.getMinutes()).padStart(2, '0')}`;
+      document.getElementById('prayerCountdownH').textContent = String(hh).padStart(2, '0');
+      document.getElementById('prayerCountdownM').textContent = String(mm).padStart(2, '0');
+      document.getElementById('prayerCountdownS').textContent = String(ss).padStart(2, '0');
+
+      const row = document.getElementById('prayerTimesRow');
+      if (row) {
+        row.innerHTML = todaysTimes.map(p => {
+          const active = !isTomorrow && p.key === next.key;
+          return `
+            <div class="flex flex-col items-center flex-1 rounded-xl py-1.5 transition-all" style="${active ? 'background:var(--teal-900); color:#fff;' : 'background:var(--paper-deep); color:var(--ink-soft);'}">
+              <span class="text-[8px] font-bold uppercase tracking-wide">${p.label}</span>
+              <span class="text-[9.5px] font-bold font-ledger mt-0.5">${String(p.time.getHours()).padStart(2, '0')}:${String(p.time.getMinutes()).padStart(2, '0')}</span>
+            </div>`;
+        }).join('');
+      }
+    }
+
     // Bellekteki veya localStorage'daki yeni eklenen camileri yüklemek için fonksiyon
     function loadCustomAddedMosques() {
       PRESET_MOSQUES.forEach(m => { if (m.isCustom === undefined) m.isCustom = false; });
@@ -1357,6 +1550,7 @@
       await loadVisits();
       loadProfileData(); 
       displayDailyVerse(); // <--- YENİ EKLENEN: AÇILIŞTA AYET GÖSTER
+      initPrayerCountdown(); // <--- YENİ EKLENEN: NAMAZ VAKTİ GERİ SAYIMINI BAŞLAT
 
       document.getElementById('appModeBadge').innerHTML = useIndexedDB
         ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
