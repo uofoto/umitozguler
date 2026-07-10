@@ -737,6 +737,95 @@
   </div>
 
   <!-- CAMİ DÜZENLEME MODALI -->
+  <!-- CAMİ DETAY / TARİHÇE BİLGİSİ MODALI -->
+  <div id="mosqueInfoModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center backdrop-blur-sm">
+    <div class="rounded-t-3xl sm:rounded-3xl w-full max-w-md shadow-2xl overflow-hidden" style="background:var(--paper-card); max-height:88vh; display:flex; flex-direction:column;">
+      <div class="hero-panel relative px-5 pt-5 pb-4 flex-shrink-0">
+        <i class="fa-solid fa-mosque arch-watermark text-white text-6xl"></i>
+        <div class="relative flex items-start justify-between">
+          <div class="space-y-1.5 pr-3">
+            <span id="mosqueInfoDistrictBadge" class="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase" style="background:rgba(255,255,255,0.16); color:#fff;"></span>
+            <h3 id="mosqueInfoName" class="font-display font-bold text-base leading-snug" style="color:#fff;"></h3>
+            <p id="mosqueInfoAddress" class="text-[10.5px] flex items-start gap-1" style="color:rgba(255,255,255,0.75);">
+              <i class="fa-solid fa-location-dot mt-0.5"></i><span></span>
+            </p>
+          </div>
+          <button onclick="closeMosqueInfoModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="p-5 space-y-3 overflow-y-auto">
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="rounded-xl p-3" style="background:var(--paper-deep); border:1px solid var(--line);">
+            <p class="text-[9px] font-bold uppercase tracking-wider flex items-center gap-1" style="color:var(--ink-faint);"><i class="fa-solid fa-calendar-days"></i><span>Yapılış Tarihi</span></p>
+            <p id="mosqueInfoPeriod" class="text-[11.5px] font-bold mt-1" style="color:var(--ink);"></p>
+          </div>
+          <div class="rounded-xl p-3" style="background:var(--paper-deep); border:1px solid var(--line);">
+            <p class="text-[9px] font-bold uppercase tracking-wider flex items-center gap-1" style="color:var(--ink-faint);"><i class="fa-solid fa-user"></i><span>Banisi (Yaptıran)</span></p>
+            <p id="mosqueInfoFounder" class="text-[11.5px] font-bold mt-1" style="color:var(--ink);"></p>
+          </div>
+        </div>
+        <div id="mosqueInfoArchitectWrap" class="rounded-xl p-3 hidden" style="background:var(--paper-deep); border:1px solid var(--line);">
+          <p class="text-[9px] font-bold uppercase tracking-wider flex items-center gap-1" style="color:var(--ink-faint);"><i class="fa-solid fa-compass-drafting"></i><span>Mimarı</span></p>
+          <p id="mosqueInfoArchitect" class="text-[11.5px] font-bold mt-1" style="color:var(--ink);"></p>
+        </div>
+        <div class="rounded-xl p-3.5" style="background:rgba(21,90,76,0.06); border:1px solid rgba(21,90,76,0.16);">
+          <p class="text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 mb-1.5" style="color:var(--teal-700);"><i class="fa-solid fa-book-open"></i><span>Kısa Bilgi</span></p>
+          <p id="mosqueInfoText" class="text-[12px] leading-relaxed" style="color:var(--ink-soft);"></p>
+        </div>
+        <div id="mosqueInfoCustomNotice" class="hidden rounded-xl p-2.5 items-center gap-2 text-[9.5px]" style="background:rgba(195,154,69,0.1); border:1px solid rgba(195,154,69,0.3); color:var(--gold-deep);">
+          <i class="fa-solid fa-pen-fancy"></i><span>Bu bilgi kartı sizin tarafınızdan düzenlendi.</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="openMosqueInfoEditModal(currentMosqueInfoId)" class="py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
+            <i class="fa-solid fa-pen"></i><span>Bilgiyi Düzenle</span>
+          </button>
+          <button id="mosqueInfoResetBtn" onclick="triggerResetMosqueInfo(currentMosqueInfoId)" class="hidden py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" style="background:rgba(168,86,49,0.08); color:var(--brick);">
+            <i class="fa-solid fa-rotate-left"></i><span>Sıfırla</span>
+          </button>
+        </div>
+        <a id="mosqueInfoMapLink" href="#" target="_blank" rel="noopener" class="btn-primary w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
+          <i class="fa-solid fa-map-location-dot"></i><span>Haritada Göster</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMİ DETAY BİLGİSİNİ DÜZENLEME MODALI -->
+  <div id="mosqueInfoEditModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center backdrop-blur-sm">
+    <div class="rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 shadow-2xl space-y-3.5" style="background:var(--paper-card); max-height:88vh; overflow-y:auto;">
+      <div class="flex items-center justify-between pb-2" style="border-bottom:1px solid var(--line);">
+        <h3 class="font-bold text-sm font-display flex items-center space-x-2" style="color:var(--ink);">
+          <i class="fa-solid fa-book-open" style="color:var(--teal-700);"></i><span>Cami Bilgisini Düzenle</span>
+        </h3>
+        <button onclick="closeMosqueInfoEditModal()" class="icon-btn" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p id="mosqueInfoEditMosqueName" class="text-xs font-bold" style="color:var(--ink);"></p>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Yapılış Tarihi</label>
+        <input id="editInfoPeriod" type="text" placeholder="Örn: 1419 (Çelebi Mehmed Dönemi)" class="field w-full rounded-xl px-3 py-2.5 text-xs">
+      </div>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Banisi (Kim Yaptırdı)</label>
+        <input id="editInfoFounder" type="text" placeholder="Örn: Çelebi Sultan I. Mehmed" class="field w-full rounded-xl px-3 py-2.5 text-xs">
+      </div>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Mimarı <span class="normal-case font-medium" style="color:var(--ink-faint);">(opsiyonel)</span></label>
+        <input id="editInfoArchitect" type="text" placeholder="Örn: Hacı İvaz Paşa" class="field w-full rounded-xl px-3 py-2.5 text-xs">
+      </div>
+      <div class="space-y-1">
+        <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Kısa Bilgi</label>
+        <textarea id="editInfoText" rows="4" placeholder="Cami hakkında kısa bir tarihçe veya bilgi notu yazın..." class="field w-full rounded-xl px-3 py-2.5 text-xs resize-none"></textarea>
+      </div>
+      <div class="rounded-xl p-3 flex items-start gap-2 text-[10px]" style="background:rgba(195,154,69,0.08); border:1px solid rgba(195,154,69,0.3); color:var(--gold-deep);">
+        <i class="fa-solid fa-circle-info mt-0.5 mr-1.5"></i><span>Yaptığınız düzenleme yalnızca bu cihazda saklanır ve bilgi kartında gösterilir.</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button onclick="closeMosqueInfoEditModal()" class="py-2.5 rounded-xl text-xs font-semibold" style="background:var(--paper-deep); color:var(--ink-soft);">Vazgeç</button>
+        <button onclick="saveMosqueInfoEdit()" class="btn-primary py-2.5 rounded-xl text-xs font-semibold">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
   <div id="mosqueEditModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center backdrop-blur-sm">
     <div class="rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 shadow-2xl space-y-3.5" style="background:var(--paper-card); max-height:88vh; overflow-y:auto;">
       <div class="flex items-center justify-between pb-2" style="border-bottom:1px solid var(--line);">
@@ -904,6 +993,45 @@
       { id: "sitti-hatun", name: "Sitti Hatun Mescidi", district: "Yıldırım", address: "Umurbey, Yıldırım/Bursa", mapsSearch: "Sitti Hatun Camii" },
       { id: "hamamlikizik-camii", name: "Hamamlıkızık Camii", district: "Yıldırım", address: "Hamamlıkızık Köyü, Yıldırım/Bursa", mapsSearch: "Hamamlıkızık Camii" }
     ];
+
+    // 1b. CAMİ TARİHÇE / DETAY BİLGİSİ VERİ TABANI (yapılış tarihi, banisi, kısa bilgi notu)
+    const MOSQUE_INFO = {
+      "ulu-cami": { period: "1396 – 1399 (Yıldırım Bayezid Dönemi)", founder: "Yıldırım Bayezid (I. Bayezid)", architect: "Mimarı kesin olarak bilinmiyor; kaynaklarda Ali Neccar adı geçer.", info: "Niğbolu Zaferi sonrası, adak olarak 20 ayrı cami yerine 20 kubbeli tek bir ulu cami yapılması önerisiyle inşa edilmiştir. Türkiye'nin iç mekânı en geniş camisi olup kündekari tekniğiyle işlenmiş tarihi minberi ve içindeki şadırvanla ünlüdür." },
+      "orhan-gazi": { period: "1339 (Orhan Gazi Dönemi)", founder: "Orhan Gazi", info: "Bursa'da kale surları dışına inşa edilen ilk külliyenin ana yapısıdır; şehirdeki 'zaviyeli plan' tipindeki ilk camidir. 1413'te Karamanoğlu Mehmed Bey tarafından tahrip edilmiş, 1417'de Çelebi Mehmed tarafından onarılmıştır." },
+      "hudavendigar": { period: "1365 – 1366 (I. Murad Dönemi)", founder: "I. Murad (Hüdavendigar)", info: "Alt katı ibadet mekânı, üst katı medrese olarak tasarlanmış; Osmanlı mimarisinde eşi görülmeyen iki katlı bir yapıdır. O dönem şehre uzak sayılan Çekirge'de, ovaya hâkim bir tepe üzerine inşa edilmiştir." },
+      "muradiye": { period: "1425 – 1426 (II. Murad Dönemi)", founder: "II. Murad", info: "Bursa'da bir Osmanlı padişahı adına yapılan son camidir. Kündekari tekniğiyle işlenmiş ahşap giriş kapısı ve İznik çinileriyle tanınır; külliye çevresinde çok sayıda şehzade ve saray mensubunun türbesi bulunur." },
+      "sehadet-camii": { period: "14. yüzyıl (I. Murad Dönemi)", founder: "I. Murad (Hüdavendigar)", info: "Rivayete göre I. Murad tarafından Bursa Hisarı çevresinde yaptırılmış, padişahın 1389'da Kosova'da şehit düşmesi üzerine halk arasında 'Şehadet Camii' adıyla anılmaya başlamıştır. Günümüzdeki yapı sonraki dönem onarımlarını yansıtır." },
+      "yesil-cami": { period: "1414 – 1419 (Çelebi Mehmed Dönemi)", founder: "Çelebi Sultan I. Mehmed", architect: "Hacı İvaz Paşa", info: "Fetret Devri sonrası devletin yeniden toparlanışını simgeleyen yapıdır. Marmara Adası mermeri ve zengin İznik çinileriyle erken dönem Osmanlı sanatının en görkemli örneklerinden sayılır; karşısındaki Yeşil Türbe'de banisi Çelebi Mehmed medfundur." },
+      "emir-sultan": { period: "15. yüzyıl başı (Çelebi Mehmed / II. Murad Dönemi)", founder: "Hundi Fatma Hatun (Yıldırım Bayezid'in kızı, Emir Sultan'ın eşi)", info: "Buhara asıllı âlim Emir Sultan adına eşi tarafından yaptırılmıştır. 1795 depreminde tamamen yıkılmış, 1804'te III. Selim tarafından aynı plan üzerine yeniden inşa edilmiştir. Avlusundaki asırlık çınarlar ve Emir Sultan Türbesi'yle bilinir." },
+      "yildirim-bayezid": { period: "1391 – 1395 (Yıldırım Bayezid Dönemi)", founder: "Yıldırım Bayezid (I. Bayezid)", info: "'Ters T' planlı erken dönem Osmanlı camilerindendir; tamamen kesme taştan inşa edilmesi ve ünlü 'Bursa kemeri'nin ilk kez burada kullanılmasıyla dikkat çeker. 1855 depreminden sonra kapsamlı onarım görmüştür." },
+      "ali-pasa": { period: "14. yüzyıl sonu (Yıldırım Bayezid Dönemi)", founder: "Çandarlı Ali Paşa (Yıldırım Bayezid'in veziri)", info: "Orhan Gazi Camii ile başlayan 'kanatlı, ters T planlı zaviyeli camiler' grubundandır. 1855 Bursa depreminde hasar görmüş ve sonrasında onarılmıştır." },
+      "alaaddin-bey": { period: "1326 (Orhan Gazi Dönemi)", founder: "Alaaddin Bey (Osman Gazi'nin oğlu)", info: "Bursa'nın fethinin hemen ardından yaptırılan, şehrin ilk camisi olarak kabul edilir. Tuğla örgülü minaresi ve sade avlusuyla erken dönem Osmanlı mimarisinin ilk izlerini taşır." },
+      "serefuddin-camii": { period: "1479 (II. Murad / Fatih Dönemi)", founder: "Şerafeddin Paşa", info: "Okçular Çarşısı içinde yer aldığı için halk arasında 'Okçular Camii' olarak da bilinir. Kare planlı, tek kubbeli, sade bir mahalle camisidir." },
+      "uftade-camii": { period: "16. yüzyılın ikinci yarısı (Kanuni / II. Selim Dönemi)", founder: "Üftade Hazretleri (Mehmed Muhyiddin Üftade)", info: "Aziz Mahmud Hüdayi'nin hocası olan meşhur mutasavvıf Üftade Hazretleri tarafından yaptırılmıştır. Cami çeşitli depremlerde hasar görmüş, torunu İbrahim ve sonraki dönemde Rıza Paşa tarafından onarılmıştır; karşısındaki türbede Üftade Hazretleri medfundur." },
+      "karabas-i-veli": { period: "16. yüzyıl", founder: "Yakup Çelebi", info: "Aslen bir Mevlevi tekkesi olarak inşa edilmiş, adını burada uzun yıllar irşad faaliyeti yürüten Karabaş-i Veli Hazretleri'nden almıştır. Günümüzde ibadetin yanı sıra kültür merkezi olarak da kullanılmaktadır." }
+    };
+
+    // Kullanıcının cami bilgi kartında yaptığı düzenlemeler / sıfırlamalar (yalnızca bu cihazda saklanır)
+    let MOSQUE_INFO_OVERRIDES = {};
+    function loadMosqueInfoOverrides() {
+      const raw = localStorage.getItem('manevi-atlas-mosque-info-overrides');
+      if (!raw) return;
+      try { MOSQUE_INFO_OVERRIDES = JSON.parse(raw) || {}; } catch (e) { MOSQUE_INFO_OVERRIDES = {}; }
+    }
+    function saveMosqueInfoOverrides() {
+      localStorage.setItem('manevi-atlas-mosque-info-overrides', JSON.stringify(MOSQUE_INFO_OVERRIDES));
+    }
+
+    // Envanterde ayrıntılı kaydı bulunmayan mabetler için dürüst, genel bir tanıtım metni üretir
+    function getMosqueInfo(m) {
+      if (MOSQUE_INFO_OVERRIDES[m.id]) return MOSQUE_INFO_OVERRIDES[m.id];
+      if (MOSQUE_INFO[m.id]) return MOSQUE_INFO[m.id];
+      return {
+        period: "Kesin yapım tarihi envanterimizde kayıtlı değil",
+        founder: "Banisi hakkında doğrulanmış bir kayıt henüz eklenmedi",
+        info: `${escapeHtml(m.name)}, Bursa'nın ${m.district} ilçesindeki tescilli tarihi cami ve mescidlerinden biridir. Bu mabetle ilgili yapım tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgiler Vakıflar Genel Müdürlüğü ve yerel kültür envanteri kayıtlarında yer almaktadır; bu kayıtlar uygulamamıza henüz eklenmemiştir.`
+      };
+    }
 
     // YENİ EKLENEN: GÜNÜN AYETLERİ DİZİSİ
     const QURAN_VERSES = [
@@ -1144,6 +1272,109 @@
     function updateDeletedMosquesCount() {
       const badge = document.getElementById('deletedMosquesCountBadge');
       if (badge) badge.textContent = getDeletedPresetMosques().length;
+    }
+
+    // CAMİ DETAY / TARİHÇE BİLGİSİ MODALI
+    let currentMosqueInfoId = null;
+    window.openMosqueInfoModal = function(id) {
+      const m = PRESET_MOSQUES.find(x => x.id === id);
+      if (!m) return;
+      currentMosqueInfoId = id;
+      const detail = getMosqueInfo(m);
+      const isOsmangazi = m.district === 'Osmangazi';
+
+      document.getElementById('mosqueInfoDistrictBadge').textContent = `${m.district} · ${getSicilNo(m)}`;
+      document.getElementById('mosqueInfoName').textContent = m.name;
+      document.querySelector('#mosqueInfoAddress span').textContent = m.address;
+      document.getElementById('mosqueInfoPeriod').textContent = detail.period;
+      document.getElementById('mosqueInfoFounder').textContent = detail.founder;
+      document.getElementById('mosqueInfoText').textContent = detail.info;
+
+      const archWrap = document.getElementById('mosqueInfoArchitectWrap');
+      if (detail.architect) {
+        document.getElementById('mosqueInfoArchitect').textContent = detail.architect;
+        archWrap.classList.remove('hidden');
+      } else {
+        archWrap.classList.add('hidden');
+      }
+
+      const isCustom = !!MOSQUE_INFO_OVERRIDES[id];
+      const notice = document.getElementById('mosqueInfoCustomNotice');
+      const resetBtn = document.getElementById('mosqueInfoResetBtn');
+      notice.classList.toggle('hidden', !isCustom);
+      notice.classList.toggle('flex', isCustom);
+      resetBtn.classList.toggle('hidden', !isCustom);
+
+      const heroPanel = document.querySelector('#mosqueInfoModal .hero-panel');
+      if (heroPanel) {
+        heroPanel.style.background = isOsmangazi
+          ? 'radial-gradient(120% 140% at 100% 0%, rgba(195,154,69,0.18) 0%, rgba(195,154,69,0) 45%), linear-gradient(160deg, var(--teal-950) 0%, var(--teal-900) 55%, var(--teal-700) 130%)'
+          : 'radial-gradient(120% 140% at 100% 0%, rgba(227,161,126,0.22) 0%, rgba(227,161,126,0) 45%), linear-gradient(160deg, var(--brick-deep) 0%, var(--brick) 65%, var(--brick-soft) 140%)';
+      }
+
+      const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
+      document.getElementById('mosqueInfoMapLink').href = mapUrl;
+
+      document.getElementById('mosqueInfoModal').classList.remove('hidden');
+    };
+    window.closeMosqueInfoModal = function() {
+      document.getElementById('mosqueInfoModal').classList.add('hidden');
+    };
+    document.getElementById('mosqueInfoModal').addEventListener('click', function(e) { if (e.target === this) closeMosqueInfoModal(); });
+
+    // CAMİ BİLGİ KARTINI DÜZENLEME
+    window.openMosqueInfoEditModal = function(id) {
+      const m = PRESET_MOSQUES.find(x => x.id === id);
+      if (!m) return;
+      const detail = getMosqueInfo(m);
+      document.getElementById('mosqueInfoEditMosqueName').textContent = m.name;
+      document.getElementById('editInfoPeriod').value = detail.period || '';
+      document.getElementById('editInfoFounder').value = detail.founder || '';
+      document.getElementById('editInfoArchitect').value = detail.architect || '';
+      document.getElementById('editInfoText').value = detail.info || '';
+      document.getElementById('mosqueInfoModal').classList.add('hidden');
+      document.getElementById('mosqueInfoEditModal').classList.remove('hidden');
+    };
+    window.closeMosqueInfoEditModal = function() {
+      document.getElementById('mosqueInfoEditModal').classList.add('hidden');
+      if (currentMosqueInfoId) openMosqueInfoModal(currentMosqueInfoId);
+    };
+    document.getElementById('mosqueInfoEditModal').addEventListener('click', function(e) { if (e.target === this) closeMosqueInfoEditModal(); });
+
+    window.saveMosqueInfoEdit = function() {
+      if (!currentMosqueInfoId) return;
+      const period = document.getElementById('editInfoPeriod').value.trim();
+      const founder = document.getElementById('editInfoFounder').value.trim();
+      const architect = document.getElementById('editInfoArchitect').value.trim();
+      const info = document.getElementById('editInfoText').value.trim();
+
+      if (!period || !founder || !info) {
+        showToast("Lütfen yapılış tarihi, banisi ve kısa bilgi alanlarını doldurun.", "error");
+        return;
+      }
+
+      MOSQUE_INFO_OVERRIDES[currentMosqueInfoId] = { period, founder, info };
+      if (architect) MOSQUE_INFO_OVERRIDES[currentMosqueInfoId].architect = architect;
+      saveMosqueInfoOverrides();
+
+      document.getElementById('mosqueInfoEditModal').classList.add('hidden');
+      openMosqueInfoModal(currentMosqueInfoId);
+      showToast("Cami bilgisi güncellendi.", "success");
+    };
+
+    // CAMİ BİLGİ KARTINI SIFIRLAMA (KULLANICI DÜZENLEMESİNİ SİLME)
+    let pendingInfoResetId = null;
+    window.triggerResetMosqueInfo = function(id) {
+      if (!id) return;
+      pendingInfoResetId = id;
+      pendingAction = 'resetMosqueInfo';
+      openConfirmModal("Bilgi Kartı Sıfırlansın mı?", "Bu camiye ait düzenlediğiniz bilgiler silinerek varsayılan içeriğe dönülecektir.", "Sıfırla");
+    };
+    function executeResetMosqueInfo(id) {
+      delete MOSQUE_INFO_OVERRIDES[id];
+      saveMosqueInfoOverrides();
+      if (currentMosqueInfoId === id) openMosqueInfoModal(id);
+      showToast("Bilgi kartı varsayılan haline döndürüldü.", "success");
     }
 
     window.openMosqueEditModal = function(id) {
@@ -1547,6 +1778,7 @@
       loadTheme();
       loadHapticsUI();
       loadCustomAddedMosques();
+      loadMosqueInfoOverrides();
       await loadVisits();
       loadProfileData(); 
       displayDailyVerse(); // <--- YENİ EKLENEN: AÇILIŞTA AYET GÖSTER
@@ -1708,7 +1940,7 @@
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
 
         return `
-          <div class="paper-card rounded-2xl p-3.5 relative overflow-hidden transition-all fade-in-up">
+          <div class="paper-card pressable rounded-2xl p-3.5 relative overflow-hidden transition-all fade-in-up" onclick="openMosqueInfoModal('${m.id}')" title="Cami hakkında bilgi al">
             <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}"></div>
             <div class="flex justify-between items-start pl-1.5">
               <div class="space-y-0.5">
@@ -1724,10 +1956,13 @@
               </div>
               <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
                 <div class="flex items-center gap-1">
-                  <button onclick="openMosqueEditModal('${m.id}')" class="icon-btn" style="background:rgba(21,90,76,0.08); color:var(--teal-700); width:26px; height:26px;" title="Düzenle">
+                  <button onclick="event.stopPropagation(); openMosqueInfoModal('${m.id}')" class="icon-btn" style="background:rgba(195,154,69,0.12); color:var(--gold-deep); width:26px; height:26px;" title="Cami hakkında bilgi">
+                    <i class="fa-solid fa-circle-info text-[10px]"></i>
+                  </button>
+                  <button onclick="event.stopPropagation(); openMosqueEditModal('${m.id}')" class="icon-btn" style="background:rgba(21,90,76,0.08); color:var(--teal-700); width:26px; height:26px;" title="Düzenle">
                     <i class="fa-solid fa-pen text-[10px]"></i>
                   </button>
-                  <button onclick="triggerDeleteMosque('${m.id}')" class="icon-btn" style="background:rgba(168,86,49,0.08); color:var(--brick); width:26px; height:26px;" title="Listeden kaldır">
+                  <button onclick="event.stopPropagation(); triggerDeleteMosque('${m.id}')" class="icon-btn" style="background:rgba(168,86,49,0.08); color:var(--brick); width:26px; height:26px;" title="Listeden kaldır">
                     <i class="fa-solid fa-trash-can text-[10px]"></i>
                   </button>
                 </div>
@@ -1738,7 +1973,7 @@
             </div>
             <div class="pl-1.5 pt-2.5 flex items-center justify-between mt-2.5" style="border-top:1px solid var(--line);">
               <div class="flex items-center space-x-1">${timeBadgesHTML}</div>
-              <a href="${mapUrl}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg font-bold flex items-center space-x-1 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
+              <a href="${mapUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[10px] px-2.5 py-1 rounded-lg font-bold flex items-center space-x-1 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
                 <i class="fa-solid fa-map-location-dot"></i><span>Haritada Göster</span>
               </a>
             </div>
@@ -1862,6 +2097,8 @@
         await executeResetAll();
       } else if (pendingAction === 'deleteMosque' && pendingMosqueDeleteId) {
         executeDeleteMosque(pendingMosqueDeleteId);
+      } else if (pendingAction === 'resetMosqueInfo' && pendingInfoResetId) {
+        executeResetMosqueInfo(pendingInfoResetId);
       }
       closeConfirmModal();
     });
@@ -1871,7 +2108,7 @@
       modal.firstElementChild.classList.remove('scale-100');
       modal.firstElementChild.classList.add('scale-95');
       document.getElementById('confirmOkBtn').textContent = "Sil";
-      setTimeout(() => { modal.classList.add('hidden'); pendingDeleteId = null; pendingMosqueDeleteId = null; pendingAction = null; }, 150);
+      setTimeout(() => { modal.classList.add('hidden'); pendingDeleteId = null; pendingMosqueDeleteId = null; pendingInfoResetId = null; pendingAction = null; }, 150);
     }
 
     async function executeResetAll() {
