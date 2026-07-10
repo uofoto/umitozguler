@@ -254,7 +254,7 @@
               </span>
               <div class="flex items-center space-x-1.5">
                 <span id="overallBadge" class="gold-shimmer text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="color:var(--teal-950);">%0 Tamamlandı</span>
-                <button onclick="shareProgress()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="İlerlemeni paylaş">
+                <button onclick="shareProgress()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="Uygulamayı arkadaşlarınla paylaş">
                   <i class="fa-solid fa-share-nodes text-[10px]"></i>
                 </button>
               </div>
@@ -1964,18 +1964,23 @@
       reader.readAsText(file);
     };
 
-    // === PAYLAŞIM ===
+    // === PAYLAŞIM (Uygulamayı Tanıt ve İndirme Linkini Paylaş) ===
     window.shareProgress = async function() {
-      const visitedMosqueIds = new Set(visitsData.map(v => v.mosqueId));
-      const totalUniqueVisited = PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length;
-      const perc = Math.round((totalUniqueVisited / PRESET_MOSQUES.length) * 100);
-      const text = `Bursa Manevi Atlası'nda ${visitsData.length} vakit namaz kaydettim ve tarihi camilerin %${perc}'ini ihya ettim. 🕌`;
+      const appUrl = "https://www.umitozguler.com.tr/bma/index.html";
+      const shareTitle = "Bursa Manevi Atlası";
+      const shareText = "Bursa Manevi Atlası ile Bursa'nın manevi noktalarına huzur dolu bir yolculuğa çık. Uygulamayı hemen telefonuna indir:";
+
       if (navigator.share) {
-        try { await navigator.share({ title: "Bursa Manevi Atlası", text }); }
-        catch (e) { /* kullanıcı paylaşımı iptal etti */ }
+        try {
+          await navigator.share({ title: shareTitle, text: shareText, url: appUrl });
+        } catch (e) { /* kullanıcı paylaşımı iptal etti */ }
       } else if (navigator.clipboard) {
-        try { await navigator.clipboard.writeText(text); showToast("İlerlemeniz panoya kopyalandı.", "success"); }
-        catch (e) { showToast("Paylaşım desteklenmiyor.", "error"); }
+        try {
+          await navigator.clipboard.writeText(`${shareText}\n${appUrl}`);
+          showToast("Uygulama bağlantısı panoya kopyalandı.", "success");
+        } catch (e) {
+          showToast("Paylaşım desteklenmiyor.", "error");
+        }
       } else {
         showToast("Paylaşım bu cihazda desteklenmiyor.", "error");
       }
