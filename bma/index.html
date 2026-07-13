@@ -29,6 +29,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- HEIC/HEIF (iPhone kamera formatı) dönüştürücü -->
   <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  <!-- Leaflet (Manevi Harita özelliği için açık kaynak harita kütüphanesi) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
   <style>
     :root{
@@ -252,6 +255,9 @@
               </span>
               <div class="flex items-center space-x-1.5">
                 <span id="overallBadge" class="gold-shimmer text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="color:var(--teal-950);">%0 Tamamlandı</span>
+                <button onclick="openMapModal()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="Manevi Haritayı Aç">
+                  <i class="fa-solid fa-map-location-dot text-[10px]"></i>
+                </button>
                 <button onclick="shareProgress()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="Uygulamayı arkadaşlarınla paylaş">
                   <i class="fa-solid fa-share-nodes text-[10px]"></i>
                 </button>
@@ -449,6 +455,9 @@
             <button onclick="filterDistrict('Mudanya')" id="btn-filter-mudanya" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Mudanya</button>
             <button onclick="filterDistrict('DIGER')" id="btn-filter-diger" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Diğer İlçeler</button>
           </div>
+          <button onclick="openMapModal()" class="w-full py-2 rounded-lg text-[10.5px] font-bold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900); border:1px solid rgba(21,90,76,0.18);">
+            <i class="fa-solid fa-map-location-dot"></i><span>🗺️ Haritada Gör (Ziyaret Edilen / Edilmeyen)</span>
+          </button>
         </div>
         <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
           <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--teal-900); color:#fff;">
@@ -960,6 +969,51 @@
         <button onclick="closeDeletedMosquesModal()" class="icon-btn" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div id="deletedMosquesList" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- MANEVİ HARİTA (Ziyaret Edilen/Edilmeyen Camiler Haritası) -->
+  <div id="mapModal" class="hidden fixed inset-0 z-50 flex flex-col" style="background:var(--paper);">
+    <div class="hero-panel relative px-4 pt-4 pb-3 flex-shrink-0 safe-padding-top">
+      <div class="relative flex items-start justify-between">
+        <div class="space-y-1">
+          <h3 class="font-display font-bold text-base leading-snug flex items-center gap-2" style="color:#fff;">
+            <i class="fa-solid fa-map-location-dot" style="color:var(--gold-soft);"></i><span>Manevi Harita</span>
+          </h3>
+          <p class="text-[10.5px]" style="color:rgba(255,255,255,0.75);">Ziyaret ettiğin ve etmediğin camileri harita üzerinde gör</p>
+        </div>
+        <button onclick="closeMapModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="grid grid-cols-3 gap-1.5 mt-3">
+        <button onclick="setMapFilter('HEPSI')" id="btn-map-filter-all" class="text-[10px] font-bold py-1.5 rounded-lg transition-all" style="background:rgba(255,255,255,0.18); color:#fff;">Tümü</button>
+        <button onclick="setMapFilter('ZIYARET_EDILEN')" id="btn-map-filter-visited" class="text-[10px] font-bold py-1.5 rounded-lg transition-all" style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8);">İhya Edilen</button>
+        <button onclick="setMapFilter('ZIYARET_EDILMEYEN')" id="btn-map-filter-unvisited" class="text-[10px] font-bold py-1.5 rounded-lg transition-all" style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8);">Kılınmayan</button>
+      </div>
+    </div>
+
+    <div id="mapGeocodeProgressWrap" class="hidden px-4 py-2 flex-shrink-0" style="background:var(--paper-deep); border-bottom:1px solid var(--line);">
+      <div class="flex items-center justify-between text-[10px] font-semibold mb-1" style="color:var(--ink-soft);">
+        <span><i class="fa-solid fa-location-crosshairs animate-spin-slow mr-1" style="color:var(--teal-700);"></i>Cami konumları belirleniyor…</span>
+        <span id="mapGeocodeProgressLabel" class="font-ledger">0 / 0</span>
+      </div>
+      <div class="w-full h-1.5 rounded-full overflow-hidden" style="background:var(--line);">
+        <div id="mapGeocodeProgressBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
+      </div>
+    </div>
+
+    <div class="flex-1 relative" style="min-height:0;">
+      <div id="mosqueMapContainer" class="absolute inset-0"></div>
+      <div id="mapEmptyState" class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-8 gap-2" style="background:var(--paper);">
+        <div class="empty-icon"><i class="fa-solid fa-map"></i></div>
+        <p class="text-xs font-semibold" style="color:var(--ink-soft);">Bu filtrede gösterilecek cami yok</p>
+        <p class="text-[10px]" style="color:var(--ink-faint);">Farklı bir filtre deneyin.</p>
+      </div>
+    </div>
+
+    <div class="px-4 py-2.5 flex-shrink-0 flex items-center justify-center gap-4 safe-padding-bottom" style="background:var(--paper-card); border-top:1px solid var(--line);">
+      <span class="text-[9.5px] font-semibold flex items-center gap-1.5" style="color:var(--ink-soft);"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#1F7A65;"></span>İhya Edilen</span>
+      <span class="text-[9.5px] font-semibold flex items-center gap-1.5" style="color:var(--ink-soft);"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#A85631;"></span>Kılınmayan</span>
+      <span class="text-[9.5px] font-semibold flex items-center gap-1.5" style="color:var(--ink-soft);"><i class="fa-solid fa-heart" style="color:var(--brick); font-size:9px;"></i>Favori</span>
     </div>
   </div>
 
@@ -1832,6 +1886,190 @@
       updateFavoriteMosquesUI();
     };
 
+    // ---- MANEVİ HARİTA (Ziyaret Edilen / Edilmeyen Camiler Haritası) ----
+    const GEOCODE_CACHE_KEY = 'manevi-atlas-geocode-cache';
+    let mosqueGeocodeCache = {};
+    let leafletMapInstance = null;
+    let mosqueMarkersLayer = null;
+    let mosqueMarkersById = {};
+    let mapFilterMode = 'HEPSI';
+    let isGeocodingMosques = false;
+    const BURSA_CENTER = [40.1885, 29.0610];
+
+    function loadGeocodeCache() {
+      try {
+        const raw = localStorage.getItem(GEOCODE_CACHE_KEY);
+        mosqueGeocodeCache = raw ? JSON.parse(raw) : {};
+      } catch (e) { mosqueGeocodeCache = {}; }
+    }
+    function saveGeocodeCache() {
+      try { localStorage.setItem(GEOCODE_CACHE_KEY, JSON.stringify(mosqueGeocodeCache)); } catch (e) {}
+    }
+
+    function computeMosqueVisitStats() {
+      const stats = {};
+      PRESET_MOSQUES.forEach(m => { stats[m.id] = 0; });
+      visitsData.forEach(v => { if (stats[v.mosqueId] !== undefined) stats[v.mosqueId] += 1; });
+      return stats;
+    }
+
+    window.openMapModal = function() {
+      document.getElementById('mapModal').classList.remove('hidden');
+      setTimeout(() => {
+        initMosqueMap();
+        if (leafletMapInstance) leafletMapInstance.invalidateSize();
+        renderMosqueMapMarkers();
+        startGeocodingQueue();
+      }, 50);
+    };
+
+    window.closeMapModal = function() {
+      document.getElementById('mapModal').classList.add('hidden');
+    };
+
+    window.setMapFilter = function(mode) {
+      mapFilterMode = mode;
+      const ids = { 'HEPSI': 'btn-map-filter-all', 'ZIYARET_EDILEN': 'btn-map-filter-visited', 'ZIYARET_EDILMEYEN': 'btn-map-filter-unvisited' };
+      Object.values(ids).forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.setAttribute('style', 'background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8);');
+      });
+      const activeBtn = document.getElementById(ids[mode]);
+      if (activeBtn) activeBtn.setAttribute('style', 'background:rgba(255,255,255,0.18); color:#fff;');
+      renderMosqueMapMarkers();
+    };
+
+    function initMosqueMap() {
+      if (leafletMapInstance || typeof L === 'undefined') return;
+      leafletMapInstance = L.map('mosqueMapContainer', { zoomControl: true }).setView(BURSA_CENTER, 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap katkıda bulunanlar'
+      }).addTo(leafletMapInstance);
+      mosqueMarkersLayer = L.layerGroup().addTo(leafletMapInstance);
+    }
+
+    function mosqueMatchesMapFilter(m, visitStats) {
+      if (mapFilterMode === 'ZIYARET_EDILEN') return (visitStats[m.id] || 0) > 0;
+      if (mapFilterMode === 'ZIYARET_EDILMEYEN') return (visitStats[m.id] || 0) === 0;
+      return true;
+    }
+
+    function buildMosquePopupHTML(m, isVisited) {
+      const rating = mosqueRatings[m.id] || 0;
+      const isFav = favoriteMosqueIds.has(m.id);
+      const starsHTML = rating > 0
+        ? [1,2,3,4,5].map(n => `<i class="fa-${n <= rating ? 'solid' : 'regular'} fa-star" style="font-size:9px; color:${n <= rating ? '#C39A45' : '#ccc'};"></i>`).join('')
+        : `<span style="font-size:9.5px; color:#999;">Puan yok</span>`;
+      const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
+      return `
+        <div style="font-family:'Manrope',sans-serif; min-width:180px;">
+          <div style="font-weight:800; font-size:12.5px; color:#241F17; margin-bottom:2px;">${escapeHtml(m.name)}${isFav ? ' <i class="fa-solid fa-heart" style="color:#A85631; font-size:10px;"></i>' : ''}</div>
+          <div style="font-size:10px; color:#5B5445; margin-bottom:4px;">${escapeHtml(m.district)} · ${escapeHtml(m.address)}</div>
+          <div style="display:flex; align-items:center; gap:3px; margin-bottom:6px;">${starsHTML}</div>
+          <div style="font-size:10px; font-weight:700; color:${isVisited ? '#1F7A65' : '#A85631'}; margin-bottom:6px;">${isVisited ? '✓ İhya Edildi' : 'Henüz Kılınmadı'}</div>
+          <div style="display:flex; gap:6px;">
+            <button onclick="closeMapModal(); openMosqueInfoModal('${m.id}');" style="flex:1; font-size:10px; font-weight:700; padding:6px 8px; border-radius:8px; border:none; background:#124A3E; color:#fff; cursor:pointer;">Detay</button>
+            <a href="${mapUrl}" target="_blank" rel="noopener" style="flex:1; text-align:center; font-size:10px; font-weight:700; padding:6px 8px; border-radius:8px; background:#F2ECDD; color:#124A3E; text-decoration:none;">Google'da Aç</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function addOrUpdateMosqueMarker(m) {
+      if (!leafletMapInstance || !mosqueMarkersLayer) return;
+      const coords = mosqueGeocodeCache[m.id];
+      if (!coords) return;
+      const visitStats = computeMosqueVisitStats();
+      const isVisited = (visitStats[m.id] || 0) > 0;
+      const isFav = favoriteMosqueIds.has(m.id);
+
+      if (mosqueMarkersById[m.id]) {
+        mosqueMarkersLayer.removeLayer(mosqueMarkersById[m.id]);
+        delete mosqueMarkersById[m.id];
+      }
+      if (!mosqueMatchesMapFilter(m, visitStats)) return;
+
+      const marker = L.circleMarker([coords.lat, coords.lng], {
+        radius: isFav ? 9 : 7,
+        fillColor: isVisited ? '#1F7A65' : '#A85631',
+        color: isFav ? '#C39A45' : '#ffffff',
+        weight: isFav ? 3 : 1.5,
+        fillOpacity: 0.92
+      });
+      marker.bindPopup(buildMosquePopupHTML(m, isVisited));
+      marker.addTo(mosqueMarkersLayer);
+      mosqueMarkersById[m.id] = marker;
+    }
+
+    function renderMosqueMapMarkers() {
+      if (!leafletMapInstance || !mosqueMarkersLayer) return;
+      mosqueMarkersLayer.clearLayers();
+      mosqueMarkersById = {};
+      const visitStats = computeMosqueVisitStats();
+      let shownCount = 0;
+      PRESET_MOSQUES.forEach(m => {
+        if (!mosqueGeocodeCache[m.id]) return;
+        if (!mosqueMatchesMapFilter(m, visitStats)) return;
+        addOrUpdateMosqueMarker(m);
+        shownCount++;
+      });
+      const emptyState = document.getElementById('mapEmptyState');
+      if (emptyState) emptyState.classList.toggle('hidden', shownCount > 0 || isGeocodingMosques);
+    }
+
+    async function geocodeSingleMosque(m) {
+      const query = m.mapsSearch || (m.name + ' ' + m.address);
+      const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=tr&q=${encodeURIComponent(query + ', Bursa, Türkiye')}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data && data[0]) {
+          return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+        }
+      } catch (e) { /* sessizce geç */ }
+      return null;
+    }
+
+    async function startGeocodingQueue() {
+      if (isGeocodingMosques) return;
+      const toGeocode = PRESET_MOSQUES.filter(m => !mosqueGeocodeCache[m.id]);
+      const progressWrap = document.getElementById('mapGeocodeProgressWrap');
+      const progressLabel = document.getElementById('mapGeocodeProgressLabel');
+      const progressBar = document.getElementById('mapGeocodeProgressBar');
+
+      if (toGeocode.length === 0) {
+        if (progressWrap) progressWrap.classList.add('hidden');
+        renderMosqueMapMarkers();
+        return;
+      }
+
+      isGeocodingMosques = true;
+      if (progressWrap) progressWrap.classList.remove('hidden');
+      const total = toGeocode.length;
+      let done = 0;
+      if (progressLabel) progressLabel.textContent = `${done} / ${total}`;
+
+      for (const m of toGeocode) {
+        if (document.getElementById('mapModal').classList.contains('hidden')) break; // harita kapatıldıysa dur
+        const coords = await geocodeSingleMosque(m);
+        if (coords) {
+          mosqueGeocodeCache[m.id] = coords;
+          saveGeocodeCache();
+          addOrUpdateMosqueMarker(m);
+        }
+        done++;
+        if (progressLabel) progressLabel.textContent = `${done} / ${total}`;
+        if (progressBar) progressBar.style.width = `${Math.round((done / total) * 100)}%`;
+        await new Promise(r => setTimeout(r, 1100)); // Nominatim kullanım kurallarına uygun bekleme
+      }
+
+      isGeocodingMosques = false;
+      if (progressWrap) progressWrap.classList.add('hidden');
+      renderMosqueMapMarkers();
+    }
+
     function openDB() {
       return new Promise((resolve, reject) => {
         if (dbInstance) { resolve(dbInstance); return; }
@@ -2023,6 +2261,7 @@
       loadMosqueInfoOverrides();
       loadFavorites();
       loadRatings();
+      loadGeocodeCache();
       initMosqueInfoHintBanner();
       await loadVisits();
       loadProfileData(); 
