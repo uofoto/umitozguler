@@ -351,33 +351,7 @@
             <i class="fa-solid fa-chart-line" style="color:var(--teal-700);"></i>
             <span class="uppercase tracking-wider" style="color:var(--ink-faint);">İlçelere Göre İlerleme</span>
           </h3>
-          <div class="space-y-1">
-            <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
-              <span>Osmangazi</span>
-              <span id="osmangaziProgressTxt" class="font-bold font-ledger">0 / 0</span>
-            </div>
-            <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
-              <div id="osmangaziProgressBar" class="bar-osmangazi h-full transition-all duration-500" style="width:0%"></div>
-            </div>
-          </div>
-          <div class="space-y-1">
-            <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
-              <span>Yıldırım</span>
-              <span id="yildirimProgressTxt" class="font-bold font-ledger">0 / 0</span>
-            </div>
-            <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
-              <div id="yildirimProgressBar" class="bar-yildirim h-full transition-all duration-500" style="width:0%"></div>
-            </div>
-          </div>
-          <div class="space-y-1">
-            <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
-              <span>Diğer İlçeler</span>
-              <span id="digerProgressTxt" class="font-bold font-ledger">0 / 0</span>
-            </div>
-            <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
-              <div id="digerProgressBar" class="h-full transition-all duration-500" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
-            </div>
-          </div>
+          <div id="districtProgressContainer" class="space-y-3"></div>
         </div>
 
         <div class="paper-card rounded-2xl p-4 space-y-3 relative overflow-hidden pop-in" style="animation-delay:0.12s;">
@@ -424,14 +398,9 @@
             <input id="mosqueSearchInput" type="text" placeholder="Tarihi mabetler arasında ara..." class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
           </div>
           <div class="grid grid-cols-3 gap-1.5">
-            <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi</button>
-            <button onclick="filterDistrict('KILINANLAR')" id="btn-filter-kilinanlar" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Kılınanlar</button>
-            <button onclick="filterDistrict('Osmangazi')" id="btn-filter-osmangazi" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Osmangazi</button>
-            <button onclick="filterDistrict('Yıldırım')" id="btn-filter-yildirim" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Yıldırım</button>
-            <button onclick="filterDistrict('Nilüfer')" id="btn-filter-nilufer" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Nilüfer</button>
-            <button onclick="filterDistrict('İznik')" id="btn-filter-iznik" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">İznik</button>
-            <button onclick="filterDistrict('Mudanya')" id="btn-filter-mudanya" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Mudanya</button>
-            <button onclick="filterDistrict('DIGER')" id="btn-filter-diger" class="text-[10px] font-bold py-2 rounded-lg transition-all col-span-2" style="background:var(--paper-deep); color:var(--ink-soft);">Diğer İlçeler</button>
+            <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" data-filter-btn="HEPSİ" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi</button>
+            <button onclick="filterDistrict('KILINANLAR')" id="btn-filter-kilinanlar" data-filter-btn="KILINANLAR" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Kılınanlar</button>
+            <div id="districtFilterButtons" class="contents"></div>
           </div>
         </div>
         <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
@@ -1960,6 +1929,13 @@
       triggerAllUIUpdates();
     }
 
+    function districtSlug(d) {
+      return d.toLocaleLowerCase('tr-TR')
+        .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c')
+        .replace(/[^a-z0-9]/g, '');
+    }
+
     function triggerAllUIUpdates() {
       updateDashboardUI();
       updateMosquesListUI();
@@ -2021,12 +1997,6 @@
       const streakEl = document.getElementById('streakCount');
       if (streakEl) { const s = computeStreak(); streakEl.textContent = `🔥 ${s} gün`; }
       const visitedMosqueIds = new Set(visitsData.map(v => v.mosqueId));
-      const osmangaziTotal = PRESET_MOSQUES.filter(m => m.district === 'Osmangazi');
-      const yildirimTotal = PRESET_MOSQUES.filter(m => m.district === 'Yıldırım');
-      const digerTotal = PRESET_MOSQUES.filter(m => m.district !== 'Osmangazi' && m.district !== 'Yıldırım');
-      const osmangaziVisited = osmangaziTotal.filter(m => visitedMosqueIds.has(m.id)).length;
-      const yildirimVisited = yildirimTotal.filter(m => visitedMosqueIds.has(m.id)).length;
-      const digerVisited = digerTotal.filter(m => visitedMosqueIds.has(m.id)).length;
 
       const totalCount = PRESET_MOSQUES.length;
       document.getElementById('totalCountInfoText').textContent = `Bursa'nın tüm ilçelerindeki tescilli ${totalCount} tarihi cami ve mescidi ihya etme yolculuğun.`;
@@ -2037,37 +2007,48 @@
       const kilinanlarFilterBtn = document.getElementById('btn-filter-kilinanlar');
       if(kilinanlarFilterBtn) kilinanlarFilterBtn.textContent = `Kılınanlar (${visitedMosqueIds.size})`;
 
-      const niluferCount = PRESET_MOSQUES.filter(m => m.district === 'Nilüfer').length;
-      const iznikCount = PRESET_MOSQUES.filter(m => m.district === 'İznik').length;
-      const mudanyaCount = PRESET_MOSQUES.filter(m => m.district === 'Mudanya').length;
-      const digerCount = PRESET_MOSQUES.filter(m => m.district !== 'Osmangazi' && m.district !== 'Yıldırım' && m.district !== 'Nilüfer' && m.district !== 'İznik' && m.district !== 'Mudanya').length;
+      // Her ilçeyi ayrı ayrı listele (mabet sayısına göre çoktan aza sıralı)
+      const districtGradients = [
+        'linear-gradient(90deg, var(--teal-700), var(--teal-500))',
+        'linear-gradient(90deg, var(--brick), var(--brick-soft))',
+        'linear-gradient(90deg, var(--gold-deep), var(--gold))'
+      ];
+      const districtCounts = {};
+      PRESET_MOSQUES.forEach(m => { districtCounts[m.district] = (districtCounts[m.district] || 0) + 1; });
+      const districts = Object.keys(districtCounts).sort((a, b) => districtCounts[b] - districtCounts[a]);
 
-      const osmangaziFilterBtn = document.getElementById('btn-filter-osmangazi');
-      if(osmangaziFilterBtn) osmangaziFilterBtn.textContent = `Osmangazi (${osmangaziTotal.length})`;
+      const progressContainer = document.getElementById('districtProgressContainer');
+      const filterContainer = document.getElementById('districtFilterButtons');
+      if (progressContainer && filterContainer) {
+        // Filtre butonlarını sadece bir kere oluştur
+        if (!filterContainer.dataset.built) {
+          filterContainer.innerHTML = districts.map(d => `
+            <button onclick="filterDistrict(${JSON.stringify(d)})" id="btn-filter-${districtSlug(d)}" data-filter-btn="${escapeHtml(d)}" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">${escapeHtml(d)}</button>
+          `).join('');
+          filterContainer.dataset.built = '1';
+        }
+        districts.forEach(d => {
+          const btn = document.getElementById(`btn-filter-${districtSlug(d)}`);
+          if (btn) btn.textContent = `${d} (${districtCounts[d]})`;
+        });
 
-      const yildirimFilterBtn = document.getElementById('btn-filter-yildirim');
-      if(yildirimFilterBtn) yildirimFilterBtn.textContent = `Yıldırım (${yildirimTotal.length})`;
-
-      const niluferFilterBtn = document.getElementById('btn-filter-nilufer');
-      if(niluferFilterBtn) niluferFilterBtn.textContent = `Nilüfer (${niluferCount})`;
-
-      const iznikFilterBtn = document.getElementById('btn-filter-iznik');
-      if(iznikFilterBtn) iznikFilterBtn.textContent = `İznik (${iznikCount})`;
-
-      const mudanyaFilterBtn = document.getElementById('btn-filter-mudanya');
-      if(mudanyaFilterBtn) mudanyaFilterBtn.textContent = `Mudanya (${mudanyaCount})`;
-
-      const digerFilterBtn = document.getElementById('btn-filter-diger');
-      if(digerFilterBtn) digerFilterBtn.textContent = `Diğer İlçeler (${digerCount})`;
-
-      document.getElementById('osmangaziProgressTxt').textContent = `${osmangaziVisited} / ${osmangaziTotal.length}`;
-      document.getElementById('yildirimProgressTxt').textContent = `${yildirimVisited} / ${yildirimTotal.length}`;
-      const digerTxt = document.getElementById('digerProgressTxt');
-      if (digerTxt) digerTxt.textContent = `${digerVisited} / ${digerTotal.length}`;
-      document.getElementById('osmangaziProgressBar').style.width = `${osmangaziTotal.length > 0 ? (osmangaziVisited / osmangaziTotal.length) * 100 : 0}%`;
-      document.getElementById('yildirimProgressBar').style.width = `${yildirimTotal.length > 0 ? (yildirimVisited / yildirimTotal.length) * 100 : 0}%`;
-      const digerBar = document.getElementById('digerProgressBar');
-      if (digerBar) digerBar.style.width = `${digerTotal.length > 0 ? (digerVisited / digerTotal.length) * 100 : 0}%`;
+        progressContainer.innerHTML = districts.map((d, i) => {
+          const dTotal = PRESET_MOSQUES.filter(m => m.district === d);
+          const dVisited = dTotal.filter(m => visitedMosqueIds.has(m.id)).length;
+          const pct = dTotal.length > 0 ? (dVisited / dTotal.length) * 100 : 0;
+          const gradient = districtGradients[i % districtGradients.length];
+          return `
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] font-semibold" style="color:var(--ink-soft);">
+                <span>${escapeHtml(d)}</span>
+                <span class="font-bold font-ledger">${dVisited} / ${dTotal.length}</span>
+              </div>
+              <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+                <div class="h-full transition-all duration-500" style="width:${pct}%; background:${gradient};"></div>
+              </div>
+            </div>`;
+        }).join('');
+      }
 
       const totalUniquePresetVisited = PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length;
       const overallPerc = Math.round((totalUniquePresetVisited / PRESET_MOSQUES.length) * 100) || 0;
@@ -2152,8 +2133,6 @@
         } else if (activeFilterDistrict === 'KILINANLAR') {
           const stats = mosqueStats[m.id] || { total: 0 };
           matchesDistrict = stats.total > 0;
-        } else if (activeFilterDistrict === 'DIGER') {
-          matchesDistrict = m.district !== 'Osmangazi' && m.district !== 'Yıldırım' && m.district !== 'Nilüfer' && m.district !== 'İznik' && m.district !== 'Mudanya';
         } else {
           matchesDistrict = m.district === activeFilterDistrict;
         }
@@ -2866,28 +2845,14 @@
     // 14. İLÇE FİLTRELEME
     window.filterDistrict = function(district) {
       activeFilterDistrict = district;
-      const btnIds = ['btn-filter-all','btn-filter-kilinanlar','btn-filter-osmangazi','btn-filter-yildirim','btn-filter-nilufer','btn-filter-iznik','btn-filter-mudanya','btn-filter-diger'];
       const baseStyle = "background:var(--paper-deep); color:var(--ink-soft);";
       const activeStyle = "background:var(--teal-900); color:#fff;";
-      
-      btnIds.forEach(id => {
-        const btn = document.getElementById(id);
-        if(btn) btn.setAttribute('style', baseStyle);
-      });
-      
-      const map = {
-        'HEPSİ': 'btn-filter-all',
-        'KILINANLAR': 'btn-filter-kilinanlar',
-        'Osmangazi': 'btn-filter-osmangazi',
-        'Yıldırım': 'btn-filter-yildirim',
-        'Nilüfer': 'btn-filter-nilufer',
-        'İznik': 'btn-filter-iznik',
-        'Mudanya': 'btn-filter-mudanya',
-        'DIGER': 'btn-filter-diger'
-      };
-      const activeBtn = document.getElementById(map[district] || 'btn-filter-all');
+
+      document.querySelectorAll('[data-filter-btn]').forEach(btn => btn.setAttribute('style', baseStyle));
+
+      const activeBtn = document.querySelector(`[data-filter-btn="${CSS.escape(district)}"]`) || document.getElementById('btn-filter-all');
       if (activeBtn) activeBtn.setAttribute('style', activeStyle);
-      
+
       updateMosquesListUI();
     };
 
