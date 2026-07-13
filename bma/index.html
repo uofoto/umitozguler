@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -287,6 +283,40 @@
               <div class="stat-chip">
                 <p class="text-[8.5px] uppercase tracking-widest font-semibold" style="color:var(--gold-soft);">Seri</p>
                 <p id="streakCount" class="font-bold text-[11px] mt-0.5 font-ledger">🔥 0 gün</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- YENİLİKLER (Son Güncellemeler Bildirimi) -->
+        <div id="whatsNewBanner" class="hidden rounded-2xl p-4 space-y-2.5 relative overflow-hidden" style="background:rgba(21,90,76,0.07); border:1px solid rgba(21,90,76,0.22);">
+          <div class="flex items-start justify-between gap-2">
+            <h3 class="font-bold text-[11px] flex items-center gap-2" style="color:var(--teal-900);">
+              <span class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--teal-900); color:#fff;"><i class="fa-solid fa-bolt text-[10px]"></i></span>
+              <span class="uppercase tracking-wider">Yenilikler</span>
+            </h3>
+            <button onclick="dismissWhatsNewBanner()" class="icon-btn flex-shrink-0" style="color:var(--ink-faint); width:24px; height:24px;" title="Kapat"><i class="fa-solid fa-xmark text-[11px]"></i></button>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">🗺️</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Manevi Harita</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">İhya ettiğin ve etmediğin camileri artık gerçek bir harita üzerinde görebilirsin.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">❤️</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Favori Camiler</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Sevdiğin camileri kalp simgesiyle favorilere ekle, ana sayfada ayrı bir listede gör.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">⭐</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Cami Puanlama</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Ziyaret ettiğin camilere 5 yıldıza kadar kendi puanını verebilirsin.</p>
               </div>
             </div>
           </div>
@@ -1268,6 +1298,22 @@
       localStorage.setItem('manevi-atlas-mosque-info-hint-dismissed', '1');
       const banner = document.getElementById('mosqueInfoHintBanner');
       if (banner) { banner.classList.add('hidden'); banner.classList.remove('flex'); }
+    };
+
+    // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI (yeni bir güncelleme yayınlandığında sürüm numarasını artırın)
+    const WHATS_NEW_VERSION = 'v3-harita-favori-puanlama';
+    function initWhatsNewBanner() {
+      const banner = document.getElementById('whatsNewBanner');
+      if (!banner) return;
+      const dismissedVersion = localStorage.getItem('manevi-atlas-whatsnew-dismissed');
+      if (dismissedVersion !== WHATS_NEW_VERSION) {
+        banner.classList.remove('hidden');
+      }
+    }
+    window.dismissWhatsNewBanner = function() {
+      localStorage.setItem('manevi-atlas-whatsnew-dismissed', WHATS_NEW_VERSION);
+      const banner = document.getElementById('whatsNewBanner');
+      if (banner) banner.classList.add('hidden');
     };
 
     // Envanterde ayrıntılı kaydı bulunmayan mabetler için dürüst, genel bir tanıtım metni üretir
@@ -2266,6 +2312,7 @@
       loadFavorites();
       loadRatings();
       loadGeocodeCache();
+      initWhatsNewBanner();
       initMosqueInfoHintBanner();
       await loadVisits();
       loadProfileData(); 
