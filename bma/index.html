@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -238,6 +242,12 @@
 
   <!-- KAYDIRILABİLİR ANA ALAN -->
   <main id="swipeContainer" class="flex-grow overflow-hidden w-full max-w-md mx-auto relative">
+    <div id="pullToRefreshIndicator" class="absolute left-0 right-0 top-0 z-20 flex items-center justify-center pointer-events-none" style="height:0; opacity:0; transition:height .25s ease, opacity .2s ease;">
+      <div class="rounded-full flex items-center justify-center gap-2 px-3.5 py-1.5" style="background:var(--paper-card); border:1px solid var(--line); box-shadow:0 4px 14px -6px var(--shadow-ambient);">
+        <i id="pullToRefreshIcon" class="fa-solid fa-arrow-down text-[11px] transition-transform" style="color:var(--teal-700);"></i>
+        <span id="pullToRefreshLabel" class="text-[10px] font-bold" style="color:var(--ink-soft);">Yenilemek için çek</span>
+      </div>
+    </div>
     <div id="tabViewport" class="tab-viewport h-full">
 
       <!-- PANEL 1: ANA SAYFA -->
@@ -3581,6 +3591,114 @@
       if (diff > threshold && currentActiveTab < 4) switchTab(currentActiveTab + 1);
       else if (diff < -threshold && currentActiveTab > 0) switchTab(currentActiveTab - 1);
     }
+
+    // 13b. AŞAĞI ÇEKEREK YENİLEME (PULL TO REFRESH)
+    let ptrStartY = 0;
+    let ptrTracking = false;
+    let ptrPulling = false;
+    let ptrDistance = 0;
+    let ptrRefreshing = false;
+    const PTR_THRESHOLD = 68;
+    const PTR_MAX = 110;
+
+    function ptrGetActivePanel() {
+      const panels = document.querySelectorAll('.tab-panel');
+      return panels[currentActiveTab] || null;
+    }
+
+    function ptrSetIndicator(distance, state) {
+      const wrap = document.getElementById('pullToRefreshIndicator');
+      const icon = document.getElementById('pullToRefreshIcon');
+      const label = document.getElementById('pullToRefreshLabel');
+      if (!wrap || !icon || !label) return;
+      const height = Math.max(0, Math.min(distance, PTR_MAX));
+      wrap.style.height = `${height}px`;
+      wrap.style.opacity = height > 4 ? '1' : '0';
+
+      if (state === 'refreshing') {
+        icon.className = 'fa-solid fa-spinner animate-spin text-[11px]';
+        icon.style.transform = 'none';
+        label.textContent = 'Yenileniyor...';
+      } else if (distance >= PTR_THRESHOLD) {
+        icon.className = 'fa-solid fa-arrow-down text-[11px] transition-transform';
+        icon.style.transform = 'rotate(180deg)';
+        label.textContent = 'Bırakınca yenilenir';
+      } else {
+        icon.className = 'fa-solid fa-arrow-down text-[11px] transition-transform';
+        icon.style.transform = 'none';
+        label.textContent = 'Yenilemek için çek';
+      }
+    }
+
+    function ptrReset(animated) {
+      const wrap = document.getElementById('pullToRefreshIndicator');
+      if (wrap) {
+        wrap.style.transition = animated ? 'height .25s ease, opacity .2s ease' : 'none';
+        wrap.style.height = '0';
+        wrap.style.opacity = '0';
+      }
+      ptrDistance = 0;
+      ptrPulling = false;
+      ptrTracking = false;
+    }
+
+    async function refreshAppData() {
+      if (ptrRefreshing) return;
+      ptrRefreshing = true;
+      ptrSetIndicator(PTR_MAX, 'refreshing');
+      if (window.hapticsEnabled && navigator.vibrate) navigator.vibrate(8);
+      const minDisplay = new Promise(r => setTimeout(r, 550));
+      try {
+        loadCustomAddedMosques();
+        applyMosqueOverrides();
+        loadMosqueInfoOverrides();
+        loadFavorites();
+        loadRatings();
+        await loadVisits();
+        loadProfileData();
+        displayDailyVerse();
+        triggerAllUIUpdates();
+        await initPrayerCountdown();
+        showToast('Kayıtlar güncellendi.', 'success');
+      } catch (e) {
+        showToast('Yenileme sırasında bir sorun oluştu.', 'error');
+      }
+      await minDisplay;
+      ptrRefreshing = false;
+      ptrReset(true);
+    }
+
+    swipeContainer.addEventListener('touchstart', e => {
+      if (ptrRefreshing) return;
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      const panel = ptrGetActivePanel();
+      if (!panel || panel.scrollTop > 0) { ptrTracking = false; return; }
+      ptrStartY = e.touches[0].screenY;
+      ptrTracking = true;
+      ptrPulling = false;
+    }, { passive: true });
+
+    swipeContainer.addEventListener('touchmove', e => {
+      if (!ptrTracking || ptrRefreshing) return;
+      const panel = ptrGetActivePanel();
+      if (!panel || panel.scrollTop > 0) { ptrReset(false); return; }
+      const currentY = e.touches[0].screenY;
+      const deltaY = currentY - ptrStartY;
+      if (deltaY <= 0) { ptrReset(false); return; }
+      ptrPulling = true;
+      ptrDistance = Math.min(deltaY * 0.5, PTR_MAX);
+      ptrSetIndicator(ptrDistance, 'pulling');
+    }, { passive: true });
+
+    swipeContainer.addEventListener('touchend', () => {
+      if (!ptrTracking) return;
+      if (ptrPulling && ptrDistance >= PTR_THRESHOLD) {
+        refreshAppData();
+      } else {
+        ptrReset(true);
+      }
+      ptrTracking = false;
+    }, { passive: true });
 
     // 14. İLÇE FİLTRELEME
     window.filterDistrict = function(district) {
