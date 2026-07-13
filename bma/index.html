@@ -377,6 +377,24 @@
           </div>
         </div>
 
+        <div class="paper-card rounded-2xl p-4 space-y-2.5 relative overflow-hidden">
+          <div class="absolute -right-5 -top-6 opacity-[0.05] pointer-events-none" style="color:var(--brick);">
+            <i class="fa-solid fa-heart text-[5.5rem]"></i>
+          </div>
+          <div class="flex items-center justify-between relative z-10">
+            <h3 class="font-bold text-[11px] flex items-center space-x-2" style="color:var(--ink);">
+              <i class="fa-solid fa-heart" style="color:var(--brick);"></i>
+              <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Favori Camilerim</span>
+            </h3>
+            <button onclick="switchTab(1); filterDistrict('FAVORILER');" class="text-[9.5px] font-bold flex items-center gap-1" style="color:var(--brick);">
+              <span>Tümünü Gör</span><i class="fa-solid fa-chevron-right text-[8px]"></i>
+            </button>
+          </div>
+          <div id="favoriteMosquesContainer" class="space-y-2 relative z-10">
+            <p class="text-xs py-2 text-center" style="color:var(--ink-faint);">Henüz favori camin yok. Cami Listesi'nde kalp simgesine dokunarak ekleyebilirsin.</p>
+          </div>
+        </div>
+
         <div class="paper-card rounded-2xl p-4 space-y-3 relative overflow-hidden pop-in" style="animation-delay:0.12s;">
           <div class="absolute -right-5 -top-6 opacity-[0.05] pointer-events-none" style="color:var(--teal-900);">
             <i class="fa-solid fa-mosque text-[5.5rem]"></i>
@@ -423,12 +441,13 @@
           <div class="grid grid-cols-3 gap-1.5">
             <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi</button>
             <button onclick="filterDistrict('KILINANLAR')" id="btn-filter-kilinanlar" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Kılınanlar</button>
+            <button onclick="filterDistrict('FAVORILER')" id="btn-filter-favoriler" class="text-[10px] font-bold py-2 rounded-lg transition-all flex items-center justify-center gap-1" style="background:var(--paper-deep); color:var(--ink-soft);"><i class="fa-solid fa-heart text-[9px]"></i><span>Favoriler</span></button>
             <button onclick="filterDistrict('Osmangazi')" id="btn-filter-osmangazi" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Osmangazi</button>
             <button onclick="filterDistrict('Yıldırım')" id="btn-filter-yildirim" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Yıldırım</button>
             <button onclick="filterDistrict('Nilüfer')" id="btn-filter-nilufer" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Nilüfer</button>
             <button onclick="filterDistrict('İznik')" id="btn-filter-iznik" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">İznik</button>
             <button onclick="filterDistrict('Mudanya')" id="btn-filter-mudanya" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Mudanya</button>
-            <button onclick="filterDistrict('DIGER')" id="btn-filter-diger" class="text-[10px] font-bold py-2 rounded-lg transition-all col-span-2" style="background:var(--paper-deep); color:var(--ink-soft);">Diğer İlçeler</button>
+            <button onclick="filterDistrict('DIGER')" id="btn-filter-diger" class="text-[10px] font-bold py-2 rounded-lg transition-all" style="background:var(--paper-deep); color:var(--ink-soft);">Diğer İlçeler</button>
           </div>
         </div>
         <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
@@ -1765,6 +1784,54 @@
 
     try { if (!window.indexedDB) useIndexedDB = false; } catch (e) { useIndexedDB = false; }
 
+    // ---- FAVORİLER & PUANLAMA ----
+    const FAVORITES_KEY = 'manevi-atlas-favorites';
+    const RATINGS_KEY = 'manevi-atlas-ratings';
+    let favoriteMosqueIds = new Set();
+    let mosqueRatings = {};
+
+    function loadFavorites() {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        favoriteMosqueIds = new Set(raw ? JSON.parse(raw) : []);
+      } catch (e) { favoriteMosqueIds = new Set(); }
+    }
+    function saveFavorites() {
+      try { localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favoriteMosqueIds))); } catch (e) {}
+    }
+    function loadRatings() {
+      try {
+        const raw = localStorage.getItem(RATINGS_KEY);
+        mosqueRatings = raw ? JSON.parse(raw) : {};
+      } catch (e) { mosqueRatings = {}; }
+    }
+    function saveRatings() {
+      try { localStorage.setItem(RATINGS_KEY, JSON.stringify(mosqueRatings)); } catch (e) {}
+    }
+
+    window.toggleFavoriteMosque = function(id) {
+      if (favoriteMosqueIds.has(id)) {
+        favoriteMosqueIds.delete(id);
+        showToast('Favorilerden kaldırıldı.', 'success');
+      } else {
+        favoriteMosqueIds.add(id);
+        showToast('Favorilere eklendi.', 'success');
+      }
+      saveFavorites();
+      updateMosquesListUI();
+      updateFavoriteMosquesUI();
+    };
+
+    window.setMosqueRating = function(id, rating, evt) {
+      if (evt) evt.stopPropagation();
+      const current = mosqueRatings[id] || 0;
+      // Aynı yıldıza tekrar dokunulursa puanı sıfırla (kaldır)
+      mosqueRatings[id] = (current === rating) ? 0 : rating;
+      saveRatings();
+      updateMosquesListUI();
+      updateFavoriteMosquesUI();
+    };
+
     function openDB() {
       return new Promise((resolve, reject) => {
         if (dbInstance) { resolve(dbInstance); return; }
@@ -1954,6 +2021,8 @@
       loadHapticsUI();
       loadCustomAddedMosques();
       loadMosqueInfoOverrides();
+      loadFavorites();
+      loadRatings();
       initMosqueInfoHintBanner();
       await loadVisits();
       loadProfileData(); 
@@ -1977,6 +2046,7 @@
       updateHistoryFeedUI();
       updateDeletedMosquesCount();
       updateRecentlyAddedMosquesUI();
+      updateFavoriteMosquesUI();
       updateStatsUI();
     }
 
@@ -2249,6 +2319,52 @@
       `;
     }
 
+    // FAVORİ CAMİLERİM (ana ekran)
+    function updateFavoriteMosquesUI() {
+      const container = document.getElementById('favoriteMosquesContainer');
+      if (!container) return;
+
+      const favorites = PRESET_MOSQUES.filter(m => favoriteMosqueIds.has(m.id));
+
+      if (favorites.length === 0) {
+        container.innerHTML = `<p class="text-xs py-2 text-center" style="color:var(--ink-faint);">Henüz favori camin yok. Cami Listesi'nde kalp simgesine dokunarak ekleyebilirsin.</p>`;
+        return;
+      }
+
+      const districtBadgeClass = (d) => d === 'Osmangazi' ? 'badge-osmangazi' : (d === 'Yıldırım' ? 'badge-yildirim' : '');
+      const districtBadgeStyle = (d) => (d === 'Osmangazi' || d === 'Yıldırım') ? '' : 'color:var(--gold-deep); background:rgba(195,154,69,0.14);';
+
+      container.innerHTML = favorites.map((m, idx) => {
+        const rating = mosqueRatings[m.id] || 0;
+        const starsHTML = rating > 0
+          ? `<span class="flex items-center gap-0.5">${[1,2,3,4,5].map(n => `<i class="fa-${n <= rating ? 'solid' : 'regular'} fa-star text-[8px]" style="color:${n <= rating ? 'var(--gold)' : 'var(--ink-faint)'};"></i>`).join('')}</span>`
+          : `<span class="text-[9.5px]" style="color:var(--ink-faint);">Henüz puan verilmedi</span>`;
+
+        return `
+          <div class="flex items-center gap-2.5 pressable rounded-xl px-2 py-1.5 -mx-2 favorite-mosque-row" data-mosque-id="${m.id}" style="cursor:pointer;">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(168,86,49,0.10); color:var(--brick);">
+              <i class="fa-solid fa-heart text-[11px]"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <h4 class="font-bold text-[11px] truncate" style="color:var(--ink);">${escapeHtml(m.name)}</h4>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <span class="sicil-tag ${districtBadgeClass(m.district)}" style="${districtBadgeStyle(m.district)}">${escapeHtml(m.district)}</span>
+                ${starsHTML}
+              </div>
+            </div>
+            <button onclick="event.stopPropagation(); toggleFavoriteMosque('${m.id}')" class="icon-btn flex-shrink-0" style="background:rgba(168,86,49,0.10); color:var(--brick); width:26px; height:26px;" title="Favorilerden kaldır">
+              <i class="fa-solid fa-heart-crack text-[10px]"></i>
+            </button>
+          </div>
+          ${idx < favorites.length - 1 ? '<div class="gold-line" style="background:linear-gradient(90deg, transparent, var(--line), transparent);"></div>' : ''}
+        `;
+      }).join('');
+
+      container.querySelectorAll('.favorite-mosque-row').forEach(row => {
+        row.addEventListener('click', () => openMosqueInfoModal(row.getAttribute('data-mosque-id')));
+      });
+    }
+
     // SON EKLENEN CAMİLER (ana ekran)
     function updateRecentlyAddedMosquesUI() {
       const container = document.getElementById('recentlyAddedContainer');
@@ -2447,6 +2563,8 @@
         } else if (activeFilterDistrict === 'KILINANLAR') {
           const stats = mosqueStats[m.id] || { total: 0 };
           matchesDistrict = stats.total > 0;
+        } else if (activeFilterDistrict === 'FAVORILER') {
+          matchesDistrict = favoriteMosqueIds.has(m.id);
         } else if (activeFilterDistrict === 'DIGER') {
           matchesDistrict = m.district !== 'Osmangazi' && m.district !== 'Yıldırım' && m.district !== 'Nilüfer' && m.district !== 'İznik' && m.district !== 'Mudanya';
         } else {
@@ -2457,11 +2575,12 @@
       });
 
       if (filtered.length === 0) {
+        const isFavView = activeFilterDistrict === 'FAVORILER';
         container.innerHTML = `
           <div class="paper-card rounded-2xl empty-state">
-            <div class="empty-icon"><i class="fa-solid fa-mosque"></i></div>
-            <p class="text-xs font-semibold" style="color:var(--ink-soft);">Aradığınız mabet bulunamadı</p>
-            <p class="text-[10px]" style="color:var(--ink-faint);">Farklı bir anahtar kelime veya filtre deneyin.</p>
+            <div class="empty-icon"><i class="fa-solid ${isFavView ? 'fa-heart' : 'fa-mosque'}"></i></div>
+            <p class="text-xs font-semibold" style="color:var(--ink-soft);">${isFavView ? 'Henüz favori camin yok' : 'Aradığınız mabet bulunamadı'}</p>
+            <p class="text-[10px]" style="color:var(--ink-faint);">${isFavView ? 'Bir caminin kalp simgesine dokunarak favorilerine ekleyebilirsin.' : 'Farklı bir anahtar kelime veya filtre deneyin.'}</p>
           </div>`;
         return;
       }
@@ -2490,6 +2609,13 @@
         // Google Haritalar URL kurgusu
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
 
+        const isFavorite = favoriteMosqueIds.has(m.id);
+        const rating = mosqueRatings[m.id] || 0;
+        const starsHTML = [1,2,3,4,5].map(n => `
+          <button onclick="setMosqueRating('${m.id}', ${n}, event)" class="icon-btn" style="width:22px; height:22px;" title="${n} yıldız ver">
+            <i class="fa-${n <= rating ? 'solid' : 'regular'} fa-star text-[12px]" style="color:${n <= rating ? 'var(--gold)' : 'var(--ink-faint)'};"></i>
+          </button>`).join('');
+
         return `
           <div class="paper-card pressable rounded-2xl p-3.5 relative overflow-hidden transition-all fade-in-up" onclick="openMosqueInfoModal('${m.id}')" title="Cami hakkında bilgi al">
             <div class="district-rail absolute left-0 top-0 bottom-0 ${railClass}" style="${railStyle}"></div>
@@ -2499,6 +2625,7 @@
                   <span class="text-[9px] font-bold ${badgeClass} px-2 py-0.5 rounded-full uppercase" style="${badgeStyle}">${m.district}</span>
                   <span class="sicil-tag">${getSicilNo(m)}</span>
                   ${customTag}
+                  ${isFavorite ? `<span class="text-[8.5px] font-bold px-1.5 py-0.5 rounded-full uppercase flex items-center gap-0.5" style="background:rgba(168,86,49,0.14); color:var(--brick);"><i class="fa-solid fa-heart text-[7px]"></i>Favori</span>` : ''}
                 </div>
                 <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${escapeHtml(m.name)}</h3>
                 <p class="text-[10px] truncate max-w-[190px] mt-0.5 flex items-center gap-1" style="color:var(--ink-faint);">
@@ -2510,6 +2637,9 @@
               </div>
               <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
                 <div class="flex items-center gap-1">
+                  <button onclick="event.stopPropagation(); toggleFavoriteMosque('${m.id}')" class="icon-btn" style="background:${isFavorite ? 'var(--brick)' : 'rgba(168,86,49,0.08)'}; color:${isFavorite ? '#fff' : 'var(--brick)'}; width:26px; height:26px;" title="${isFavorite ? 'Favorilerden kaldır' : 'Favorilere ekle'}">
+                    <i class="fa-solid fa-heart text-[10px]"></i>
+                  </button>
                   <button onclick="event.stopPropagation(); openMosqueInfoModal('${m.id}')" class="icon-btn" style="background:rgba(195,154,69,0.12); color:var(--gold-deep); width:26px; height:26px;" title="Cami hakkında bilgi">
                     <i class="fa-solid fa-circle-info text-[10px]"></i>
                   </button>
@@ -2524,6 +2654,10 @@
                   ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-0.5 whitespace-nowrap" style="background:rgba(21,90,76,0.12); color:var(--teal-900);"><i class="fa-solid fa-check"></i> <span>İhya Edildi</span></span>`
                   : `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap" style="background:var(--paper-deep); color:var(--ink-faint);">Kılınmadı</span>`}
               </div>
+            </div>
+            <div class="pl-1.5 pt-2 flex items-center justify-between" onclick="event.stopPropagation()">
+              <div class="flex items-center gap-0.5">${starsHTML}</div>
+              ${rating > 0 ? `<span class="text-[9px] font-bold font-ledger" style="color:var(--gold-deep);">${rating}/5</span>` : `<span class="text-[9px]" style="color:var(--ink-faint);">Puan ver</span>`}
             </div>
             <div class="pl-1.5 pt-2.5 flex items-center justify-between mt-2.5" style="border-top:1px solid var(--line);">
               <div class="flex items-center space-x-1">${timeBadgesHTML}</div>
@@ -3161,18 +3295,21 @@
     // 14. İLÇE FİLTRELEME
     window.filterDistrict = function(district) {
       activeFilterDistrict = district;
-      const btnIds = ['btn-filter-all','btn-filter-kilinanlar','btn-filter-osmangazi','btn-filter-yildirim','btn-filter-nilufer','btn-filter-iznik','btn-filter-mudanya','btn-filter-diger'];
+      const btnIds = ['btn-filter-all','btn-filter-kilinanlar','btn-filter-favoriler','btn-filter-osmangazi','btn-filter-yildirim','btn-filter-nilufer','btn-filter-iznik','btn-filter-mudanya','btn-filter-diger'];
       const baseStyle = "background:var(--paper-deep); color:var(--ink-soft);";
       const activeStyle = "background:var(--teal-900); color:#fff;";
+      const activeStyleFavoriler = "background:var(--brick); color:#fff;";
+      const favBtnExtra = " display:flex; align-items:center; justify-content:center; gap:.25rem;";
       
       btnIds.forEach(id => {
         const btn = document.getElementById(id);
-        if(btn) btn.setAttribute('style', baseStyle);
+        if(btn) btn.setAttribute('style', baseStyle + (id === 'btn-filter-favoriler' ? favBtnExtra : ''));
       });
       
       const map = {
         'HEPSİ': 'btn-filter-all',
         'KILINANLAR': 'btn-filter-kilinanlar',
+        'FAVORILER': 'btn-filter-favoriler',
         'Osmangazi': 'btn-filter-osmangazi',
         'Yıldırım': 'btn-filter-yildirim',
         'Nilüfer': 'btn-filter-nilufer',
@@ -3181,7 +3318,10 @@
         'DIGER': 'btn-filter-diger'
       };
       const activeBtn = document.getElementById(map[district] || 'btn-filter-all');
-      if (activeBtn) activeBtn.setAttribute('style', activeStyle);
+      if (activeBtn) {
+        const style = (district === 'FAVORILER') ? activeStyleFavoriler : activeStyle;
+        activeBtn.setAttribute('style', style + (district === 'FAVORILER' ? favBtnExtra : ''));
+      }
       
       updateMosquesListUI();
     };
