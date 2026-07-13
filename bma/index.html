@@ -2062,6 +2062,22 @@
         }
       });
 
+      // En çok ziyaret edilen cami
+      const visitTallyByMosque = {};
+      const visitNameByMosque = {};
+      visitsData.forEach(v => {
+        if (!v.mosqueId) return;
+        visitTallyByMosque[v.mosqueId] = (visitTallyByMosque[v.mosqueId] || 0) + 1;
+        if (v.mosqueName) visitNameByMosque[v.mosqueId] = v.mosqueName;
+      });
+      let topVisitedMosqueId = null, topVisitedCount = 0;
+      Object.keys(visitTallyByMosque).forEach(id => {
+        if (visitTallyByMosque[id] > topVisitedCount) { topVisitedCount = visitTallyByMosque[id]; topVisitedMosqueId = id; }
+      });
+      const topVisitedMosqueName = topVisitedMosqueId
+        ? (visitNameByMosque[topVisitedMosqueId] || (PRESET_MOSQUES.find(m => m.id === topVisitedMosqueId) || {}).name || '—')
+        : '—';
+
       // Fotoğraf istatistikleri
       let totalPhotos = 0;
       const photosByMosque = {};
@@ -2167,6 +2183,7 @@
           <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Bu Ay Ziyaret Edilen</span><strong style="color:var(--ink);">${thisMonthCount} cami</strong></p>
           <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Bu Yıl Ziyaret Edilen</span><strong style="color:var(--ink);">${thisYearCount} cami</strong></p>
           <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Yoğun Ziyaret Edilen Ay</span><strong style="color:var(--ink);">${busiestMonthLabel}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">En Çok Ziyaret Edilen Cami</span><strong style="color:var(--ink);">${topVisitedMosqueId ? `${escapeHtml(topVisitedMosqueName)} (${topVisitedCount} ziyaret)` : '—'}</strong></p>
         </div>
 
         <!-- FOTOĞRAF İSTATİSTİKLERİ -->
