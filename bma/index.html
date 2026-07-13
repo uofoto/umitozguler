@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -580,7 +577,21 @@
           </h2>
           <span id="historyTotalCount" class="text-[10px] font-bold px-2 py-0.5 rounded-full font-ledger" style="background:rgba(21,90,76,0.1); color:var(--teal-900);">0 Kayıt</span>
         </div>
+
+        <!-- DEFTER / İSTATİSTİK SEKME SEÇİCİ -->
+        <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl" style="background:var(--paper-deep);">
+          <button id="defterViewBtn" onclick="switchDefterView('defter')" class="segment-tab active text-[11px] font-bold py-2 rounded-xl">
+            <i class="fa-solid fa-scroll mr-1"></i> Defter
+          </button>
+          <button id="statsViewBtn" onclick="switchDefterView('stats')" class="segment-tab text-[11px] font-bold py-2 rounded-xl" style="color:var(--ink-soft);">
+            <i class="fa-solid fa-chart-pie mr-1"></i> İstatistik
+          </button>
+        </div>
+
         <div id="historyFeed" class="space-y-3.5"></div>
+
+        <!-- İSTATİSTİK PANELİ -->
+        <div id="statsPanel" class="hidden space-y-4"></div>
       </div>
 
       <!-- PANEL 5: PROFİL -->
@@ -1966,6 +1977,259 @@
       updateHistoryFeedUI();
       updateDeletedMosquesCount();
       updateRecentlyAddedMosquesUI();
+      updateStatsUI();
+    }
+
+    // DEFTER / İSTATİSTİK GÖRÜNÜM ANAHTARI
+    window.switchDefterView = function(view) {
+      const feed = document.getElementById('historyFeed');
+      const stats = document.getElementById('statsPanel');
+      const defterBtn = document.getElementById('defterViewBtn');
+      const statsBtn = document.getElementById('statsViewBtn');
+      if (view === 'stats') {
+        feed.classList.add('hidden');
+        stats.classList.remove('hidden');
+        statsBtn.classList.add('active');
+        statsBtn.style.color = '';
+        defterBtn.classList.remove('active');
+        defterBtn.style.color = 'var(--ink-soft)';
+        updateStatsUI();
+      } else {
+        feed.classList.remove('hidden');
+        stats.classList.add('hidden');
+        defterBtn.classList.add('active');
+        defterBtn.style.color = '';
+        statsBtn.classList.remove('active');
+        statsBtn.style.color = 'var(--ink-soft)';
+      }
+    };
+
+    // 4.5 İSTATİSTİK BÖLÜMÜ
+    function updateStatsUI() {
+      const container = document.getElementById('statsPanel');
+      if (!container) return;
+
+      const totalMosques = PRESET_MOSQUES.length;
+      const visitedMosqueIds = new Set(visitsData.map(v => v.mosqueId));
+      const visitedCount = PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length;
+      const remaining = totalMosques - visitedCount;
+      const completionPerc = totalMosques ? Math.round((visitedCount / totalMosques) * 100) : 0;
+
+      if (visitsData.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state paper-card rounded-3xl">
+            <div class="empty-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <p class="text-xs font-bold" style="color:var(--ink);">Henüz istatistik yok</p>
+            <p class="text-[10.5px]" style="color:var(--ink-faint);">İlk ziyaretini deftere işlediğinde istatistiklerin burada belirecek.</p>
+          </div>`;
+        return;
+      }
+
+      // Tarih sıralı kayıtlar (eskiden yeniye)
+      const sortedByDate = [...visitsData].filter(v => v.date).sort((a, b) => new Date(a.date) - new Date(b.date));
+      const firstVisitDate = sortedByDate.length ? sortedByDate[0].date : null;
+      const lastVisitDate = sortedByDate.length ? sortedByDate[sortedByDate.length - 1].date : null;
+
+      const now = new Date();
+      const curYear = now.getFullYear();
+      const curMonth = now.getMonth();
+      const thisMonthCount = visitsData.filter(v => {
+        if (!v.date) return false;
+        const d = new Date(v.date);
+        return d.getFullYear() === curYear && d.getMonth() === curMonth;
+      }).length;
+      const thisYearCount = visitsData.filter(v => {
+        if (!v.date) return false;
+        return new Date(v.date).getFullYear() === curYear;
+      }).length;
+
+      // Yoğun ziyaret edilen ay
+      const monthNames = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+      const monthTally = {};
+      visitsData.forEach(v => {
+        if (!v.date) return;
+        const d = new Date(v.date);
+        const key = `${d.getFullYear()}-${d.getMonth()}`;
+        monthTally[key] = (monthTally[key] || 0) + 1;
+      });
+      let busiestMonthLabel = '—';
+      let busiestMonthCount = 0;
+      Object.keys(monthTally).forEach(key => {
+        if (monthTally[key] > busiestMonthCount) {
+          busiestMonthCount = monthTally[key];
+          const [y, m] = key.split('-').map(Number);
+          busiestMonthLabel = `${monthNames[m]} ${y}`;
+        }
+      });
+
+      // Fotoğraf istatistikleri
+      let totalPhotos = 0;
+      const photosByMosque = {};
+      visitsData.forEach(v => {
+        const count = (v.photos && v.photos.length) ? v.photos.length : 0;
+        totalPhotos += count;
+        if (count > 0) photosByMosque[v.mosqueId] = (photosByMosque[v.mosqueId] || 0) + count;
+      });
+      const avgPhotosPerMosque = visitedCount ? (totalPhotos / visitedCount).toFixed(1) : '0.0';
+      let topPhotoMosqueId = null, topPhotoCount = 0;
+      Object.keys(photosByMosque).forEach(id => {
+        if (photosByMosque[id] > topPhotoCount) { topPhotoCount = photosByMosque[id]; topPhotoMosqueId = id; }
+      });
+      const topPhotoMosque = topPhotoMosqueId ? PRESET_MOSQUES.find(m => m.id === topPhotoMosqueId) : null;
+
+      // İlçe dağılımı (ziyaret edilen benzersiz cami sayısı, ilçeye göre)
+      const districtTally = {};
+      PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).forEach(m => {
+        districtTally[m.district] = (districtTally[m.district] || 0) + 1;
+      });
+      const districtEntries = Object.entries(districtTally).sort((a, b) => b[1] - a[1]);
+      const maxDistrictCount = districtEntries.length ? districtEntries[0][1] : 1;
+      const districtColors = ['bar-osmangazi', 'bar-yildirim'];
+
+      // Yolculuk özeti
+      const sortedByCreated = [...visitsData].sort((a, b) => getVisitTimestamp(b) - getVisitTimestamp(a));
+      const lastVisitRecord = sortedByCreated[0];
+
+      // En uzun ara verilen ziyaret (ardışık iki ziyaret arasındaki en büyük gün farkı)
+      let longestGapDays = 0;
+      let longestGapLabel = '—';
+      if (sortedByDate.length > 1) {
+        for (let i = 1; i < sortedByDate.length; i++) {
+          const d1 = new Date(sortedByDate[i - 1].date);
+          const d2 = new Date(sortedByDate[i].date);
+          const diffDays = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+          if (diffDays > longestGapDays) {
+            longestGapDays = diffDays;
+            longestGapLabel = `${diffDays} gün`;
+          }
+        }
+        if (longestGapDays === 0) longestGapLabel = '0 gün';
+      }
+
+      // En çok ardışık ziyaret edilen gün sayısı (en uzun seri — geçmiş dahil)
+      const uniqueDateKeys = [...new Set(visitsData.filter(v => v.date).map(v => v.date))].sort();
+      let longestStreak = uniqueDateKeys.length ? 1 : 0;
+      let curStreak = uniqueDateKeys.length ? 1 : 0;
+      for (let i = 1; i < uniqueDateKeys.length; i++) {
+        const prev = new Date(uniqueDateKeys[i - 1]);
+        const cur = new Date(uniqueDateKeys[i]);
+        const diff = Math.round((cur - prev) / (1000 * 60 * 60 * 24));
+        if (diff === 1) { curStreak++; longestStreak = Math.max(longestStreak, curStreak); }
+        else { curStreak = 1; }
+      }
+
+      const fmtDate = (dstr) => dstr ? new Date(dstr).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+
+      // Başarı rozetleri
+      const badgeThresholds = [
+        { count: 10, icon: '🥉', label: 'İlk 10 Cami' },
+        { count: 25, icon: '🥈', label: '25 Cami' },
+        { count: 50, icon: '🥇', label: '50 Cami' },
+        { count: totalMosques, icon: '👑', label: 'Tüm Camiler Tamamlandı' }
+      ];
+
+      container.innerHTML = `
+        <!-- GENEL İLERLEME -->
+        <div class="paper-card rounded-3xl p-4 space-y-3">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-chart-simple"></i> Genel İlerleme
+          </h4>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="rounded-2xl p-3" style="background:var(--paper-deep);">
+              <p class="text-[9.5px] font-semibold uppercase tracking-wide" style="color:var(--ink-faint);">Toplam Takipçi Cami</p>
+              <p class="text-xl font-black font-ledger mt-0.5" style="color:var(--ink);">${totalMosques}</p>
+            </div>
+            <div class="rounded-2xl p-3" style="background:var(--paper-deep);">
+              <p class="text-[9.5px] font-semibold uppercase tracking-wide" style="color:var(--ink-faint);">Ziyaret Edilen</p>
+              <p class="text-xl font-black font-ledger mt-0.5" style="color:var(--teal-700);">${visitedCount}</p>
+            </div>
+            <div class="rounded-2xl p-3" style="background:var(--paper-deep);">
+              <p class="text-[9.5px] font-semibold uppercase tracking-wide" style="color:var(--ink-faint);">Kalan</p>
+              <p class="text-xl font-black font-ledger mt-0.5" style="color:var(--brick);">${remaining}</p>
+            </div>
+            <div class="rounded-2xl p-3" style="background:var(--paper-deep);">
+              <p class="text-[9.5px] font-semibold uppercase tracking-wide" style="color:var(--ink-faint);">Tamamlanma Oranı</p>
+              <p class="text-xl font-black font-ledger mt-0.5" style="color:var(--gold-deep);">%${completionPerc}</p>
+            </div>
+          </div>
+          <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+            <div class="h-full rounded-full" style="width:${completionPerc}%; background:linear-gradient(90deg, var(--teal-700), var(--teal-500));"></div>
+          </div>
+        </div>
+
+        <!-- ZİYARET İSTATİSTİKLERİ -->
+        <div class="paper-card rounded-3xl p-4 space-y-1.5">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-calendar-days"></i> Ziyaret İstatistikleri
+          </h4>
+          <p class="flex justify-between text-[11px] py-1"><span style="color:var(--ink-soft);">İlk Ziyaret Tarihi</span><strong style="color:var(--ink);">${fmtDate(firstVisitDate)}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Son Ziyaret Tarihi</span><strong style="color:var(--ink);">${fmtDate(lastVisitDate)}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Bu Ay Ziyaret Edilen</span><strong style="color:var(--ink);">${thisMonthCount} cami</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Bu Yıl Ziyaret Edilen</span><strong style="color:var(--ink);">${thisYearCount} cami</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Yoğun Ziyaret Edilen Ay</span><strong style="color:var(--ink);">${busiestMonthLabel}</strong></p>
+        </div>
+
+        <!-- FOTOĞRAF İSTATİSTİKLERİ -->
+        <div class="paper-card rounded-3xl p-4 space-y-1.5">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-camera-retro"></i> Fotoğraf İstatistikleri
+          </h4>
+          <p class="flex justify-between text-[11px] py-1"><span style="color:var(--ink-soft);">Toplam Kaydedilen Fotoğraf</span><strong style="color:var(--ink);">${totalPhotos}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Cami Başına Fotoğraf Ortalaması</span><strong style="color:var(--ink);">${avgPhotosPerMosque}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">En Çok Fotoğraf Çekilen Cami</span><strong style="color:var(--ink);">${topPhotoMosque ? escapeHtml(topPhotoMosque.name) : '—'}</strong></p>
+        </div>
+
+        <!-- İLÇE DAĞILIMI -->
+        <div class="paper-card rounded-3xl p-4 space-y-2.5">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-map-location-dot"></i> İlçe Dağılımı
+          </h4>
+          ${districtEntries.length === 0 ? `<p class="text-[10.5px]" style="color:var(--ink-faint);">Henüz ziyaret edilen bir cami yok.</p>` :
+            districtEntries.map(([district, count], i) => `
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px]">
+                  <span style="color:var(--ink-soft);">${escapeHtml(district)}</span>
+                  <strong class="font-ledger" style="color:var(--ink);">${count}</strong>
+                </div>
+                <div class="w-full h-1.5 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+                  <div class="h-full rounded-full ${districtColors[i % districtColors.length]}" style="width:${Math.round((count / maxDistrictCount) * 100)}%;"></div>
+                </div>
+              </div>
+            `).join('')
+          }
+        </div>
+
+        <!-- YOLCULUK ÖZETİ -->
+        <div class="paper-card rounded-3xl p-4 space-y-1.5">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-route"></i> Yolculuk Özeti
+          </h4>
+          <p class="flex justify-between text-[11px] py-1"><span style="color:var(--ink-soft);">En Son Ziyaret Edilen Cami</span><strong style="color:var(--ink);">${lastVisitRecord ? escapeHtml(lastVisitRecord.mosqueName) : '—'}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">En Uzun Ara Verilen Ziyaret</span><strong style="color:var(--ink);">${longestGapLabel}</strong></p>
+          <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Arka Arkaya En Çok Ziyaret Edilen Gün Sayısı</span><strong style="color:var(--ink);">${longestStreak} gün</strong></p>
+        </div>
+
+        <!-- BAŞARI ROZETLERİ -->
+        <div class="paper-card rounded-3xl p-4 space-y-2.5">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-medal"></i> Başarı Rozetleri
+          </h4>
+          <div class="grid grid-cols-2 gap-2.5">
+            ${badgeThresholds.map(b => {
+              const earned = visitedCount >= b.count;
+              return `
+                <div class="rounded-2xl p-3 flex items-center gap-2.5 ${earned ? '' : 'opacity-40'}" style="background:var(--paper-deep);">
+                  <span class="text-xl">${b.icon}</span>
+                  <div class="min-w-0">
+                    <p class="text-[10.5px] font-bold truncate" style="color:var(--ink);">${b.label}</p>
+                    <p class="text-[9px]" style="color:var(--ink-faint);">${earned ? 'Kazanıldı' : `${visitedCount}/${b.count}`}</p>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
     }
 
     // SON EKLENEN CAMİLER (ana ekran)
@@ -1994,7 +2258,7 @@
         const dateLabel = diffDays <= 0 ? 'Bugün eklendi' : (diffDays === 1 ? 'Dün eklendi' : added.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }));
 
         return `
-          <div class="flex items-center gap-2.5 pressable rounded-xl px-2 py-1.5 -mx-2" onclick="switchTab(1); setTimeout(() => { const inp = document.getElementById('mosqueSearchInput'); if (inp) { inp.value = ${JSON.stringify(m.name)}; inp.dispatchEvent(new Event('input')); } }, 380);" style="cursor:pointer;">
+          <div class="flex items-center gap-2.5 pressable rounded-xl px-2 py-1.5 -mx-2 recent-mosque-row" data-mosque-name="${escapeHtml(m.name)}" style="cursor:pointer;">
             <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(21,90,76,0.10); color:var(--teal-700);">
               <i class="fa-solid fa-mosque text-[11px]"></i>
             </div>
@@ -2013,6 +2277,20 @@
           ${idx < recent.length - 1 ? '<div class="gold-line" style="background:linear-gradient(90deg, transparent, var(--line), transparent);"></div>' : ''}
         `;
       }).join('');
+
+      container.querySelectorAll('.recent-mosque-row').forEach(row => {
+        row.addEventListener('click', () => {
+          const mosqueName = row.getAttribute('data-mosque-name');
+          switchTab(1);
+          setTimeout(() => {
+            const inp = document.getElementById('mosqueSearchInput');
+            if (inp) {
+              inp.value = mosqueName;
+              inp.dispatchEvent(new Event('input'));
+            }
+          }, 380);
+        });
+      });
     }
 
     // 4. DASHBOARD + SEYAHAT ÖNERİSİ
