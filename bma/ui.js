@@ -777,16 +777,20 @@
  // 'delete' | 'resetAll'
 
     function openConfirmModal(title, message, actionLabel) {
+      window.haptic([8, 30, 8]);
       document.getElementById('confirmTitle').textContent = title;
       document.getElementById('confirmMessage').textContent = message;
       const okBtn = document.getElementById('confirmOkBtn');
       if (actionLabel) okBtn.textContent = actionLabel;
       const modal = document.getElementById('customConfirmModal');
       modal.classList.remove('hidden');
-      setTimeout(() => {
+      modal.style.opacity = '0';
+      requestAnimationFrame(() => {
+        modal.style.transition = 'opacity .18s ease';
+        modal.style.opacity = '1';
         modal.firstElementChild.classList.remove('scale-95');
         modal.firstElementChild.classList.add('scale-100');
-      }, 10);
+      });
     }
     window.triggerDelete = function(docId) {
       pendingDeleteId = docId;
@@ -799,6 +803,7 @@
     };
     document.getElementById('confirmCancelBtn').addEventListener('click', () => closeConfirmModal());
     document.getElementById('confirmOkBtn').addEventListener('click', async () => {
+      window.haptic([10, 40, 10]);
       if (pendingAction === 'delete' && pendingDeleteId) {
         await executeDeleteLog(pendingDeleteId);
       } else if (pendingAction === 'resetAll') {
@@ -814,8 +819,9 @@
       const modal = document.getElementById('customConfirmModal');
       modal.firstElementChild.classList.remove('scale-100');
       modal.firstElementChild.classList.add('scale-95');
+      modal.style.opacity = '0';
       document.getElementById('confirmOkBtn').textContent = "Sil";
-      setTimeout(() => { modal.classList.add('hidden'); pendingDeleteId = null; pendingMosqueDeleteId = null; pendingInfoResetId = null; pendingAction = null; }, 150);
+      setTimeout(() => { modal.classList.add('hidden'); modal.style.opacity = ''; pendingDeleteId = null; pendingMosqueDeleteId = null; pendingInfoResetId = null; pendingAction = null; }, 150);
     }
     async function executeResetAll() {
       const backup = visitsData;
@@ -918,7 +924,7 @@
         const ok = await persistNewVisit(updatedRecord);
 
         if (ok) {
-          if (window.hapticsEnabled && navigator.vibrate) navigator.vibrate(12);
+          window.haptic(12);
           showToast("Kaydınız güncellendi.", "success");
           cancelEditVisit();
           triggerAllUIUpdates();
@@ -943,7 +949,7 @@
       const ok = await persistNewVisit(newRecord);
 
       if (ok) {
-        if (window.hapticsEnabled && navigator.vibrate) navigator.vibrate(12);
+        window.haptic([10, 50, 14]);
         showToast("İbadet kaydınız deftere işlendi. Allah kabul etsin!", "success");
         document.getElementById('visitForm').reset();
         window.uploadedPhotos = { 1: null, 2: null };
@@ -1072,6 +1078,7 @@
     }
     // 10. NAMAZ SEÇİMİ
     window.selectPrayer = function(prayer) {
+      window.haptic(6);
       document.querySelectorAll('.prayer-btn').forEach(btn => btn.classList.remove('active'));
       const selectedBtn = document.getElementById(`btn-p-${prayer}`);
       if (selectedBtn) selectedBtn.classList.add('active');
@@ -1084,7 +1091,8 @@
     }
     // 12. MOBİL SEKME GEÇİŞİ 
     window.switchTab = function(index) {
-      if (index !== currentActiveTab && window.hapticsEnabled && navigator.vibrate) navigator.vibrate(6);
+      const isChanging = index !== currentActiveTab;
+      if (isChanging) window.haptic(6);
       currentActiveTab = index;
       document.getElementById('tabViewport').style.transform = `translateX(-${index * 20}%)`;
       document.getElementById('navIndicator').style.left = `${index * 20}%`;
@@ -1097,7 +1105,17 @@
       if (index === 1) updateMosquesListUI();
 
       const panels = document.querySelectorAll('.tab-panel');
-      if (panels[index]) panels[index].scrollTo({ top: 0, behavior: 'instant' });
+      const activePanel = panels[index];
+      if (activePanel) {
+        activePanel.scrollTo({ top: 0, behavior: 'instant' });
+        // Sekmeye girişte hafif bir "içerik canlanması" hissi için mevcut
+        // fade-in-up animasyonunu yeniden tetikle (kayma animasyonuna ek olarak).
+        if (isChanging) {
+          activePanel.classList.remove('tab-content-pop');
+          void activePanel.offsetWidth; // reflow: animasyonu yeniden başlatmak için
+          activePanel.classList.add('tab-content-pop');
+        }
+      }
     };
     // 13. PARMAK KAYDIRMA (SWIPE)
     let touchStartX = 0, touchEndX = 0;
@@ -1161,7 +1179,7 @@
       if (ptrRefreshing) return;
       ptrRefreshing = true;
       ptrSetIndicator(PTR_MAX, 'refreshing');
-      if (window.hapticsEnabled && navigator.vibrate) navigator.vibrate(8);
+      window.haptic(8);
       const minDisplay = new Promise(r => setTimeout(r, 550));
       try {
         loadCustomAddedMosques();

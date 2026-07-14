@@ -147,3 +147,33 @@
 
     @keyframes fade-in-up{ 0%{ opacity:0; transform:translateY(8px);} 100%{ opacity:1; transform:translateY(0);} }
     .fade-in-up{ animation:fade-in-up .35s ease both; }
+
+    /* ---- Sekme (Tab) Geçiş Hissi ---- */
+    /* tabViewport zaten transform ile kayıyor; buna ek olarak aktif olan
+       panelin içeriği hafifçe belirip yukarı süzülerek gelir, böylece geçiş
+       daha "canlı" ve amaçlı hissettirir. */
+    @keyframes tab-content-pop{
+      0%{ opacity:0.4; transform:translateY(5px) scale(0.995); }
+      100%{ opacity:1; transform:translateY(0) scale(1); }
+    }
+    .tab-content-pop{ animation:tab-content-pop .28s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ---- Modal / Sayfa Geçişleri ----
+       Bütün modallar `id="...Modal"` ve `hidden` sınıfı ile açılıp kapanıyor.
+       display:none -> flex/block geçişinde CSS animasyonları otomatik olarak
+       (yeniden) başlar, bu sayede tek satır JS eklemeden her modal için
+       tutarlı bir açılış animasyonu elde ediyoruz. */
+    @keyframes modal-overlay-fade{ from{ opacity:0; } to{ opacity:1; } }
+    @keyframes modal-sheet-in{
+      from{ opacity:0; transform:translateY(18px) scale(0.98); }
+      to{ opacity:1; transform:translateY(0) scale(1); }
+    }
+    @keyframes modal-panel-in{ from{ opacity:0; } to{ opacity:1; } }
+
+    [id$="Modal"].fixed:not(.hidden){ animation:modal-overlay-fade .2s ease both; }
+    /* Alttan açılan "sheet" tarzı modallar (cami bilgi/düzenleme, silinenler vb.) */
+    [id$="Modal"].fixed:not(.hidden) > .rounded-t-3xl{ animation:modal-sheet-in .26s cubic-bezier(0.22,1,0.36,1) both; }
+    /* Tam ekran sayfa-modalları (harita, rota, yolculuk) sade bir fade ile açılır */
+    #mapModal:not(.hidden), #nearbyModal:not(.hidden), #routeModal:not(.hidden), #journeyModal:not(.hidden){
+      animation:modal-panel-in .22s ease both;
+    }
