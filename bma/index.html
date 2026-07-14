@@ -455,7 +455,7 @@
               <span id="digerProgressTxt" class="font-bold font-ledger">0 / 0</span>
             </div>
             <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--paper-deep);">
-              <div id="digerProgressBar" class="h-full transition-all duration-500" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
+              <div id="digerProgressBar" class="h-full transition-all duration-500" style="width:0%; background:linear-gradient(90deg, #B91C1C, #DC2626);"></div>
             </div>
           </div>
         </div>
@@ -1138,7 +1138,7 @@
         <span id="mapGeocodeProgressLabel" class="font-ledger">0 / 0</span>
       </div>
       <div class="w-full h-1.5 rounded-full overflow-hidden" style="background:var(--line);">
-        <div id="mapGeocodeProgressBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
+        <div id="mapGeocodeProgressBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, #B91C1C, #DC2626);"></div>
       </div>
     </div>
 
@@ -1186,7 +1186,7 @@
         <div class="empty-icon"><i class="fa-solid fa-location-crosshairs animate-spin-slow"></i></div>
         <p id="nearbyLoadingLabel" class="text-xs font-semibold" style="color:var(--ink-soft);">Konumun belirleniyor…</p>
         <div class="w-full max-w-[220px] h-1.5 rounded-full overflow-hidden" style="background:var(--line);">
-          <div id="nearbyLoadingBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
+          <div id="nearbyLoadingBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, #B91C1C, #DC2626);"></div>
         </div>
       </div>
 
@@ -1240,7 +1240,7 @@
             </select>
           </div>
         </div>
-        <button onclick="generateVisitRoute()" id="routeGenerateBtn" class="w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2" style="background:var(--gold-deep); color:#241F17;">
+        <button onclick="generateVisitRoute()" id="routeGenerateBtn" class="w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2" style="background:#DC2626; color:#fff;">
           <i class="fa-solid fa-wand-magic-sparkles"></i><span>Rotamı Oluştur</span>
         </button>
       </div>
@@ -1257,7 +1257,7 @@
         <div class="empty-icon"><i class="fa-solid fa-location-crosshairs animate-spin-slow"></i></div>
         <p id="routeLoadingLabel" class="text-xs font-semibold" style="color:var(--ink-soft);">Rota hazırlanıyor…</p>
         <div class="w-full max-w-[220px] h-1.5 rounded-full overflow-hidden" style="background:var(--line);">
-          <div id="routeLoadingBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
+          <div id="routeLoadingBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, #B91C1C, #DC2626);"></div>
         </div>
       </div>
 
@@ -1295,7 +1295,7 @@
         </div>
         <button onclick="closeJourneyModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <a id="journeyMapBtn" href="#" target="_blank" rel="noopener" class="hidden mt-3 w-full py-2.5 rounded-xl text-xs font-bold items-center justify-center gap-2" style="background:var(--gold-deep); color:#241F17;">
+      <a id="journeyMapBtn" href="#" target="_blank" rel="noopener" class="hidden mt-3 w-full py-2.5 rounded-xl text-xs font-bold items-center justify-center gap-2" style="background:#DC2626; color:#fff;">
         <i class="fa-solid fa-diamond-turn-right"></i><span>Haritada Aç</span>
       </a>
     </div>
@@ -2818,7 +2818,7 @@
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
         return `
           <div class="paper-card rounded-2xl p-3 flex items-start gap-3">
-            <div class="arch-badge flex-shrink-0" style="width:26px; height:26px; background:var(--gold-deep); color:#fff; font-size:11px; font-weight:800; font-family:'JetBrains Mono',monospace;">${i + 1}</div>
+            <div class="arch-badge flex-shrink-0" style="width:26px; height:26px; background:#DC2626; color:#fff; font-size:11px; font-weight:800; font-family:'JetBrains Mono',monospace;">${i + 1}</div>
             <div class="flex-1 min-w-0">
               <p class="text-xs font-bold truncate" style="color:var(--ink);">${escapeHtml(m.name)}</p>
               <p class="text-[10px] truncate" style="color:var(--ink-soft);">${escapeHtml(m.address)}</p>
