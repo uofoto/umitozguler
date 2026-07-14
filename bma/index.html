@@ -1247,6 +1247,9 @@
         </div>
         <button onclick="closeJourneyModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
       </div>
+      <a id="journeyMapBtn" href="#" target="_blank" rel="noopener" class="hidden mt-3 w-full py-2.5 rounded-xl text-xs font-bold items-center justify-center gap-2" style="background:var(--gold-deep); color:#241F17;">
+        <i class="fa-solid fa-diamond-turn-right"></i><span>Haritada Aç</span>
+      </a>
     </div>
 
     <div class="flex-1 overflow-y-auto px-4 py-3 space-y-2.5">
@@ -2591,6 +2594,7 @@
       saveActiveJourney();
       renderJourneyBanner();
       openJourneyModal();
+      window.open(getMosqueMapUrl(m.id, m.name, m.address), '_blank');
       showToast('Yolculuğun başladı, Allah kabul etsin!', 'success');
     };
 
@@ -2879,6 +2883,8 @@
       closeRouteModal();
       renderJourneyBanner();
       openJourneyModal();
+      const firstStop = activeJourney.stops[0];
+      if (firstStop) window.open(getMosqueMapUrl(firstStop.mosqueId, firstStop.name, firstStop.address), '_blank');
       showToast('Yolculuğun başladı, Allah kabul etsin!', 'success');
     };
 
@@ -2902,6 +2908,12 @@
       document.getElementById('journeyModal').classList.add('hidden');
     };
 
+    function getMosqueMapUrl(mosqueId, fallbackName, fallbackAddress) {
+      const m = PRESET_MOSQUES.find(x => x.id === mosqueId);
+      const query = (m && m.mapsSearch) || `${fallbackName || (m && m.name) || ''} ${fallbackAddress || (m && m.address) || ''}`;
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    }
+
     function renderJourneyChecklist() {
       const emptyState = document.getElementById('journeyEmptyState');
       const footer = document.getElementById('journeyFooter');
@@ -2920,17 +2932,30 @@
       footer.classList.remove('hidden');
       subtitle.textContent = `${activeJourney.district} · Bugünkü Rota`;
 
+      const journeyMapBtn = document.getElementById('journeyMapBtn');
+      const nextStop = activeJourney.stops.find(s => !s.done);
+      if (nextStop) {
+        journeyMapBtn.href = getMosqueMapUrl(nextStop.mosqueId, nextStop.name, nextStop.address);
+        journeyMapBtn.classList.remove('hidden');
+        journeyMapBtn.style.display = 'flex';
+      } else {
+        journeyMapBtn.classList.add('hidden');
+      }
+
       list.innerHTML = activeJourney.stops.map(stop => `
-        <button onclick="toggleJourneyStop('${stop.mosqueId}')" class="paper-card w-full rounded-2xl p-3 flex items-center gap-3 text-left ${stop.done ? 'opacity-70' : ''}">
-          <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:${stop.done ? 'var(--teal-900)' : 'var(--paper-deep)'}; border:1.5px solid ${stop.done ? 'var(--teal-900)' : 'var(--line)'};">
+        <div class="paper-card w-full rounded-2xl p-3 flex items-center gap-3 ${stop.done ? 'opacity-70' : ''}">
+          <button onclick="toggleJourneyStop('${stop.mosqueId}')" class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:${stop.done ? 'var(--teal-900)' : 'var(--paper-deep)'}; border:1.5px solid ${stop.done ? 'var(--teal-900)' : 'var(--line)'};">
             ${stop.done ? '<i class="fa-solid fa-check text-[11px]" style="color:#fff;"></i>' : ''}
-          </div>
-          <div class="flex-1 min-w-0">
+          </button>
+          <button onclick="toggleJourneyStop('${stop.mosqueId}')" class="flex-1 min-w-0 text-left">
             <p class="text-xs font-bold truncate ${stop.done ? 'line-through' : ''}" style="color:var(--ink);">${escapeHtml(stop.name)}</p>
             <p class="text-[10px] truncate" style="color:var(--ink-faint);">${escapeHtml(stop.address)}</p>
-          </div>
-          ${stop.done ? '<span class="text-[9px] font-bold flex-shrink-0" style="color:var(--teal-700);">İhya Edildi</span>' : ''}
-        </button>
+          </button>
+          ${stop.done ? '<span class="text-[9px] font-bold flex-shrink-0" style="color:var(--teal-700);">İhya Edildi</span>' : `
+          <a href="${getMosqueMapUrl(stop.mosqueId, stop.name, stop.address)}" target="_blank" rel="noopener" class="icon-btn flex-shrink-0" style="background:var(--paper-deep); color:var(--teal-900); width:30px; height:30px;" title="Haritada Aç">
+            <i class="fa-solid fa-diamond-turn-right text-[12px]"></i>
+          </a>`}
+        </div>
       `).join('');
 
       const total = activeJourney.stops.length;
