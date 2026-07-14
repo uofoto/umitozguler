@@ -222,9 +222,10 @@
   </div>
 
   <!-- SPLASH -->
-  <div id="authLoader" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-6" style="background:var(--teal-950);">
-    <div class="arch-badge w-20 h-20 mb-6" style="background:var(--gold); color:var(--teal-950); border:3px solid var(--gold-soft);">
-      <span class="font-display font-bold text-2xl tracking-tighter">ÜÖ</span>
+  <div id="authLoader" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-6" style="background:var(--teal-950); opacity:1; transition:opacity .45s ease;">
+    <div class="arch-badge w-20 h-20 mb-6 overflow-hidden" style="background:var(--gold); color:var(--teal-950); border:3px solid var(--gold-soft);">
+      <img src="icons/icon-192.png" alt="Bursa Manevi Atlası Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <span class="font-display font-bold text-2xl tracking-tighter" style="display:none; align-items:center; justify-content:center; width:100%; height:100%;">ÜÖ</span>
     </div>
     <h2 class="text-xl font-bold font-display text-center tracking-wide" style="color:var(--gold-soft);">Bursa Manevi Atlası</h2>
     <p class="text-[10px] uppercase tracking-widest mt-1 font-semibold" style="color:rgba(231,212,160,0.6);">Seyyah Defteri</p>
@@ -2829,6 +2830,8 @@
     }
 
     async function initApp() {
+      const __splashStart = Date.now();
+      const __MIN_SPLASH_MS = 1400;
       loadTheme();
       loadHapticsUI();
       loadCustomAddedMosques();
@@ -2846,12 +2849,19 @@
       document.getElementById('appModeBadge').innerHTML = useIndexedDB
         ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
         : '<span style="color:var(--teal-700);">Yerel Yedek Modu</span>';
-      document.getElementById('authLoader').classList.add('hidden');
       document.getElementById('syncStatus').innerHTML = `
         <span class="w-1.5 h-1.5 rounded-full" style="background:var(--gold);"></span>
         <span>Kayıtlar Hazır</span>
       `;
       triggerAllUIUpdates();
+
+      const __elapsed = Date.now() - __splashStart;
+      const __remaining = Math.max(0, __MIN_SPLASH_MS - __elapsed);
+      setTimeout(() => {
+        const loader = document.getElementById('authLoader');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.classList.add('hidden'), 450);
+      }, __remaining);
     }
 
     function triggerAllUIUpdates() {
