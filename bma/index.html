@@ -513,17 +513,17 @@
 
           <div id="dailySuggestionStatsGrid" class="hidden grid grid-cols-2 gap-2">
             <div class="rounded-xl p-2 text-center" style="background:rgba(255,255,255,0.55);">
-              <p class="text-[8px] font-bold uppercase" style="color:var(--ink-faint);">Yürüme mesafesi</p>
+              <p class="text-[8px] font-bold uppercase" style="color:var(--ink-faint);">🚶 Yürüyerek</p>
               <p id="dailySuggestionDistance" class="text-xs font-bold font-ledger" style="color:var(--teal-800);">—</p>
             </div>
             <div class="rounded-xl p-2 text-center" style="background:rgba(255,255,255,0.55);">
-              <p class="text-[8px] font-bold uppercase" style="color:var(--ink-faint);">Tahmini süre</p>
-              <p id="dailySuggestionDuration" class="text-xs font-bold font-ledger" style="color:var(--teal-800);">—</p>
+              <p class="text-[8px] font-bold uppercase" style="color:var(--ink-faint);">🚗 Araçla</p>
+              <p id="dailySuggestionDuration" class="text-xs font-bold font-ledger" style="color:var(--gold-deep);">—</p>
             </div>
           </div>
 
           <button id="dailySuggestionLocationBtn" onclick="refreshDailySuggestionLocation()" class="hidden w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900); border:1px solid rgba(21,90,76,0.18);">
-            <i class="fa-solid fa-location-crosshairs"></i><span>Yürüme mesafesini görmek için konumunu paylaş</span>
+            <i class="fa-solid fa-location-crosshairs"></i><span>Mesafeleri görmek için konumunu paylaş</span>
           </button>
 
           <p id="dailySuggestionVisitedNote" class="text-[10.5px] font-semibold" style="color:var(--ink-soft);"></p>
@@ -1270,9 +1270,10 @@
         </button>
 
         <div class="paper-card rounded-2xl p-3 flex items-center justify-between gap-2">
-          <div>
-            <p class="text-[9.5px] font-bold uppercase tracking-wide" style="color:var(--ink-faint);">Toplam Mesafe (Yürüyerek Tahmini)</p>
-            <p id="routeTotalDistance" class="text-base font-black font-ledger" style="color:var(--teal-700);">—</p>
+          <div class="space-y-0.5">
+            <p class="text-[9.5px] font-bold uppercase tracking-wide" style="color:var(--ink-faint);">Toplam Mesafe (Kuş Uçuşu Tahmini)</p>
+            <p id="routeTotalDistanceWalk" class="text-[13px] font-black font-ledger" style="color:var(--teal-700);">—</p>
+            <p id="routeTotalDistanceDrive" class="text-[13px] font-black font-ledger" style="color:var(--gold-deep);">—</p>
           </div>
           <a id="routeGoogleMapsLink" href="#" target="_blank" rel="noopener" class="btn-primary text-[10.5px] font-bold px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 flex-shrink-0">
             <i class="fa-brands fa-google"></i><span>Haritalar'da Aç</span>
@@ -2504,16 +2505,34 @@
       return `${km.toFixed(1)} km`;
     }
 
+    // Kuş uçuşu mesafeden yürüyerek ve araçla gidiş için ayrı mesafe/süre tahmini üretir.
+    // Gerçek yol ağı verimiz olmadığından, yollardaki dolambaçlanmayı yansıtan makul çarpanlar kullanılır.
+    function estimateTravelInfo(straightKm) {
+      const walkKm = straightKm * 1.2;   // yürüyüş yolları kuş uçuşuna göre biraz daha uzun olur
+      const driveKm = straightKm * 1.35; // araç yolları genelde daha dolambaçlı olur
+      const walkMin = Math.max(1, Math.round((walkKm / 5) * 60));   // ~5 km/s yürüyüş hızı
+      const driveMin = Math.max(1, Math.round((driveKm / 28) * 60)); // ~28 km/s şehir içi ortalama hız
+      return { walkKm, driveKm, walkMin, driveMin };
+    }
+
+    // Tek satırda yürüme (🚶) ve araç (🚗) mesafe/süresini yan yana gösteren metin üretir
+    function formatDualDistanceInline(straightKm) {
+      const info = estimateTravelInfo(straightKm);
+      return `🚶 ${formatDistance(info.walkKm)} · ~${info.walkMin} dk &nbsp;·&nbsp; 🚗 ${formatDistance(info.driveKm)} · ~${info.driveMin} dk`;
+    }
+
     function renderNearbyList(sortedMosques, visitStats) {
       const wrap = document.getElementById('nearbyList');
       wrap.innerHTML = sortedMosques.map(item => {
         const m = item.mosque;
         const isVisited = (visitStats[m.id] || 0) > 0;
+        const info = estimateTravelInfo(item.km);
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
         return `
           <div class="paper-card rounded-2xl p-3 flex items-center gap-3">
-            <div class="flex flex-col items-center justify-center flex-shrink-0" style="width:54px;">
-              <span class="text-[11px] font-black font-ledger" style="color:var(--gold-deep);">${formatDistance(item.km)}</span>
+            <div class="flex flex-col items-center justify-center flex-shrink-0 gap-0.5" style="width:66px;">
+              <span class="text-[10px] font-black font-ledger" style="color:var(--teal-700);">🚶 ${formatDistance(info.walkKm)}</span>
+              <span class="text-[10px] font-black font-ledger" style="color:var(--gold-deep);">🚗 ${formatDistance(info.driveKm)}</span>
             </div>
             <div class="flex-1 min-w-0 cursor-pointer" onclick="closeNearbyModal(); openMosqueInfoModal('${m.id}');">
               <p class="text-xs font-bold truncate" style="color:var(--ink);">${escapeHtml(m.name)}</p>
@@ -2685,8 +2704,9 @@
       }
 
       const km = haversineKm(lastLoc, coords);
-      document.getElementById('dailySuggestionDistance').textContent = formatDistance(km);
-      document.getElementById('dailySuggestionDuration').textContent = `${Math.max(1, Math.round(km * 12))} dakika`;
+      const info = estimateTravelInfo(km);
+      document.getElementById('dailySuggestionDistance').textContent = `${formatDistance(info.walkKm)} · ~${info.walkMin} dk`;
+      document.getElementById('dailySuggestionDuration').textContent = `${formatDistance(info.driveKm)} · ~${info.driveMin} dk`;
       statsGrid.classList.remove('hidden');
       locBtn.classList.add('hidden');
     }
@@ -2869,6 +2889,7 @@
       const wrap = document.getElementById('routeStopsList');
       wrap.innerHTML = orderedStops.map((stop, i) => {
         const m = stop.mosque;
+        const info = estimateTravelInfo(stop.distFromPrev);
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
         return `
           <div class="paper-card rounded-2xl p-3 flex items-start gap-3">
@@ -2876,7 +2897,8 @@
             <div class="flex-1 min-w-0">
               <p class="text-xs font-bold truncate" style="color:var(--ink);">${escapeHtml(m.name)}</p>
               <p class="text-[10px] truncate" style="color:var(--ink-soft);">${escapeHtml(m.address)}</p>
-              <p class="text-[9.5px] font-semibold mt-0.5" style="color:var(--gold-deep);"><i class="fa-solid fa-shoe-prints mr-1"></i>${i === 0 ? 'Başlangıçtan' : 'Önceki duraktan'} ${stop.distFromPrev.toFixed(1)} km</p>
+              <p class="text-[9.5px] font-semibold mt-0.5" style="color:var(--ink-faint);">${i === 0 ? 'Başlangıçtan' : 'Önceki duraktan'}</p>
+              <p class="text-[9.5px] font-semibold mt-0.5" style="color:var(--gold-deep);">🚶 ${formatDistance(info.walkKm)} · ~${info.walkMin} dk &nbsp;·&nbsp; 🚗 ${formatDistance(info.driveKm)} · ~${info.driveMin} dk</p>
             </div>
             <a href="${mapUrl}" target="_blank" rel="noopener" class="icon-btn flex-shrink-0" style="background:var(--paper-deep); color:var(--teal-900);" title="Google'da Aç"><i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i></a>
           </div>
@@ -2950,7 +2972,9 @@
       document.getElementById('routeContent').classList.remove('hidden');
       document.getElementById('routeGenerateBtn').disabled = false;
 
-      document.getElementById('routeTotalDistance').textContent = `${totalKm.toFixed(1)} km · ~${Math.round(totalKm * 12)} dk yürüyüş`;
+      const totalInfo = estimateTravelInfo(totalKm);
+      document.getElementById('routeTotalDistanceWalk').textContent = `🚶 ${formatDistance(totalInfo.walkKm)} · ~${totalInfo.walkMin} dk`;
+      document.getElementById('routeTotalDistanceDrive').textContent = `🚗 ${formatDistance(totalInfo.driveKm)} · ~${totalInfo.driveMin} dk`;
       document.getElementById('routeGoogleMapsLink').href = buildGoogleMapsRouteUrl(orderedStops, startPoint, hasRealUserLocation);
       renderRouteStopsList(orderedStops);
       renderRouteOnMap(orderedStops, startPoint, hasRealUserLocation);
