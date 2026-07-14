@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -500,6 +501,9 @@
           </div>
           <button onclick="openMapModal()" class="w-full py-2 rounded-lg text-[10.5px] font-bold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900); border:1px solid rgba(21,90,76,0.18);">
             <i class="fa-solid fa-map-location-dot"></i><span>🗺️ Haritada Gör (Ziyaret Edilen / Edilmeyen)</span>
+          </button>
+          <button onclick="openRouteModal()" class="w-full py-2 rounded-lg text-[10.5px] font-bold flex items-center justify-center gap-1.5" style="background:rgba(195,154,69,0.12); color:var(--gold-deep); border:1px solid rgba(195,154,69,0.3);">
+            <i class="fa-solid fa-route"></i><span>🧭 Ziyaret Rotası Oluştur</span>
           </button>
         </div>
         <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
@@ -1057,6 +1061,74 @@
       <span class="text-[9.5px] font-semibold flex items-center gap-1.5" style="color:var(--ink-soft);"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#1F7A65;"></span>İhya Edilen</span>
       <span class="text-[9.5px] font-semibold flex items-center gap-1.5" style="color:var(--ink-soft);"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#A85631;"></span>Kılınmayan</span>
       <span class="text-[9.5px] font-semibold flex items-center gap-1.5" style="color:var(--ink-soft);"><i class="fa-solid fa-heart" style="color:var(--brick); font-size:9px;"></i>Favori</span>
+    </div>
+  </div>
+
+  <!-- ZİYARET ROTASI (Yakındaki Ziyaret Edilmemiş Camilerden Otomatik Rota) -->
+  <div id="routeModal" class="hidden fixed inset-0 z-50 flex flex-col" style="background:var(--paper);">
+    <div class="hero-panel relative px-4 pt-4 pb-3 flex-shrink-0 safe-padding-top">
+      <div class="relative flex items-start justify-between">
+        <div class="space-y-1">
+          <h3 class="font-display font-bold text-base leading-snug flex items-center gap-2" style="color:#fff;">
+            <i class="fa-solid fa-route" style="color:var(--gold-soft);"></i><span>Ziyaret Rotası</span>
+          </h3>
+          <p class="text-[10.5px]" style="color:rgba(255,255,255,0.75);">Bulunduğun ilçedeki ziyaret etmediğin camilerden sana özel bir rota oluştur</p>
+        </div>
+        <button onclick="closeRouteModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="relative mt-3 space-y-2">
+        <div class="grid grid-cols-2 gap-1.5">
+          <div class="space-y-1">
+            <label class="text-[9.5px] font-bold" style="color:rgba(255,255,255,0.7);">İlçe</label>
+            <select id="routeDistrictSelect" class="field w-full rounded-lg px-2.5 py-2 text-[11px] font-semibold"></select>
+          </div>
+          <div class="space-y-1">
+            <label class="text-[9.5px] font-bold" style="color:rgba(255,255,255,0.7);">Durak Sayısı</label>
+            <select id="routeStopCountSelect" class="field w-full rounded-lg px-2.5 py-2 text-[11px] font-semibold">
+              <option value="4">4 Cami</option>
+              <option value="6" selected>6 Cami</option>
+              <option value="8">8 Cami</option>
+              <option value="10">10 Cami</option>
+            </select>
+          </div>
+        </div>
+        <button onclick="generateVisitRoute()" id="routeGenerateBtn" class="w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2" style="background:var(--gold-deep); color:#241F17;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i><span>Rotamı Oluştur</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="routeResultsWrap" class="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+      <div id="routeEmptyState" class="empty-state">
+        <div class="empty-icon"><i class="fa-solid fa-signs-post"></i></div>
+        <p class="text-xs font-semibold" style="color:var(--ink-soft);">Henüz bir rota oluşturmadın</p>
+        <p class="text-[10px] max-w-[240px]" style="color:var(--ink-faint);">İlçeni ve kaç cami ziyaret etmek istediğini seç, uygulama sana en yakından başlayan bir ziyaret rotası çıkarsın.</p>
+      </div>
+
+      <div id="routeLoadingState" class="hidden empty-state">
+        <div class="empty-icon"><i class="fa-solid fa-location-crosshairs animate-spin-slow"></i></div>
+        <p id="routeLoadingLabel" class="text-xs font-semibold" style="color:var(--ink-soft);">Rota hazırlanıyor…</p>
+        <div class="w-full max-w-[220px] h-1.5 rounded-full overflow-hidden" style="background:var(--line);">
+          <div id="routeLoadingBar" class="h-full transition-all duration-300" style="width:0%; background:linear-gradient(90deg, var(--gold-deep), var(--gold));"></div>
+        </div>
+      </div>
+
+      <div id="routeContent" class="hidden space-y-3">
+        <div id="routeMapContainer" class="w-full rounded-2xl overflow-hidden" style="height:220px; border:1px solid var(--line);"></div>
+
+        <div class="paper-card rounded-2xl p-3 flex items-center justify-between gap-2">
+          <div>
+            <p class="text-[9.5px] font-bold uppercase tracking-wide" style="color:var(--ink-faint);">Toplam Mesafe (Yürüyerek Tahmini)</p>
+            <p id="routeTotalDistance" class="text-base font-black font-ledger" style="color:var(--teal-700);">—</p>
+          </div>
+          <a id="routeGoogleMapsLink" href="#" target="_blank" rel="noopener" class="btn-primary text-[10.5px] font-bold px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 flex-shrink-0">
+            <i class="fa-brands fa-google"></i><span>Haritalar'da Aç</span>
+          </a>
+        </div>
+
+        <div id="routeStopsList" class="space-y-2"></div>
+      </div>
     </div>
   </div>
 
@@ -2128,6 +2200,216 @@
       if (progressWrap) progressWrap.classList.add('hidden');
       renderMosqueMapMarkers();
     }
+
+    // ---- ZİYARET ROTASI (En Yakın Ziyaret Edilmemiş Camilerden Otomatik Rota) ----
+    let routeMapInstance = null;
+    let routeMarkersLayer = null;
+    let routePolyline = null;
+    let routeUserCoords = null;
+
+    function haversineKm(a, b) {
+      const R = 6371;
+      const dLat = (b.lat - a.lat) * Math.PI / 180;
+      const dLng = (b.lng - a.lng) * Math.PI / 180;
+      const lat1 = a.lat * Math.PI / 180;
+      const lat2 = b.lat * Math.PI / 180;
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+      return R * 2 * Math.asin(Math.min(1, Math.sqrt(h)));
+    }
+
+    function populateRouteDistrictSelect() {
+      const sel = document.getElementById('routeDistrictSelect');
+      if (!sel || sel.options.length > 0) return;
+      const districtOrder = ['Osmangazi', 'Yıldırım', 'Nilüfer', 'Mudanya', 'İznik', 'Gemlik', 'İnegöl', 'Orhangazi', 'Yenişehir', 'Karacabey', 'Mustafakemalpaşa', 'Kestel', 'Gürsu', 'Orhaneli', 'Keles', 'Büyükorhan', 'Harmancık'];
+      const present = districtOrder.filter(d => PRESET_MOSQUES.some(m => m.district === d));
+      sel.innerHTML = present.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`).join('');
+    }
+
+    window.openRouteModal = function() {
+      populateRouteDistrictSelect();
+      document.getElementById('routeModal').classList.remove('hidden');
+    };
+
+    window.closeRouteModal = function() {
+      document.getElementById('routeModal').classList.add('hidden');
+    };
+
+    function tryGetUserLocation() {
+      return new Promise((resolve) => {
+        if (!('geolocation' in navigator)) { resolve(null); return; }
+        const timer = setTimeout(() => resolve(null), 6000);
+        navigator.geolocation.getCurrentPosition(
+          (pos) => { clearTimeout(timer); resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }); },
+          () => { clearTimeout(timer); resolve(null); },
+          { enableHighAccuracy: true, timeout: 5500, maximum: 60000 }
+        );
+      });
+    }
+
+    function buildNearestNeighborRoute(startPoint, stops) {
+      const remaining = stops.slice();
+      const ordered = [];
+      let current = startPoint;
+      while (remaining.length) {
+        let bestIdx = 0, bestDist = Infinity;
+        remaining.forEach((s, idx) => {
+          const d = haversineKm(current, mosqueGeocodeCache[s.id]);
+          if (d < bestDist) { bestDist = d; bestIdx = idx; }
+        });
+        const next = remaining.splice(bestIdx, 1)[0];
+        ordered.push({ mosque: next, distFromPrev: bestDist });
+        current = mosqueGeocodeCache[next.id];
+      }
+      return ordered;
+    }
+
+    function initRouteMap() {
+      if (routeMapInstance || typeof L === 'undefined') return;
+      routeMapInstance = L.map('routeMapContainer', { zoomControl: false, attributionControl: false }).setView(BURSA_CENTER, 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(routeMapInstance);
+      routeMarkersLayer = L.layerGroup().addTo(routeMapInstance);
+    }
+
+    function renderRouteOnMap(orderedStops, startPoint, hasRealUserLocation) {
+      initRouteMap();
+      setTimeout(() => routeMapInstance && routeMapInstance.invalidateSize(), 60);
+      routeMarkersLayer.clearLayers();
+      if (routePolyline) { routeMapInstance.removeLayer(routePolyline); routePolyline = null; }
+
+      const latlngs = [];
+      if (hasRealUserLocation) {
+        const userIcon = L.divIcon({
+          html: '<div style="width:16px;height:16px;border-radius:50%;background:#1F7A65;border:2.5px solid #fff;box-shadow:0 0 0 2px rgba(31,122,101,0.4);"></div>',
+          className: '', iconSize: [16, 16], iconAnchor: [8, 8]
+        });
+        L.marker([startPoint.lat, startPoint.lng], { icon: userIcon }).addTo(routeMarkersLayer).bindPopup('Konumun');
+        latlngs.push([startPoint.lat, startPoint.lng]);
+      }
+
+      orderedStops.forEach((stop, i) => {
+        const coords = mosqueGeocodeCache[stop.mosque.id];
+        const numIcon = L.divIcon({
+          html: `<div style="width:24px;height:24px;border-radius:50% 50% 6px 6px;background:#8C6A22;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-family:'JetBrains Mono',monospace;box-shadow:0 2px 6px rgba(0,0,0,0.35);">${i + 1}</div>`,
+          className: '', iconSize: [24, 24], iconAnchor: [12, 22]
+        });
+        L.marker([coords.lat, coords.lng], { icon: numIcon }).addTo(routeMarkersLayer).bindPopup(`<b>${i + 1}. ${escapeHtml(stop.mosque.name)}</b>`);
+        latlngs.push([coords.lat, coords.lng]);
+      });
+
+      if (latlngs.length > 1) {
+        routePolyline = L.polyline(latlngs, { color: '#C39A45', weight: 3.5, opacity: 0.85, dashArray: '1,8', lineCap: 'round' }).addTo(routeMapInstance);
+        routeMapInstance.fitBounds(routePolyline.getBounds(), { padding: [28, 28] });
+      } else if (latlngs.length === 1) {
+        routeMapInstance.setView(latlngs[0], 15);
+      }
+    }
+
+    function buildGoogleMapsRouteUrl(orderedStops, startPoint, hasRealUserLocation) {
+      const coordsList = orderedStops.map(s => mosqueGeocodeCache[s.mosque.id]);
+      const destination = coordsList[coordsList.length - 1];
+      const waypoints = coordsList.slice(0, -1).map(c => `${c.lat},${c.lng}`).join('|');
+      const params = new URLSearchParams();
+      params.set('api', '1');
+      params.set('destination', `${destination.lat},${destination.lng}`);
+      params.set('travelmode', 'walking');
+      if (waypoints) params.set('waypoints', waypoints);
+      if (hasRealUserLocation) params.set('origin', `${startPoint.lat},${startPoint.lng}`);
+      return `https://www.google.com/maps/dir/?${params.toString()}`;
+    }
+
+    function renderRouteStopsList(orderedStops) {
+      const wrap = document.getElementById('routeStopsList');
+      wrap.innerHTML = orderedStops.map((stop, i) => {
+        const m = stop.mosque;
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.mapsSearch || (m.name + ' ' + m.address))}`;
+        return `
+          <div class="paper-card rounded-2xl p-3 flex items-start gap-3">
+            <div class="arch-badge flex-shrink-0" style="width:26px; height:26px; background:var(--gold-deep); color:#fff; font-size:11px; font-weight:800; font-family:'JetBrains Mono',monospace;">${i + 1}</div>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-bold truncate" style="color:var(--ink);">${escapeHtml(m.name)}</p>
+              <p class="text-[10px] truncate" style="color:var(--ink-soft);">${escapeHtml(m.address)}</p>
+              <p class="text-[9.5px] font-semibold mt-0.5" style="color:var(--gold-deep);"><i class="fa-solid fa-shoe-prints mr-1"></i>${i === 0 ? 'Başlangıçtan' : 'Önceki duraktan'} ${stop.distFromPrev.toFixed(1)} km</p>
+            </div>
+            <a href="${mapUrl}" target="_blank" rel="noopener" class="icon-btn flex-shrink-0" style="background:var(--paper-deep); color:var(--teal-900);" title="Google'da Aç"><i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i></a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.generateVisitRoute = async function() {
+      const district = document.getElementById('routeDistrictSelect').value;
+      const stopCount = parseInt(document.getElementById('routeStopCountSelect').value, 10);
+      if (!district) return;
+
+      const visitedIds = new Set(visitsData.map(v => v.mosqueId));
+      let candidates = PRESET_MOSQUES.filter(m => m.district === district && !visitedIds.has(m.id));
+
+      if (candidates.length === 0) {
+        showToast(`${district} ilçesinde ziyaret etmediğin cami kalmamış! 🎉`, 'success');
+        return;
+      }
+
+      document.getElementById('routeEmptyState').classList.add('hidden');
+      document.getElementById('routeContent').classList.add('hidden');
+      document.getElementById('routeLoadingState').classList.remove('hidden');
+      document.getElementById('routeGenerateBtn').disabled = true;
+      const loadingLabel = document.getElementById('routeLoadingLabel');
+      const loadingBar = document.getElementById('routeLoadingBar');
+      loadingLabel.textContent = 'Konumun belirleniyor…';
+      loadingBar.style.width = '10%';
+
+      const userLoc = await tryGetUserLocation();
+      const hasRealUserLocation = !!userLoc;
+      routeUserCoords = userLoc;
+      const startPoint = userLoc || mosqueGeocodeCache[candidates[0].id] || { lat: BURSA_CENTER[0], lng: BURSA_CENTER[1] };
+
+      // Başlangıç noktasına göre en yakın adaylar önce gelsin (henüz konumu olmayanlar dahil edilecek şekilde geocode sırası da öncelikli olsun)
+      const toGeocode = candidates.filter(m => !mosqueGeocodeCache[m.id]);
+      if (toGeocode.length) {
+        loadingLabel.textContent = `Cami konumları belirleniyor… (0 / ${toGeocode.length})`;
+        let done = 0;
+        for (const m of toGeocode) {
+          const coords = await geocodeSingleMosque(m);
+          if (coords) { mosqueGeocodeCache[m.id] = coords; saveGeocodeCache(); }
+          done++;
+          loadingLabel.textContent = `Cami konumları belirleniyor… (${done} / ${toGeocode.length})`;
+          loadingBar.style.width = `${10 + Math.round((done / toGeocode.length) * 80)}%`;
+          await new Promise(r => setTimeout(r, 1100));
+        }
+      } else {
+        loadingBar.style.width = '90%';
+      }
+
+      candidates = candidates.filter(m => mosqueGeocodeCache[m.id]);
+      if (candidates.length === 0) {
+        document.getElementById('routeLoadingState').classList.add('hidden');
+        document.getElementById('routeEmptyState').classList.remove('hidden');
+        document.getElementById('routeGenerateBtn').disabled = false;
+        showToast('Cami konumları alınamadı, lütfen tekrar dene.', 'error');
+        return;
+      }
+
+      candidates.sort((a, b) => haversineKm(startPoint, mosqueGeocodeCache[a.id]) - haversineKm(startPoint, mosqueGeocodeCache[b.id]));
+      const pool = candidates.slice(0, Math.max(stopCount * 2, stopCount));
+      const chosen = pool.slice(0, Math.min(stopCount, pool.length));
+
+      const orderedStops = buildNearestNeighborRoute(startPoint, chosen);
+      const totalKm = orderedStops.reduce((sum, s) => sum + s.distFromPrev, 0);
+
+      loadingBar.style.width = '100%';
+      document.getElementById('routeLoadingState').classList.add('hidden');
+      document.getElementById('routeContent').classList.remove('hidden');
+      document.getElementById('routeGenerateBtn').disabled = false;
+
+      document.getElementById('routeTotalDistance').textContent = `${totalKm.toFixed(1)} km · ~${Math.round(totalKm * 12)} dk yürüyüş`;
+      document.getElementById('routeGoogleMapsLink').href = buildGoogleMapsRouteUrl(orderedStops, startPoint, hasRealUserLocation);
+      renderRouteStopsList(orderedStops);
+      renderRouteOnMap(orderedStops, startPoint, hasRealUserLocation);
+
+      if (!hasRealUserLocation) {
+        showToast('Konumuna ulaşılamadı, en yakın camiden başlayan bir rota oluşturuldu.', 'success');
+      }
+    };
 
     function openDB() {
       return new Promise((resolve, reject) => {
