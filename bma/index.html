@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -506,6 +502,20 @@
             <i class="fa-solid fa-route"></i><span>🧭 Ziyaret Rotası Oluştur</span>
           </button>
         </div>
+        <button id="journeyBannerCard" onclick="openJourneyModal()" class="hidden w-full rounded-2xl p-3 text-left" style="background:linear-gradient(160deg, var(--teal-800), var(--teal-900)); border:1px solid rgba(195,154,69,0.35);">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,0.14); color:var(--gold-soft);">
+              <i class="fa-solid fa-person-walking-luggage"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[11px] font-bold" style="color:#fff;">Bugünkü Yolculuğun Sürüyor</p>
+              <div class="w-full h-1.5 rounded-full overflow-hidden mt-1.5" style="background:rgba(255,255,255,0.18);">
+                <div id="journeyBannerBar" class="h-full transition-all duration-400" style="width:0%; background:var(--gold-soft);"></div>
+              </div>
+            </div>
+            <p id="journeyBannerLabel" class="text-xs font-black font-ledger flex-shrink-0" style="color:var(--gold-soft);">0/0</p>
+          </div>
+        </button>
         <div id="mosqueInfoHintBanner" class="hidden rounded-2xl p-3 items-start gap-2.5" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.22);">
           <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--teal-900); color:#fff;">
             <i class="fa-solid fa-hand-pointer text-xs"></i>
@@ -1117,6 +1127,10 @@
       <div id="routeContent" class="hidden space-y-3">
         <div id="routeMapContainer" class="w-full rounded-2xl overflow-hidden" style="height:220px; border:1px solid var(--line);"></div>
 
+        <button id="routeStartJourneyBtn" onclick="startJourneyFromRoute()" class="hidden w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2" style="background:linear-gradient(160deg, var(--teal-800), var(--teal-900)); color:#fff; box-shadow:0 10px 22px -10px rgba(12,58,50,0.65);">
+          <i class="fa-solid fa-person-walking-luggage"></i><span>Bugünkü Yolculuğa Başla</span>
+        </button>
+
         <div class="paper-card rounded-2xl p-3 flex items-center justify-between gap-2">
           <div>
             <p class="text-[9.5px] font-bold uppercase tracking-wide" style="color:var(--ink-faint);">Toplam Mesafe (Yürüyerek Tahmini)</p>
@@ -1129,6 +1143,44 @@
 
         <div id="routeStopsList" class="space-y-2"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- MANEVİ YOLCULUK MODU (Bugünkü Rota İçin Ziyaret Kontrol Listesi) -->
+  <div id="journeyModal" class="hidden fixed inset-0 z-50 flex flex-col" style="background:var(--paper);">
+    <div class="hero-panel relative px-4 pt-4 pb-4 flex-shrink-0 safe-padding-top">
+      <div class="relative flex items-start justify-between">
+        <div class="space-y-1">
+          <h3 class="font-display font-bold text-base leading-snug flex items-center gap-2" style="color:#fff;">
+            <i class="fa-solid fa-person-walking-luggage" style="color:var(--gold-soft);"></i><span>Manevi Yolculuk Modu</span>
+          </h3>
+          <p id="journeySubtitle" class="text-[10.5px]" style="color:rgba(255,255,255,0.75);">Uygulama sana rehberlik eder</p>
+        </div>
+        <button onclick="closeJourneyModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-4 py-3 space-y-2.5">
+      <div id="journeyEmptyState" class="hidden empty-state">
+        <div class="empty-icon"><i class="fa-solid fa-signs-post"></i></div>
+        <p class="text-xs font-semibold" style="color:var(--ink-soft);">Aktif bir yolculuğun yok</p>
+        <p class="text-[10px] max-w-[240px]" style="color:var(--ink-faint);">Önce "Ziyaret Rotası Oluştur" ile bir rota hazırla, sonra yolculuğu başlat.</p>
+        <button onclick="closeJourneyModal(); openRouteModal();" class="btn-primary text-[10.5px] font-bold px-4 py-2 rounded-xl mt-1">Rota Oluştur</button>
+      </div>
+
+      <div id="journeyStopsList" class="space-y-2"></div>
+    </div>
+
+    <div id="journeyFooter" class="hidden px-4 py-3 flex-shrink-0 space-y-2 safe-padding-bottom" style="background:var(--paper-card); border-top:1px solid var(--line);">
+      <div class="flex items-center justify-between">
+        <p class="text-[10.5px] font-bold" style="color:var(--ink);">Bugün</p>
+        <p id="journeyProgressLabel" class="text-xs font-black font-ledger" style="color:var(--teal-700);">0/0</p>
+      </div>
+      <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--line);">
+        <div id="journeyProgressBar" class="h-full transition-all duration-400" style="width:0%; background:linear-gradient(90deg, var(--teal-700), var(--teal-500));"></div>
+      </div>
+      <p id="journeyProgressPercent" class="text-[10px] text-center font-semibold" style="color:var(--ink-soft);">%0 tamamlandı</p>
+      <button onclick="endJourney()" class="w-full py-2 rounded-lg text-[10px] font-bold" style="background:var(--paper-deep); color:var(--brick);">Yolculuğu Sonlandır</button>
     </div>
   </div>
 
@@ -2352,6 +2404,7 @@
       document.getElementById('routeEmptyState').classList.add('hidden');
       document.getElementById('routeContent').classList.add('hidden');
       document.getElementById('routeLoadingState').classList.remove('hidden');
+      document.getElementById('routeStartJourneyBtn').classList.add('hidden');
       document.getElementById('routeGenerateBtn').disabled = true;
       const loadingLabel = document.getElementById('routeLoadingLabel');
       const loadingBar = document.getElementById('routeLoadingBar');
@@ -2405,10 +2458,183 @@
       document.getElementById('routeGoogleMapsLink').href = buildGoogleMapsRouteUrl(orderedStops, startPoint, hasRealUserLocation);
       renderRouteStopsList(orderedStops);
       renderRouteOnMap(orderedStops, startPoint, hasRealUserLocation);
+      lastGeneratedRoute = { district, orderedStops };
+      document.getElementById('routeStartJourneyBtn').classList.remove('hidden');
 
       if (!hasRealUserLocation) {
         showToast('Konumuna ulaşılamadı, en yakın camiden başlayan bir rota oluşturuldu.', 'success');
       }
+    };
+
+    // ---- MANEVİ YOLCULUK MODU (Bugünkü Rota İçin Ziyaret Kontrol Listesi) ----
+    const JOURNEY_KEY = 'manevi-atlas-active-journey';
+    let activeJourney = null;
+    let lastGeneratedRoute = null;
+
+    function todayDateStr() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function loadActiveJourney() {
+      try {
+        const raw = localStorage.getItem(JOURNEY_KEY);
+        activeJourney = raw ? JSON.parse(raw) : null;
+      } catch (e) { activeJourney = null; }
+    }
+
+    function saveActiveJourney() {
+      try {
+        if (activeJourney) localStorage.setItem(JOURNEY_KEY, JSON.stringify(activeJourney));
+        else localStorage.removeItem(JOURNEY_KEY);
+      } catch (e) {}
+    }
+
+    window.startJourneyFromRoute = function() {
+      if (!lastGeneratedRoute) return;
+      activeJourney = {
+        date: todayDateStr(),
+        district: lastGeneratedRoute.district,
+        createdAt: new Date().toISOString(),
+        stops: lastGeneratedRoute.orderedStops.map(s => ({
+          mosqueId: s.mosque.id,
+          name: s.mosque.name,
+          address: s.mosque.address,
+          done: false,
+          doneAt: null
+        }))
+      };
+      saveActiveJourney();
+      closeRouteModal();
+      renderJourneyBanner();
+      openJourneyModal();
+      showToast('Yolculuğun başladı, Allah kabul etsin!', 'success');
+    };
+
+    function renderJourneyBanner() {
+      const card = document.getElementById('journeyBannerCard');
+      if (!card) return;
+      if (!activeJourney || !activeJourney.stops.length) { card.classList.add('hidden'); return; }
+      const total = activeJourney.stops.length;
+      const done = activeJourney.stops.filter(s => s.done).length;
+      card.classList.remove('hidden');
+      document.getElementById('journeyBannerLabel').textContent = `${done}/${total}`;
+      document.getElementById('journeyBannerBar').style.width = `${total ? Math.round((done / total) * 100) : 0}%`;
+    }
+
+    window.openJourneyModal = function() {
+      document.getElementById('journeyModal').classList.remove('hidden');
+      renderJourneyChecklist();
+    };
+
+    window.closeJourneyModal = function() {
+      document.getElementById('journeyModal').classList.add('hidden');
+    };
+
+    function renderJourneyChecklist() {
+      const emptyState = document.getElementById('journeyEmptyState');
+      const footer = document.getElementById('journeyFooter');
+      const list = document.getElementById('journeyStopsList');
+      const subtitle = document.getElementById('journeySubtitle');
+
+      if (!activeJourney || !activeJourney.stops.length) {
+        emptyState.classList.remove('hidden');
+        footer.classList.add('hidden');
+        list.innerHTML = '';
+        subtitle.textContent = 'Uygulama sana rehberlik eder';
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      footer.classList.remove('hidden');
+      subtitle.textContent = `${activeJourney.district} · Bugünkü Rota`;
+
+      list.innerHTML = activeJourney.stops.map(stop => `
+        <button onclick="toggleJourneyStop('${stop.mosqueId}')" class="paper-card w-full rounded-2xl p-3 flex items-center gap-3 text-left ${stop.done ? 'opacity-70' : ''}">
+          <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:${stop.done ? 'var(--teal-900)' : 'var(--paper-deep)'}; border:1.5px solid ${stop.done ? 'var(--teal-900)' : 'var(--line)'};">
+            ${stop.done ? '<i class="fa-solid fa-check text-[11px]" style="color:#fff;"></i>' : ''}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-bold truncate ${stop.done ? 'line-through' : ''}" style="color:var(--ink);">${escapeHtml(stop.name)}</p>
+            <p class="text-[10px] truncate" style="color:var(--ink-faint);">${escapeHtml(stop.address)}</p>
+          </div>
+          ${stop.done ? '<span class="text-[9px] font-bold flex-shrink-0" style="color:var(--teal-700);">İhya Edildi</span>' : ''}
+        </button>
+      `).join('');
+
+      const total = activeJourney.stops.length;
+      const done = activeJourney.stops.filter(s => s.done).length;
+      const perc = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('journeyProgressLabel').textContent = `${done}/${total}`;
+      document.getElementById('journeyProgressBar').style.width = `${perc}%`;
+      document.getElementById('journeyProgressPercent').textContent = `%${perc} tamamlandı`;
+
+      if (done === total) {
+        document.getElementById('journeyProgressPercent').textContent = `🎉 %${perc} tamamlandı — Rota bitti!`;
+      }
+    }
+
+    window.toggleJourneyStop = async function(mosqueId) {
+      if (!activeJourney) return;
+      const stop = activeJourney.stops.find(s => s.mosqueId === mosqueId);
+      if (!stop) return;
+
+      const wasDone = stop.done;
+      stop.done = !stop.done;
+      stop.doneAt = stop.done ? new Date().toISOString() : null;
+      saveActiveJourney();
+      renderJourneyChecklist();
+      renderJourneyBanner();
+
+      if (window.hapticsEnabled && navigator.vibrate) navigator.vibrate(10);
+
+      // Yeni işaretlenen durak için, bugüne ait bir kayıt yoksa deftere otomatik kısa bir ziyaret notu düşülür
+      if (!wasDone && stop.done) {
+        const today = todayDateStr();
+        const alreadyLogged = visitsData.some(v => v.mosqueId === mosqueId && v.date === today);
+        if (!alreadyLogged) {
+          const mosque = PRESET_MOSQUES.find(m => m.id === mosqueId);
+          const now = new Date();
+          const record = {
+            id: "v-" + Date.now(),
+            mosqueId,
+            mosqueName: stop.name,
+            district: mosque ? mosque.district : (activeJourney.district || ''),
+            prayerTime: '',
+            address: stop.address || '',
+            date: today,
+            time: `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`,
+            notes: 'Manevi Yolculuk Modu ile kaydedildi.',
+            photos: [],
+            createdAt: now.toISOString()
+          };
+          visitsData.push(record);
+          sortVisitsInMemory();
+          const ok = await persistNewVisit(record);
+          if (ok) triggerAllUIUpdates();
+          else visitsData = visitsData.filter(v => v.id !== record.id);
+        }
+      }
+
+      const total = activeJourney.stops.length;
+      const done = activeJourney.stops.filter(s => s.done).length;
+      if (done === total && !wasDone) {
+        showToast('Bugünkü yolculuğunu tamamladın! Allah kabul etsin. 🌙', 'success');
+      }
+    };
+
+    window.endJourney = function() {
+      if (!activeJourney) { closeJourneyModal(); return; }
+      const total = activeJourney.stops.length;
+      const done = activeJourney.stops.filter(s => s.done).length;
+      const msg = done < total
+        ? `Yolculuğu sonlandırmak istediğine emin misin? (${done}/${total} tamamlandı)`
+        : 'Tebrikler, yolculuğunu tamamladın! Kaydı kapatalım mı?';
+      if (!confirm(msg)) return;
+      activeJourney = null;
+      saveActiveJourney();
+      renderJourneyBanner();
+      closeJourneyModal();
     };
 
     function openDB() {
@@ -4223,6 +4449,8 @@
     populateMosquesDropdown();
     setTodayDateTime();
     initApp();
+    loadActiveJourney();
+    renderJourneyBanner();
   </script>
 </body>
 </html>
