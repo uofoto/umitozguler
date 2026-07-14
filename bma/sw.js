@@ -14,12 +14,21 @@
 // saklanır; bu servis çalışanı yalnızca uygulamanın açılış hızını ve çevrimdışı
 // erişimini yönetir.
 
-const CACHE_NAME = "bursa-manevi-atlas-v4";
+const CACHE_NAME = "bursa-manevi-atlas-v5";
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./icons/icon-512.png",
+  "./styles.css",
+  "./mosques-data.js",
+  "./db.js",
+  "./theme.js",
+  "./map.js",
+  "./stats.js",
+  "./search.js",
+  "./backup.js",
+  "./ui.js"
 ];
 
 // Bu sunuculara giden istekler asla SW önbelleğine takılmaz, her zaman
