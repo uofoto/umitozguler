@@ -1993,13 +1993,15 @@
       const removed = PRESET_MOSQUES[idx];
       PRESET_MOSQUES.splice(idx, 1);
 
+      // Özel (kullanıcının eklediği) bir camiyse, kendi deposundan da çıkar;
+      // ancak her iki türü de (hazır + özel) aynı "Silinen Camiler" listesine
+      // ekleyerek geri getirilebilir hale getir.
       if (removed.isCustom) {
         persistCustomMosqueList();
-      } else {
-        const deletedList = getDeletedPresetMosques();
-        if (!deletedList.some(d => d.id === id)) deletedList.push(removed);
-        localStorage.setItem('manevi-atlas-deleted-presets', JSON.stringify(deletedList));
       }
+      const deletedList = getDeletedPresetMosques();
+      if (!deletedList.some(d => d.id === id)) deletedList.push(removed);
+      localStorage.setItem('manevi-atlas-deleted-presets', JSON.stringify(deletedList));
 
       populateMosquesDropdown();
       triggerAllUIUpdates();
@@ -2042,6 +2044,7 @@
       localStorage.setItem('manevi-atlas-deleted-presets', JSON.stringify(list));
       if (restored && !PRESET_MOSQUES.some(m => m.id === id)) {
         PRESET_MOSQUES.push(restored);
+        if (restored.isCustom) persistCustomMosqueList();
       }
       populateMosquesDropdown();
       triggerAllUIUpdates();
