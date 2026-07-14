@@ -2501,21 +2501,32 @@
 
     // ---- BUGÜN BURSA'DA (Günlük Ziyaret Önerisi Kartı) ----
     let todaysSuggestedMosque = null;
+    const LAST_SUGGESTED_MOSQUE_KEY = 'manevi-atlas-last-suggested-mosque';
 
-    function hashStringToInt(str) {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
-      return hash;
+    function loadLastSuggestedMosqueId() {
+      try { return localStorage.getItem(LAST_SUGGESTED_MOSQUE_KEY); } catch (e) { return null; }
+    }
+
+    function saveLastSuggestedMosqueId(id) {
+      try { localStorage.setItem(LAST_SUGGESTED_MOSQUE_KEY, id); } catch (e) {}
     }
 
     function pickTodayMosque() {
       const visitedIds = new Set(visitsData.map(v => v.mosqueId));
       const unvisited = PRESET_MOSQUES.filter(m => !visitedIds.has(m.id));
-      const pool = unvisited.length ? unvisited : PRESET_MOSQUES;
+      let pool = unvisited.length ? unvisited : PRESET_MOSQUES;
       if (!pool.length) return null;
 
+      // Her açılışta farklı bir öneri gelsin diye, mümkünse bir önceki
+      // önerilen camiyi havuzdan geçici olarak çıkar.
+      const lastId = loadLastSuggestedMosqueId();
+      if (lastId && pool.length > 1) {
+        const withoutLast = pool.filter(m => m.id !== lastId);
+        if (withoutLast.length) pool = withoutLast;
+      }
+
       const lastLoc = loadLastKnownLocation();
-      const seed = hashStringToInt(todayDateStr());
+      let chosen = null;
 
       if (lastLoc) {
         const withCoords = pool.filter(m => mosqueGeocodeCache[m.id]);
@@ -2524,10 +2535,14 @@
             .map(m => ({ mosque: m, km: haversineKm(lastLoc, mosqueGeocodeCache[m.id]) }))
             .sort((a, b) => a.km - b.km)
             .slice(0, 5);
-          return byDistance[seed % byDistance.length].mosque;
+          chosen = byDistance[Math.floor(Math.random() * byDistance.length)].mosque;
         }
       }
-      return pool[seed % pool.length];
+
+      if (!chosen) chosen = pool[Math.floor(Math.random() * pool.length)];
+
+      saveLastSuggestedMosqueId(chosen.id);
+      return chosen;
     }
 
     async function fetchTodayWeather() {
