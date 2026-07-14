@@ -391,7 +391,7 @@
           </div>
           <h3 class="font-bold text-[11px] flex items-center space-x-2 relative z-10" style="color:var(--ink);">
             <i class="fa-solid fa-book-quran" style="color:var(--gold-deep);"></i>
-            <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Günün Namaz Ayeti</span>
+            <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Günün Ayeti</span>
           </h3>
           <p id="dailyVerseText" class="text-[11px] leading-relaxed italic relative z-10 font-medium" style="color:var(--ink-soft);"></p>
           <p id="dailyVerseSource" class="text-[9.5px] font-bold text-right relative z-10 mt-1" style="color:var(--teal-700);"></p>
@@ -668,7 +668,7 @@
                     <i class="fa-solid fa-camera text-lg mb-0.5" style="color:var(--ink-faint);"></i>
                     <p class="text-[9px] font-semibold" style="color:var(--ink-soft);">Fotoğraf 1</p>
                   </div>
-                  <img id="photoPreview1" class="hidden w-full h-full object-cover">
+                  <img id="photoPreview1" class="hidden w-full h-full object-cover" alt="Hatıra fotoğrafı 1">
                   <button type="button" onclick="removePhoto(1)" id="btnRemovePhoto1" class="hidden absolute top-1 right-1 text-white w-5 h-5 rounded-full flex items-center justify-center shadow z-20" style="background:var(--brick);">
                     <i class="fa-solid fa-times text-[10px]"></i>
                   </button>
@@ -679,7 +679,7 @@
                     <i class="fa-solid fa-camera text-lg mb-0.5" style="color:var(--ink-faint);"></i>
                     <p class="text-[9px] font-semibold" style="color:var(--ink-soft);">Fotoğraf 2</p>
                   </div>
-                  <img id="photoPreview2" class="hidden w-full h-full object-cover">
+                  <img id="photoPreview2" class="hidden w-full h-full object-cover" alt="Hatıra fotoğrafı 2">
                   <button type="button" onclick="removePhoto(2)" id="btnRemovePhoto2" class="hidden absolute top-1 right-1 text-white w-5 h-5 rounded-full flex items-center justify-center shadow z-20" style="background:var(--brick);">
                     <i class="fa-solid fa-times text-[10px]"></i>
                   </button>
@@ -1323,7 +1323,7 @@
     </button>
 
     <div id="lightboxViewport" class="w-full h-full flex items-center justify-center overflow-hidden" style="touch-action:none;">
-      <img id="lightboxImage" class="max-w-[100vw] max-h-[100vh] w-auto h-auto object-contain select-none pointer-events-none" draggable="false">
+      <img id="lightboxImage" class="max-w-[100vw] max-h-[100vh] w-auto h-auto object-contain select-none pointer-events-none" draggable="false" alt="Hatıra fotoğrafı">
     </div>
 
     <p class="text-white/45 text-[9.5px] absolute bottom-5 safe-padding-bottom text-center px-6">Yakınlaştırmak için çift dokunun veya iki parmağınızla açın</p>
@@ -3937,7 +3937,7 @@
             <div class="grid grid-cols-2 gap-2 mt-2">
               ${v.photos.map((p, pIdx) => `
                 <div class="relative rounded-xl overflow-hidden h-24 cursor-pointer active:opacity-80 transition-opacity" style="background:var(--paper-deep); border:1px solid var(--line);" onclick="openLightboxFromRecord('${v.id}', ${pIdx})">
-                  <img src="${p}" class="w-full h-full object-cover" onerror="window.__imgFallback(this)">
+                  <img src="${p}" class="w-full h-full object-cover" alt="Ziyaret fotoğrafı" onerror="window.__imgFallback(this)">
                   <div class="absolute bottom-1 right-1 w-5 h-5 rounded-full flex items-center justify-center" style="background:rgba(0,0,0,0.5);">
                     <i class="fa-solid fa-expand text-white text-[9px]"></i>
                   </div>
