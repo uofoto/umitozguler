@@ -305,6 +305,20 @@
           </div>
           <div class="space-y-2">
             <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">🧭</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Ziyaret Rotası Oluştur</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Bulunduğun ilçedeki ziyaret etmediğin camilerden, en yakından başlayan otomatik bir rota çıkar.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">🚶</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Manevi Yolculuk Modu</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Oluşturduğun rotayı adım adım takip et, ziyaret ettikçe işaretle, ilerlemeni anlık gör.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
               <span class="text-base leading-none mt-0.5">🗺️</span>
               <div class="min-w-0">
                 <p class="text-[11px] font-bold" style="color:var(--ink);">Manevi Harita</p>
@@ -316,13 +330,6 @@
               <div class="min-w-0">
                 <p class="text-[11px] font-bold" style="color:var(--ink);">Favori Camiler</p>
                 <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Sevdiğin camileri kalp simgesiyle favorilere ekle, ana sayfada ayrı bir listede gör.</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-2.5">
-              <span class="text-base leading-none mt-0.5">⭐</span>
-              <div class="min-w-0">
-                <p class="text-[11px] font-bold" style="color:var(--ink);">Cami Puanlama</p>
-                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Ziyaret ettiğin camilere 5 yıldıza kadar kendi puanını verebilirsin.</p>
               </div>
             </div>
           </div>
@@ -1434,7 +1441,7 @@
     };
 
     // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI (yeni bir güncelleme yayınlandığında sürüm numarasını artırın)
-    const WHATS_NEW_VERSION = 'v3-harita-favori-puanlama';
+    const WHATS_NEW_VERSION = 'v4-rota-yolculuk-modu';
     function initWhatsNewBanner() {
       const banner = document.getElementById('whatsNewBanner');
       if (!banner) return;
