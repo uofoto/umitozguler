@@ -1323,7 +1323,7 @@
     </button>
 
     <div id="lightboxViewport" class="w-full h-full flex items-center justify-center overflow-hidden" style="touch-action:none;">
-      <img id="lightboxImage" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl select-none pointer-events-none" draggable="false">
+      <img id="lightboxImage" class="max-w-[100vw] max-h-[100vh] w-auto h-auto object-contain select-none pointer-events-none" draggable="false">
     </div>
 
     <p class="text-white/45 text-[9.5px] absolute bottom-5 safe-padding-bottom text-center px-6">Yakınlaştırmak için çift dokunun veya iki parmağınızla açın</p>
@@ -2083,14 +2083,14 @@
             img.onload = () => {
               try {
                 const canvas = document.createElement('canvas');
-                const maxDimension = 320;
+                const maxDimension = 1600;
                 let width = img.width, height = img.height;
                 if (width > height) { if (width > maxDimension) { height = Math.round((height * maxDimension) / width); width = maxDimension; } }
                 else { if (height > maxDimension) { width = Math.round((width * maxDimension) / height); height = maxDimension; } }
                 canvas.width = width; canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                finishResolve(canvas.toDataURL('image/jpeg', 0.5));
+                finishResolve(canvas.toDataURL('image/jpeg', 0.85));
               } catch (err) { finishReject(err); }
             };
             img.onerror = () => finishReject(new Error('DECODE_ERROR'));
