@@ -2615,7 +2615,6 @@
       saveActiveJourney();
       renderJourneyBanner();
       openJourneyModal();
-      window.open(getMosqueMapUrl(m.id, m.name, m.address), '_blank');
       showToast('Yolculuğun başladı, Allah kabul etsin!', 'success');
     };
 
@@ -2904,8 +2903,6 @@
       closeRouteModal();
       renderJourneyBanner();
       openJourneyModal();
-      const firstStop = activeJourney.stops[0];
-      if (firstStop) window.open(getMosqueMapUrl(firstStop.mosqueId, firstStop.name, firstStop.address), '_blank');
       showToast('Yolculuğun başladı, Allah kabul etsin!', 'success');
     };
 
