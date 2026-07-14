@@ -797,7 +797,7 @@
       renderJourneyChecklist();
       renderJourneyBanner();
 
-      window.haptic(stop.done ? [10, 40, 10] : 8);
+      window.haptic(stop.done ? [16, 45, 16] : 15);
 
       // Yeni işaretlenen durak için, bugüne ait bir kayıt yoksa deftere otomatik kısa bir ziyaret notu düşülür
       if (!wasDone && stop.done) {

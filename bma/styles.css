@@ -153,10 +153,10 @@
        panelin içeriği hafifçe belirip yukarı süzülerek gelir, böylece geçiş
        daha "canlı" ve amaçlı hissettirir. */
     @keyframes tab-content-pop{
-      0%{ opacity:0.4; transform:translateY(5px) scale(0.995); }
+      0%{ opacity:0.15; transform:translateY(14px) scale(0.97); }
       100%{ opacity:1; transform:translateY(0) scale(1); }
     }
-    .tab-content-pop{ animation:tab-content-pop .28s cubic-bezier(0.22,1,0.36,1) both; }
+    .tab-content-pop{ animation:tab-content-pop .42s cubic-bezier(0.22,1,0.36,1) both; }
 
     /* ---- Modal / Sayfa Geçişleri ----
        Bütün modallar `id="...Modal"` ve `hidden` sınıfı ile açılıp kapanıyor.
@@ -165,15 +165,18 @@
        tutarlı bir açılış animasyonu elde ediyoruz. */
     @keyframes modal-overlay-fade{ from{ opacity:0; } to{ opacity:1; } }
     @keyframes modal-sheet-in{
-      from{ opacity:0; transform:translateY(18px) scale(0.98); }
+      from{ opacity:0; transform:translateY(38px) scale(0.96); }
       to{ opacity:1; transform:translateY(0) scale(1); }
     }
-    @keyframes modal-panel-in{ from{ opacity:0; } to{ opacity:1; } }
+    @keyframes modal-panel-in{
+      from{ opacity:0; transform:scale(1.015); }
+      to{ opacity:1; transform:scale(1); }
+    }
 
-    [id$="Modal"].fixed:not(.hidden){ animation:modal-overlay-fade .2s ease both; }
+    [id$="Modal"].fixed:not(.hidden){ animation:modal-overlay-fade .32s ease both; }
     /* Alttan açılan "sheet" tarzı modallar (cami bilgi/düzenleme, silinenler vb.) */
-    [id$="Modal"].fixed:not(.hidden) > .rounded-t-3xl{ animation:modal-sheet-in .26s cubic-bezier(0.22,1,0.36,1) both; }
+    [id$="Modal"].fixed:not(.hidden) > .rounded-t-3xl{ animation:modal-sheet-in .4s cubic-bezier(0.22,1,0.36,1) both; }
     /* Tam ekran sayfa-modalları (harita, rota, yolculuk) sade bir fade ile açılır */
     #mapModal:not(.hidden), #nearbyModal:not(.hidden), #routeModal:not(.hidden), #journeyModal:not(.hidden){
-      animation:modal-panel-in .22s ease both;
+      animation:modal-panel-in .32s ease both;
     }

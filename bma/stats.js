@@ -26,11 +26,11 @@
     window.toggleFavoriteMosque = function(id) {
       if (favoriteMosqueIds.has(id)) {
         favoriteMosqueIds.delete(id);
-        window.haptic(6);
+        window.haptic(15);
         showToast('Favorilerden kaldırıldı.', 'success');
       } else {
         favoriteMosqueIds.add(id);
-        window.haptic([8, 40, 8]);
+        window.haptic([14, 45, 14]);
         showToast('Favorilere eklendi.', 'success');
       }
       saveFavorites();
@@ -42,7 +42,7 @@
       const current = mosqueRatings[id] || 0;
       // Aynı yıldıza tekrar dokunulursa puanı sıfırla (kaldır)
       mosqueRatings[id] = (current === rating) ? 0 : rating;
-      window.haptic(current === rating ? 6 : 8);
+      window.haptic(current === rating ? 12 : 16);
       saveRatings();
       updateMosquesListUI();
       updateFavoriteMosquesUI();

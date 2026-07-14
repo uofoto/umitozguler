@@ -777,7 +777,7 @@
  // 'delete' | 'resetAll'
 
     function openConfirmModal(title, message, actionLabel) {
-      window.haptic([8, 30, 8]);
+      window.haptic([12, 40, 12]);
       document.getElementById('confirmTitle').textContent = title;
       document.getElementById('confirmMessage').textContent = message;
       const okBtn = document.getElementById('confirmOkBtn');
@@ -786,7 +786,7 @@
       modal.classList.remove('hidden');
       modal.style.opacity = '0';
       requestAnimationFrame(() => {
-        modal.style.transition = 'opacity .18s ease';
+        modal.style.transition = 'opacity .28s ease';
         modal.style.opacity = '1';
         modal.firstElementChild.classList.remove('scale-95');
         modal.firstElementChild.classList.add('scale-100');
@@ -803,7 +803,7 @@
     };
     document.getElementById('confirmCancelBtn').addEventListener('click', () => closeConfirmModal());
     document.getElementById('confirmOkBtn').addEventListener('click', async () => {
-      window.haptic([10, 40, 10]);
+      window.haptic([16, 45, 16]);
       if (pendingAction === 'delete' && pendingDeleteId) {
         await executeDeleteLog(pendingDeleteId);
       } else if (pendingAction === 'resetAll') {
@@ -821,7 +821,7 @@
       modal.firstElementChild.classList.add('scale-95');
       modal.style.opacity = '0';
       document.getElementById('confirmOkBtn').textContent = "Sil";
-      setTimeout(() => { modal.classList.add('hidden'); modal.style.opacity = ''; pendingDeleteId = null; pendingMosqueDeleteId = null; pendingInfoResetId = null; pendingAction = null; }, 150);
+      setTimeout(() => { modal.classList.add('hidden'); modal.style.opacity = ''; pendingDeleteId = null; pendingMosqueDeleteId = null; pendingInfoResetId = null; pendingAction = null; }, 280);
     }
     async function executeResetAll() {
       const backup = visitsData;
@@ -924,7 +924,7 @@
         const ok = await persistNewVisit(updatedRecord);
 
         if (ok) {
-          window.haptic(12);
+          window.haptic(20);
           showToast("Kaydınız güncellendi.", "success");
           cancelEditVisit();
           triggerAllUIUpdates();
@@ -949,7 +949,7 @@
       const ok = await persistNewVisit(newRecord);
 
       if (ok) {
-        window.haptic([10, 50, 14]);
+        window.haptic([16, 55, 20]);
         showToast("İbadet kaydınız deftere işlendi. Allah kabul etsin!", "success");
         document.getElementById('visitForm').reset();
         window.uploadedPhotos = { 1: null, 2: null };
@@ -1078,7 +1078,7 @@
     }
     // 10. NAMAZ SEÇİMİ
     window.selectPrayer = function(prayer) {
-      window.haptic(6);
+      window.haptic(15);
       document.querySelectorAll('.prayer-btn').forEach(btn => btn.classList.remove('active'));
       const selectedBtn = document.getElementById(`btn-p-${prayer}`);
       if (selectedBtn) selectedBtn.classList.add('active');
@@ -1092,7 +1092,7 @@
     // 12. MOBİL SEKME GEÇİŞİ 
     window.switchTab = function(index) {
       const isChanging = index !== currentActiveTab;
-      if (isChanging) window.haptic(6);
+      if (isChanging) window.haptic(15);
       currentActiveTab = index;
       document.getElementById('tabViewport').style.transform = `translateX(-${index * 20}%)`;
       document.getElementById('navIndicator').style.left = `${index * 20}%`;
@@ -1179,7 +1179,7 @@
       if (ptrRefreshing) return;
       ptrRefreshing = true;
       ptrSetIndicator(PTR_MAX, 'refreshing');
-      window.haptic(8);
+      window.haptic(15);
       const minDisplay = new Promise(r => setTimeout(r, 550));
       try {
         loadCustomAddedMosques();

@@ -17,7 +17,7 @@
       document.getElementById('darkModeToggle')?.classList.toggle('on', isDark);
       const icon = document.getElementById('headerThemeIcon');
       if (icon) icon.className = isDark ? 'fa-solid fa-sun text-[11px]' : 'fa-solid fa-moon text-[11px]';
-      window.haptic(6);
+      window.haptic(15);
     };
     function loadTheme() {
       const saved = localStorage.getItem('manevi-atlas-theme');
@@ -34,7 +34,7 @@
       window.hapticsEnabled = !window.hapticsEnabled;
       localStorage.setItem('manevi-atlas-haptics', window.hapticsEnabled ? 'on' : 'off');
       document.getElementById('hapticToggle')?.classList.toggle('on', window.hapticsEnabled);
-      window.haptic(6);
+      window.haptic(15);
     };
     function loadHapticsUI() {
       document.getElementById('hapticToggle')?.classList.toggle('on', window.hapticsEnabled);
