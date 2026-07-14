@@ -723,6 +723,19 @@
 
       <!-- PANEL 5: PROFİL -->
       <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
+
+        <!-- KENDİ PROFİLİNİ OLUŞTUR UYARI BANNER'I (kullanıcı kendi adını/fotoğrafını ekleyene kadar gösterilir) -->
+        <div id="ownProfileHintBanner" class="hidden items-start space-x-2.5 rounded-2xl p-3.5" style="background:rgba(197,161,84,0.14); border:1px solid var(--gold);">
+          <i class="fa-solid fa-circle-exclamation mt-0.5" style="color:var(--teal-900);"></i>
+          <div class="flex-1">
+            <p class="text-[11px] font-bold" style="color:var(--ink);">Bu profil örnek olarak gösteriliyor</p>
+            <p class="text-[10px] mt-0.5 leading-snug" style="color:var(--ink-soft);">"Ümit Özgüler", uygulamanın fikir sahibidir — sizin hesabınız değildir. Aşağıdan kendi isminizi yazıp fotoğrafınızı ekleyerek profilinizi kişiselleştirin.</p>
+          </div>
+          <button onclick="dismissOwnProfileHint()" class="text-[11px] px-1" style="color:var(--ink-faint);" title="Kapat">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
         <div class="paper-card rounded-3xl p-5 text-center space-y-3 relative">
           
           <!-- Dinamik Fotoğraf Yükleme Alanı -->
@@ -3161,7 +3174,31 @@
       } else {
         updateInitials(savedName);
       }
+
+      updateOwnProfileHint();
     }
+
+    // Kullanıcı henüz kendi adını/fotoğrafını eklememişse (varsayılan "Ümit Özgüler" profili duruyorsa)
+    // ve banner'ı daha önce kapatmadıysa, kendi profilini oluşturması için uyarı göster.
+    function updateOwnProfileHint() {
+      const banner = document.getElementById('ownProfileHintBanner');
+      if (!banner) return;
+      const hasOwnName = !!localStorage.getItem('manevi-atlas-username');
+      const hasOwnPhoto = !!localStorage.getItem('manevi-atlas-userphoto');
+      const dismissed = localStorage.getItem('manevi-atlas-own-profile-hint-dismissed');
+
+      if (!hasOwnName && !hasOwnPhoto && !dismissed) {
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+      } else {
+        banner.classList.add('hidden');
+        banner.classList.remove('flex');
+      }
+    }
+    window.dismissOwnProfileHint = function() {
+      localStorage.setItem('manevi-atlas-own-profile-hint-dismissed', '1');
+      updateOwnProfileHint();
+    };
 
     window.saveProfileName = function(name) {
       const val = name.trim() || 'Seyyah';
@@ -3170,6 +3207,7 @@
       if (!localStorage.getItem('manevi-atlas-userphoto')) {
         updateInitials(val);
       }
+      updateOwnProfileHint();
       showToast("Profil ismi kaydedildi.", "success");
     }
 
@@ -3198,6 +3236,7 @@
           const base64Data = await window.compressImage(input.files[0]);
           localStorage.setItem('manevi-atlas-userphoto', base64Data);
           setProfileImages(base64Data);
+          updateOwnProfileHint();
           showToast("Profil fotoğrafı güncellendi!", "success");
         } catch (err) {
           showToast("Fotoğraf yüklenemedi. Lütfen tekrar deneyin.", "error");
