@@ -462,14 +462,45 @@
           </div>
         </div>
 
-        <div class="rounded-2xl p-4 flex items-start space-x-3" style="background:rgba(195,154,69,0.08); border:1px solid rgba(195,154,69,0.3);">
-          <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(195,154,69,0.18); color:var(--gold-deep);">
-            <i class="fa-solid fa-compass text-xs animate-spin-slow"></i>
+        <div id="dailySuggestionCard" class="rounded-2xl p-4 space-y-3 relative overflow-hidden" style="background:linear-gradient(160deg, rgba(195,154,69,0.12), rgba(195,154,69,0.04)); border:1px solid rgba(195,154,69,0.32);">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs flex items-center gap-1.5" style="color:var(--gold-deep);">
+              <i class="fa-solid fa-compass animate-spin-slow"></i><span>Bugün Bursa'da</span>
+            </h4>
+            <span id="dailySuggestionDate" class="text-[10px] font-bold font-ledger" style="color:var(--ink-faint);">—</span>
           </div>
-          <div class="space-y-0.5">
-            <h4 class="font-bold text-xs" style="color:var(--gold-deep);">Manevi Seyahat Önerisi</h4>
-            <p id="recommendationText" class="text-[11px] leading-relaxed font-light" style="color:var(--ink-soft);">Namaz kaydı ekledikçe size özel ziyaret rotaları burada görüntülenecek.</p>
+
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex-1 min-w-0">
+              <p class="text-[8.5px] font-bold uppercase tracking-wide" style="color:var(--ink-faint);">Bugün ziyaret önerisi</p>
+              <p id="dailySuggestionMosqueName" class="text-sm font-bold truncate" style="color:var(--ink);">Namaz kaydı ekledikçe size özel öneriler burada görüntülenecek.</p>
+            </div>
+            <div id="dailySuggestionWeather" class="hidden flex-shrink-0 items-center gap-1.5 px-2.5 py-1.5 rounded-xl" style="background:rgba(255,255,255,0.65);">
+              <i id="dailySuggestionWeatherIcon" class="fa-solid fa-cloud-sun text-xs" style="color:var(--gold-deep);"></i>
+              <span id="dailySuggestionTemp" class="text-xs font-bold font-ledger" style="color:var(--ink);">—</span>
+            </div>
           </div>
+
+          <div id="dailySuggestionStatsGrid" class="hidden grid grid-cols-2 gap-2">
+            <div class="rounded-xl p-2 text-center" style="background:rgba(255,255,255,0.55);">
+              <p class="text-[8px] font-bold uppercase" style="color:var(--ink-faint);">Yürüme mesafesi</p>
+              <p id="dailySuggestionDistance" class="text-xs font-bold font-ledger" style="color:var(--teal-800);">—</p>
+            </div>
+            <div class="rounded-xl p-2 text-center" style="background:rgba(255,255,255,0.55);">
+              <p class="text-[8px] font-bold uppercase" style="color:var(--ink-faint);">Tahmini süre</p>
+              <p id="dailySuggestionDuration" class="text-xs font-bold font-ledger" style="color:var(--teal-800);">—</p>
+            </div>
+          </div>
+
+          <button id="dailySuggestionLocationBtn" onclick="refreshDailySuggestionLocation()" class="hidden w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900); border:1px solid rgba(21,90,76,0.18);">
+            <i class="fa-solid fa-location-crosshairs"></i><span>Yürüme mesafesini görmek için konumunu paylaş</span>
+          </button>
+
+          <p id="dailySuggestionVisitedNote" class="text-[10.5px] font-semibold" style="color:var(--ink-soft);"></p>
+
+          <button id="dailySuggestionStartBtn" onclick="startTodayMosqueJourney()" class="hidden w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2" style="background:var(--gold-deep); color:#241F17;">
+            <i class="fa-solid fa-person-walking-luggage"></i><span>Rotayı Başlat</span>
+          </button>
         </div>
 
         <div class="paper-card rounded-2xl p-4 space-y-2.5">
@@ -2129,6 +2160,8 @@
 
     // ---- MANEVİ HARİTA (Ziyaret Edilen / Edilmeyen Camiler Haritası) ----
     const GEOCODE_CACHE_KEY = 'manevi-atlas-geocode-cache';
+    const LAST_LOCATION_KEY = 'manevi-atlas-last-location';
+    const WEATHER_CACHE_KEY = 'manevi-atlas-weather-cache';
     let mosqueGeocodeCache = {};
     let leafletMapInstance = null;
     let mosqueMarkersLayer = null;
@@ -2442,12 +2475,194 @@
       content.classList.remove('hidden');
     };
 
+    // ---- BUGÜN BURSA'DA (Günlük Ziyaret Önerisi Kartı) ----
+    let todaysSuggestedMosque = null;
+
+    function hashStringToInt(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+      return hash;
+    }
+
+    function pickTodayMosque() {
+      const visitedIds = new Set(visitsData.map(v => v.mosqueId));
+      const unvisited = PRESET_MOSQUES.filter(m => !visitedIds.has(m.id));
+      const pool = unvisited.length ? unvisited : PRESET_MOSQUES;
+      if (!pool.length) return null;
+
+      const lastLoc = loadLastKnownLocation();
+      const seed = hashStringToInt(todayDateStr());
+
+      if (lastLoc) {
+        const withCoords = pool.filter(m => mosqueGeocodeCache[m.id]);
+        if (withCoords.length) {
+          const byDistance = withCoords
+            .map(m => ({ mosque: m, km: haversineKm(lastLoc, mosqueGeocodeCache[m.id]) }))
+            .sort((a, b) => a.km - b.km)
+            .slice(0, 5);
+          return byDistance[seed % byDistance.length].mosque;
+        }
+      }
+      return pool[seed % pool.length];
+    }
+
+    async function fetchTodayWeather() {
+      try {
+        const cachedRaw = localStorage.getItem(WEATHER_CACHE_KEY);
+        const today = todayDateStr();
+        if (cachedRaw) {
+          const cached = JSON.parse(cachedRaw);
+          if (cached.date === today) return cached;
+        }
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${BURSA_CENTER[0]}&longitude=${BURSA_CENTER[1]}&current_weather=true`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data.current_weather) return null;
+        const result = { date: today, temp: Math.round(data.current_weather.temperature), code: data.current_weather.weathercode };
+        localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(result));
+        return result;
+      } catch (e) { return null; }
+    }
+
+    function weatherCodeToIcon(code) {
+      if (code === 0) return 'fa-sun';
+      if (code <= 3) return 'fa-cloud-sun';
+      if (code <= 48) return 'fa-smog';
+      if (code <= 67) return 'fa-cloud-rain';
+      if (code <= 77) return 'fa-snowflake';
+      if (code <= 82) return 'fa-cloud-showers-heavy';
+      if (code <= 99) return 'fa-cloud-bolt';
+      return 'fa-cloud-sun';
+    }
+
+    async function renderDailySuggestionStats(mosque) {
+      const statsGrid = document.getElementById('dailySuggestionStatsGrid');
+      const locBtn = document.getElementById('dailySuggestionLocationBtn');
+      const lastLoc = loadLastKnownLocation();
+
+      if (!lastLoc) {
+        statsGrid.classList.add('hidden');
+        locBtn.classList.remove('hidden');
+        return;
+      }
+
+      let coords = mosqueGeocodeCache[mosque.id];
+      if (!coords) {
+        coords = await geocodeSingleMosque(mosque);
+        if (coords) { mosqueGeocodeCache[mosque.id] = coords; saveGeocodeCache(); }
+      }
+
+      if (!coords) {
+        statsGrid.classList.add('hidden');
+        locBtn.classList.add('hidden');
+        return;
+      }
+
+      const km = haversineKm(lastLoc, coords);
+      document.getElementById('dailySuggestionDistance').textContent = formatDistance(km);
+      document.getElementById('dailySuggestionDuration').textContent = `${Math.max(1, Math.round(km * 12))} dakika`;
+      statsGrid.classList.remove('hidden');
+      locBtn.classList.add('hidden');
+    }
+
+    window.refreshDailySuggestionLocation = async function() {
+      const locBtn = document.getElementById('dailySuggestionLocationBtn');
+      const originalHTML = locBtn.innerHTML;
+      locBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Konum alınıyor…</span>';
+      const loc = await tryGetUserLocation();
+      locBtn.innerHTML = originalHTML;
+      if (!loc) {
+        showToast('Konumun alınamadı, lütfen konum iznini kontrol et.', 'error');
+        return;
+      }
+      if (todaysSuggestedMosque) renderDailySuggestionStats(todaysSuggestedMosque);
+    };
+
+    window.startTodayMosqueJourney = function() {
+      if (!todaysSuggestedMosque) return;
+      const m = todaysSuggestedMosque;
+      activeJourney = {
+        date: todayDateStr(),
+        district: m.district,
+        createdAt: new Date().toISOString(),
+        stops: [{ mosqueId: m.id, name: m.name, address: m.address, done: false, doneAt: null }]
+      };
+      saveActiveJourney();
+      renderJourneyBanner();
+      openJourneyModal();
+      showToast('Yolculuğun başladı, Allah kabul etsin!', 'success');
+    };
+
+    async function updateDailySuggestionCard() {
+      const dateEl = document.getElementById('dailySuggestionDate');
+      const nameEl = document.getElementById('dailySuggestionMosqueName');
+      const noteEl = document.getElementById('dailySuggestionVisitedNote');
+      const startBtn = document.getElementById('dailySuggestionStartBtn');
+      const weatherWrap = document.getElementById('dailySuggestionWeather');
+
+      dateEl.textContent = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+
+      const mosque = pickTodayMosque();
+      todaysSuggestedMosque = mosque;
+
+      if (!mosque) {
+        nameEl.textContent = "Namaz kaydı ekledikçe size özel öneriler burada görüntülenecek.";
+        noteEl.textContent = '';
+        startBtn.classList.add('hidden');
+        document.getElementById('dailySuggestionStatsGrid').classList.add('hidden');
+        document.getElementById('dailySuggestionLocationBtn').classList.add('hidden');
+        return;
+      }
+
+      nameEl.textContent = mosque.name;
+      startBtn.classList.remove('hidden');
+
+      const visitedToday = visitsData.some(v => v.mosqueId === mosque.id && v.date === todayDateStr());
+      const visitedEver = visitsData.some(v => v.mosqueId === mosque.id);
+      if (visitedToday) {
+        noteEl.textContent = `Bugün ${mosque.name}'yi ziyaret ettiniz. Allah kabul etsin! ✓`;
+        noteEl.style.color = '#1F7A65';
+      } else if (visitedEver) {
+        noteEl.textContent = `Bugün bu camiyi henüz ziyaret etmediniz.`;
+        noteEl.style.color = 'var(--ink-soft)';
+      } else {
+        noteEl.textContent = `Henüz ziyaret etmediğiniz bir mabet — bugün ilk ziyaretin olabilir.`;
+        noteEl.style.color = 'var(--ink-soft)';
+      }
+
+      renderDailySuggestionStats(mosque);
+
+      fetchTodayWeather().then(w => {
+        if (!w) return;
+        weatherWrap.classList.remove('hidden');
+        weatherWrap.style.display = 'flex';
+        document.getElementById('dailySuggestionTemp').textContent = `${w.temp}°`;
+        document.getElementById('dailySuggestionWeatherIcon').className = `fa-solid ${weatherCodeToIcon(w.code)} text-xs`;
+      });
+    }
+
+    function saveLastKnownLocation(loc) {
+      try { localStorage.setItem(LAST_LOCATION_KEY, JSON.stringify({ lat: loc.lat, lng: loc.lng, ts: Date.now() })); } catch (e) {}
+    }
+    function loadLastKnownLocation() {
+      try {
+        const raw = localStorage.getItem(LAST_LOCATION_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) { return null; }
+    }
+
     function tryGetUserLocation() {
       return new Promise((resolve) => {
         if (!('geolocation' in navigator)) { resolve(null); return; }
         const timer = setTimeout(() => resolve(null), 6000);
         navigator.geolocation.getCurrentPosition(
-          (pos) => { clearTimeout(timer); resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }); },
+          (pos) => {
+            clearTimeout(timer);
+            const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+            saveLastKnownLocation(loc);
+            resolve(loc);
+          },
           () => { clearTimeout(timer); resolve(null); },
           { enableHighAccuracy: true, timeout: 5500, maximum: 60000 }
         );
@@ -3456,23 +3671,7 @@
       const overallPerc = Math.round((totalUniquePresetVisited / PRESET_MOSQUES.length) * 100) || 0;
       document.getElementById('overallBadge').textContent = `%${overallPerc} Tamamlandı`;
 
-      const recText = document.getElementById('recommendationText');
-      if (visitsData.length === 0) {
-        recText.textContent = "Manevi seyahatinize başlamak için ilk namazınızı tescilli Ulu Cami, Yeşil Cami veya İznik Ayasofya'da kılabilirsiniz!";
-      } else {
-        const unvisited = PRESET_MOSQUES.filter(m => !visitedMosqueIds.has(m.id));
-        if (unvisited.length === 0) {
-          recText.textContent = "Harika! Bursa'daki tescilli camilerin tamamında ibadet ettiniz. Allah kabul etsin.";
-        } else {
-          // Prefer same district or main ones first
-          const lastVisit = visitsData[0];
-          let preferred = unvisited.filter(m => m.district === lastVisit.district);
-          if (!preferred.length) preferred = unvisited.filter(m => m.district === 'Osmangazi' || m.district === 'Yıldırım');
-          if (!preferred.length) preferred = unvisited;
-          const pick = preferred[0];
-          recText.textContent = `Sıradaki öneri (${pick.district}): "${pick.name}".`;
-        }
-      }
+      updateDailySuggestionCard();
 
       // Unvan: herhangi bir ilçeyi tamamlayan Mihrap, hepsini Fatih
       const completedAnyDistrict = ['Osmangazi','Yıldırım','Nilüfer','Mudanya','İznik','Gemlik','İnegöl','Orhangazi','Yenişehir','Karacabey','Mustafakemalpaşa','Kestel','Gürsu','Orhaneli','Keles','Büyükorhan','Harmancık'].some(d => {
