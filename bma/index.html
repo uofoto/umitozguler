@@ -2083,14 +2083,16 @@
             img.onload = () => {
               try {
                 const canvas = document.createElement('canvas');
-                const maxDimension = 1600;
+                const maxDimension = 2400;
                 let width = img.width, height = img.height;
                 if (width > height) { if (width > maxDimension) { height = Math.round((height * maxDimension) / width); width = maxDimension; } }
                 else { if (height > maxDimension) { width = Math.round((width * maxDimension) / height); height = maxDimension; } }
                 canvas.width = width; canvas.height = height;
                 const ctx = canvas.getContext('2d');
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
                 ctx.drawImage(img, 0, 0, width, height);
-                finishResolve(canvas.toDataURL('image/jpeg', 0.85));
+                finishResolve(canvas.toDataURL('image/jpeg', 0.92));
               } catch (err) { finishReject(err); }
             };
             img.onerror = () => finishReject(new Error('DECODE_ERROR'));
