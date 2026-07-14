@@ -551,7 +551,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3" style="color:var(--ink-faint);">
               <i class="fa-solid fa-magnifying-glass text-xs"></i>
             </span>
-            <input id="mosqueSearchInput" type="text" placeholder="Tarihi mabetler arasında ara..." class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
+            <input id="mosqueSearchInput" type="text" placeholder="Tarihi mabetler arasında ara..." autocomplete="off" class="field w-full rounded-xl pl-9 pr-4 py-2 text-xs">
           </div>
           <div class="grid grid-cols-3 gap-1.5">
             <button onclick="filterDistrict('HEPSİ')" id="btn-filter-all" class="text-[10px] font-bold py-2 rounded-lg text-white transition-all" style="background:var(--teal-900);">Hepsi</button>
@@ -3396,6 +3396,11 @@
       loadFavorites();
       loadRatings();
       loadGeocodeCache();
+      // Sayfa yenilendiğinde tarayıcının eski arama kutusu değerini geri getirmesini
+      // (form restore) önlemek için arama kutusunu ve filtreyi başlangıç durumuna sıfırla
+      const __searchInputOnInit = document.getElementById('mosqueSearchInput');
+      if (__searchInputOnInit) __searchInputOnInit.value = '';
+      activeFilterDistrict = 'HEPSİ';
       initWhatsNewBanner();
       initMosqueInfoHintBanner();
       await loadVisits();
@@ -4768,6 +4773,10 @@
     // 14. İLÇE FİLTRELEME
     window.filterDistrict = function(district) {
       activeFilterDistrict = district;
+      // Bir ilçe/filtre butonuna tıklandığında, eski arama metni yüzünden o ilçedeki
+      // camilerin "bulunamadı" görünmesini engellemek için arama kutusunu temizle
+      const searchInputEl = document.getElementById('mosqueSearchInput');
+      if (searchInputEl && searchInputEl.value) searchInputEl.value = '';
       const btnIds = ['btn-filter-all','btn-filter-kilinanlar','btn-filter-favoriler','btn-filter-osmangazi','btn-filter-yildirim','btn-filter-nilufer','btn-filter-iznik','btn-filter-mudanya','btn-filter-diger'];
       const baseStyle = "background:var(--paper-deep); color:var(--ink-soft);";
       const activeStyle = "background:var(--teal-900); color:#fff;";
