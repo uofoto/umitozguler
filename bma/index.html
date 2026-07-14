@@ -333,7 +333,8 @@
             </h3>
             <button onclick="dismissWhatsNewBanner()" class="icon-btn flex-shrink-0" style="color:var(--ink-faint); width:24px; height:24px;" title="Kapat"><i class="fa-solid fa-xmark text-[11px]"></i></button>
           </div>
-          <div class="space-y-2">
+          <div class="space-y-2" id="whatsNewList">
+            <div id="whatsNewMosqueEntry"></div>
             <div class="flex items-start gap-2.5">
               <span class="text-base leading-none mt-0.5">🕌</span>
               <div class="min-w-0">
@@ -1573,18 +1574,71 @@
       if (banner) { banner.classList.add('hidden'); banner.classList.remove('flex'); }
     };
 
-    // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI (yeni bir güncelleme yayınlandığında sürüm numarasını artırın)
-    const WHATS_NEW_VERSION = 'v5-oneri-offline-silinen-ayet';
+    // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI
+    // Statik özellik güncellemeleri için (yeni bir uygulama özelliği yayınlandığında bu sürüm etiketini artırın)
+    const WHATS_NEW_STATIC_VERSION = 'v6-oneri-offline-silinen-ayet';
+
+    // Envanterdeki en yeni "addedAt" tarihini bulur; yeni cami eklendikçe bu otomatik değişir,
+    // böylece kartın tekrar gösterilip gösterilmeyeceği koddaki bir sürüm numarasına değil,
+    // gerçek veriye bağlı olur (elle güncelleme gerekmez).
+    function getNewestMosqueAddedAt() {
+      const withDates = PRESET_MOSQUES.filter(m => m.addedAt);
+      if (withDates.length === 0) return 'none';
+      return withDates.reduce((latest, m) => new Date(m.addedAt) > new Date(latest) ? m.addedAt : latest, withDates[0].addedAt);
+    }
+
+    // Son 14 gün içinde eklenen camileri (recentlyAdded ile aynı eşik) özetleyen bir madde üretip karta ekler
+    function renderWhatsNewMosqueEntry() {
+      const el = document.getElementById('whatsNewMosqueEntry');
+      if (!el) return;
+
+      const now = new Date();
+      const recentNew = PRESET_MOSQUES
+        .filter(m => m.addedAt)
+        .filter(m => {
+          const diffDays = Math.floor((now - new Date(m.addedAt)) / (1000 * 60 * 60 * 24));
+          return diffDays >= 0 && diffDays <= 14;
+        })
+        .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
+
+      if (recentNew.length === 0) {
+        el.innerHTML = '';
+        return;
+      }
+
+      const districts = [...new Set(recentNew.map(m => m.district))];
+      const districtText = districts.length > 1
+        ? `${districts.slice(0, -1).join(', ')} ve ${districts[districts.length - 1]}`
+        : districts[0];
+      const namesPreview = recentNew.slice(0, 3).map(m => m.name).join(', ');
+      const extra = recentNew.length > 3 ? ` ve ${recentNew.length - 3} diğeri` : '';
+
+      el.innerHTML = `
+        <div class="flex items-start gap-2.5">
+          <span class="text-base leading-none mt-0.5">🕌</span>
+          <div class="min-w-0">
+            <p class="text-[11px] font-bold" style="color:var(--ink);">${recentNew.length} Yeni Cami Eklendi</p>
+            <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">${escapeHtml(districtText)} bölgelerinden ${escapeHtml(namesPreview)}${escapeHtml(extra)} envantere katıldı.</p>
+          </div>
+        </div>`;
+    }
+
     function initWhatsNewBanner() {
       const banner = document.getElementById('whatsNewBanner');
       if (!banner) return;
+
+      renderWhatsNewMosqueEntry();
+
+      const currentVersion = `${WHATS_NEW_STATIC_VERSION}|${getNewestMosqueAddedAt()}`;
+      window.__whatsNewCurrentVersion = currentVersion;
+
       const dismissedVersion = localStorage.getItem('manevi-atlas-whatsnew-dismissed');
-      if (dismissedVersion !== WHATS_NEW_VERSION) {
+      if (dismissedVersion !== currentVersion) {
         banner.classList.remove('hidden');
       }
     }
     window.dismissWhatsNewBanner = function() {
-      localStorage.setItem('manevi-atlas-whatsnew-dismissed', WHATS_NEW_VERSION);
+      localStorage.setItem('manevi-atlas-whatsnew-dismissed', window.__whatsNewCurrentVersion || WHATS_NEW_STATIC_VERSION);
       const banner = document.getElementById('whatsNewBanner');
       if (banner) banner.classList.add('hidden');
     };
