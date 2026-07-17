@@ -124,7 +124,7 @@
       <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
 
         <div class="hero-panel text-white rounded-3xl p-5 relative overflow-hidden pop-in">
-          <svg class="arch-watermark" width="130" height="130" viewBox="0 0 100 100" fill="none">
+          <svg class="arch-watermark" width="130" height="130" viewBox="0 0 100 100" fill="none" style="pointer-events:none;">
             <path d="M20 90 V45 A30 30 0 0 1 80 45 V90" stroke="#E7D4A0" stroke-width="2"/>
             <path d="M32 90 V50 A18 18 0 0 1 68 50 V90" stroke="#E7D4A0" stroke-width="1.4"/>
           </svg>
@@ -137,9 +137,6 @@
                 <span id="overallBadge" class="gold-shimmer text-[10px] font-bold px-2 py-0.5 rounded-lg font-ledger" style="color:var(--teal-950);">%0 Tamamlandı</span>
                 <button onclick="openMapModal()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="Manevi Haritayı Aç">
                   <i class="fa-solid fa-map-location-dot text-[10px]"></i>
-                </button>
-                <button onclick="shareMyStats()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="İstatistiklerini sosyal medyada paylaş">
-                  <i class="fa-solid fa-chart-simple text-[10px]"></i>
                 </button>
                 <button onclick="shareProgress()" class="icon-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:var(--gold-soft); width:26px; height:26px;" title="Uygulamayı arkadaşlarınla paylaş">
                   <i class="fa-solid fa-share-nodes text-[10px]"></i>
@@ -182,6 +179,13 @@
           </div>
           <div class="space-y-2" id="whatsNewList">
             <div id="whatsNewMosqueEntry"></div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">📊</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">İstatistiklerini Paylaş</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Paylaşım butonu artık Defter → İstatistik sekmesinde, daha belirgin bir şekilde yer alıyor.</p>
+              </div>
+            </div>
             <div class="flex items-start gap-2.5">
               <span class="text-base leading-none mt-0.5">🕌</span>
               <div class="min-w-0">
@@ -584,11 +588,19 @@
 
         <!-- DEFTER / İSTATİSTİK SEKME SEÇİCİ -->
         <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl" style="background:var(--paper-deep);">
-          <button id="defterViewBtn" onclick="switchDefterView('defter')" class="segment-tab active text-[11px] font-bold py-2 rounded-xl">
+          <button id="defterViewBtn" onclick="switchDefterView('defter'); document.getElementById('statsShareBtnWrap').classList.add('hidden');" class="segment-tab active text-[11px] font-bold py-2 rounded-xl">
             <i class="fa-solid fa-scroll mr-1"></i> Defter
           </button>
-          <button id="statsViewBtn" onclick="switchDefterView('stats')" class="segment-tab text-[11px] font-bold py-2 rounded-xl" style="color:var(--ink-soft);">
+          <button id="statsViewBtn" onclick="switchDefterView('stats'); document.getElementById('statsShareBtnWrap').classList.remove('hidden');" class="segment-tab text-[11px] font-bold py-2 rounded-xl" style="color:var(--ink-soft);">
             <i class="fa-solid fa-chart-pie mr-1"></i> İstatistik
+          </button>
+        </div>
+
+        <!-- İSTATİSTİKLERİNİ PAYLAŞ BUTONU (yalnızca İstatistik sekmesinde görünür) -->
+        <div id="statsShareBtnWrap" class="hidden">
+          <button onclick="shareMyStats()" class="w-full flex items-center justify-center gap-2 rounded-2xl py-2.5 text-[11.5px] font-bold text-white" style="background:var(--teal-900); border:1px solid rgba(21,90,76,0.3);" title="İstatistiklerini sosyal medyada paylaş">
+            <i class="fa-solid fa-chart-simple text-[11px]"></i>
+            <span>İstatistiklerini Paylaş</span>
           </button>
         </div>
 
