@@ -36,7 +36,10 @@ const APP_SHELL = [
 const NETWORK_ONLY_HOSTS = [
   "api.open-meteo.com",
   "api.aladhan.com",
-  "nominatim.openstreetmap.org"
+  "nominatim.openstreetmap.org",
+  "www.googletagmanager.com",
+  "www.google-analytics.com",
+  "region1.google-analytics.com"
 ];
 
 self.addEventListener("install", (event) => {
