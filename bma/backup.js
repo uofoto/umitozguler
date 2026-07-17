@@ -71,9 +71,16 @@
     // paylaşım menüsü (Instagram, WhatsApp, X vb.) üzerinden paylaşmasını
     // sağlar. Web Share API dosya paylaşımını desteklemeyen tarayıcılarda
     // görsel otomatik olarak indirilir ve özet metin panoya kopyalanır.
+    // İki metni ortak bir satır genişliğine sığdırmak için basit kısaltma yardımcı fonksiyonu
+    function fitText(ctx, text, maxWidth) {
+      if (ctx.measureText(text).width <= maxWidth) return text;
+      let t = text;
+      while (t.length > 1 && ctx.measureText(t + '…').width > maxWidth) t = t.slice(0, -1);
+      return t + '…';
+    }
     function renderStatsShareCard(data) {
       return new Promise((resolve) => {
-        const W = 1080, H = 1350;
+        const W = 1080, H = 1580;
         const canvas = document.createElement('canvas');
         canvas.width = W; canvas.height = H;
         const ctx = canvas.getContext('2d');
@@ -122,13 +129,13 @@
         ctx.font = '800 60px serif';
         ctx.fillText(data.name, W / 2, 285);
 
-        // Büyük tamamlanma yüzdesi
+        // Büyük tamamlanma yüzdesi (biraz küçültüldü, alt bölümlere yer açmak için)
         ctx.fillStyle = goldSoft;
-        ctx.font = '900 168px sans-serif';
-        ctx.fillText(`%${data.completionPerc}`, W / 2, 545);
+        ctx.font = '900 140px sans-serif';
+        ctx.fillText(`%${data.completionPerc}`, W / 2, 490);
         ctx.fillStyle = 'rgba(255,255,255,0.72)';
-        ctx.font = '600 26px sans-serif';
-        ctx.fillText('YOLCULUK TAMAMLANDI', W / 2, 600);
+        ctx.font = '600 24px sans-serif';
+        ctx.fillText('YOLCULUK TAMAMLANDI', W / 2, 535);
 
         // Alt istatistik sütunları
         const stats = [
@@ -140,28 +147,103 @@
         stats.forEach((s, i) => {
           const cx = colW * i + colW / 2;
           ctx.fillStyle = '#FFFFFF';
-          ctx.font = '800 50px sans-serif';
-          ctx.fillText(s[0], cx, 780);
+          ctx.font = '800 46px sans-serif';
+          ctx.fillText(s[0], cx, 665);
           ctx.fillStyle = 'rgba(255,255,255,0.68)';
-          ctx.font = '600 22px sans-serif';
-          ctx.fillText(s[1], cx, 815);
+          ctx.font = '600 21px sans-serif';
+          ctx.fillText(s[1], cx, 698);
         });
 
         // Ayraç
         ctx.strokeStyle = 'rgba(231,212,160,0.4)';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(140, 870);
-        ctx.lineTo(W - 140, 870);
+        ctx.moveTo(140, 745);
+        ctx.lineTo(W - 140, 745);
         ctx.stroke();
+
+        // === SON İBADET (en son hangi camide vakit kılındığı) ===
+        let cursorY = 745;
+        if (data.lastVisit) {
+          cursorY = 800;
+          ctx.fillStyle = goldSoft;
+          ctx.font = '700 24px sans-serif';
+          ctx.fillText('SON DURAK', W / 2, cursorY);
+
+          cursorY += 55;
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '800 42px serif';
+          ctx.fillText(fitText(ctx, data.lastVisit.mosqueName, W - 200), W / 2, cursorY);
+
+          cursorY += 38;
+          ctx.fillStyle = 'rgba(255,255,255,0.7)';
+          ctx.font = '600 24px sans-serif';
+          const subLine = [data.lastVisit.district, data.lastVisit.prayerTime, data.lastVisit.relativeDate].filter(Boolean).join('  •  ');
+          ctx.fillText(subLine, W / 2, cursorY);
+
+          cursorY += 45;
+          ctx.strokeStyle = 'rgba(231,212,160,0.4)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(140, cursorY);
+          ctx.lineTo(W - 140, cursorY);
+          ctx.stroke();
+        }
+
+        // === ZİYARET ETTİĞİ CAMİLER LİSTESİ ===
+        if (data.visitedMosqueNames && data.visitedMosqueNames.length) {
+          cursorY += 55;
+          ctx.fillStyle = goldSoft;
+          ctx.font = '700 24px sans-serif';
+          ctx.fillText('İHYA ETTİĞİ CAMİLER', W / 2, cursorY);
+
+          cursorY += 20;
+          const listStartY = cursorY + 40;
+          const rowH = 56;
+          ctx.textAlign = 'left';
+          data.visitedMosqueNames.forEach((name, i) => {
+            const y = listStartY + i * rowH;
+            // altın nokta
+            ctx.fillStyle = gold;
+            ctx.beginPath();
+            ctx.arc(160, y - 12, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '600 30px sans-serif';
+            ctx.fillText(fitText(ctx, name, W - 320), 190, y);
+          });
+          ctx.textAlign = 'center';
+
+          if (data.extraMosqueCount > 0) {
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.font = '600 24px sans-serif';
+            ctx.fillText(`+ ${data.extraMosqueCount} cami daha`, W / 2, listStartY + data.visitedMosqueNames.length * rowH + 5);
+            cursorY = listStartY + data.visitedMosqueNames.length * rowH + 5;
+          } else {
+            cursorY = listStartY + (data.visitedMosqueNames.length - 1) * rowH;
+          }
+        }
 
         // Alt bilgi
         ctx.fillStyle = 'rgba(255,255,255,0.55)';
         ctx.font = '500 24px sans-serif';
-        ctx.fillText('umitozguler.com.tr/bma', W / 2, H - 70);
+        ctx.fillText('umitozguler.com.tr/bma', W / 2, H - 60);
 
         canvas.toBlob((blob) => resolve(blob), 'image/png', 0.95);
       });
+    }
+    // Bir tarihi "Bugün / Dün / X gün önce / X ay önce" gibi göreceli metne çevirir
+    function formatRelativeDate(dateStr) {
+      if (!dateStr) return '';
+      const then = new Date(dateStr);
+      if (isNaN(then.getTime())) return '';
+      const now = new Date();
+      const diffDays = Math.floor((new Date(now.toDateString()) - new Date(then.toDateString())) / (1000 * 60 * 60 * 24));
+      if (diffDays <= 0) return 'Bugün';
+      if (diffDays === 1) return 'Dün';
+      if (diffDays < 30) return `${diffDays} gün önce`;
+      if (diffDays < 365) return `${Math.round(diffDays / 30)} ay önce`;
+      return `${Math.round(diffDays / 365)} yıl önce`;
     }
     window.shareMyStats = async function() {
       try {
@@ -180,11 +262,43 @@
         const title = (document.getElementById('userTitle')?.textContent || 'Seyyah 🧭').trim();
         const name = localStorage.getItem('manevi-atlas-username') || 'Seyyah';
 
-        const blob = await renderStatsShareCard({ name, title, totalVisits, streak, visitedCount, totalMosques, completionPerc });
+        // Ziyaretleri tarih/saate göre en yeniden en eskiye sırala
+        const sortedVisits = [...visitsData].sort((a, b) => {
+          const da = new Date(`${a.date || ''}T${a.time || '00:00'}`);
+          const db = new Date(`${b.date || ''}T${b.time || '00:00'}`);
+          return db - da;
+        });
+
+        // En son namaz kılınan cami
+        const lastRaw = sortedVisits[0];
+        const lastVisit = lastRaw && lastRaw.mosqueName ? {
+          mosqueName: lastRaw.mosqueName,
+          district: lastRaw.district || '',
+          prayerTime: lastRaw.prayerTime || '',
+          relativeDate: formatRelativeDate(lastRaw.date)
+        } : null;
+
+        // Ziyaret edilen camilerin (tekrarsız) en yeniden en eskiye listesi
+        const seenIds = new Set();
+        const allVisitedNames = [];
+        for (const v of sortedVisits) {
+          if (!v.mosqueName || seenIds.has(v.mosqueId)) continue;
+          seenIds.add(v.mosqueId);
+          allVisitedNames.push(v.mosqueName);
+        }
+        const MAX_LISTED = 5;
+        const visitedMosqueNames = allVisitedNames.slice(0, MAX_LISTED);
+        const extraMosqueCount = Math.max(0, allVisitedNames.length - MAX_LISTED);
+
+        const blob = await renderStatsShareCard({
+          name, title, totalVisits, streak, visitedCount, totalMosques, completionPerc,
+          lastVisit, visitedMosqueNames, extraMosqueCount
+        });
         const stamp = new Date().toISOString().slice(0, 10);
         const fileName = `bursa-manevi-atlas-istatistik-${stamp}.png`;
         const file = new File([blob], fileName, { type: 'image/png' });
-        const shareText = `${name} - Bursa Manevi Atlası'nda ${totalVisits} vakit namaz kaydetti, ${visitedCount}/${totalMosques} tarihi camiyi ziyaret etti (%${completionPerc}). 🕌`;
+        const lastVisitText = lastVisit ? ` En son ${lastVisit.mosqueName}'de namaz kıldı.` : '';
+        const shareText = `${name} - Bursa Manevi Atlası'nda ${totalVisits} vakit namaz kaydetti, ${visitedCount}/${totalMosques} tarihi camiyi ziyaret etti (%${completionPerc}).${lastVisitText} 🕌`;
 
         // Cihaz, dosya paylaşımını destekliyorsa (çoğu telefon) doğrudan
         // Instagram/WhatsApp/X gibi uygulamaların paylaşım menüsünü aç.
