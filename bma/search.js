@@ -139,6 +139,10 @@
         if (!byDistrict[m.district]) byDistrict[m.district] = [];
         byDistrict[m.district].push(m);
       });
+      // Her ilçe grubu içindeki camileri isme göre (Türkçe harf sırasına göre) sırala
+      Object.keys(byDistrict).forEach(d => {
+        byDistrict[d].sort((a, b) => a.name.localeCompare(b.name, 'tr'));
+      });
       // Prefer ordered, then any remaining
       const ordered = districtOrder.filter(d => byDistrict[d] && byDistrict[d].length);
       const remaining = Object.keys(byDistrict).filter(d => !districtOrder.includes(d)).sort();
