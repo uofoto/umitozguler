@@ -1,4 +1,4 @@
-// search.js — Cami listesi filtreleme/arama ve dropdown doldurma
+// search.js — Cami listesi filtreleme/arama ve dropdown doldurma 
 
     // 5. CAMİ LİSTESİ
     function updateMosquesListUI() {
