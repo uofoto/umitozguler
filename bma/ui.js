@@ -603,10 +603,10 @@
     };
     // === PROFIL FOTOGRAFI VE ISIM YONETIMI ===
     function loadProfileData() {
-      const savedName = localStorage.getItem('manevi-atlas-username') || 'Ümit Özgüler';
+      const savedName = localStorage.getItem('manevi-atlas-username') || 'Ziyaretçi';
       const savedPhoto = localStorage.getItem('manevi-atlas-userphoto');
 
-      document.getElementById('profileNameInput').value = savedName;
+      document.getElementById('profileNameInput').value = localStorage.getItem('manevi-atlas-username') || '';
       updateNameDisplays(savedName);
 
       if (savedPhoto) {
@@ -616,8 +616,9 @@
       }
 
       updateOwnProfileHint();
+      updateHeroPersonalizeHint();
     }
-    // Kullanıcı henüz kendi adını/fotoğrafını eklememişse (varsayılan "Ümit Özgüler" profili duruyorsa)
+    // Kullanıcı henüz kendi adını/fotoğrafını eklememişse (varsayılan "Ziyaretçi" profili duruyorsa)
     // ve banner'ı daha önce kapatmadıysa, kendi profilini oluşturması için uyarı göster.
     function updateOwnProfileHint() {
       const banner = document.getElementById('ownProfileHintBanner');
@@ -634,18 +635,38 @@
         banner.classList.remove('flex');
       }
     }
+    // Dashboard'daki "Hoş geldiniz, Ziyaretçi" karşılamasının altında, kullanıcı
+    // kendi adını/fotoğrafını eklemediği sürece kısa bir kişiselleştirme uyarısı gösterir.
+    function updateHeroPersonalizeHint() {
+      const hint = document.getElementById('heroPersonalizeHint');
+      if (!hint) return;
+      const hasOwnName = !!localStorage.getItem('manevi-atlas-username');
+      const hasOwnPhoto = !!localStorage.getItem('manevi-atlas-userphoto');
+      hint.classList.toggle('hidden', hasOwnName || hasOwnPhoto);
+    }
     window.dismissOwnProfileHint = function() {
       localStorage.setItem('manevi-atlas-own-profile-hint-dismissed', '1');
       updateOwnProfileHint();
     };
     window.saveProfileName = function(name) {
-      const val = name.trim() || 'Seyyah';
+      const val = name.trim();
+      if (val === '') {
+        // Kullanıcı ismini tamamen silerse, "Ziyaretçi" varsayılan durumuna geri dön.
+        localStorage.removeItem('manevi-atlas-username');
+        updateNameDisplays('Ziyaretçi');
+        if (!localStorage.getItem('manevi-atlas-userphoto')) updateInitials('Ziyaretçi');
+        updateOwnProfileHint();
+        updateHeroPersonalizeHint();
+        showToast("Profil ismi sıfırlandı.", "success");
+        return;
+      }
       localStorage.setItem('manevi-atlas-username', val);
       updateNameDisplays(val);
       if (!localStorage.getItem('manevi-atlas-userphoto')) {
         updateInitials(val);
       }
       updateOwnProfileHint();
+      updateHeroPersonalizeHint();
       showToast("Profil ismi kaydedildi.", "success");
     }
     function updateNameDisplays(name) {
@@ -654,13 +675,14 @@
       if(document.getElementById('profileStatsName')) document.getElementById('profileStatsName').textContent = name;
     }
     function updateInitials(name) {
-      let initials = "S";
-      if(name && name.trim() !== "") {
+      const hasOwnName = !!localStorage.getItem('manevi-atlas-username');
+      let initials = "";
+      if (hasOwnName && name && name.trim() !== "") {
          const parts = name.trim().split(' ');
          if(parts.length > 1) initials = parts[0][0] + parts[parts.length-1][0];
          else initials = parts[0].substring(0,2);
+         initials = initials.toUpperCase();
       }
-      initials = initials.toUpperCase();
       if(document.getElementById('headerInitials')) document.getElementById('headerInitials').textContent = initials;
       if(document.getElementById('profileInitials')) document.getElementById('profileInitials').textContent = initials;
     }
@@ -672,6 +694,7 @@
           localStorage.setItem('manevi-atlas-userphoto', base64Data);
           setProfileImages(base64Data);
           updateOwnProfileHint();
+          updateHeroPersonalizeHint();
           showToast("Profil fotoğrafı güncellendi!", "success");
         } catch (err) {
           showToast("Fotoğraf yüklenemedi. Lütfen tekrar deneyin.", "error");

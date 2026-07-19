@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-19-06",
-  "note": "Mabetler sayfasındaki cami listesi artık isme göre alfabetik sıralanıyor."
+  "version": "2026-07-19-07",
+  "note": "İlk açılışta varsayılan profil artık 'Ümit Özgüler / ÜÖ' değil, boş/'Ziyaretçi' olarak gösteriliyor. Karşılama ekranında 'Profil kısmında uygulamayı kişiselleştirebilirsin' uyarısı eklendi."
 }

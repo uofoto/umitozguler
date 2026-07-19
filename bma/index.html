@@ -54,12 +54,12 @@
     <div class="px-4 py-3.5 max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="arch-badge w-10 h-10 transition-transform active:scale-95 relative overflow-hidden" style="background:var(--gold); color:var(--teal-950); border:2px solid var(--gold-soft);">
-          <span id="headerInitials" class="font-display font-bold text-xs tracking-tighter">ÜÖ</span>
+          <span id="headerInitials" class="font-display font-bold text-xs tracking-tighter"></span>
           <img id="headerProfileImg" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="Profil">
         </div>
         <div>
           <h1 class="font-bold text-sm leading-tight tracking-wide font-display" style="color:var(--gold-soft);">Bursa Manevi Atlası</h1>
-          <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:rgba(231,212,160,0.65);">Seyyah: <span id="headerNameDisplay">Ümit Özgüler</span></p>
+          <p class="text-[9px] uppercase tracking-widest font-semibold" style="color:rgba(231,212,160,0.65);">Seyyah: <span id="headerNameDisplay">Ziyaretçi</span></p>
         </div>
       </div>
       <div class="flex items-center space-x-2">
@@ -99,7 +99,7 @@
     </svg>
     <div class="arch-badge w-20 h-20 mb-6 overflow-hidden splash-logo-in" style="background:var(--gold); color:var(--teal-950); border:3px solid var(--gold-soft);">
       <img src="icons/icon-192.png" alt="Bursa Manevi Atlası Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <span class="font-display font-bold text-2xl tracking-tighter" style="display:none; align-items:center; justify-content:center; width:100%; height:100%;">ÜÖ</span>
+      <span class="font-display font-bold text-2xl tracking-tighter" style="display:none; align-items:center; justify-content:center; width:100%; height:100%;"><i class="fa-solid fa-mosque"></i></span>
     </div>
     <h2 class="text-xl font-bold font-display text-center tracking-wide fade-in-up" style="color:var(--gold-soft); animation-delay:0s;">Bursa Manevi Atlası</h2>
     <p class="text-[10px] uppercase tracking-widest mt-1 font-semibold fade-in-up" style="color:rgba(231,212,160,0.6); animation-delay:0s;">Seyyah Defteri</p>
@@ -160,7 +160,10 @@
             </div>
             <div>
               <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldiniz,</h2>
-              <p id="heroNameDisplay" class="text-2xl font-bold font-display tracking-wide mt-1">Ümit Özgüler</p>
+              <p id="heroNameDisplay" class="text-2xl font-bold font-display tracking-wide mt-1">Ziyaretçi</p>
+              <p id="heroPersonalizeHint" class="hidden text-[10.5px] mt-1.5 leading-snug font-semibold flex items-center gap-1.5" style="color:var(--gold-soft);">
+                <i class="fa-solid fa-circle-info"></i><span>Profil kısmında uygulamayı kişiselleştirebilirsin.</span>
+              </p>
               <p id="totalCountInfoText" class="text-[11px] mt-1.5 leading-relaxed font-light" style="color:rgba(255,255,255,0.72);">
                 Bursa'nın tüm ilçelerindeki tescilli tarihi cami ve mescidleri ihya etme yolculuğun.
               </p>
@@ -656,8 +659,8 @@
         <div id="ownProfileHintBanner" class="hidden items-start space-x-2.5 rounded-2xl p-3.5" style="background:rgba(197,161,84,0.14); border:1px solid var(--gold);">
           <i class="fa-solid fa-circle-exclamation mt-0.5" style="color:var(--teal-900);"></i>
           <div class="flex-1">
-            <p class="text-[11px] font-bold" style="color:var(--ink);">Bu profil örnek olarak gösteriliyor</p>
-            <p class="text-[10px] mt-0.5 leading-snug" style="color:var(--ink-soft);">"Ümit Özgüler", uygulamanın fikir sahibidir — sizin hesabınız değildir. Aşağıdan kendi isminizi yazıp fotoğrafınızı ekleyerek profilinizi kişiselleştirin.</p>
+            <p class="text-[11px] font-bold" style="color:var(--ink);">Profilini henüz kişiselleştirmedin</p>
+            <p class="text-[10px] mt-0.5 leading-snug" style="color:var(--ink-soft);">Aşağıdan kendi isminizi yazıp fotoğrafınızı ekleyerek profilinizi kişiselleştirin.</p>
           </div>
           <button onclick="dismissOwnProfileHint()" class="text-[11px] px-1" style="color:var(--ink-faint);" title="Kapat">
             <i class="fa-solid fa-xmark"></i>
@@ -670,7 +673,7 @@
           <div class="relative w-20 h-20 mx-auto">
             <input type="file" id="profilePhotoInput" accept="image/*,.heic,.heif" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="handleProfilePhotoUpload(this)" title="Profil fotoğrafı seç">
             <div class="w-full h-full rounded-full flex items-center justify-center text-2xl shadow-md font-display font-bold overflow-hidden relative" style="background:var(--gold-soft); color:var(--teal-950); border:2px solid var(--gold);">
-              <span id="profileInitials">ÜÖ</span>
+              <span id="profileInitials"></span>
               <img id="profilePhotoImg" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="Profil">
             </div>
             <!-- Kamera İkonu -->
@@ -681,13 +684,13 @@
 
           <!-- Dinamik İsim Girişi -->
           <div class="px-4">
-            <input type="text" id="profileNameInput" value="Ümit Özgüler" placeholder="İsminizi girin..." class="w-full text-center font-bold text-lg font-display bg-transparent border-b border-dashed hover:border-[var(--line)] focus:border-[var(--gold)] transition-colors py-1 outline-none" style="color:var(--ink); border-color:transparent;" onchange="saveProfileName(this.value)">
+            <input type="text" id="profileNameInput" value="" placeholder="İsminizi girin..." class="w-full text-center font-bold text-lg font-display bg-transparent border-b border-dashed hover:border-[var(--line)] focus:border-[var(--gold)] transition-colors py-1 outline-none" style="color:var(--ink); border-color:transparent;" onchange="saveProfileName(this.value)">
             <p class="text-[10px] font-semibold uppercase tracking-widest mt-1" style="color:var(--teal-700);">Bursa Miras Seyyahı</p>
           </div>
 
           <div class="rounded-xl p-3 text-[10px] text-left space-y-1.5" style="background:var(--paper-deep);">
             <p class="flex justify-between"><strong style="color:var(--ink);">Kayıt Modu:</strong> <span id="appModeBadge" class="font-bold" style="color:var(--teal-700);">Yükleniyor...</span></p>
-            <p class="flex justify-between"><strong style="color:var(--ink);">Kullanıcı:</strong> <span id="profileStatsName" class="font-bold truncate max-w-[120px] text-right" style="color:var(--ink);">Ümit Özgüler</span></p>
+            <p class="flex justify-between"><strong style="color:var(--ink);">Kullanıcı:</strong> <span id="profileStatsName" class="font-bold truncate max-w-[120px] text-right" style="color:var(--ink);">Ziyaretçi</span></p>
             <p class="flex justify-between"><strong style="color:var(--ink);">Sürüm:</strong> <span class="font-ledger" style="color:var(--ink-faint);">v6.0 — Cihazda Kalıcı Kayıt</span></p>
           </div>
         </div>
