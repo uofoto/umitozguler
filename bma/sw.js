@@ -14,7 +14,7 @@
 // saklanır; bu servis çalışanı yalnızca uygulamanın açılış hızını ve çevrimdışı
 // erişimini yönetir.
 
-const CACHE_NAME = "bursa-manevi-atlas-v20";
+const CACHE_NAME = "bursa-manevi-atlas-v17";
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
@@ -28,8 +28,7 @@ const APP_SHELL = [
   "./stats.js",
   "./search.js",
   "./backup.js",
-  "./ui.js",
-  "./LICENSE.txt"
+  "./ui.js"
 ];
 
 // Bu sunuculara giden istekler asla SW önbelleğine takılmaz, her zaman
@@ -47,18 +46,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).catch(() => {})
   );
-  // NOT: self.skipWaiting() burada BİLEREK çağrılmıyor. Yeni bir sürüm
-  // indirildiğinde, sayfa hâlâ eski JS koduyla çalışırken servis çalışanının
-  // aniden devreye girip fetch davranışını değiştirmesi ("karışık sürüm"
-  // durumu) istenmiyor. Bunun yerine yeni SW "waiting" durumunda bekler;
-  // kullanıcı arayüzdeki güncelleme bandındaki "Güncelle" butonuna basınca
-  // sayfa bu SW'ye SKIP_WAITING mesajı gönderir (bkz. ui.js) ve o zaman
-  // güvenle devreye girer.
-});
-
-// Sayfadan gelen "şimdi devral" komutunu dinle.
-self.addEventListener("message", (event) => {
-  if (event.data === "SKIP_WAITING") self.skipWaiting();
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
