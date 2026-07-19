@@ -1,0 +1,59 @@
+Bursa Manevi Atlası
+Telif Hakkı © 2026 Ümit Özgüler. Tüm Hakları Saklıdır.
+(Copyright © 2026 Ümit Özgüler. All Rights Reserved.)
+
+TÜRKÇE
+
+Bu depoda (repository) yer alan tüm kaynak kodu, tasarım, konsept, arayüz,
+metin, veri yapısı ve ilişkili tüm dosyalar ("Yazılım"), Ümit Özgüler'e
+aittir ve Türkiye Cumhuriyeti ile uluslararası telif hakkı mevzuatı
+kapsamında korunmaktadır.
+
+Aksi yazılı olarak açıkça belirtilmedikçe, hak sahibinin önceden yazılı
+izni olmaksızın:
+
+  1. Yazılımın tamamının veya bir kısmının kopyalanması, çoğaltılması
+     veya başka bir ortama aktarılması,
+  2. Yazılımın değiştirilerek veya değiştirilmeden, kısmen veya tamamen
+     başka bir ürün, uygulama veya proje içinde kullanılması,
+  3. Yazılımın veya türev çalışmalarının dağıtılması, yayımlanması,
+     alt lisansının verilmesi, satılması veya herhangi bir ticari ya da
+     ticari olmayan amaçla kullanılması,
+  4. Yazılımın kaynağının gizlenerek veya farklı bir isim/marka altında
+     üçüncü kişilere sunulması,
+
+kesinlikle yasaktır.
+
+Bu depoya erişim veya görüntüleme izni, herhangi bir kullanım, kopyalama
+veya dağıtım hakkı verildiği anlamına gelmez. Tüm haklar saklıdır.
+
+İzin talepleri için: https://www.umitozguler.com.tr
+
+-------------------------------------------------------------------------
+
+ENGLISH (informal translation — the Turkish text above is authoritative)
+
+All source code, design, concept, interface, text, data structures, and
+associated files in this repository (the "Software") are the property of
+Ümit Özgüler and are protected under the copyright laws of the Republic
+of Türkiye and applicable international copyright treaties.
+
+Unless expressly authorized in writing by the copyright holder, no one
+may:
+
+  1. Copy, reproduce, or transfer the Software, in whole or in part, to
+     any other medium;
+  2. Use the Software, modified or unmodified, in whole or in part, in
+     any other product, application, or project;
+  3. Distribute, publish, sublicense, sell, or otherwise exploit the
+     Software or any derivative work, for commercial or non-commercial
+     purposes;
+  4. Present the Software, or any derivative of it, to third parties
+     under a different name or brand, with its origin concealed or
+     misrepresented.
+
+Access to or the ability to view this repository does not, by itself,
+grant any license, right of use, copying, or distribution. All rights
+reserved.
+
+For permission requests, contact: https://www.umitozguler.com.tr

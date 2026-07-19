@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-19-11",
-  "note": "Kullanım Şartları metnindeki 'LICENSE dosyasına bakınız' ifadesi tıklanabilir bir bağlantıya dönüştürüldü (./LICENSE). LICENSE dosyası çevrimdışı erişim için servis çalışanı önbellek listesine eklendi — bu dosyanın index.html ile aynı klasörde sunucuda bulunması gerekir."
+  "version": "2026-07-19-12",
+  "note": "LICENSE dosyası, telefonlarda doğru şekilde açılabilmesi için LICENSE.txt olarak yeniden adlandırıldı (uzantısız dosyalar mobilde 'bilinmeyen dosya' olarak indirilip açılamıyordu). Kullanım Şartları linki ve servis çalışanı önbellek listesi buna göre güncellendi."
 }
