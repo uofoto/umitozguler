@@ -495,21 +495,43 @@
       return canvas;
     }
     window.downloadStatsPDF = async function() {
+      if (!visitsData.length) {
+        showToast("PDF için önce bir ziyaret kaydet.", "error");
+        return;
+      }
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        showToast("PDF özelliği yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.", "error");
+        console.error("[downloadStatsPDF] window.jspdf.jsPDF bulunamadı — CDN kütüphanesi yüklenmemiş olabilir.");
+        return;
+      }
+      window.haptic(15);
+
+      let data, canvas, imgData;
       try {
-        if (!visitsData.length) {
-          showToast("PDF için önce bir ziyaret kaydet.", "error");
-          return;
-        }
-        if (!window.jspdf || !window.jspdf.jsPDF) {
-          showToast("PDF özelliği yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.", "error");
-          return;
-        }
-        window.haptic(15);
+        data = buildStatsPdfData();
+      } catch (e) {
+        console.error("[downloadStatsPDF] buildStatsPdfData aşamasında hata:", e);
+        showToast("Veriler hazırlanırken hata oluştu: " + e.message, "error");
+        return;
+      }
 
-        const data = buildStatsPdfData();
-        const canvas = renderStatsPdfCanvas(data);
-        const imgData = canvas.toDataURL('image/png', 1.0);
+      try {
+        canvas = renderStatsPdfCanvas(data);
+      } catch (e) {
+        console.error("[downloadStatsPDF] renderStatsPdfCanvas aşamasında hata:", e);
+        showToast("Görsel çizilirken hata oluştu: " + e.message, "error");
+        return;
+      }
 
+      try {
+        imgData = canvas.toDataURL('image/png', 1.0);
+      } catch (e) {
+        console.error("[downloadStatsPDF] canvas.toDataURL aşamasında hata:", e);
+        showToast("Görsel dışa aktarılırken hata oluştu: " + e.message, "error");
+        return;
+      }
+
+      try {
         const { jsPDF } = window.jspdf;
         const pdfWidthMM = 210; // A4 genişliği
         const pdfHeightMM = pdfWidthMM * (canvas.height / canvas.width);
@@ -520,7 +542,8 @@
         doc.save(`bursa-manevi-atlas-istatistik-${stamp}.pdf`);
         showToast("İstatistik raporu PDF olarak indirildi.", "success");
       } catch (e) {
-        showToast("PDF oluşturulamadı. Lütfen tekrar deneyin.", "error");
+        console.error("[downloadStatsPDF] jsPDF aşamasında hata:", e);
+        showToast("PDF oluşturulamadı: " + e.message, "error");
       }
     };
     // === PAYLAŞIM (Uygulamayı Tanıt ve İndirme Linkini Paylaş) ===
