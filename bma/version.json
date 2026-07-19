@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-19-01",
-  "note": "Osmangazi'ye 4 yeni cami eklendi (Kefensüzen, Mizanoğlu, Zafranlık, Süluki) ve istatistik raporu PDF indirme özelliği eklendi."
+  "version": "2026-07-19-02",
+  "note": "Yedekleme hatırlatma sistemi eklendi: veriler belirli sayıda değişiklikten sonra kullanıcıya .json yedeği alması için hatırlatılıyor, ayarlarda son yedekleme tarihi gösteriliyor."
 }

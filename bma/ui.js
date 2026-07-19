@@ -737,6 +737,8 @@
       updateRecentlyAddedMosquesUI();
       updateFavoriteMosquesUI();
       updateStatsUI();
+      if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
+      if (typeof maybeShowBackupReminder === 'function') maybeShowBackupReminder();
     }
     // DEFTER / İSTATİSTİK GÖRÜNÜM ANAHTARI
     window.switchDefterView = function(view) {

@@ -5,6 +5,28 @@
     const DB_VERSION = 1;
     const STORE_NAME = 'visits';
     const LS_FALLBACK_KEY = 'bursa-manevi-atlas-visits-fallback-v1';
+    // === YEDEKLEME HATIRLATMA TAKİBİ ===
+    // Veriler yalnızca bu cihazda (IndexedDB/localStorage) saklandığı için,
+    // kullanıcı çerezleri/site verilerini silerse veya farklı bir cihaza
+    // geçerse tüm kayıtlar kaybolabilir. Bunu azaltmak için: kaç değişiklik
+    // yapıldığını ve en son ne zaman JSON yedeği indirildiğini takip edip,
+    // belirli bir eşiği geçince kullanıcıya nazik bir hatırlatma gösteriyoruz.
+    const BACKUP_LAST_AT_KEY = 'manevi-atlas-last-backup-at';
+    const BACKUP_CHANGES_KEY = 'manevi-atlas-unbacked-changes';
+    const BACKUP_REMINDER_THRESHOLD = 4; // bu kadar yedeksiz değişiklikten sonra hatırlat
+    function markDataChanged() {
+      try {
+        const n = (parseInt(localStorage.getItem(BACKUP_CHANGES_KEY) || '0', 10) || 0) + 1;
+        localStorage.setItem(BACKUP_CHANGES_KEY, String(n));
+      } catch (e) {}
+      if (typeof window.maybeShowBackupReminder === 'function') window.maybeShowBackupReminder();
+    }
+    function getBackupStatus() {
+      let lastAt = 0, changes = 0;
+      try { lastAt = parseInt(localStorage.getItem(BACKUP_LAST_AT_KEY) || '0', 10) || 0; } catch (e) {}
+      try { changes = parseInt(localStorage.getItem(BACKUP_CHANGES_KEY) || '0', 10) || 0; } catch (e) {}
+      return { lastAt, changes };
+    }
     let visitsData = [];
     let activeFilterDistrict = 'HEPSİ';
     let currentActiveTab = 0;
@@ -97,9 +119,10 @@
         } else {
           saveFallbackToLocalStorage();
         }
+        markDataChanged();
         return true;
       } catch (e) {
-        try { saveFallbackToLocalStorage(); return true; }
+        try { saveFallbackToLocalStorage(); markDataChanged(); return true; }
         catch (e2) {
           showToast("Kayıt cihazınıza kaydedilemedi. Depolama alanınızı kontrol edin.", "error");
           return false;
@@ -113,9 +136,10 @@
         } else {
           saveFallbackToLocalStorage();
         }
+        markDataChanged();
         return true;
       } catch (e) {
-        try { saveFallbackToLocalStorage(); return true; }
+        try { saveFallbackToLocalStorage(); markDataChanged(); return true; }
         catch (e2) {
           showToast("Kayıt silinirken bir sorun oluştu.", "error");
           return false;

@@ -228,6 +228,7 @@
     function persistCustomMosqueList() {
       const customList = PRESET_MOSQUES.filter(m => m.isCustom);
       localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(customList));
+      if (typeof markDataChanged === 'function') markDataChanged();
     }
     function saveMosqueOverride(id, data) {
       let overrides = {};

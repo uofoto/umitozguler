@@ -124,6 +124,20 @@
       <!-- PANEL 1: ANA SAYFA -->
       <div class="tab-panel px-4 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-8rem)] space-y-4">
 
+        <div id="backupReminderBanner" class="hidden paper-card rounded-2xl p-3.5 fade-in-up" style="border:1px solid rgba(195,154,69,0.4); background:rgba(195,154,69,0.08);">
+          <div class="flex items-start gap-2.5">
+            <div class="settings-icon flex-shrink-0" style="background:rgba(195,154,69,0.18); color:var(--gold-deep);"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[11px] font-bold" style="color:var(--ink);">Kayıtların yedeklenmedi</p>
+              <p class="text-[9.5px] mt-0.5 leading-relaxed" style="color:var(--ink-soft);">Verilerin sadece bu tarayıcıda saklanıyor. Çerezler silinirse veya cihaz değişirse kayıtların kaybolabilir. Şimdi bir .json yedeği indir; ihtiyaç halinde Ayarlar &gt; "Yedekten Geri Yükle" ile tek dokunuşla geri getirebilirsin.</p>
+              <div class="flex items-center gap-2 mt-2">
+                <button onclick="exportBackup()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg text-white flex-shrink-0" style="background:var(--teal-900);">Şimdi Yedekle</button>
+                <button onclick="dismissBackupReminder()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex-shrink-0" style="background:var(--paper-deep); color:var(--ink-soft);">Şimdi Değil</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="hero-panel text-white rounded-3xl p-5 relative overflow-hidden pop-in">
           <svg class="arch-watermark" width="130" height="130" viewBox="0 0 100 100" fill="none" style="pointer-events:none;">
             <path d="M20 90 V45 A30 30 0 0 1 80 45 V90" stroke="#E7D4A0" stroke-width="2"/>
@@ -713,6 +727,7 @@
               <div>
                 <p class="text-[11px] font-bold" style="color:var(--ink);">Yedeğini Dışa Aktar</p>
                 <p class="text-[9.5px]" style="color:var(--ink-faint);">Tüm kayıtları .json dosyasına indir</p>
+                <p id="lastBackupInfo" class="text-[9px] font-bold mt-0.5" style="color:var(--gold-deep);">Henüz hiç yedeklenmedi</p>
               </div>
             </div>
             <button onclick="exportBackup()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg text-white flex-shrink-0" style="background:var(--teal-900);">İndir</button>

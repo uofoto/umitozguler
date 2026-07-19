@@ -1,5 +1,49 @@
 // backup.js — Yedek dışa/içe aktarma ve ilerleme paylaşımı
 
+    // === YEDEKLEME HATIRLATMA BANNER'I ===
+    // Uygulama tamamen tarayıcı içi depolama (IndexedDB/localStorage) kullandığı
+    // için çerezler/site verileri silinirse ya da başka bir cihaza geçilirse
+    // yedeği alınmamış kayıtlar geri getirilemez. Belirli sayıda yedeksiz
+    // değişiklikten sonra kullanıcıya nazik, kapatılabilir bir hatırlatma
+    // gösteriyoruz; "Şimdi Yedekle" butonu doğrudan exportBackup()'ı tetikler.
+    function formatRelativeBackupTime(ts) {
+      if (!ts) return "Henüz hiç yedeklenmedi";
+      const diffMs = Date.now() - ts;
+      const days = Math.floor(diffMs / 86400000);
+      if (days <= 0) return "Bugün yedeklendi";
+      if (days === 1) return "1 gün önce yedeklendi";
+      return `${days} gün önce yedeklendi`;
+    }
+    window.updateBackupStatusUI = function() {
+      const el = document.getElementById('lastBackupInfo');
+      if (!el) return;
+      const status = (typeof getBackupStatus === 'function') ? getBackupStatus() : { lastAt: 0, changes: 0 };
+      el.textContent = formatRelativeBackupTime(status.lastAt);
+    };
+    window.hideBackupReminder = function() {
+      const banner = document.getElementById('backupReminderBanner');
+      if (banner) banner.classList.add('hidden');
+    };
+    window.dismissBackupReminder = function() {
+      // Kullanıcı "Hatırlatma" yerine "Şimdi değil" derse, tekrar rahatsız
+      // etmemek için bir sonraki hatırlatmayı biraz daha geciktiriyoruz
+      // (sayaç sıfırlanmaz, sadece o oturum için banner kapanır).
+      try { sessionStorage.setItem('manevi-atlas-backup-reminder-dismissed', '1'); } catch (e) {}
+      hideBackupReminder();
+    };
+    window.maybeShowBackupReminder = function() {
+      try {
+        if (sessionStorage.getItem('manevi-atlas-backup-reminder-dismissed') === '1') return;
+      } catch (e) {}
+      const status = (typeof getBackupStatus === 'function') ? getBackupStatus() : { lastAt: 0, changes: 0 };
+      const banner = document.getElementById('backupReminderBanner');
+      if (!banner) return;
+      if (status.changes >= (typeof BACKUP_REMINDER_THRESHOLD !== 'undefined' ? BACKUP_REMINDER_THRESHOLD : 4)) {
+        banner.classList.remove('hidden');
+      }
+    };
+
+
     // === YEDEKLEME: DIŞA / İÇE AKTARMA ===
     window.exportBackup = function() {
       try {
@@ -21,6 +65,12 @@
         a.click();
         a.remove();
         URL.revokeObjectURL(url);
+        try {
+          localStorage.setItem('manevi-atlas-last-backup-at', String(Date.now()));
+          localStorage.setItem('manevi-atlas-unbacked-changes', '0');
+        } catch (e2) {}
+        if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
+        hideBackupReminder();
         showToast("Yedek dosyanız indirildi.", "success");
       } catch (e) {
         showToast("Yedek oluşturulamadı. Lütfen tekrar deneyin.", "error");
@@ -55,6 +105,14 @@
           }
           sortVisitsInMemory();
           triggerAllUIUpdates();
+          // İçe aktarılan dosya zaten bir yedek olduğundan, kullanıcının elinde
+          // güncel bir yedek dosyası olduğunu varsayıp sayaçları sıfırlıyoruz.
+          try {
+            localStorage.setItem('manevi-atlas-last-backup-at', String(Date.now()));
+            localStorage.setItem('manevi-atlas-unbacked-changes', '0');
+          } catch (e3) {}
+          if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
+          hideBackupReminder();
           showToast(addedCount > 0 ? `${addedCount} kayıt geri yüklendi.` : "Yedekte yeni kayıt bulunamadı.", "success");
         } catch (err) {
           showToast("Bu dosya geçerli bir yedek dosyası değil.", "error");
