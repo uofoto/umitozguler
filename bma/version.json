@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-20-02",
-  "note": "Yedek içe aktarma (importBackup) artık şema/versiyon doğrulaması yapıyor: yanlış uygulamaya ait veya desteklenmeyen sürümdeki yedek dosyaları anlaşılır hata mesajlarıyla reddediliyor. Ayrıca IndexedDB kullanılamadığında localStorage'a geçilirken kullanıcı artık bilgilendiriliyor ve depolama alanı dolduğunda daha açıklayıcı bir uyarı gösteriliyor."
+  "version": "2026-07-20-03",
+  "note": "Yedek içe aktarma (importBackup) artık şema/versiyon doğrulaması yapıyor ve içe aktarılan özel camileri O(1) Set kontrolüyle, mevcut listeyle çakışmadan (localStorage'ı ezmeden) birleştiriyor. Ayrıca IndexedDB kullanılamadığında localStorage'a geçilirken kullanıcı bilgilendiriliyor ve depolama alanı dolduğunda daha açıklayıcı bir uyarı gösteriliyor."
 }

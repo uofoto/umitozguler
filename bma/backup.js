@@ -142,10 +142,24 @@
           const importedVisits = migrateImportedVisits(validation.visits, validation.version);
 
           if (Array.isArray(validation.customMosques)) {
+            const existingMosqueIds = new Set(PRESET_MOSQUES.map(m => m.id));
             validation.customMosques.forEach(cm => {
-              if (!PRESET_MOSQUES.some(m => m.id === cm.id)) PRESET_MOSQUES.push(cm);
+              if (!cm || !cm.id || existingMosqueIds.has(cm.id)) return;
+              cm.isCustom = true;
+              PRESET_MOSQUES.push(cm);
+              existingMosqueIds.add(cm.id);
             });
-            localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(validation.customMosques));
+            // NOT: localStorage'ı doğrudan validation.customMosques ile ezmiyoruz —
+            // bu, içe aktarmadan önce zaten eklenmiş ama yedek dosyasında bulunmayan
+            // özel camileri bir sonraki açılışta (loadCustomAddedMosques) sessizce
+            // kaybettirirdi. Bunun yerine mosques-data.js'teki mevcut senkronizasyon
+            // yardımcısını kullanıp PRESET_MOSQUES'un GÜNCEL (eski+yeni birleşik)
+            // hâlini kalıcı hale getiriyoruz.
+            if (typeof persistCustomMosqueList === 'function') {
+              persistCustomMosqueList();
+            } else {
+              localStorage.setItem('manevi-atlas-custom-mosques', JSON.stringify(PRESET_MOSQUES.filter(m => m.isCustom)));
+            }
             populateMosquesDropdown();
           }
 
