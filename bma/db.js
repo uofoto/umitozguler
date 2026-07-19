@@ -1,1 +1,182 @@
-const _0x1d66e0=_0x4a70;(function(_0x30e1e9,_0x53cfda){const _0x4b2967=_0x4a70,_0x5d9257=_0x30e1e9();while(!![]){try{const _0x17f159=parseInt(_0x4b2967(0x134))/(0x941+0xb2d*0x2+-0x1f9a)+-parseInt(_0x4b2967(0x105))/(-0x1d80+-0x16f*-0x2+0x1aa4)*(-parseInt(_0x4b2967(0xd0))/(-0xd11+0xadf*0x2+0x8aa*-0x1))+parseInt(_0x4b2967(0xda))/(0x1*0x259f+-0x1edd+-0x6be)*(-parseInt(_0x4b2967(0x128))/(0x2099+-0x5*-0x3f3+-0x3453))+parseInt(_0x4b2967(0x111))/(-0xde*0x11+-0x154a+-0x5*-0x736)+-parseInt(_0x4b2967(0xe2))/(-0x3d5*0x1+-0x2174+-0x10*-0x255)*(parseInt(_0x4b2967(0xe7))/(-0x2660+0x3d*0x46+0x6*0x39f))+-parseInt(_0x4b2967(0xff))/(0x1d7a+-0x1*0x13c0+-0x1*0x9b1)*(-parseInt(_0x4b2967(0xfb))/(-0x50a*0x7+-0x7*0x48b+-0x1*-0x431d))+-parseInt(_0x4b2967(0xcf))/(0x4a5*0x7+-0x1a*0xc+-0xfa0*0x2)*(-parseInt(_0x4b2967(0xef))/(-0x1*0xec2+0x686+0x848));if(_0x17f159===_0x53cfda)break;else _0x5d9257['push'](_0x5d9257['shift']());}catch(_0x43445c){_0x5d9257['push'](_0x5d9257['shift']());}}}(_0x20a6,-0xf*0xcfdc+0xcc326+-0xaeeef*-0x1));const _0x9c1a20=(function(){let _0x5cf200=!![];return function(_0x51383c,_0xa01768){const _0x5df689=_0x5cf200?function(){const _0x4e793a=_0x4a70;if(_0xa01768){const _0x27dd76=_0xa01768[_0x4e793a(0x124)](_0x51383c,arguments);return _0xa01768=null,_0x27dd76;}}:function(){};return _0x5cf200=![],_0x5df689;};}()),_0x148de0=_0x9c1a20(this,function(){const _0x5d72b0=_0x4a70,_0x3561ca={'aqaCN':_0x5d72b0(0x11a)+_0x5d72b0(0x115)};if(_0x148de0[_0x5d72b0(0xcc)]()[_0x5d72b0(0x10e)]()['indexOf']('\x0a')!==-(-0x13b1*0x1+-0x1207+0x431*0x9))return;return _0x148de0[_0x5d72b0(0x10e)]()[_0x5d72b0(0x12b)](_0x3561ca[_0x5d72b0(0x121)])[_0x5d72b0(0x10e)]()[_0x5d72b0(0x13c)+_0x5d72b0(0xd3)](_0x148de0)[_0x5d72b0(0x12b)](_0x3561ca['aqaCN']);});_0x148de0();const DB_NAME=_0x1d66e0(0x137)+_0x1d66e0(0x10f)+'DB',DB_VERSION=-0x182a+0x844+-0x17*-0xb1,STORE_NAME=_0x1d66e0(0x126),LS_FALLBACK_KEY=_0x1d66e0(0xdc)+'nevi-atl'+'as-visit'+_0x1d66e0(0x101)+_0x1d66e0(0xd8),BACKUP_LAST_AT_KEY='manevi-a'+_0x1d66e0(0x11c)+'t-backup'+_0x1d66e0(0xd1),BACKUP_CHANGES_KEY=_0x1d66e0(0xd4)+_0x1d66e0(0x109)+_0x1d66e0(0xfd)+_0x1d66e0(0x102),BACKUP_REMINDER_THRESHOLD=0x4b+0x1a2d+-0x1a76;function markDataChanged(){const _0x10d77c=_0x1d66e0,_0x53fc68={'bjSvF':function(_0x521db5,_0x5ae460,_0x2ccc56){return _0x521db5(_0x5ae460,_0x2ccc56);},'EPisM':function(_0x5642b2,_0x321d4b){return _0x5642b2===_0x321d4b;},'WMgNz':_0x10d77c(0x106)};try{const _0x2ede70=(_0x53fc68[_0x10d77c(0xec)](parseInt,localStorage[_0x10d77c(0x110)](BACKUP_CHANGES_KEY)||'0',0x6f4*-0x4+0x1ec9+-0x2ef)||0x1*-0x25c4+-0xf*-0x100+-0x4*-0x5b1)+(-0x4*0x779+0x10bf+0xd26);localStorage[_0x10d77c(0xf9)](BACKUP_CHANGES_KEY,String(_0x2ede70));}catch(_0x58d2ea){}if(_0x53fc68['EPisM'](typeof window['maybeSho'+_0x10d77c(0x11b)+_0x10d77c(0x10c)],_0x53fc68['WMgNz']))window[_0x10d77c(0x13a)+_0x10d77c(0x11b)+_0x10d77c(0x10c)]();}function getBackupStatus(){const _0x26a87c=_0x1d66e0,_0x3daa9d={'riHyY':function(_0x33f6d3,_0x1ef07d,_0xd88d93){return _0x33f6d3(_0x1ef07d,_0xd88d93);}};let _0x2041a9=-0x1f70+0xf1a*-0x1+0x2*0x1745,_0x4cb2bf=-0x1a08+0x1*0x239b+-0x13*0x81;try{_0x2041a9=parseInt(localStorage['getItem'](BACKUP_LAST_AT_KEY)||'0',-0x1c7b+0xe*-0x203+0x38af*0x1)||-0x7*-0x39e+-0x1e7f+0x52d*0x1;}catch(_0x21a29f){}try{_0x4cb2bf=_0x3daa9d[_0x26a87c(0xf7)](parseInt,localStorage[_0x26a87c(0x110)](BACKUP_CHANGES_KEY)||'0',0x157d*-0x1+0x646*-0x1+0x1bcd)||0x12c6+0x3e9*0x9+-0x35f7;}catch(_0x3b1cc7){}return{'lastAt':_0x2041a9,'changes':_0x4cb2bf};}let visitsData=[],activeFilterDistrict=_0x1d66e0(0x10d),currentActiveTab=0x52*-0x25+0x83f*-0x2+0x1*0x1c58,useIndexedDB=!![],dbInstance=null;window[_0x1d66e0(0xeb)+_0x1d66e0(0x103)]={0x1:null,0x2:null},window['photoGal'+_0x1d66e0(0xde)]={};let editingVisitId=null,editingMosqueId=null,pendingMosqueDeleteId=null;function _0x20a6(){const _0x3186d7=['B3jL','yMLUza','AgDHvMO','BMZdVgT0zw4G','mJuZA0HTEMnX','mte4mZK1ouj6BKDdAW','lwf0','ESsXigTVBNrY','Dg9Y','BwfUzxzPlwe','tw1ZENi','B3jLtMfTzxm','s2f5Xlf0igFdVa','y2STDJe','mda6mda','nhbmthjcyW','zMLSDgvY','yNvYC2eTBwe','AMvJDfn0B3i','BgvYAwvZ','Aw5KzxHLzeq','B251CgDYywq','DgLTzq','nJm5ody1mw5MBunJra','yxfNtgW','z2v0vgLTzq','sLz3vMO','B25ZDwnJzxm','ohfODenmqq','D01dvuy','C2LSAw5KAs4','yMLHr1y','DxbSB2fKzwq','yMPtDKy','DhjHBNnHy3q','BgLUAxjRzw4','mJm3ndq0tMnTs3f5','CuTktuW','C3vJy2vZCW','z2netxu','A25Nwuu','zgvSzxrL','rvPpBuK','r1PdAhO','CMLiEvK','Dw4GB2X1Xz90','C2v0sxrLBq','ELrQswC','ntbowNLxBey','r3jStfy','ywnRzwqTy2G','B25LCNjVCG','ndG3nda0vLjtCLjk','CMvZDwX0','CY1MywXSyMe','yw5Nzxm','ugHVDg9Z','BgvTzwrPlIa','mM1su3vOyW','zNvUy3rPB24','BxPTsMu','v3v4ruC','DgXHCY11BMi','wNjft3C','DgfYz2v0','zw1PBMrLCG','sevqu8sW','Dg9tDhjPBMC','zxzPqxrSyxm','z2v0sxrLBq','mZqWntyWmgrxC092Bq','zKPOCfO','sLPqu0W','B25JB21WBgu','kYKRja','D1HUEgG','EMnzBMK','zxjYB3i','CgfYC2u','kcGOlISPkYK','D0jHy2T1Cfi','DgXHCY1Syxm','CMvHzhDYAxq','tuPAuNi','y3jLyxrLt2i','s2f5Xlf0ihnP','yxfHq04','B3bLBG','Chv0','yxbWBhK','y29UDgfPBNm','DMLZAxrZ','C3rYAw5NAwy','mtuXnZa5mhD4q1LZuq','B2jQzwn0u3q','uvrRwhq','C2vHCMnO','igjPCIbZB3i','v211wxC','Aw9U','igTHEwrLzgK','zgf0zq','svjWzKe','tMjSzuy','rwzyzum','mJG0mte0u0r2B09v','tgjwA2C','CfjMufG','qNvYC2fnyw4','ve1tqKu','igfSyw7eSw7eSq','Bwf5yMvtAg8','Eej5yxO','y29UC3rYDwm','rgvWB2XHBwe','AgXqywm','BM1zr04'];_0x20a6=function(){return _0x3186d7;};return _0x20a6();}try{if(!window[_0x1d66e0(0xdf)+'B'])useIndexedDB=![];}catch(_0x571d00){useIndexedDB=![];}function openDB(){const _0x659993={'TULwD':function(_0x28dd6b,_0x8728c5){return _0x28dd6b(_0x8728c5);}};return new Promise((_0x1dca92,_0x4a79a4)=>{const _0x386896=_0x4a70;if(dbInstance){_0x1dca92(dbInstance);return;}const _0x51bed2=indexedDB[_0x386896(0x122)](DB_NAME,DB_VERSION);_0x51bed2[_0x386896(0xe0)+'eneeded']=_0xfaca3e=>{const _0x2584ff=_0x386896,_0x186f8c=_0xfaca3e[_0x2584ff(0x10b)][_0x2584ff(0x100)];!_0x186f8c[_0x2584ff(0x129)+_0x2584ff(0xd6)][_0x2584ff(0x125)](STORE_NAME)&&_0x186f8c['createOb'+'jectStor'+'e'](STORE_NAME,{'keyPath':'id'});},_0x51bed2[_0x386896(0xe6)+'s']=()=>{const _0x8c90a2=_0x386896;dbInstance=_0x51bed2[_0x8c90a2(0x100)],_0x659993['TULwD'](_0x1dca92,dbInstance);},_0x51bed2[_0x386896(0xfe)]=()=>_0x4a79a4(_0x51bed2['error']);});}async function dbGetAll(){const _0x8cebe1={'EZOmI':'readonly'},_0x5be75c=await openDB();return new Promise((_0x79ad75,_0x2e7fa9)=>{const _0xa5f565=_0x4a70,_0x2264ee=_0x5be75c['transact'+_0xa5f565(0x12e)](STORE_NAME,_0x8cebe1[_0xa5f565(0xf5)]),_0x4d57fc=_0x2264ee['objectSt'+_0xa5f565(0xcb)](STORE_NAME)['getAll']();_0x4d57fc[_0xa5f565(0xe6)+'s']=()=>_0x79ad75(_0x4d57fc[_0xa5f565(0x100)]||[]),_0x4d57fc[_0xa5f565(0xfe)]=()=>_0x2e7fa9(_0x4d57fc[_0xa5f565(0x118)]);});}async function dbPut(_0x47781f){const _0x32e67e=_0x1d66e0,_0x3264f2={'LOoHO':function(_0x4afb63,_0x17ab61){return _0x4afb63===_0x17ab61;},'TMSBE':_0x32e67e(0x107)},_0x5aa641=await openDB();return new Promise((_0xcb1c33,_0x28dfd3)=>{const _0x5ad941=_0x32e67e;if(_0x3264f2['LOoHO'](_0x3264f2[_0x5ad941(0x138)],_0x3264f2[_0x5ad941(0x138)])){const _0x3d1397=_0x5aa641['transact'+'ion'](STORE_NAME,'readwrit'+'e');_0x3d1397['objectSt'+_0x5ad941(0xcb)](STORE_NAME)['put'](_0x47781f),_0x3d1397[_0x5ad941(0x114)+'te']=()=>_0xcb1c33(!![]),_0x3d1397[_0x5ad941(0xfe)]=()=>_0x28dfd3(_0x3d1397[_0x5ad941(0x118)]);}else _0x2895b0[_0x5ad941(0xf9)](_0x5233e6,_0x9cefe[_0x5ad941(0x127)+'y'](_0x294f65));});}async function dbDelete(_0x1f4d09){const _0x15d6ca=_0x1d66e0,_0x101721={'IRpfA':_0x15d6ca(0xea),'kngYE':function(_0x49d6e5){return _0x49d6e5();}},_0x2c7266=await _0x101721[_0x15d6ca(0xf3)](openDB);return new Promise((_0x59769b,_0x39521b)=>{const _0x4118e5=_0x15d6ca;if(_0x101721[_0x4118e5(0x131)]===_0x101721[_0x4118e5(0x131)]){const _0xb5b964=_0x2c7266[_0x4118e5(0xed)+_0x4118e5(0x12e)](STORE_NAME,'readwrit'+'e');_0xb5b964['objectSt'+_0x4118e5(0xcb)](STORE_NAME)[_0x4118e5(0xf4)](_0x1f4d09),_0xb5b964['oncomple'+'te']=()=>_0x59769b(!![]),_0xb5b964[_0x4118e5(0xfe)]=()=>_0x39521b(_0xb5b964[_0x4118e5(0x118)]);}else _0x5778ab=_0x4c695a;});}function saveFallbackToLocalStorage(){const _0x47d14d=_0x1d66e0;localStorage['setItem'](LS_FALLBACK_KEY,JSON[_0x47d14d(0x127)+'y'](visitsData));}function getVisitTimestamp(_0x5cc4ce){const _0x3b91fc=_0x1d66e0,_0x192831={'PjCOU':_0x3b91fc(0x133),'aqgLl':function(_0x5b5fc1,_0x15c463){return _0x5b5fc1(_0x15c463);}};if(_0x5cc4ce[_0x3b91fc(0x130)]){if(_0x192831['PjCOU']===_0x3b91fc(0xe5)){const _0x401573=_0x4e58db[_0x3b91fc(0x10b)]['result'];!_0x401573[_0x3b91fc(0x129)+_0x3b91fc(0xd6)][_0x3b91fc(0x125)](_0xfd5f0f)&&_0x401573[_0x3b91fc(0x11f)+_0x3b91fc(0xdd)+'e'](_0xa9cec1,{'keyPath':'id'});}else{const _0x537246=new Date(_0x5cc4ce[_0x3b91fc(0x130)]+'T'+(_0x5cc4ce[_0x3b91fc(0xe1)]||_0x3b91fc(0xd9)));if(!_0x192831[_0x3b91fc(0xe3)](isNaN,_0x537246[_0x3b91fc(0xe4)]()))return _0x537246[_0x3b91fc(0xe4)]();}}const _0xecb4d5=_0x5cc4ce['createdA'+'t']?new Date(_0x5cc4ce['createdA'+'t'])[_0x3b91fc(0xe4)]():NaN;return isNaN(_0xecb4d5)?0x1c12+-0xcdf+-0xf33:_0xecb4d5;}function sortVisitsInMemory(){visitsData['sort']((_0x32e805,_0x53718e)=>getVisitTimestamp(_0x53718e)-getVisitTimestamp(_0x32e805));}function _0x4a70(_0x169493,_0x4b011a){_0x169493=_0x169493-(-0x9f7*-0x1+-0x2a8+-0x686);const _0x6ae7da=_0x20a6();let _0x424750=_0x6ae7da[_0x169493];if(_0x4a70['SWqcbL']===undefined){var _0x214955=function(_0x298064){const _0xa7e390='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x3b52af='',_0x71ac6a='',_0x5bb286=_0x3b52af+_0x214955,_0x2451cc=(''+function(){return 0x15eb+-0x59d+-0x104e;})['indexOf']('\x0a')!==-(0xa5a+-0x1*-0x1d35+-0x2*0x13c7);for(let _0x4647c1=-0x1*-0xbf5+0x1493+-0xad8*0x3,_0x2e5d0f,_0x378493,_0x355f1b=0x17*-0xf9+-0x3b+0x169a;_0x378493=_0x298064['charAt'](_0x355f1b++);~_0x378493&&(_0x2e5d0f=_0x4647c1%(0x129a+-0x1c3+0x3b*-0x49)?_0x2e5d0f*(0x24a8+-0x1c59+-0x1*0x80f)+_0x378493:_0x378493,_0x4647c1++%(-0x2*0x127f+-0x2670+0x4b72))?_0x3b52af+=_0x2451cc||_0x5bb286['charCodeAt'](_0x355f1b+(-0x778+0x3*-0xcd6+0x24d*0x14))-(0x1ba6*-0x1+-0x2187+-0x3d37*-0x1)!==-0xb65*-0x1+-0x1f4c+-0x13e7*-0x1?String['fromCharCode'](-0xed9+-0x2629+0x19*0x229&_0x2e5d0f>>(-(-0x2547+0x69b*0x1+-0x1eae*-0x1)*_0x4647c1&-0xeb*0x26+0x1109+0x11df)):_0x4647c1:-0x869*-0x2+0x815*-0x2+-0xa8){_0x378493=_0xa7e390['indexOf'](_0x378493);}for(let _0x5cdb6b=0x14f7+-0x1814+0x31d,_0x28a49e=_0x3b52af['length'];_0x5cdb6b<_0x28a49e;_0x5cdb6b++){_0x71ac6a+='%'+('00'+_0x3b52af['charCodeAt'](_0x5cdb6b)['toString'](-0x3df*-0x1+-0xfbf+-0x1*-0xbf0))['slice'](-(0x13d9+0x7*0x3f9+0x7f1*-0x6));}return decodeURIComponent(_0x71ac6a);};_0x4a70['zcoicM']=_0x214955,_0x4a70['fULJXe']={},_0x4a70['SWqcbL']=!![];}const _0xba9f33=_0x6ae7da[0x232b+-0x3c7*0x7+-0x8ba],_0xcbd3f1=_0x169493+_0xba9f33,_0x24a992=_0x4a70['fULJXe'][_0xcbd3f1];if(!_0x24a992){const _0x46de26=function(_0x9a48d1){this['eZxcuf']=_0x9a48d1,this['scfNJu']=[0x21e2+0x158c+-0x376d,0xb5*-0x19+0x51+-0x1*-0x115c,-0x6d1+0x21ac+0x5*-0x55f],this['MwLMLg']=function(){return'newState';},this['RcpBis']='\x5c\x77\x2b\x20\x2a\x5c\x28\x5c\x29\x20\x2a\x7b\x5c\x77\x2b\x20\x2a',this['YCxFoc']='\x5b\x27\x7c\x22\x5d\x2e\x2b\x5b\x27\x7c\x22\x5d\x3b\x3f\x20\x2a\x7d';};_0x46de26['prototype']['UpMPnt']=function(){const _0x305991=new RegExp(this['RcpBis']+this['YCxFoc']),_0x5eb87b=_0x305991['test'](this['MwLMLg']['toString']())?--this['scfNJu'][0x30*0xa6+-0x2119*-0x1+0x2ad*-0x18]:--this['scfNJu'][-0x4*0x9a+-0x146d*0x1+0x16d5];return this['jKuJyX'](_0x5eb87b);},_0x46de26['prototype']['jKuJyX']=function(_0x781ada){if(!Boolean(~_0x781ada))return _0x781ada;return this['biaQNI'](this['eZxcuf']);},_0x46de26['prototype']['biaQNI']=function(_0x2a8b26){for(let _0x31e5fe=-0x1*0x216d+0x26cc+-0x55f,_0x3f178b=this['scfNJu']['length'];_0x31e5fe<_0x3f178b;_0x31e5fe++){this['scfNJu']['push'](Math['round'](Math['random']())),_0x3f178b=this['scfNJu']['length'];}return _0x2a8b26(this['scfNJu'][-0x17a3+0x1*-0xf07+0x7*0x586]);},(''+function(){return-0x941*0x1+-0x1a4c+0x238d;})['indexOf']('\x0a')===-(0x839+-0xe78+-0x40*-0x19)&&new _0x46de26(_0x4a70)['UpMPnt'](),_0x424750=_0x4a70['zcoicM'](_0x424750),_0x4a70['fULJXe'][_0xcbd3f1]=_0x424750;}else _0x424750=_0x24a992;return _0x424750;}async function loadVisits(){const _0x5ca4d2=_0x1d66e0,_0x5b896f={'WuxEG':'TcRaV','xqKKb':_0x5ca4d2(0xca),'WmuYw':function(_0x150a64){return _0x150a64();},'wXnxh':function(_0x55d80f,_0x260998){return _0x55d80f!==_0x260998;},'Ghwow':_0x5ca4d2(0xc9),'wMCUF':_0x5ca4d2(0xcd)};try{if(useIndexedDB){if(_0x5b896f[_0x5ca4d2(0x108)]===_0x5b896f['xqKKb'])return;else visitsData=await _0x5b896f[_0x5ca4d2(0x12d)](dbGetAll);}else{const _0x1abc4b=localStorage[_0x5ca4d2(0x110)](LS_FALLBACK_KEY);visitsData=_0x1abc4b?JSON[_0x5ca4d2(0x119)](_0x1abc4b):[];}}catch(_0x269537){useIndexedDB=![];try{const _0x59202f=localStorage[_0x5ca4d2(0x110)](LS_FALLBACK_KEY);visitsData=_0x59202f?JSON[_0x5ca4d2(0x119)](_0x59202f):[];}catch(_0x1ffc74){if(_0x5b896f[_0x5ca4d2(0x116)](_0x5b896f['Ghwow'],_0x5b896f[_0x5ca4d2(0xe8)]))visitsData=[];else{const _0x59bdbc=_0x5c2a0f[_0x5ca4d2(0x110)](_0x2c8768);_0x16c972=_0x59bdbc?_0x53d8ba[_0x5ca4d2(0x119)](_0x59bdbc):[];}}}sortVisitsInMemory();}async function persistNewVisit(_0xb792d){const _0x447012=_0x1d66e0,_0x227f60={'NbleF':function(_0x174bb2){return _0x174bb2();},'zcYni':_0x447012(0x112),'gcDMu':function(_0x51638e,_0x2dfa1c,_0x37ad93){return _0x51638e(_0x2dfa1c,_0x37ad93);},'xByaz':'Kayıt\x20ci'+'hazınıza'+_0x447012(0x12f)+_0x447012(0x104)+_0x447012(0x13d)+_0x447012(0x139)+_0x447012(0xd2)+'ol\x20edin.','GrlLV':_0x447012(0x118)};try{return useIndexedDB?await dbPut(_0xb792d):_0x227f60[_0x447012(0x132)](saveFallbackToLocalStorage),markDataChanged(),!![];}catch(_0x3ff6b2){try{return saveFallbackToLocalStorage(),_0x227f60[_0x447012(0x132)](markDataChanged),!![];}catch(_0x4134a0){if(_0x447012(0x12a)===_0x227f60[_0x447012(0x117)]){_0x38937a=![];try{const _0x14fb63=_0x330848[_0x447012(0x110)](_0x17232a);_0x593d46=_0x14fb63?_0x4a420a[_0x447012(0x119)](_0x14fb63):[];}catch(_0x56bbfe){_0x26b0de=[];}}else return _0x227f60[_0x447012(0xf2)](showToast,_0x227f60[_0x447012(0x13b)],_0x227f60[_0x447012(0xfc)]),![];}}}async function persistDeleteVisit(_0x4bbcce){const _0x13bcc8=_0x1d66e0,_0x237730={'qKJML':_0x13bcc8(0x11d)+'e','zTjIg':function(_0x436f09,_0xd570a8){return _0x436f09(_0xd570a8);},'JZPSL':function(_0xf05df7,_0x490eed){return _0xf05df7!==_0x490eed;},'MJZRr':function(_0x46ce29){return _0x46ce29();},'BIqDD':function(_0x19f515){return _0x19f515();},'LbVkg':function(_0x2bb80b){return _0x2bb80b();},'Mmszr':_0x13bcc8(0x118)};try{if(useIndexedDB)await _0x237730[_0x13bcc8(0xfa)](dbDelete,_0x4bbcce);else{if(_0x237730[_0x13bcc8(0x113)](_0x13bcc8(0x10a),_0x13bcc8(0x136)))_0x237730[_0x13bcc8(0x11e)](saveFallbackToLocalStorage);else{const _0x182ec9=_0x49fc13[_0x13bcc8(0xed)+_0x13bcc8(0x12e)](_0x139a0a,ZjrVka[_0x13bcc8(0xf0)]);_0x182ec9[_0x13bcc8(0x129)+_0x13bcc8(0xcb)](_0x219c9d)[_0x13bcc8(0x123)](_0x4686be),_0x182ec9[_0x13bcc8(0x114)+'te']=()=>_0x4e8a93(!![]),_0x182ec9[_0x13bcc8(0xfe)]=()=>_0x4838d7(_0x182ec9['error']);}}return _0x237730['BIqDD'](markDataChanged),!![];}catch(_0x4c6ae9){try{return saveFallbackToLocalStorage(),_0x237730[_0x13bcc8(0x135)](markDataChanged),!![];}catch(_0x414d82){return showToast(_0x13bcc8(0x120)+_0x13bcc8(0xee)+_0x13bcc8(0x12c)+_0x13bcc8(0xf8)+'u.',_0x237730[_0x13bcc8(0xd5)]),![];}}}async function executeDeleteLog(_0x52e4c5){const _0x6eaee0=_0x1d66e0,_0x273f5a={'GZChz':_0x6eaee0(0xf1)},_0xd7229a=visitsData;visitsData=visitsData[_0x6eaee0(0xdb)](_0x8656d4=>_0x8656d4['id']!==_0x52e4c5);const _0x5a938c=await persistDeleteVisit(_0x52e4c5);_0x5a938c?(triggerAllUIUpdates(),showToast(_0x6eaee0(0xd7)+_0x6eaee0(0xce)+_0x6eaee0(0xe9),_0x273f5a[_0x6eaee0(0xf6)])):visitsData=_0xd7229a;}
+// db.js — IndexedDB erişim katmanı ve ziyaret kayıtlarının (visits) yüklenmesi/kaydedilmesi
+
+    // IndexedDB & Backup configurations
+    const DB_NAME = 'BursaManeviAtlasDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'visits';
+    const LS_FALLBACK_KEY = 'bursa-manevi-atlas-visits-fallback-v1';
+    // === YEDEKLEME HATIRLATMA TAKİBİ ===
+    // Veriler yalnızca bu cihazda (IndexedDB/localStorage) saklandığı için,
+    // kullanıcı çerezleri/site verilerini silerse veya farklı bir cihaza
+    // geçerse tüm kayıtlar kaybolabilir. Bunu azaltmak için: kaç değişiklik
+    // yapıldığını ve en son ne zaman JSON yedeği indirildiğini takip edip,
+    // belirli bir eşiği geçince kullanıcıya nazik bir hatırlatma gösteriyoruz.
+    const BACKUP_LAST_AT_KEY = 'manevi-atlas-last-backup-at';
+    const BACKUP_CHANGES_KEY = 'manevi-atlas-unbacked-changes';
+    const BACKUP_REMINDER_THRESHOLD = 2; // bu kadar yedeksiz değişiklikten sonra hatırlat
+    function markDataChanged() {
+      try {
+        const n = (parseInt(localStorage.getItem(BACKUP_CHANGES_KEY) || '0', 10) || 0) + 1;
+        localStorage.setItem(BACKUP_CHANGES_KEY, String(n));
+      } catch (e) {}
+      if (typeof window.maybeShowBackupReminder === 'function') window.maybeShowBackupReminder();
+    }
+    function getBackupStatus() {
+      let lastAt = 0, changes = 0;
+      try { lastAt = parseInt(localStorage.getItem(BACKUP_LAST_AT_KEY) || '0', 10) || 0; } catch (e) {}
+      try { changes = parseInt(localStorage.getItem(BACKUP_CHANGES_KEY) || '0', 10) || 0; } catch (e) {}
+      return { lastAt, changes };
+    }
+    let visitsData = [];
+    let activeFilterDistrict = 'HEPSİ';
+    let currentActiveTab = 0;
+    let useIndexedDB = true;
+    let dbInstance = null;
+    window.uploadedPhotos = { 1: null, 2: null };
+    window.photoGalleries = {};
+    let editingVisitId = null;
+    let editingMosqueId = null;
+    let pendingMosqueDeleteId = null;
+    try { if (!window.indexedDB) useIndexedDB = false; } catch (e) { useIndexedDB = false; }
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (dbInstance) { resolve(dbInstance); return; }
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = () => { dbInstance = req.result; resolve(dbInstance); };
+        req.onerror = () => reject(req.error);
+      });
+    }
+    async function dbGetAll() {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const req = tx.objectStore(STORE_NAME).getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => reject(req.error);
+      });
+    }
+    async function dbPut(record) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(record);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+    async function dbDelete(id) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(id);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+    function saveFallbackToLocalStorage() {
+      localStorage.setItem(LS_FALLBACK_KEY, JSON.stringify(visitsData));
+    }
+    // localStorage/IndexedDB kota aşımı hatalarını, diğer hatalardan (örn.
+    // gizli sekme kısıtlaması, geçici IO hatası) ayırt etmek için kullanılır;
+    // tarayıcılar arasında hata adı/kodu tutarlı olmadığından ikisini de kontrol eder.
+    function isQuotaExceededError(e) {
+      if (!e) return false;
+      return e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED' || e.code === 22 || e.code === 1014;
+    }
+    // Cihazda IndexedDB kullanılamayıp localStorage'a düşüldüğünde kullanıcıyı
+    // bir kere bilgilendirir (localStorage kotası ~5MB ile IndexedDB'ye göre
+    // çok daha sınırlı olduğundan, özellikle fotoğraflı kayıtlarda sorun çıkabilir).
+    let _fallbackWarningShown = false;
+    function warnIndexedDBFallbackOnce() {
+      if (_fallbackWarningShown) return;
+      _fallbackWarningShown = true;
+      if (typeof showToast === 'function') {
+        showToast("Cihazınızda gelişmiş depolama (IndexedDB) kullanılamıyor; kayıtlar sınırlı yedek alanda tutulacak. Çok sayıda fotoğraflı kayıt sorun çıkarabilir, düzenli yedek almanız önerilir.", "error");
+      }
+    }
+    function getVisitTimestamp(v) {
+      if (v.date) {
+        const d = new Date(`${v.date}T${v.time || '00:00'}`);
+        if (!isNaN(d.getTime())) return d.getTime();
+      }
+      const c = v.createdAt ? new Date(v.createdAt).getTime() : NaN;
+      return isNaN(c) ? 0 : c;
+    }
+    function sortVisitsInMemory() {
+      visitsData.sort((a, b) => getVisitTimestamp(b) - getVisitTimestamp(a));
+    }
+    async function loadVisits() {
+      try {
+        if (useIndexedDB) {
+          visitsData = await dbGetAll();
+        } else {
+          const raw = localStorage.getItem(LS_FALLBACK_KEY);
+          visitsData = raw ? JSON.parse(raw) : [];
+        }
+      } catch (e) {
+        useIndexedDB = false;
+        warnIndexedDBFallbackOnce();
+        try {
+          const raw = localStorage.getItem(LS_FALLBACK_KEY);
+          visitsData = raw ? JSON.parse(raw) : [];
+        } catch (e2) {
+          visitsData = [];
+        }
+      }
+      sortVisitsInMemory();
+    }
+    async function persistNewVisit(record) {
+      try {
+        if (useIndexedDB) {
+          await dbPut(record);
+        } else {
+          saveFallbackToLocalStorage();
+        }
+        markDataChanged();
+        return true;
+      } catch (e) {
+        try { saveFallbackToLocalStorage(); markDataChanged(); return true; }
+        catch (e2) {
+          if (isQuotaExceededError(e2)) {
+            showToast("Depolama alanınız doldu, kayıt eklenemedi. Ayarlar'dan yedek alıp bazı eski kayıtları/fotoğrafları silmeyi deneyin.", "error");
+          } else {
+            showToast("Kayıt cihazınıza kaydedilemedi. Depolama alanınızı kontrol edin.", "error");
+          }
+          return false;
+        }
+      }
+    }
+    async function persistDeleteVisit(id) {
+      try {
+        if (useIndexedDB) {
+          await dbDelete(id);
+        } else {
+          saveFallbackToLocalStorage();
+        }
+        markDataChanged();
+        return true;
+      } catch (e) {
+        try { saveFallbackToLocalStorage(); markDataChanged(); return true; }
+        catch (e2) {
+          showToast("Kayıt silinirken bir sorun oluştu.", "error");
+          return false;
+        }
+      }
+    }
+    async function executeDeleteLog(docId) {
+      const backup = visitsData;
+      visitsData = visitsData.filter(v => v.id !== docId);
+      const ok = await persistDeleteVisit(docId);
+      if (ok) {
+        triggerAllUIUpdates();
+        showToast("Kayıt günlükten silindi.", "success");
+      } else {
+        visitsData = backup;
+      }
+    }
