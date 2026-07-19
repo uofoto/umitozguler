@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-19-08",
-  "note": "Telif hakkı ibaresi eklendi: Ayarlar > Uygulama Hakkında kartına ve sayfa meta bilgilerine '© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.' notu yerleştirildi."
+  "version": "2026-07-19-09",
+  "note": "Tüm JavaScript dosyaları (ui.js, db.js, backup.js, search.js, stats.js, theme.js, mosques-data.js, sw.js) obfuscate edildi: değişken/fonksiyon isimleri karıştırıldı, string'ler şifrelendi, kontrol akışı karmaşıklaştırıldı."
 }
