@@ -27,6 +27,11 @@ kesinlikle yasaktır.
 Bu depoya erişim veya görüntüleme izni, herhangi bir kullanım, kopyalama
 veya dağıtım hakkı verildiği anlamına gelmez. Tüm haklar saklıdır.
 
+Uygulanacak Hukuk ve Yetkili Mahkeme: Bu Lisanstan doğan veya bu Lisansla
+bağlantılı her türlü uyuşmazlık Türkiye Cumhuriyeti kanunlarına tabidir.
+Bu Lisans kapsamındaki fiillerin suç teşkil ettiği hâllerde açılacak
+ceza davalarında Bursa Asliye Ceza Mahkemeleri yetkilidir.
+
 İzin talepleri için: https://www.umitozguler.com.tr
 
 -------------------------------------------------------------------------
@@ -55,5 +60,11 @@ may:
 Access to or the ability to view this repository does not, by itself,
 grant any license, right of use, copying, or distribution. All rights
 reserved.
+
+Governing Law and Jurisdiction: This License is governed by the laws
+of the Republic of Türkiye. Where conduct under this License
+constitutes a criminal offense, the Bursa Criminal Courts of First
+Instance (Bursa Asliye Ceza Mahkemeleri) have jurisdiction over any
+resulting criminal proceedings.
 
 For permission requests, contact: https://www.umitozguler.com.tr
