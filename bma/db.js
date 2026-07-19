@@ -13,7 +13,7 @@
     // belirli bir eşiği geçince kullanıcıya nazik bir hatırlatma gösteriyoruz.
     const BACKUP_LAST_AT_KEY = 'manevi-atlas-last-backup-at';
     const BACKUP_CHANGES_KEY = 'manevi-atlas-unbacked-changes';
-    const BACKUP_REMINDER_THRESHOLD = 4; // bu kadar yedeksiz değişiklikten sonra hatırlat
+    const BACKUP_REMINDER_THRESHOLD = 2; // bu kadar yedeksiz değişiklikten sonra hatırlat
     function markDataChanged() {
       try {
         const n = (parseInt(localStorage.getItem(BACKUP_CHANGES_KEY) || '0', 10) || 0) + 1;

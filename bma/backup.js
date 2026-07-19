@@ -38,7 +38,7 @@
       const status = (typeof getBackupStatus === 'function') ? getBackupStatus() : { lastAt: 0, changes: 0 };
       const banner = document.getElementById('backupReminderBanner');
       if (!banner) return;
-      if (status.changes >= (typeof BACKUP_REMINDER_THRESHOLD !== 'undefined' ? BACKUP_REMINDER_THRESHOLD : 4)) {
+      if (status.changes >= (typeof BACKUP_REMINDER_THRESHOLD !== 'undefined' ? BACKUP_REMINDER_THRESHOLD : 2)) {
         banner.classList.remove('hidden');
       }
     };
