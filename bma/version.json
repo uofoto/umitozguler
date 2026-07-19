@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-19-10",
-  "note": "Güncelleme mekanizması sağlamlaştırıldı: servis çalışanı artık kullanıcı onayı olmadan otomatik devreye girmiyor (skipWaiting mesaj tabanlı hale getirildi), arka planda/saatte bir otomatik güncelleme kontrolü eklendi, ve Ayarlar sayfasına görünür bir 'Uygulama Sürümü' etiketi kondu."
+  "version": "2026-07-19-11",
+  "note": "Kullanım Şartları metnindeki 'LICENSE dosyasına bakınız' ifadesi tıklanabilir bir bağlantıya dönüştürüldü (./LICENSE). LICENSE dosyası çevrimdışı erişim için servis çalışanı önbellek listesine eklendi — bu dosyanın index.html ile aynı klasörde sunucuda bulunması gerekir."
 }
