@@ -17,7 +17,7 @@
     };
     // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI
     // Statik özellik güncellemeleri için (yeni bir uygulama özelliği yayınlandığında bu sürüm etiketini artırın)
-    const WHATS_NEW_STATIC_VERSION = 'v6-istatistik-paylas-zengin';
+    const WHATS_NEW_STATIC_VERSION = 'v7-yedekleme-hatirlatma';
     // Envanterdeki en yeni "addedAt" tarihini bulur; yeni cami eklendikçe bu otomatik değişir,
     // böylece kartın tekrar gösterilip gösterilmeyeceği koddaki bir sürüm numarasına değil,
     // gerçek veriye bağlı olur (elle güncelleme gerekmez).
