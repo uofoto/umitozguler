@@ -1,4 +1,4 @@
 {
   "version": "2026-07-19-09",
-  "note": "Tüm JavaScript dosyaları (ui.js, db.js, backup.js, search.js, stats.js, theme.js, mosques-data.js, sw.js) obfuscate edildi: değişken/fonksiyon isimleri karıştırıldı, string'ler şifrelendi, kontrol akışı karmaşıklaştırıldı."
+  "note": "Kapsamlı 'Kullanım Şartları' sayfası eklendi (Türkçe/İngilizce, Ayarlar > Uygulama Hakkında kartından açılıyor). Fikri mülkiyet, izin verilen kullanım, veri saklama sorumluluğu ve üçüncü taraf servisler bölümlerini içerir."
 }

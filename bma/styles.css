@@ -210,6 +210,6 @@
     /* Alttan açılan "sheet" tarzı modallar (cami bilgi/düzenleme, silinenler vb.) */
     [id$="Modal"].fixed:not(.hidden) > .rounded-t-3xl{ animation:modal-sheet-in .4s cubic-bezier(0.22,1,0.36,1) both; }
     /* Tam ekran sayfa-modalları (harita, rota, yolculuk) sade bir fade ile açılır */
-    #mapModal:not(.hidden), #nearbyModal:not(.hidden), #routeModal:not(.hidden), #journeyModal:not(.hidden){
+    #mapModal:not(.hidden), #nearbyModal:not(.hidden), #routeModal:not(.hidden), #journeyModal:not(.hidden), #termsModal:not(.hidden){
       animation:modal-panel-in .32s ease both;
     }

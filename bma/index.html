@@ -825,6 +825,9 @@
               </p>
               <p class="text-[9px] pt-1.5" style="color:var(--ink-faint); border-top:1px solid var(--line); margin-top:0.35rem;">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
               <p class="text-[8.5px] leading-relaxed" style="color:var(--ink-faint);">Bu uygulamanın tasarımı, konsepti, kaynak kodu ve içeriği telif hakkı ile korunmaktadır. Ümit Özgüler'in yazılı izni olmaksızın kısmen veya tamamen çoğaltılamaz, kopyalanamaz, dağıtılamaz, değiştirilerek veya değiştirilmeden başka bir ad altında yayımlanamaz ya da ticari/ticari olmayan hiçbir amaçla kullanılamaz.</p>
+              <button onclick="openTermsModal()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 mt-1" style="background:var(--paper-deep); color:var(--ink-soft);">
+                <i class="fa-solid fa-file-contract text-[9px]" style="color:var(--gold-deep);"></i><span>Kullanım Şartlarını Oku / Terms of Use</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1028,6 +1031,121 @@
         <button onclick="closeDeletedMosquesModal()" class="icon-btn" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div id="deletedMosquesList" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- KULLANIM ŞARTLARI / TERMS OF USE -->
+  <div id="termsModal" class="hidden fixed inset-0 z-50 flex flex-col" style="background:var(--paper);">
+    <div class="hero-panel relative px-4 pt-4 pb-3 flex-shrink-0 safe-padding-top">
+      <div class="relative flex items-start justify-between">
+        <div class="space-y-1">
+          <h3 class="font-display font-bold text-base leading-snug flex items-center gap-2" style="color:#fff;">
+            <i class="fa-solid fa-file-contract" style="color:var(--gold-soft);"></i><span>Kullanım Şartları</span>
+          </h3>
+          <p class="text-[10.5px]" style="color:rgba(255,255,255,0.75);">Son güncelleme: 19 Temmuz 2026</p>
+        </div>
+        <button onclick="closeTermsModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl mt-3" style="background:rgba(255,255,255,0.1);">
+        <button id="termsLangTrBtn" onclick="switchTermsLang('tr')" class="segment-tab active text-[11px] font-bold py-2 rounded-xl">Türkçe</button>
+        <button id="termsLangEnBtn" onclick="switchTermsLang('en')" class="segment-tab text-[11px] font-bold py-2 rounded-xl" style="color:rgba(255,255,255,0.8);">English</button>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-4 py-4 safe-padding-bottom">
+      <!-- TÜRKÇE İÇERİK (esas metin) -->
+      <div id="termsContentTr" class="space-y-4">
+        <div class="paper-card rounded-2xl p-3.5">
+          <p class="text-[10px]" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>Bu metin, uygulamayı ("Bursa Manevi Atlası") kullanan herkes için geçerlidir. Uygulamayı kullanarak aşağıdaki şartları kabul etmiş olursunuz. Anlaşmazlık halinde bu Türkçe metin esas alınır.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">1. Taraflar ve Kapsam</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Bursa Manevi Atlası ("Uygulama"), fikir, konsept ve proje sahibi Ümit Özgüler ("Hak Sahibi") tarafından geliştirilmiştir. Bu şartlar, Uygulamanın web/PWA sürümünü kullanan tüm kişiler ("Kullanıcı") için geçerlidir.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">2. Fikri Mülkiyet Hakları</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulamanın kaynak kodu, arayüz tasarımı, konsept, isim, logo ve tüm içeriği Hak Sahibine aittir ve telif hakkı mevzuatı ile korunur. Hak Sahibinin önceden yazılı izni olmaksızın Uygulama kısmen veya tamamen kopyalanamaz, çoğaltılamaz, başka bir isim/marka altında yayımlanamaz, değiştirilerek türev bir ürün olarak dağıtılamaz veya ticari/ticari olmayan herhangi bir amaçla kullanılamaz. Ayrıntılı bilgi için Uygulamanın LICENSE dosyasına bakınız.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">3. İzin Verilen Kullanım</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama, yalnızca kişisel ve kişisel olmayan ticari amaç taşımayan kullanım için sunulmuştur. Uygulamayı yalnızca hukuka ve bu şartlara uygun şekilde kullanabilirsiniz. Uygulamanın güvenlik önlemlerini aşmaya çalışmak, kaynak kodunu tersine mühendislikle bu şartlara aykırı biçimde yeniden paketlemek veya kütlesel/otomatik erişim (scraping) yoluyla veri toplamak yasaktır.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">4. Verilerinizin Saklanması ve Sorumluluğunuz</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Namaz kayıtlarınız, favorileriniz ve tercihleriniz yalnızca kullandığınız cihazda (tarayıcının IndexedDB/localStorage depolama alanında) saklanır; herhangi bir sunucuya gönderilmez. Tarayıcı verilerini/önbelleğini temizlemeniz, farklı bir cihaz veya tarayıcı kullanmanız ya da Uygulamayı kaldırmanız hâlinde bu kayıtlar kalıcı olarak kaybolabilir. Kayıtlarınızı korumak için Uygulama içindeki yedekleme (JSON dışa aktarma) özelliğini düzenli olarak kullanmak tamamen sizin sorumluluğunuzdadır; Hak Sahibi, cihazınızda oluşan veri kayıplarından sorumlu tutulamaz.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">5. Üçüncü Taraf Servisler</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama; namaz vakitleri için Aladhan API, hava durumu için Open-Meteo, konum/adres arama için OpenStreetMap Nominatim ve yol tarifi/harita görüntüleme için Google Haritalar gibi üçüncü taraf servislere bağlanabilir. Bu servislerin sağladığı verilerin doğruluğu, güncelliği ve kesintisiz erişilebilirliği Hak Sahibinin kontrolünde değildir ve garanti edilmez. Bu servislerin kendi kullanım şartları ve gizlilik politikaları ayrıca geçerlidir.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">6. Sorumluluk Reddi</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama "olduğu gibi" sunulmaktadır. Cami/mescid bilgileri, tarihçe metinleri, namaz vakitleri ve konum verileri özenle derlenmiş olsa da hatasız veya güncel olacağı garanti edilmez. Namaz vakitleri gibi dinî açıdan hassas konularda, bölgenizdeki resmî diyanet kaynaklarını da kontrol etmeniz tavsiye edilir. Hak Sahibi, Uygulamanın kullanımından doğabilecek doğrudan veya dolaylı hiçbir zarardan sorumlu tutulamaz.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">7. Değişiklikler</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Hak Sahibi, bu Kullanım Şartlarını ve Uygulamayı önceden bildirimde bulunmaksızın güncelleyebilir. Güncel sürüm her zaman Uygulama içinde bu ekranda yer alır; Uygulamayı kullanmaya devam etmeniz güncel şartları kabul ettiğiniz anlamına gelir.</p>
+        </div>
+
+        <div class="space-y-1.5 pb-2">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">8. İletişim</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Sorularınız, izin talepleriniz veya bildirimleriniz için: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener" class="font-semibold underline decoration-dotted underline-offset-2" style="color:var(--teal-700);">www.umitozguler.com.tr</a></p>
+        </div>
+      </div>
+
+      <!-- ENGLISH CONTENT (informal translation) -->
+      <div id="termsContentEn" class="space-y-4 hidden">
+        <div class="paper-card rounded-2xl p-3.5">
+          <p class="text-[10px]" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>This is an informal English translation for convenience. It applies to everyone using the app ("Bursa Manevi Atlası"). By using the app you accept the terms below. In case of any conflict, the Turkish text is authoritative.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">1. Parties and Scope</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Bursa Manevi Atlası (the "App") was developed by its concept and project owner, Ümit Özgüler (the "Rights Holder"). These terms apply to everyone ("User") using the web/PWA version of the App.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">2. Intellectual Property</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App's source code, interface design, concept, name, logo, and all content belong to the Rights Holder and are protected under copyright law. Without the Rights Holder's prior written permission, the App may not be copied or reproduced in whole or in part, published under another name or brand, modified and redistributed as a derivative work, or used for any commercial or non-commercial purpose. See the App's LICENSE file for details.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">3. Permitted Use</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App is provided for personal, non-commercial use only. You may use it solely in a manner consistent with applicable law and these terms. Attempting to bypass the App's security measures, reverse-engineering and repackaging its source code in violation of these terms, or collecting data through bulk/automated access (scraping) is prohibited.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">4. Data Storage and Your Responsibility</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Your prayer records, favorites, and preferences are stored only on the device you use (in the browser's IndexedDB/localStorage) and are never sent to any server. Clearing your browser data/cache, switching devices or browsers, or uninstalling the App may permanently erase these records. It is entirely your responsibility to regularly use the in-app backup (JSON export) feature to protect your records; the Rights Holder cannot be held responsible for data loss occurring on your device.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">5. Third-Party Services</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App may connect to third-party services such as the Aladhan API for prayer times, Open-Meteo for weather, OpenStreetMap Nominatim for location/address search, and Google Maps for directions and map display. The accuracy, timeliness, and uninterrupted availability of data from these services are outside the Rights Holder's control and are not guaranteed. Each of these services' own terms of use and privacy policies apply separately.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">6. Disclaimer</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App is provided "as is." While mosque/masjid information, historical texts, prayer times, and location data are compiled with care, they are not guaranteed to be error-free or up to date. For religiously sensitive matters such as prayer times, you are advised to also check official local religious-authority sources. The Rights Holder cannot be held liable for any direct or indirect damages arising from use of the App.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">7. Changes</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The Rights Holder may update these Terms of Use and the App without prior notice. The current version is always available on this screen within the App; continuing to use the App means you accept the current terms.</p>
+        </div>
+
+        <div class="space-y-1.5 pb-2">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">8. Contact</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">For questions, permission requests, or notices: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener" class="font-semibold underline decoration-dotted underline-offset-2" style="color:var(--teal-700);">www.umitozguler.com.tr</a></p>
+        </div>
+      </div>
     </div>
   </div>
 
