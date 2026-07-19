@@ -3,6 +3,34 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <script>
+    // === ALAN ADI KİLİDİ (Domain Lock) ===
+    // Bu uygulama yalnızca Ümit Özgüler'in kendi alan adlarında ve yerel
+    // geliştirme/test ortamlarında çalışacak şekilde tasarlanmıştır. Kaynak
+    // kodu izinsiz kopyalanıp başka bir sunucuya/alan adına konursa, sayfa
+    // hiçbir içerik göstermeden tamamen boş kalır. Bkz. LICENSE ve
+    // Kullanım Şartları (Ayarlar > Uygulama Hakkında).
+    (function () {
+      var ALLOWED_HOSTS = ['umitozguler.com.tr'];
+      var DEV_HOSTS = ['localhost', '127.0.0.1', ''];
+      var host = window.location.hostname;
+
+      function isAllowedHost(h) {
+        if (DEV_HOSTS.indexOf(h) !== -1) return true;
+        for (var i = 0; i < ALLOWED_HOSTS.length; i++) {
+          var base = ALLOWED_HOSTS[i];
+          if (h === base || h.slice(-(base.length + 1)) === '.' + base) return true;
+        }
+        return false;
+      }
+
+      if (!isAllowedHost(host)) {
+        document.open();
+        document.write('<!DOCTYPE html><html><head><meta charset="utf-8"></head><body></body></html>');
+        document.close();
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Bursa Manevi Atlası — Ümit Özgüler</title>
   <meta name="copyright" content="© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.">
