@@ -22,6 +22,13 @@ izni olmaksızın aşağıdaki eylemler kesinlikle yasaktır:
   4. Yazılımın kaynağı gizlenerek veya farklı bir isim ya da marka
      altında üçüncü kişilere sunulması.
 
+"Bursa Manevi Atlası" ismi de bu Yazılım ile birlikte anılan ve
+korunan bir addır. Hak sahibinin önceden yazılı izni olmaksızın hiç
+kimse bu ismi veya bu isimle karıştırılabilecek türev/benzer isimleri;
+başka bir uygulama, yazılım, hizmet, marka veya projede
+kullanamaz, tescil ettiremez, alan adı (domain) olarak alamaz ya da bu
+isim altında herhangi bir ürün veya hizmet sunamaz.
+
 Bu depoya erişim veya bu depoyu görüntüleme izninin verilmiş olması,
 herhangi bir kullanım, kopyalama veya dağıtım hakkının tanındığı
 anlamına gelmez. Tüm haklar saklıdır.
@@ -56,6 +63,13 @@ without the copyright holder's prior written permission, no one may:
   4. Present the Software, or any derivative thereof, to third parties
      under a different name or brand, or with its origin concealed or
      misrepresented.
+
+The name "Bursa Manevi Atlası" is likewise a protected name associated
+with this Software. Without the copyright holder's prior written
+permission, no one may use, register, adopt as a domain name, or
+otherwise employ this name — or any derivative or confusingly similar
+name — for any other application, website, software, service, brand,
+or project, nor offer any product or service under this name.
 
 Access to, or the ability to view, this repository does not, by itself,
 grant any right of use, copying, or distribution. All rights reserved.
