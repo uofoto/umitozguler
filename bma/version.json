@@ -1,4 +1,4 @@
 {
-  "version": "2026-07-19-09",
-  "note": "Kapsamlı 'Kullanım Şartları' sayfası eklendi (Türkçe/İngilizce, Ayarlar > Uygulama Hakkında kartından açılıyor). Fikri mülkiyet, izin verilen kullanım, veri saklama sorumluluğu ve üçüncü taraf servisler bölümlerini içerir."
+  "version": "2026-07-19-10",
+  "note": "Güncelleme mekanizması sağlamlaştırıldı: servis çalışanı artık kullanıcı onayı olmadan otomatik devreye girmiyor (skipWaiting mesaj tabanlı hale getirildi), arka planda/saatte bir otomatik güncelleme kontrolü eklendi, ve Ayarlar sayfasına görünür bir 'Uygulama Sürümü' etiketi kondu."
 }

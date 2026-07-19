@@ -98,6 +98,7 @@
 
         window.__remoteAppVersion = remoteVersion;
         const localVersion = localStorage.getItem('manevi-atlas-app-version');
+        updateVersionBadge(localVersion || remoteVersion);
 
         if (!localVersion) {
           // İlk kurulum / bu cihazda ilk kez kontrol ediliyor: sessizce kaydet, banner gösterme
@@ -117,6 +118,14 @@
         if (manualTrigger) showToast("Güncelleme kontrol edilemedi. İnternet bağlantınızı kontrol edin.", "error");
       }
     }
+    // Ayarlar sayfasındaki "Uygulama Sürümü: …" etiketini günceller. Bu, bir
+    // sorun bildirirken ("telefonumda hangi sürüm çalışıyor?") tek bakışta
+    // cevap verebilmeyi sağlar — konsol veya kaynak koda bakmaya gerek kalmaz.
+    function updateVersionBadge(version) {
+      const el = document.getElementById('appVersionBadge');
+      if (el && version) el.textContent = version;
+    }
+    window.updateVersionBadge = updateVersionBadge;
     window.checkForAppUpdate = checkForAppUpdate;
     window.dismissAppUpdateBanner = function() {
       const banner = document.getElementById('appUpdateBanner');
@@ -131,6 +140,23 @@
       try {
         window.haptic(15);
         showToast("Güncelleniyor...", "success");
+
+        // Tercih edilen yol: sunucuda hazır bekleyen bir servis çalışanı varsa
+        // (bkz. 'updatefound' dinleyicisi), ona nazikçe devral mesajı gönder.
+        // Devrettiğinde 'controllerchange' olayı sayfayı zaten yenileyecek.
+        if (window.__pendingSW) {
+          window.__pendingSW.postMessage('SKIP_WAITING');
+          if (window.__remoteAppVersion) {
+            localStorage.setItem('manevi-atlas-app-version', window.__remoteAppVersion);
+          }
+          return;
+        }
+
+        // Yedek yol: bekleyen bir SW henüz tespit edilmediyse (ör. sadece
+        // version.json değişmiş, veya SW kontrolü daha tamamlanmadıysa) eski
+        // yöntemle tüm önbellekleri temizleyip sayfayı sıfırdan yeniden yükle.
+        // Bu durumda da hiçbir kayıt kaybı olmaz; cami kayıtları IndexedDB'de,
+        // bu temizlik yalnızca uygulamanın kendi kod/veri önbelleğini kapsar.
         if ('caches' in window) {
           const keys = await caches.keys();
           await Promise.all(keys.map(k => caches.delete(k)));
@@ -1520,9 +1546,43 @@
       document.getElementById('installBanner').classList.add('hidden');
       showToast('Uygulama ana ekranınıza yüklendi!', 'success');
     });
-    // 18. SERVICE WORKER KAYDI (çevrimdışı açılış desteği)
+    // 18. SERVICE WORKER KAYDI (çevrimdışı açılış desteği) + GÜNCELLEME TESPİTİ
+    // Basit "register et ve unut" yerine: yeni bir sürüm sunucuya yüklendiğinde
+    // bunu olabildiğince erken fark edip kullanıcıya güncelleme bandını
+    // gösteriyoruz. Servis çalışanı hazır ("installed") ama henüz devrede
+    // değilse (sayfa hâlâ eski koda bağlıyken), window.__pendingSW olarak
+    // saklıyoruz; kullanıcı "Güncelle"ye basınca ona SKIP_WAITING mesajı
+    // gönderiyoruz (bkz. applyAppUpdate ve sw.js).
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            if (!newSW) return;
+            newSW.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                window.__pendingSW = newSW;
+                const banner = document.getElementById('appUpdateBanner');
+                if (banner) banner.classList.remove('hidden');
+              }
+            });
+          });
+          // Uygulama arka plandan öne geldiğinde veya her saat başı, sunucuda
+          // yeni bir sw.js olup olmadığını sessizce kontrol et (bu, kullanıcının
+          // uygulamayı yalnızca ana ekran ikonundan açtığı ve hiç manuel
+          // "Kontrol Et" demediği durumlarda güncellemenin fark edilmesini sağlar).
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') reg.update().catch(() => {});
+          });
+          setInterval(() => reg.update().catch(() => {}), 60 * 60 * 1000);
+        }).catch(() => {});
+      });
+
+      // Yeni SW devraldığı an (skipWaiting sonrası) sayfayı bir kez yenile.
+      let __swRefreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (__swRefreshing) return;
+        __swRefreshing = true;
+        window.location.reload();
       });
     }
