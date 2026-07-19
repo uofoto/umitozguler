@@ -31,7 +31,7 @@
         }
         
         return matchesSearch && matchesDistrict;
-      });
+      }).sort((a, b) => a.name.localeCompare(b.name, 'tr'));
 
       if (filtered.length === 0) {
         const isFavView = activeFilterDistrict === 'FAVORILER';
