@@ -80,6 +80,73 @@
       const banner = document.getElementById('whatsNewBanner');
       if (banner) banner.classList.add('hidden');
     };
+    // === UYGULAMA GÜNCELLEME KONTROLÜ ===
+    // Servis çalışanı (service worker), performans için statik dosyaları (cami
+    // listesi, arayüz kodları vb.) cihazda önbelleğe alır. Bu sayede uygulama
+    // internetsizken de açılabilir, ama sunucudaki bilgiler değiştiğinde (ör.
+    // yeni bir cami eklendiğinde) cihazdaki önbellek kendiliğinden yenilenmez.
+    // Bu yüzden sunucudaki küçük "version.json" dosyasını (önbelleğe hiç
+    // takılmadan, doğrudan ağdan) kontrol ediyoruz; cihazda daha önce görülen
+    // sürümden farklıysa kullanıcıya bir "Güncelle" bandı gösteriyoruz.
+    async function checkForAppUpdate(manualTrigger = false) {
+      try {
+        const res = await fetch(`./version.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('version.json alınamadı');
+        const data = await res.json();
+        const remoteVersion = data.version;
+        if (!remoteVersion) throw new Error('version.json içinde sürüm bilgisi yok');
+
+        window.__remoteAppVersion = remoteVersion;
+        const localVersion = localStorage.getItem('manevi-atlas-app-version');
+
+        if (!localVersion) {
+          // İlk kurulum / bu cihazda ilk kez kontrol ediliyor: sessizce kaydet, banner gösterme
+          localStorage.setItem('manevi-atlas-app-version', remoteVersion);
+          if (manualTrigger) showToast("Uygulama güncel.", "success");
+          return;
+        }
+
+        if (localVersion !== remoteVersion) {
+          const banner = document.getElementById('appUpdateBanner');
+          if (banner) banner.classList.remove('hidden');
+          if (manualTrigger) showToast("Yeni bir güncelleme bulundu.", "success");
+        } else if (manualTrigger) {
+          showToast("Uygulama zaten güncel.", "success");
+        }
+      } catch (e) {
+        if (manualTrigger) showToast("Güncelleme kontrol edilemedi. İnternet bağlantınızı kontrol edin.", "error");
+      }
+    }
+    window.checkForAppUpdate = checkForAppUpdate;
+    window.dismissAppUpdateBanner = function() {
+      const banner = document.getElementById('appUpdateBanner');
+      if (banner) banner.classList.add('hidden');
+    };
+    // Kullanıcı "Güncelle" butonuna bastığında: cihazdaki tüm eski önbellekleri
+    // temizler, sürüm numarasını günceller ve sayfayı sıfırdan (ağdan) yeniden
+    // yükler. Bu, cami defteri (ziyaret kayıtları) IndexedDB'de tutulduğu için
+    // hiçbir kayıt kaybına yol açmaz — sadece uygulamanın kendi kodunu ve
+    // cami listesini en güncel haliyle yeniden indirir.
+    window.applyAppUpdate = async function() {
+      try {
+        window.haptic(15);
+        showToast("Güncelleniyor...", "success");
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) await reg.update().catch(() => {});
+        }
+        if (window.__remoteAppVersion) {
+          localStorage.setItem('manevi-atlas-app-version', window.__remoteAppVersion);
+        }
+        setTimeout(() => { window.location.reload(); }, 250);
+      } catch (e) {
+        showToast("Güncelleme uygulanamadı. Lütfen tekrar deneyin.", "error");
+      }
+    };
     // Envanterde ayrıntılı kaydı bulunmayan mabetler için dürüst, genel bir tanıtım metni üretir
     function getMosqueInfo(m) {
       if (MOSQUE_INFO_OVERRIDES[m.id]) return MOSQUE_INFO_OVERRIDES[m.id];
@@ -639,6 +706,7 @@
       activeFilterDistrict = 'HEPSİ';
       initWhatsNewBanner();
       initMosqueInfoHintBanner();
+      checkForAppUpdate(); // Sunucuda daha yeni bir sürüm var mı, sessizce kontrol et
       await loadVisits();
       loadProfileData(); 
       displayDailyVerse(); // <--- YENİ EKLENEN: AÇILIŞTA AYET GÖSTER
@@ -1192,6 +1260,7 @@
         displayDailyVerse();
         triggerAllUIUpdates();
         await initPrayerCountdown();
+        checkForAppUpdate(); // Yenilerken sunucuda yeni bir sürüm olup olmadığını da kontrol et
         showToast('Kayıtlar güncellendi.', 'success');
       } catch (e) {
         showToast('Yenileme sırasında bir sorun oluştu.', 'error');

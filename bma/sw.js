@@ -14,7 +14,7 @@
 // saklanır; bu servis çalışanı yalnızca uygulamanın açılış hızını ve çevrimdışı
 // erişimini yönetir.
 
-const CACHE_NAME = "bursa-manevi-atlas-v8";
+const CACHE_NAME = "bursa-manevi-atlas-v9";
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
@@ -63,6 +63,15 @@ self.addEventListener("fetch", (event) => {
 
   let hostname = "";
   try { hostname = new URL(event.request.url).hostname; } catch (e) {}
+
+  // "Güncelle" özelliğinin çalışması için version.json HİÇBİR ZAMAN önbelleğe
+  // alınmaz; her istek doğrudan ağa gider. Aksi halde uygulama, sunucudaki
+  // gerçek sürüm yerine önbellekteki eski version.json'u kontrol eder ve
+  // güncelleme bildirimi hiç görünmez.
+  if (event.request.url.includes("version.json")) {
+    event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => Response.error()));
+    return;
+  }
 
   // Canlı veri API'leri: önbelleğe hiç dokunma, doğrudan ağa git.
   // Çevrimdışıyken bu istekler doğal olarak başarısız olur; uygulama
