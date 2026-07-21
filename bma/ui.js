@@ -97,6 +97,15 @@
     // sürümden farklıysa kullanıcıya bir "Güncelle" bandı gösteriyoruz.
     async function checkForAppUpdate(manualTrigger = false) {
       try {
+        // Sürüm kontrolüyle eş zamanlı olarak servis çalışanının da sunucudaki
+        // sw.js'i kontrol etmesini tetikle. Böylece sadece version.json değil,
+        // servis çalışanının kendisi değiştiyse de en erken şekilde fark edilir.
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistration().then((reg) => {
+            if (reg) reg.update().catch(() => {});
+          }).catch(() => {});
+        }
+
         const res = await fetch(`./version.json?t=${Date.now()}`, { cache: 'no-store' });
         if (!res.ok) throw new Error('version.json alınamadı');
         const data = await res.json();
@@ -107,22 +116,34 @@
         const localVersion = localStorage.getItem('manevi-atlas-app-version');
         updateVersionBadge(localVersion || remoteVersion);
 
-        if (!localVersion) {
-          // İlk kurulum / bu cihazda ilk kez kontrol ediliyor: sessizce kaydet, banner gösterme
+        // Cihazda bu sürüm takip özelliğinden önce yüklenmiş, zaten bir servis
+        // çalışanı tarafından kontrol edilen (dolayısıyla önbellekte eski dosyalar
+        // barındırma ihtimali olan) bir sayfa olabilir. Böyle bir durumda
+        // "localVersion boş, o yüzden ilk kurulumdur" varsayıp sessizce "güncel"
+        // demek YANLIŞ ve yanıltıcıdır — kullanıcı hiçbir zaman gerçek güncellemeyi
+        // görmeden eski içerikte kalmış olur. Bu yüzden sadece gerçekten hiçbir
+        // servis çalışanı kaydı yokken (yani cihazda önbellek de yoksa) sessiz
+        // ilk-kurulum varsayımını yap; aksi halde normal karşılaştırma akışına düş.
+        const hasExistingController = ('serviceWorker' in navigator) && !!navigator.serviceWorker.controller;
+        if (!localVersion && !hasExistingController) {
+          // Gerçek ilk kurulum: cihazda hiçbir önbellek yok, güvenle taban sürüm olarak kaydet.
           localStorage.setItem('manevi-atlas-app-version', remoteVersion);
           if (manualTrigger) showToast("Uygulama güncel.", "success");
-          return;
+          return false;
         }
 
         if (localVersion !== remoteVersion) {
           const banner = document.getElementById('appUpdateBanner');
           if (banner) banner.classList.remove('hidden');
           if (manualTrigger) showToast("Yeni bir güncelleme bulundu.", "success");
+          return true;
         } else if (manualTrigger) {
           showToast("Uygulama zaten güncel.", "success");
         }
+        return false;
       } catch (e) {
         if (manualTrigger) showToast("Güncelleme kontrol edilemedi. İnternet bağlantınızı kontrol edin.", "error");
+        return false;
       }
     }
     // Ayarlar sayfasındaki "Uygulama Sürümü: …" etiketini günceller. Bu, bir
@@ -1340,7 +1361,19 @@
         displayDailyVerse();
         triggerAllUIUpdates();
         await initPrayerCountdown();
-        checkForAppUpdate(); // Yenilerken sunucuda yeni bir sürüm olup olmadığını da kontrol et
+        // Yenilerken sunucuda yeni bir sürüm olup olmadığını da kontrol et.
+        // Sadece bir banner bırakıp kullanıcının fark etmesini beklemek yerine,
+        // kullanıcı zaten "en güncel bilgiyi getir" niyetiyle aşağı çektiği için
+        // bir güncelleme bulunursa doğrudan uygula: önbellek temizlenir ve sayfa
+        // sıfırdan (en güncel cami/bilgi listesiyle) yeniden yüklenir.
+        const updateAvailable = await checkForAppUpdate();
+        if (updateAvailable) {
+          await minDisplay;
+          ptrRefreshing = false;
+          ptrReset(true);
+          window.applyAppUpdate();
+          return;
+        }
         showToast('Kayıtlar güncellendi.', 'success');
       } catch (e) {
         showToast('Yenileme sırasında bir sorun oluştu.', 'error');
