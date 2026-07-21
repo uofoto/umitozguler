@@ -191,6 +191,122 @@ const _0x47a81f=_0x47aa;(function(_0x20893a,_0x558a30){const _0x4f0086=_0x47aa,_
   {id:"gungormez-camii",name:"Güngörmez Camii",district:"Osmangazi",address:"Ulucami, Atatürk Cd., Osmangazi/Bursa",mapsSearch:"Güngörmez Camii Bursa",addedAt:"2026-07-20"},
   {id:"guranli-mescidi",name:"Güranlı Mescidi",district:"Osmangazi",address:"Mollagürani, Güranlı Sk., Osmangazi/Bursa",mapsSearch:"Güranlı Mescidi Bursa",addedAt:"2026-07-20"},
   {id:"haci-iskender-camii",name:"Hacı İskender Camii",district:"Osmangazi",address:"Akçardak, Cıngıllı Sk., Osmangazi/Bursa",mapsSearch:"Hacı İskender Camii Bursa",addedAt:"2026-07-20"},
+  // === Osmangazi eklemeleri (Vakıflar envanterinde olup listede bulunmayanlar) ===
+  {id:"elvan-bey-camii",name:"Elvan Bey Camii",district:"Osmangazi",address:"Hamzabey Mah., Osmangazi/Bursa",mapsSearch:"Elvan Bey Camii Bursa",addedAt:"2026-07-21"},
+  {id:"fidan-hani-mescidi",name:"Fidan Hanı Mescidi (Mahmut Paşa)",district:"Osmangazi",address:"Orhanbey Mah., Uzun Çarşı Cd., Osmangazi/Bursa",mapsSearch:"Fidan Hanı Mescidi Bursa",addedAt:"2026-07-21"},
+  {id:"geyve-han-camii",name:"Geyve Han Camii",district:"Osmangazi",address:"Orhanbey Mah., Uzunçarşı Cad., Osmangazi/Bursa",mapsSearch:"Geyve Han Camii Bursa",addedAt:"2026-07-21"},
+  {id:"haci-sevinc-camii",name:"Hacı Sevinç Camii",district:"Osmangazi",address:"Tahtakale Mah., Veziri Cad., Osmangazi/Bursa",mapsSearch:"Hacı Sevinç Camii Bursa",addedAt:"2026-07-21"},
+  {id:"hoca-hasan-camii",name:"Hoca Hasan Camii",district:"Osmangazi",address:"Hoca Hasan Mah., Hoca Hasan Sok., Osmangazi/Bursa",mapsSearch:"Hoca Hasan Camii Bursa",addedAt:"2026-07-21"},
+  {id:"ismail-hakki-tekke-camii",name:"İsmail Hakkı Tekke Camii",district:"Osmangazi",address:"Tuzpazarı Mah., İsmail Hakkı Cad., Osmangazi/Bursa",mapsSearch:"İsmail Hakkı Tekke Camii Bursa",addedAt:"2026-07-21"},
+  {id:"ivaz-pasa-camii",name:"İvaz Paşa Camii",district:"Osmangazi",address:"Orhanbey Mah., İstiklal Mevkii, Osmangazi/Bursa",mapsSearch:"İvaz Paşa Camii Bursa",addedAt:"2026-07-21"},
+  {id:"ruscuk-camii",name:"Ruscuk Camii",district:"Osmangazi",address:"Şahabettinpaşa Mah., Osmangazi/Bursa",mapsSearch:"Ruscuk Camii Bursa",addedAt:"2026-07-21"},
+  {id:"tavukcu-mescidi",name:"Tavukçu Mescidi",district:"Osmangazi",address:"Şehreküstü Mah., Tavukçu Sok., Osmangazi/Bursa",mapsSearch:"Tavukçu Mescidi Bursa",addedAt:"2026-07-21"},
+  {id:"uftade-tekke-camii",name:"Üftade Tekke Camii",district:"Osmangazi",address:"Pınarbaşı Semti, Osmangazi/Bursa",mapsSearch:"Üftade Tekke Camii Bursa",addedAt:"2026-07-21"},
+  {id:"veziri-camii",name:"Veziri Camii",district:"Osmangazi",address:"Alipaşa Mah., Bezirci Sok., Osmangazi/Bursa",mapsSearch:"Veziri Camii Bursa",addedAt:"2026-07-21"},
+  {id:"yeni-bezzaz-camii",name:"Yeni Bezzaz Camii",district:"Osmangazi",address:"Tuzpazarı Mah., İsmail Hakkı Cad., Osmangazi/Bursa",mapsSearch:"Yeni Bezzaz Camii Bursa",addedAt:"2026-07-21"},
+  {id:"elmalik-camii",name:"Elmalık Camii",district:"Osmangazi",address:"Tuzpazarı Mah., Osmangazi/Bursa",mapsSearch:"Elmalık Camii Bursa",addedAt:"2026-07-21"},
+  {id:"erhan-senater-camii",name:"Erhan Senater Camii",district:"Osmangazi",address:"Çekirge Mah., Selvinaz Sok., Osmangazi/Bursa",mapsSearch:"Erhan Senater Camii Bursa",addedAt:"2026-07-21"},
+  {id:"veysel-karani-camii",name:"Veysel Karani Camii",district:"Osmangazi",address:"Veysel Karani Mah., İnönü Cad., Osmangazi/Bursa",mapsSearch:"Veysel Karani Camii Bursa",addedAt:"2026-07-21"},
+
+  // === Yıldırım eklemeleri ===
+  {id:"babadag-camii",name:"Babadağ Camii",district:"Yıldırım",address:"Yeni Mah., Merdivenli Sok., Yıldırım/Bursa",mapsSearch:"Babadağ Camii Bursa",addedAt:"2026-07-21"},
+  {id:"haci-husamettin-tekke-camii",name:"Hacı Hüsamettin Tekke Camii",district:"Yıldırım",address:"Molla Arap Mah., Hüsamettin Tekke Sok., Yıldırım/Bursa",mapsSearch:"Hacı Hüsamettin Tekke Camii Bursa",addedAt:"2026-07-21"},
+  {id:"haci-sevindik-camii",name:"Hacı Sevindik Camii",district:"Yıldırım",address:"Meydancık Mah., Cami Aralığı Sok., Yıldırım/Bursa",mapsSearch:"Hacı Sevindik Camii Bursa",addedAt:"2026-07-21"},
+  {id:"haci-seyfettin-camii",name:"Hacı Seyfettin Camii",district:"Yıldırım",address:"Hacı Seyfettin Mah., İncirli Cad., Yıldırım/Bursa",mapsSearch:"Hacı Seyfettin Camii Bursa",addedAt:"2026-07-21"},
+  {id:"mucelleddin-omer-aga-camii",name:"Mücelleddin Ömer Ağa Camii",district:"Yıldırım",address:"Hacı Seyfettin Mah., Mücelleddin Mevkii, Yıldırım/Bursa",mapsSearch:"Mücelleddin Ömer Ağa Camii Bursa",addedAt:"2026-07-21"},
+  {id:"selami-tekkesi-camii",name:"Selami Tekkesi Camii",district:"Yıldırım",address:"Namazgah Mah., Yıldırım/Bursa",mapsSearch:"Selami Tekkesi Camii Bursa",addedAt:"2026-07-21"},
+  {id:"tatarlar-camii",name:"Tatarlar Camii",district:"Yıldırım",address:"Selimzade Mah., Selimzade Cad., Yıldırım/Bursa",mapsSearch:"Tatarlar Camii Bursa",addedAt:"2026-07-21"},
+  {id:"ortayol-orhangazi-vakfi-camii",name:"Ortayol (Orhangazi Vakfı) Camii",district:"Yıldırım",address:"Davut Kadı Mah., Davut Kadı Cad., Yıldırım/Bursa",mapsSearch:"Ortayol Orhangazi Vakfı Camii Bursa",addedAt:"2026-07-21"},
+  {id:"hayriye-camii",name:"Hayriye Camii",district:"Yıldırım",address:"Karamazak Mah., Karınca Dere Sok., Yıldırım/Bursa",mapsSearch:"Hayriye Camii Bursa",addedAt:"2026-07-21"},
+  {id:"yeni-mahalle-camii-yildirim",name:"Yeni Mahalle Camii",district:"Yıldırım",address:"Yeni Mahalle Mah., 2. Özer Sok., Yıldırım/Bursa",mapsSearch:"Yeni Mahalle Camii Yıldırım Bursa",addedAt:"2026-07-21"},
+  {id:"sukraniye-sari-camii",name:"Şükraniye (Sarı) Camii",district:"Yıldırım",address:"Anadolu Mah., Ankara Cad., Yıldırım/Bursa",mapsSearch:"Şükraniye Sarı Camii Bursa",addedAt:"2026-07-21"},
+
+  // === İnegöl eklemeleri ===
+  {id:"isak-pasa-camii-inegol",name:"İsak Paşa Camii ve Haziresi",district:"İnegöl",address:"Camiikebir Mevkii, Cuma Mah., İnegöl/Bursa",mapsSearch:"İsak Paşa Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"cuma-camii-inegol",name:"Cuma Camii",district:"İnegöl",address:"Cuma Mah., İnegöl/Bursa",mapsSearch:"Cuma Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"burhaniye-camii-inegol",name:"Burhaniye Camii",district:"İnegöl",address:"Burhaniye Mah., İnegöl/Bursa",mapsSearch:"Burhaniye Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"hamidiye-camii-inegol",name:"Hamidiye Camii",district:"İnegöl",address:"Hamidiye Mah., Kasımefendi Sok., İnegöl/Bursa",mapsSearch:"Hamidiye Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"kemal-pasa-bosnak-camii",name:"Kemal Paşa (Boşnak) Camii",district:"İnegöl",address:"Kemal Paşa Cad., Esat Bey Mah., İnegöl/Bursa",mapsSearch:"Kemal Paşa Boşnak Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"osmaniye-camasirlik-camii",name:"Osmaniye (Çamaşırlık) Camii",district:"İnegöl",address:"Osmaniye Mah., İnegöl/Bursa",mapsSearch:"Osmaniye Çamaşırlık Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"sipali-koyu-ivaz-celebi-camii",name:"Şipali Köyü (İvaz Çelebi) Camii ve Haziresi",district:"İnegöl",address:"Şipali Köyü, Köyiçi Mevkii, İnegöl/Bursa",mapsSearch:"Şipali Köyü İvaz Çelebi Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"cardak-camii-inegol",name:"Çardak Camii",district:"İnegöl",address:"Cuma Mah., İnegöl/Bursa",mapsSearch:"Çardak Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"hurriyet-sari-camii",name:"Hürriyet Sarı Camii",district:"İnegöl",address:"Mahmudiye Mah., Kasımefendi Cad., İnegöl/Bursa",mapsSearch:"Hürriyet Sarı Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"haci-hafiz-laz-camii",name:"Hacı Hafız (Laz) Camii",district:"İnegöl",address:"Kemal Paşa Mah., İsmailefendi Cad., İnegöl/Bursa",mapsSearch:"Hacı Hafız Laz Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"kursunlu-koyu-yildirim-camii",name:"Kurşunlu Köyü Yıldırım Camii",district:"İnegöl",address:"Kurşunlu Köyü, Yıldırım Cad., İnegöl/Bursa",mapsSearch:"Kurşunlu Köyü Yıldırım Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"tahta-kopru-hamidiye-camii",name:"Tahta Köprü Hamidiye Camii",district:"İnegöl",address:"Tahtaköprü, Köy İçi Mevkii, İnegöl/Bursa",mapsSearch:"Tahta Köprü Hamidiye Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"sungur-pasa-koyu-camii",name:"Sungur Paşa Köyü Camii",district:"İnegöl",address:"Sungur Paşa Köyü, Köyiçi Mevkii, İnegöl/Bursa",mapsSearch:"Sungur Paşa Köyü Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"kiran-koyu-camii",name:"Kıran Köyü Camii",district:"İnegöl",address:"Kıran Köyü, Köy içi Mevkii, İnegöl/Bursa",mapsSearch:"Kıran Köyü Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"hamidiye-koyu-camii",name:"Hamidiye Köyü Camii",district:"İnegöl",address:"Hamidiye Köyü, Köy içi Mevkii, İnegöl/Bursa",mapsSearch:"Hamidiye Köyü Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"suleymaniye-camii-inegol",name:"Süleymaniye Camii",district:"İnegöl",address:"Süleymaniye Mah., İnegöl/Bursa",mapsSearch:"Süleymaniye Camii İnegöl",addedAt:"2026-07-21"},
+  {id:"sinan-bey-camii-inegol",name:"Sinan Bey Camii",district:"İnegöl",address:"Sinan Bey Mah., Atatürk Bulvarı, İnegöl/Bursa",mapsSearch:"Sinan Bey Camii İnegöl",addedAt:"2026-07-21"},
+
+  // === Yenişehir eklemeleri ===
+  {id:"haci-hasan-demirci-hidirbali-camii",name:"Hacı Hasan Demirci (Hıdırbali) Camii ve Haziresi",district:"Yenişehir",address:"Hıdırbali Mah., Ali Haydar Sok., Yenişehir/Bursa",mapsSearch:"Hıdırbali Camii Yenişehir",addedAt:"2026-07-21"},
+  {id:"postinpos-camii",name:"Postinpos Camii",district:"Yenişehir",address:"Yenigün Cad., Cihadiye Cad., Yenişehir/Bursa",mapsSearch:"Postinpos Camii Yenişehir",addedAt:"2026-07-21"},
+  {id:"semaki-camii",name:"Şemaki Camii",district:"Yenişehir",address:"Çayır Mah., Şeref Mevkii, Yenişehir/Bursa",mapsSearch:"Şemaki Camii Yenişehir",addedAt:"2026-07-21"},
+  {id:"baba-sultan-camii-yenisehir",name:"Baba Sultan Camii",district:"Yenişehir",address:"Yenigün Mah., Sağır Osman Cad., Yenişehir/Bursa",mapsSearch:"Baba Sultan Camii Yenişehir",addedAt:"2026-07-21"},
+  {id:"cayir-tatarlar-mescidi",name:"Çayır (Tatarlar) Mescidi",district:"Yenişehir",address:"Çayır Mah., Tatarlar Mevkii, Yenişehir/Bursa",mapsSearch:"Çayır Tatarlar Mescidi Yenişehir",addedAt:"2026-07-21"},
+  {id:"hatuniye-camii",name:"Hatuniye Camii",district:"Yenişehir",address:"Yenigün Mah., Güldeste Cad., Yenişehir/Bursa",mapsSearch:"Hatuniye Camii Yenişehir",addedAt:"2026-07-21"},
+  {id:"reyhan-pasa-sumbullu-camii",name:"Reyhan Paşa Camii (Sümbüllü)",district:"Yenişehir",address:"Yeni Mah., Dere Sok., Yenişehir/Bursa",mapsSearch:"Reyhan Paşa Camii Yenişehir",addedAt:"2026-07-21"},
+
+  // === Mustafakemalpaşa eklemeleri ===
+  {id:"attariye-camii",name:"Attariye Camii",district:"Mustafakemalpaşa",address:"Attariye Mah., Mustafakemalpaşa/Bursa",mapsSearch:"Attariye Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"celtikci-koyu-camii",name:"Çeltikçi Köyü Camii",district:"Mustafakemalpaşa",address:"Çeltikçi Mah., Mustafakemalpaşa/Bursa",mapsSearch:"Çeltikçi Köyü Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"selimiye-camii-minaresi-mkp",name:"Selimiye Camii Minaresi",district:"Mustafakemalpaşa",address:"Selimiye Mah., Cami Sok., Mustafakemalpaşa/Bursa",mapsSearch:"Selimiye Camii Minaresi Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"zufer-bey-camii",name:"Züfer Bey Camii",district:"Mustafakemalpaşa",address:"Züfer Bey Mah., Çarşı Sok., Mustafakemalpaşa/Bursa",mapsSearch:"Züfer Bey Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"yeni-mahalle-dere-camii",name:"Yeni Mahalle (Dere) Camii",district:"Mustafakemalpaşa",address:"Dere Mah., Mustafakemalpaşa/Bursa",mapsSearch:"Yeni Mahalle Dere Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"fevzi-dede-camii",name:"Fevzi Dede Camii",district:"Mustafakemalpaşa",address:"Fevzidede Mah., Hüseyin Cad., Mustafakemalpaşa/Bursa",mapsSearch:"Fevzi Dede Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"hamidiye-yesil-camii-mkp",name:"Hamidiye (Yeşil) Camii",district:"Mustafakemalpaşa",address:"Çırpan Mah., Balıkesir Cad., Mustafakemalpaşa/Bursa",mapsSearch:"Hamidiye Yeşil Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"haci-poturcu-camii",name:"Hacı Poturcu Camii",district:"Mustafakemalpaşa",address:"Orta Mah., Eski Bursa Cad., Mustafakemalpaşa/Bursa",mapsSearch:"Hacı Poturcu Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"sevketiye-demirciler-camii",name:"Şevketiye (Demirciler) Camii",district:"Mustafakemalpaşa",address:"Şevketiye Mah., Demirciler Cad., Mustafakemalpaşa/Bursa",mapsSearch:"Şevketiye Demirciler Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"bahcelievler-camii-mkp",name:"Bahçelievler Camii",district:"Mustafakemalpaşa",address:"Hamza Bey Mah., Bahçeli Mevkii, Mustafakemalpaşa/Bursa",mapsSearch:"Bahçelievler Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"cardak-camii-mkp",name:"Çardak Camii",district:"Mustafakemalpaşa",address:"Orta Mah., Eski Bursa Cad., Mustafakemalpaşa/Bursa",mapsSearch:"Çardak Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"yildiz-orta-camii",name:"Yıldız (Orta) Camii",district:"Mustafakemalpaşa",address:"Orta Mah., Eski Bursa Cad., Mustafakemalpaşa/Bursa",mapsSearch:"Yıldız Orta Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+  {id:"cirpan-camii",name:"Çırpan Camii",district:"Mustafakemalpaşa",address:"Çırpan Mah., Adile Mezarlık Sok., Mustafakemalpaşa/Bursa",mapsSearch:"Çırpan Camii Mustafakemalpaşa",addedAt:"2026-07-21"},
+
+  // === Mudanya eklemeleri ===
+  {id:"yeni-camii-mudanya",name:"Yeni Camii",district:"Mudanya",address:"Halitpaşa Mah., Fevzi Sok., Mudanya/Bursa",mapsSearch:"Yeni Camii Mudanya",addedAt:"2026-07-21"},
+  {id:"mursel-koyu-camii",name:"Mürsel Köyü Camii",district:"Mudanya",address:"Mürsel Köyü, Köyiçi Mevkii, Mudanya/Bursa",mapsSearch:"Mürsel Köyü Camii Mudanya",addedAt:"2026-07-21"},
+
+  // === Orhangazi eklemeleri ===
+  {id:"muradiye-camii-orhangazi",name:"Muradiye Camii",district:"Orhangazi",address:"Muradiye Mah., Yalova Cad., Orhangazi/Bursa",mapsSearch:"Muradiye Camii Orhangazi",addedAt:"2026-07-21"},
+  {id:"tekke-camii-orhangazi",name:"Tekke Camii",district:"Orhangazi",address:"Tekke Mahallesi, Cami Sok., Orhangazi/Bursa",mapsSearch:"Tekke Camii Orhangazi",addedAt:"2026-07-21"},
+  {id:"gurle-koyu-orhangazi-camii",name:"Gürle Köyü (Orhangazi) Camii",district:"Orhangazi",address:"Gürle Köyü, Köy İçi, Orhangazi/Bursa",mapsSearch:"Gürle Köyü Camii Orhangazi",addedAt:"2026-07-21"},
+
+  // === Kestel eklemeleri ===
+  {id:"aksukoyu-camii",name:"Aksuköyü Camii",district:"Kestel",address:"Aksu Köyü, Köyiçi, Kestel/Bursa",mapsSearch:"Aksuköyü Camii Kestel",addedAt:"2026-07-21"},
+  {id:"vani-mehmet-efendi-camii",name:"Vani Mehmet Efendi Camii",district:"Kestel",address:"Kestel Mah., Beşevler Mevkii, Kestel/Bursa",mapsSearch:"Vani Mehmet Efendi Camii Kestel",addedAt:"2026-07-21"},
+
+  // === Karacabey eklemeleri ===
+  {id:"karacabey-ulu-hudavendigar-camii",name:"Ulu (Hüdavendigar) Camii",district:"Karacabey",address:"Garipçe Mah., İmaret Cad., Karacabey/Bursa",mapsSearch:"Ulu Hüdavendigar Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-mamuriyet-camii",name:"Mamuriyet Camii",district:"Karacabey",address:"Mamuriyet Mah., 7 Nolu Sok., Karacabey/Bursa",mapsSearch:"Mamuriyet Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-haci-cemali-nasrullah-camii",name:"Hacı Cemali (Nasrullah) Camii",district:"Karacabey",address:"Yenice Mah., Bursa Cad., Karacabey/Bursa",mapsSearch:"Hacı Cemali Nasrullah Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-hasim-onur-mihrahur-ali-aga-camii",name:"Haşim Onur Mihrahur Ali Ağa Camii",district:"Karacabey",address:"Tavşanlı Mah., Karacabey/Bursa",mapsSearch:"Haşim Onur Mihrahur Ali Ağa Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-rungus-pasa-camii",name:"Runguş Paşa Camii",district:"Karacabey",address:"Runguş Paşa Mah., Karacabey/Bursa",mapsSearch:"Runguş Paşa Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-asmali-mescit",name:"Asmalı Mescit",district:"Karacabey",address:"Yenice Mah., Karacabey/Bursa",mapsSearch:"Asmalı Mescit Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-canbolu-camii",name:"Canbolu Camii",district:"Karacabey",address:"Canbolu Mah., İnönü Cad., Karacabey/Bursa",mapsSearch:"Canbolu Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-hamidiye-camii",name:"Hamidiye Camii",district:"Karacabey",address:"Hüdavendigar Mah., Karacabey/Bursa",mapsSearch:"Hamidiye Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-saadet-camii",name:"Saadet Camii",district:"Karacabey",address:"Saadet Mah., Karacabey/Bursa",mapsSearch:"Saadet Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-hidayet-camii",name:"Hidayet Camii",district:"Karacabey",address:"Sırabademler Mah., 14 Eylül Cad., Karacabey/Bursa",mapsSearch:"Hidayet Camii Karacabey",addedAt:"2026-07-21"},
+  {id:"karacabey-haci-hasan-mecidiye-camii",name:"Hacı Hasan (Mecidiye) Camii",district:"Karacabey",address:"Mecidiye Mah., 107 Nolu Sok., Karacabey/Bursa",mapsSearch:"Hacı Hasan Mecidiye Camii Karacabey",addedAt:"2026-07-21"},
+
+  // === Nilüfer eklemeleri ===
+  {id:"nilufer-demirci-koyu-camii",name:"Demirci Köyü Camii",district:"Nilüfer",address:"Demirci Mah., Nilüfer/Bursa",mapsSearch:"Demirci Köyü Camii Nilüfer",addedAt:"2026-07-21"},
+  {id:"nilufer-ozluce-koyu-camii",name:"Özlüce Köyü Camii",district:"Nilüfer",address:"Özlüce Mahallesi, Nilüfer/Bursa",mapsSearch:"Özlüce Köyü Camii Nilüfer",addedAt:"2026-07-21"},
+
+  // === Gemlik eklemeleri ===
+  {id:"gemlik-yeni-balik-pazari-camii",name:"Yeni (Balık Pazarı) Camii",district:"Gemlik",address:"Balıkpazarı Mah., Gemlik/Bursa",mapsSearch:"Yeni Balık Pazarı Camii Gemlik",addedAt:"2026-07-21"},
+  {id:"gemlik-emetullah-camii",name:"Emetullah Camii ve Şehitler Anıtı",district:"Gemlik",address:"Demirsubaşı Mah., Gemlik/Bursa",mapsSearch:"Emetullah Camii Gemlik",addedAt:"2026-07-21"},
+  {id:"gemlik-adliye-koyu-camii",name:"Adliye Köyü Camii",district:"Gemlik",address:"Adliye Köyü, Gemlik/Bursa",mapsSearch:"Adliye Köyü Camii Gemlik",addedAt:"2026-07-21"},
+
+  // === Orhaneli eklemesi ===
+  {id:"orhaneli-durdu-bey-camii",name:"Durdu Bey Camii",district:"Orhaneli",address:"Fevzi Paşa Mah., Çarşı Cad., Orhaneli/Bursa",mapsSearch:"Durdu Bey Camii Orhaneli",addedAt:"2026-07-21"},
+
+  // === Gürsu eklemesi ===
+  {id:"gursu-orta-camii",name:"Orta Camii",district:"Gürsu",address:"İstiklal Mah., Fatih Cad., Gürsu/Bursa",mapsSearch:"Orta Camii Gürsu",addedAt:"2026-07-21"},
+
+  // === Harmancık eklemesi ===
+  {id:"harmancik-divan-camii",name:"Divan Camii",district:"Harmancık",address:"Dedebali Mah., Harmancık/Bursa",mapsSearch:"Divan Camii Harmancık",addedAt:"2026-07-21"},
 ];;const MOSQUE_INFO={
   "ulu-cami":{period:"1396 – 1399 (Yıldırım Bayezid Dönemi)",founder:"Yıldırım Bayezid (I. Bayezid)",architect:"Mimarı kesin olarak bilinmiyor; kaynaklarda Ali Neccar adı geçer.",info:"Niğbolu Zaferi sonrası, adak olarak 20 ayrı cami yerine 20 kubbeli tek bir ulu cami yapılması önerisiyle inşa edilmiştir. Türkiye'nin iç mekânı en geniş camisi olup kündekari tekniğiyle işlenmiş tarihi minberi ve içindeki şadırvanla ünlüdür."},
   "orhan-gazi":{period:"1339 (Orhan Gazi Dönemi)",founder:"Orhan Gazi",info:"Bursa'da kale surları dışına inşa edilen ilk külliyenin ana yapısıdır; şehirdeki 'zaviyeli plan' tipindeki ilk camidir. 1413'te Karamanoğlu Mehmed Bey tarafından tahrip edilmiş, 1417'de Çelebi Mehmed tarafından onarılmıştır."},
