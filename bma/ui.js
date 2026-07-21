@@ -95,10 +95,24 @@
     // Bu yüzden sunucudaki küçük "version.json" dosyasını (önbelleğe hiç
     // takılmadan, doğrudan ağdan) kontrol ediyoruz; cihazda daha önce görülen
     // sürümden farklıysa kullanıcıya bir "Güncelle" bandı gösteriyoruz.
+    // Sunucudaki cami/bilgi verisinin (mosques-data.js) gerçek içeriğinin bir
+    // özetini (SHA-256 hash) hesaplar. Bu, "version.json" gibi elle güncellenmesi
+    // gereken bir dosyaya bağlı değildir: siz mosques-data.js'i sunucuya her
+    // yüklediğinizde (tek bir harf bile değişse) bu özet otomatik olarak
+    // değişir. Böylece güncelleme tespiti tamamen otomatikleşir; sizin ayrıca
+    // bir sürüm numarası/metni girmenizi gerektirmez.
+    async function computeContentHash() {
+      const res = await fetch(`./mosques-data.js?__freshcheck=1&t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error('mosques-data.js alınamadı');
+      const text = await res.text();
+      const encoded = new TextEncoder().encode(text);
+      const digest = await crypto.subtle.digest('SHA-256', encoded);
+      return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+    }
     async function checkForAppUpdate(manualTrigger = false) {
       try {
         // Sürüm kontrolüyle eş zamanlı olarak servis çalışanının da sunucudaki
-        // sw.js'i kontrol etmesini tetikle. Böylece sadece version.json değil,
+        // sw.js'i kontrol etmesini tetikle. Böylece sadece içerik değil,
         // servis çalışanının kendisi değiştiyse de en erken şekilde fark edilir.
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.getRegistration().then((reg) => {
@@ -106,33 +120,42 @@
           }).catch(() => {});
         }
 
-        const res = await fetch(`./version.json?t=${Date.now()}`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('version.json alınamadı');
-        const data = await res.json();
-        const remoteVersion = data.version;
-        if (!remoteVersion) throw new Error('version.json içinde sürüm bilgisi yok');
+        // version.json artık ZORUNLU değil: sadece varsa, ayarlardaki "Uygulama
+        // Sürümü" rozetinde okunaklı bir etiket göstermek için kullanılır.
+        // Güncelleme olup olmadığı kararı buna bağlı DEĞİLDİR — bu dosyayı
+        // güncellemeyi unutsanız bile aşağıdaki içerik özeti kontrolü sayesinde
+        // uygulama gerçek değişikliği kendiliğinden fark eder.
+        let displayVersion = null;
+        try {
+          const vres = await fetch(`./version.json?t=${Date.now()}`, { cache: 'no-store' });
+          if (vres.ok) {
+            const vdata = await vres.json();
+            displayVersion = vdata.version || null;
+          }
+        } catch (e) { /* version.json yoksa sorun değil, sessizce geç */ }
 
-        window.__remoteAppVersion = remoteVersion;
-        const localVersion = localStorage.getItem('manevi-atlas-app-version');
-        updateVersionBadge(localVersion || remoteVersion);
+        const remoteHash = await computeContentHash();
+        window.__remoteAppVersion = displayVersion || remoteHash;
+        window.__remoteContentHash = remoteHash;
 
-        // Cihazda bu sürüm takip özelliğinden önce yüklenmiş, zaten bir servis
-        // çalışanı tarafından kontrol edilen (dolayısıyla önbellekte eski dosyalar
-        // barındırma ihtimali olan) bir sayfa olabilir. Böyle bir durumda
-        // "localVersion boş, o yüzden ilk kurulumdur" varsayıp sessizce "güncel"
-        // demek YANLIŞ ve yanıltıcıdır — kullanıcı hiçbir zaman gerçek güncellemeyi
-        // görmeden eski içerikte kalmış olur. Bu yüzden sadece gerçekten hiçbir
-        // servis çalışanı kaydı yokken (yani cihazda önbellek de yoksa) sessiz
-        // ilk-kurulum varsayımını yap; aksi halde normal karşılaştırma akışına düş.
+        const localHash = localStorage.getItem('manevi-atlas-content-hash');
+        updateVersionBadge(displayVersion || localHash || remoteHash);
+
+        // Cihazda bu içerik takibi özelliğinden önce yüklenmiş, zaten bir
+        // servis çalışanı tarafından kontrol edilen (dolayısıyla önbellekte
+        // eski dosyalar barındırma ihtimali olan) bir sayfa olabilir. Böyle
+        // bir durumda "localHash boş, o yüzden ilk kurulumdur" varsayıp
+        // sessizce "güncel" demek YANLIŞ ve yanıltıcıdır. Bu yüzden sadece
+        // gerçekten hiçbir servis çalışanı kaydı yokken (yani cihazda
+        // önbellek de yoksa) sessiz ilk-kurulum varsayımını yap.
         const hasExistingController = ('serviceWorker' in navigator) && !!navigator.serviceWorker.controller;
-        if (!localVersion && !hasExistingController) {
-          // Gerçek ilk kurulum: cihazda hiçbir önbellek yok, güvenle taban sürüm olarak kaydet.
-          localStorage.setItem('manevi-atlas-app-version', remoteVersion);
+        if (!localHash && !hasExistingController) {
+          localStorage.setItem('manevi-atlas-content-hash', remoteHash);
           if (manualTrigger) showToast("Uygulama güncel.", "success");
           return false;
         }
 
-        if (localVersion !== remoteVersion) {
+        if (localHash !== remoteHash) {
           const banner = document.getElementById('appUpdateBanner');
           if (banner) banner.classList.remove('hidden');
           if (manualTrigger) showToast("Yeni bir güncelleme bulundu.", "success");
@@ -174,8 +197,8 @@
         // Devrettiğinde 'controllerchange' olayı sayfayı zaten yenileyecek.
         if (window.__pendingSW) {
           window.__pendingSW.postMessage('SKIP_WAITING');
-          if (window.__remoteAppVersion) {
-            localStorage.setItem('manevi-atlas-app-version', window.__remoteAppVersion);
+          if (window.__remoteContentHash) {
+            localStorage.setItem('manevi-atlas-content-hash', window.__remoteContentHash);
           }
           return;
         }
@@ -193,8 +216,8 @@
           const reg = await navigator.serviceWorker.getRegistration();
           if (reg) await reg.update().catch(() => {});
         }
-        if (window.__remoteAppVersion) {
-          localStorage.setItem('manevi-atlas-app-version', window.__remoteAppVersion);
+        if (window.__remoteContentHash) {
+          localStorage.setItem('manevi-atlas-content-hash', window.__remoteContentHash);
         }
         setTimeout(() => { window.location.reload(); }, 250);
       } catch (e) {

@@ -73,6 +73,16 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // OTOMATİK GÜNCELLEME TESPİTİ: Uygulama, cami/bilgi verisinin (mosques-data.js)
+  // gerçek içeriğinin bir özetini (hash) periyodik olarak kontrol eder. Bu
+  // özel "__freshcheck" işaretli istekler de version.json gibi ASLA önbelleğe
+  // takılmaz, her zaman doğrudan ağa gider — aksi halde uygulama önbellekteki
+  // eski dosyayı kendisiyle karşılaştırıp hep "değişmemiş" sonucunu bulur.
+  if (event.request.url.includes("__freshcheck=1")) {
+    event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => Response.error()));
+    return;
+  }
+
   // Canlı veri API'leri: önbelleğe hiç dokunma, doğrudan ağa git.
   // Çevrimdışıyken bu istekler doğal olarak başarısız olur; uygulama
   // kodu bunu zaten try/catch ile nazikçe yönetiyor.
