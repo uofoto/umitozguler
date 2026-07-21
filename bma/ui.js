@@ -26,18 +26,25 @@
       if (withDates.length === 0) return 'none';
       return withDates.reduce((latest, m) => new Date(m.addedAt) > new Date(latest) ? m.addedAt : latest, withDates[0].addedAt);
     }
-    // Son 14 gün içinde eklenen camileri (recentlyAdded ile aynı eşik) özetleyen bir madde üretip karta ekler
+    // Yalnızca envanterdeki EN SON eklenen tarihte (yani "bugün" yapılan son güncellemede)
+    // eklenmiş camileri özetleyen bir madde üretip karta ekler. Böylece kart, son 14 günün
+    // toplamı yerine gerçekten "bugün kaç cami eklendi" bilgisini gösterir.
     function renderWhatsNewMosqueEntry() {
       const el = document.getElementById('whatsNewMosqueEntry');
       if (!el) return;
 
+      const newestAddedAt = getNewestMosqueAddedAt();
+      if (newestAddedAt === 'none') { el.innerHTML = ''; return; }
+
+      // Kart, en son güncelleme tarihinden itibaren 14 gün boyunca gösterilmeye devam eder
+      // (kullanıcı uygulamayı her gün açmasa bile haberi kaçırmasın diye), ama sayı olarak
+      // yalnızca o en son güncelleme GÜNÜNDE eklenen camileri sayar.
       const now = new Date();
+      const daysSinceUpdate = Math.floor((now - new Date(newestAddedAt)) / (1000 * 60 * 60 * 24));
+      if (daysSinceUpdate < 0 || daysSinceUpdate > 14) { el.innerHTML = ''; return; }
+
       const recentNew = PRESET_MOSQUES
-        .filter(m => m.addedAt)
-        .filter(m => {
-          const diffDays = Math.floor((now - new Date(m.addedAt)) / (1000 * 60 * 60 * 24));
-          return diffDays >= 0 && diffDays <= 14;
-        })
+        .filter(m => m.addedAt === newestAddedAt)
         .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
 
       if (recentNew.length === 0) {
