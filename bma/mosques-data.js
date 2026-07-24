@@ -740,9 +740,10 @@ let PRESET_MOSQUES = [{
   }, {
     id: "selcuk-hatun",
     name: "Selçuk Hatun Camii",
-    district: "Yıldırım",
-    address: "Selçuk Hatun Mh., Yıldırım/Bursa",
-    mapsSearch: "Selçuk Hatun Camii"
+    district: "Osmangazi",
+    address: "Kayıhan, Selçuk Hatun Sk. No:1, 16230 Osmangazi/Bursa",
+    mapsSearch: "Selçuk Hatun Camii",
+    info: "Kayhan Semti'nde, Selçuk Hatun Caddesi'ndedir. 1450 yılında, Çelebi Sultan Mehmet'in kızı Selçuk Hatun tarafından yaptırılmıştır. Selçuk Hatun ile Bedrettin Cami'ni yaptıran Hafsa Hatun kardeştirler. Yapı esas olarak tek kubbeli asıl ibadet alanı ile kuzey yönündeki üç bölümlü son cemaat yerinden oluşmaktadır. Tek kubbeli asıl ibadet alanı 8,80 x 8,80 metre iç ölçülerinde, kare planlıdır. Kubbe dıştan sekizgen kasnaklı, üstten kurşunla kaplıdır. Kare alandan kubbeye geçiş, büyük boyda prizmatik üçgen motifleri veren bir kuşakla sağlanmıştır. Son cemaat yerinin üzeri, yan göz düz tavan, orta göz ise yarım daire kesitli tonoz ile örtülüdür. Beden duvarları 0,95 metre kalınlığında olup, iki sıra moloz taş dizisi ile örülmüştür. Minarenin girişi son cemaat yerindedir. Sekizgen kaidesinden mermer ve tuğla değişimli olarak on altı dilimli küp kısmına geçilmekte olup, üzerinde silindirik tuğla gövde yükselmektedir. Kaynak: https://kulturportali.gov.tr/"
   }, {
     id: "haci-ilyas-camii",
     name: "Hacı İlyas Camii",
