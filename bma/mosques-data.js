@@ -122,7 +122,7 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Tuzpazarı Camii Bursa"
   }, {
     id: "serefuddin-camii",
-    name: "Şerefüddin Camii",
+    name: "Şerafettin Paşa Camii",
     district: "Osmangazi",
     address: "Hocaalizade, Şerefüddin Sk., Osmangazi/Bursa",
     mapsSearch: "Şerefüddin Camii"
@@ -146,10 +146,11 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Karaşeyh Camii Bursa"
   }, {
     id: "somuncu-baba-firini",
-    name: "Somuncu Baba Mescidi",
+    name: "Somuncu Baba (Şeyh Hamid Camii ve Ayazma Camii) Camii",
     district: "Osmangazi",
     address: "Mollafenari, Somuncu Baba Sk., Osmangazi/Bursa",
-    mapsSearch: "Somuncu Baba Camii"
+    mapsSearch: "Somuncu Baba Camii",
+    info: "Yıldırım Bayezid Dönemi'nde, Şeyh Hamid adına, Başcı Hacı Sevindik tarafından yaptırılmıştır. Ana hatları ile dikdörtgen planı olan cami; iç ölçüleri 5.70 x 5.70 metre olan tek kubbeli kare bir alanla, kuzey yönünde buna eklenen 3.00 x 5.70 metre iç ölçülerinde bir son cemaat yerinden oluşmaktadır. Son cemaat yerinin üstü tonozla örtülüdür. Kalkan duvarlı camilerdendir. Bursa kemerli bir kapı ile asıl ibadet alanına girilmektedir. Beden duvarları düzgün moloz taş ve iki sıra tuğla örgülü yatay düzende üçer sıralı tuğla hatıllarla takviye edilmiştir. Sekizgen kaideli tuğla-taş almaşıklı minare, tuğla gövdeli ve sivri külahlıdır. Caminin içine yeni çiniler döşenmiştir. 1955-1971 yıllarında aslına uygun olarak onarılmıştır. Doğusunda mezarlar vardır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "ishakpasa-camii",
     name: "İshakpaşa Camii",
@@ -176,10 +177,11 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Demirkapı Mescidi"
   }, {
     id: "sehrekustu-camii",
-    name: "Şehreküstü Camii",
+    name: "Şehreküstü (Pars Bey) Camii",
     district: "Osmangazi",
     address: "Şehreküstü, Osmangazi/Bursa",
-    mapsSearch: "Şehreküstü Camii"
+    mapsSearch: "Şehreküstü Camii",
+    info: "Şehreküstü Mahallesi'ndeki cami, II. Murat döneminde Bedreddin Mahmut (Parsbey) tarafından, 1430 yılında vakfiye olarak yaptırılmıştır. Moloz taştan geniş bir bina iken ihtiyaca cevap verememesi ve çok tahribat görmesinden dolayı yıktırılarak, yerine 1984 yılında bugünkü betonarme ve kubbeli olan cami yapılmıştır. 9,10 x 16,23 metre iç ölçülerinde olan asıl ibadet alanının girişinde 5,10 metre derinliğinde bir son cemaat yeri vardır. Sadece minaresi orijinaldir. Mihrap, yeşil türbe çinileri ile kaplanmıştır. Sarı, mavi, yeşil, turkuaz, lacivert, kiremit rengi zengin bir görünüm oluşturmaktadır. Minare silindir gövdeli, sivri külahlı ve tek şereflidir. Minareye çıkış cami içinden, kuzeybatı köşesindendir. Caminin alt katında bir konferans salonu ile şadırvan bulunmaktadır. Caminin kıble tarafındaki türbede, Sultan II. Murat döneminde yaşamış ve aynı zamanda caminin banisi de olan Abdullah oğlu Bedreddin Mahmut (Pars) Bey yatmaktadır. KAYNAK: https://www.kulturportali.gov.tr/"
   }, {
     id: "maksem-camii",
     name: "Maksem (Düsturhan) Camii",
@@ -579,11 +581,12 @@ let PRESET_MOSQUES = [{
     addedAt: "2026-07-19"
   }, {
     id: "uc-kizlar-camii-ve-minaresi",
-    name: "Üç Kızlar Camii ve Minaresi",
+    name: "Üç Kuzular (Üç Kozlar) Camii",
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Üç Kızlar Camii ve Minaresi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Bursa'nın Üç Kuzular Semtindedir. 1950 yılında yıkılmış, sadece minaresi ayakta kalmış ve yıkılan yapının yerine yeni bir cami yapılmıştır. İlk yapılış tarihi hakkında bir belge bulunmamaktadır. Yapının doğu yönünde yer alan minaresi sağlam ve zariftir. Sekizgen biçimli kaide, aralarında tuğla dizileri olan kesme taşlarla örülmüştür. Gövdeye geçiş tuğla üçgen yüzeyler aracılığı ile sağlanmış, silindirik tuğla gövde, merdiven biçimi motiflerle tezyin edilmiştir. Şerefe altında zincir motifli bir su bulunmaktadır. Beş sıra stalaktitli şerefe altına sahip olup, petek üzerindeki sivri külahı camdan yapılmıştır. Son cemaat yerine giriş doğudandır. Kare planlı olan cami 17 pencere ile aydınlatılmaktadır. Ahşap tavanlı olup kırma çatı ile örtülerek kiremitle kaplanmıştır. Cami sağlam ve açık durumdadır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "veled-i-habib",
     name: "Veled-i Habib (Eminiye Dergâhı) Camii",
@@ -607,11 +610,12 @@ let PRESET_MOSQUES = [{
     addedAt: "2026-07-19"
   }, {
     id: "veled-i-veziri",
-    name: "Veled-i Veziri (Üç Kumalı) Camii",
+    name: "Veled-i Vezir (Üç Kurnalı) Camii",
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Veled-i Veziri Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Pınarbaşı Mezarlığı ile Tahtakale arasında yer alan caminin, Sultan II. Bayezıd'ın bir veziri tarafından yapıldığı söylenmektedir. Bundan dolayı bu isimle anılmıştır. 6,10 x 7,40 metre iç ölçülerinde, caminin girişinde ana mekana ekli, 3,70 metre derinliğinde bir son cemaat yeri vardır. Üzeri çatı ile örtülüdür. Beden duvarları üç sıra tuğla, bir sıra kesme taş ile örülmüştür. Bir dönem Mülkiyeti özel şahısların eline geçmiş ve ticarethane olarak kullanılmıştır. Bu dönemde yapı bazı değişikliklere uğramıştır. Daha sonra onarılarak tekrar ibadete açılmıştır. Kare planlı asıl ibadet alanı üçgen motifleri veren bir kuşak üzerine oturan, dıştan sekizgen kasnaklı, kurşun kaplı tek bir kubbe ile örtülüdür. Kuzeybatı köşesinde yer alan minareye, son cemaat yerindeki bir kapıdan çıkılmaktadır. Minarenin silindirik tuğla gövdesi ve peteği yeni yapılmıştır. Caminin batısındaki mezarlığın ucunda zarif biçimli bir çeşme vardır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "veled-i-yanic-mescidi",
     name: "Veled-i Yanıç Mescidi",
