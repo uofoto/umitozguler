@@ -15,9 +15,20 @@
       const banner = document.getElementById('mosqueInfoHintBanner');
       if (banner) { banner.classList.add('hidden'); banner.classList.remove('flex'); }
     };
+    window.toggleRemovedMosquesDetail = function() {
+      const list = document.getElementById('removedMosquesDetailList');
+      const label = document.getElementById('removedMosquesToggleLabel');
+      const icon = document.getElementById('removedMosquesToggleIcon');
+      if (!list) return;
+      const willShow = list.classList.contains('hidden');
+      list.classList.toggle('hidden');
+      if (label) label.textContent = willShow ? 'Detayları gizle' : 'Detayları gör';
+      if (icon) icon.classList.toggle('fa-chevron-down', !willShow);
+      if (icon) icon.classList.toggle('fa-chevron-up', willShow);
+    };
     // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI
     // Statik özellik güncellemeleri için (yeni bir uygulama özelliği yayınlandığında bu sürüm etiketini artırın)
-    const WHATS_NEW_STATIC_VERSION = 'v7-yedekleme-hatirlatma';
+    const WHATS_NEW_STATIC_VERSION = 'v8-cami-listesi-temizlendi';
     // Envanterdeki en yeni "addedAt" tarihini bulur; yeni cami eklendikçe bu otomatik değişir,
     // böylece kartın tekrar gösterilip gösterilmeyeceği koddaki bir sürüm numarasına değil,
     // gerçek veriye bağlı olur (elle güncelleme gerekmez).

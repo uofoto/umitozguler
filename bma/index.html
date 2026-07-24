@@ -241,6 +241,35 @@
           <div class="space-y-2" id="whatsNewList">
             <div id="whatsNewMosqueEntry"></div>
             <div class="flex items-start gap-2.5">
+              <span class="text-base leading-none mt-0.5">🧹</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Cami Listesi Temizlendi</p>
+                <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Tarihi niteliği bulunmayan veya mükerrer kayıtlı 18 cami envanterden çıkarıldı; listedeki bilgiler daha doğru hale getirildi.</p>
+                <button onclick="toggleRemovedMosquesDetail()" class="text-[10px] font-bold mt-1" style="color:var(--teal-700);">
+                  <span id="removedMosquesToggleLabel">Detayları gör</span> <i id="removedMosquesToggleIcon" class="fa-solid fa-chevron-down text-[8px]"></i>
+                </button>
+                <ul id="removedMosquesDetailList" class="hidden mt-1.5 space-y-0.5 text-[10px] leading-snug list-disc pl-4" style="color:var(--ink-soft);">
+                  <li>Armutköy Camii — Osmangazi</li>
+                  <li>Başçı İbrahim Camii — Osmangazi</li>
+                  <li>Hacı Hasan (Mecidiye) Camii — Karacabey</li>
+                  <li>Veziri Camii — Osmangazi</li>
+                  <li>Erhan Senater Camii — Osmangazi</li>
+                  <li>Veysel Karani Camii — Osmangazi</li>
+                  <li>Hacı İskender Camii — Osmangazi (2 kayıt)</li>
+                  <li>Ortayol (Orhangazi Vakfı) Camii — Yıldırım</li>
+                  <li>Hayriye Camii — Yıldırım</li>
+                  <li>Yeni Mahalle Camii — Yıldırım</li>
+                  <li>Şükraniye (Sarı) Camii — Yıldırım</li>
+                  <li>Hamidiye Camii — İnegöl</li>
+                  <li>Kurşunlu Köyü Yıldırım Camii — İnegöl</li>
+                  <li>Yeni Mahalle (Dere) Camii — Mustafakemalpaşa</li>
+                  <li>Haşim Onur Mihrahur Ali Ağa Camii — Karacabey</li>
+                  <li>Asmalı Mescit — Karacabey</li>
+                  <li>Canbolu Camii — Karacabey</li>
+                </ul>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
               <span class="text-base leading-none mt-0.5">🛡️</span>
               <div class="min-w-0">
                 <p class="text-[11px] font-bold" style="color:var(--ink);">Yedekleme Hatırlatması Eklendi</p>
