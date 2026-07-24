@@ -1548,8 +1548,17 @@
       }
 
       if (platform === 'facebook') {
-        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-        window.open(url, '_blank', 'noopener,noreferrer');
+        // Facebook, gizlilik/spam önleme gerekçesiyle paylaşım linkine özel metin
+        // eklemeyi (quote parametresi) sıradan siteler için engelliyor; paylaşım
+        // kutusu her zaman boş açılır. Bu yüzden metni panoya kopyalayıp
+        // kullanıcının yapıştırmasını sağlıyoruz.
+        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(shareText)
+            .then(() => showToast("Paylaşım metni kopyalandı. Facebook kutusuna yapıştırabilirsin.", "success"))
+            .catch(() => {});
+        }
+        window.open(fbUrl, '_blank', 'noopener,noreferrer');
         return;
       }
 
