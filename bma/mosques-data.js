@@ -108,7 +108,7 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Kiremitçi Camii Bursa"
   }, {
     id: "kayhan-camii",
-    name: "Kayhan Camii",
+    name: "Kayhan (Kaygan) Camii",
     district: "Osmangazi",
     address: "Kayhan, Kayhan Cd., Osmangazi/Bursa",
     mapsSearch: "Kayhan Camii Bursa"
