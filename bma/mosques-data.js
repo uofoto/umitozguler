@@ -366,10 +366,9 @@ let PRESET_MOSQUES = [{
     id: "ebu-i-shak-mescidi",
     name: "Ebu İshak Mescidi",
     district: "Osmangazi",
-    address: "Ebu İshak Mahallesi, İshak Aralığı, Osmangazi/Bursa",
+    address: "Osmangazi/Bursa",
     mapsSearch: "Ebu İshak Mescidi Bursa",
-    addedAt: "2026-07-19",
-    info: "Ebu İshak Mahallesi’nde, Cumhuriyet Caddesi’nin altında, İshak Aralığındaki cami Yıldırım Bayezıt tarafından Ebu İshak adına yaptırılmıştır. Fatih Sultan Mehmet döneminde yenilenerek 1479 yılında ibadete açılmıştır. “ Ters T ” planlı bir yapı olan caminin üst kısmı kubbe ve yanlardan tonozla örtülüdür. Kuzey yönünde yer alan son cemaat yeri kesme taş örgülü dört ayağı birbirine bağlayan sivri kemerlerin oluşturduğu beş bölmeden ibarettir. Orta bölme, diğerlerinden daha geniş ve yüksektir. Orta bölme kubbe ve yanlarındaki bölmeler tekne biçimi tonoz örtülüdür. Duvarları moloz taş ve değişik sıralarda tuğladandır. Kalkan, üç sıra tuğla, bir sıra kesme taş ile örülmüştür. Minarenin kaidesi üç sıra tuğla, bir sıra kesme taş, gövdesi ise tuğladandır. Avlusunda 14 köşeli şadırvanı camekanlıdır. Cami 1855 yılındaki depremde büyük hasar görmüş, 1892 yılında ise 1.600 kuruş harcanarak tamir edilmiştir. Zemini kare tuğlalarla döşenmiştir. kaynak:https://www.kulturportali.gov.tr/"
+    addedAt: "2026-07-19"
   }, {
     id: "enbiya",
     name: "Enbiya (Veled-i Enbiya) Mescidi",
@@ -383,7 +382,8 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Ertuğrul Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Cumhuriyet Caddesi üzerinde, Sipahi Çarşısı'nın bitişiğindedir. 1395 yılında Yıldırım Bayezid'in oğlu Ertuğrul Çelebi adına yapılmıştır. 10,00 x 10,40 metre iç ölçülerinde kare planlı olan caminin üst kısmı ahşap olup, kırma çatı ile örülmüştür. Yapının kuzey cephesinde yer alan son cemaat yeri, 5,00 x 10,00 m. ölçüsündedir. Sonradan yapılan eklerle değişime uğramış, iki yanı düz duvarla kapatılmıştır. Kuzey cephe ortada iki ahşap direk ve yan duvarlar birbirine gemi teknesi formundaki kemerlerle bağlanmıştır. Ortada dar yanlarda geniş olan kemer açıklıkları sonradan camekanla kapatılmıştır. Beş metre derinliğinde bir son cemaat yeri vardır. Yanları duvarla, ortada dar ve yanlarda geniş olan kemer açıklıkları ise camekanla kapatılmıştır. Sık sık yapılan onarımlar sonucu özgün yapısını yitirmiştir. Duvarları moloz taşıyla örülen cami, Celal isyanları sırasında tümüyle yanmıştır. 1892 yılında tamir edilmiş ve 1954 yılında da aslına uygun olarak tekrar onarılmıştır. Caminin batı duvarına bitişik minareye son cemaat yerindeki bir kapıdan çıkılmaktadır. Kaidesi kare planlı, iki sıra tuğla ve moloz taşla örgülüdür. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "guranli",
     name: "Güranlı (Yeşil) Mescidi",
@@ -2246,11 +2246,6 @@ const MOSQUE_INFO = {
     period: "1421 (Çelebi Sultan Mehmed Dönemi)",
     founder: "Çelebi Sultan Mehmed'in süt annesi Daye Hatun",
     info: "255 m² iç mekâna sahip olan caminin bir adet minaresi bulunmaktadır; kırma çatı ile örtülmüş olup kiremit ile kaplanmıştır. 1651'de yenilenmiş, son tamiratı 1971'de yapılmıştır. Cami avlusunda çok sayıda mezar bulunmaktadır; Nakşibendi tarikatı ariflerinden Açıkbaş Mahmud'un mezarı da buradadır. Kaynak: kulturportali.gov.tr"
-  },
-  "ebu-i-shak-mescidi": {
-    period: "1479 (Fatih Sultan Mehmet Dönemi)",
-    founder: "Yıldırım Bayezıt (Ebu İshak adına yaptırmış, Fatih döneminde yenilenmiştir)",
-    info: "Ebu İshak Mahallesi’nde, Cumhuriyet Caddesi’nin altında, İshak Aralığındaki cami Yıldırım Bayezıt tarafından Ebu İshak adına yaptırılmıştır. Fatih Sultan Mehmet döneminde yenilenerek 1479 yılında ibadete açılmıştır. “ Ters T ” planlı bir yapı olan caminin üst kısmı kubbe ve yanlardan tonozla örtülüdür. Kuzey yönünde yer alan son cemaat yeri kesme taş örgülü dört ayağı birbirine bağlayan sivri kemerlerin oluşturduğu beş bölmeden ibarettir. Orta bölme, diğerlerinden daha geniş ve yüksektir. Orta bölme kubbe ve yanlarındaki bölmeler tekne biçimi tonoz örtülüdür. Duvarları moloz taş ve değişik sıralarda tuğladandır. Kalkan, üç sıra tuğla, bir sıra kesme taş ile örülmüştür. Minarenin kaidesi üç sıra tuğla, bir sıra kesme taş, gövdesi ise tuğladandır. Avlusunda 14 köşeli şadırvanı camekanlıdır. Cami 1855 yılındaki depremde büyük hasar görmüş, 1892 yılında ise 1.600 kuruş harcanarak tamir edilmiştir. Zemini kare tuğlalarla döşenmiştir. kaynak:https://www.kulturportali.gov.tr/"
   },
   "duhter-i-serif-fiskirik": {
     period: "Fatih Sultan Mehmed Dönemi (salt. 1451-1481); Mart/Nisan 1492 tarihli bir sicile dayanarak bu döneme tarihlenmektedir",
