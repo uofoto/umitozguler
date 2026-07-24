@@ -182,10 +182,11 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Şehreküstü Camii"
   }, {
     id: "maksem-camii",
-    name: "Maksem Camii",
+    name: "Maksem (Düsturhan) Camii",
     district: "Osmangazi",
     address: "Maksem, Osmangazi/Bursa",
-    mapsSearch: "Maksem Camii"
+    mapsSearch: "Maksem Camii",
+    info: "Caminin giriş kapısı üstünde yer alan kitabesinde Fatih Sultan Mehmet döneminde (1451-1481), Düsturhan lakaplı Yahya Hüseyin oğlu Yahya tarafından 1479 yılında yaptırıldığı yazılıdır. Bursa'ya gelen suların taksiminin eskiden burada yapılması sebebiyle mahalleye, 'su dağıtma yeri' ifadesinden türeyen 'Maksem' denilmiş ve bu isim camiye de verilmiştir. Ayrıca cami, yaptıran kişinin lakabı olan 'Düsturhan' adı ile de anılmaktadır. Dikdörtgen planlı olan caminin girişinde son cemaat yeri bulunmaktadır. Yapı, 1955 yılında Bursa Eski Eserleri Sevenler Kurumu tarafından onarılmıştır. Düsturhan'ın oğlu Hoca Ali Paşa'nın (vefatı 1503) mezarının da bulunduğu batıdaki haziresinden günümüze sadece birkaç mezar taşı kalmıştır. Kaynak: https://kulturportali.gov.tr/"
   }, {
     id: "dayioglu-camii",
     name: "Dayıoğlu Camii",
