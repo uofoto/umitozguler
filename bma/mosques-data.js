@@ -2247,6 +2247,11 @@ const MOSQUE_INFO = {
     founder: "Çelebi Sultan Mehmed'in süt annesi Daye Hatun",
     info: "255 m² iç mekâna sahip olan caminin bir adet minaresi bulunmaktadır; kırma çatı ile örtülmüş olup kiremit ile kaplanmıştır. 1651'de yenilenmiş, son tamiratı 1971'de yapılmıştır. Cami avlusunda çok sayıda mezar bulunmaktadır; Nakşibendi tarikatı ariflerinden Açıkbaş Mahmud'un mezarı da buradadır. Kaynak: kulturportali.gov.tr"
   },
+  "ebu-i-shak-mescidi": {
+    period: "1479 (Fatih Sultan Mehmet Dönemi)",
+    founder: "Yıldırım Bayezıt (Ebu İshak adına yaptırmış, Fatih döneminde yenilenmiştir)",
+    info: "Ebu İshak Mahallesi’nde, Cumhuriyet Caddesi’nin altında, İshak Aralığındaki cami Yıldırım Bayezıt tarafından Ebu İshak adına yaptırılmıştır. Fatih Sultan Mehmet döneminde yenilenerek 1479 yılında ibadete açılmıştır. “ Ters T ” planlı bir yapı olan caminin üst kısmı kubbe ve yanlardan tonozla örtülüdür. Kuzey yönünde yer alan son cemaat yeri kesme taş örgülü dört ayağı birbirine bağlayan sivri kemerlerin oluşturduğu beş bölmeden ibarettir. Orta bölme, diğerlerinden daha geniş ve yüksektir. Orta bölme kubbe ve yanlarındaki bölmeler tekne biçimi tonoz örtülüdür. Duvarları moloz taş ve değişik sıralarda tuğladandır. Kalkan, üç sıra tuğla, bir sıra kesme taş ile örülmüştür. Minarenin kaidesi üç sıra tuğla, bir sıra kesme taş, gövdesi ise tuğladandır. Avlusunda 14 köşeli şadırvanı camekanlıdır. Cami 1855 yılındaki depremde büyük hasar görmüş, 1892 yılında ise 1.600 kuruş harcanarak tamir edilmiştir. Zemini kare tuğlalarla döşenmiştir. kaynak:https://www.kulturportali.gov.tr/"
+  },
   "duhter-i-serif-fiskirik": {
     period: "Fatih Sultan Mehmed Dönemi (salt. 1451-1481); Mart/Nisan 1492 tarihli bir sicile dayanarak bu döneme tarihlenmektedir",
     founder: "Molla Şerefüddin Kırımi'nin kız kardeşi Şahi Hatun",
