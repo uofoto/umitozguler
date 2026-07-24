@@ -143,12 +143,6 @@ let PRESET_MOSQUES = [{
     address: "Karaşeyh Mh., Osmangazi/Bursa",
     mapsSearch: "Karaşeyh Camii Bursa"
   }, {
-    id: "seyh-muftu",
-    name: "Şeyh Müftü Camii",
-    district: "Osmangazi",
-    address: "Şeyhmüftü Mh., Osmangazi/Bursa",
-    mapsSearch: "Şeyh Müftü Camii"
-  }, {
     id: "somuncu-baba-firini",
     name: "Somuncu Baba Mescidi",
     district: "Osmangazi",
@@ -1088,7 +1082,7 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Yeniceköy Camii Mustafakemalpaşa"
   }, {
     id: "mustafakemalpasa-muftu-camii",
-    name: "Müftü Camii",
+    name: "Şeyh Müftü Camii",
     district: "Mustafakemalpaşa",
     address: "Şeyhmüftü Mahallesi, Balıkesir Cd., Mustafakemalpaşa/Bursa",
     mapsSearch: "Müftü Camii Mustafakemalpaşa"
