@@ -254,6 +254,17 @@
     function getMosqueInfo(m) {
       if (MOSQUE_INFO_OVERRIDES[m.id]) return MOSQUE_INFO_OVERRIDES[m.id];
       if (MOSQUE_INFO[m.id]) return MOSQUE_INFO[m.id];
+      // MOSQUE_INFO sözlüğünde ayrı bir kayıt yoksa, caminin kendi nesnesine
+      // doğrudan eklenmiş "info" alanını kullan (mosques-data.js'e iki farklı
+      // yoldan bilgi eklenebilir; ikisi de burada birleştirilir). period/founder
+      // ayrıca girilmediyse dürüst bir yer tutucu metin gösterilir.
+      if (m.info) {
+        return {
+          period: m.period || "Kesin yapım tarihi envanterimizde kayıtlı değil",
+          founder: m.founder || "Banisi hakkında doğrulanmış bir kayıt henüz eklenmedi",
+          info: m.info
+        };
+      }
       return {
         period: "Kesin yapım tarihi envanterimizde kayıtlı değil",
         founder: "Banisi hakkında doğrulanmış bir kayıt henüz eklenmedi",
