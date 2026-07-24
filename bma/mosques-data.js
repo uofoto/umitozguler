@@ -111,7 +111,8 @@ let PRESET_MOSQUES = [{
     name: "Kayhan (Kaygan) Camii",
     district: "Osmangazi",
     address: "Kayhan, Kayhan Cd., Osmangazi/Bursa",
-    mapsSearch: "Kayhan Camii Bursa"
+    mapsSearch: "Kayhan Camii Bursa",
+    info: "Kayhan Çarşısı'na inen Kayhan ve Selçuk Hatun Sokak arasında bulunan cami, Fatih devrinde, Kaygan Musa b. Mehmet tarafından yaptırılmıştır. Ancak caminin yapımına Kazzazoğlu Söle Mustafa Paşa'da para yardımında bulunmuştur. Asıl ibadet yeri 17,10 x 17,35 metre iç ölçüsündedir. 3,15 metre derinliğinde bir son cemaat yeri bulunmaktadır. 14 pencere ile aydınlatılan cami, 1855 depreminde büyük hasar görmüştür. 1873 yılında Emekli Yüzbaşı Halil Efendi tarafından esaslı bir onarımdan geçirilmiştir. Cami ilk yapıldığında dokuz kubbeli olduğu halde, bugün ortadan dilimli bir kubbe ve yanlarda tonoz çatıyla örtülmüştür. Bu biçimiyle hiçbir yapıda görülmeyen bir özelliğe sahiptir. Eski biçimiyle Ulu Cami tarzında, çok kubbeli Bursa yapılarının ikincisiydi. Minaresinin biri kurşunluk hizasında diğeri üstte iki şerefeli vardı. Ezanlardan üçü birinde, ikisi ise diğerinde okunmaktaydı. Bugünkü mimarisi ise tek şerefeli, sivri külahlı ve tuğla gövdelidir. Mihrap yarım daire kesitli sade bir niş halinde olup, 1873 tarihine aittir. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "tuzpazari-camii",
     name: "Tuzpazarı Camii",
@@ -433,13 +434,6 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Karakadı Mescidi Bursa",
-    addedAt: "2026-07-19"
-  }, {
-    id: "kayan",
-    name: "Kayan (Kavganı) Camii",
-    district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Kayan Bursa",
     addedAt: "2026-07-19"
   }, {
     id: "koca-naip-camii",
