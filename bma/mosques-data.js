@@ -234,7 +234,7 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Hatice İsfendiyar Sultan Camii Bursa"
   }, {
     id: "gazi-timurtas-pasa-camii",
-    name: "Gazi Timurtaş Paşa Camii",
+    name: "Demirtaş Camii / Temurtaş Camii",
     district: "Osmangazi",
     address: "Demirtaş Mahallesi, Osmangazi/Bursa",
     mapsSearch: "Timurtaş Paşa Camii Bursa"
