@@ -403,7 +403,8 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Hayreddin Paşa Camii Minaresi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Tuz Pazarı semtinde bulunan cami, I. Murad'ın ünlü veziri Çandarlı Kara Halil Hayrettin Paşa tarafından yaptırılmıştır. Cami ve minareyi yaptıran Hayrettin Paşa, aynı zamanda İznik'teki Yeşil Camii'nin de banisi olmuştur. Hayrettin Paşa Camii başta çatılı olarak yapılmış olup, 1863 yılında vakfın mütevellisi Salih Efendi tarafından yeniden inşa edilmiş ve günümüze bu haliyle gelebilmiştir. Caminin sadece minaresi orijinal kalmıştır. Kaynak: Kazım Baykal, Bursa ve Anıtları, s.108."
   }, {
     id: "i-brahim-pasa",
     name: "İbrahim Paşa (Candarlı / Mahkeme) Camii",
