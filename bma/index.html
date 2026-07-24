@@ -463,6 +463,37 @@
             <p class="text-xs py-3 text-center" style="color:var(--ink-faint);">Henüz bir vakit namazı kaydı girmediniz.</p>
           </div>
         </div>
+
+        <!-- UYGULAMAYI PAYLAŞ -->
+        <div class="paper-card rounded-2xl p-4 space-y-3">
+          <h3 class="font-bold text-[11px] flex items-center space-x-2" style="color:var(--ink);">
+            <i class="fa-solid fa-share-nodes" style="color:var(--teal-700);"></i>
+            <span class="uppercase tracking-wider" style="color:var(--ink-faint);">Uygulamayı Paylaş</span>
+          </h3>
+          <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">Bursa Manevi Atlası'nı arkadaşlarınla ve ailenle paylaşarak onların da bu yolculuğa katılmasını sağla.</p>
+          <div class="grid grid-cols-3 gap-2.5">
+            <button onclick="shareApp('x')" class="flex flex-col items-center justify-center gap-1.5 rounded-xl py-3" style="background:var(--paper-deep);" title="X'te paylaş">
+              <i class="fa-brands fa-x-twitter text-base" style="color:var(--ink);"></i>
+              <span class="text-[9px] font-bold" style="color:var(--ink-soft);">X</span>
+            </button>
+            <button onclick="shareApp('facebook')" class="flex flex-col items-center justify-center gap-1.5 rounded-xl py-3" style="background:var(--paper-deep);" title="Facebook'ta paylaş">
+              <i class="fa-brands fa-facebook text-base" style="color:#1877F2;"></i>
+              <span class="text-[9px] font-bold" style="color:var(--ink-soft);">Facebook</span>
+            </button>
+            <button onclick="shareApp('whatsapp')" class="flex flex-col items-center justify-center gap-1.5 rounded-xl py-3" style="background:var(--paper-deep);" title="WhatsApp'ta paylaş">
+              <i class="fa-brands fa-whatsapp text-base" style="color:#25D366;"></i>
+              <span class="text-[9px] font-bold" style="color:var(--ink-soft);">WhatsApp</span>
+            </button>
+            <button onclick="shareApp('linkedin')" class="flex flex-col items-center justify-center gap-1.5 rounded-xl py-3" style="background:var(--paper-deep);" title="LinkedIn'de paylaş">
+              <i class="fa-brands fa-linkedin text-base" style="color:#0A66C2;"></i>
+              <span class="text-[9px] font-bold" style="color:var(--ink-soft);">LinkedIn</span>
+            </button>
+            <button onclick="shareApp('other')" class="flex flex-col items-center justify-center gap-1.5 rounded-xl py-3" style="background:var(--paper-deep);" title="Diğer paylaşım seçenekleri">
+              <i class="fa-solid fa-ellipsis text-base" style="color:var(--ink);"></i>
+              <span class="text-[9px] font-bold" style="color:var(--ink-soft);">Diğer</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- PANEL 2: CAMİ LİSTESİ -->

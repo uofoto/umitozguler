@@ -1536,6 +1536,53 @@
         toast.classList.add('opacity-0', '-translate-y-4');
       }, 3000);
     };
+    // 15b. UYGULAMAYI PAYLAŞ (X / Facebook / Instagram)
+    window.shareApp = function(platform) {
+      const shareUrl = "https://www.umitozguler.com.tr";
+      const shareText = "Bursa'nın tarihi camilerini keşfet, ziyaretlerini kaydet ve manevi yolculuğunu paylaş: Bursa Manevi Atlası";
+
+      if (platform === 'x') {
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
+      if (platform === 'facebook') {
+        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
+      if (platform === 'whatsapp') {
+        const url = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
+      if (platform === 'linkedin') {
+        const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
+      if (platform === 'other') {
+        // Cihazın yerel paylaşım menüsünü aç (Instagram, Telegram, e-posta, SMS vb. dahil tüm uygulamalar listelenir).
+        if (navigator.share) {
+          navigator.share({ title: "Bursa Manevi Atlası", text: shareText, url: shareUrl }).catch(() => {});
+          return;
+        }
+        // Yerel paylaşım desteklenmiyorsa metni panoya kopyala ve kullanıcıyı bilgilendir.
+        const fallbackText = `${shareText} ${shareUrl}`;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(fallbackText)
+            .then(() => showToast("Paylaşım metni kopyalandı. Dilediğin uygulamaya yapıştırabilirsin.", "success"))
+            .catch(() => showToast("Kopyalama başarısız oldu. Lütfen tekrar deneyin.", "error"));
+        } else {
+          showToast("Paylaşım bu tarayıcıda desteklenmiyor.", "error");
+        }
+      }
+    };
+
     // 16. LIGHTBOX (Fotoğraf Büyütme / Yakınlaştırma / Gezinme)
     let lightboxPhotos = [];
     let lightboxIndex = 0;
