@@ -1538,7 +1538,7 @@
     };
     // 15b. UYGULAMAYI PAYLAŞ (X / Facebook / Instagram)
     window.shareApp = function(platform) {
-      const shareUrl = "https://www.umitozguler.com.tr";
+      const shareUrl = "https://www.umitozguler.com.tr/bma/index.html";
       const shareText = "Bursa'nın tarihi camilerini keşfet, ziyaretlerini kaydet ve manevi yolculuğunu paylaş: Bursa Manevi Atlası";
 
       if (platform === 'x') {
