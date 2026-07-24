@@ -165,10 +165,11 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Bedrettin Camii Bursa"
   }, {
     id: "yerkapi-camii",
-    name: "Yerkapı Camii",
+    name: "Yer Kapı (Kara Ali) Camii",
     district: "Osmangazi",
     address: "Yerkapı Mh., Osmangazi/Bursa",
-    mapsSearch: "Yerkapı Camii Bursa"
+    mapsSearch: "Yerkapı Camii Bursa",
+    info: "Hisar'ın beş kapısından biri olan Yerkapı Caddesi ile Kaleboyu Caddesi'nin kesiştikleri yerde bulunan cami, tarihi kesin olarak bilinmemekle birlikte, Osman ve Orhangazi'nin kumandanlarından Timurtaş Paşa'nın babası Kara Ali tarafından yaptırılmıştır. 8,00 x 8,00 metre iç ölçülerinde kare planlı olan camide, üç metre derinliğinde bir son cemaat yeri vardır. Asıl ibadet yerinin üzeri kubbe ile örtülüyken, 1855 depreminde kubbesi yıkılmıştır. Sonraki onarımda ise üst kısmı kırma çatı ile örülmüştür. Uzun yıllar harap durumda kalan cami, 1967 yılında cami onarılmış ve üzeri yine kubbe ile örtülmüştür. Duvarları moloz taş ve tuğla ile örülmüştür. Bahçesinde mermer işçiliğinin en güzel örneklerinden sayılan mezarlar vardır. Kaynak: https://kulturportali.gov.tr/"
   }, {
     id: "demirkapi-mescidi",
     name: "Demirkapı Mescidi",
@@ -833,11 +834,12 @@ let PRESET_MOSQUES = [{
     addedAt: "2026-07-19"
   }, {
     id: "satbasi",
-    name: "Satbaşı (Karacelebi) Camii",
+    name: "Setbaşı (Kara Çelebizade) Camii",
     district: "Yıldırım",
     address: "Yıldırım/Bursa",
     mapsSearch: "Satbaşı Yıldırım Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Kazasker Karaçelebizade Hüsamettin Efendi tarafından 1594 yılında yaptırılmıştır. Setbaşı Köprüsü'nün yanında bulunduğu için \"Setbaşı Camii\" olarak anılmaktadır. Cami, asıl ibadet mekânı ve son cemaat yeri ile birlikte dikdörtgen planlıdır. Caminin kuzeydoğusunda Şeyhülislam Abdülaziz Efendi'nin Bursa'ya akıttığı ve vakfettiği Müftü Suyu'nun kırk çeşmesinden biri olan şadırvan bulunmaktadır. Camiyi yaptıran Karaçelebizade Hüsamettin Efendi'nin oğlu Şeyhülislam Karaçelebizade Abdülaziz Efendi tarafından 1654 yılında ve aynı sülaleden Bursa Valisi Ahmet Aziz Paşa tarafından 1813 yılında onarılmıştır. 1855 depremi ve 1863 Setbaşı yangını sonrasında da tekrar tamir görmüş olup son olarak 1997 yılında Bursa Büyükşehir Belediyesi tarafından onarılmıştır. Kaynak: https://kulturenvanteri.com/"
   }, {
     id: "selimzade-camii",
     name: "Selimzâde Camii",
@@ -990,11 +992,12 @@ let PRESET_MOSQUES = [{
     mapsSearch: "İshakpaşa Camii İnegöl"
   }, {
     id: "yildirim-camii-inegol",
-    name: "Yıldırım Camii",
+    name: "Yıldırım (Cuma) Camii",
     district: "İnegöl",
     address: "Cuma Mahallesi, Nuri Doğrul Cd., İshak Paşa Medresesi yanı, İnegöl/Bursa",
     mapsSearch: "Yıldırım Camii İnegöl",
-    addedAt: "2026-07-13T06:00:00"
+    addedAt: "2026-07-13T06:00:00",
+    info: "İnegöl ilçe merkezinde, İshak Paşa Medresesi yanında cami. I. Beyazıt Yıldırım tarafından 1398-1402 yıllarında yaptırılmış ise de, zamanla tahrip olduğu için, Abdülhamit II. döneminde yerine günümüzdeki gotik yapı inşa edilmiştir. Evliya çelebi, Seyahatnamesinde kubbesinin kiremit örtülü olduğunu belirtmektedir. Yalnızca minaresinin kaidesi özgünlüğünü korumaktadır. 10.50 x 10.50 metre boyutlarında kare planlıdır. Yıldırım Beyazıt Camisi adıyla da anılır. Altıgen kaidesi üstünde yükselen silindirik tuğla minaresi tek şerefelidir. Şerefesinin üst tarafında çini süslemeler vardır. İnegöl'ün en eski camisidir. Yapının iç ve dış duvarları sıvandığından malzeme ve teknik belli olamamaktadır. Minare kaidesi bir sıra taş, üç sıra tuğla ile almaşık teknikte örülmüştür. Gövde ve petek tuğladır. Kasnak, pandandif ve kubbe yüzeyi bitkisel motifli kalem işleriyle süslüdür. Harim duvarlarında bitkisel bezemeler ve yazılar görülür. Cami; Yıldırım Cami, Beyazıd Han Cami, Yıldırım Han Cami, Cuma Cami adlarıyla anılmaktadır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "kasim-efendi-camii-inegol",
     name: "Kasım Efendi Camii",
@@ -1340,7 +1343,8 @@ let PRESET_MOSQUES = [{
     district: "Yıldırım",
     address: "Hacı Seyfettin Mah., Mücelleddin Mevkii, Yıldırım/Bursa",
     mapsSearch: "Mücelleddin Ömer Ağa Camii Bursa",
-    addedAt: "2026-07-21"
+    addedAt: "2026-07-21",
+    info: "Hacı Seyfettin Mahallesi; eski ismi ile Mücellidi Mahallesi'nde, Mücelleddin Sokak'ta bulunan cami, Kadı Ali Çelebi tarafından 1500 yılından önce yaptırılmıştır. Adi moloz taşı ile yapılan caminin üzeri daha önce ahşap ve kiremitli iken daha sonra yapılan tamiratlarda üzeri kubbe ile örtülmüştür. H.1371/ M.1952 yılında yeniden inşa edilmiştir. 1793 yılında etraflı bir onarım gören mescidin daha evvel minaresi bulunmamakta idi. Vakıflar Müdürlüğünce yakın zamanda restorasyona tabi tutulmuştur. Kaynak: https://kulturenvanteri.com/"
   }, {
     id: "selami-tekkesi-camii",
     name: "Selami Tekkesi Camii",
@@ -1364,13 +1368,6 @@ let PRESET_MOSQUES = [{
     district: "İnegöl",
     address: "Camiikebir Mevkii, Cuma Mah., İnegöl/Bursa",
     mapsSearch: "İsak Paşa Camii İnegöl",
-    addedAt: "2026-07-21"
-  }, {
-    id: "cuma-camii-inegol",
-    name: "Cuma Camii",
-    district: "İnegöl",
-    address: "Cuma Mah., İnegöl/Bursa",
-    mapsSearch: "Cuma Camii İnegöl",
     addedAt: "2026-07-21"
   }, {
     id: "burhaniye-camii-inegol",
