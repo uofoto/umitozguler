@@ -167,9 +167,24 @@
         }
 
         if (localHash !== remoteHash) {
-          const banner = document.getElementById('appUpdateBanner');
-          if (banner) banner.classList.remove('hidden');
-          if (manualTrigger) showToast("Yeni bir güncelleme bulundu.", "success");
+          if (manualTrigger) {
+            // Kullanıcı elle "güncellemeyi kontrol et" dediyse, bandı göster ve
+            // ona haber ver — ama karar yine kendisine bırakılır.
+            const banner = document.getElementById('appUpdateBanner');
+            if (banner) banner.classList.remove('hidden');
+            showToast("Yeni bir güncelleme bulundu.", "success");
+          } else {
+            // OTOMATİK GÜNCELLEME: Uygulama açılışında sessizce fark tespit edildi.
+            // Kullanıcının ayrıca bir bandı fark edip tıklamasını beklemeden,
+            // güncellemeyi hemen kendiliğinden uygula. Namaz kayıtları IndexedDB'de
+            // tutulduğundan bu işlem hiçbir veri kaybına yol açmaz; sadece
+            // uygulamanın kod/veri önbelleğini tazeler ve sayfayı bir kez yeniler.
+            // Sonsuz döngüyü önlemek için applyAppUpdate, yeniden yüklemeden önce
+            // yerel özet değerini güncel değerle eşitler.
+            if (typeof window.applyAppUpdate === 'function') {
+              window.applyAppUpdate();
+            }
+          }
           return true;
         } else if (manualTrigger) {
           showToast("Uygulama zaten güncel.", "success");
