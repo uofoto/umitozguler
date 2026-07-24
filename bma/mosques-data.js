@@ -1779,6 +1779,22 @@ let PRESET_MOSQUES = [{
     address: "Dedebali Mah., Harmancık/Bursa",
     mapsSearch: "Divan Camii Harmancık",
     addedAt: "2026-07-21"
+  }, {
+    id: "harmancik-murat-celebi-camii",
+    name: "Murat Çelebi Camii",
+    district: "Harmancık",
+    address: "Harmancık Merkez, Harmancık/Bursa",
+    mapsSearch: "Murat Çelebi Camii Harmancık",
+    info: "Halkın Cuma cami adıyla tanıdıkları yapının vakıf kaydında \"Murad Çelebi cami şerifi\" adı verilmiştir. Yapı, son cemaat yeri ve harim kısmından oluşur. Kuzey-güney doğrultusunda dikdörtgen planlı, düz tavanlı harimin kuzeyinde destekler üzerine oturan mahfil ve güneyinde tavanı taşıyan iki destek vardır. Harim kısmı ahşap tavanla örtülüdür. Minber moderndir; mahfilin orta kısmı balkon biçiminde çıkıntılıdır. Kare kesitli ahşap desteklerin arası parmaklıkla kapatılmıştır. Mahfile batı duvarın kuzey köşesindeki bir merdivenle çıkılır. Harimin güney duvarında, eksende dikdörtgen bir kapı, iki yanda ahşap parmaklıklı birer dikdörtgen pencere bulunur. Yapının kuzey cephesi sıvalıdır. Çıplak olan diğer cepheler moloz ve devşirme taşlarla örülmüştür. Aralarda ahşap hatıllar görülür. Pencere çerçeveleri, parmaklıklar, tavan, mahfil destekler ve minber ahşaptır. Çatı kiremitle kaplıdır. Kaynak: https://www.kulturportali.gov.tr/",
+    addedAt: "2026-07-24"
+  }, {
+    id: "harmancik-haci-mehmet-camii",
+    name: "Hacı Mehmet Camii",
+    district: "Harmancık",
+    address: "Çakmak Mah., Harmancık/Bursa",
+    mapsSearch: "Hacı Mehmet Camii Harmancık",
+    info: "Çakmak'ta halen kullanılan yapı, köyün tek ve eski eser değeri taşıyan camisidir. Vakıf kayıtlarında belirtilen \"Hacı Mehmet Cami Şerifi\" muhtemelen bu yapıdır. Cami kuzey-güney doğrultusunda uzunlamasına dikdörtgen planlı, düz tavanlıdır. Güneyde eksende yarım yuvarlak mihrap nişi, kuzeyde giriş kapısı yer alır. Batı duvardaki üstlük pencerelerin güney tarafında enlemesine dikdörtgen bir pano içinde, iki ağacın sınırladığı bir avlu ile çevrelenen kulevari görünümlü bir ev tasviri vardır. Ayrıca uzunlamasına dikdörtgen panolar içinde vazo içinde çiçek demetleri tasvir edilmiştir. Tüm duvarlarda altlık pencerelerin üstü kıvrık dal motifli bezemelerle taçlandırılmıştır. Kaynak: https://www.kulturportali.gov.tr/",
+    addedAt: "2026-07-24"
   }];;
 const MOSQUE_INFO = {
   "ulu-cami": {
