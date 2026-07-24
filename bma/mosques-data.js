@@ -366,9 +366,10 @@ let PRESET_MOSQUES = [{
     id: "ebu-i-shak-mescidi",
     name: "Ebu İshak Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
+    address: "Ebu İshak Mahallesi, İshak Aralığı, Osmangazi/Bursa",
     mapsSearch: "Ebu İshak Mescidi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Ebu İshak Mahallesi’nde, Cumhuriyet Caddesi’nin altında, İshak Aralığındaki cami Yıldırım Bayezıt tarafından Ebu İshak adına yaptırılmıştır. Fatih Sultan Mehmet döneminde yenilenerek 1479 yılında ibadete açılmıştır. “ Ters T ” planlı bir yapı olan caminin üst kısmı kubbe ve yanlardan tonozla örtülüdür. Kuzey yönünde yer alan son cemaat yeri kesme taş örgülü dört ayağı birbirine bağlayan sivri kemerlerin oluşturduğu beş bölmeden ibarettir. Orta bölme, diğerlerinden daha geniş ve yüksektir. Orta bölme kubbe ve yanlarındaki bölmeler tekne biçimi tonoz örtülüdür. Duvarları moloz taş ve değişik sıralarda tuğladandır. Kalkan, üç sıra tuğla, bir sıra kesme taş ile örülmüştür. Minarenin kaidesi üç sıra tuğla, bir sıra kesme taş, gövdesi ise tuğladandır. Avlusunda 14 köşeli şadırvanı camekanlıdır. Cami 1855 yılındaki depremde büyük hasar görmüş, 1892 yılında ise 1.600 kuruş harcanarak tamir edilmiştir. Zemini kare tuğlalarla döşenmiştir. kaynak:https://www.kulturportali.gov.tr/"
   }, {
     id: "enbiya",
     name: "Enbiya (Veled-i Enbiya) Mescidi",
