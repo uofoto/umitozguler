@@ -1474,6 +1474,77 @@
   <script src="backup.js"></script>
   <script src="ui.js"></script>
   <script>
+    // === PWA Kurulum Takip & Mantığı ===
+    let deferredPrompt;
+    const installBanner = document.getElementById('installBanner');
+    const installBtn = document.getElementById('installBtn');
+    const installDismissBtn = document.getElementById('installDismissBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Tarayıcının varsayılan istemini engelle
+      e.preventDefault();
+      // Olayı daha sonra tetiklemek üzere sakla
+      deferredPrompt = e;
+      // Kurulum bandını göster
+      if (installBanner) {
+        installBanner.classList.remove('hidden');
+        // Analytics: Kurulum teklifi kullanıcıya gösterildi
+        gtag('event', 'pwa_install_prompt_shown', {
+          'event_category': 'PWA',
+          'event_label': 'Install Banner Displayed'
+        });
+      }
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        
+        // Analytics: Kullanıcı yükle butonuna bastı
+        gtag('event', 'pwa_install_clicked', {
+          'event_category': 'PWA',
+          'event_label': 'Install Button Clicked'
+        });
+
+        // Kurulum istemini göster
+        deferredPrompt.prompt();
+        
+        // Kullanıcının seçimini bekle
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('Kullanıcı kurulumu kabul etti');
+          // Analytics: Kullanıcı kurulumu onayladı
+          gtag('event', 'pwa_install_accepted');
+        } else {
+          console.log('Kullanıcı kurulumu reddetti');
+          // Analytics: Kullanıcı kurulumu iptal etti
+          gtag('event', 'pwa_install_dismissed');
+        }
+        
+        deferredPrompt = null;
+        if (installBanner) installBanner.classList.add('hidden');
+      });
+    }
+
+    if (installDismissBtn) {
+      installDismissBtn.addEventListener('click', () => {
+        if (installBanner) installBanner.classList.add('hidden');
+        // Analytics: Kullanıcı banner'ı kapattı
+        gtag('event', 'pwa_install_banner_closed');
+      });
+    }
+
+    window.addEventListener('appinstalled', (evt) => {
+      console.log('Uygulama başarıyla kuruldu');
+      // Analytics: Kurulum başarıyla tamamlandı
+      gtag('event', 'pwa_install_completed', {
+        'event_category': 'PWA',
+        'event_label': 'App Installed Successfully'
+      });
+      if (installBanner) installBanner.classList.add('hidden');
+    });
+
     // Başlat
     populateMosquesDropdown();
     setTodayDateTime();
