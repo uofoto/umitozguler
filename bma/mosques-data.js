@@ -102,10 +102,11 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Tahtakale Camii Bursa"
   }, {
     id: "kiremitci-camii",
-    name: "Kiremitçi Camii",
+    name: "Kiremitçi Sinan Bey Camii",
     district: "Osmangazi",
     address: "Kiremitçi, Kiremitçi Mh., Osmangazi/Bursa",
-    mapsSearch: "Kiremitçi Camii Bursa"
+    mapsSearch: "Kiremitçi Camii Bursa",
+    info: "Kiremitçi Mahallesi'nde bulunan cami, 16. yüzyıl ortalarında Pir Mehmet oğlu Sinan Bey tarafından yaptırılmıştır. Cami ve müştemilatı 1000 m2 olup, caminin iç alanı 600 m2'dir. 1803 yılında esaslı bir onarım gören caminin duvarları tuğla ve moloz taşı ile örülmüştür. 1952 yılında eskisi yıkılıp yerine yenisi yapılmıştır. Doğu yönünde duvara bitişik, kare kaideli minare yükselmektedir. Kaidesi üç sıra tuğla, iki sıra moloz taş örgülüdür. Üçgenler yardımıyla silindirik tuğla gövdeye geçilmiştir. Minarenin şerefe altı, dokuz sıra kirpi saçak dizili, demir korkuluklu ve sivri külahlıdır. Son cemaat yeri, kuzey yönüne betonarme olarak sonradan ilave edilmiştir. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "kayhan-camii",
     name: "Kayhan (Kaygan) Camii",
