@@ -42,7 +42,18 @@
     .motif-bg{
       position:fixed; inset:0; z-index:0; pointer-events:none;
       background-color:var(--paper);
+      background-image:
+        radial-gradient(circle at 0 0, rgba(195,154,69,0.05) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(21,90,76,0.05) 0, transparent 55%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23C39A45' stroke-width='0.6' opacity='0.16'%3E%3Cpath d='M60 6 L98 30 L98 78 L60 102 L22 78 L22 30 Z'/%3E%3Ccircle cx='60' cy='54' r='20'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:auto, auto, 120px 120px;
       transition:background-color .35s ease;
+    }
+    html[data-theme="dark"] .motif-bg{
+      background-image:
+        radial-gradient(circle at 0 0, rgba(195,154,69,0.07) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(47,161,132,0.08) 0, transparent 55%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23D9B667' stroke-width='0.6' opacity='0.10'%3E%3Cpath d='M60 6 L98 30 L98 78 L60 102 L22 78 L22 30 Z'/%3E%3Ccircle cx='60' cy='54' r='20'/%3E%3C/g%3E%3C/svg%3E");
     }
     .font-display{ font-family:'Playfair Display', serif; }
     .font-ledger{ font-family:'JetBrains Mono', monospace; letter-spacing:0.02em; font-variant-numeric:tabular-nums; }
@@ -65,11 +76,20 @@
     .gold-line{ background:linear-gradient(90deg, transparent, var(--gold-soft), transparent); height:1px; }
 
     .paper-card{
+      position:relative;
       background:var(--paper-card); border:1px solid var(--line);
-      box-shadow:0 1px 2px rgba(36,31,23,0.04), 0 8px 20px -14px var(--shadow-ambient);
-      transition:transform .15s ease, box-shadow .15s ease, background-color .35s ease, border-color .35s ease;
+      box-shadow:0 1px 2px rgba(36,31,23,0.05), 0 2px 6px -2px rgba(36,31,23,0.06), 0 14px 28px -18px var(--shadow-ambient);
+      transition:transform .18s cubic-bezier(0.22,1,0.36,1), box-shadow .18s ease, background-color .35s ease, border-color .35s ease;
     }
+    .paper-card::before{
+      content:''; position:absolute; top:0; left:14px; right:14px; height:1px;
+      background:linear-gradient(90deg, transparent, rgba(195,154,69,0.35), transparent);
+      opacity:0; transition:opacity .25s ease;
+      pointer-events:none;
+    }
+    .paper-card:hover::before{ opacity:1; }
     .paper-card.pressable{ cursor:pointer; }
+    .paper-card.pressable:hover{ box-shadow:0 1px 2px rgba(36,31,23,0.05), 0 4px 10px -4px rgba(36,31,23,0.08), 0 20px 34px -18px var(--shadow-ambient); transform:translateY(-1px); }
     .paper-card.pressable:active{ transform:scale(0.985); box-shadow:0 1px 2px rgba(36,31,23,0.05); }
 
     /* ---- Ayarlar / Toggle Anahtarı ---- */
@@ -82,8 +102,10 @@
     .toggle-switch.on .knob{ transform:translateX(18px); background:var(--gold-soft); }
 
     /* ---- Rozet / İstatistik çipleri ---- */
-    .stat-chip{ border-radius:14px; padding:.6rem .7rem; background:rgba(255,255,255,0.06); border:1px solid rgba(195,154,69,0.22); }
-    .icon-btn{ width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center; transition:transform .15s ease, background-color .15s ease; }
+    .stat-chip{ position:relative; border-radius:14px; padding:.6rem .7rem; background:rgba(255,255,255,0.06); border:1px solid rgba(195,154,69,0.22); overflow:hidden; transition:border-color .2s ease, background-color .2s ease; }
+    .stat-chip::after{ content:''; position:absolute; inset:0; background:linear-gradient(160deg, rgba(255,255,255,0.08), transparent 60%); pointer-events:none; }
+    .icon-btn{ width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center; transition:transform .15s cubic-bezier(0.22,1,0.36,1), background-color .15s ease; }
+    .icon-btn:hover{ transform:translateY(-1px); }
     .icon-btn:active{ transform:scale(0.9); }
 
     /* ---- Defter zaman çizgisi ---- */
@@ -127,8 +149,15 @@
 
     .badge-osmangazi{ color:var(--teal-900); background:rgba(21,90,76,0.10); }
     .badge-yildirim{ color:var(--brick-deep); background:rgba(168,86,49,0.12); }
+    .bar-osmangazi, .bar-yildirim, #digerProgressBar, #journeyProgressBar{ border-radius:999px; position:relative; overflow:hidden; }
     .bar-osmangazi{ background:linear-gradient(90deg, var(--teal-700), var(--teal-500)); }
     .bar-yildirim{ background:linear-gradient(90deg, var(--brick), var(--brick-soft)); }
+    .bar-osmangazi::after, .bar-yildirim::after, #digerProgressBar::after, #journeyProgressBar::after{
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      background-size:60% 100%; background-repeat:no-repeat; background-position:-60% 0;
+      animation:shimmer 3.6s ease-in-out infinite;
+    }
 
     ::-webkit-scrollbar{ display:none; }
 
