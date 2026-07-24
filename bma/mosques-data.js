@@ -221,12 +221,6 @@ let PRESET_MOSQUES = [{
     address: "Şehreküstü, Uzun Çarşı Cd., Koza Hanı içi, Osmangazi/Bursa",
     mapsSearch: "Koza Hanı Mescidi Bursa"
   }, {
-    id: "haci-ivaz-pasa-camii",
-    name: "Hacı İvaz Paşa Camii",
-    district: "Osmangazi",
-    address: "Tavuk Pazarı, Pirinç Hanı karşısı, Osmangazi/Bursa",
-    mapsSearch: "Hacı İvaz Paşa Camii Bursa"
-  }, {
     id: "hatice-isfendiyar-sultan-camii",
     name: "Hatice İsfendiyar Sultan Camii",
     district: "Osmangazi",
@@ -1271,7 +1265,8 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Orhanbey Mah., İstiklal Mevkii, Osmangazi/Bursa",
     mapsSearch: "İvaz Paşa Camii Bursa",
-    addedAt: "2026-07-21"
+    addedAt: "2026-07-21",
+    info: "Cumhuriyet Caddesi'nden Ulu Cami'ye çıkan yol üzerinde İvaz Paşa Çarşısı'nın batısındadır. Hacı İvaz Paşa, Tavukpazarı, İmadiye, Kazzazhane Camisi olarak da adlandırılır. Yeşil Cami ve Yeşil Türbe'nin mimarı ve iyi bir asker olan Hacı İvaz Paşa tarafından II. Murad döneminde (salt. 1421-1451) yaptırılmıştır. 1958'deki Çarşı yangınından sonra cami 1967-1968 yıllarında tamamen yenilenmiş, ancak bu süreçte özgünlüğünü kaybetmiştir. Günümüzde kubbe ile örtülü yan yana iki kare mekan şeklindeki yapı, bu haliyle Oruç Bey ve Abdal camilerinin plan şemalarına benzer. 1990'lı yıllarda esaslı bir tamir görmüş ve duvarları bir sıra kesme taş ve tuğla olarak örülmüştür. Minaresinin kaidesi taş, gövdesi ise tuğladır. Kaynaklarda basit yapılı, üzeri ahşap ve kiremit örtülü olarak sözü edilen yapı 15. yüzyılda mescit olarak inşa edilmiş, 1642 yılında da Seyit Mehmed Efendi'nin vakfettiği bir minberle camiye dönüştürülmüştür. Kaynak: Baykal, Bursa ve Anıtları, 106; Bursa Ansiklopedisi, Cilt 2, 810-811; Kaplanoğlu, Bursa Anıtlar Ansiklopedisi, 74."
   }, {
     id: "ruscuk-camii",
     name: "Ruscuk Camii",
