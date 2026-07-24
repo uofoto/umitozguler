@@ -28,7 +28,7 @@
     };
     // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI
     // Statik özellik güncellemeleri için (yeni bir uygulama özelliği yayınlandığında bu sürüm etiketini artırın)
-    const WHATS_NEW_STATIC_VERSION = 'v8-cami-listesi-temizlendi';
+    const WHATS_NEW_STATIC_VERSION = 'v9-bilgi-karti-bildirimi-eklendi';
     // Envanterdeki en yeni "addedAt" tarihini bulur; yeni cami eklendikçe bu otomatik değişir,
     // böylece kartın tekrar gösterilip gösterilmeyeceği koddaki bir sürüm numarasına değil,
     // gerçek veriye bağlı olur (elle güncelleme gerekmez).
@@ -79,13 +79,62 @@
           </div>
         </div>`;
     }
+    // Envanterdeki en yeni "infoUpdatedAt" tarihini bulur; bir caminin bilgi kartı
+    // eklendikçe/güncellendikçe bu otomatik değişir. "addedAt"tan farklı olarak bu,
+    // yeni eklenen değil, ÖNCEDEN VAR OLAN bir caminin bilgi metninin (info) sonradan
+    // eklendiği/güncellendiği tarihi izler — böylece "filanca caminin bilgi kartı
+    // yenilendi" bildirimi elle yazmaya gerek kalmadan kendiliğinden oluşur.
+    function getNewestInfoUpdateDate() {
+      const withDates = PRESET_MOSQUES.filter(m => m.infoUpdatedAt);
+      if (withDates.length === 0) return 'none';
+      return withDates.reduce((latest, m) => new Date(m.infoUpdatedAt) > new Date(latest) ? m.infoUpdatedAt : latest, withDates[0].infoUpdatedAt);
+    }
+    // En son güncelleme tarihinde bilgi kartı eklenen/güncellenen camileri özetleyen
+    // bir madde üretip karta ekler. renderWhatsNewMosqueEntry ile aynı 14 günlük
+    // görünürlük mantığını kullanır.
+    function renderWhatsNewInfoUpdateEntry() {
+      const el = document.getElementById('whatsNewInfoUpdateEntry');
+      if (!el) return;
+
+      const newestInfoUpdate = getNewestInfoUpdateDate();
+      if (newestInfoUpdate === 'none') { el.innerHTML = ''; return; }
+
+      const now = new Date();
+      const daysSinceUpdate = Math.floor((now - new Date(newestInfoUpdate)) / (1000 * 60 * 60 * 24));
+      if (daysSinceUpdate < 0 || daysSinceUpdate > 14) { el.innerHTML = ''; return; }
+
+      const recentlyUpdated = PRESET_MOSQUES
+        .filter(m => m.infoUpdatedAt === newestInfoUpdate)
+        .sort((a, b) => a.name.localeCompare(b.name, 'tr'));
+
+      if (recentlyUpdated.length === 0) { el.innerHTML = ''; return; }
+
+      const namesPreview = recentlyUpdated.slice(0, 3).map(m => m.name).join(', ');
+      const extra = recentlyUpdated.length > 3 ? ` ve ${recentlyUpdated.length - 3} diğerinin` : '';
+      const title = recentlyUpdated.length === 1
+        ? `${recentlyUpdated[0].name} Bilgi Kartı Yenilendi`
+        : `${recentlyUpdated.length} Caminin Bilgi Kartı Yenilendi`;
+      const desc = recentlyUpdated.length === 1
+        ? `Yapılış tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgiler eklendi.`
+        : `${escapeHtml(namesPreview)}${escapeHtml(extra)} yapılış tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgileri eklendi.`;
+
+      el.innerHTML = `
+        <div class="flex items-start gap-2.5">
+          <span class="text-base leading-none mt-0.5">📖</span>
+          <div class="min-w-0">
+            <p class="text-[11px] font-bold" style="color:var(--ink);">${escapeHtml(title)}</p>
+            <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">${desc}</p>
+          </div>
+        </div>`;
+    }
     function initWhatsNewBanner() {
       const banner = document.getElementById('whatsNewBanner');
       if (!banner) return;
 
       renderWhatsNewMosqueEntry();
+      renderWhatsNewInfoUpdateEntry();
 
-      const currentVersion = `${WHATS_NEW_STATIC_VERSION}|${getNewestMosqueAddedAt()}`;
+      const currentVersion = `${WHATS_NEW_STATIC_VERSION}|${getNewestMosqueAddedAt()}|${getNewestInfoUpdateDate()}`;
       window.__whatsNewCurrentVersion = currentVersion;
 
       const dismissedVersion = localStorage.getItem('manevi-atlas-whatsnew-dismissed');

@@ -383,6 +383,7 @@ let PRESET_MOSQUES = [{
     address: "Osmangazi/Bursa",
     mapsSearch: "Ertuğrul Camii Bursa",
     addedAt: "2026-07-19",
+    infoUpdatedAt: "2026-07-24",
     info: "Cumhuriyet Caddesi üzerinde, Sipahi Çarşısı'nın bitişiğindedir. 1395 yılında Yıldırım Bayezid'in oğlu Ertuğrul Çelebi adına yapılmıştır. 10,00 x 10,40 metre iç ölçülerinde kare planlı olan caminin üst kısmı ahşap olup, kırma çatı ile örülmüştür. Yapının kuzey cephesinde yer alan son cemaat yeri, 5,00 x 10,00 m. ölçüsündedir. Sonradan yapılan eklerle değişime uğramış, iki yanı düz duvarla kapatılmıştır. Kuzey cephe ortada iki ahşap direk ve yan duvarlar birbirine gemi teknesi formundaki kemerlerle bağlanmıştır. Ortada dar yanlarda geniş olan kemer açıklıkları sonradan camekanla kapatılmıştır. Beş metre derinliğinde bir son cemaat yeri vardır. Yanları duvarla, ortada dar ve yanlarda geniş olan kemer açıklıkları ise camekanla kapatılmıştır. Sık sık yapılan onarımlar sonucu özgün yapısını yitirmiştir. Duvarları moloz taşıyla örülen cami, Celal isyanları sırasında tümüyle yanmıştır. 1892 yılında tamir edilmiş ve 1954 yılında da aslına uygun olarak tekrar onarılmıştır. Caminin batı duvarına bitişik minareye son cemaat yerindeki bir kapıdan çıkılmaktadır. Kaidesi kare planlı, iki sıra tuğla ve moloz taşla örgülüdür. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "guranli",
@@ -469,6 +470,7 @@ let PRESET_MOSQUES = [{
     address: "Osmangazi/Bursa",
     mapsSearch: "Mantıcı Mescidi Bursa",
     addedAt: "2026-07-19",
+    infoUpdatedAt: "2026-07-24",
     info: "Reyhan Mahallesi Mantıcı Sokak'ta bulunan cami, Fatih Döneminde mahalle sakinleri tarafından yaptırılmıştır. İç ölçüleri 8,10 x 8,25 metre olan cami, ahşap tavanlı, kırma çatılı ana ibadet mekanı ve 4,60 metre derinliğindeki son cemaat yeri ile birlikte genel olarak dikdörtgen bir plana sahiptir. Son cemaat yeri iki katlı hale dönüştürülerek kadınlar mahfili elde edilmiştir. İçeride aydınlığı alt sırada altı, üstte ve her yönde ikişer pencere ile sağlanmıştır. Alt sıra pencereler ahşap söveli ve demir parmaklıdır. Mahalle mescidi tipinde inşa edilen mekan birçok kez onarımdan geçmiş ve en son 1959 yılında onarılmıştır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "mecidiye-camii",
