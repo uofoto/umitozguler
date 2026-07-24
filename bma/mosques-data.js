@@ -468,7 +468,8 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Mantıcı Mescidi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    info: "Reyhan Mahallesi Mantıcı Sokak'ta bulunan cami, Fatih Döneminde mahalle sakinleri tarafından yaptırılmıştır. İç ölçüleri 8,10 x 8,25 metre olan cami, ahşap tavanlı, kırma çatılı ana ibadet mekanı ve 4,60 metre derinliğindeki son cemaat yeri ile birlikte genel olarak dikdörtgen bir plana sahiptir. Son cemaat yeri iki katlı hale dönüştürülerek kadınlar mahfili elde edilmiştir. İçeride aydınlığı alt sırada altı, üstte ve her yönde ikişer pencere ile sağlanmıştır. Alt sıra pencereler ahşap söveli ve demir parmaklıdır. Mahalle mescidi tipinde inşa edilen mekan birçok kez onarımdan geçmiş ve en son 1959 yılında onarılmıştır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "mecidiye-camii",
     name: "Mecidiye Camii",
