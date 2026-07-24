@@ -772,7 +772,7 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Fidyekızık Camii"
   }, {
     id: "sitti-hatun",
-    name: "Sitti Hatun Mescidi",
+    name: "Kanberler (Sitti Hatun) Camii",
     district: "Yıldırım",
     address: "Umurbey, Yıldırım/Bursa",
     mapsSearch: "Sitti Hatun Camii"
