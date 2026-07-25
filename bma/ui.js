@@ -15,6 +15,17 @@
       const banner = document.getElementById('mosqueInfoHintBanner');
       if (banner) { banner.classList.add('hidden'); banner.classList.remove('flex'); }
     };
+    window.toggleWhatsNewInfoUpdateDetail = function() {
+      const list = document.getElementById('whatsNewInfoUpdateDetailList');
+      const label = document.getElementById('whatsNewInfoUpdateToggleLabel');
+      const icon = document.getElementById('whatsNewInfoUpdateToggleIcon');
+      if (!list) return;
+      const willShow = list.classList.contains('hidden');
+      list.classList.toggle('hidden');
+      if (label) label.textContent = willShow ? 'Detayları gizle' : 'Detayları gör';
+      if (icon) icon.classList.toggle('fa-chevron-down', !willShow);
+      if (icon) icon.classList.toggle('fa-chevron-up', willShow);
+    };
     window.toggleRemovedMosquesDetail = function() {
       const list = document.getElementById('removedMosquesDetailList');
       const label = document.getElementById('removedMosquesToggleLabel');
@@ -117,6 +128,7 @@
       const desc = recentlyUpdated.length === 1
         ? `Yapılış tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgiler eklendi.`
         : `${escapeHtml(namesPreview)}${escapeHtml(extra)} yapılış tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgileri eklendi.`;
+      const detailItems = recentlyUpdated.map(m => `<li>${escapeHtml(m.name)} — ${escapeHtml(m.district)}</li>`).join('');
 
       el.innerHTML = `
         <div class="flex items-start gap-2.5">
@@ -124,6 +136,12 @@
           <div class="min-w-0">
             <p class="text-[11px] font-bold" style="color:var(--ink);">${escapeHtml(title)}</p>
             <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">${desc}</p>
+            <button onclick="toggleWhatsNewInfoUpdateDetail()" class="text-[10px] font-bold mt-1" style="color:var(--teal-700);">
+              <span id="whatsNewInfoUpdateToggleLabel">Detayları gör</span> <i id="whatsNewInfoUpdateToggleIcon" class="fa-solid fa-chevron-down text-[8px]"></i>
+            </button>
+            <ul id="whatsNewInfoUpdateDetailList" class="hidden mt-1.5 space-y-0.5 text-[10px] leading-snug list-disc pl-4" style="color:var(--ink-soft);">
+              ${detailItems}
+            </ul>
           </div>
         </div>`;
     }
@@ -1710,7 +1728,7 @@
     // tarayıcı/CDN bu tam URL'i daha önce hiç görmediği için önbellek
     // ne kadar agresif olursa olsun mecburen sıfırdan indirir. CACHE_NAME'i
     // sw.js içinde artırdığım her seferde bu SW_REGISTER_VERSION'ı da artıracağım.
-    const SW_REGISTER_VERSION = "v34";
+    const SW_REGISTER_VERSION = "v35";
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register(`sw.js?v=${SW_REGISTER_VERSION}`).then((reg) => {
