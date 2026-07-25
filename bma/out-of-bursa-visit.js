@@ -198,10 +198,122 @@
     window.cancelEditVisit = wrapped;
   }
 
+  // Kart üzerindeki timeline çizgisini (rail) ve alt boşluğunu, bölünmüş
+  // liste içindeki yeni "son eleman" konumuna göre yeniden düzenler.
+  function fixTimelineRail(nodeList) {
+    nodeList.forEach(function (node, i) {
+      var isLast = i === nodeList.length - 1;
+      var rail = node.querySelector('.timeline-rail');
+      if (isLast) {
+        if (rail) rail.remove();
+        node.classList.remove('pb-1');
+      } else {
+        node.classList.add('pb-1');
+        if (!rail) {
+          var railDiv = document.createElement('div');
+          railDiv.className = 'timeline-rail';
+          node.insertBefore(railDiv, node.firstElementChild);
+        }
+      }
+    });
+  }
+
+  // updateHistoryFeedUI, #historyFeed içine visitsData sırasıyla birebir
+  // eşleşen kartları basar. Bu fonksiyon, o kartları arka planda Bursa /
+  // Bursa-dışı olarak ikiye ayırıp Bursa-dışı olanları #outOfBursaFeed'e
+  // taşır; böylece Bursa defteri yalnızca Bursa içi kayıtları gösterir.
+  function reorganizeHistoryFeed() {
+    var feed = document.getElementById('historyFeed');
+    var outWrap = document.getElementById('outOfBursaSectionWrap');
+    var outFeed = document.getElementById('outOfBursaFeed');
+    var totalBadge = document.getElementById('historyTotalCount');
+    var outBadge = document.getElementById('outOfBursaTotalCount');
+    if (!feed || !outFeed) return;
+
+    if (!Array.isArray(visitsData) || visitsData.length === 0) {
+      if (outWrap) outWrap.classList.add('hidden');
+      if (outFeed) outFeed.innerHTML = '';
+      if (outBadge) outBadge.textContent = '0 Kayıt';
+      return;
+    }
+
+    var children = Array.prototype.slice.call(feed.children);
+    var bursaNodes = [];
+    var outNodes = [];
+    children.forEach(function (node, idx) {
+      var v = visitsData[idx];
+      if (v && v.outOfBursa) outNodes.push(node); else bursaNodes.push(node);
+    });
+
+    feed.innerHTML = '';
+    if (bursaNodes.length === 0) {
+      feed.innerHTML =
+        '<div class="paper-card rounded-2xl empty-state">' +
+        '<div class="empty-icon"><i class="fa-solid fa-mosque"></i></div>' +
+        '<p class="text-xs font-semibold" style="color:var(--ink-soft);">Bursa içinde henüz kayıt yok</p>' +
+        '<p class="text-[10px] max-w-[220px]" style="color:var(--ink-faint);">Bursa\'daki bir camide kıldığınız namazı işleyerek başlayın.</p>' +
+        '</div>';
+    } else {
+      bursaNodes.forEach(function (n) { feed.appendChild(n); });
+      fixTimelineRail(bursaNodes);
+    }
+
+    outFeed.innerHTML = '';
+    outNodes.forEach(function (n) { outFeed.appendChild(n); });
+    fixTimelineRail(outNodes);
+
+    if (outWrap) {
+      if (outNodes.length === 0) outWrap.classList.add('hidden');
+      else outWrap.classList.remove('hidden');
+    }
+
+    if (totalBadge) totalBadge.textContent = bursaNodes.length + ' Kayıt';
+    if (outBadge) outBadge.textContent = outNodes.length + ' Kayıt';
+  }
+
+  function wrapUpdateHistoryFeedUI() {
+    var original = window.updateHistoryFeedUI;
+    if (!original || original.__outOfBursaWrapped) return;
+
+    var wrapped = function () {
+      original.apply(this, arguments);
+      reorganizeHistoryFeed();
+    };
+
+    wrapped.__outOfBursaWrapped = true;
+    window.updateHistoryFeedUI = wrapped;
+  }
+
+  // Defter/İstatistik sekmesi değiştirildiğinde Bursa-dışı bölümünün
+  // görünürlüğünü senkron tutar (İstatistik görünümündeyken gizli kalır).
+  function wrapSwitchDefterView() {
+    var original = window.switchDefterView;
+    if (!original || original.__outOfBursaWrapped) return;
+
+    var wrapped = function (view) {
+      original.apply(this, arguments);
+      var outWrap = document.getElementById('outOfBursaSectionWrap');
+      if (!outWrap) return;
+      if (view === 'stats') {
+        outWrap.classList.add('hidden');
+      } else {
+        var outFeed = document.getElementById('outOfBursaFeed');
+        if (outFeed && outFeed.children.length > 0) {
+          outWrap.classList.remove('hidden');
+        }
+      }
+    };
+
+    wrapped.__outOfBursaWrapped = true;
+    window.switchDefterView = wrapped;
+  }
+
   function init() {
     wrapHandleVisitSubmit();
     wrapTriggerEditVisit();
     wrapCancelEditVisit();
+    wrapUpdateHistoryFeedUI();
+    wrapSwitchDefterView();
   }
 
   document.addEventListener('DOMContentLoaded', init);
