@@ -147,7 +147,9 @@ let PRESET_MOSQUES = [{
     name: "Karaşeyh Camii",
     district: "Osmangazi",
     address: "Karaşeyh Mh., Osmangazi/Bursa",
-    mapsSearch: "Karaşeyh Camii Bursa"
+    mapsSearch: "Karaşeyh Camii Bursa",
+    infoUpdatedAt: "2026-07-25",
+    info: "Kara Şeyh Camii: 15. yüzyılda inşa edilen Kara Şeyh Camii'nin kurşun kaplama kubbesi sekizgen kirpi saçaklı bir kasnağa oturur. Yüksek bir kalkan duvarı vardır. Asıl ibadet mekanı kareye yakın ölçülerdedir. Camini son cemaat yeri kemerlerle üç bölüme ayrılmıştır. 1950 lerde kütüphane olarak kullanıldığı kaynaklarda belirtilmektedir. 2000 li yıllarda tamamen onarılmış olup, kuzeyinde sonradan küçük bir avlu oluşturulmuştur. Kaynak: Kazım Baykal, Bursa ve Anıtları, 91."
   }, {
     id: "somuncu-baba-firini",
     name: "Somuncu Baba (Şeyh Hamid Camii ve Ayazma Camii) Camii",
@@ -465,7 +467,9 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Karakadı Mescidi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    infoUpdatedAt: "2026-07-25",
+    info: "Karakadı Camii: Karakadı Mahallesi'nde yer alan cami Fatih Sultan Mehmed döneminde (salt. 1451-1481) Seyyid Hüseyin Hüsameddin Kararakadı tarafından yaptırılmıştır. Ana ibadet mekanı 5.5 x5.5 metre kare planlı olan tek kubbeli bir camidir. Üç gözlü son cemaat yeri, kalkan duvarı ve tuğla minaresiyle tipik bir Bursa camisi olarak tanımlanabilir. Beden duvarları moloz taş ve tuğla ile örülmüştür. 1930'lu yılların sonunda özel mülkiyete geçtikten sonra uzun yıllar depo olarak kullanılmış, binanın kuzeydeki asıl girişi kapatılmış, doğudaki pencere genişletilerek kapıya dönüştürülmüştür. Ayrıca, kuzeydoğusunda bulunan minare yıkılmış, sadece sekizgen kaidesi kalmıştır. Son derece bakımsız bir durumdayken 1980'li yıllarda onarılarak yeniden ibadete açılmıştır. Kaynak: Baykal, Bursa ve Anıtları, 109; Bursa Ansiklopedisi, Cilt 3, 1013; Kaplanoğlu, Bursa Anıtlar Ansiklopedisi, 79-80."
   }, {
     id: "koca-naip-camii",
     name: "Koca Naip Camii",
