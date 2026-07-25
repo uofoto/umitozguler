@@ -217,7 +217,11 @@ let PRESET_MOSQUES = [{
     name: "Nilüfer Hatun (Hıdırlık) Camii",
     district: "Osmangazi",
     address: "Pınarbaşı Meydanı, İvaz Paşa Mh., Osmangazi/Bursa",
-    mapsSearch: "Nilüfer Hatun Hıdırlık Camii Bursa"
+    mapsSearch: "Nilüfer Hatun Hıdırlık Camii Bursa",
+    period: "1569 (I. Murad Hüdavendigar'ın kızı Nilüfer Hatun tarafından yaptırıldı); 1975'te onarıldı",
+    founder: "Nilüfer Hatun (Sultan Murad Hüdavendigar'ın kızı)",
+    infoUpdatedAt: "2026-07-25",
+    info: "Pınarbaşı Meydanı'nda, İvaz Paşa Mahallesi Nilüfer Sokak'tadır. Sultan Murat Hüdavendigar'ın kızı Nilüfer Hatun tarafından 1569 yılında yaptırılmıştır. Ana hatlarıyla dikdörtgen bir plana sahip olan cami, iç ölçüleri 7,00 x 7,00 metre ölçülere sahip ana mekan ile 2,00 x 5,90 metre iç ölçülerindeki bir son cemaat yerinden oluşur. Ana mekanın üstü kubbe ile örtülmüştür. Duvarları bir sıra tuğla, bir sıra moloz taşıyla örülmüştür. Son cemaat yerinin girişinde büyük, tek kemerli bir revak vardır. Dıştan üzeri kiremitle kaplıdır. 1975 yılında onarılıp ibadete açılmıştır. Orijinalinde minaresi olmayıp, bugün metalden küçük bir minareye sahiptir. Kaynak: kulturportali.gov.tr"
   }, {
     id: "yaylacik-camii",
     name: "Yaylacık Camii",
