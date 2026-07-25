@@ -1054,7 +1054,7 @@
               <div class="space-y-1 pr-12">
                 <div class="flex items-center space-x-1.5">
                   <span class="text-[9px] font-bold text-white px-2 py-0.5 rounded font-ledger" style="background:var(--teal-900);">${escapeHtml(v.prayerTime)} Namazı</span>
-                  <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">${escapeHtml(v.district)}</span>
+                  <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">${v.outOfBursa ? '<i class="fa-solid fa-earth-europe" style="margin-right:3px;"></i>' : ''}${escapeHtml(v.district)}</span>
                 </div>
                 <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${escapeHtml(v.mosqueName)}</h3>
                 <p class="text-[10px]" style="color:var(--ink-faint);">${formattedDate} - Saat: ${escapeHtml(v.time) || '--:--'}</p>

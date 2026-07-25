@@ -552,8 +552,25 @@
 
           <form id="visitForm" class="space-y-3.5" onsubmit="handleVisitSubmit(event)">
             <div class="space-y-1">
-              <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Cami / Mescid Seçimi *</label>
-              <select id="formMosqueSelect" class="field w-full rounded-xl px-3 py-2.5 text-xs" onchange="toggleCustomMosqueInput()" required></select>
+              <div class="flex items-center justify-between gap-2">
+                <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Cami / Mescid Seçimi *</label>
+                <button type="button" id="btnToggleOutOfBursa" onclick="toggleOutOfBursaMode()" class="text-[9px] font-bold shrink-0 flex items-center gap-1" style="color:var(--gold-deep);">
+                  <i class="fa-solid fa-earth-europe"></i><span>Bursa Dışında Ziyaret Ettim</span>
+                </button>
+              </div>
+              <div id="mosqueSelectFieldWrap">
+                <select id="formMosqueSelect" class="field w-full rounded-xl px-3 py-2.5 text-xs" onchange="toggleCustomMosqueInput()" required></select>
+              </div>
+            </div>
+
+            <div id="outOfBursaSection" class="hidden space-y-2.5 p-3 rounded-xl" style="background:rgba(21,90,76,0.08); border:1px solid rgba(21,90,76,0.3);">
+              <div class="flex items-center justify-between">
+                <h4 class="text-[10px] font-bold uppercase flex items-center gap-1.5" style="color:var(--teal-800);"><i class="fa-solid fa-earth-europe"></i>Bursa Dışı Tarihi Cami</h4>
+                <button type="button" onclick="toggleOutOfBursaMode(false)" class="text-[9px] font-bold underline underline-offset-2" style="color:var(--ink-faint);">Vazgeç</button>
+              </div>
+              <input id="formOutOfBursaCity" type="text" placeholder="Şehir / İl Adı * (örn. İstanbul)" class="w-full rounded-xl px-3 py-2 text-xs" style="border:1px solid var(--line); background:var(--paper-card); color:var(--ink);">
+              <input id="formOutOfBursaName" type="text" placeholder="Cami veya Mescid Adı *" class="w-full rounded-xl px-3 py-2 text-xs" style="border:1px solid var(--line); background:var(--paper-card); color:var(--ink);">
+              <p class="text-[9px]" style="color:var(--ink-faint);">Namaz vakti, adres/konum, tarih-saat, notlar ve fotoğraf alanlarını aşağıdan aynı şekilde doldurabilirsiniz.</p>
             </div>
 
             <div id="customMosqueSection" class="hidden space-y-2.5 p-3 rounded-xl" style="background:rgba(195,154,69,0.08); border:1px solid rgba(195,154,69,0.3);">
@@ -1459,6 +1476,7 @@
   <script src="backup.js"></script>
   <script src="ui.js"></script>
   <script src="mosque-select-search.js"></script>
+  <script src="out-of-bursa-visit.js"></script>
   <script>
     // === PWA Kurulum Takip & Mantığı ===
     let deferredPrompt;
