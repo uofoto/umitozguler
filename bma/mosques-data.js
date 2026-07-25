@@ -131,7 +131,11 @@ let PRESET_MOSQUES = [{
     name: "Hoca Alizade Camii",
     district: "Osmangazi",
     address: "Hocaalizade, Hocaalizade Cd., Osmangazi/Bursa",
-    mapsSearch: "Hoca Alizade Camii Bursa"
+    mapsSearch: "Hoca Alizade Camii Bursa",
+    period: "1439 (tahmini)",
+    founder: "Hoca b. Ömer ve Hoca Ali oğlu Hoca Ahmet (tüccar kardeşler)",
+    infoUpdatedAt: "2026-07-25",
+    info: "Hocaalizade Mahallesi Alioğlu Sokak'ta bulunmaktadır. Bahçesinde bulunan mezar taşlarındaki yazıtlara göre, 1439 yılında Hoca b. Ömer ile Hoca Ali oğlu Hoca Ahmet adlı tüccar kardeşlerin yaptırdığı sanılmaktadır. 9,00 x 9,00 metre iç ölçülerine sahip olan caminin asıl ibadet yeri büyük kubbe ile örtülmüştür. 1955 yılında orijinaline uygun olarak onartılmıştır. Özgün hali ile günümüze kadar ulaşan camide duvar yazıları, kalem işleri, yağlı boya pencere kemerleri ve kubbe süsleri bulunmaktadır. On sekiz pencere ile aydınlatılmaktadır. Bahçesinin dış kapı bitişiğinde bir tarihi çeşme bulunmaktadır. Minaresi tek şerefeli olup, sekizgen kaideli, üst kısmında sekiz adet sivri kemerli kitabeliği vardır. Küpün bir dilimi mermer bir dilimi tuğladır. Gövdesi tuğla ile örülü ve kesme taş külahlıdır. Kaynak: kulturportali.gov.tr"
   }, {
     id: "veled-i-sarban",
     name: "Veled-i Sarban Camii",
