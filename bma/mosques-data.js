@@ -1271,7 +1271,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Hoca Hasan Mah., Hoca Hasan Sok., Osmangazi/Bursa",
     mapsSearch: "Hoca Hasan Camii Bursa",
-    addedAt: "2026-07-21"
+    addedAt: "2026-07-21",
+    period: "1575 (Pir Gayyib oğlu Hoca Hasan tarafından); 1855 depreminde yıkıldı, 1904'te yeniden yapıldı",
+    founder: "Pir Gayyib oğlu Hoca Hasan",
+    infoUpdatedAt: "2026-07-25",
+    info: "Çatalfırın ile Ahmet Paşa Mahalleleri arasındaki Hoca Hasan Mahallesi'ndedir. Mahalleye adını veren bir camidir. Kapısının üzerindeki iki satırlık Arapça kitabede, 1575 yılında Pir Gayyib oğlu Hoca Hasan tarafından yaptırıldığı belirtilmiştir. 235 m2 iç alana sahip olan cami, kırma çatı ile örtülmüştür. 1855 depreminde tamamıyla yıkılmış olan cami, 1904 yılında yeniden yapılmıştır. Duvarları taş ve tuğla ile örülmüştür. Son kez 1955 yılında onarılmıştır. Yapının yanında camiyi yaptıran Pir Gayyib'in mezarı bulunmaktadır. Son yıllarda yapılan onarımlarla içi bozulmuş, duvarları sıvanmıştır. Doğusunda yeni bir ek bölüm yapılmıştır. Silindirik gövdeli, tek şerefeli, sivri külahlı bir minaresi bulunmaktadır. Kaynak: kulturportali.gov.tr"
   }, {
     id: "ismail-hakki-tekke-camii",
     name: "İsmail Hakkı Tekke Camii",
