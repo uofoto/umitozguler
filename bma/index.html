@@ -180,6 +180,23 @@
           </div>
         </div>
 
+        <!-- DEPOLAMA SAĞLIĞI UYARISI: gizli sekme / düşük kota / kalıcı olmayan
+             depolama tespit edildiğinde storage-health.js tarafından gösterilir. -->
+        <div id="storageHealthBanner" class="hidden paper-card rounded-2xl p-3.5 fade-in-up" style="border:1px solid rgba(168,86,49,0.4); background:rgba(168,86,49,0.08);">
+          <div class="flex items-start gap-2.5">
+            <div class="settings-icon flex-shrink-0" style="background:rgba(168,86,49,0.16); color:var(--brick);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[11px] font-bold" style="color:var(--ink);">Bu cihazda depolama alanı risk altında</p>
+              <p id="storageHealthBannerText" class="text-[9.5px] mt-0.5 leading-relaxed" style="color:var(--ink-soft);">Kontrol ediliyor...</p>
+              <div class="flex items-center gap-2 mt-2">
+                <button onclick="exportBackup()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg text-white flex-shrink-0" style="background:var(--teal-900);">Şimdi Yedekle</button>
+                <button onclick="dismissStorageHealthBanner()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex-shrink-0" style="background:var(--paper-deep); color:var(--ink-soft);">Anladım</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <div class="hero-panel text-white rounded-3xl p-5 relative overflow-hidden pop-in">
           <svg class="arch-watermark" width="130" height="130" viewBox="0 0 100 100" fill="none" style="pointer-events:none;">
             <path d="M20 90 V45 A30 30 0 0 1 80 45 V90" stroke="#E7D4A0" stroke-width="2"/>
@@ -802,6 +819,16 @@
               </div>
             </div>
             <div id="hapticToggle" class="toggle-switch on" onclick="toggleHaptics()"><div class="knob"></div></div>
+          </div>
+
+          <div class="settings-row" style="border-top:1px solid var(--line);">
+            <div class="flex items-center space-x-2.5">
+              <div class="settings-icon" id="storageHealthIcon" style="background:rgba(21,90,76,0.1); color:var(--teal-900);"><i class="fa-solid fa-hard-drive"></i></div>
+              <div>
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Depolama Durumu</p>
+                <p id="storageHealthInfo" class="text-[9.5px] font-bold mt-0.5" style="color:var(--ink-faint);">Kontrol ediliyor...</p>
+              </div>
+            </div>
           </div>
 
           <div class="settings-row" style="border-top:1px solid var(--line);">
@@ -1489,6 +1516,7 @@
   <script src="ui.js"></script>
   <script src="mosque-select-search.js"></script>
   <script src="out-of-bursa-visit.js"></script>
+  <script src="storage-health.js"></script>
   <script>
     // === PWA Kurulum Takip & Mantığı ===
     let deferredPrompt;

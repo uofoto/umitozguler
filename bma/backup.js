@@ -46,13 +46,16 @@
 
     // === YEDEKLEME: DIŞA / İÇE AKTARMA ===
     // Yedek şeması sürüm bilgisi ("version") exportBackup() içindeki payload
-    // ile birebir aynı tutulmalı. İleride şema değişirse (örn. "7.0"), yeni
-    // sürümü SUPPORTED_BACKUP_VERSIONS listesine ekleyin ve gerekiyorsa
-    // migrateImportedVisits() içine eski->yeni dönüşüm mantığını yazın;
-    // importBackup'ın geri kalanına dokunmanız gerekmez.
+    // ile birebir aynı tutulmalı. İleride şema değişirse (örn. "7.0"):
+    //   1) CURRENT_BACKUP_VERSION'ı "7.0" yapın ve exportBackup() içindeki
+    //      version alanını da güncelleyin.
+    //   2) MIGRATIONS nesnesine "6.0": { to: "7.0", migrate: fn } girişini
+    //      ekleyin (bkz. MIGRATIONS tanımının hemen üstündeki örnek).
+    // Zincirleme motor (buildMigrationChain / migrateImportedVisits) eski
+    // sürümleri otomatik olarak adım adım günceller; importBackup'ın geri
+    // kalanına dokunmanız gerekmez.
     const BACKUP_APP_NAME = "Bursa Manevi Atlası";
     const CURRENT_BACKUP_VERSION = "6.0";
-    const SUPPORTED_BACKUP_VERSIONS = ["6.0"];
     function compareBackupVersions(a, b) {
       const pa = String(a).split('.').map(Number);
       const pb = String(b).split('.').map(Number);
@@ -61,6 +64,70 @@
         if (diff !== 0) return diff;
       }
       return 0;
+    }
+
+    // === ZİNCİRLEME SÜRÜM MİGRASYON MOTORU (Chain Migration Engine) ===
+    // Her giriş, BİR sürümden BİR SONRAKİ sürüme dönüşümü tanımlar.
+    // Yeni bir şema alanı eklendiğinde (örn. koordinat, etiket, sesli not),
+    // buraya yeni bir "kaynak sürüm: { to, migrate }" girişi eklemeniz yeterli;
+    // mevcut adımlara veya motorun geri kalanına dokunmanız gerekmez.
+    //
+    // Örnek — v6.0'dan v7.0'a geçiş eklerken:
+    // "6.0": {
+    //   to: "7.0",
+    //   migrate: (visits, payload) => visits.map(v => ({
+    //     ...v,
+    //     coords: v.coords || null,            // camiye koordinat
+    //     tags: v.tags || [],                  // özel etiketler
+    //     voiceNoteUrl: v.voiceNoteUrl || null  // sesli not
+    //   }))
+    // },
+    const MIGRATIONS = {
+      "4.0": {
+        to: "5.0",
+        migrate: (visits) => visits.map(v => ({
+          ...v,
+          namazTuru: v.namazTuru || "bilinmiyor"
+        }))
+      },
+      "5.0": {
+        to: "6.0",
+        migrate: (visits) => visits.map(v => ({
+          ...v,
+          note: v.note || ""
+        }))
+      }
+    };
+    // Çok eski, "version" alanı hiç olmayan ham dizi yedekleri (bkz. validateBackupPayload
+    // içindeki legacy=true durumu) bu sürümden geliyormuş gibi kabul edilir.
+    const LEGACY_BACKUP_VERSION = "4.0";
+    // Verilen kaynak sürümden CURRENT_BACKUP_VERSION'a kadar adım adım zinciri kurar.
+    // Yol bulunamazsa (kırık zincir) null, döngü tespit edilirse hata döner.
+    function buildMigrationChain(fromVersion) {
+      const chain = [];
+      let cursor = fromVersion;
+      const seen = new Set();
+      while (cursor !== CURRENT_BACKUP_VERSION) {
+        if (seen.has(cursor)) {
+          throw new Error(`Migration zincirinde döngü tespit edildi: ${cursor}`);
+        }
+        seen.add(cursor);
+        const step = MIGRATIONS[cursor];
+        if (!step) return null;
+        chain.push(step);
+        cursor = step.to;
+      }
+      return chain;
+    }
+    // Bir sürümden mevcut sürüme zincirleme bir yol olup olmadığını bildirir.
+    // validateBackupPayload, "desteklenen sürümler" kontrolü için bunu kullanır.
+    function isVersionMigratable(version) {
+      if (!version || version === CURRENT_BACKUP_VERSION) return true;
+      try {
+        return buildMigrationChain(version) !== null;
+      } catch (e) {
+        return false;
+      }
     }
     // Eski dosyalar da geri yüklenebilsin diye üç durumu ayrı ayrı ele alır:
     //  1) Çok eski format: sadece ham bir dizi (app/version alanı hiç yok) — kabul edilir.
@@ -76,14 +143,22 @@
       if (data.app && data.app !== BACKUP_APP_NAME) {
         return { ok: false, reason: "Bu dosya Bursa Manevi Atlası yedeği değil." };
       }
-      if (data.version && !SUPPORTED_BACKUP_VERSIONS.includes(data.version)) {
+      if (data.version && data.version !== CURRENT_BACKUP_VERSION) {
         const isNewer = compareBackupVersions(data.version, CURRENT_BACKUP_VERSION) > 0;
-        return {
-          ok: false,
-          reason: isNewer
-            ? `Bu yedek, uygulamanın daha yeni bir sürümüyle (v${data.version}) oluşturulmuş. Lütfen önce uygulamayı güncelleyin.`
-            : `Bu yedek dosyası desteklenmeyen bir sürüme (v${data.version}) ait.`
-        };
+        if (isNewer) {
+          return {
+            ok: false,
+            reason: `Bu yedek, uygulamanın daha yeni bir sürümüyle (v${data.version}) oluşturulmuş. Lütfen önce uygulamayı güncelleyin.`
+          };
+        }
+        if (!isVersionMigratable(data.version)) {
+          return {
+            ok: false,
+            reason: `Bu yedek dosyası (v${data.version}) artık desteklenmiyor.`
+          };
+        }
+        // Migrasyon yolu mevcut — geri kalan işlem importBackup içindeki
+        // migrateImportedVisits() tarafından zincirleme uygulanacak.
       }
       const visits = Array.isArray(data.visits) ? data.visits : (Array.isArray(data) ? data : null);
       if (!visits) {
@@ -91,9 +166,24 @@
       }
       return { ok: true, visits, version: data.version || null, customMosques: data.customMosques };
     }
-    // Sürümler arası veri taşıma gerekiyorsa buraya eklenir (şu an no-op).
-    function migrateImportedVisits(visits, fromVersion) {
-      return visits;
+    // Sürümler arası veri taşıma: fromVersion'dan CURRENT_BACKUP_VERSION'a kadar
+    // MIGRATIONS zincirini sırayla uygular. fromVersion boşsa (legacy ham dizi
+    // yedek) LEGACY_BACKUP_VERSION'dan başlatılır. Yol bulunamazsa hata fırlatır
+    // — sessizce eksik/bozuk veri içe aktarılmasın diye.
+    function migrateImportedVisits(visits, fromVersion, payload) {
+      const startVersion = fromVersion || LEGACY_BACKUP_VERSION;
+      if (startVersion === CURRENT_BACKUP_VERSION) return visits;
+
+      const chain = buildMigrationChain(startVersion);
+      if (!chain) {
+        throw new Error(`v${startVersion} sürümünden v${CURRENT_BACKUP_VERSION}'a geçiş yolu bulunamadı.`);
+      }
+
+      let migrated = visits;
+      for (const step of chain) {
+        migrated = step.migrate(migrated, payload);
+      }
+      return migrated;
     }
     window.exportBackup = function() {
       try {
@@ -139,7 +229,14 @@
             input.value = '';
             return;
           }
-          const importedVisits = migrateImportedVisits(validation.visits, validation.version);
+          let importedVisits;
+          try {
+            importedVisits = migrateImportedVisits(validation.visits, validation.version, data);
+          } catch (migErr) {
+            showToast(migErr.message, "error");
+            input.value = '';
+            return;
+          }
 
           if (Array.isArray(validation.customMosques)) {
             const existingMosqueIds = new Set(PRESET_MOSQUES.map(m => m.id));
