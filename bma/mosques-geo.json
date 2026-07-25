@@ -1,0 +1,4 @@
+{
+  "_note": "Bu dosya tools/generate-mosques-geo.js betiği ile üretilir/güncellenir. Elle düzenlemeyin — betiği tekrar çalıştırdığınızda üzerine yazılır. Format: { \"<mosque-id>\": { \"lat\": 40.1826, \"lng\": 29.0658 } }"
+}
+

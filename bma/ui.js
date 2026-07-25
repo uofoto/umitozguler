@@ -925,6 +925,10 @@
       loadFavorites();
       loadRatings();
       loadGeocodeCache();
+      // Harita modalı henüz açılmadan, statik koordinat matrisini (mosques-geo.json)
+      // arka planda ön-yükle. Kullanıcı haritayı ilk kez açtığında bu istek
+      // büyük ihtimalle zaten tamamlanmış olur → sıfır gecikmeyle açılış.
+      if (typeof prefetchMosqueGeoMatrix === 'function') prefetchMosqueGeoMatrix();
       // Sayfa yenilendiğinde tarayıcının eski arama kutusu değerini geri getirmesini
       // (form restore) önlemek için arama kutusunu ve filtreyi başlangıç durumuna sıfırla
       const __searchInputOnInit = document.getElementById('mosqueSearchInput');

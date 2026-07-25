@@ -20,11 +20,45 @@
     function saveGeocodeCache() {
       try { localStorage.setItem(GEOCODE_CACHE_KEY, JSON.stringify(mosqueGeocodeCache)); } catch (e) {}
     }
+
+    // === STATİK KOORDİNAT MATRİSİ (mosques-geo.json) ===
+    // Preset camilerin koordinatları, tools/generate-mosques-geo.js betiği ile
+    // derleme aşamasında (build time) bir kerelik üretilip mosques-geo.json'a
+    // gömülür. Uygulama açılışta bu dosyayı okur; Nominatim, SADECE bu dosyada
+    // bulunmayan camiler için (yani kullanıcının sonradan eklediği özel
+    // camiler için) devreye girer. Böylece ilk harita açılışında yüzlerce
+    // sıralı API isteği beklemek gerekmez.
+    const MOSQUE_GEO_STATIC_URL = './mosques-geo.json';
+    let staticGeoMatrixPromise = null;
+    function loadStaticGeoMatrix() {
+      if (staticGeoMatrixPromise) return staticGeoMatrixPromise;
+      staticGeoMatrixPromise = fetch(MOSQUE_GEO_STATIC_URL, { cache: 'force-cache' })
+        .then(res => (res && res.ok) ? res.json() : {})
+        .then(staticData => {
+          if (staticData && typeof staticData === 'object') {
+            // Statik matris TABAN alınır; localStorage cache'inde zaten var olan
+            // girdiler (örn. daha önce geocode edilmiş özel camiler ya da
+            // kullanıcı tarafında elle düzeltilmiş bir kayıt) bunun üzerine
+            // yazılır ki mevcut veriler ezilmesin.
+            mosqueGeocodeCache = { ...staticData, ...mosqueGeocodeCache };
+          }
+        })
+        .catch(() => { /* dosya yoksa/bozuksa sessizce geç — Nominatim yedeği zaten devrede */ });
+      return staticGeoMatrixPromise;
+    }
+    // Uygulama açılışında (initApp içinde) tetiklenir; harita modalı henüz
+    // açılmadan istek arka planda tamamlanmış olur, açılış anında beklenmez.
+    window.prefetchMosqueGeoMatrix = loadStaticGeoMatrix;
+
     window.openMapModal = function() {
       document.getElementById('mapModal').classList.remove('hidden');
-      setTimeout(() => {
+      setTimeout(async () => {
         initMosqueMap();
         if (leafletMapInstance) leafletMapInstance.invalidateSize();
+        // initApp içinde önceden başlatılmışsa bu await anlık döner (zaten
+        // önbelleğe alınmıştır); ilk kez burada tetikleniyorsa haritayı
+        // açmadan önce statik matrisin gelmesini bekler.
+        await loadStaticGeoMatrix();
         renderMosqueMapMarkers();
         startGeocodingQueue();
       }, 50);
