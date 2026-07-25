@@ -1,7 +1,9 @@
 // Bursa Manevi Atlası — Service Worker (v4)
-// Sayfa kabuğu (HTML) için "ağ öncelikli" strateji kullanılır: internet varsa
-// her zaman en güncel sürüm indirilir; yoksa önbellekteki son sürüm açılır.
-// Statik dosyalar (ikonlar, manifest, CDN kütüphaneleri) için "önbellek
+// Sayfa kabuğu (HTML) VE kod dosyaları (JS/CSS) için "ağ öncelikli" strateji
+// kullanılır: internet varsa her zaman en güncel sürüm indirilir; yoksa
+// önbellekteki son sürüm açılır. Bu sayede CACHE_NAME artırılmayı unutulsa
+// bile kullanıcılar hep güncel kodu görür.
+// Statik-değişmeyen dosyalar (ikonlar, manifest) için "önbellek
 // öncelikli" çalışır: bir kez indirildikten sonra tekrar tekrar ağa gitmez,
 // bu da çevrimdışı erişimi mümkün kılar.
 // Canlı veri servisleri (hava durumu, namaz vakitleri, konum arama) SW
@@ -14,7 +16,7 @@
 // saklanır; bu servis çalışanı yalnızca uygulamanın açılış hızını ve çevrimdışı
 // erişimini yönetir.
 
-const CACHE_NAME = "bursa-manevi-atlas-v26";
+const CACHE_NAME = "bursa-manevi-atlas-v27";
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
@@ -93,7 +95,13 @@ self.addEventListener("fetch", (event) => {
 
   const isNavigation = event.request.mode === "navigate" || event.request.destination === "document";
 
-  if (isNavigation) {
+  // KOD DOSYALARI (JS/CSS): Bunlar sık değişir ve önbellek öncelikli olduklarında
+  // (CACHE_NAME artırılmayı unutulursa) eski sürüm sonsuza dek takılı kalır.
+  // Bu yüzden HTML'de olduğu gibi "ağ öncelikli" çalışırlar: internet varsa
+  // her zaman güncel dosya indirilir; yoksa önbellekteki son sürüm kullanılır.
+  const isCodeAsset = /\.(js|css)(\?|$)/.test(event.request.url);
+
+  if (isNavigation || isCodeAsset) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
@@ -102,7 +110,7 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() =>
-          caches.match(event.request).then((cached) => cached || caches.match("./index.html"))
+          caches.match(event.request).then((cached) => cached || (isNavigation ? caches.match("./index.html") : undefined))
         )
     );
     return;
