@@ -445,9 +445,13 @@ let PRESET_MOSQUES = [{
     id: "i-zzuddin",
     name: "İzzuddin (Pınarbaşı) Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
+    address: "Pınarbaşı Mh., Osmangazi/Bursa",
     mapsSearch: "İzzuddin Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "1405",
+    founder: "İzzeddin Bey (Doğan Bey'in kardeşi)",
+    infoUpdatedAt: "2026-07-25",
+    info: "Pınarbaşı Mahallesi'nde, I. Murat'ın kızı Nilüfer Hatun'un vakıf arazisi üzerine İzzeddin Bey tarafından yaptırılmıştır. Kaynaklarda caminin 1405 yılında yapılmış olduğu belirtilir. Caminin beden duvarları moloz taş örgülü, üst kısmı çatılı ve kiremitle örtülüdür. Yapılan tamirler sonucu mimari özelliği yitirmiş, şekli bozulmuştur. Sade bir minbere sahip olan cami, ibadete açık durumdadır. Ahşap minaresi yıkılmış, yerine 1960 yılında Hüdavendigar Cami minaresinin benzeri yapılmıştır. İzzettin Bey; Hüdavendigar'ın kızı Nilüfer Hatun'un emirlerinden Doğan Bey'in kardeşidir. Kaynak: kulturportali.gov.tr"
   }, {
     id: "kademeri",
     name: "Kademeri (Çukur) Camii",
