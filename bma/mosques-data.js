@@ -430,9 +430,13 @@ let PRESET_MOSQUES = [{
     id: "i-sa-bey-fenari",
     name: "İsa Bey Fenari (Güdük Minare) Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
+    address: "Alaaddin Mh., Osmangazi/Bursa",
     mapsSearch: "İsa Bey Fenari Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "15. yüzyıl",
+    founder: "İsa Bey (Molla Fenari'nin torunu)",
+    infoUpdatedAt: "2026-07-25",
+    info: "Alaaddin Mahallesindeki cami, 15. yüzyılda Molla Fenari'nin torunu İsa Bey tarafından yaptırılmıştır. Cami 8,13 x 8,13 metre iç ölçülerinde, kare planlı olup, prizmatik üçgenler (badem) üzerine oturan bir kubbe ile örtülüdür. Kare planlı ana mekanın üstünü örten kubbe dıştan sekizgen kasnaklı, içten prizmatik üçgenlerden oluşan bir kuşak üzerine oturmaktadır. Prizmatik üçgen kuşağın üzerinde bir sıra zikzak motifi yer almaktadır. Yapının dört ana yönünde yer alan sekiz adet alt sıra pencere ile içerinin aydınlığı sağlanmıştır. Dikdörtgen çerçeveli ve demir parmaklıklı pencerelerin onarımlar sonucu sivri kemer alınlıkları doldurularak sıvanmış, asıl formunu kaybetmiştir. Son cemaat yerinin Doğu-batı yan duvarları ile kuzey yönündeki iki taş kaidesi günümüz kadar gelebilmiştir. Sütunlar, kemerler ve üst örtüsü yıkılmış, yerine basit tarzda kiremitli bir çatı yapılmıştır. Mihrabın mukarnasları kırılarak sivri kemerli bir niş haline getirilmiştir. Duvarlar kesme taş örgülüdür. Yapıdan ayrı ve yapının Kuzeydoğu yönünde minaresi yer almaktadır. Kısa gövdeli oluşundan dolayı camiye 'Güdük Minare' adı verilmiştir. Kaynak: kulturportali.gov.tr"
   }, {
     id: "i-zzuddin",
     name: "İzzuddin (Pınarbaşı) Camii",
