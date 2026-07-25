@@ -75,7 +75,9 @@ let PRESET_MOSQUES = [{
     name: "Kavaklı Camii",
     district: "Osmangazi",
     address: "Kavaklı, Kavaklı Cd., Osmangazi/Bursa",
-    mapsSearch: "Kavaklı Camii Bursa"
+    mapsSearch: "Kavaklı Camii Bursa",
+    infoUpdatedAt: "2026-07-25",
+    info: "Kavaklı Caddesi No: 19'da yer alan cami, Sultan Hüdavendiğar devrinde Bursa Kadısı Koca Naib tarafından yaptırılmıştır. Cami, içte 8,75 x 8,80 metre ebadında olup üçgen kuşak üzerine oturan tek kubbe ile örtülüdür. Mihrab sade ve üç köşelidir, 0,33 metre derinliğinde tepesi sivri kemerle son bulmaktadır. Kuzey duvarı tuğla ve tuğla hatıllı kefeki taşla örülmüştür. Kubbe dıştan kurşunla kaplıdır. Daha önce ahşap minareli iken 1890 yılında bugünkü halinde inşa edilmiştir. Kuzeybatı köşesinde, caminin beden duvarı üzerinde yükselmektedir. Silindirik tuğla gövdeden sonra stalaktitli şerefeye sahiptir. Cami çeşitli yerlerde kırk yıl kadılık etmiş, Yıldırım için Germiyanoğlu'nun kızını almaya giden heyetin başkanlığını yapan, meşhur Bursa Kadısı tarafından yaptırılmıştır. Bu zat Koca Efendi, Kadı Efendi, Koca Naib adları ile de anılmaktadır. Uzun ömürlü olması nedeniyle (Koca) sıfatını kazanmıştır. 1329 yılında Kadıasker olmuş, 1372 yılında vefat etmiştir. Mezarı Bursa Mevlevihanesi karşısında iken, bugün mevcut değildir. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
     id: "alacahirka-camii",
     name: "Alacahırka Camii",
