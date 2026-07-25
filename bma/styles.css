@@ -159,6 +159,81 @@
       animation:shimmer 3.6s ease-in-out infinite;
     }
 
+    /* ---- Aranabilir & İlçe Renkli Cami Seçim Kutusu ---- */
+    .mosque-native-select-hidden{
+      position:absolute; opacity:0; width:1px; height:1px; overflow:hidden;
+      pointer-events:none;
+    }
+    .mosque-select-wrap{ position:relative; }
+    .mosque-select-trigger{
+      display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+      text-align:left; cursor:pointer;
+    }
+    .mosque-select-trigger-label{
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ink);
+    }
+    .mosque-select-trigger-label.mosque-select-placeholder{ color:var(--ink-faint); }
+    .mosque-select-trigger-icon{
+      font-size:10px; color:var(--ink-faint); flex-shrink:0; transition:transform .18s ease;
+    }
+    .mosque-select-trigger.open .mosque-select-trigger-icon{ transform:rotate(180deg); }
+
+    .mosque-select-panel{
+      position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:60;
+      background:var(--paper-card); border:1px solid var(--line); border-radius:14px;
+      box-shadow:0 14px 34px -12px var(--shadow-ambient), 0 2px 6px rgba(8,43,37,0.15);
+      overflow:hidden;
+      animation:fade-in-up .18s ease both;
+    }
+    .mosque-select-search-box{
+      display:flex; align-items:center; gap:.5rem; padding:.6rem .75rem;
+      border-bottom:1px solid var(--line); background:var(--paper-deep);
+    }
+    .mosque-select-search-box i{ color:var(--ink-faint); font-size:11px; }
+    .mosque-select-search-input{
+      flex:1; min-width:0; border:none; outline:none; background:transparent;
+      color:var(--ink); font-size:12px; font-family:'Manrope', sans-serif;
+    }
+    .mosque-select-search-input::placeholder{ color:var(--ink-faint); }
+
+    .mosque-select-results{ max-height:280px; overflow-y:auto; padding:.35rem; }
+    .mosque-select-group{ margin-bottom:.25rem; }
+    .mosque-select-group-label{
+      display:flex; align-items:center; gap:.4rem; padding:.4rem .5rem .25rem;
+      font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
+      color:var(--district-color, var(--ink-faint));
+      position:sticky; top:0; background:var(--paper-card); z-index:1;
+    }
+    .mosque-select-group-dot{
+      width:7px; height:7px; border-radius:50%; flex-shrink:0;
+      background:var(--district-color, var(--ink-faint));
+    }
+    .mosque-select-group-count{ color:var(--ink-faint); font-weight:600; text-transform:none; letter-spacing:0; }
+
+    .mosque-select-option{
+      display:flex; align-items:center; gap:.5rem; padding:.5rem .6rem .5rem 1.4rem;
+      font-size:12px; color:var(--ink); border-radius:9px; cursor:pointer;
+      border-left:2px solid transparent; transition:background-color .12s ease;
+    }
+    .mosque-select-option:hover, .mosque-select-option:active{
+      background:var(--paper-deep);
+      border-left-color:var(--district-color, var(--gold-deep));
+    }
+    .mosque-select-option-dot{
+      width:5px; height:5px; border-radius:50%; flex-shrink:0;
+      background:var(--district-color, var(--ink-faint)); opacity:.75;
+    }
+
+    .mosque-select-custom-group{ border-top:1px solid var(--line); margin-top:.25rem; padding-top:.25rem; }
+    .mosque-select-custom-option{
+      color:var(--gold-deep); font-weight:700; padding-left:.6rem;
+    }
+    .mosque-select-custom-option i{ font-size:10px; }
+
+    .mosque-select-empty{
+      padding:1rem .75rem; text-align:center; font-size:11px; color:var(--ink-faint);
+    }
+
     ::-webkit-scrollbar{ display:none; }
 
     @keyframes spin-slow{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
