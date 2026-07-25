@@ -478,7 +478,9 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Koca Naip Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    infoUpdatedAt: "2026-07-25",
+    info: "15. yüzyılda Koca Nâib lakaplı Mahmud Efendi tarafından yaptırılmıştır. Cami, tek kubbeli asıl ibadet mekânı ve kuzey yönündeki son cemaat yeri olmak üzere iki kısımdan meydana gelmektedir. Asıl ibadet mekânı kare plana sahiptir. Son cemaat yerinde kalkan duvar uygulaması ilk defa bu yapıda ortaya çıkmaktadır. Bursa kemeri gibi bu kalkan duvar da Bursa'nın Osmanlı mimarisine kazandırdığı bir mimari öğedir. Cami, 2005 yılında aslına uygun olarak onarılmıştır. Kaynak: https://kulturenvanteri.com/"
   }, {
     id: "konevi",
     name: "Konevi (Şeyh Konevi) Camii",
