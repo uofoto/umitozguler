@@ -215,7 +215,11 @@ let PRESET_MOSQUES = [{
     name: "İmaret-i İsabey Camii",
     district: "Osmangazi",
     address: "Alaaddin Mh., Kale içi, Osmangazi/Bursa",
-    mapsSearch: "İmaret-i İsabey Camii Bursa"
+    mapsSearch: "İmaret-i İsabey Camii Bursa",
+    period: "1436 (II. Murad devrinde)",
+    founder: "İsa Bey (Çelebi Mehmed'in Baş Veziri Bayezıd Paşa'nın oğlu)",
+    infoUpdatedAt: "2026-07-25",
+    info: "Kale içinde, Devlet Hastanesinin önünde yer almaktadır. Çelebi Mehmet'in Baş Veziri Bayezıd Paşa'nın oğlu İsa Bey tarafından, 1436 yılında, II. Murat devrinde yaptırılmıştır. Bursa mescitlerinin içinde ölçü olarak en küçüklerindendir. Caminin iç alanı 6,40 x 6,40 metre ölçüsündedir. Beden duvarlarından kubbeye geçiş baklavalı bir kuşakla sağlanmıştır. Sekizgen kasnakta üç pencere yer alır. Son cemaat mahalli yol yapımı sırasında çapraz bir şekilde kesilmiş, yalnız minare tarafından yan duvarlar kalmış, kalan kısmın bir bölümü ahşaptan oda haline getirilmiştir. Mescit iki sıra tuğla, bir sıra moloz taş ile örülmüştür. Mihrabı sade çerçeveli, dört sıra mukarnaslı bir yaşmağa sahiptir. Sekizgen minare kaidesinden, üçgen yüzeylerle silindirik gövdeye geçilmiş, şerefe altında dört sıra kirpi saçak dizisi ile kademelendirilmiştir. Kaynak: kulturportali.gov.tr"
   }, {
     id: "nilufer-hidirlik",
     name: "Nilüfer Hatun (Hıdırlık) Camii",
