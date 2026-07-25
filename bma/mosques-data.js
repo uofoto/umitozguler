@@ -12,7 +12,7 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Bursa Ulu Cami"
   }, {
     id: "orhan-gazi",
-    name: "Orhan Gazi Camii",
+    name: "Orhan Camii",
     district: "Osmangazi",
     address: "Nalbantoğlu, Tarihi Çarşı, Osmangazi/Bursa",
     mapsSearch: "Orhan Gazi Camii Bursa"
