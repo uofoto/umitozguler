@@ -201,7 +201,8 @@ let PRESET_MOSQUES = [{
     name: "Hamzabey Camii",
     district: "Osmangazi",
     address: "Hamzabey Mh., Osmangazi/Bursa",
-    mapsSearch: "Hamzabey Camii Bursa"
+    mapsSearch: "Hamzabey Camii Bursa",
+    info: "Fatih Sultan Mehmed döneminde (1451-1481) Bursa'da inşa edilmiş mescitlerin en büyüğü olup, Hamzabey Külliyesi'nin ana yapısıdır. Külliyenin Bayezid Paşa (I. Mehmet ve II. Murat'ın Veziri)'nin kardeşi olduğu bilinen 'İzmir Fatihi' lakaplı Hamza Bey tarafından yaptırıldığı bilinmektedir. Cami, medrese, imaret ve beş türbeden oluşan külliyeden günümüze cami ile üç türbe ulaşmıştır. Caminin giriş kapısı üzerindeki kitabe 1874 yılına ait olan tamir kitabesidir. Mescit, 1614'te Kazasker Muallimzade Ahmet Efendi tarafından minber ilavesiyle camiye çevrilmiştir. Yapı, zaviyeli (Tabhaneli) camiler grubuna girer. Hamza Bey Külliyesi bahçesinde, Hamza Bey, eşi ve kızları ile torunu Kara Mustafa Paşa'ya ait üç türbe bulunmaktadır. Kaynak: bursa.com"
   }, {
     id: "imaret-isabey",
     name: "İmaret-i İsabey Camii",
