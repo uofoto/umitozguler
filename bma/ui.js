@@ -962,8 +962,39 @@
       updateRecentlyAddedMosquesUI();
       updateFavoriteMosquesUI();
       updateStatsUI();
+      updateHeroBadgeUI();
       if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
       if (typeof maybeShowBackupReminder === 'function') maybeShowBackupReminder();
+    }
+    // ANA SAYFADA, İSMİN YANINDA GÖSTERİLEN BAŞARI ROZETİ
+    // "Başarı Rozetleri" kartındaki eşiklerle (10 / 25 / 50 / Tümü) birebir
+    // aynı mantığı kullanır: kaç FARKLI cami ziyaret edildiğine bakar ve
+    // ulaşılan en yüksek rozeti isim yanında küçük bir ikon olarak gösterir.
+    function updateHeroBadgeUI() {
+      const el = document.getElementById('heroBadgeIcon');
+      if (!el) return;
+      const totalMosques = PRESET_MOSQUES.length;
+      const visitedMosqueCount = PRESET_MOSQUES.filter(m =>
+        visitsData.some(v => v.mosqueId === m.id)
+      ).length;
+      const milestones = [
+        { count: 10, icon: '🥉', label: 'İlk 10 Cami' },
+        { count: 25, icon: '🥈', label: '25 Cami' },
+        { count: 50, icon: '🥇', label: '50 Cami' },
+        { count: totalMosques, icon: '👑', label: 'Tüm Camiler Tamamlandı' }
+      ];
+      // En yüksek ulaşılan rozeti bul (eşikler artan sırada olduğu için sondan başa doğru tara)
+      let earned = null;
+      for (let i = milestones.length - 1; i >= 0; i--) {
+        if (visitedMosqueCount >= milestones[i].count) { earned = milestones[i]; break; }
+      }
+      if (earned) {
+        el.textContent = earned.icon;
+        el.title = earned.label + ' Kazanıldı';
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
     }
     // DEFTER / İSTATİSTİK GÖRÜNÜM ANAHTARI
     window.switchDefterView = function(view) {

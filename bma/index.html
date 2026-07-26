@@ -219,7 +219,10 @@
             </div>
             <div>
               <h2 class="text-lg font-light leading-none" style="color:rgba(255,255,255,0.85);">Hoş geldiniz,</h2>
-              <p id="heroNameDisplay" class="text-2xl font-bold font-display tracking-wide mt-1">Ziyaretçi</p>
+              <p class="flex items-center gap-2 mt-1">
+                <span id="heroNameDisplay" class="text-2xl font-bold font-display tracking-wide">Ziyaretçi</span>
+                <span id="heroBadgeIcon" class="hidden text-xl leading-none" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,0.35));"></span>
+              </p>
               <p id="heroPersonalizeHint" class="hidden text-[10.5px] mt-1.5 leading-snug font-semibold flex items-center gap-1.5" style="color:var(--gold-soft);">
                 <i class="fa-solid fa-circle-info"></i><span>Profil kısmında uygulamayı kişiselleştirebilirsin.</span>
               </p>
@@ -525,7 +528,7 @@
             <div class="space-y-1">
               <div class="flex items-center justify-between gap-2">
                 <label class="block text-[10px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">Cami / Mescid Seçimi *</label>
-                <button type="button" id="btnToggleOutOfBursa" onclick="toggleOutOfBursaMode()" class="text-[9px] font-extrabold shrink-0 flex items-center gap-1 px-2 py-1 rounded-full" style="color:var(--brick-deep); background:rgba(168,86,49,0.1); border:1px solid var(--brick-soft);">
+                <button type="button" id="btnToggleOutOfBursa" onclick="toggleOutOfBursaMode()" class="text-[9px] font-bold shrink-0 flex items-center gap-1" style="color:var(--gold-deep);">
                   <i class="fa-solid fa-earth-europe"></i><span>Bursa Dışında Ziyaret Ettim</span>
                 </button>
               </div>
@@ -579,7 +582,7 @@
                 <button type="button" onclick="selectPrayer('İkindi')" id="btn-p-İkindi" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">İkindi</button>
                 <button type="button" onclick="selectPrayer('Akşam')" id="btn-p-Akşam" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">Akşam</button>
                 <button type="button" onclick="selectPrayer('Yatsı')" id="btn-p-Yatsı" class="prayer-btn text-[10px] font-semibold py-2 rounded-xl">Yatsı</button>
-                <button type="button" onclick="selectPrayer('Vakit Dışı')" id="btn-p-Vakit Dışı" class="prayer-btn vakit-disi-btn text-[10px] font-semibold py-2 rounded-xl relative">Vakit Dışı</button>
+                <button type="button" onclick="selectPrayer('Vakit Dışı')" id="btn-p-Vakit Dışı" class="prayer-btn vakit-disi-btn text-[10px] font-semibold py-2 rounded-xl relative">Vakit Dışı<span class="vakit-disi-star absolute -top-1.5 -right-1 text-[11px] font-extrabold leading-none">*</span></button>
               </div>
               <p class="text-[9.5px] font-bold" style="color:var(--brick-deep);"><i class="fa-solid fa-triangle-exclamation" style="font-size:8px;"></i> Vakit Dışı: kaza, şükür vb. beş vakit dışında kılınan namazlar için.</p>
               <input type="hidden" id="formPrayerSelected" required>
