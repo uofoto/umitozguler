@@ -15,64 +15,33 @@
       const banner = document.getElementById('mosqueInfoHintBanner');
       if (banner) { banner.classList.add('hidden'); banner.classList.remove('flex'); }
     };
-    window.toggleWhatsNewInfoUpdateDetail = function() {
-      const list = document.getElementById('whatsNewInfoUpdateDetailList');
-      const label = document.getElementById('whatsNewInfoUpdateToggleLabel');
-      const icon = document.getElementById('whatsNewInfoUpdateToggleIcon');
-      if (!list) return;
-      const willShow = list.classList.contains('hidden');
-      list.classList.toggle('hidden');
-      if (label) label.textContent = willShow ? 'Detayları gizle' : 'Detayları gör';
-      if (icon) icon.classList.toggle('fa-chevron-down', !willShow);
-      if (icon) icon.classList.toggle('fa-chevron-up', willShow);
-    };
-    window.toggleRemovedMosquesDetail = function() {
-      const list = document.getElementById('removedMosquesDetailList');
-      const label = document.getElementById('removedMosquesToggleLabel');
-      const icon = document.getElementById('removedMosquesToggleIcon');
-      if (!list) return;
-      const willShow = list.classList.contains('hidden');
-      list.classList.toggle('hidden');
-      if (label) label.textContent = willShow ? 'Detayları gizle' : 'Detayları gör';
-      if (icon) icon.classList.toggle('fa-chevron-down', !willShow);
-      if (icon) icon.classList.toggle('fa-chevron-up', willShow);
-    };
     // ANA SAYFADAKİ "YENİLİKLER" BİLDİRİM KARTI
-    // Statik özellik güncellemeleri için (yeni bir uygulama özelliği yayınlandığında bu sürüm etiketini artırın)
-    const WHATS_NEW_STATIC_VERSION = 'v9-bilgi-karti-bildirimi-eklendi';
-    // Envanterdeki en yeni "addedAt" tarihini bulur; yeni cami eklendikçe bu otomatik değişir,
-    // böylece kartın tekrar gösterilip gösterilmeyeceği koddaki bir sürüm numarasına değil,
-    // gerçek veriye bağlı olur (elle güncelleme gerekmez).
+    // Kart artık HTML içine elle yazılmıyor; changelog.js'teki APP_CHANGELOG
+    // dizisinden ve envanterdeki otomatik "yeni cami eklendi" / "bilgi kartı
+    // güncellendi" olaylarından üretilip, en güncel 5 kayıt gösterilir.
+    // Yeni bir özellik eklediğinizde tek yapmanız gereken changelog.js'e bir
+    // kayıt eklemek — bu dosyaya (ui.js) veya index.html'e dokunmanıza gerek
+    // kalmaz.
     function getNewestMosqueAddedAt() {
       const withDates = PRESET_MOSQUES.filter(m => m.addedAt);
       if (withDates.length === 0) return 'none';
       return withDates.reduce((latest, m) => new Date(m.addedAt) > new Date(latest) ? m.addedAt : latest, withDates[0].addedAt);
     }
-    // Yalnızca envanterdeki EN SON eklenen tarihte (yani "bugün" yapılan son güncellemede)
-    // eklenmiş camileri özetleyen bir madde üretip karta ekler. Böylece kart, son 14 günün
-    // toplamı yerine gerçekten "bugün kaç cami eklendi" bilgisini gösterir.
-    function renderWhatsNewMosqueEntry() {
-      const el = document.getElementById('whatsNewMosqueEntry');
-      if (!el) return;
-
+    // Envanterdeki en son eklenen tarihte eklenmiş camileri özetleyen bir
+    // "Yenilikler" kaydı üretir (varsa). Kart, bu tarihten itibaren 14 gün
+    // boyunca listede kalabilir (14 günden eskiyse artık "yeni" sayılmaz).
+    function buildMosqueAddedEntry() {
       const newestAddedAt = getNewestMosqueAddedAt();
-      if (newestAddedAt === 'none') { el.innerHTML = ''; return; }
+      if (newestAddedAt === 'none') return null;
 
-      // Kart, en son güncelleme tarihinden itibaren 14 gün boyunca gösterilmeye devam eder
-      // (kullanıcı uygulamayı her gün açmasa bile haberi kaçırmasın diye), ama sayı olarak
-      // yalnızca o en son güncelleme GÜNÜNDE eklenen camileri sayar.
       const now = new Date();
       const daysSinceUpdate = Math.floor((now - new Date(newestAddedAt)) / (1000 * 60 * 60 * 24));
-      if (daysSinceUpdate < 0 || daysSinceUpdate > 14) { el.innerHTML = ''; return; }
+      if (daysSinceUpdate < 0 || daysSinceUpdate > 14) return null;
 
       const recentNew = PRESET_MOSQUES
         .filter(m => m.addedAt === newestAddedAt)
         .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
-
-      if (recentNew.length === 0) {
-        el.innerHTML = '';
-        return;
-      }
+      if (recentNew.length === 0) return null;
 
       const districts = [...new Set(recentNew.map(m => m.district))];
       const districtText = districts.length > 1
@@ -81,44 +50,35 @@
       const namesPreview = recentNew.slice(0, 3).map(m => m.name).join(', ');
       const extra = recentNew.length > 3 ? ` ve ${recentNew.length - 3} diğeri` : '';
 
-      el.innerHTML = `
-        <div class="flex items-start gap-2.5">
-          <span class="text-base leading-none mt-0.5">🕌</span>
-          <div class="min-w-0">
-            <p class="text-[11px] font-bold" style="color:var(--ink);">${recentNew.length} Yeni Cami Eklendi</p>
-            <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">${escapeHtml(districtText)} bölgelerinden ${escapeHtml(namesPreview)}${escapeHtml(extra)} envantere katıldı.</p>
-          </div>
-        </div>`;
+      return {
+        id: `mosque-added-${newestAddedAt}`,
+        date: newestAddedAt,
+        icon: '🕌',
+        title: `${recentNew.length} Yeni Cami Eklendi`,
+        desc: `${escapeHtml(districtText)} bölgelerinden ${escapeHtml(namesPreview)}${escapeHtml(extra)} envantere katıldı.`
+      };
     }
-    // Envanterdeki en yeni "infoUpdatedAt" tarihini bulur; bir caminin bilgi kartı
-    // eklendikçe/güncellendikçe bu otomatik değişir. "addedAt"tan farklı olarak bu,
-    // yeni eklenen değil, ÖNCEDEN VAR OLAN bir caminin bilgi metninin (info) sonradan
-    // eklendiği/güncellendiği tarihi izler — böylece "filanca caminin bilgi kartı
-    // yenilendi" bildirimi elle yazmaya gerek kalmadan kendiliğinden oluşur.
+    // Envanterdeki en yeni "infoUpdatedAt" tarihini bulur; bir caminin bilgi
+    // kartı eklendikçe/güncellendikçe bu otomatik değişir.
     function getNewestInfoUpdateDate() {
       const withDates = PRESET_MOSQUES.filter(m => m.infoUpdatedAt);
       if (withDates.length === 0) return 'none';
       return withDates.reduce((latest, m) => new Date(m.infoUpdatedAt) > new Date(latest) ? m.infoUpdatedAt : latest, withDates[0].infoUpdatedAt);
     }
-    // En son güncelleme tarihinde bilgi kartı eklenen/güncellenen camileri özetleyen
-    // bir madde üretip karta ekler. renderWhatsNewMosqueEntry ile aynı 14 günlük
-    // görünürlük mantığını kullanır.
-    function renderWhatsNewInfoUpdateEntry() {
-      const el = document.getElementById('whatsNewInfoUpdateEntry');
-      if (!el) return;
-
+    // En son güncelleme tarihinde bilgi kartı eklenen/güncellenen camileri
+    // özetleyen bir "Yenilikler" kaydı üretir (varsa).
+    function buildInfoUpdateEntry() {
       const newestInfoUpdate = getNewestInfoUpdateDate();
-      if (newestInfoUpdate === 'none') { el.innerHTML = ''; return; }
+      if (newestInfoUpdate === 'none') return null;
 
       const now = new Date();
       const daysSinceUpdate = Math.floor((now - new Date(newestInfoUpdate)) / (1000 * 60 * 60 * 24));
-      if (daysSinceUpdate < 0 || daysSinceUpdate > 14) { el.innerHTML = ''; return; }
+      if (daysSinceUpdate < 0 || daysSinceUpdate > 14) return null;
 
       const recentlyUpdated = PRESET_MOSQUES
         .filter(m => m.infoUpdatedAt === newestInfoUpdate)
         .sort((a, b) => a.name.localeCompare(b.name, 'tr'));
-
-      if (recentlyUpdated.length === 0) { el.innerHTML = ''; return; }
+      if (recentlyUpdated.length === 0) return null;
 
       const namesPreview = recentlyUpdated.slice(0, 3).map(m => m.name).join(', ');
       const extra = recentlyUpdated.length > 3 ? ` ve ${recentlyUpdated.length - 3} diğerinin` : '';
@@ -128,40 +88,75 @@
       const desc = recentlyUpdated.length === 1
         ? `Yapılış tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgiler eklendi.`
         : `${escapeHtml(namesPreview)}${escapeHtml(extra)} yapılış tarihi, banisi ve mimari geçmişine dair ayrıntılı bilgileri eklendi.`;
-      const detailItems = recentlyUpdated.map(m => `<li>${escapeHtml(m.name)} — ${escapeHtml(m.district)}</li>`).join('');
 
-      el.innerHTML = `
+      return {
+        id: `info-updated-${newestInfoUpdate}`,
+        date: newestInfoUpdate,
+        icon: '📖',
+        title: escapeHtml(title),
+        desc,
+        details: recentlyUpdated.map(m => `${m.name} — ${m.district}`)
+      };
+    }
+    // Elle yazılan (changelog.js) ve otomatik üretilen (yeni cami/bilgi
+    // güncellemesi) kayıtları birleştirip tarihe göre en yeniden en eskiye
+    // sıralar, sadece ilk 5'ini döndürür.
+    function buildWhatsNewEntries() {
+      const entries = Array.isArray(window.APP_CHANGELOG) ? window.APP_CHANGELOG.slice() : [];
+      const mosqueEntry = buildMosqueAddedEntry();
+      if (mosqueEntry) entries.push(mosqueEntry);
+      const infoEntry = buildInfoUpdateEntry();
+      if (infoEntry) entries.push(infoEntry);
+      entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return entries.slice(0, 5);
+    }
+    function renderWhatsNewEntryHtml(entry, idx) {
+      const hasDetails = Array.isArray(entry.details) && entry.details.length > 0;
+      const detailsHtml = hasDetails ? `
+        <button onclick="toggleWhatsNewDetail(${idx})" class="text-[10px] font-bold mt-1" style="color:var(--teal-700);">
+          <span id="whatsNewToggleLabel-${idx}">Detayları gör</span> <i id="whatsNewToggleIcon-${idx}" class="fa-solid fa-chevron-down text-[8px]"></i>
+        </button>
+        <ul id="whatsNewDetailList-${idx}" class="hidden mt-1.5 space-y-0.5 text-[10px] leading-snug list-disc pl-4" style="color:var(--ink-soft);">
+          ${entry.details.map(d => `<li>${escapeHtml(d)}</li>`).join('')}
+        </ul>` : '';
+      return `
         <div class="flex items-start gap-2.5">
-          <span class="text-base leading-none mt-0.5">📖</span>
+          <span class="text-base leading-none mt-0.5">${entry.icon}</span>
           <div class="min-w-0">
-            <p class="text-[11px] font-bold" style="color:var(--ink);">${escapeHtml(title)}</p>
-            <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">${desc}</p>
-            <button onclick="toggleWhatsNewInfoUpdateDetail()" class="text-[10px] font-bold mt-1" style="color:var(--teal-700);">
-              <span id="whatsNewInfoUpdateToggleLabel">Detayları gör</span> <i id="whatsNewInfoUpdateToggleIcon" class="fa-solid fa-chevron-down text-[8px]"></i>
-            </button>
-            <ul id="whatsNewInfoUpdateDetailList" class="hidden mt-1.5 space-y-0.5 text-[10px] leading-snug list-disc pl-4" style="color:var(--ink-soft);">
-              ${detailItems}
-            </ul>
+            <p class="text-[11px] font-bold" style="color:var(--ink);">${entry.title}</p>
+            <p class="text-[10px] leading-snug" style="color:var(--ink-soft);">${entry.desc}</p>
+            ${detailsHtml}
           </div>
         </div>`;
     }
+    window.toggleWhatsNewDetail = function(idx) {
+      const list = document.getElementById(`whatsNewDetailList-${idx}`);
+      const label = document.getElementById(`whatsNewToggleLabel-${idx}`);
+      const icon = document.getElementById(`whatsNewToggleIcon-${idx}`);
+      if (!list) return;
+      const willShow = list.classList.contains('hidden');
+      list.classList.toggle('hidden');
+      if (label) label.textContent = willShow ? 'Detayları gizle' : 'Detayları gör';
+      if (icon) { icon.classList.toggle('fa-chevron-down', !willShow); icon.classList.toggle('fa-chevron-up', willShow); }
+    };
     function initWhatsNewBanner() {
       const banner = document.getElementById('whatsNewBanner');
-      if (!banner) return;
+      const listEl = document.getElementById('whatsNewList');
+      if (!banner || !listEl) return;
 
-      renderWhatsNewMosqueEntry();
-      renderWhatsNewInfoUpdateEntry();
+      const entries = buildWhatsNewEntries();
+      listEl.innerHTML = entries.map((entry, idx) => renderWhatsNewEntryHtml(entry, idx)).join('');
 
-      const currentVersion = `${WHATS_NEW_STATIC_VERSION}|${getNewestMosqueAddedAt()}|${getNewestInfoUpdateDate()}`;
+      const currentVersion = entries.map(e => e.id).join('|');
       window.__whatsNewCurrentVersion = currentVersion;
 
       const dismissedVersion = localStorage.getItem('manevi-atlas-whatsnew-dismissed');
-      if (dismissedVersion !== currentVersion) {
+      if (entries.length > 0 && dismissedVersion !== currentVersion) {
         banner.classList.remove('hidden');
       }
     }
     window.dismissWhatsNewBanner = function() {
-      localStorage.setItem('manevi-atlas-whatsnew-dismissed', window.__whatsNewCurrentVersion || WHATS_NEW_STATIC_VERSION);
+      localStorage.setItem('manevi-atlas-whatsnew-dismissed', window.__whatsNewCurrentVersion || '');
       const banner = document.getElementById('whatsNewBanner');
       if (banner) banner.classList.add('hidden');
     };
@@ -1057,7 +1052,7 @@
               </div>
               <div class="space-y-1 pr-12">
                 <div class="flex items-center space-x-1.5">
-                  <span class="text-[9px] font-bold text-white px-2 py-0.5 rounded font-ledger" style="background:var(--teal-900);">${escapeHtml(v.prayerTime)} Namazı</span>
+                  <span class="text-[9px] font-bold text-white px-2 py-0.5 rounded font-ledger" style="background:var(--teal-900);">${escapeHtml(v.prayerTime)}${v.prayerTime === 'Vakit Dışı' ? '' : ' Namazı'}</span>
                   <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--ink-faint);">${v.outOfBursa ? '<i class="fa-solid fa-earth-europe" style="margin-right:3px;"></i>' : ''}${escapeHtml(v.district)}</span>
                 </div>
                 <h3 class="font-bold text-xs mt-1" style="color:var(--ink);">${escapeHtml(v.mosqueName)}</h3>
