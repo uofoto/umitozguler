@@ -164,7 +164,7 @@
       if (!visits) {
         return { ok: false, reason: "Bu dosya geçerli bir yedek dosyası değil." };
       }
-      return { ok: true, visits, version: data.version || null, customMosques: data.customMosques };
+      return { ok: true, visits, version: data.version || null, customMosques: data.customMosques, favoriteMosqueIds: data.favoriteMosqueIds, mosqueRatings: data.mosqueRatings };
     }
     // Sürümler arası veri taşıma: fromVersion'dan CURRENT_BACKUP_VERSION'a kadar
     // MIGRATIONS zincirini sırayla uygular. fromVersion boşsa (legacy ham dizi
@@ -193,6 +193,8 @@
           exportedAt: new Date().toISOString(),
           profileName: localStorage.getItem('manevi-atlas-username') || 'Seyyah',
           customMosques: JSON.parse(localStorage.getItem('manevi-atlas-custom-mosques') || '[]'),
+          favoriteMosqueIds: JSON.parse(localStorage.getItem('manevi-atlas-favorites') || '[]'),
+          mosqueRatings: JSON.parse(localStorage.getItem('manevi-atlas-ratings') || '{}'),
           visits: visitsData
         };
         const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -259,6 +261,25 @@
             }
             populateMosquesDropdown();
           }
+
+          // Favori camiler: mevcut favorilerle BİRLEŞTİRİLİR (üzerine yazılmaz),
+          // böylece bu cihazda yedekten sonra eklenmiş bir favori kaybolmaz.
+          if (Array.isArray(validation.favoriteMosqueIds) && typeof favoriteMosqueIds !== 'undefined') {
+            validation.favoriteMosqueIds.forEach(id => { if (id) favoriteMosqueIds.add(id); });
+            if (typeof saveFavorites === 'function') saveFavorites();
+          }
+          // Puanlar (yıldızlar): sadece bu cihazda HENÜZ puanlanmamış camiler
+          // için yedekteki değer uygulanır; cihazda zaten verilmiş bir puan
+          // sessizce ezilmez.
+          if (validation.mosqueRatings && typeof mosqueRatings !== 'undefined') {
+            Object.keys(validation.mosqueRatings).forEach(id => {
+              if (mosqueRatings[id] === undefined) mosqueRatings[id] = validation.mosqueRatings[id];
+            });
+            if (typeof saveRatings === 'function') saveRatings();
+          }
+          if (typeof updateFavoriteMosquesUI === 'function') updateFavoriteMosquesUI();
+          if (typeof updateMosquesListUI === 'function') updateMosquesListUI();
+
 
           const existingIds = new Set(visitsData.map(v => v.id));
           let addedCount = 0;
