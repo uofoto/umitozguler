@@ -127,6 +127,13 @@
     .prayer-btn{ border:1px solid var(--line); color:var(--ink-soft); background:var(--paper-card); transition:all .15s ease; }
     .prayer-btn:active{ transform:scale(0.94); }
     .prayer-btn.active{ background:var(--teal-900); color:#fff; border-color:var(--teal-900); box-shadow:0 4px 10px -4px rgba(12,58,50,0.6); }
+    /* "Vakit Dışı" (kaza/şükür) seçeneği kasıtlı olarak diğerlerinden farklı,
+       dikkat çekici bir renkte: kullanıcı bunun beş vakitten biri olmadığını
+       ilk bakışta ayırt edebilsin. Seçiliyken normal .prayer-btn.active
+       rengine (teal) döner, böylece "seçili" hissi tüm butonlarda tutarlı kalır. */
+    .prayer-btn.vakit-disi-btn:not(.active){ color:var(--brick-deep); border-color:var(--brick-soft); background:rgba(168,86,49,0.06); }
+    .prayer-btn.vakit-disi-btn:not(.active) .vakit-disi-star{ color:var(--brick-deep); }
+    .prayer-btn.vakit-disi-btn.active .vakit-disi-star{ color:#fff; }
 
     input:focus, textarea:focus, select:focus{
       outline:none; border-color:var(--gold-deep) !important;
