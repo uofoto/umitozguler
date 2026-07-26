@@ -1744,6 +1744,29 @@
       document.getElementById('installBanner').classList.add('hidden');
       showToast('Uygulama ana ekranınıza yüklendi!', 'success');
     });
+    // 17b. ÇEVRİMDIŞI MOD ROZETİ
+    // Tarayıcının navigator.onLine / 'online' / 'offline' sinyallerine göre
+    // üst bardaki rozeti göster/gizle. İnternet giderken normal "Kayıtlar
+    // Hazır" senkron rozetiyle çakışmaması için o rozet geçici olarak gizlenir
+    // (internet gelince tekrar görünür).
+    function updateOfflineModeBadge() {
+      const badge = document.getElementById('offlineModeBadge');
+      const sync = document.getElementById('syncStatus');
+      if (!badge) return;
+      if (navigator.onLine) {
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+        if (sync) sync.classList.remove('hidden');
+      } else {
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+        if (sync) sync.classList.add('hidden');
+      }
+    }
+    window.addEventListener('online', updateOfflineModeBadge);
+    window.addEventListener('offline', updateOfflineModeBadge);
+    updateOfflineModeBadge();
+
     // 18. SERVICE WORKER KAYDI (çevrimdışı açılış desteği) + GÜNCELLEME TESPİTİ
     // Basit "register et ve unut" yerine: yeni bir sürüm sunucuya yüklendiğinde
     // bunu olabildiğince erken fark edip kullanıcıya güncelleme bandını
@@ -1758,7 +1781,7 @@
     // tarayıcı/CDN bu tam URL'i daha önce hiç görmediği için önbellek
     // ne kadar agresif olursa olsun mecburen sıfırdan indirir. CACHE_NAME'i
     // sw.js içinde artırdığım her seferde bu SW_REGISTER_VERSION'ı da artıracağım.
-    const SW_REGISTER_VERSION = "v36";
+    const SW_REGISTER_VERSION = "v37";
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register(`sw.js?v=${SW_REGISTER_VERSION}`).then((reg) => {
