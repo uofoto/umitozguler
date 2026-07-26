@@ -981,7 +981,7 @@
         { count: 10, icon: '🥉', label: 'İlk 10 Cami' },
         { count: 25, icon: '🥈', label: '25 Cami' },
         { count: 50, icon: '🥇', label: '50 Cami' },
-        { count: totalMosques, icon: '👑', label: 'Tüm Camiler Tamamlandı' }
+        { count: totalMosques, icon: '<svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><circle cx="20" cy="20" r="18" fill="none" stroke="#C39A45" stroke-width="2"/><circle cx="20" cy="20" r="14" fill="#8C6A22"/><path d="M23 12a9 9 0 1 0 0 16 7.2 7.2 0 1 1 0-16Z" fill="#F4E4B8"/><path d="M27.2 17.6l.9 1.9 2.1.3-1.5 1.45.35 2.05-1.85-.97-1.85.97.35-2.05-1.5-1.45 2.1-.3Z" fill="#F4E4B8"/></svg>', label: 'Tüm Camiler Tamamlandı' }
       ];
       // En yüksek ulaşılan rozeti bul (eşikler artan sırada olduğu için sondan başa doğru tara)
       let earned = null;
@@ -989,7 +989,7 @@
         if (visitedMosqueCount >= milestones[i].count) { earned = milestones[i]; break; }
       }
       if (earned) {
-        el.textContent = earned.icon;
+        el.innerHTML = earned.icon;
         el.title = earned.label + ' Kazanıldı';
         el.classList.remove('hidden');
       } else {
