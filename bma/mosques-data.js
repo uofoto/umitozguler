@@ -628,7 +628,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Şahabeddin Paşa Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "1497/98 (H. 903)",
+    founder: "Karamanlı Mehmed oğlu Mehmed Çelebi",
+    infoUpdatedAt: "2026-07-27",
+    info: "Caminin giriş kapısı üstünde yer alan kitabesinde 1497/98 yıllarında (H. 903) Karamanlı Mehmed oğlu Mehmed Çelebi tarafından yaptırılmış olduğu belirtilmektedir. Cami adını, II. Murad ve II. Mehmed dönemi vezirlerinden olan Şehabettin Paşa'dan almakta olup, yapıya ait vakıf kayıtlarında vakfiyesinin Şahabeddin Paşa'ya ait olduğu da anlaşılmaktadır. Bir rivayete göre, camiyi önce Şahabettin Paşa'nın yaptırdığı fakat bilinmeyen bir sebepten ötürü yapının yıkıldığı ve Karamanlı Mehmed tarafından ikinci kez yaptırıldığı bilinmektedir. Yapı iki bölümden oluşmaktadır. Caminin asıl ibadet mekanı dikdörtgen planlı, tavanı ahşap çatılıdır. Kuzeydeki son cemaat yeri açık bir sundurma şeklindedir. 2010 yılında aslına uygun olarak esaslı bir onarım görmüştür. Kaynak: gotobursa.com.tr"
   }, {
     id: "tahtali-mescid",
     name: "Tahtalı Mescid",
