@@ -582,7 +582,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Selimiye Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "1894",
+    founder: "Tırnovalı Hacı Ahmet",
+    infoUpdatedAt: "2026-07-27",
+    info: "1894 yılında Tırnovalı Hacı Ahmet tarafından yaptırılmış ve aynı yıl ibadete açılmıştır. 500 m2 iç mekana sahiptir. Küçük bir son cemaat yerinden sonra ana ibadet alanına girilir. 14 pencere ile aydınlatılmaktadır. Ahşap tavanlı, kırma çatılı ve kiremit örtülüdür. Duvarları kagir yapılı ve sıvalıdır. Minaresi tuğla gövdeli, tek şerefelidir. Avlusunda şadırvanı bulunmaktadır. Cami taş ve tuğla ile yapılmış, ahşap çatı üzerine Marsilya kiremidi ile kaplanmıştır. Kaynak: kulturenvanteri.com"
   }, {
     id: "seyid-nasir-zaviye",
     name: "Seyid Nasır Zaviye (Haca Şahabeddin) Mescidi",
