@@ -29,6 +29,13 @@
 
 window.APP_CHANGELOG = [
   {
+    id: 'nakkas-ali-bilgi-karti-guncellendi',
+    date: '2026-07-27T10:00:00',
+    icon: '🖌️',
+    title: 'Nakkaş Ali Mescidi Bilgi Kartı Güncellendi',
+    desc: 'Yeşil Camii ve Yeşil Türbe\'nin süslemelerini yapan ünlü usta Nakkaş Ali Efendi\'ye ait mescit için banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri bilgi kartına eklendi.'
+  },
+  {
     id: 'molla-fenari-bilgi-karti-guncellendi',
     date: '2026-07-27T09:00:00',
     icon: '📜',

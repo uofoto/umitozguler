@@ -535,7 +535,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Nakkaş Ali Mescidi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "II. Murad Dönemi (1421 – 1451)",
+    founder: "Nakkaş Ali Efendi (Yeşil Camii ve Yeşil Türbe'nin taş oyma ve kalem işi süslemelerini yapan Bursalı ünlü usta)",
+    infoUpdatedAt: "2026-07-27",
+    info: "14-15. yüzyıllarında yaşadığı bilinen, Yeşil Camii ile Yeşil Türbe'nin taş oyma işçiliğini ve kalem işi süslemelerini yapan Bursalı ünlü usta Nakkaş Ali Efendi tarafından II. Murad döneminde (1421-1451) yaptırılmıştır. Asıl ibadet mekanı, son cemaat yeriyle birlikte dikdörtgen planlı küçük boyutlu bir mahalle mescididir. 2011 yılında Vakıflar Genel Müdürlüğü tarafından rekonstrüksiyonu yapılarak tekrar ayağa kaldırılmıştır. Mescidin yanındaki haziresinde Nakkaş Ali'nin oğlu Defterdar Osman Çelebi ve Nakkaş Ali'nin torunu, Bursalı ünlü Divan şairi Lamii Çelebi ile birlikte çoğunlukla Nakkaş Ali'nin soyundan gelen aile bireylerinin mezarları bulunmaktadır. Kaynak: bursasevdam.com"
   }, {
     id: "nalbantoglu-camii",
     name: "Nalbantoğlu Camii",
