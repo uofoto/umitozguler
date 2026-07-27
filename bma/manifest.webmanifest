@@ -1,7 +1,7 @@
 {
   "name": "Bursa Manevi Atlası — Ümit Özgüler",
   "short_name": "Manevi Atlas",
-  "description": "Bursa'nın 70 tarihi cami ve mescidinde namaz ziyaretlerini kaydeden kişisel seyyah defteri.",
+  "description": "Bursa'nın 263 tarihi cami ve mescidinde namaz ziyaretlerini kaydeden kişisel seyyah defteri.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
