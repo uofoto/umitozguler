@@ -89,7 +89,11 @@ let PRESET_MOSQUES = [{
     name: "Şekerhoca Camii",
     district: "Osmangazi",
     address: "Şekerhoca, Şekerhoca Sk., Osmangazi/Bursa",
-    mapsSearch: "Şekerhoca Camii Bursa"
+    mapsSearch: "Şekerhoca Camii Bursa",
+    period: "Çelebi Mehmed veya II. Murad Dönemi (1484 tarihli sicil kayıtlarına dayanarak kabul edilmektedir)",
+    founder: "Şeker Hoca",
+    infoUpdatedAt: "2026-07-27",
+    info: "Caminin yapım tarihi ve yaptıranıyla ilgili kesin bilgiler bulunmamaktadır. Ancak, 1484 tarihli sicil kayıtlarından yola çıkarak, Şeker Hoca'nın Çelebi Mehmed ya da II. Murad döneminde yaşamış olduğu ve camiyi de bu dönemlerde yaptırmış olduğu kabul edilebilir. Kesme taş ve tuğlanın birlikte kullanıldığı bir duvar örgüsüne sahip olan cami, kare planlı ve üzeri kurşun ile kaplı kasnaksız bir kubbe ile örtülüdür. Kaynak: Bursa Kültür Varlıkları Envanteri: Anıtsal Eserler, Bursa Büyükşehir Belediyesi Yayınları, s. 189"
   }, {
     id: "karabas-i-veli",
     name: "Karabaş-i Veli Camii",
