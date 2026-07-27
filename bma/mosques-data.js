@@ -571,7 +571,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Satı Fakıh Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "Fatih Sultan Mehmed Dönemi",
+    founder: "Satı Fakih (Fatih dönemi hocalarından)",
+    infoUpdatedAt: "2026-07-27",
+    info: "Osmangazi Mahallesi'nde (Hisar içinde), Oruç Bey Caddesi'ndedir. Fatih Sultan Mehmed döneminde, Satı Fakih tarafından yaptırılmıştır. Satı Fakih, Fatih dönemi hocalarından olup, oğulları Murat, Hasan ve Alaaddin de babaları gibi Bursa'nın hocalarındandır. Mevlana Murat Fakih, babasının yaptırmış olduğu bu mescitte imamlık yapmıştır. Dikdörtgen planlı yapının güney duvarı 6,30 metre eninde, 9,90 metre derinliğinde olup, genişliği diğer duvarlardan bir metre daha azdır. Minaresi yeni olan mescidin beden duvarları moloz taşla örülmüş ve üst kısmı çatıyla örtülmüştür. Mescidin hemen yanında Satı Fakih ve ailesine ait mezarlar bulunur. Kaynak: kulturportali.gov.tr"
   }, {
     id: "selimiye-camii",
     name: "Selimiye Camii",
