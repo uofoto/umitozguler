@@ -524,7 +524,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Molla Fenari Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "15. yüzyıl başları (Yıldırım Bayezid ve II. Murad Hüdavendigâr Dönemi)",
+    founder: "\"Molla Fenari\" ünvanlı Mehmet Şemseddin (Osmanlı'nın ilk şeyhülislamı)",
+    infoUpdatedAt: "2026-07-27",
+    info: "Osmanlı İmparatorluğu'nun ilk şeyhülislamı sayılan ve eserleri yüzyıllarca medreselerde başucu kaynağı olarak okutulan Molla Fenari'nin cami ve türbesidir. Alimin bilimsel mirası ile caminin sunduğu manevi atmosfer, bu alanı hem kültürel hem de dini bir çekim merkezi haline getirmektedir. Yıldırım Bayezid döneminin bilgin ve kadılarından olan ve II. Murad Hüdavendigâr döneminde şeyhülislamlık görevi verilen \"Molla Fenari\" ünvanlı Mehmet Şemseddin tarafından, 15. yüzyıl başlarında yaptırılmıştır. Dikdörtgen planlı cami büyük ölçüde yenilenmiştir. Caminin son cemaat yeri asimetrik olarak doğu yönünden camiye bitişik olarak inşa edilmiştir. 1855 depreminde büyük ölçüde hasar gören yapı, 1969 yılında Bursa Eski Eserleri Sevenler Kurumu ile Vakıflar Genel Müdürlüğü tarafından onarılmıştır. 2011 yılında onarım görmüştür. Kaynak: bursa.com.tr"
   }, {
     id: "nakkas-ali-mescidi",
     name: "Nakkaş Ali Mescidi",

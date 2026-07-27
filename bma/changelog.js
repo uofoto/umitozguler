@@ -29,6 +29,13 @@
 
 window.APP_CHANGELOG = [
   {
+    id: 'molla-fenari-bilgi-karti-guncellendi',
+    date: '2026-07-27T09:00:00',
+    icon: '📜',
+    title: 'Molla Fenari Camii Bilgi Kartı Güncellendi',
+    desc: 'Osmanlı\'nın ilk şeyhülislamı Molla Fenari\'ye ait cami için banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri bilgi kartına eklendi.'
+  },
+  {
     id: 'vakit-disi-namaz',
     date: '2026-07-26T21:00:00',
     icon: '🕋',
