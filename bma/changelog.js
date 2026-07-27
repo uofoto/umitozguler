@@ -33,7 +33,7 @@ window.APP_CHANGELOG = [
     date: '2026-07-27T11:00:00',
     icon: '📚',
     title: 'Bilgi Kartı Güncellenen Camiler',
-    desc: '8 caminin bilgi kartına banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri eklendi.',
+    desc: '9 caminin bilgi kartına banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri eklendi.',
     details: [
       'Nalbantoğlu Camii — Osmangazi',
       'Nakkaş Ali Mescidi — Osmangazi',
@@ -42,7 +42,8 @@ window.APP_CHANGELOG = [
       'Satı Fakıh (Sıdı Fakıh) Mescidi — Osmangazi',
       'Selimiye Camii — Osmangazi',
       'Şahabeddin Paşa Camii — Osmangazi',
-      'Şekerhoca Camii — Osmangazi'
+      'Şekerhoca Camii — Osmangazi',
+      'Sivaslılar (Tahtalı) Mescidi — Osmangazi'
     ]
   },
   {

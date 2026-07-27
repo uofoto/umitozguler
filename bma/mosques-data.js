@@ -618,7 +618,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Sivaslılar Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "XV. yüzyıl",
+    founder: "Banisi belli değil",
+    infoUpdatedAt: "2026-07-27",
+    info: "Gökdere'nin hemen doğusunda, Sivasiler Mahallesi'ndedir. XV. yüzyılda yapılmış olup yapanı belli değildir. Bursa'nın ahşap yapıları içinde önemli bir yeri bulunan mescidin çatısı ahşap malzeme ile örtülmüştür. Kendine özgü mimari tarzı ile ilginç bir yapıdır. Tahtan veya Tahtalı Mescit olarak da anılmasına karşın, eski Tahtalı Mescit dereye kayıp yok olmuştur. Yerine bugünkü mescit yaptırılmıştır. Halen sağlam olan mescit ibadete açık durumdadır. Kaynak: bursarehberim.com"
   }, {
     id: "surmeli",
     name: "Sürmeli (Tefsir Han / Ahi Hasan) Mescidi",
