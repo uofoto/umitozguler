@@ -29,6 +29,13 @@
 
 window.APP_CHANGELOG = [
   {
+    id: 'nalbantoglu-bilgi-karti-guncellendi',
+    date: '2026-07-27T11:00:00',
+    icon: '🕌',
+    title: 'Nalbantoğlu Camii Bilgi Kartı Güncellendi',
+    desc: 'Nalbantbaşı tarafından mescit olarak yaptırılan ve 1777\'de camiye çevrilen yapı için banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri bilgi kartına eklendi.'
+  },
+  {
     id: 'nakkas-ali-bilgi-karti-guncellendi',
     date: '2026-07-27T10:00:00',
     icon: '🖌️',

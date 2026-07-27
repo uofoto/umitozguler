@@ -546,7 +546,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Osmangazi/Bursa",
     mapsSearch: "Nalbantoğlu Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "II. Murad Devri (1421 – 1451) mescit olarak; 1777'de camiye çevrildi",
+    founder: "Nalbantbaşı",
+    infoUpdatedAt: "2026-07-27",
+    info: "II. Murad devrinde Nalbantbaşı tarafından mescit olarak inşa ettirilmiştir. Baykal da kitabında 1455 yılında Bursa'da bu isimle anılan bir mahalle ve cami olduğunu belirtmektedir. Ancak zamanla artan ihtiyaçlara yanıt veremediğinden, 1777 yılında bir minber eklenerek cami haline getirilmiştir. Cami 7.50 x 7.50 metre ölçülerinde kare plana sahiptir. Kurşun kaplı kubbesi, Türk üçgenli geçiş elemanlarına oturtulmuştur. 3.50 metre derinliğindeki üç gözlü son cemaat yerindeki revakın yanları kapalı biçimdedir ve iki tarafı ufak tavanlı çapraz tonozla, ortası da beşik tonozla örtülüdür. Cephe, kemer özengisine kadar üçlü basit tuğla hatıl ve iki sıra muntazam moloz taşla, ondan sonra da kesme taşla işlenmiştir. Mihrap basit, 1777 yılında eklenen minber dikdörtgen parçalı, geçme parmaklıklıdır. Ahşap mahfili de sonradan eklenmiştir. Kaynak: Baykal, Bursa ve Anıtları, 92; Bursa Ansiklopedisi, Cilt 3, 1244; Kaplanoğlu, Bursa Anıtlar Ansiklopedisi, 96; Yalman, Bursa, 116, 118"
   }, {
     id: "pasa-camii",
     name: "Paşa Camii",
