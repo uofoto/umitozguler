@@ -1329,7 +1329,11 @@ let PRESET_MOSQUES = [{
     district: "Osmangazi",
     address: "Şahabettinpaşa Mah., Osmangazi/Bursa",
     mapsSearch: "Ruscuk Camii Bursa",
-    addedAt: "2026-07-21"
+    addedAt: "2026-07-21",
+    period: "1877",
+    founder: "Rusçuklu Mustafa Efendi",
+    infoUpdatedAt: "2026-07-27",
+    info: "Rusçuk Camii, 1877 yılında Rusçuklu Mustafa Efendi tarafından yaptırılmıştır. Yapı, 1996 yılında mahalle halkı tarafından yıktırılmış ve aslına uygun olmayan biçimde yeniden inşa edilmiştir. Caminin girişinde, yeniden inşa edilmeden önceki özgün hâlini gösteren bir fotoğraf bulunmaktadır. Bu fotoğraf, yapının günümüze ulaşmayan asıl görünümünü belgeleyen önemli bir görsel kaynak niteliğindedir. Kaynak: kulturenvanteri.com"
   }, {
     id: "tavukcu-mescidi",
     name: "Tavukçu Mescidi",

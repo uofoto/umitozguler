@@ -29,25 +29,17 @@
 
 window.APP_CHANGELOG = [
   {
-    id: 'nalbantoglu-bilgi-karti-guncellendi',
+    id: 'bilgi-karti-guncellenen-camiler',
     date: '2026-07-27T11:00:00',
-    icon: '🕌',
-    title: 'Nalbantoğlu Camii Bilgi Kartı Güncellendi',
-    desc: 'Nalbantbaşı tarafından mescit olarak yaptırılan ve 1777\'de camiye çevrilen yapı için banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri bilgi kartına eklendi.'
-  },
-  {
-    id: 'nakkas-ali-bilgi-karti-guncellendi',
-    date: '2026-07-27T10:00:00',
-    icon: '🖌️',
-    title: 'Nakkaş Ali Mescidi Bilgi Kartı Güncellendi',
-    desc: 'Yeşil Camii ve Yeşil Türbe\'nin süslemelerini yapan ünlü usta Nakkaş Ali Efendi\'ye ait mescit için banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri bilgi kartına eklendi.'
-  },
-  {
-    id: 'molla-fenari-bilgi-karti-guncellendi',
-    date: '2026-07-27T09:00:00',
-    icon: '📜',
-    title: 'Molla Fenari Camii Bilgi Kartı Güncellendi',
-    desc: 'Osmanlı\'nın ilk şeyhülislamı Molla Fenari\'ye ait cami için banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri bilgi kartına eklendi.'
+    icon: '📚',
+    title: 'Bilgi Kartı Güncellenen Camiler',
+    desc: '4 caminin bilgi kartına banisi, yapım tarihi ve ayrıntılı tarihçe bilgileri eklendi.',
+    details: [
+      'Nalbantoğlu Camii — Osmangazi',
+      'Nakkaş Ali Mescidi — Osmangazi',
+      'Molla Fenari Camii — Osmangazi',
+      'Ruscuk Camii — Osmangazi'
+    ]
   },
   {
     id: 'vakit-disi-namaz',
