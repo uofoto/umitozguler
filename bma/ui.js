@@ -1090,6 +1090,10 @@
                 <p class="text-[10px]" style="color:var(--ink-faint);">${formattedDate} - Saat: ${escapeHtml(v.time) || '--:--'}</p>
               </div>
               ${v.notes ? `<p class="text-[11px] p-2.5 rounded-lg italic mt-2" style="color:var(--ink-soft); background:var(--paper-deep); border-left:2px solid var(--teal-700);">"${escapeHtml(v.notes)}"</p>` : ''}
+              ${v.notes ? `
+              <button onclick="sendNoteToGoogleReview('${v.id}')" class="inline-flex items-center space-x-1 text-[10px] font-bold px-2 py-1 rounded-lg mt-2 ml-1.5 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);" title="Notu kopyala ve Google'da yorum sayfasını aç">
+                <i class="fa-brands fa-google"></i><span>Google'a Yorum Olarak Gönder</span>
+              </button>` : ''}
               ${mapBtnHTML}
               ${photosHTML}
             </div>
@@ -1583,6 +1587,51 @@
         toast.classList.remove('opacity-100', 'translate-y-0');
         toast.classList.add('opacity-0', '-translate-y-4');
       }, 3000);
+    };
+
+    // 15b. DEFTER NOTUNU GOOGLE YORUMU OLARAK GÖNDERME
+    // Google, üçüncü taraf uygulamaların kullanıcı adına otomatik yorum
+    // GÖNDERMESİNE izin veren bir API sunmuyor (sadece okuma API'leri var).
+    // Bu yüzden burada yaptığımız: notu panoya kopyalayıp kullanıcıyı
+    // ilgili caminin Google Maps sayfasına yönlendirmek — orada kullanıcı
+    // "Yorum yaz" düğmesine basıp metni kendisi yapıştırır. Tamamen Google
+    // kurallarına uygun, kullanıcının onayı/eylemiyle gerçekleşen bir akış.
+    window.sendNoteToGoogleReview = function(visitId) {
+      const v = visitsData.find(x => x.id === visitId);
+      if (!v || !v.notes) return;
+
+      const mosque = PRESET_MOSQUES.find(m => m.id === v.mosqueId);
+      const query = (mosque && mosque.mapsSearch) || `${v.mosqueName || ''} ${v.district || ''}`.trim();
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+      function openMapsPage() {
+        window.open(mapsUrl, '_blank', 'noopener');
+        showToast("Not panoya kopyalandı. Açılan Google Maps sayfasında \"Yorum yaz\"a dokunup yapıştırabilirsiniz.", "success");
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(v.notes).then(openMapsPage).catch(() => {
+          showToast("Not kopyalanamadı, Google Maps sayfasını açıyorum; notu elle kopyalayabilirsiniz.", "error");
+          window.open(mapsUrl, '_blank', 'noopener');
+        });
+      } else {
+        // navigator.clipboard desteklenmiyorsa (eski tarayıcı/http bağlamı) eski yöntemle dene
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = v.notes;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          openMapsPage();
+        } catch (e) {
+          showToast("Not otomatik kopyalanamadı, Google Maps sayfasını açıyorum; notu elle kopyalayabilirsiniz.", "error");
+          window.open(mapsUrl, '_blank', 'noopener');
+        }
+      }
+      window.haptic && window.haptic(15);
     };
 
     // 16. LIGHTBOX (Fotoğraf Büyütme / Yakınlaştırma / Gezinme)
