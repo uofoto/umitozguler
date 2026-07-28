@@ -678,9 +678,12 @@ let PRESET_MOSQUES = [{
     id: "veled-i-habib",
     name: "Veled-i Habib (Eminiye Dergâhı) Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Veled-i Habib Bursa",
-    addedAt: "2026-07-19"
+    address: "Tahtakale, İnebey Cd., Osmangazi/Bursa",
+    mapsSearch: "Veled-i Habib Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Habib oğlu Hacı Şüca",
+    period: "1520",
+    info: "Tahtakale semtinde, İnebey Caddesi üzerinde bulunan cami, Habib oğlu Hacı Şüca tarafından 1520 yılında yaptırılmıştır. 8,80 x 8,80 metre iç ölçülere sahiptir. 1801 yılında Kerküklü Mehmed Emin Efendi, buradaki mescidi camiye çevirip yanına bir kütüphane ekleyerek yapıyı Nakşibendiyye tarikatına bağlı Eminiye Dergâhı'na dönüştürmüştür; bu nedenle yapı 'Eminiye Dergâhı' olarak da anılır. Bir tür tekke olarak kullanılan yapının mülkiyeti, Mehmed Emin Efendi'nin torunlarından Gökçen ailesine aittir. Kaynak: kulturportali.gov.tr, evliyalar.net"
   }, {
     id: "veled-i-halva-i",
     name: "Veled-i Halva-i (Helvacıoğlu) Mescidi",
@@ -707,9 +710,12 @@ let PRESET_MOSQUES = [{
     id: "veled-i-yanic-mescidi",
     name: "Veled-i Yanıç Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Veled-i Yanıç Mescidi Bursa",
-    addedAt: "2026-07-19"
+    address: "Osmangazi Mah., Zindankapı Sk., Osmangazi/Bursa",
+    mapsSearch: "Veled-i Yanıç Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Yaniç Oğlu Hacı Mahmud Çelebi",
+    period: "Temmuz 1440",
+    info: "Osmangazi Mahallesi'nde bulunan caminin yapıldığı tarih ve yaptıranı kesin olarak bilinmemekle birlikte II. Murad dönemine ait olduğu kaynaklarda belirtilmektedir. Kapının üzerindeki kitabesine göre Temmuz 1440'ta Yaniç Oğlu Hacı Mahmud Çelebi tarafından yaptırılmıştır. Veled-i Yaniç, asıl adı Mahmud olan bir sufi olup babası Yaniç oğlu Hacı Hayreddin, I. Murad Hüdavendigar ve Yıldırım Bayezid dönemlerinde devlet hizmetinde bulunmuştur. Kare planlı mescit sekizgen biçimli bir kubbeyle örtülüdür. Caminin, çan kulesine benzeyen ve mimarisinde bir benzeri bulunmayan ilgi çekici bir minaresi vardır; beş basamakla çıkılan minare yapının yaklaşık on metre dışında, girişin karşısındaki çeşmenin üzerinde konumlanmıştır. Kaynak: kulturportali.gov.tr, İngilizce Vikipedi (Baykal, Bursa ve Anıtları, 1950, s.61; Kaplanoğlu, Doğal ve Anıtsal Eserleri ile Bursa, 2003, s.289)"
   }, {
     id: "veled-i-semseddin",
     name: "Veled-i Şemseddin (Yohni Kapan) Camii",
@@ -728,9 +734,11 @@ let PRESET_MOSQUES = [{
     id: "yigit-cedid-camii",
     name: "Yiğit Cedid Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
+    address: "Cumhuriyet Cd., Yeniyiğit Sk. başı, Osmangazi/Bursa",
     mapsSearch: "Yiğit Cedid Camii Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    period: "15. yüzyılın ilk yarısı (tahmini)",
+    info: "Cumhuriyet Caddesi'nden Reyhan Çarşısı'na girilen noktada, Yeniyiğit Sokağı'nın başında yer alan cami, yaptıran ve yapılış tarihi kesin olarak bilinmemekle birlikte, bazı kaynaklara göre Yiğit Köhne Camii'ni yaptıran Yiğit oğlu Hacı Ali tarafından 15. yüzyılın ilk yarısında yaptırılmış olabileceği belirtilmektedir. Mahalle mescidi tipinde inşa edilen kalkan duvarlı cami, kare planlıdır. 1855 depreminde büyük hasar görmüş ve bir süre özel mülkiyete geçmiştir; 1960 yılında geniş çaplı bir onarımdan geçirilerek yeniden ibadete açılmıştır. Kaynak: kulturportali.gov.tr, alanbaskanligi.bursa.bel.tr, kulturenvanteri.com"
   }, {
     id: "zogronlik",
     name: "Zoğronlık (Zofronlık) Mescidi",
