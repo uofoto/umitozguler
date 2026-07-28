@@ -122,7 +122,10 @@ let PRESET_MOSQUES = [{
     name: "Tuzpazarı Camii",
     district: "Osmangazi",
     address: "Tuzpazarı, Çarşı İçi, Osmangazi/Bursa",
-    mapsSearch: "Tuzpazarı Camii Bursa"
+    mapsSearch: "Tuzpazarı Camii Bursa",
+    founder: "Kara Ali Bey",
+    period: "1479 (Fatih Sultan Mehmed Dönemi)",
+    info: "Tuzpazarı Caddesi üzerinde yer alan cami, Fatih Sultan Mehmed devrinde Kara Ali Bey tarafından 1479 yılında yaptırılmıştır. Asıl ibadet mekânı ve son cemaat yeriyle birlikte dikdörtgen bir plan şemasına sahip olan cami, tek kubbeli ana mekânla, ortada küçük bir kubbesi bulunan üç bölümlü son cemaat yerinden oluşur. Bursa mescitlerinde sıkça görülen kalkan duvarlı cephesi üç kemerli açıklık şeklindedir. Tamamen tuğla örgülü minaresi, kaval silmeler biçiminde düzenlenmiş yivli gövdesi, şerefesi ve miğfer külahıyla Bursa'nın en güzel örneklerinden biri kabul edilir. Kaynak: kulturenvanteri.com, alanbaskanligi.bursa.bel.tr"
   }, {
     id: "serefuddin-camii",
     name: "Şerafettin Paşa Camii",
@@ -387,9 +390,12 @@ let PRESET_MOSQUES = [{
     id: "ebu-i-shak-mescidi",
     name: "Ebu İshak Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Ebu İshak Mescidi Bursa",
-    addedAt: "2026-07-19"
+    address: "Ebu İshak Mah., Cumhuriyet Cd., Osmangazi/Bursa",
+    mapsSearch: "Ebu İshak Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Yıldırım Bayezid",
+    period: "14. yüzyıl sonu (Fatih devrinde onarım, 1479'da yeniden ibadete açılış)",
+    info: "Ebu İshak Mahallesi'nde, Cumhuriyet Caddesi'nin altında yer alan cami, İranlı âlim ve Kazeruniyye tarikatının kurucusu Ebu İshak İbrahim b. Şehriyar Kazeruni adına Yıldırım Bayezid tarafından 14. yüzyıl sonunda yaptırılmıştır. Fatih Sultan Mehmed döneminde yenilenerek 1479 yılında yeniden ibadete açılmıştır. Giriş kapısının üzerindeki üç satırlık sülüs kitabede, yapının Yıldırım Bayezid tarafından yaptırıldığı ve Fatih Sultan Mehmed devrinde onarıldığı belirtilir. 1855 depreminde ağır hasar görmüş, 1892'de onarılarak zemini kare tuğlalarla döşenmiştir. Ters T planlı olan cami, üstte kubbe ve yanlarda tonoz örtüsüyle örtülüdür; kuzeyindeki son cemaat yeri, sivri kemerlerle birbirine bağlanan dört kesme taş ayağın oluşturduğu beş bölümden meydana gelir, orta bölüm diğerlerinden geniş ve yüksektir. Caminin önünde 15. yüzyılda yapılmış, moloz taştan dikdörtgen planlı bir türbe bulunur. Kaynak: kulturportali.gov.tr, kulturenvanteri.com"
   }, {
     id: "enbiya",
     name: "Enbiya (Veled-i Enbiya) Mescidi",
@@ -482,16 +488,22 @@ let PRESET_MOSQUES = [{
     id: "konevi",
     name: "Konevi (Şeyh Konevi) Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Konevi Bursa",
-    addedAt: "2026-07-19"
+    address: "İvazpaşa, Tezveren Sk., Osmangazi/Bursa",
+    mapsSearch: "Şeyh Konevi Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Konyalı Hacı Sinan",
+    period: "1537",
+    info: "Pınarbaşı Mezarlığı üzerinde, Kuzgunluk semtinde, Tezveren Sokak'ta bulunan cami, Konyalı Hacı Sinan tarafından yaptırıldığı için 'Konyalı' anlamına gelen Konevi adını almıştır. Caminin ön kısmındaki kitabede 1537 yılında yapıldığı belirtilir. 7,00 x 7,00 metre ölçülerinde kare planlı olan caminin girişinde 3,40 metre derinliğinde bir son cemaat yeri bulunur. Asıl ibadet mekânını örten kubbe sonradan ahşap bir tavanla kapatılmıştır. Duvarları iki sıra tuğla, iki sıra moloz taşla örülmüştür. Doğusundaki minare tuğla gövdeli, tek şerefeli ve sivri külahlıdır; minareye ana mekânın doğusundaki bir kapıdan çıkılmaktadır. Kaynak: kulturportali.gov.tr"
   }, {
     id: "lamii-celebi-mescidi",
     name: "Lamii Çelebi Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Lamii Çelebi Mescidi Bursa",
-    addedAt: "2026-07-19"
+    address: "Çekirge Meydanı, Osmangazi/Bursa",
+    mapsSearch: "Lamii Çelebi Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Lamii Çelebi",
+    period: "1528",
+    info: "Çekirge Meydanı'nda bulunan mescit, 1528 yılında Lamii Çelebi tarafından yaptırılmıştır; kaynaklara göre Lamii Çelebi, Yeşil Külliyesi'nin ünlü nakkaşı Ali bin İlyas Ali'nin torunu olup aynı zamanda tanınmış bir şairdir. Dikdörtgen planlı yapı 7,50 x 9,60 metre iç ölçülere sahip olup girişinde dört metre derinliğinde bir son cemaat yeri bulunur; kargir duvarlı ve ahşap çatılıdır. Bir dönem konut olarak kullanılan mescit, 1962 yılında yeniden ibadete açılmıştır. Kaynak: kulturportali.gov.tr, alanbaskanligi.bursa.bel.tr"
   }, {
     id: "mantici-mescidi",
     name: "Mantıcı Mescidi",
@@ -591,23 +603,31 @@ let PRESET_MOSQUES = [{
     id: "seyid-nasir-zaviye",
     name: "Seyid Nasır Zaviye (Haca Şahabeddin) Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Seyid Nasır Zaviye Bursa",
-    addedAt: "2026-07-19"
+    address: "Seyid Nasır, Osmangazi/Bursa",
+    mapsSearch: "Seyyid Nasır Türbesi Bursa",
+    addedAt: "2026-07-19",
+    founder: "Hacı Şahabeddin",
+    period: "1453",
+    info: "Buhara'da doğup Bursa'ya gelen ve Peygamber soyundan geldiği söylenen Seyyid Nasır'ın adını taşıyan mahalledeki mescit, Buharalı bir veli olan tüccar Hacı Şahabeddin (ö. 1454) tarafından 1453 yılında yaptırıldığı söylenmektedir. Bursa'nın fethine katılan ve lakabı Hüsrev olan Seyyid Nasır, Sultan II. Murad devrinde yaşamış ve 1451 yılında Bursa'da vefat etmiştir. Duvarları moloz taşıyla örülü olan mescit ile yanındaki türbe 1671 yılında, ardından 1893'te Sultan II. Abdülhamid döneminde onarılmış; 1963 ve 1993 yıllarında da bakımdan geçirilmiştir. Kaynak: bursa.com"
   }, {
     id: "seyh-pasa",
     name: "Şeyh Paşa (Dibekli) Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Şeyh Paşa Bursa",
-    addedAt: "2026-07-19"
+    address: "Hisar, Şahin Sk., Osmangazi/Bursa",
+    mapsSearch: "Şeyh Paşa Dibekli Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Şeyh Paşa bin Şahabeddin bin Bayezıd",
+    period: "1439",
+    info: "Hisar semtinde Şahin Sokak'ta bulunan cami, 1439 yılında Şeyh Paşa bin Şahabeddin bin Bayezıd tarafından yaptırılmıştır. 7,00 x 7,10 metre iç ölçülerinde olan caminin girişinde 4,80 metre derinliğinde bir son cemaat yeri bulunur. Üzeri eskiden kubbe ile örtülüyken günümüzde çatıya dönüştürülmüştür; duvarları kesme taş ve tuğla ile örülmüştür. Sık sık yapılan onarımlar nedeniyle özgün yapısını büyük ölçüde yitirmiş olan cami, günümüzde sağlam ve ibadete açık durumdadır; kapısında tarihi bir çeşme yer alır. Kaynak: bursa.com (Kütük IV; Baykal, Bursa ve Anıtları, 1950, s.63; Vakıflar Genel Müdürlüğü, 1983, III; Köseoğlu, 1946, s.61; Ayverdi II)"
   }, {
     id: "simkes",
     name: "Simkeş (Sırmakeş) Camii",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Simkeş Bursa",
-    addedAt: "2026-07-19"
+    address: "Gümüşçeken Cd., Simkeş Çıkmazı, Osmangazi/Bursa",
+    mapsSearch: "Simkeş Sırmakeş Camii Bursa",
+    addedAt: "2026-07-19",
+    period: "15. yüzyılın sonları",
+    info: "Atatürk Caddesi'nden Tuzpazarı'na inen Gümüşçeken Caddesi üzerinde, Simkeş Çıkmazı'nda bulunan cami, 15. yüzyılın sonlarında yapılmıştır; kimin yaptırdığı bilinmemektedir. 7,00 x 7,35 metre iç ölçülerinde olan caminin üç metre derinliğinde bir son cemaat yeri vardır. Ana hatlarıyla dikdörtgen planlı olan yapı, tek kubbeli asıl ibadet alanı ile kuzey yönündeki son cemaat yerinden oluşur. Kaynak: kulturportali.gov.tr, bursaarastirmalarimerkezi.com"
   }, {
     id: "sivaslilar",
     name: "Sivaslılar (Tahtalı) Mescidi",
@@ -641,9 +661,11 @@ let PRESET_MOSQUES = [{
     id: "tahtali-mescid",
     name: "Tahtalı Mescid",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Tahtalı Mescid Bursa",
-    addedAt: "2026-07-19"
+    address: "Alaaddin Mah., Tahtalı Sk., Osmangazi/Bursa",
+    mapsSearch: "Tahtalı Hatipzade Mescit Bursa",
+    addedAt: "2026-07-19",
+    period: "16.-17. yüzyıl (tahmini)",
+    info: "Tahtalı (Hatipzade) Mescit olarak da bilinen yapı, Alaaddin Mahallesi Tahtalı Sokak'ta bulunmaktadır. Yapıldığı tarih ve yaptıranı kesin olarak bilinmemekle birlikte 16.-17. yüzyıla ait olabileceği düşünülmektedir. Duvarları moloz taş örgülü olan mescidin üstü ahşap ve kiremit kaplıdır. Kaynak: kulturportali.gov.tr"
   }, {
     id: "uc-kizlar-camii-ve-minaresi",
     name: "Üç Kuzular (Üç Kozlar) Camii",
