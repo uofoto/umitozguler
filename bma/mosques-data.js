@@ -9,31 +9,51 @@ let PRESET_MOSQUES = [{
     name: "Bursa Ulu Cami",
     district: "Osmangazi",
     address: "Nalbantoğlu, Atatürk Cd., Osmangazi/Bursa",
-    mapsSearch: "Bursa Ulu Cami"
+    mapsSearch: "Bursa Ulu Cami",
+    founder: "Yıldırım Bayezid (mimarı Ali Neccar olduğu düşünülmektedir)",
+    period: "1396-1400 (bazı kaynaklarda 1399)",
+    infoUpdatedAt: "2026-07-28",
+    info: "Osmangazi ilçesinde, tarihi çarşının ortasında yer alan Ulu Cami, Yıldırım Bayezid tarafından 1396-1400 yılları arasında yaptırılmıştır; mimarının Ali Neccar olduğu düşünülmektedir. Osmanlı döneminde inşa edilen çok kubbeli anıtsal camilerin ilk örneği kabul edilir. Zaman içinde depremler, yangınlar, fırtınalar ve bazı istilalar nedeniyle zarar görmüş, çeşitli onarımlardan geçmiştir. Dikdörtgen planlı yapı 69 x 55 metre ölçülerinde olup yaklaşık 3795 metrekarelik bir alanı kaplar. On iki büyük fil ayağına oturan kemer ve pandantiflerle taşınan yirmi kubbe caminin üzerini örter; ortadaki kubbenin altı camla kapatılmış olup, tam altında on altı köşeli büyük bir şadırvan bulunur. Kesme küfeki taşından yapılan cephelerde sağır kemerler içinde alt ve üstte ikişer pencere sıralanır. Kuzey cephesinin iki köşesinde, kaideleri mermer gövdeleri tuğla olan birer minare yükselir. Doğu, batı ve kuzeyde olmak üzere üç kapısı bulunan yapının kuzeydeki taç kapısı özellikle görkemlidir. İç mekânda, 19. yüzyılın ikinci yarısı ile 20. yüzyıl başlarına tarihlenen 192 adet yazı, hat sanatının özgün örnekleri arasında sayılır. Caminin güneybatı köşesindeki Çinili Çeşme 1903 yılında yaptırılmış, 1959'daki kapsamlı onarım sırasında yıkılmış, 1993-1994 yıllarında ise özgününe yakın bir biçimde yeniden inşa edilmiştir. Kaynak: alanbaskanligi.bursa.bel.tr, kulturportali.gov.tr"
   }, {
     id: "orhan-gazi",
     name: "Orhan Gazi Camii",
     district: "Osmangazi",
     address: "Nalbantoğlu, Tarihi Çarşı, Osmangazi/Bursa",
-    mapsSearch: "Orhan Gazi Camii Bursa"
+    mapsSearch: "Orhan Gazi Camii Bursa",
+    founder: "Orhan Gazi",
+    period: "1339 (1413'te Karamanoğlu Mehmed Bey tarafından tahrip edilmiş, 1417'de Çelebi Sultan Mehmed döneminde onarılmıştır)",
+    infoUpdatedAt: "2026-07-28",
+    info: "Orhan Külliyesi içinde yer alan Orhan Gazi Camii, kapısı üzerindeki kitabeye göre 1339 yılında Orhan Gazi tarafından yaptırılmıştır. Kitabede, caminin 1413 yılında Karamanoğlu Mehmed Bey tarafından yakıldığı, 1417 yılında ise Çelebi Sultan Mehmed döneminde onarıldığı belirtilir. Bursa'da zaviyeli (tabhaneli) plan şemasıyla inşa edilen ilk camidir; mihrap ekseni boyunca art arda sıralanan iki kubbeli mekân, bunların iki yanında birer eyvan ve önünde son cemaat yerinden oluşur. Ana mekânın üzerini sekizgen kasnaklara oturan iki kubbe, eyvanların üzerini ise daha küçük kubbeler örter. Duvarları farklı biçimlerde bir araya getirilen moloz taşı ve tuğla ile örülmüştür; tek minaresi kuzeydoğu köşesinde, son cemaat yerinin solunda yükselir. Tuğladan yapılan kirpi saçaklar ve duvarlardaki rozetler yapıya özgün bir görünüm kazandırır. Beş gözlü son cemaat yerinin duvarları üç sıra tuğla ve bir sıra kesme taşla örülmüş, önünde kesme taştan altı ayak sivri tuğla kemerlerle birbirine bağlanmıştır; yan cephelerde ise devşirme Bizans başlıklı birer sütunla ikişer kemer oluşturulmuştur. Son cemaat yerinin üzeri ortada üç kubbe, yanlarda tonozla örtülüdür. Cami 1855 depreminde büyük ölçüde zarar görmüş, birkaç kez onarılmış; 1905 yılında Vali Reşid Paşa döneminde yapılan tamirde daha önce bulunmayan doğu kapısı açılmıştır. Kaynak: alanbaskanligi.bursa.bel.tr, kulturportali.gov.tr"
   }, {
     id: "hudavendigar",
     name: "I. Murad Hüdavendigar Camii",
     district: "Osmangazi",
     address: "Çekirge, 1. Murat Sk., Osmangazi/Bursa",
-    mapsSearch: "Hüdavendigar Camii Bursa"
+    mapsSearch: "Hüdavendigar Camii Bursa",
+    founder: "Sultan I. Murad (Hüdavendigar)",
+    period: "1363 (inşaatın yaklaşık 19 yıl sürdüğü kaydedilir)",
+    infoUpdatedAt: "2026-07-28",
+    info: "Çekirge'de yer alan Hüdavendigar Camii'nin inşaatına 1363 yılında Sultan I. Murad tarafından başlanmıştır; bazı kayıtlarda yapımının yaklaşık on dokuz yıl sürdüğü belirtilir. İki katlı olarak inşa edilen yapının alt katı cami, üst katı ise medrese olarak düzenlenmiştir. Diğer külliyelerde genellikle ayrı yapılar olarak yer alan zaviye ve medrese mekânları, burada ibadet yeriyle iç içe kurgulanmıştır. Kemerleri ve giriş bölümünün yapısal özellikleri bakımından Bursa'daki erken dönem Osmanlı camilerinden farklılık gösterir. Caminin batı köşesinde, sivri kemerli bir niş içine alınmış ve kirpi saçakla sonlandırılmış bir çeşme bulunur; bu çeşme, Osmanlı'nın erken dönem çeşme uygulamalarının tipik bir örneği olarak kabul edilir. Kaynak: alanbaskanligi.bursa.bel.tr"
   }, {
     id: "muradiye",
     name: "Muradiye Camii (II. Murad)",
     district: "Osmangazi",
     address: "Muradiye, Prf. Dr. Halil İnalcık Sk., Osmangazi/Bursa",
-    mapsSearch: "Muradiye Camii Bursa"
+    mapsSearch: "Muradiye Camii Bursa",
+    founder: "Sultan II. Murad",
+    period: "1425-1426",
+    infoUpdatedAt: "2026-07-28",
+    info: "Muradiye (II. Murad) Külliyesi'nin merkezinde yer alan cami, giriş kapısı üzerindeki kitabeye göre 1425-1426 yıllarında Sultan II. Murad tarafından yaptırılmıştır ve Bursa'da son sultan camisidir. Zaviyeli plan tipindeki camilerin en yalın örneklerinden biri olmasına rağmen, gerek dış cephesindeki taş-tuğla işçiliği gerekse iç mekânlardaki renkli sırlı çiniler bakımından oldukça zengin bir süslemeye sahiptir. Tuğladan inşa edilen iki minareden doğudaki daha eskidir; batıdaki minarenin kaidesinde 1322 Muharrem (Nisan 1902) tarihi okunmaktadır. Cami, içinde Sultan II. Murad'ın türbesi de dâhil olmak üzere toplam on iki türbenin bulunduğu hazireyle birlikte, 1425 yılında yaptırılmaya başlanan Muradiye Külliyesi'nin ana yapısını oluşturur. Kaynak: alanbaskanligi.bursa.bel.tr, kulturportali.gov.tr"
   }, {
     id: "sehadet-camii",
     name: "Şahadet Camii (Hisar / Kale Camii)",
     district: "Osmangazi",
     address: "Hisar, Tophane Parkı İçi, Osmangazi/Bursa",
-    mapsSearch: "Şahadet Camii Bursa"
+    mapsSearch: "Şahadet Camii Bursa",
+    founder: "I. Murad Hüdavendigar",
+    period: "1365 (1389'da Sultan'ın Kosova'da şehit olmasının ardından bugünkü adını almıştır)",
+    infoUpdatedAt: "2026-07-28",
+    info: "Hisar (Tophane) semtinde, dönemin Bey Sarayı'nın tam karşısında yer alan cami, I. Murad Hüdavendigar tarafından 1365 yılında yaptırılmış ve ilk dönemde 'Sultan Camisi' ya da 'Kale Camisi' olarak anılmıştır. I. Murad'ın 1389 yılında Kosova'da şehit düşmesinin ardından yapı, bugün de kullanılan 'Şehadet Camii' adını almıştır. Kaynak: kulturportali.gov.tr"
   }, {
     id: "uftade-camii",
     name: "Üftade Camii ve Mescidi",
