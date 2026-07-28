@@ -184,12 +184,6 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Somuncu Baba Camii",
     info: "Yıldırım Bayezid Dönemi'nde, Şeyh Hamid adına, Başcı Hacı Sevindik tarafından yaptırılmıştır. Ana hatları ile dikdörtgen planı olan cami; iç ölçüleri 5.70 x 5.70 metre olan tek kubbeli kare bir alanla, kuzey yönünde buna eklenen 3.00 x 5.70 metre iç ölçülerinde bir son cemaat yerinden oluşmaktadır. Son cemaat yerinin üstü tonozla örtülüdür. Kalkan duvarlı camilerdendir. Bursa kemerli bir kapı ile asıl ibadet alanına girilmektedir. Beden duvarları düzgün moloz taş ve iki sıra tuğla örgülü yatay düzende üçer sıralı tuğla hatıllarla takviye edilmiştir. Sekizgen kaideli tuğla-taş almaşıklı minare, tuğla gövdeli ve sivri külahlıdır. Caminin içine yeni çiniler döşenmiştir. 1955-1971 yıllarında aslına uygun olarak onarılmıştır. Doğusunda mezarlar vardır. Kaynak: https://www.kulturportali.gov.tr/"
   }, {
-    id: "ishakpasa-camii",
-    name: "İshakpaşa Camii",
-    district: "Osmangazi",
-    address: "Muradiye, İshakpaşa Sk., Osmangazi/Bursa",
-    mapsSearch: "İshakpaşa Camii Bursa"
-  }, {
     id: "bedrettin-camii",
     name: "Bedrettin Camii",
     district: "Osmangazi",
@@ -1110,8 +1104,11 @@ let PRESET_MOSQUES = [{
     district: "İnegöl",
     address: "Cuma Mahallesi, Nuri Doğrul Cd., İshak Paşa Medresesi yanı, İnegöl/Bursa",
     mapsSearch: "Yıldırım Camii İnegöl",
+    founder: "I. Bayezid (Yıldırım Bayezid)",
+    period: "1398-1402 (günümüzdeki bina II. Abdülhamid Dönemi'nde yenilendi)",
     addedAt: "2026-07-13T06:00:00",
-    info: "İnegöl ilçe merkezinde, İshak Paşa Medresesi yanında cami. I. Beyazıt Yıldırım tarafından 1398-1402 yıllarında yaptırılmış ise de, zamanla tahrip olduğu için, Abdülhamit II. döneminde yerine günümüzdeki gotik yapı inşa edilmiştir. Evliya çelebi, Seyahatnamesinde kubbesinin kiremit örtülü olduğunu belirtmektedir. Yalnızca minaresinin kaidesi özgünlüğünü korumaktadır. 10.50 x 10.50 metre boyutlarında kare planlıdır. Yıldırım Beyazıt Camisi adıyla da anılır. Altıgen kaidesi üstünde yükselen silindirik tuğla minaresi tek şerefelidir. Şerefesinin üst tarafında çini süslemeler vardır. İnegöl'ün en eski camisidir. Yapının iç ve dış duvarları sıvandığından malzeme ve teknik belli olamamaktadır. Minare kaidesi bir sıra taş, üç sıra tuğla ile almaşık teknikte örülmüştür. Gövde ve petek tuğladır. Kasnak, pandandif ve kubbe yüzeyi bitkisel motifli kalem işleriyle süslüdür. Harim duvarlarında bitkisel bezemeler ve yazılar görülür. Cami; Yıldırım Cami, Beyazıd Han Cami, Yıldırım Han Cami, Cuma Cami adlarıyla anılmaktadır. Kaynak: https://www.kulturportali.gov.tr/"
+    infoUpdatedAt: "2026-07-29",
+    info: "İnegöl ilçe merkezinde, Cuma Mahallesi Nuri Doğrul Caddesi'nde, İshak Paşa Medresesi'nin yanında yer alan cami, İnegöl'ün en eski camisidir. Yıldırım Cami, Beyazıd Han Cami, Yıldırım Han Cami, Cuma Cami ve Yıldırım Beyazıt Camisi adlarıyla da anılır. Özgün yapı I. Bayezid (Yıldırım) tarafından 1398-1402 yıllarında yaptırılmış, ancak zamanla tahrip olması üzerine II. Abdülhamid döneminde yerine bugünkü gotik yapı inşa edilmiştir; yalnızca minarenin kaidesi özgünlüğünü korumaktadır. Evliya Çelebi, Seyahatnâme'sinde kubbesinin kiremit örtülü olduğunu belirtir. 10,50 x 10,50 metre ölçülerinde kare planlı yapının altıgen kaide üzerinde yükselen silindirik tuğla minaresi tek şerefelidir; şerefenin üst tarafında çini süslemeler bulunur. Minare kaidesi bir sıra taş, üç sıra tuğla ile almaşık teknikte örülmüş, gövde ve petek tuğladandır. İç ve dış duvarlar sıvalı olduğundan özgün malzeme ve teknik tam olarak belli değildir. Kasnak, pandantif ve kubbe yüzeyi bitkisel motifli kalem işleriyle, harim duvarları ise bitkisel bezemeler ve yazılarla süslüdür. Kaynak: Kültür Portalı (kulturportali.gov.tr)"
   }, {
     id: "kasim-efendi-camii-inegol",
     name: "Kasım Efendi Camii",
@@ -1485,13 +1482,6 @@ let PRESET_MOSQUES = [{
 
   // === İnegöl eklemeleri ===
   {
-    id: "isak-pasa-camii-inegol",
-    name: "İsak Paşa Camii ve Haziresi",
-    district: "İnegöl",
-    address: "Camiikebir Mevkii, Cuma Mah., İnegöl/Bursa",
-    mapsSearch: "İsak Paşa Camii İnegöl",
-    addedAt: "2026-07-21"
-  }, {
     id: "burhaniye-camii-inegol",
     name: "Burhaniye Camii",
     district: "İnegöl",
@@ -1921,30 +1911,35 @@ let PRESET_MOSQUES = [{
   }];;
 const MOSQUE_INFO = {
   "ulu-cami": {
-    period: "1396 – 1399 (Yıldırım Bayezid Dönemi)",
-    founder: "Yıldırım Bayezid (I. Bayezid)",
-    architect: "Mimarı kesin olarak bilinmiyor; kaynaklarda Ali Neccar adı geçer.",
-    info: "Niğbolu Zaferi sonrası, adak olarak 20 ayrı cami yerine 20 kubbeli tek bir ulu cami yapılması önerisiyle inşa edilmiştir. Türkiye'nin iç mekânı en geniş camisi olup kündekari tekniğiyle işlenmiş tarihi minberi ve içindeki şadırvanla ünlüdür."
+    period: "1396-1400 (bazı kaynaklarda 1399)",
+    founder: "Yıldırım Bayezid (mimarı Ali Neccar olduğu düşünülmektedir)",
+    architect: "Ali Neccar (kesin olarak bilinmemekle birlikte kaynaklarda bu isim geçer)",
+    infoUpdatedAt: "2026-07-28",
+    info: "Osmangazi ilçesinde, tarihi çarşının ortasında yer alan Ulu Cami, Yıldırım Bayezid tarafından 1396-1400 yılları arasında yaptırılmıştır; mimarının Ali Neccar olduğu düşünülmektedir. Osmanlı döneminde inşa edilen çok kubbeli anıtsal camilerin ilk örneği kabul edilir. Zaman içinde depremler, yangınlar, fırtınalar ve bazı istilalar nedeniyle zarar görmüş, çeşitli onarımlardan geçmiştir. Dikdörtgen planlı yapı 69 x 55 metre ölçülerinde olup yaklaşık 3795 metrekarelik bir alanı kaplar. On iki büyük fil ayağına oturan kemer ve pandantiflerle taşınan yirmi kubbe caminin üzerini örter; ortadaki kubbenin altı camla kapatılmış olup, tam altında on altı köşeli büyük bir şadırvan bulunur. Kesme küfeki taşından yapılan cephelerde sağır kemerler içinde alt ve üstte ikişer pencere sıralanır. Kuzey cephesinin iki köşesinde, kaideleri mermer gövdeleri tuğla olan birer minare yükselir. Doğu, batı ve kuzeyde olmak üzere üç kapısı bulunan yapının kuzeydeki taç kapısı özellikle görkemlidir. İç mekânda, 19. yüzyılın ikinci yarısı ile 20. yüzyıl başlarına tarihlenen 192 adet yazı, hat sanatının özgün örnekleri arasında sayılır. Caminin güneybatı köşesindeki Çinili Çeşme 1903 yılında yaptırılmış, 1959'daki kapsamlı onarım sırasında yıkılmış, 1993-1994 yıllarında ise özgününe yakın bir biçimde yeniden inşa edilmiştir. Kaynak: alanbaskanligi.bursa.bel.tr, kulturportali.gov.tr"
   },
   "orhan-gazi": {
-    period: "1339 (Orhan Gazi Dönemi)",
+    period: "1339 (1413'te Karamanoğlu Mehmed Bey tarafından tahrip edilmiş, 1417'de Çelebi Sultan Mehmed döneminde onarılmıştır)",
     founder: "Orhan Gazi",
-    info: "Bursa'da kale surları dışına inşa edilen ilk külliyenin ana yapısıdır; şehirdeki 'zaviyeli plan' tipindeki ilk camidir. 1413'te Karamanoğlu Mehmed Bey tarafından tahrip edilmiş, 1417'de Çelebi Mehmed tarafından onarılmıştır."
+    infoUpdatedAt: "2026-07-28",
+    info: "Orhan Külliyesi içinde yer alan Orhan Gazi Camii, kapısı üzerindeki kitabeye göre 1339 yılında Orhan Gazi tarafından yaptırılmıştır. Kitabede, caminin 1413 yılında Karamanoğlu Mehmed Bey tarafından yakıldığı, 1417 yılında ise Çelebi Sultan Mehmed döneminde onarıldığı belirtilir. Bursa'da zaviyeli (tabhaneli) plan şemasıyla inşa edilen ilk camidir; mihrap ekseni boyunca art arda sıralanan iki kubbeli mekân, bunların iki yanında birer eyvan ve önünde son cemaat yerinden oluşur. Ana mekânın üzerini sekizgen kasnaklara oturan iki kubbe, eyvanların üzerini ise daha küçük kubbeler örter. Duvarları farklı biçimlerde bir araya getirilen moloz taşı ve tuğla ile örülmüştür; tek minaresi kuzeydoğu köşesinde, son cemaat yerinin solunda yükselir. Tuğladan yapılan kirpi saçaklar ve duvarlardaki rozetler yapıya özgün bir görünüm kazandırır. Beş gözlü son cemaat yerinin duvarları üç sıra tuğla ve bir sıra kesme taşla örülmüş, önünde kesme taştan altı ayak sivri tuğla kemerlerle birbirine bağlanmıştır; yan cephelerde ise devşirme Bizans başlıklı birer sütunla ikişer kemer oluşturulmuştur. Son cemaat yerinin üzeri ortada üç kubbe, yanlarda tonozla örtülüdür. Cami 1855 depreminde büyük ölçüde zarar görmüş, birkaç kez onarılmış; 1905 yılında Vali Reşid Paşa döneminde yapılan tamirde daha önce bulunmayan doğu kapısı açılmıştır. Kaynak: alanbaskanligi.bursa.bel.tr, kulturportali.gov.tr"
   },
   "hudavendigar": {
-    period: "1365 – 1366 (I. Murad Dönemi)",
-    founder: "I. Murad (Hüdavendigar)",
-    info: "Alt katı ibadet mekânı, üst katı medrese olarak tasarlanmış; Osmanlı mimarisinde eşi görülmeyen iki katlı bir yapıdır. O dönem şehre uzak sayılan Çekirge'de, ovaya hâkim bir tepe üzerine inşa edilmiştir."
+    period: "1363 (inşaatın yaklaşık 19 yıl sürdüğü kaydedilir)",
+    founder: "Sultan I. Murad (Hüdavendigar)",
+    infoUpdatedAt: "2026-07-28",
+    info: "Çekirge'de yer alan Hüdavendigar Camii'nin inşaatına 1363 yılında Sultan I. Murad tarafından başlanmıştır; bazı kayıtlarda yapımının yaklaşık on dokuz yıl sürdüğü belirtilir. İki katlı olarak inşa edilen yapının alt katı cami, üst katı ise medrese olarak düzenlenmiştir. Diğer külliyelerde genellikle ayrı yapılar olarak yer alan zaviye ve medrese mekânları, burada ibadet yeriyle iç içe kurgulanmıştır. Kemerleri ve giriş bölümünün yapısal özellikleri bakımından Bursa'daki erken dönem Osmanlı camilerinden farklılık gösterir. Caminin batı köşesinde, sivri kemerli bir niş içine alınmış ve kirpi saçakla sonlandırılmış bir çeşme bulunur; bu çeşme, Osmanlı'nın erken dönem çeşme uygulamalarının tipik bir örneği olarak kabul edilir. Kaynak: alanbaskanligi.bursa.bel.tr"
   },
   "muradiye": {
-    period: "1425 – 1426 (II. Murad Dönemi)",
-    founder: "II. Murad",
-    info: "Bursa'da bir Osmanlı padişahı adına yapılan son camidir. Kündekari tekniğiyle işlenmiş ahşap giriş kapısı ve İznik çinileriyle tanınır; külliye çevresinde çok sayıda şehzade ve saray mensubunun türbesi bulunur."
+    period: "1425-1426",
+    founder: "Sultan II. Murad",
+    infoUpdatedAt: "2026-07-28",
+    info: "Muradiye (II. Murad) Külliyesi'nin merkezinde yer alan cami, giriş kapısı üzerindeki kitabeye göre 1425-1426 yıllarında Sultan II. Murad tarafından yaptırılmıştır ve Bursa'da son sultan camisidir. Zaviyeli plan tipindeki camilerin en yalın örneklerinden biri olmasına rağmen, gerek dış cephesindeki taş-tuğla işçiliği gerekse iç mekânlardaki renkli sırlı çiniler bakımından oldukça zengin bir süslemeye sahiptir. Tuğladan inşa edilen iki minareden doğudaki daha eskidir; batıdaki minarenin kaidesinde 1322 Muharrem (Nisan 1902) tarihi okunmaktadır. Cami, içinde Sultan II. Murad'ın türbesi de dâhil olmak üzere toplam on iki türbenin bulunduğu hazireyle birlikte, 1425 yılında yaptırılmaya başlanan Muradiye Külliyesi'nin ana yapısını oluşturur. Kaynak: alanbaskanligi.bursa.bel.tr, kulturportali.gov.tr"
   },
   "sehadet-camii": {
-    period: "1365 (I. Murad Hüdavendigar Dönemi); 1892'de büyük ölçüde yenilendi",
-    founder: "I. Murad (Hüdavendigar)",
-    info: "Hisar içinde, sarayın tam karşısında I. Murad Hüdavendigar tarafından 1365 yılında 'Sultan Camisi' (Kale Camisi) adıyla yaptırılmıştır. Çeşitli kaynaklara göre, Sultan'ın 1389'da Kosova'da şehit düşmesi üzerine cami 'Şahadet Camisi' adını almıştır. Üç sahınlı; orta sahın iki kubbe, iki yan sahın ise ikişerden toplam dört tonozla örtülü, çok direkli-kubbeli bir Ulu Cami örneğidir. Kuzeydoğusunda tek minaresi, kuzeyinde dört küçük kubbeli son cemaat yeri bulunur; 17. yüzyılda güney cephesini desteklemek için iki payanda eklenmiştir. 1855 depreminde ağır hasar görmüş, 1892'de Vali Mahmud Celaleddin tarafından yıkıntılar üzerine, yalnızca orta sahından ibaret ve aslının yaklaşık üçte iki küçüklüğünde, oldukça farklı bir biçimde yeniden inşa edilmiştir. Cephesi 19. yüzyılda Avrupa'da yaygın Gotik üslupta, sivri kemerli pencerelerle yapılmıştır. Kaynak: turkiyenintarihieserleri.com"
+    period: "1365 (1389'da Sultan'ın Kosova'da şehit olmasının ardından bugünkü adını almıştır)",
+    founder: "I. Murad Hüdavendigar",
+    infoUpdatedAt: "2026-07-28",
+    info: "Hisar (Tophane) semtinde, dönemin Bey Sarayı'nın tam karşısında yer alan cami, I. Murad Hüdavendigar tarafından 1365 yılında yaptırılmış ve ilk dönemde 'Sultan Camisi' ya da 'Kale Camisi' olarak anılmıştır. I. Murad'ın 1389 yılında Kosova'da şehit düşmesinin ardından yapı, bugün de kullanılan 'Şehadet Camii' adını almıştır. Kaynak: kulturportali.gov.tr"
   },
   "yesil-cami": {
     period: "1414 – 1419 (Çelebi Mehmed Dönemi)",
@@ -2034,9 +2029,10 @@ const MOSQUE_INFO = {
     info: "Mudanya ilçe merkezinde, sahil şeridinin arkasındaki cadde üzerinde, girişe oldukça yakın bir konumda bulunur. Kare planlı yapının iç kısmında bir kubbe bulunmakla birlikte, kubbenin üzeri piramit tarzında kapatıldığından dışarıdan görünmez; bu özelliğiyle 'gizli kubbe' olarak adlandırılır. Taştan inşa edilmiş tek minareli caminin ağaçtan beyaz oyma bir minberi, klasik eski Osmanlı süslemeleriyle bezenmiş bir mihrabı ve ağaç şerit süslemeli bir tavanı vardır. Mermer sütunlu bir yan girişi de bulunan caminin kapısı üzerinde Osmanlıca yazılar yer alır; iç kısımda bayanlara ayrılmış bir balkon bölümü mevcuttur. Arka bahçesindeki hazirede Havace Hacı Ali bin Muhammet Hazretleri, Muhammet Necmettin Molla, Mudanya Müdürü Hurşit Ağa Mahdumu Ahmet Bey, Remzi Bey, Tevfik Efendi, Emine Seher Hanım, Mudanya Naibi İbrahim Efendi ile Elhac Salih Efendi'nin kerimesi Safiye Hatun'un kabirleri bulunmaktadır. Kaynak: Seyyah Çelebi"
   },
   "yildirim-camii-inegol": {
-    period: "1398-1402 (I. Bayezid/Yıldırım Dönemi); günümüzdeki bina II. Abdülhamid Dönemi'nde yenilendi",
+    period: "1398-1402 (günümüzdeki bina II. Abdülhamid Dönemi'nde yenilendi)",
     founder: "I. Bayezid (Yıldırım Bayezid)",
-    info: "İnegöl ilçe merkezinde, Cuma Mahallesi Nuri Doğrul Caddesi'nde, İshak Paşa Medresesi'nin yanında yer alır. İnegöl'ün en eski camisi olup Yıldırım Cami, Beyazıd Han Cami, Yıldırım Han Cami ve Cuma Cami adlarıyla da anılır. Özgün yapı I. Bayezid tarafından 1398-1402 yıllarında yaptırılmış, zamanla tahrip olması üzerine II. Abdülhamid döneminde yerine bugünkü gotik yapı inşa edilmiştir; yalnızca minarenin kaidesi özgünlüğünü korumaktadır. Evliya Çelebi Seyahatnâme'sinde kubbesinin kiremit örtülü olduğunu belirtir. 10,50 x 10,50 m ölçülerinde kare planlı yapının altıgen kaide üzerinde yükselen silindirik tuğla minaresi tek şerefeli olup şerefe üstünde çini süslemeler bulunur; minare kaidesi bir sıra taş, üç sıra tuğla ile almaşık örülmüş, gövde ve petek tuğladandır. İç ve dış duvarlar sıvalı olduğundan özgün malzeme ve teknik tam olarak belli değildir. Kasnak, pandantif ve kubbe yüzeyi bitkisel motifli kalem işleriyle, harim duvarları ise bitkisel bezemeler ve yazılarla süslüdür. Kaynak: Kültür Portalı"
+    infoUpdatedAt: "2026-07-29",
+    info: "İnegöl ilçe merkezinde, Cuma Mahallesi Nuri Doğrul Caddesi'nde, İshak Paşa Medresesi'nin yanında yer alan cami, İnegöl'ün en eski camisidir. Yıldırım Cami, Beyazıd Han Cami, Yıldırım Han Cami, Cuma Cami ve Yıldırım Beyazıt Camisi adlarıyla da anılır. Özgün yapı I. Bayezid (Yıldırım) tarafından 1398-1402 yıllarında yaptırılmış, ancak zamanla tahrip olması üzerine II. Abdülhamid döneminde yerine bugünkü gotik yapı inşa edilmiştir; yalnızca minarenin kaidesi özgünlüğünü korumaktadır. Evliya Çelebi, Seyahatnâme'sinde kubbesinin kiremit örtülü olduğunu belirtir. 10,50 x 10,50 metre ölçülerinde kare planlı yapının altıgen kaide üzerinde yükselen silindirik tuğla minaresi tek şerefelidir; şerefenin üst tarafında çini süslemeler bulunur. Minare kaidesi bir sıra taş, üç sıra tuğla ile almaşık teknikte örülmüş, gövde ve petek tuğladandır. İç ve dış duvarlar sıvalı olduğundan özgün malzeme ve teknik tam olarak belli değildir. Kasnak, pandantif ve kubbe yüzeyi bitkisel motifli kalem işleriyle, harim duvarları ise bitkisel bezemeler ve yazılarla süslüdür. Kaynak: Kültür Portalı (kulturportali.gov.tr)"
   },
   "inegol-ishakpasa": {
     period: "873 (1468-69) yılından önce tamamlanmış; vakfiyesi Safer 891/Şubat 1486, ek vakfiyesi Cemaziyelevvel 892/Mayıs 1487 tarihli",
