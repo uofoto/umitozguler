@@ -59,12 +59,6 @@ let PRESET_MOSQUES = [{
     address: "Abdal, Abdal Cd., Osmangazi/Bursa",
     mapsSearch: "Abdal Mehmed Camii Bursa"
   }, {
-    id: "haci-ozbek",
-    name: "Hacı Özbek Camii",
-    district: "Osmangazi",
-    address: "Reyhan, Tarihi Çarşı, Osmangazi/Bursa",
-    mapsSearch: "Hacı Özbek Camii Bursa"
-  }, {
     id: "reyhan-camii",
     name: "Reyhan Camii",
     district: "Osmangazi",
