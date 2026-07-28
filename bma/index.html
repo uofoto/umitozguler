@@ -137,6 +137,21 @@
     <p class="text-[9.5px] text-center mt-1.5" style="color:var(--ink-faint);">Kurulum sırasında bir uyarı görürseniz endişelenmeyin, sadece Chrome'unuzu güncelleyin.</p>
   </div>
 
+  <!-- iOS İÇİN "ANA EKRANA EKLE" TALİMAT BANDI -->
+  <div id="iosInstallBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-30 w-[92%] max-w-md">
+    <div class="paper-card rounded-2xl px-4 py-3 shadow-lg" style="border:1px solid var(--gold-soft);">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <div class="arch-badge w-8 h-8 flex-shrink-0" style="background:var(--gold); color:var(--teal-950);">
+            <i class="fa-solid fa-share-from-square text-xs"></i>
+          </div>
+          <p class="text-[11px] font-semibold leading-tight" style="color:var(--ink);">Uygulama olarak yüklemek için: Paylaş &gt; Ana Ekrana Ekle</p>
+        </div>
+        <button id="iosInstallDismissBtn" class="text-[10px] px-1 flex-shrink-0" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+
   <!-- SPLASH -->
   <div id="authLoader" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-6 overflow-hidden" style="background:var(--teal-950); opacity:1; transition:opacity .45s ease;">
     <!-- Dekoratif kemer motifi: logo belirirken arkasında kendini "çizerek" tamamlar -->
@@ -1553,6 +1568,43 @@
       });
       if (installBanner) installBanner.classList.add('hidden');
     });
+
+    // === iOS Safari için manuel "Ana Ekrana Ekle" talimatı ===
+    // iOS Safari 'beforeinstallprompt' olayını hiçbir zaman tetiklemez,
+    // bu yüzden yukarıdaki Chrome tabanlı kurulum bandı iPhone'da asla görünmez.
+    // Kullanıcıya Paylaş > Ana Ekrana Ekle yolunu manuel olarak gösteriyoruz.
+    (function () {
+      const ua = window.navigator.userAgent;
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isStandalone = window.navigator.standalone === true; // iOS'ta zaten ana ekrandan açılmışsa true
+
+      if (!isIOS || isStandalone) return;
+
+      // Kullanıcı daha önce kapattıysa tekrar gösterme (7 gün)
+      const dismissedAt = localStorage.getItem('iosInstallBannerDismissedAt');
+      if (dismissedAt && (Date.now() - parseInt(dismissedAt, 10)) < 7 * 24 * 60 * 60 * 1000) {
+        return;
+      }
+
+      const iosBanner = document.getElementById('iosInstallBanner');
+      const iosDismissBtn = document.getElementById('iosInstallDismissBtn');
+
+      if (iosBanner) {
+        iosBanner.classList.remove('hidden');
+        gtag('event', 'ios_install_instructions_shown', {
+          'event_category': 'PWA',
+          'event_label': 'iOS Install Banner Displayed'
+        });
+      }
+
+      if (iosDismissBtn) {
+        iosDismissBtn.addEventListener('click', () => {
+          if (iosBanner) iosBanner.classList.add('hidden');
+          localStorage.setItem('iosInstallBannerDismissedAt', String(Date.now()));
+          gtag('event', 'ios_install_banner_closed');
+        });
+      }
+    })();
 
     // Başlat
     populateMosquesDropdown();
