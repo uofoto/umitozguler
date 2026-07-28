@@ -45,7 +45,10 @@ let PRESET_MOSQUES = [{
     name: "Yiğit Köhne Camii",
     district: "Osmangazi",
     address: "Alacahırka, Kiremitçi Sk., Osmangazi/Bursa",
-    mapsSearch: "Yiğit Köhne Camii"
+    mapsSearch: "Yiğit Köhne Camii",
+    founder: "Yiğit oğlu Hacı Ali",
+    period: "15. yüzyılın ilk yarısı",
+    info: "İnönü Caddesi ile Yeni Cumhuriyet Caddesi'nin kesiştiği noktada bulunan cami, 15. yüzyılın ilk yarısında Yiğit oğlu Hacı Ali adlı bir kişi tarafından yaptırılmıştır. 1463 tarihli kadı sicillerinde caminin adı, 'Eski Yiğitoğlu' anlamına gelen İbn-i Yiğit Köhne, İbn-i Şab Köhne veya İbn-i Şab olarak geçmektedir; buradaki 'Şab' kelimesi yiğit anlamına gelir. Yolun zamanla yükseltilmesiyle çukurda kalan cami, kalkan duvarındaki on yedi adet kör mihrapçıkla dikkat çeker. 8,40 x 8,30 metre iç ölçülere sahip ana ibadet mekânı büyük bir kubbeyle örtülüdür ve ekli son cemaat yerinden minareye çıkılmaktadır. Duvarları iki sıra moloz taş, iki sıra tuğla dizileriyle örülmüştür; sekizgen kaideli minarede kaideden silindirik gövdeye geçiş tuğla ve mermer üçgenlerle sağlanmıştır. Kaynak: kulturportali.gov.tr, kulturenvanteri.com"
   }, {
     id: "alaaddin-bey",
     name: "Alaaddin Bey Camii",
@@ -391,9 +394,12 @@ let PRESET_MOSQUES = [{
     id: "enbiya",
     name: "Enbiya (Veled-i Enbiya) Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Enbiya Bursa",
-    addedAt: "2026-07-19"
+    address: "Reyhan, Reyhan Cd., Osmangazi/Bursa",
+    mapsSearch: "Veled-i Enbiya Camii Bursa",
+    addedAt: "2026-07-19",
+    founder: "Kazzazoğlu Söle (Süle) Mehmet Paşa",
+    period: "1449 veya 1499 (Fatih Sultan Mehmed Dönemi)",
+    info: "Mantıcı Caddesi ile Reyhan Caddesi'nin kesiştiği köşede yer alan cami, Fatih Sultan Mehmed devrinde Kazzazoğlu Söle (Süle) Mehmet Paşa tarafından yaptırılmıştır; kaynaklarda yapılış tarihi 1449 ile 1499 arasında farklı şekillerde verilmektedir. Son cemaat yeriyle birlikte dikdörtgen planlı olan cami, 1855 depreminde büyük hasar görmüş, 1890 yılında esaslı bir onarımdan geçirilerek üzeri ahşap çatıyla kapatılmıştır. Doğu ve batı duvarları özgünlüğünü korumaktadır; yapı 2009 yılında yeniden restore edilmiştir. Kaynak: kulturportali.gov.tr, alanbaskanligi.bursa.bel.tr"
   }, {
     id: "ertugrul-camii",
     name: "Ertuğrul Camii",
@@ -403,13 +409,6 @@ let PRESET_MOSQUES = [{
     addedAt: "2026-07-19",
     infoUpdatedAt: "2026-07-24",
     info: "Cumhuriyet Caddesi üzerinde, Sipahi Çarşısı'nın bitişiğindedir. 1395 yılında Yıldırım Bayezid'in oğlu Ertuğrul Çelebi adına yapılmıştır. 10,00 x 10,40 metre iç ölçülerinde kare planlı olan caminin üst kısmı ahşap olup, kırma çatı ile örülmüştür. Yapının kuzey cephesinde yer alan son cemaat yeri, 5,00 x 10,00 m. ölçüsündedir. Sonradan yapılan eklerle değişime uğramış, iki yanı düz duvarla kapatılmıştır. Kuzey cephe ortada iki ahşap direk ve yan duvarlar birbirine gemi teknesi formundaki kemerlerle bağlanmıştır. Ortada dar yanlarda geniş olan kemer açıklıkları sonradan camekanla kapatılmıştır. Beş metre derinliğinde bir son cemaat yeri vardır. Yanları duvarla, ortada dar ve yanlarda geniş olan kemer açıklıkları ise camekanla kapatılmıştır. Sık sık yapılan onarımlar sonucu özgün yapısını yitirmiştir. Duvarları moloz taşıyla örülen cami, Celal isyanları sırasında tümüyle yanmıştır. 1892 yılında tamir edilmiş ve 1954 yılında da aslına uygun olarak tekrar onarılmıştır. Caminin batı duvarına bitişik minareye son cemaat yerindeki bir kapıdan çıkılmaktadır. Kaidesi kare planlı, iki sıra tuğla ve moloz taşla örgülüdür. Kaynak: https://www.kulturportali.gov.tr/"
-  }, {
-    id: "guranli",
-    name: "Güranlı (Yeşil) Mescidi",
-    district: "Osmangazi",
-    address: "Osmangazi/Bursa",
-    mapsSearch: "Güranlı Bursa",
-    addedAt: "2026-07-19"
   }, {
     id: "hacilar-camii",
     name: "Hacılar Camii",
@@ -513,9 +512,12 @@ let PRESET_MOSQUES = [{
     id: "mes-ud-makramevi",
     name: "Mes'ud Makramevi (Hasırcılar) Mescidi",
     district: "Osmangazi",
-    address: "Osmangazi/Bursa",
+    address: "Namazgah, Havlucu Sk., Osmangazi/Bursa",
     mapsSearch: "Mes'ud Makramevi Bursa",
-    addedAt: "2026-07-19"
+    addedAt: "2026-07-19",
+    founder: "Mes'ud Makramevi",
+    period: "II. Murad Dönemi",
+    info: "Namazgâh semtinden Yeşil'e inen Havlucu Sokağı'nda bulunan mescit, Sultan II. Murad devrinde Mes'ud Makramevi tarafından yaptırılmıştır. Genel olarak dikdörtgen planlı olan yapının duvarları 0,75 metre kalınlığında olup üzeri ahşap çatı ile örtülüdür. Zaman içinde geçirdiği tamirler nedeniyle büyük değişikliklere uğrayan mescit, günümüzde sağlam durumda olup ibadete açıktır. Kaynak: kulturportali.gov.tr"
   }, {
     id: "molla-fenari-camii",
     name: "Molla Fenari Camii",
