@@ -1048,8 +1048,8 @@
       checkForAppUpdate(); // Sunucuda daha yeni bir sürüm var mı, sessizce kontrol et
       await loadVisits();
       loadProfileData(); 
-      displayDailyVerse(); // <--- YENİ EKLENEN: AÇILIŞTA AYET GÖSTER
-      initPrayerCountdown(); // <--- YENİ EKLENEN: NAMAZ VAKTİ GERİ SAYIMINI BAŞLAT
+      try { displayDailyVerse(); } catch (e) { console.error("Ayet yüklenemedi:", e); }
+      try { initPrayerCountdown(); } catch (e) { console.error("Namaz vakitleri yüklenemedi:", e); }
 
       document.getElementById('appModeBadge').innerHTML = useIndexedDB
         ? '<span style="color:var(--teal-700);">Cihazınızda Güvende</span>'
