@@ -23,8 +23,10 @@ Uygulama artık sadece bir kayıt defteri değil, kullanıcıyı motive eden bir
 - **Hata Yönetimi**: Uygulamanın ilk yüklenme anında oluşabilecek ağ veya veritabanı hatalarının tüm sistemi kilitlemesi engellendi (`try-catch` izolasyonu).
 - **Global İzleme**: Beklenmedik hataların tespiti için küresel bir hata yakalayıcı (`window.onerror`) eklendi.
 
-## 3. PWA ve Veri Bütünlüğü
-- **Service Worker v41**: Yeni özelliklerin tüm kullanıcılara anında ulaşması için önbellek stratejisi güncellendi.
+## 3. PWA ve Gelişmiş Çevrimdışı Harita
+- **Vektör Katman Desteği**: Bursa'nın tarihi bölgeleri (UNESCO Alanları, Hisar, Yeşil vb.) için GeoJSON formatında vektör verileri sisteme gömüldü. Bu veriler internet olmasa dahi harita üzerinde sınırları gösterir.
+- **Agresif Önbellekleme (SW v42)**: Service Worker, kritik harita varlıklarını ve tarihi bölge verilerini uygulama açılışında otomatik olarak cihaz hafızasına alır.
+- **Çevrimdışı Durum Göstergesi**: Harita ekranına eklenen akıllı rozet ile kullanıcının çevrimdışı harita durumu hakkında anlık bilgi sahibi olması sağlandı.
 - **Depolama Kotası Kontrolü**: Cihaz hafızasının dolması durumunda verilerin kaybolmaması için proaktif uyarı sistemi devreye alındı.
 
 ## Kurulum Talimatı

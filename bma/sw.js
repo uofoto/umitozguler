@@ -25,7 +25,7 @@
 // veritabanında saklanır; bu servis çalışanı yalnızca uygulamanın açılış
 // hızını ve çevrimdışı erişimini yönetir.
 
-const CACHE_VERSION = "v41"; // Yazılım Mühendisi Güncellemesi - v41
+const CACHE_VERSION = "v42"; // Çevrimdışı Harita Güncellemesi - v42
 const STATIC_CACHE = `bursa-manevi-atlas-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `bursa-manevi-atlas-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `bursa-manevi-atlas-tiles-${CACHE_VERSION}`;
@@ -55,7 +55,8 @@ const APP_SHELL = [
   "./ui.js",
   "./mosque-select-search.js",
   "./out-of-bursa-visit.js",
-  "./storage-health.js"
+  "./storage-health.js",
+  "./bursa-historical-zones.json"
 ];
 
 // ---- Harici CDN kütüphaneleri ----

@@ -7,6 +7,7 @@
     let mosqueGeocodeCache = {};
     let leafletMapInstance = null;
     let mosqueMarkersLayer = null;
+    let historicalZonesLayer = null;
     let mosqueMarkersById = {};
     let mapFilterMode = 'HEPSI';
     let isGeocodingMosques = false;
@@ -84,7 +85,33 @@
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap katkıda bulunanlar'
       }).addTo(leafletMapInstance);
+      
       mosqueMarkersLayer = L.layerGroup().addTo(leafletMapInstance);
+      historicalZonesLayer = L.geoJSON(null, {
+        style: function(feature) {
+          return {
+            color: 'var(--gold-deep)',
+            weight: 2,
+            opacity: 0.4,
+            fillColor: 'var(--gold)',
+            fillOpacity: 0.1,
+            dashArray: '5, 5'
+          };
+        },
+        onEachFeature: function(feature, layer) {
+          if (feature.properties && feature.properties.name) {
+            layer.bindPopup(`<div style="font-family:'Manrope',sans-serif; font-size:11px;"><strong style="color:var(--ink);">${feature.properties.name}</strong><br/><span style="color:var(--ink-soft);">${feature.properties.description}</span></div>`);
+          }
+        }
+      }).addTo(leafletMapInstance);
+
+      // Çevrimdışı Vektör Verilerini Yükle
+      fetch('./bursa-historical-zones.json')
+        .then(res => res.json())
+        .then(data => {
+          if (historicalZonesLayer) historicalZonesLayer.addData(data);
+        })
+        .catch(e => console.error("Vektör verileri yüklenemedi:", e));
     }
     function mosqueMatchesMapFilter(m, visitStats) {
       if (mapFilterMode === 'ZIYARET_EDILEN') return (visitStats[m.id] || 0) > 0;

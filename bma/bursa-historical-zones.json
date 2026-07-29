@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hanlar Bölgesi ve Sultan Külliyeleri",
+        "type": "UNESCO World Heritage",
+        "description": "Bursa'nın tarihi merkezi, Ulu Cami ve çevresindeki hanlar bölgesi."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [29.0550, 40.1850],
+            [29.0650, 40.1850],
+            [29.0650, 40.1800],
+            [29.0550, 40.1800],
+            [29.0550, 40.1850]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Yeşil ve Emirsultan Bölgesi",
+        "type": "Historical Zone",
+        "description": "Yeşil Cami, Yeşil Türbe ve Emir Sultan Külliyesi çevresi."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [29.0700, 40.1830],
+            [29.0850, 40.1830],
+            [29.0850, 40.1780],
+            [29.0700, 40.1780],
+            [29.0700, 40.1830]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hisar Bölgesi",
+        "type": "Historical Zone",
+        "description": "Bursa Kalesi (Hisar), Tophane ve Orhangazi/Osmangazi türbeleri."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [29.0500, 40.1880],
+            [29.0600, 40.1880],
+            [29.0600, 40.1830],
+            [29.0500, 40.1830],
+            [29.0500, 40.1880]
+          ]
+        ]
+      }
+    }
+  ]
+}
