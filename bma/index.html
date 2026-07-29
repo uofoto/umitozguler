@@ -1500,6 +1500,7 @@
   <script src="search.js"></script>
   <script src="backup.js"></script>
   <script src="ui.js"></script>
+  <script src="gamification.js"></script>
   <script src="mosque-select-search.js"></script>
   <script src="out-of-bursa-visit.js"></script>
   <script src="storage-health.js"></script>
@@ -1617,6 +1618,7 @@
       populateMosquesDropdown();
       setTodayDateTime();
       initApp();
+      if (typeof initGamification === 'function') initGamification();
       loadActiveJourney();
       renderJourneyBanner();
     } catch (e) {

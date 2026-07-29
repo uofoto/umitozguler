@@ -225,7 +225,28 @@ function updateStatsUI() {
     }
   ];
 
+  const badgeList = (typeof window.__gamification !== 'undefined') ? window.__gamification.getBadgeList() : [];
+  const earnedCount = badgeList.filter(b => b.earned).length;
+  
   panelEl.innerHTML = `
+        <!-- MANEVİ ROZETLER VE BAŞARILAR -->
+        <div class="paper-card rounded-3xl p-4 space-y-3">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center justify-between" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <span><i class="fa-solid fa-medal"></i> Manevi Rozetler</span>
+            <span class="text-[9px] font-ledger" style="color:var(--gold-deep);">${earnedCount} / ${badgeList.length}</span>
+          </h4>
+          <div class="grid grid-cols-4 gap-2">
+            ${badgeList.map(badge => `
+              <div class="flex flex-col items-center justify-center p-2 rounded-2xl transition-all ${badge.earned ? 'scale-100 opacity-100' : 'scale-90 opacity-40 grayscale'}" 
+                   style="background:${badge.earned ? 'var(--paper-deep)' : 'transparent'}; border:1px solid ${badge.earned ? 'var(--line)' : 'rgba(0,0,0,0.05)'};"
+                   title="${badge.title}: ${badge.desc}">
+                <span class="text-xl mb-1">${badge.icon}</span>
+                <span class="text-[8px] font-bold text-center leading-tight" style="color:${badge.earned ? 'var(--ink)' : 'var(--ink-faint)'};">${badge.title}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
         <!-- GENEL İLERLEME -->
         <div class="paper-card rounded-3xl p-4 space-y-3">
           <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">

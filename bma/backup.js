@@ -55,7 +55,7 @@
     // sürümleri otomatik olarak adım adım günceller; importBackup'ın geri
     // kalanına dokunmanız gerekmez.
     const BACKUP_APP_NAME = "Bursa Manevi Atlası";
-    const CURRENT_BACKUP_VERSION = "6.0";
+    const CURRENT_BACKUP_VERSION = "6.1";
     function compareBackupVersions(a, b) {
       const pa = String(a).split('.').map(Number);
       const pb = String(b).split('.').map(Number);
@@ -189,7 +189,7 @@
       try {
         const payload = {
           app: "Bursa Manevi Atlası",
-          version: "6.0",
+          version: "6.1",
           exportedAt: new Date().toISOString(),
           profileName: localStorage.getItem('manevi-atlas-username') || 'Seyyah',
           customMosques: JSON.parse(localStorage.getItem('manevi-atlas-custom-mosques') || '[]'),

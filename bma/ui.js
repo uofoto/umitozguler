@@ -1069,6 +1069,9 @@
       }, __remaining);
     }
     function triggerAllUIUpdates() {
+      if (window.__gamification && typeof window.__gamification.checkAllAchievements === 'function') {
+        window.__gamification.checkAllAchievements();
+      }
       updateDashboardUI();
       updateMosquesListUI();
       updateHistoryFeedUI();
