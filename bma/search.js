@@ -230,4 +230,9 @@ window.filterDistrict = function (district) {
   updateMosquesListUI();
 };
 
-document.getElementById('mosqueSearchInput').addEventListener('input', () => updateMosquesListUI());
+// Arama performansını artırmak için debounce (gecikmeli çalıştırma) eklendi
+    let searchDebounceTimeout;
+    document.getElementById('mosqueSearchInput').addEventListener('input', () => {
+      clearTimeout(searchDebounceTimeout);
+      searchDebounceTimeout = setTimeout(() => updateMosquesListUI(), 150);
+    });

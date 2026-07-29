@@ -1172,8 +1172,12 @@
 
         let mapBtnHTML = '';
         if (v.address) {
-          const isUrl = v.address.startsWith('http') || v.address.includes('google.com/maps');
-          const targetUrl = isUrl ? v.address : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.mosqueName + ' ' + v.address)}`;
+          const isUrl = (v.address.startsWith('http') || v.address.includes('google.com/maps')) && !v.address.toLowerCase().includes('javascript:');
+          let targetUrl = isUrl ? v.address : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.mosqueName + ' ' + v.address)}`;
+          // URL güvenliği: Sadece http, https veya google maps linklerine izin ver
+          if (isUrl && !targetUrl.startsWith('http') && !targetUrl.startsWith('https')) {
+            targetUrl = '#';
+          }
           mapBtnHTML = `
             <a href="${targetUrl}" target="_blank" rel="noopener" class="inline-flex items-center space-x-1 text-[10px] font-bold px-2 py-1 rounded-lg mt-2 transition-colors" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
               <i class="fa-solid fa-compass"></i><span class="truncate max-w-[150px]">${isUrl ? 'Konumu Görüntüle' : escapeHtml(v.address)}</span>
