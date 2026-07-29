@@ -80,7 +80,18 @@
       });
     }
     function saveFallbackToLocalStorage() {
-      localStorage.setItem(LS_FALLBACK_KEY, JSON.stringify(visitsData));
+      try {
+        const data = JSON.stringify(visitsData);
+        // localStorage yaklaşık 5MB limitine sahiptir. 4.5MB'ı geçerse uyar.
+        if (data.length > 4.5 * 1024 * 1024) {
+          console.warn("LocalStorage limiti zorlanıyor, veri kaybı riski!");
+        }
+        localStorage.setItem(LS_FALLBACK_KEY, data);
+      } catch (e) {
+        if (isQuotaExceededError(e)) {
+          throw e; // Üst katmanda (persistNewVisit) yakalanıp kullanıcıya gösterilecek
+        }
+      }
     }
     // localStorage/IndexedDB kota aşımı hatalarını, diğer hatalardan (örn.
     // gizli sekme kısıtlaması, geçici IO hatası) ayırt etmek için kullanılır;

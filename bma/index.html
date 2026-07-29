@@ -10,6 +10,12 @@
     // kodu izinsiz kopyalanıp başka bir sunucuya/alan adına konursa, sayfa
     // hiçbir içerik göstermeden tamamen boş kalır. Bkz. LICENSE ve
     // Kullanım Şartları (Ayarlar > Uygulama Hakkında).
+    // Küresel Hata Yakalayıcı (Global Error Handler)
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error("Global Hata:", message, "Kaynak:", source, "Satır:", lineno);
+      return false; 
+    };
+
     (function () {
       var ALLOWED_HOSTS = ['umitozguler.com.tr'];
       var DEV_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '::1', ''];
