@@ -915,6 +915,11 @@
     };
     // === PROFIL FOTOGRAFI VE ISIM YONETIMI ===
     function loadProfileData() {
+      // Geofencing Toggle Durumu
+      const geofencingEnabled = localStorage.getItem('manevi-atlas-geofencing-enabled') !== '0';
+      const geofencingToggle = document.getElementById('geofencingToggle');
+      if (geofencingToggle) geofencingToggle.checked = geofencingEnabled;
+
       const savedName = localStorage.getItem('manevi-atlas-username') || 'Ziyaretçi';
       const savedPhoto = localStorage.getItem('manevi-atlas-userphoto');
 
@@ -1537,6 +1542,15 @@
       document.getElementById('formTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     }
     // 12. MOBİL SEKME GEÇİŞİ 
+    window.toggleGeofencing = function(enabled) {
+      localStorage.setItem('manevi-atlas-geofencing-enabled', enabled ? '1' : '0');
+      if (window.__geofencing) {
+        if (enabled) window.__geofencing.startTracking();
+        else window.__geofencing.stopTracking();
+      }
+      showToast(enabled ? "Konum asistanı aktif." : "Konum asistanı kapatıldı.", "success");
+    };
+
     window.switchTab = function(index) {
       const isChanging = index !== currentActiveTab;
       if (isChanging) window.haptic(15);

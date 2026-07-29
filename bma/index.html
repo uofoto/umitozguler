@@ -863,6 +863,20 @@
             </div>
             <button onclick="triggerResetAll()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex-shrink-0" style="background:rgba(168,86,49,0.12); color:var(--brick-deep);">Sıfırla</button>
           </div>
+
+          <div class="settings-row">
+            <div class="flex items-center space-x-2.5">
+              <div class="settings-icon" style="background:rgba(195,154,69,0.12); color:var(--gold-deep);"><i class="fa-solid fa-location-crosshairs"></i></div>
+              <div>
+                <p class="text-[11px] font-bold" style="color:var(--ink);">Akıllı Konum Asistanı</p>
+                <p class="text-[9.5px]" style="color:var(--ink-faint);">Cami yakınındayken bildirim gönderir</p>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="geofencingToggle" class="sr-only peer" onchange="toggleGeofencing(this.checked)">
+              <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-900"></div>
+            </label>
+          </div>
         </div>
 
         <div class="paper-card rounded-3xl p-4 space-y-3">
@@ -1506,6 +1520,7 @@
   <script src="backup.js"></script>
   <script src="ui.js"></script>
   <script src="gamification.js"></script>
+  <script src="geofencing.js"></script>
   <script src="mosque-select-search.js"></script>
   <script src="out-of-bursa-visit.js"></script>
   <script src="storage-health.js"></script>
@@ -1618,12 +1633,33 @@
       }
     })();
 
+    // Bildirimden gelen mesajları dinle
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.action === 'openMosque') {
+          if (typeof openMosqueInfoModal === 'function') {
+            openMosqueInfoModal(event.data.mosqueId);
+          }
+        }
+      });
+    }
+
+    // URL parametrelerini kontrol et (?openMosque=ulu-cami)
+    const urlParams = new URLSearchParams(window.location.search);
+    const openMosqueId = urlParams.get('openMosque');
+    if (openMosqueId) {
+      setTimeout(() => {
+        if (typeof openMosqueInfoModal === 'function') openMosqueInfoModal(openMosqueId);
+      }, 1000);
+    }
+
     // Başlat
     try {
       populateMosquesDropdown();
       setTodayDateTime();
       initApp();
       if (typeof initGamification === 'function') initGamification();
+      if (typeof initGeofencing === 'function') initGeofencing();
       loadActiveJourney();
       renderJourneyBanner();
     } catch (e) {

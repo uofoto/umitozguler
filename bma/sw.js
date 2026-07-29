@@ -25,7 +25,7 @@
 // veritabanında saklanır; bu servis çalışanı yalnızca uygulamanın açılış
 // hızını ve çevrimdışı erişimini yönetir.
 
-const CACHE_VERSION = "v42"; // Çevrimdışı Harita Güncellemesi - v42
+const CACHE_VERSION = "v43"; // Geofencing ve Bildirim Güncellemesi - v43
 const STATIC_CACHE = `bursa-manevi-atlas-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `bursa-manevi-atlas-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `bursa-manevi-atlas-tiles-${CACHE_VERSION}`;
@@ -56,7 +56,8 @@ const APP_SHELL = [
   "./mosque-select-search.js",
   "./out-of-bursa-visit.js",
   "./storage-health.js",
-  "./bursa-historical-zones.json"
+  "./bursa-historical-zones.json",
+  "./geofencing.js"
 ];
 
 // ---- Harici CDN kütüphaneleri ----
@@ -223,4 +224,27 @@ self.addEventListener("fetch", (event) => {
   // her varlık otomatik olarak önbelleğe girer ve bir sonraki çevrimdışı
   // ziyarette kullanılabilir hale gelir.
   event.respondWith(staleWhileRevalidate(event.request, RUNTIME_CACHE));
+});
+
+// Bildirim Tıklama Etkileşimi
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const mosqueId = event.notification.data.mosqueId;
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url.includes('index.html') && 'focus' in client) {
+          if (mosqueId) {
+            client.postMessage({ action: 'openMosque', mosqueId: mosqueId });
+          }
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        const url = './index.html' + (mosqueId ? `?openMosque=${mosqueId}` : '');
+        return clients.openWindow(url);
+      }
+    })
+  );
 });

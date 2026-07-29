@@ -29,5 +29,11 @@ Uygulama artık sadece bir kayıt defteri değil, kullanıcıyı motive eden bir
 - **Çevrimdışı Durum Göstergesi**: Harita ekranına eklenen akıllı rozet ile kullanıcının çevrimdışı harita durumu hakkında anlık bilgi sahibi olması sağlandı.
 - **Depolama Kotası Kontrolü**: Cihaz hafızasının dolması durumunda verilerin kaybolmaması için proaktif uyarı sistemi devreye alındı.
 
+## 4. Akıllı Konum Farkındalığı (Geofencing)
+- **Proaktif Asistan**: Kullanıcı, envanterdeki 263 camiden birine 100 metre yaklaştığında otomatik bildirim gönderen sistem entegre edildi.
+- **Arka Plan Takibi**: Uygulama kapalı veya arka planda olsa dahi çalışabilen `navigator.geolocation.watchPosition` altyapısı kuruldu.
+- **Akıllı Bildirimler**: Aynı cami için bildirim yığılmasını önleyen 4 saatlik bekleme süresi (cooldown) ve sadece ziyaret edilmemiş camiler için uyarı verme mantığı eklendi.
+- **Kontrol Paneli**: Profil sekmesindeki ayarlar bölümünden bu özelliğin açılıp kapatılabilmesi sağlandı.
+
 ## Kurulum Talimatı
 Hazırlanan yeni paketi mevcut dosyaların üzerine yazdırarak yükleyebilirsiniz. Yükleme sonrası kullanıcıların yeni özellikleri görmesi için sayfayı bir kez yenilemeleri yeterli olacaktır.
