@@ -12,7 +12,7 @@
     // Kullanım Şartları (Ayarlar > Uygulama Hakkında).
     (function () {
       var ALLOWED_HOSTS = ['umitozguler.com.tr'];
-      var DEV_HOSTS = ['localhost', '127.0.0.1', ''];
+      var DEV_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '::1', ''];
       var host = window.location.hostname;
 
       function isAllowedHost(h) {
@@ -1607,11 +1607,15 @@
     })();
 
     // Başlat
-    populateMosquesDropdown();
-    setTodayDateTime();
-    initApp();
-    loadActiveJourney();
-    renderJourneyBanner();
+    try {
+      populateMosquesDropdown();
+      setTodayDateTime();
+      initApp();
+      loadActiveJourney();
+      renderJourneyBanner();
+    } catch (e) {
+      console.error("Uygulama başlatılırken hata oluştu:", e);
+    }
   </script>
 </body>
 </html>
