@@ -1085,34 +1085,23 @@
       updateFavoriteMosquesUI();
       updateStatsUI();
       updateHeroBadgeUI();
+      if (typeof syncUnvanGuideUI === 'function') syncUnvanGuideUI();
       if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
       if (typeof maybeShowBackupReminder === 'function') maybeShowBackupReminder();
     }
-    // ANA SAYFADA, İSMİN YANINDA GÖSTERİLEN BAŞARI ROZETİ
-    // "Başarı Rozetleri" kartındaki eşiklerle (10 / 25 / 50 / Tümü) birebir
-    // aynı mantığı kullanır: kaç FARKLI cami ziyaret edildiğine bakar ve
-    // ulaşılan en yüksek rozeti isim yanında küçük bir ikon olarak gösterir.
+    // ANA SAYFADA, İSMİN YANINDA GÖSTERİLEN UNVAN ROZETİ
+    // Tek gerçek kaynak: stats.js -> getCurrentUnvan(). Profil sekmesindeki unvan
+    // rehberi ve İstatistik sekmesindeki "Mevcut Unvanın" kartıyla her zaman
+    // aynı sonucu gösterir; artık kendi ayrı eşik listesini tutmuyor.
     function updateHeroBadgeUI() {
       const el = document.getElementById('heroBadgeIcon');
-      if (!el) return;
-      const totalMosques = PRESET_MOSQUES.length;
-      const visitedMosqueCount = PRESET_MOSQUES.filter(m =>
-        visitsData.some(v => v.mosqueId === m.id)
-      ).length;
-      const milestones = [
-        { count: 10, icon: '🥉', label: 'İlk 10 Cami' },
-        { count: 25, icon: '🥈', label: '25 Cami' },
-        { count: 50, icon: '🥇', label: '50 Cami' },
-        { count: totalMosques, icon: '<svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><circle cx="20" cy="20" r="18" fill="none" stroke="#C39A45" stroke-width="2"/><circle cx="20" cy="20" r="14" fill="#8C6A22"/><path d="M23 12a9 9 0 1 0 0 16 7.2 7.2 0 1 1 0-16Z" fill="#F4E4B8"/><path d="M27.2 17.6l.9 1.9 2.1.3-1.5 1.45.35 2.05-1.85-.97-1.85.97.35-2.05-1.5-1.45 2.1-.3Z" fill="#F4E4B8"/></svg>', label: 'Tüm Camiler Tamamlandı' }
-      ];
-      // En yüksek ulaşılan rozeti bul (eşikler artan sırada olduğu için sondan başa doğru tara)
-      let earned = null;
-      for (let i = milestones.length - 1; i >= 0; i--) {
-        if (visitedMosqueCount >= milestones[i].count) { earned = milestones[i]; break; }
-      }
-      if (earned) {
-        el.innerHTML = earned.icon;
-        el.title = earned.label + ' Kazanıldı';
+      if (!el || typeof getCurrentUnvan !== 'function') return;
+      const unvan = getCurrentUnvan();
+      if (unvan.current) {
+        el.className = 'leading-none sicil-tag';
+        el.style.color = 'var(--teal-700)';
+        el.textContent = unvan.current.title;
+        el.title = unvan.current.title + ' — ' + unvan.current.desc;
         el.classList.remove('hidden');
       } else {
         el.classList.add('hidden');

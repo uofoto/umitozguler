@@ -11,7 +11,9 @@
     // Rozet Tanımları
     const BADGE_DEFINITIONS = {
         // Milestone Rozetleri
-        'milestone-10': { id: 'milestone-10', title: 'İlk Adımlar', desc: '10 farklı cami ziyareti', icon: '🥉', color: '#CD7F32' },
+        // NOT: 10 cami eşiği kaldırıldı — bu artık "Türbedar" unvanıyla birebir
+        // aynı anlama geliyordu (bkz. stats.js -> getCurrentUnvan). Unvan sistemi
+        // aşamalı ilerlemeyi, rozetler ise ek/özel başarımları temsil eder.
         'milestone-50': { id: 'milestone-50', title: 'Deneyimli Seyyah', desc: '50 farklı cami ziyareti', icon: '🥈', color: '#C0C0C0' },
         'milestone-100': { id: 'milestone-100', title: 'Bursa Rehberi', desc: '100 farklı cami ziyareti', icon: '🥇', color: '#FFD700' },
         
@@ -103,7 +105,6 @@
             const uniqueMosqueIds = new Set(window.visitsData.map(v => v.mosqueId));
             
             // 1. Milestone Kontrolleri
-            if (uniqueMosqueIds.size >= 10) this.earnBadge('milestone-10');
             if (uniqueMosqueIds.size >= 50) this.earnBadge('milestone-50');
             if (uniqueMosqueIds.size >= 100) this.earnBadge('milestone-100');
 

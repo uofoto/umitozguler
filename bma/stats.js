@@ -69,6 +69,95 @@ function computeMosqueVisitStats() {
   return visitCountByMosque;
 }
 
+// MAKAM VE UNVAN SİSTEMİ — TEK GERÇEK KAYNAK (single source of truth)
+// "Manevi Rozetler" kartıyla karışmaması için: rozetler tekil/özel başarımlardır
+// (seri, belirli cami ziyareti vb.), unvan ise ziyaret ilerlemene göre OTOMATİK
+// yükselen tek bir kademeli sıralamadır. Uygulamadaki her yer (Profil sekmesindeki
+// unvan rehberi, isim yanındaki rütbe ikonu, İstatistik sekmesindeki unvan kartı)
+// unvanını hesaplarken SADECE bu fonksiyonu kullanmalı.
+const UNVAN_TIERS = [
+  { key: 'siftah', title: 'Siftah', desc: 'İlk namaz kaydını gerçekleştiren acemi seyyah.' },
+  { key: 'manevi', title: 'Manevi', desc: 'En az 1 vakit ibadeti tescillemiş seyyah.' },
+  { key: 'turbedar', title: 'Türbedar', desc: 'Bursa genelinde 10 farklı tarihi camide ibadet etmiş kişi.' },
+  { key: 'mihrap', title: 'Mihrap Fatihi', desc: 'Bir ilçedeki tüm tescilli tarihi camileri tamamlayan.' },
+  { key: 'fatih', title: 'Bursa Fatihi', desc: 'Envanterdeki tüm tescilli tarihi mabet ve mescidlerin tamamını tamamlayan baş seyyah.' }
+];
+
+function getCurrentUnvan() {
+  const totalMosques = PRESET_MOSQUES.length;
+  const visitedMosqueIds = new Set(visitsData.map(v => v.mosqueId));
+  const visitedCount = PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length;
+
+  const districtTotals = {};
+  PRESET_MOSQUES.forEach(m => { districtTotals[m.district] = (districtTotals[m.district] || 0) + 1; });
+  const districtVisited = {};
+  PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).forEach(m => {
+    districtVisited[m.district] = (districtVisited[m.district] || 0) + 1;
+  });
+  const completedDistricts = Object.keys(districtTotals).filter(d => districtTotals[d] > 0 && districtVisited[d] === districtTotals[d]);
+
+  if (visitedCount === 0) {
+    return { index: -1, current: null, next: UNVAN_TIERS[0], progressLabel: 'İlk namaz kaydınla "Siftah" unvanını kazan.', progressPerc: 0 };
+  }
+  if (totalMosques > 0 && visitedCount >= totalMosques) {
+    return { index: 4, current: UNVAN_TIERS[4], next: null, progressLabel: 'En üst unvana ulaştın.', progressPerc: 100 };
+  }
+  if (completedDistricts.length > 0) {
+    return {
+      index: 3,
+      current: UNVAN_TIERS[3],
+      next: UNVAN_TIERS[4],
+      progressLabel: (totalMosques - visitedCount) + ' cami kaldı (Bursa Fatihi için)',
+      progressPerc: Math.round((visitedCount / totalMosques) * 100)
+    };
+  }
+  if (visitedCount >= 10) {
+    let nearestDistrict = null, nearestRemaining = Infinity;
+    Object.keys(districtTotals).forEach(d => {
+      const remaining = districtTotals[d] - (districtVisited[d] || 0);
+      if (remaining > 0 && remaining < nearestRemaining) { nearestRemaining = remaining; nearestDistrict = d; }
+    });
+    return {
+      index: 2,
+      current: UNVAN_TIERS[2],
+      next: UNVAN_TIERS[3],
+      progressLabel: nearestDistrict ? (nearestRemaining + ' cami kaldı (' + nearestDistrict + ' ilçesini tamamla, Mihrap Fatihi ol)') : '',
+      progressPerc: 100
+    };
+  }
+  return {
+    index: 1,
+    current: UNVAN_TIERS[1],
+    next: UNVAN_TIERS[2],
+    progressLabel: (10 - visitedCount) + ' cami kaldı (Türbedar için)',
+    progressPerc: Math.round((visitedCount / 10) * 100)
+  };
+}
+window.getCurrentUnvan = getCurrentUnvan;
+window.UNVAN_TIERS = UNVAN_TIERS;
+
+// Profil sekmesindeki statik "Unvan Rehberi" listesini canlı unvanla eşitler:
+// kazanılan satırı vurgular, henüz kazanılmamışları soluklaştırır ve
+// üstteki "Mevcut unvanın: ..." etiketini doldurur.
+function syncUnvanGuideUI() {
+  const label = document.getElementById('profileCurrentUnvanLabel');
+  const list = document.getElementById('unvanGuideList');
+  if (!label && !list) return;
+
+  const unvan = getCurrentUnvan();
+  if (label) label.textContent = unvan.current ? unvan.current.title : 'Henüz yok';
+
+  if (list) {
+    list.querySelectorAll('[data-unvan-key]').forEach(row => {
+      const key = row.getAttribute('data-unvan-key');
+      const isEarned = unvan.current && UNVAN_TIERS.findIndex(t => t.key === unvan.current.key) >= UNVAN_TIERS.findIndex(t => t.key === key);
+      row.style.opacity = isEarned ? '1' : '0.45';
+      row.style.fontWeight = (unvan.current && key === unvan.current.key) ? '700' : '';
+    });
+  }
+}
+window.syncUnvanGuideUI = syncUnvanGuideUI;
+
 function updateStatsUI() {
   const panelEl = document.getElementById('statsPanel');
   if (!panelEl) return;
@@ -214,25 +303,35 @@ function updateStatsUI() {
     ? new Date(dateStr).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })
     : '—';
 
-  const badges = [
-    { count: 10, icon: '🥉', label: 'İlk 10 Cami' },
-    { count: 25, icon: '🥈', label: '25 Cami' },
-    { count: 50, icon: '🥇', label: '50 Cami' },
-    {
-      count: totalMosques,
-      icon: '<svg width="22" height="22" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;"><circle cx="20" cy="20" r="18" fill="none" stroke="#C39A45" stroke-width="2"/><circle cx="20" cy="20" r="14" fill="#8C6A22"/><path d="M23 12a9 9 0 1 0 0 16 7.2 7.2 0 1 1 0-16Z" fill="#F4E4B8"/><path d="M27.2 17.6l.9 1.9 2.1.3-1.5 1.45.35 2.05-1.85-.97-1.85.97.35-2.05-1.5-1.45 2.1-.3Z" fill="#F4E4B8"/></svg>',
-      label: 'Tüm Camiler Tamamlandı'
-    }
-  ];
-
   const badgeList = (typeof window.__gamification !== 'undefined') ? window.__gamification.getBadgeList() : [];
   const earnedCount = badgeList.filter(b => b.earned).length;
-  
+  const unvan = getCurrentUnvan();
+
   panelEl.innerHTML = `
-        <!-- MANEVİ ROZETLER VE BAŞARILAR -->
+        <!-- MEVCUT UNVANIN (tek gerçek kaynak: getCurrentUnvan) -->
+        <div class="paper-card rounded-3xl p-4 space-y-2.5" style="background:linear-gradient(135deg, var(--paper-deep), var(--paper));">
+          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
+            <i class="fa-solid fa-scroll"></i> Mevcut Unvanın
+          </h4>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-lg font-black" style="color:var(--gold-deep);">${unvan.current ? escapeHtml(unvan.current.title) : 'Henüz Unvansız'}</p>
+              <p class="text-[10.5px]" style="color:var(--ink-soft);">${unvan.current ? escapeHtml(unvan.current.desc) : 'İlk ziyaretini kaydet, yolculuğun başlasın.'}</p>
+            </div>
+            <span class="sicil-tag min-w-[76px] text-center flex-shrink-0" style="color:var(--teal-700);">${unvan.current ? escapeHtml(unvan.current.title) : '—'}</span>
+          </div>
+          ${unvan.next ? `
+            <div class="w-full h-1.5 rounded-full overflow-hidden" style="background:var(--paper-deep);">
+              <div class="h-full rounded-full" style="width:${unvan.progressPerc}%; background:linear-gradient(90deg, var(--teal-700), var(--teal-500));"></div>
+            </div>
+            <p class="text-[9.5px]" style="color:var(--ink-faint);">Sıradaki unvan: <strong style="color:var(--ink-soft);">${escapeHtml(unvan.next.title)}</strong> — ${escapeHtml(unvan.progressLabel)}</p>
+          ` : `<p class="text-[9.5px] font-bold" style="color:var(--gold-deep);">${escapeHtml(unvan.progressLabel)}</p>`}
+        </div>
+
+        <!-- MANEVİ ROZETLER (özel başarımlar: seriler, belirli camiler, sayısal kilometre taşları) -->
         <div class="paper-card rounded-3xl p-4 space-y-3">
           <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center justify-between" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
-            <span><i class="fa-solid fa-medal"></i> Manevi Rozetler</span>
+            <span><i class="fa-solid fa-medal"></i> Özel Rozetler</span>
             <span class="text-[9px] font-ledger" style="color:var(--gold-deep);">${earnedCount} / ${badgeList.length}</span>
           </h4>
           <div class="grid grid-cols-4 gap-2">
@@ -328,26 +427,6 @@ function updateStatsUI() {
           <p class="flex justify-between text-[11px] py-1" style="border-top:1px solid var(--line);"><span style="color:var(--ink-soft);">Arka Arkaya En Çok Ziyaret Edilen Gün Sayısı</span><strong style="color:var(--ink);">${longestStreakDays} gün</strong></p>
         </div>
 
-        <!-- BAŞARI ROZETLERİ -->
-        <div class="paper-card rounded-3xl p-4 space-y-2.5">
-          <h4 class="font-bold text-[10px] pb-2 uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint); border-bottom:1px solid var(--line);">
-            <i class="fa-solid fa-medal"></i> Başarı Rozetleri
-          </h4>
-          <div class="grid grid-cols-2 gap-2.5">
-            ${badges.map(badge => {
-              const earned = visitedCount >= badge.count;
-              return `
-                <div class="rounded-2xl p-3 flex items-center gap-2.5 ${earned ? '' : 'opacity-40'}" style="background:var(--paper-deep);">
-                  <span class="text-xl">${badge.icon}</span>
-                  <div class="min-w-0">
-                    <p class="text-[10.5px] font-bold truncate" style="color:var(--ink);">${badge.label}</p>
-                    <p class="text-[9px]" style="color:var(--ink-faint);">${earned ? 'Kazanıldı' : visitedCount + '/' + badge.count}</p>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
       `;
 }
 
