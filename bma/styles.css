@@ -22,39 +22,6 @@
       --nav-bg: rgba(14,22,19,0.92);
       color-scheme: dark;
     }
-    /* Şafak Teması (Sabah Namazı Vakti) */
-    html[data-theme="dawn"]{
-      --paper:#F0F4F8; --paper-deep:#D9E2EC; --paper-card:#FFFFFF;
-      --ink:#102A43; --ink-soft:#334E68; --ink-faint:#627D98;
-      --teal-950:#102A43; --teal-900:#243B53; --teal-800:#334E68; --teal-700:#486581; --teal-500:#627D98;
-      --gold:#486581; --gold-soft:#9FB3C8; --gold-deep:#243B53;
-      --brick:#CB6E17; --brick-soft:#F0B429; --brick-deep:#8D2B0B;
-      --line:#BCCCDC;
-      --shadow-ambient: rgba(16,42,67,0.12);
-      --nav-bg: rgba(240,244,248,0.94);
-    }
-    /* Gün Batımı Teması (Akşam Namazı Vakti) */
-    html[data-theme="sunset"]{
-      --paper:#FFF5F5; --paper-deep:#FFE3E3; --paper-card:#FFFFFF;
-      --ink:#621B1B; --ink-soft:#822727; --ink-faint:#A64444;
-      --teal-950:#4A0E0E; --teal-900:#742A2A; --teal-800:#9B2C2C; --teal-700:#C53030; --teal-500:#E53E3E;
-      --gold:#C39A45; --gold-soft:#E7D4A0; --gold-deep:#8C6A22;
-      --brick:#742A2A; --brick-soft:#C53030; --brick-deep:#4A0E0E;
-      --line:#FFD5D5;
-      --shadow-ambient: rgba(98,27,27,0.15);
-      --nav-bg: rgba(255,245,245,0.94);
-    }
-    /* Özel Gün Teması (Cuma / Kandil / Ramazan) */
-    html[data-theme="special"]{
-      --paper:#F0F9F4; --paper-deep:#DCF2E7; --paper-card:#FFFFFF;
-      --ink:#064E3B; --ink-soft:#065F46; --ink-faint:#047857;
-      --teal-950:#064E3B; --teal-900:#065F46; --teal-800:#047857; --teal-700:#059669; --teal-500:#10B981;
-      --gold:#C39A45; --gold-soft:#E7D4A0; --gold-deep:#8C6A22;
-      --brick:#A85631; --brick-soft:#E3A17E; --brick-deep:#7A3C1E;
-      --line:#D1FAE5;
-      --shadow-ambient: rgba(6,78,59,0.12);
-      --nav-bg: rgba(240,249,244,0.94);
-    }
     html, body{ height:100%; overscroll-behavior-y:none; }
     body{
       font-family:'Manrope', sans-serif;
@@ -356,48 +323,4 @@
     /* Tam ekran sayfa-modalları (harita, rota, yolculuk) sade bir fade ile açılır */
     #mapModal:not(.hidden), #nearbyModal:not(.hidden), #routeModal:not(.hidden), #journeyModal:not(.hidden), #termsModal:not(.hidden){
       animation:modal-panel-in .32s ease both;
-    }
-
-    /* AI Assistant Animations */
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-    .animate-bounce { animation: bounce 0.6s infinite; }
-    
-    #aiChatMessages::-webkit-scrollbar { width: 4px; }
-    #aiChatMessages::-webkit-scrollbar-track { background: transparent; }
-    #aiChatMessages::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
-    
-    .fade-in-up {
-      animation: fadeInUp 0.4s ease-out forwards;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Özel Gün Motifleri */
-    html[data-theme="special"] .motif-bg {
-      background-image:
-        radial-gradient(circle at 0 0, rgba(16,185,129,0.1) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(195,154,69,0.1) 0, transparent 55%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%2310B981' stroke-width='0.8' opacity='0.12'%3E%3Cpath d='M60 10 L110 40 L110 80 L60 110 L10 80 L10 40 Z'/%3E%3Cpath d='M60 25 L95 45 L95 75 L60 95 L25 75 L25 45 Z'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: auto, auto, 120px 120px;
-    }
-    
-    /* Şafak Motifi */
-    html[data-theme="dawn"] .motif-bg {
-      background-image:
-        radial-gradient(circle at 0 0, rgba(98,125,152,0.1) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(159,179,200,0.1) 0, transparent 55%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23627D98' stroke-width='0.6' opacity='0.1'%3E%3Ccircle cx='60' cy='60' r='40'/%3E%3Ccircle cx='60' cy='60' r='25'/%3E%3Cpath d='M60 10 L60 110 M10 60 L110 60'/%3E%3C/g%3E%3C/svg%3E");
-    }
-    
-    /* Gün Batımı Motifi */
-    html[data-theme="sunset"] .motif-bg {
-      background-image:
-        radial-gradient(circle at 0 0, rgba(197,48,48,0.1) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(246,173,85,0.1) 0, transparent 55%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23C53030' stroke-width='0.6' opacity='0.1'%3E%3Cpath d='M20 100 Q60 20 100 100'/%3E%3Ccircle cx='60' cy='60' r='15'/%3E%3C/g%3E%3C/svg%3E");
     }

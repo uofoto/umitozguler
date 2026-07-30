@@ -326,11 +326,6 @@ function updateStatsUI() {
             </div>
             <p class="text-[9.5px]" style="color:var(--ink-faint);">Sıradaki unvan: <strong style="color:var(--ink-soft);">${escapeHtml(unvan.next.title)}</strong> — ${escapeHtml(unvan.progressLabel)}</p>
           ` : `<p class="text-[9.5px] font-bold" style="color:var(--gold-deep);">${escapeHtml(unvan.progressLabel)}</p>`}
-          ${unvan.index >= 4 ? `
-            <button onclick="downloadCalligraphyCertificate()" class="w-full mt-3 py-2.5 rounded-2xl text-[11px] font-bold flex items-center justify-center gap-2 text-white shadow-lg active:scale-95 transition-transform" style="background:linear-gradient(135deg, #C39A45, #8C6A22);">
-              <i class="fa-solid fa-certificate"></i><span>Hat Sanatı Sertifikanı İndir</span>
-            </button>
-          ` : ''}
         </div>
 
         <!-- MANEVİ ROZETLER (özel başarımlar: seriler, belirli camiler, sayısal kilometre taşları) -->

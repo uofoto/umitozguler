@@ -480,8 +480,8 @@
       { key: 'Isha', label: 'Yatsı' }
     ];
     let prayerCountdownInterval = null;
-    window.prayerTimingsToday = null;
-    window.prayerTimingsTomorrow = null;
+    let prayerTimingsToday = null;
+    let prayerTimingsTomorrow = null;
     let prayerTimingsDateKey = null;
     function pcDateKey(d) {
       return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -528,15 +528,15 @@
       const todayKey = pcDateKey(now);
 
       try {
-        if (prayerTimingsDateKey !== todayKey || !window.prayerTimingsToday || !window.prayerTimingsTomorrow) {
+        if (prayerTimingsDateKey !== todayKey || !prayerTimingsToday || !prayerTimingsTomorrow) {
           const tomorrow = new Date(now);
           tomorrow.setDate(tomorrow.getDate() + 1);
           const [todayT, tomorrowT] = await Promise.all([
             getPrayerTimingsCached(now),
             getPrayerTimingsCached(tomorrow)
           ]);
-          window.prayerTimingsToday = todayT;
-          window.prayerTimingsTomorrow = tomorrowT;
+          prayerTimingsToday = todayT;
+          prayerTimingsTomorrow = tomorrowT;
           prayerTimingsDateKey = todayKey;
         }
 
@@ -546,7 +546,6 @@
         if (prayerCountdownInterval) clearInterval(prayerCountdownInterval);
         tickPrayerCountdown();
         prayerCountdownInterval = setInterval(tickPrayerCountdown, 1000);
-        if (typeof updateDynamicTheme === 'function') updateDynamicTheme();
       } catch (e) {
         console.error('Namaz vakti alınamadı:', e);
         document.getElementById('prayerCountdownLoading').classList.add('hidden');
@@ -557,7 +556,7 @@
       }
     };
     function tickPrayerCountdown() {
-      if (!window.prayerTimingsToday) return;
+      if (!prayerTimingsToday) return;
       const now = new Date();
 
       // Gün değiştiyse verileri tazele
@@ -571,15 +570,15 @@
 
       const todaysTimes = PRAYER_COUNTDOWN_MAP.map(p => ({
         key: p.key, label: p.label,
-        time: pcParseTimeOnDate(todayBase, window.prayerTimingsToday[p.key])
+        time: pcParseTimeOnDate(todayBase, prayerTimingsToday[p.key])
       }));
 
       let next = todaysTimes.find(p => p.time.getTime() > now.getTime());
       let isTomorrow = false;
-      if (!next && window.prayerTimingsTomorrow) {
+      if (!next && prayerTimingsTomorrow) {
         next = {
           key: 'Fajr', label: 'Sabah',
-          time: pcParseTimeOnDate(tomorrowBase, window.prayerTimingsTomorrow['Fajr'])
+          time: pcParseTimeOnDate(tomorrowBase, prayerTimingsTomorrow['Fajr'])
         };
         isTomorrow = true;
       }
@@ -609,11 +608,11 @@
       }
     }
     // CAMİ DETAY / TARİHÇE BİLGİSİ MODALI
-    window.currentMosqueInfoId = null;
+    let currentMosqueInfoId = null;
     window.openMosqueInfoModal = function(id) {
       const m = PRESET_MOSQUES.find(x => x.id === id);
       if (!m) return;
-      window.currentMosqueInfoId = id;
+      currentMosqueInfoId = id;
       const detail = getMosqueInfo(m);
       const isOsmangazi = m.district === 'Osmangazi';
 
@@ -670,11 +669,11 @@
     };
     window.closeMosqueInfoEditModal = function() {
       document.getElementById('mosqueInfoEditModal').classList.add('hidden');
-      if (window.currentMosqueInfoId) openMosqueInfoModal(window.currentMosqueInfoId);
+      if (currentMosqueInfoId) openMosqueInfoModal(currentMosqueInfoId);
     };
     document.getElementById('mosqueInfoEditModal').addEventListener('click', function(e) { if (e.target === this) closeMosqueInfoEditModal(); });
     window.saveMosqueInfoEdit = function() {
-      if (!window.currentMosqueInfoId) return;
+      if (!currentMosqueInfoId) return;
       const period = document.getElementById('editInfoPeriod').value.trim();
       const founder = document.getElementById('editInfoFounder').value.trim();
       const architect = document.getElementById('editInfoArchitect').value.trim();
@@ -685,12 +684,12 @@
         return;
       }
 
-      MOSQUE_INFO_OVERRIDES[window.currentMosqueInfoId] = { period, founder, info };
-      if (architect) MOSQUE_INFO_OVERRIDES[window.currentMosqueInfoId].architect = architect;
+      MOSQUE_INFO_OVERRIDES[currentMosqueInfoId] = { period, founder, info };
+      if (architect) MOSQUE_INFO_OVERRIDES[currentMosqueInfoId].architect = architect;
       saveMosqueInfoOverrides();
 
       document.getElementById('mosqueInfoEditModal').classList.add('hidden');
-      openMosqueInfoModal(window.currentMosqueInfoId);
+      openMosqueInfoModal(currentMosqueInfoId);
       showToast("Cami bilgisi güncellendi.", "success");
     };
     // CAMİ BİLGİ KARTINI SIFIRLAMA (KULLANICI DÜZENLEMESİNİ SİLME)
@@ -704,7 +703,7 @@
     function executeResetMosqueInfo(id) {
       delete MOSQUE_INFO_OVERRIDES[id];
       saveMosqueInfoOverrides();
-      if (window.currentMosqueInfoId === id) openMosqueInfoModal(id);
+      if (currentMosqueInfoId === id) openMosqueInfoModal(id);
       showToast("Bilgi kartı varsayılan haline döndürüldü.", "success");
     }
     window.openMosqueEditModal = function(id) {
