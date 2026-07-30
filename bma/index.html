@@ -1021,20 +1021,20 @@
           <p class="text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 mb-1.5" style="color:var(--teal-700);"><i class="fa-solid fa-book-open"></i><span>Kısa Bilgi</span></p>
           <p id="mosqueInfoText" class="text-[12px] leading-relaxed" style="color:var(--ink-soft);"></p>
         </div>
+        <button onclick="window.__aiAssistant.openChat(window.currentMosqueInfoId)" class="w-full py-3 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 text-white shadow-lg active:scale-95 transition-transform" style="background:linear-gradient(135deg, var(--teal-900), var(--teal-700)); border:1px solid rgba(195,154,69,0.35); margin-bottom: 8px;">
+          <i class="fa-solid fa-sparkles"></i><span>Yapay Zeka Rehberine Sor</span>
+        </button>
         <div id="mosqueInfoCustomNotice" class="hidden rounded-xl p-2.5 items-center gap-2 text-[9.5px]" style="background:rgba(195,154,69,0.1); border:1px solid rgba(195,154,69,0.3); color:var(--gold-deep);">
           <i class="fa-solid fa-pen-fancy"></i><span>Bu bilgi kartı sizin tarafınızdan düzenlendi.</span>
         </div>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="openMosqueInfoEditModal(currentMosqueInfoId)" class="py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
+          <button onclick="openMosqueInfoEditModal(window.currentMosqueInfoId)" class="py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" style="background:rgba(21,90,76,0.08); color:var(--teal-900);">
             <i class="fa-solid fa-pen"></i><span>Bilgiyi Düzenle</span>
           </button>
-          <button id="mosqueInfoResetBtn" onclick="triggerResetMosqueInfo(currentMosqueInfoId)" class="hidden py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" style="background:rgba(168,86,49,0.08); color:var(--brick);">
+          <button id="mosqueInfoResetBtn" onclick="triggerResetMosqueInfo(window.currentMosqueInfoId)" class="hidden py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" style="background:rgba(168,86,49,0.08); color:var(--brick);">
             <i class="fa-solid fa-rotate-left"></i><span>Sıfırla</span>
           </button>
         </div>
-        <button onclick="window.__aiAssistant.openChat(currentMosqueInfoId)" class="w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 text-white shadow-md active:scale-95 transition-transform" style="background:linear-gradient(135deg, var(--teal-900), var(--teal-700)); border:1px solid rgba(195,154,69,0.3);">
-          <i class="fa-solid fa-sparkles"></i><span>Yapay Zeka Rehberine Sor</span>
-        </button>
         <a id="mosqueInfoMapLink" href="#" target="_blank" rel="noopener" class="btn-primary w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
           <i class="fa-solid fa-map-location-dot"></i><span>Haritada Göster</span>
         </a>
@@ -1670,7 +1670,8 @@
       if (typeof initGeofencing === 'function') initGeofencing();
       loadActiveJourney();
       renderJourneyBanner();
-      if (typeof initAiAssistant === 'function') initAiAssistant('sk-Ed2bvSKBmRehPjtAQWGhZz');
+      // AI Rehber Başlatma (Buraya kendi Google Gemini API Anahtarınızı 'AIza...' formatında ekleyin)
+      if (typeof initAiAssistant === 'function') initAiAssistant('BURAYA_GEMINI_API_ANAHTARINIZI_YAZIN');
     } catch (e) {
       console.error("Uygulama başlatılırken hata oluştu:", e);
     }

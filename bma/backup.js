@@ -812,3 +812,137 @@
         showToast("Paylaşım bu cihazda desteklenmiyor.", "error");
       }
     };
+
+    // === KİŞİYE ÖZEL HAT SANATI SERTİFİKASI (BURSA FATİHİ) ===
+    // Bu fonksiyon, Bursa Fatihi unvanına ulaşan kullanıcılar için
+    // yüksek çözünürlüklü, sanatsal bir dijital sertifika üretir.
+    window.downloadCalligraphyCertificate = async function() {
+      const name = localStorage.getItem('manevi-atlas-username') || 'Seyyah';
+      const unvan = (typeof getCurrentUnvan === 'function') ? getCurrentUnvan() : null;
+      
+      // Sadece Bursa Fatihi olanlar veya test için (geliştirme aşamasında)
+      // Normalde: if (!unvan || unvan.index < 4) { showToast("Bu sertifika sadece Bursa Fatihleri içindir.", "error"); return; }
+      
+      window.haptic([20, 60, 20]);
+      showToast("Sertifikanız hazırlanıyor...", "info");
+
+      const W = 2000, H = 1414; // A4 Yatay Oranı (Yüksek Çözünürlük)
+      const canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Arka Plan (Zümrüt Yeşili Degrade)
+      const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W);
+      grad.addColorStop(0, '#0C3A32');
+      grad.addColorStop(1, '#051A16');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      // 2. Altın Çerçeve
+      ctx.strokeStyle = '#C39A45';
+      ctx.lineWidth = 40;
+      ctx.strokeRect(60, 60, W - 120, H - 120);
+      
+      ctx.strokeStyle = '#E7D4A0';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(100, 100, W - 200, H - 200);
+
+      // 3. Köşe Motifleri
+      const drawCorner = (x, y, rotation) => {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+        ctx.fillStyle = '#C39A45';
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(150, 0);
+        ctx.lineTo(150, 20);
+        ctx.lineTo(20, 20);
+        ctx.lineTo(20, 150);
+        ctx.lineTo(0, 150);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      };
+      drawCorner(60, 60, 0);
+      drawCorner(W-60, 60, Math.PI/2);
+      drawCorner(W-60, H-60, Math.PI);
+      drawCorner(60, H-60, -Math.PI/2);
+
+      // 4. Büyük Kemer Motifi (Arka Planda Hafif)
+      ctx.strokeStyle = 'rgba(231,212,160,0.08)';
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(400, H - 150);
+      ctx.lineTo(400, 500);
+      ctx.quadraticCurveTo(400, 150, W/2, 150);
+      ctx.quadraticCurveTo(W-400, 150, W-400, 500);
+      ctx.lineTo(W-400, H - 150);
+      ctx.stroke();
+
+      // 5. Metinler
+      ctx.textAlign = 'center';
+      
+      // Başlık
+      ctx.fillStyle = '#E7D4A0';
+      ctx.font = '600 40px "Manrope", sans-serif';
+      ctx.fillText('BURSA MANEVİ ATLASI', W/2, 300);
+
+      ctx.fillStyle = '#C39A45';
+      ctx.font = 'italic 800 120px "Playfair Display", serif';
+      ctx.fillText('İhya Sertifikası', W/2, 450);
+
+      // Ana Metin
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '500 45px "Manrope", sans-serif';
+      const lines = [
+        'Bursa\'nın manevi ikliminde tescilli tüm tarihi cami ve mescidleri',
+        'ziyaret ederek, kadim şehrin ruhunu ihya eden seyyahımız'
+      ];
+      lines.forEach((line, i) => ctx.fillText(line, W/2, 600 + i*60));
+
+      // İsim (Hat Sanatı Hissiyatı)
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 15;
+      ctx.fillStyle = '#E7D4A0';
+      ctx.font = '800 160px "Playfair Display", serif';
+      ctx.fillText(name, W/2, 850);
+      ctx.shadowBlur = 0;
+
+      // Unvan
+      ctx.fillStyle = '#C39A45';
+      ctx.font = 'bold 70px "Playfair Display", serif';
+      ctx.fillText('BURSA FATİHİ', W/2, 980);
+
+      // Alt Bilgi
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.font = '400 30px "Manrope", sans-serif';
+      const dateStr = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+      ctx.fillText(`${dateStr} tarihinde tescil edilmiştir.`, W/2, 1150);
+
+      // Mühür / Logo
+      ctx.fillStyle = '#C39A45';
+      ctx.beginPath();
+      ctx.arc(W - 300, H - 300, 100, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = '#E7D4A0';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+      ctx.fillStyle = '#0C3A32';
+      ctx.font = 'bold 25px sans-serif';
+      ctx.fillText('BMA', W - 300, H - 305);
+      ctx.fillText('MÜHÜR', W - 300, H - 275);
+
+      // İndirme
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `bursa-manevi-atlas-sertifika-${name}.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showToast("Sertifikanız başarıyla oluşturuldu.", "success");
+      }, 'image/png', 1.0);
+    };

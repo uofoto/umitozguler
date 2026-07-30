@@ -1,15 +1,14 @@
 /**
- * ai-assistant.js — Yapay Zeka Destekli Manevi Rehber ve Sesli Asistan
- * Bu modül, cami verilerini kullanarak kullanıcının sorularını yanıtlar.
+ * ai-assistant.js — Google Gemini Destekli Manevi Rehber ve Sesli Asistan
+ * Bu modül, Google Gemini API kullanarak cami verileriyle soruları yanıtlar.
  */
 
 (function() {
     'use strict';
 
     const AI_CONFIG = {
-        apiEndpoint: 'https://api.openai.com/v1/chat/completions', // Üretim için proxy önerilir
-        model: 'gpt-4o-mini',
-        maxTokens: 500
+        model: 'gemini-1.5-flash',
+        baseUrl: 'https://generativelanguage.googleapis.com/v1beta/models/'
     };
 
     window.__aiAssistant = {
@@ -19,6 +18,7 @@
         currentMosque: null,
 
         init: function() {
+            console.log('AI Asistan başlatılıyor...');
             this.initSpeechRecognition();
             this.createChatUI();
         },
@@ -46,7 +46,6 @@
                 this.recognition.onerror = (event) => {
                     console.error('Ses tanıma hatası:', event.error);
                     this.stopRecordingUI();
-                    showToast('Ses tanıma başarısız oldu.', 'error');
                 };
             }
         },
@@ -62,7 +61,7 @@
                                     <i class="fa-solid fa-sparkles"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-sm font-display" style="color:var(--ink);">Manevi Rehber (AI)</h3>
+                                    <h3 class="font-bold text-sm font-display" style="color:var(--ink);">Manevi Rehber (Gemini AI)</h3>
                                     <p id="aiChatStatus" class="text-[10px]" style="color:var(--ink-faint);">Çevrimiçi · Yardım etmeye hazır</p>
                                 </div>
                             </div>
@@ -76,7 +75,7 @@
                                     <i class="fa-solid fa-robot"></i>
                                 </div>
                                 <div class="rounded-2xl p-3 text-xs leading-relaxed max-w-[85%]" style="background:var(--paper-deep); color:var(--ink-soft);">
-                                    Selamün aleyküm seyyah! Ben Bursa Manevi Atlası'nın yapay zeka rehberiyim. Şu an incelediğin <b><span id="aiChatMosqueName">cami</span></b> veya Bursa'nın manevi tarihi hakkında bana istediğini sorabilirsin.
+                                    Selamün aleyküm seyyah! Ben Bursa Manevi Atlası'nın Gemini destekli rehberiyim. Şu an incelediğin <b><span id="aiChatMosqueName">cami</span></b> veya Bursa'nın manevi tarihi hakkında bana istediğini sorabilirsin.
                                 </div>
                             </div>
                         </div>
@@ -103,12 +102,16 @@
         },
 
         openChat: function(mosqueId) {
+            console.log('Sohbet açılıyor, Cami ID:', mosqueId);
+            if (!mosqueId) {
+                showToast('Cami bilgisi bulunamadı.', 'error');
+                return;
+            }
             this.currentMosque = PRESET_MOSQUES.find(m => m.id === mosqueId);
             document.getElementById('aiChatMosqueName').textContent = this.currentMosque ? this.currentMosque.name : 'cami';
             document.getElementById('aiChatModal').classList.remove('hidden');
             document.getElementById('aiChatInput').focus();
             
-            // Temizle
             const container = document.getElementById('aiChatMessages');
             while (container.children.length > 1) {
                 container.removeChild(container.lastChild);
@@ -132,8 +135,12 @@
                 this.recognition.stop();
                 this.stopRecordingUI();
             } else {
-                this.recognition.start();
-                this.startRecordingUI();
+                try {
+                    this.recognition.start();
+                    this.startRecordingUI();
+                } catch (e) {
+                    console.error('Ses tanıma başlatılamadı:', e);
+                }
             }
         },
 
@@ -178,7 +185,6 @@
             input.value = '';
             this.addMessage(text, true);
             
-            // Loading state
             const loadingId = 'ai-loading-' + Date.now();
             const container = document.getElementById('aiChatMessages');
             container.insertAdjacentHTML('beforeend', `
@@ -194,62 +200,72 @@
             container.scrollTop = container.scrollHeight;
 
             try {
-                const response = await this.callAI(text);
-                document.getElementById(loadingId).remove();
+                const response = await this.callGemini(text);
+                const loadingEl = document.getElementById(loadingId);
+                if (loadingEl) loadingEl.remove();
                 this.addMessage(response);
                 this.speak(response);
             } catch (error) {
-                document.getElementById(loadingId).remove();
-                this.addMessage("Üzgünüm, şu an bağlantı kuramıyorum. Lütfen daha sonra tekrar deneyin.");
-                console.error("AI Hatası:", error);
+                const loadingEl = document.getElementById(loadingId);
+                if (loadingEl) loadingEl.remove();
+                
+                let errorMsg = "Üzgünüm, bir bağlantı hatası oluştu.";
+                if (error.message.includes('API anahtarı')) {
+                    errorMsg = "Hata: Geçersiz veya eksik Gemini API anahtarı. Lütfen ayarlarınızı kontrol edin.";
+                } else if (error.message.includes('403') || error.message.includes('401')) {
+                    errorMsg = "Hata: API anahtarınız yetkisiz veya yanlış formatta. Gemini API anahtarı kullandığınızdan emin olun.";
+                } else if (error.message.includes('quota')) {
+                    errorMsg = "Hata: API kullanım kotanız dolmuş olabilir.";
+                }
+                
+                this.addMessage(errorMsg);
+                console.error("Gemini Detaylı Hata:", error);
             }
         },
 
-        callAI: async function(userPrompt) {
-            // Cami verilerini bağlam olarak hazırla
-            let context = "Sen Bursa Manevi Atlası uygulamasının uzman manevi rehberisin. Bursa'nın tarihi camileri, mimarisi ve manevi şahsiyetleri hakkında derin bilgiye sahipsin. Nazik, bilgili ve manevi bir dil kullan.";
-            
-            if (this.currentMosque) {
-                context += `\n\nŞu anki cami hakkında bilgiler:
-                Adı: ${this.currentMosque.name}
-                İlçe: ${this.currentMosque.district}
-                Adres: ${this.currentMosque.address}
-                Tarihçe: ${this.currentMosque.info || 'Bilgi yok'}
-                Banisi: ${this.currentMosque.founder || 'Bilinmiyor'}
-                Dönemi: ${this.currentMosque.period || 'Bilinmiyor'}`;
+        callGemini: async function(userPrompt) {
+            const key = window.__AI_API_KEY__;
+            if (!key || key === '' || key.startsWith('sk-')) {
+                throw new Error('Geçerli bir Gemini API anahtarı bulunamadı. (OpenAI anahtarı kullanılamaz)');
             }
 
-            // Not: Bu kısım normalde bir backend üzerinden yapılmalıdır.
-            // Sandbox ortamında doğrudan API çağrısı yapıyoruz.
-            const response = await fetch(AI_CONFIG.apiEndpoint, {
+            let systemInstruction = "Sen Bursa Manevi Atlası uygulamasının uzman manevi rehberisin. Bursa'nın tarihi camileri, mimarisi ve manevi şahsiyetleri hakkında derin bilgiye sahipsin. Nazik, bilgili ve manevi bir dil kullan. Yanıtlarını Markdown formatında değil, düz metin olarak ver.";
+            
+            if (this.currentMosque) {
+                systemInstruction += `\n\nŞu anki cami hakkında bilgiler:\nAdı: ${this.currentMosque.name}\nİlçe: ${this.currentMosque.district}\nAdres: ${this.currentMosque.address}\nTarihçe: ${this.currentMosque.info || 'Bilgi yok'}\nBanisi: ${this.currentMosque.founder || 'Bilinmiyor'}\nDönemi: ${this.currentMosque.period || 'Bilinmiyor'}`;
+            }
+
+            const url = `${AI_CONFIG.baseUrl}${AI_CONFIG.model}:generateContent?key=${key}`;
+
+            const response = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${window.__AI_API_KEY__ || ''}`
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    model: AI_CONFIG.model,
-                    messages: [
-                        { role: "system", content: context },
-                        { role: "user", content: userPrompt }
-                    ],
-                    max_tokens: AI_CONFIG.maxTokens
+                    contents: [{ parts: [{ text: userPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemInstruction }] },
+                    generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
                 })
             });
 
-            if (!response.ok) throw new Error('API hatası');
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(`Gemini API Hatası (${response.status}): ${errData.error?.message || 'Bilinmeyen hata'}`);
+            }
+
             const data = await response.json();
-            return data.choices[0].message.content;
+            if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+                return data.candidates[0].content.parts[0].text;
+            } else {
+                throw new Error('Gemini geçersiz yanıt döndürdü.');
+            }
         },
 
         speak: function(text) {
-            // Sesli okuma özelliği ayarlar > ses açık ise çalışsın
             const isSoundEnabled = localStorage.getItem('manevi-atlas-sound') !== 'off';
             if (!isSoundEnabled) return;
 
             if (this.synth.speaking) this.synth.cancel();
             
-            // HTML etiketlerini temizle
             const cleanText = text.replace(/<[^>]*>/g, '');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'tr-TR';
@@ -259,7 +275,6 @@
         }
     };
 
-    // Global erişim
     window.initAiAssistant = function(apiKey) {
         window.__AI_API_KEY__ = apiKey;
         window.__aiAssistant.init();

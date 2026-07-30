@@ -29,6 +29,19 @@
 
 window.APP_CHANGELOG = [
   {
+    id: 'premium-visuals-v1',
+    date: '2026-07-30T22:00:00',
+    icon: '🎨',
+    title: 'Görsel Devrim: Dinamik Temalar ve Sertifikalar!',
+    desc: 'Uygulamanın estetik dilini bir üst seviyeye taşıdık. Artık Bursa Manevi Atlası, günün vaktine ve özel günlere göre renk değiştiriyor.',
+    details: [
+      'Vakit Bazlı Dinamik Tema: Sabah şafağı, gün batımı ve gece için özel renk paletleri',
+      'Özel Gün Motifleri: Cuma ve Kandil günlerinde devreye giren özel arayüz tasarımları',
+      'Hat Sanatı Sertifikası: "Bursa Fatihi" olanlara özel, yüksek çözünürlüklü dijital tablo üretimi',
+      'Ayarlar > Görünüm kısmından "Otomatik (Vakitlere Göre)" modunu aktif edebilirsiniz'
+    ]
+  },
+  {
     id: 'ai-manevi-rehber',
     date: '2026-07-30T20:00:00',
     icon: '✨',

@@ -480,8 +480,8 @@
       { key: 'Isha', label: 'Yatsı' }
     ];
     let prayerCountdownInterval = null;
-    let prayerTimingsToday = null;
-    let prayerTimingsTomorrow = null;
+    window.prayerTimingsToday = null;
+    window.prayerTimingsTomorrow = null;
     let prayerTimingsDateKey = null;
     function pcDateKey(d) {
       return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -528,15 +528,15 @@
       const todayKey = pcDateKey(now);
 
       try {
-        if (prayerTimingsDateKey !== todayKey || !prayerTimingsToday || !prayerTimingsTomorrow) {
+        if (prayerTimingsDateKey !== todayKey || !window.prayerTimingsToday || !window.prayerTimingsTomorrow) {
           const tomorrow = new Date(now);
           tomorrow.setDate(tomorrow.getDate() + 1);
           const [todayT, tomorrowT] = await Promise.all([
             getPrayerTimingsCached(now),
             getPrayerTimingsCached(tomorrow)
           ]);
-          prayerTimingsToday = todayT;
-          prayerTimingsTomorrow = tomorrowT;
+          window.prayerTimingsToday = todayT;
+          window.prayerTimingsTomorrow = tomorrowT;
           prayerTimingsDateKey = todayKey;
         }
 
@@ -546,6 +546,7 @@
         if (prayerCountdownInterval) clearInterval(prayerCountdownInterval);
         tickPrayerCountdown();
         prayerCountdownInterval = setInterval(tickPrayerCountdown, 1000);
+        if (typeof updateDynamicTheme === 'function') updateDynamicTheme();
       } catch (e) {
         console.error('Namaz vakti alınamadı:', e);
         document.getElementById('prayerCountdownLoading').classList.add('hidden');
@@ -556,7 +557,7 @@
       }
     };
     function tickPrayerCountdown() {
-      if (!prayerTimingsToday) return;
+      if (!window.prayerTimingsToday) return;
       const now = new Date();
 
       // Gün değiştiyse verileri tazele
@@ -570,15 +571,15 @@
 
       const todaysTimes = PRAYER_COUNTDOWN_MAP.map(p => ({
         key: p.key, label: p.label,
-        time: pcParseTimeOnDate(todayBase, prayerTimingsToday[p.key])
+        time: pcParseTimeOnDate(todayBase, window.prayerTimingsToday[p.key])
       }));
 
       let next = todaysTimes.find(p => p.time.getTime() > now.getTime());
       let isTomorrow = false;
-      if (!next && prayerTimingsTomorrow) {
+      if (!next && window.prayerTimingsTomorrow) {
         next = {
           key: 'Fajr', label: 'Sabah',
-          time: pcParseTimeOnDate(tomorrowBase, prayerTimingsTomorrow['Fajr'])
+          time: pcParseTimeOnDate(tomorrowBase, window.prayerTimingsTomorrow['Fajr'])
         };
         isTomorrow = true;
       }
