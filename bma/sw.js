@@ -25,7 +25,7 @@
 // veritabanında saklanır; bu servis çalışanı yalnızca uygulamanın açılış
 // hızını ve çevrimdışı erişimini yönetir.
 
-const CACHE_VERSION = "v43"; // Geofencing ve Bildirim Güncellemesi - v43
+const CACHE_VERSION = "v44"; // Hat Sanatı Sertifikası ve Dinamik Tema Güncellemesi - v44
 const STATIC_CACHE = `bursa-manevi-atlas-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `bursa-manevi-atlas-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `bursa-manevi-atlas-tiles-${CACHE_VERSION}`;
@@ -57,7 +57,9 @@ const APP_SHELL = [
   "./out-of-bursa-visit.js",
   "./storage-health.js",
   "./bursa-historical-zones.json",
-  "./geofencing.js"
+  "./geofencing.js",
+  "./certificate.js",
+  "./dynamic-theme.js"
 ];
 
 // ---- Harici CDN kütüphaneleri ----

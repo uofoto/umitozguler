@@ -1086,6 +1086,7 @@
       updateStatsUI();
       updateHeroBadgeUI();
       if (typeof syncUnvanGuideUI === 'function') syncUnvanGuideUI();
+      if (typeof updateCertificateButtonUI === 'function') updateCertificateButtonUI();
       if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
       if (typeof maybeShowBackupReminder === 'function') maybeShowBackupReminder();
     }

@@ -29,6 +29,20 @@
 
 window.APP_CHANGELOG = [
   {
+    id: 'dinamik-tema-vakit-mevsim',
+    date: '2026-07-31T10:30:00',
+    icon: '🌇',
+    title: 'Dinamik Tema: Vakit ve Mevsim Motifleri',
+    desc: 'Mevcut Dark/Light temaya ek olarak; sabah namazı vaktinde arayüz şafak tonlarına, akşam namazında gün batımı tonlarına bürünüyor. Ramazan ayı, kandil geceleri ve cuma günlerinde de ince, sıcak altın tonlu özel bir motif otomatik devreye giriyor.'
+  },
+  {
+    id: 'hat-sanati-sertifikasi',
+    date: '2026-07-31T10:00:00',
+    icon: '📜',
+    title: 'Kişiye Özel Hat Sanatı Sertifikası',
+    desc: '"Mihrap Fatihi" veya "Bursa Fatihi" unvanına ulaştığında, isminin geleneksel hat sanatı hissiyatlı bir fontla işlendiği; çerçeveletip asabileceğin, yüksek çözünürlüklü kişiye özel bir sertifika artık Profil sekmende hazır. PNG veya PDF olarak indirilebilir.'
+  },
+  {
     id: 'bilgi-karti-guncellenen-camiler',
     date: '2026-07-27T11:00:00',
     icon: '📚',

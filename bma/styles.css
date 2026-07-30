@@ -246,6 +246,32 @@
     @keyframes spin-slow{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
     .animate-spin-slow{ animation:spin-slow 6s linear infinite; }
 
+    /* ---- Dinamik Tema: Vakit ve Mevsim Motifleri (dynamic-theme.js) ----
+       Mevcut Dark/Light temanın (data-theme) ÜSTÜNE eklenen ince bir katman:
+       sabah namazı vaktinde şafak tonları, akşam namazında gün batımı tonları,
+       Ramazan/kandil/cuma günlerinde ise sıcak altın tonlu bir ışıltı verir.
+       Değerler dynamic-theme.js tarafından :root üzerinde CSS değişkeni
+       olarak set edilir; burada sadece uygulanır. */
+    :root{
+      --mood-overlay-bg: none;
+      --mood-overlay-opacity: 0;
+      --mood-overlay-blend: normal;
+    }
+    .hero-panel::after{
+      content:''; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
+      background:var(--mood-overlay-bg);
+      opacity:var(--mood-overlay-opacity);
+      mix-blend-mode:var(--mood-overlay-blend);
+      transition:opacity 1.4s ease, background 1.4s ease;
+    }
+    body.occasion-friday h1.font-display{
+      text-shadow:0 0 14px rgba(231,212,160,0.55), 0 0 3px rgba(255,255,255,0.35);
+      transition:text-shadow 1.2s ease;
+    }
+    body.occasion-ramadan .motif-bg, body.occasion-kandil .motif-bg{
+      transition:opacity 1.2s ease;
+    }
+
     @keyframes shimmer{ 0%{ background-position:-120% 0; } 100%{ background-position:220% 0; } }
     .gold-shimmer{
       background-image:linear-gradient(110deg, var(--gold) 30%, var(--gold-soft) 45%, #fff 50%, var(--gold-soft) 55%, var(--gold) 70%);

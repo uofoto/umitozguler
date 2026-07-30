@@ -75,7 +75,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
   <!-- HEIC/HEIF (iPhone kamera formatı) dönüştürücü -->
   <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
   <!-- Leaflet (Manevi Harita özelliği için açık kaynak harita kütüphanesi) -->
@@ -909,6 +909,26 @@
           </div>
         </div>
 
+        <div class="paper-card rounded-3xl p-4 relative overflow-hidden" id="certificateCard">
+          <div class="absolute -right-4 -top-4 opacity-[0.06] pointer-events-none" style="color:var(--gold-deep);">
+            <i class="fa-solid fa-mosque text-[4.5rem]"></i>
+          </div>
+          <div class="relative z-10 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-[10px] uppercase tracking-wider flex items-center gap-1.5" style="color:var(--ink-faint);">
+                <i class="fa-solid fa-scroll" style="color:var(--gold-deep);"></i> Hat Sanatı Sertifikası
+              </h4>
+            </div>
+            <p id="certificateStatusText" class="text-[10.5px] leading-relaxed" style="color:var(--ink-soft);">
+              "Mihrap Fatihi" veya "Bursa Fatihi" unvanını kazandığında; adının geleneksel hat sanatı fontuyla işlendiği, çerçeveletip asabileceğin yüksek çözünürlüklü kişiye özel bir sertifika burada seni bekleyecek.
+            </p>
+            <button id="certificateBtn" onclick="openCertificateModal()" class="w-full flex items-center justify-center gap-2 rounded-2xl py-2.5 text-[11.5px] font-bold text-white opacity-50 cursor-not-allowed" style="background:var(--gold-deep);" disabled>
+              <i class="fa-solid fa-award text-[11px]"></i>
+              <span>Sertifikanı Görüntüle</span>
+            </button>
+          </div>
+        </div>
+
         <div class="paper-card rounded-3xl p-4 relative overflow-hidden">
           <div class="absolute -right-3 -bottom-3 opacity-[0.05] pointer-events-none" style="color:var(--teal-900);">
             <i class="fa-solid fa-feather-pointed text-[4.5rem]"></i>
@@ -1468,6 +1488,38 @@
     </div>
   </div>
 
+  <!-- HAT SANATI SERTİFİKASI ÖNİZLEME MODALI -->
+  <div id="certificateModal" class="hidden fixed inset-0 z-50 flex flex-col" style="background:var(--paper);">
+    <div class="hero-panel relative px-4 pt-4 pb-3 flex-shrink-0 safe-padding-top">
+      <div class="relative z-10 flex items-start justify-between">
+        <div class="space-y-1">
+          <h3 class="font-display font-bold text-base leading-snug flex items-center gap-2" style="color:#fff;">
+            <i class="fa-solid fa-scroll" style="color:var(--gold-soft);"></i><span>Hat Sanatı Sertifikan</span>
+          </h3>
+          <p class="text-[10.5px]" style="color:rgba(255,255,255,0.75);">Çerçeveletip asabileceğin kişiye özel bir hatıra</p>
+        </div>
+        <button onclick="closeCertificateModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-4 py-4 space-y-4 flex flex-col items-center">
+      <div id="certificateLoading" class="flex flex-col items-center justify-center py-10 space-y-2">
+        <i class="fa-solid fa-spinner fa-spin text-xl" style="color:var(--teal-700);"></i>
+        <p class="text-[11px]" style="color:var(--ink-faint);">Sertifikan hazırlanıyor...</p>
+      </div>
+      <img id="certificatePreviewImg" class="hidden w-full max-w-md rounded-xl shadow-lg" style="border:1px solid var(--line);" alt="Hat Sanatı Sertifikası Önizleme">
+    </div>
+
+    <div class="px-4 py-3 flex-shrink-0 grid grid-cols-2 gap-2 safe-padding-bottom" style="background:var(--paper-card); border-top:1px solid var(--line);">
+      <button onclick="downloadCertificatePNG()" class="flex items-center justify-center gap-2 rounded-2xl py-2.5 text-[11.5px] font-bold text-white" style="background:var(--teal-900);">
+        <i class="fa-solid fa-image text-[11px]"></i><span>PNG İndir</span>
+      </button>
+      <button onclick="downloadCertificatePDF()" class="flex items-center justify-center gap-2 rounded-2xl py-2.5 text-[11.5px] font-bold" style="background:var(--paper-deep); color:var(--teal-900); border:1px solid rgba(21,90,76,0.3);">
+        <i class="fa-solid fa-file-pdf text-[11px]"></i><span>PDF İndir</span>
+      </button>
+    </div>
+  </div>
+
   <!-- LIGHTBOX (Fotoğraf Büyütme / Yakınlaştırma) -->
   <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center">
     <div class="absolute top-0 left-0 right-0 flex items-center justify-between p-4 z-10 safe-padding-top" style="background:linear-gradient(180deg, rgba(0,0,0,0.55), transparent);">
@@ -1528,6 +1580,8 @@
   <script src="mosque-select-search.js"></script>
   <script src="out-of-bursa-visit.js"></script>
   <script src="storage-health.js"></script>
+  <script src="certificate.js"></script>
+  <script src="dynamic-theme.js"></script>
   <script>
     // === PWA Kurulum Takip & Mantığı ===
     let deferredPrompt;
