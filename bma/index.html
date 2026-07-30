@@ -1032,6 +1032,9 @@
             <i class="fa-solid fa-rotate-left"></i><span>Sıfırla</span>
           </button>
         </div>
+        <button onclick="window.__aiAssistant.openChat(currentMosqueInfoId)" class="w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 text-white shadow-md active:scale-95 transition-transform" style="background:linear-gradient(135deg, var(--teal-900), var(--teal-700)); border:1px solid rgba(195,154,69,0.3);">
+          <i class="fa-solid fa-sparkles"></i><span>Yapay Zeka Rehberine Sor</span>
+        </button>
         <a id="mosqueInfoMapLink" href="#" target="_blank" rel="noopener" class="btn-primary w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
           <i class="fa-solid fa-map-location-dot"></i><span>Haritada Göster</span>
         </a>
@@ -1528,6 +1531,7 @@
   <script src="mosque-select-search.js"></script>
   <script src="out-of-bursa-visit.js"></script>
   <script src="storage-health.js"></script>
+  <script src="ai-assistant.js"></script>
   <script>
     // === PWA Kurulum Takip & Mantığı ===
     let deferredPrompt;
@@ -1666,6 +1670,7 @@
       if (typeof initGeofencing === 'function') initGeofencing();
       loadActiveJourney();
       renderJourneyBanner();
+      if (typeof initAiAssistant === 'function') initAiAssistant('sk-Ed2bvSKBmRehPjtAQWGhZz');
     } catch (e) {
       console.error("Uygulama başlatılırken hata oluştu:", e);
     }

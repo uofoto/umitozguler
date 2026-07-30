@@ -608,11 +608,11 @@
       }
     }
     // CAMİ DETAY / TARİHÇE BİLGİSİ MODALI
-    let currentMosqueInfoId = null;
+    window.currentMosqueInfoId = null;
     window.openMosqueInfoModal = function(id) {
       const m = PRESET_MOSQUES.find(x => x.id === id);
       if (!m) return;
-      currentMosqueInfoId = id;
+      window.currentMosqueInfoId = id;
       const detail = getMosqueInfo(m);
       const isOsmangazi = m.district === 'Osmangazi';
 
@@ -669,11 +669,11 @@
     };
     window.closeMosqueInfoEditModal = function() {
       document.getElementById('mosqueInfoEditModal').classList.add('hidden');
-      if (currentMosqueInfoId) openMosqueInfoModal(currentMosqueInfoId);
+      if (window.currentMosqueInfoId) openMosqueInfoModal(window.currentMosqueInfoId);
     };
     document.getElementById('mosqueInfoEditModal').addEventListener('click', function(e) { if (e.target === this) closeMosqueInfoEditModal(); });
     window.saveMosqueInfoEdit = function() {
-      if (!currentMosqueInfoId) return;
+      if (!window.currentMosqueInfoId) return;
       const period = document.getElementById('editInfoPeriod').value.trim();
       const founder = document.getElementById('editInfoFounder').value.trim();
       const architect = document.getElementById('editInfoArchitect').value.trim();
@@ -684,12 +684,12 @@
         return;
       }
 
-      MOSQUE_INFO_OVERRIDES[currentMosqueInfoId] = { period, founder, info };
-      if (architect) MOSQUE_INFO_OVERRIDES[currentMosqueInfoId].architect = architect;
+      MOSQUE_INFO_OVERRIDES[window.currentMosqueInfoId] = { period, founder, info };
+      if (architect) MOSQUE_INFO_OVERRIDES[window.currentMosqueInfoId].architect = architect;
       saveMosqueInfoOverrides();
 
       document.getElementById('mosqueInfoEditModal').classList.add('hidden');
-      openMosqueInfoModal(currentMosqueInfoId);
+      openMosqueInfoModal(window.currentMosqueInfoId);
       showToast("Cami bilgisi güncellendi.", "success");
     };
     // CAMİ BİLGİ KARTINI SIFIRLAMA (KULLANICI DÜZENLEMESİNİ SİLME)
@@ -703,7 +703,7 @@
     function executeResetMosqueInfo(id) {
       delete MOSQUE_INFO_OVERRIDES[id];
       saveMosqueInfoOverrides();
-      if (currentMosqueInfoId === id) openMosqueInfoModal(id);
+      if (window.currentMosqueInfoId === id) openMosqueInfoModal(id);
       showToast("Bilgi kartı varsayılan haline döndürüldü.", "success");
     }
     window.openMosqueEditModal = function(id) {

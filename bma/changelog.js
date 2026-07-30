@@ -29,6 +29,19 @@
 
 window.APP_CHANGELOG = [
   {
+    id: 'ai-manevi-rehber',
+    date: '2026-07-30T20:00:00',
+    icon: '✨',
+    title: 'AI Destekli Manevi Rehber Yayında!',
+    desc: 'Bursa\'nın manevi atlasında artık yalnız değilsiniz. Yapay zeka destekli rehberimizle camilerin tarihçesi, mimarisi ve manevi sırları hakkında sohbet edebilirsiniz.',
+    details: [
+      'Cami detay sayfasındaki "Yapay Zeka Rehberine Sor" butonuyla erişim',
+      'Sesli soru sorma ve sesli yanıt dinleme desteği',
+      'Cami verileriyle zenginleştirilmiş akıllı sohbet deneyimi',
+      'Mimari detaylar ve manevi şahsiyetler hakkında derinlemesine bilgi'
+    ]
+  },
+  {
     id: 'bilgi-karti-guncellenen-camiler',
     date: '2026-07-27T11:00:00',
     icon: '📚',
