@@ -334,14 +334,15 @@ function updateStatsUI() {
             <span><i class="fa-solid fa-medal"></i> Özel Rozetler</span>
             <span class="text-[9px] font-ledger" style="color:var(--gold-deep);">${earnedCount} / ${badgeList.length}</span>
           </h4>
+          <p class="text-[9.5px] -mt-1" style="color:var(--ink-faint);">Unvanın ziyaret sayınla otomatik yükselir; rozetler ise seri veya özel cami ziyareti gibi ek başarımlarındır. Nasıl kazanılacağını görmek için bir rozete dokun.</p>
           <div class="grid grid-cols-4 gap-2">
             ${badgeList.map(badge => `
-              <div class="flex flex-col items-center justify-center p-2 rounded-2xl transition-all ${badge.earned ? 'scale-100 opacity-100' : 'scale-90 opacity-40 grayscale'}" 
-                   style="background:${badge.earned ? 'var(--paper-deep)' : 'transparent'}; border:1px solid ${badge.earned ? 'var(--line)' : 'rgba(0,0,0,0.05)'};"
-                   title="${badge.title}: ${badge.desc}">
+              <button type="button" onclick="window.__gamification && window.__gamification.showBadgeDetail('${badge.id}')"
+                   class="flex flex-col items-center justify-center p-2 rounded-2xl transition-all active:scale-90 cursor-pointer ${badge.earned ? 'scale-100 opacity-100' : 'scale-90 opacity-40 grayscale'}" 
+                   style="background:${badge.earned ? 'var(--paper-deep)' : 'transparent'}; border:1px solid ${badge.earned ? 'var(--line)' : 'rgba(0,0,0,0.05)'};">
                 <span class="text-xl mb-1">${badge.icon}</span>
                 <span class="text-[8px] font-bold text-center leading-tight" style="color:${badge.earned ? 'var(--ink)' : 'var(--ink-faint)'};">${badge.title}</span>
-              </div>
+              </button>
             `).join('')}
           </div>
         </div>
