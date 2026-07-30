@@ -129,9 +129,9 @@ function certBuildData() {
   const unvan = (typeof getCurrentUnvan === 'function') ? getCurrentUnvan() : null;
   const name = localStorage.getItem('manevi-atlas-username') || 'Seyyah';
   const totalMosques = (typeof PRESET_MOSQUES !== 'undefined') ? PRESET_MOSQUES.length : 0;
-  const visitedMosqueIds = new Set((window.visitsData || []).map(v => v.mosqueId));
+  const visitedMosqueIds = new Set((visitsData || []).map(v => v.mosqueId));
   const visitedCount = (typeof PRESET_MOSQUES !== 'undefined') ? PRESET_MOSQUES.filter(m => visitedMosqueIds.has(m.id)).length : 0;
-  const totalVisits = (window.visitsData || []).length;
+  const totalVisits = (visitsData || []).length;
   const streak = (typeof computeStreak === 'function') ? computeStreak() : 0;
   const completionPerc = totalMosques ? Math.round((visitedCount / totalMosques) * 100) : 0;
   const dateLabel = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });

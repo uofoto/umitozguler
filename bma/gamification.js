@@ -148,9 +148,9 @@
         },
 
         checkAllAchievements: function() {
-            if (!window.visitsData || window.visitsData.length === 0) return;
+            if (!visitsData || visitsData.length === 0) return;
 
-            const uniqueMosqueIds = new Set(window.visitsData.map(v => v.mosqueId));
+            const uniqueMosqueIds = new Set(visitsData.map(v => v.mosqueId));
             
             // 1. Milestone Kontrolleri
             if (uniqueMosqueIds.size >= 50) this.earnBadge('milestone-50');
@@ -167,7 +167,7 @@
         },
 
         checkStreaks: function() {
-            const visits = [...window.visitsData].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const visits = [...visitsData].sort((a, b) => new Date(a.date) - new Date(b.date));
             
             // Aynı gün içinde 5 farklı cami
             const visitsByDate = {};
