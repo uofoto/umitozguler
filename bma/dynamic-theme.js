@@ -129,6 +129,11 @@ function dynThemeApply(mood, occasion) {
     layers.push('radial-gradient(circle at 85% 10%, rgba(231,212,160,0.5), transparent 60%)');
   } else if (occasion && occasion.key === 'kandil') {
     layers.push('radial-gradient(circle at 50% 0%, rgba(231,212,160,0.6), transparent 65%)');
+  } else if (occasion && occasion.key === 'friday') {
+    // Dosya başındaki açıklamada cuma günleri için de ince, sıcak altın tonlu
+    // bir motif vaat ediliyordu; bu kural eksikti ve cuma günleri sadece
+    // fark edilmesi zor bir başlık text-shadow'u ile geçiştiriliyordu.
+    layers.push('radial-gradient(circle at 50% 0%, rgba(231,212,160,0.32), transparent 65%)');
   }
 
   if (layers.length) {
@@ -158,23 +163,38 @@ let dynThemeDayCache = null;
 let dynThemeDayCacheKey = null;
 
 async function dynThemeTick() {
+  const now = new Date();
+
+  // Namaz vakti / Hicri tarih verisi Aladhan API'sinden gelir ve ağa bağımlıdır.
+  // Bu istek başarısız olursa (ağ hatası, geçici kesinti vb.) SADECE şafak/gün
+  // batımı (mood) efekti devre dışı kalmalı; cuma/Ramazan/kandil tespiti buna
+  // bağlı DEĞİLDİR ve API çağrısından bağımsız olarak her zaman çalışmalıdır.
+  // Önceden ikisi tek bir try/catch içindeydi, bu yüzden API isteği her
+  // başarısız olduğunda (ör. cuma günü boyunca) cuma motifi de hiç
+  // tetiklenmiyordu.
+  let hijri = null;
+  let mood = 'normal';
   try {
-    const now = new Date();
     const todayKey = dynThemeDateKey(now);
     if (dynThemeDayCacheKey !== todayKey || !dynThemeDayCache) {
       dynThemeDayCache = await dynThemeGetDayCached(now);
       dynThemeDayCacheKey = todayKey;
     }
     const todayBase = new Date(now); todayBase.setHours(0, 0, 0, 0);
-    const mood = dynThemeComputeMood(now, todayBase, dynThemeDayCache.timings);
-    const occasion = dynThemeComputeOccasion(now, dynThemeDayCache.hijri);
-    dynThemeApply(mood, occasion);
-    dynThemeMaybeNotify(occasion);
+    mood = dynThemeComputeMood(now, todayBase, dynThemeDayCache.timings);
+    hijri = dynThemeDayCache.hijri;
   } catch (e) {
-    // Ağ hatası vb. durumlarda dinamik tema sessizce devre dışı kalır;
-    // uygulamanın geri kalanı (Dark/Light tema) normal çalışmaya devam eder.
-    console.error('[dynamic-theme] güncellenemedi:', e);
+    // Ağ hatası vb. durumlarda sadece şafak/gün batımı rengi devre dışı kalır;
+    // uygulamanın geri kalanı (Dark/Light tema) ve cuma/Ramazan/kandil motifi
+    // normal çalışmaya devam eder.
+    console.error('[dynamic-theme] namaz vakti verisi alınamadı, sadece vakit (mood) rengi bu turda pasif:', e);
   }
+
+  // Cuma/Ramazan/kandil tespiti yerel tarihe (ve varsa Hicri veriye) dayanır,
+  // yukarıdaki API isteğinden bağımsız olarak her zaman hesaplanır.
+  const occasion = dynThemeComputeOccasion(now, hijri);
+  dynThemeApply(mood, occasion);
+  dynThemeMaybeNotify(occasion);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
