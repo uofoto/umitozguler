@@ -1906,7 +1906,7 @@
     // tarayıcı/CDN bu tam URL'i daha önce hiç görmediği için önbellek
     // ne kadar agresif olursa olsun mecburen sıfırdan indirir. CACHE_NAME'i
     // sw.js içinde artırdığım her seferde bu SW_REGISTER_VERSION'ı da artıracağım.
-    const SW_REGISTER_VERSION = "v43";
+    const SW_REGISTER_VERSION = "v44";
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register(`sw.js?v=${SW_REGISTER_VERSION}`).then((reg) => {
