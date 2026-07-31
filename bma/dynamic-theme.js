@@ -8,24 +8,161 @@
 // yalnızca hero panellerin üzerine ince bir "ruh hali" (mood) katmanı ekler.
 //
 // Namaz vakitleri, ui.js'teki namaz vakti geri sayımıyla aynı kaynaktan
-// (Aladhan API, Bursa koordinatları, Diyanet hesaplama metodu) alınır;
-// burada ayrıca Hicri tarih bilgisi de okunup Ramazan/Kandil tespiti için
-// kullanılır. Sonuçlar günlük olarak yerelde önbelleklenir.
+// (Aladhan API, Bursa koordinatları, Diyanet hesaplama metodu) alınır ve
+// günlük olarak yerelde önbelleklenir. Ramazan/Kandil tespiti ise Hicri
+// takvim hesaplamasına DEĞİL, Diyanet İşleri Başkanlığı'nın resmi olarak
+// ilan ettiği sabit Miladi tarihlere dayanır (bkz. DYN_THEME_KANDIL_FIXED_DATES
+// ve DYN_THEME_RAMADAN_RANGES) — çünkü Diyanet'in takvimi astronomik/Hicri
+// hesaptan küçük farklarla ayrışabiliyor. Bu tarihlerin her yıl elle
+// güncellenmesi gerekir.
 
 const DYN_THEME_LAT = 40.1826, DYN_THEME_LON = 29.0665;
 const DYN_THEME_CACHE_KEY = 'manevi-atlas-dyntheme-cache';
 const DYN_THEME_OCCASION_SEEN_KEY = 'manevi-atlas-dyntheme-occasion-seen';
 
-// Sabit Hicri gün/ay eşleşen kandiller (gece, ilgili Hicri günün akşamında idrak edilir):
-// Mevlid (Rebiülevvel 12), Miraç (Recep 27), Berat (Şaban 15), Kadir (Ramazan 27).
-// Regaib Kandili sabit bir Hicri güne denk gelmediği (Recep ayının ilk cuma gecesi)
-// için bu basit eşleşme listesine dahil edilmemiştir.
-const DYN_THEME_KANDIL_DAYS = [
-  { month: 3, day: 12, name: 'Mevlid Kandili' },
-  { month: 7, day: 27, name: 'Miraç Kandili' },
-  { month: 8, day: 15, name: 'Berat Kandili' },
-  { month: 9, day: 27, name: 'Kadir Gecesi' }
+// ÖNEMLİ — YILLIK GÜNCELLEME GEREKTİRİR:
+// Diyanet İşleri Başkanlığı'nın kandil/Ramazan tarihleri Hicri takvimin
+// astronomik hesabından değil, Diyanet'in resmi olarak ilan ettiği takvimden
+// alınır (bazı yıllarda ay gözlemine dayalı küçük kaymalar olabiliyor). Bu
+// yüzden Aladhan API'nin Hicri gün/ay bilgisiyle eşleştirme YAPMIYORUZ;
+// bunun yerine Diyanet'in yayımladığı takvimdeki sabit Miladi tarihleri
+// elle giriyoruz. Her yıl (Diyanet yeni takvimi açıkladığında, genelde
+// yıl başında) bu listenin güncellenmesi gerekir.
+//
+// Kaynak: Diyanet İşleri Başkanlığı 2026 Dini Günler Takvimi.
+const DYN_THEME_KANDIL_FIXED_DATES = {
+  '2026-01-15': 'Miraç Kandili',
+  '2026-02-02': 'Berat Kandili',
+  '2026-03-16': 'Kadir Gecesi',
+  '2026-08-24': 'Mevlid Kandili',
+  '2026-12-10': 'Regaib Kandili'
+};
+
+// Diyanet'in resmi Ramazan başlangıç/bitiş (arefe günü dahil son gün) tarihleri.
+// Ramazan Bayramı arefe günü (19 Mart 2026) de Ramazan'ın son günü sayılır;
+// bayramın kendisi (20 Mart itibarıyla) bu aralığa dahil değildir.
+const DYN_THEME_RAMADAN_RANGES = [
+  { start: '2026-02-19', end: '2026-03-19' }
 ];
+
+// --- OTOMATİK YILLIK KAPSAM KONTROLÜ ------------------------------------
+// Yukarıdaki iki listeyi her yıl elle güncellemek unutulabilir. Bu fonksiyon
+// uygulama her açıldığında hangi yılların kapsandığını listelerin kendisinden
+// çıkarır ve içinde bulunulan yıl (veya yaklaşan yeni yıl) eksikse konsola
+// göz ardı edilmesi zor, büyük ve renkli bir uyarı basar. Ekim ayından
+// itibaren bir sonraki yıl için de kontrol yapılır, böylece yıl dönmeden
+// önce haber verilmiş olur.
+function dynThemeCoveredYears() {
+  const years = new Set();
+  Object.keys(DYN_THEME_KANDIL_FIXED_DATES).forEach(k => years.add(Number(k.slice(0, 4))));
+  DYN_THEME_RAMADAN_RANGES.forEach(r => {
+    years.add(Number(r.start.slice(0, 4)));
+    years.add(Number(r.end.slice(0, 4)));
+  });
+  return years;
+}
+
+function dynThemeWarnMissingYear(year, context) {
+  const msg = `%c[dynamic-theme] UYARI: ${year} yılı için Diyanet kandil/Ramazan tarihleri (DYN_THEME_KANDIL_FIXED_DATES / DYN_THEME_RAMADAN_RANGES) girilmemiş! ${context} Diyanet'in ${year} Dini Günler Takvimi'ni kontrol edip dynamic-theme.js dosyasını güncelle.`;
+  console.warn(msg, 'background:#b91c1c;color:#fff;font-weight:bold;padding:4px 8px;border-radius:4px;');
+}
+
+// Son hesaplanan kapsam durumu; window.dynThemeGetCoverageStatus() üzerinden
+// mevcut ayarlar/admin paneline entegre edilebilir.
+let dynThemeLastCoverageStatus = { ok: true, missingCurrentYear: null, missingNextYearSoon: null, message: null };
+
+function dynThemeCheckYearlyCoverage(now) {
+  const covered = dynThemeCoveredYears();
+  const thisYear = now.getFullYear();
+  const nextYear = thisYear + 1;
+  const status = { ok: true, missingCurrentYear: null, missingNextYearSoon: null, message: null };
+
+  if (!covered.has(thisYear)) {
+    const ctx = 'İçinde bulunulan yıl kapsanmıyor, kandil/Ramazan motifleri bugün itibarıyla YANLIŞ ÇALIŞACAK.';
+    dynThemeWarnMissingYear(thisYear, ctx);
+    status.ok = false;
+    status.missingCurrentYear = thisYear;
+    status.message = `${thisYear} yılı için kandil/Ramazan takvimi eksik.`;
+  }
+
+  // Ekim ayının başından itibaren (ay index 9 = Ekim) gelecek yılı da kontrol et,
+  // yıl dönmeden önce hazırlık için uyarı verilsin.
+  if (now.getMonth() >= 9 && !covered.has(nextYear)) {
+    const ctx = `Yeni yıla az kaldı, henüz veri girilmemiş.`;
+    dynThemeWarnMissingYear(nextYear, ctx);
+    status.missingNextYearSoon = nextYear;
+    if (status.ok) {
+      status.message = `${nextYear} yılı için kandil/Ramazan takvimi henüz eklenmemiş (yeni yıl yaklaşıyor).`;
+    }
+  }
+
+  dynThemeLastCoverageStatus = status;
+  dynThemeRenderCoverageBadge(status);
+  return status;
+}
+
+// Mevcut ayarlar/admin panelinin çağırabileceği genel API. Panel kendi
+// tasarımına göre bir rozet/ikon gösterebilir. Örnek kullanım:
+//   const status = window.dynThemeGetCoverageStatus();
+//   if (!status.ok) { /* panelde uyarı göster */ }
+window.dynThemeGetCoverageStatus = function () {
+  return dynThemeLastCoverageStatus;
+};
+
+// --- Kendiliğinden görünen, göze batmayan uyarı rozeti ---------------------
+// Admin/ayarlar panelinin markup'ı bilinmediği için, sorun olduğunda
+// sayfaya kendiliğinden küçük bir rozet enjekte edilir. Sadece eksik veri
+// varken görünür; günlük olarak kapatılabilir (bir daha o gün çıkmaz).
+const DYN_THEME_BADGE_DISMISS_KEY = 'manevi-atlas-dyntheme-badge-dismissed';
+const DYN_THEME_BADGE_ID = 'dyntheme-coverage-badge';
+
+function dynThemeBadgeDismissedToday() {
+  try {
+    return localStorage.getItem(DYN_THEME_BADGE_DISMISS_KEY) === dynThemeDateKey(new Date());
+  } catch (e) { return false; }
+}
+
+function dynThemeDismissBadgeToday() {
+  try { localStorage.setItem(DYN_THEME_BADGE_DISMISS_KEY, dynThemeDateKey(new Date())); } catch (e) {}
+}
+
+function dynThemeRenderCoverageBadge(status) {
+  if (typeof document === 'undefined' || !document.body) return;
+  const existing = document.getElementById(DYN_THEME_BADGE_ID);
+
+  if (status.ok || dynThemeBadgeDismissedToday()) {
+    if (existing) existing.remove();
+    return;
+  }
+  if (existing) return; // zaten gösteriliyor
+
+  const badge = document.createElement('div');
+  badge.id = DYN_THEME_BADGE_ID;
+  badge.setAttribute('role', 'alert');
+  badge.style.cssText = [
+    'position:fixed', 'bottom:14px', 'right:14px', 'z-index:99999',
+    'max-width:280px', 'background:#7c2d12', 'color:#fef3c7',
+    'font-size:12.5px', 'line-height:1.4', 'padding:10px 12px',
+    'border-radius:10px', 'box-shadow:0 4px 14px rgba(0,0,0,0.35)',
+    'font-family:system-ui,-apple-system,sans-serif', 'display:flex',
+    'align-items:flex-start', 'gap:8px'
+  ].join(';');
+
+  const text = document.createElement('span');
+  text.textContent = `⚠️ ${status.message}`;
+  text.style.flex = '1';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  closeBtn.setAttribute('aria-label', 'Uyarıyı kapat');
+  closeBtn.style.cssText = 'background:none;border:none;color:#fef3c7;cursor:pointer;font-size:14px;line-height:1;padding:0;';
+  closeBtn.onclick = () => { dynThemeDismissBadgeToday(); badge.remove(); };
+
+  badge.appendChild(text);
+  badge.appendChild(closeBtn);
+  document.body.appendChild(badge);
+}
+// -------------------------------------------------------------------------
 
 function dynThemeDateKey(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -89,17 +226,18 @@ function dynThemeComputeMood(now, todayBase, timings) {
   return 'normal';
 }
 
-function dynThemeComputeOccasion(now, hijri) {
-  const isFriday = now.getDay() === 5;
-  let isRamadan = false, kandilName = null;
+function dynThemeIsWithinRange(todayKey, range) {
+  return todayKey >= range.start && todayKey <= range.end;
+}
 
-  if (hijri && hijri.month && hijri.day) {
-    const hMonth = Number(hijri.month.number);
-    const hDay = Number(hijri.day);
-    isRamadan = hMonth === 9;
-    const kandil = DYN_THEME_KANDIL_DAYS.find(k => k.month === hMonth && k.day === hDay);
-    if (kandil) kandilName = kandil.name;
-  }
+function dynThemeComputeOccasion(now) {
+  const todayKey = dynThemeDateKey(now);
+  const isFriday = now.getDay() === 5;
+
+  // Kandil geceleri Diyanet'in ilgili gününün akşamında (o günün gündüzünden
+  // itibaren) idrak edilir; burada gün bazlı eşleştirme yeterlidir.
+  const kandilName = DYN_THEME_KANDIL_FIXED_DATES[todayKey] || null;
+  const isRamadan = DYN_THEME_RAMADAN_RANGES.some(r => dynThemeIsWithinRange(todayKey, r));
 
   if (kandilName) return { key: 'kandil', label: kandilName };
   if (isRamadan) return { key: 'ramadan', label: 'Ramazan Ayı' };
@@ -162,12 +300,13 @@ async function dynThemeTick() {
     const now = new Date();
     const todayKey = dynThemeDateKey(now);
     if (dynThemeDayCacheKey !== todayKey || !dynThemeDayCache) {
+      dynThemeCheckYearlyCoverage(now); // günde bir kez, gün değiştiğinde kontrol et
       dynThemeDayCache = await dynThemeGetDayCached(now);
       dynThemeDayCacheKey = todayKey;
     }
     const todayBase = new Date(now); todayBase.setHours(0, 0, 0, 0);
     const mood = dynThemeComputeMood(now, todayBase, dynThemeDayCache.timings);
-    const occasion = dynThemeComputeOccasion(now, dynThemeDayCache.hijri);
+    const occasion = dynThemeComputeOccasion(now);
     dynThemeApply(mood, occasion);
     dynThemeMaybeNotify(occasion);
   } catch (e) {
