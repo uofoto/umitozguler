@@ -129,6 +129,8 @@ function dynThemeApply(mood, occasion) {
     layers.push('radial-gradient(circle at 85% 10%, rgba(231,212,160,0.5), transparent 60%)');
   } else if (occasion && occasion.key === 'kandil') {
     layers.push('radial-gradient(circle at 50% 0%, rgba(231,212,160,0.6), transparent 65%)');
+  } else if (occasion && occasion.key === 'friday') {
+    layers.push('radial-gradient(circle at 80% 15%, rgba(212,225,187,0.32), transparent 62%), radial-gradient(circle at 15% 85%, rgba(231,212,160,0.22), transparent 55%)');
   }
 
   if (layers.length) {
