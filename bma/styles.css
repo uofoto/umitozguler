@@ -66,6 +66,7 @@
     .nav-indicator{ transition:left 0.38s cubic-bezier(0.22,1,0.36,1); box-shadow:0 0 8px rgba(195,154,69,0.6); }
 
     .hero-panel{
+      position:relative;
       background:
         radial-gradient(120% 140% at 100% 0%, rgba(195,154,69,0.18) 0%, rgba(195,154,69,0) 45%),
         linear-gradient(160deg, var(--teal-950) 0%, var(--teal-900) 55%, var(--teal-700) 130%);
