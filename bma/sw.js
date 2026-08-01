@@ -25,7 +25,7 @@
 // veritabanında saklanır; bu servis çalışanı yalnızca uygulamanın açılış
 // hızını ve çevrimdışı erişimini yönetir.
 
-const CACHE_VERSION = "v45"; // Yeşil Türbe logosu ile ikon/splash güncellemesi - v45
+const CACHE_VERSION = "v46"; // Gizlilik Politikası eklendi - v46
 const STATIC_CACHE = `bursa-manevi-atlas-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `bursa-manevi-atlas-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `bursa-manevi-atlas-tiles-${CACHE_VERSION}`;

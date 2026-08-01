@@ -8,8 +8,8 @@
     // Bu uygulama yalnızca Ümit Özgüler'in kendi alan adlarında ve yerel
     // geliştirme/test ortamlarında çalışacak şekilde tasarlanmıştır. Kaynak
     // kodu izinsiz kopyalanıp başka bir sunucuya/alan adına konursa, sayfa
-    // hiçbir içerik göstermeden tamamen boş kalır. Bkz. LICENSE ve
-    // Kullanım Şartları (Ayarlar > Uygulama Hakkında).
+    // hiçbir içerik göstermeden tamamen boş kalır. Bkz. LICENSE, Kullanım
+    // Şartları ve Gizlilik Politikası (Ayarlar > Uygulama Hakkında).
     // Küresel Hata Yakalayıcı (Global Error Handler)
     window.onerror = function(message, source, lineno, colno, error) {
       console.error("Global Hata:", message, "Kaynak:", source, "Satır:", lineno);
@@ -946,9 +946,14 @@
               </p>
               <p class="text-[9px] pt-1.5" style="color:var(--ink-faint); border-top:1px solid var(--line); margin-top:0.35rem;">© 2026 Ümit Özgüler. Tüm Hakları Saklıdır.</p>
               <p class="text-[8.5px] leading-relaxed" style="color:var(--ink-faint);">Bu uygulamanın tasarımı, konsepti, kaynak kodu ve içeriği telif hakkı ile korunmaktadır. Ümit Özgüler'in yazılı izni olmaksızın kısmen veya tamamen çoğaltılamaz, kopyalanamaz, dağıtılamaz, değiştirilerek veya değiştirilmeden başka bir ad altında yayımlanamaz ya da ticari/ticari olmayan hiçbir amaçla kullanılamaz.</p>
-              <button onclick="openTermsModal()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 mt-1" style="background:var(--paper-deep); color:var(--ink-soft);">
-                <i class="fa-solid fa-file-contract text-[9px]" style="color:var(--gold-deep);"></i><span>Kullanım Şartlarını Oku / Terms of Use</span>
-              </button>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <button onclick="openTermsModal()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5" style="background:var(--paper-deep); color:var(--ink-soft);">
+                  <i class="fa-solid fa-file-contract text-[9px]" style="color:var(--gold-deep);"></i><span>Kullanım Şartlarını Oku / Terms of Use</span>
+                </button>
+                <button onclick="openPrivacyModal()" class="text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5" style="background:var(--paper-deep); color:var(--ink-soft);">
+                  <i class="fa-solid fa-shield-halved text-[9px]" style="color:var(--gold-deep);"></i><span>Gizlilik Politikasını Oku / Privacy Policy</span>
+                </button>
+              </div>
               <p class="text-[8.5px] font-ledger pt-1" style="color:var(--ink-faint);">Uygulama Sürümü: <span id="appVersionBadge">—</span></p>
             </div>
           </div>
@@ -1266,6 +1271,141 @@
         <div class="space-y-1.5 pb-2">
           <h4 class="font-bold text-xs font-display" style="color:var(--ink);">8. Contact</h4>
           <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">For questions, permission requests, or notices: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener" class="font-semibold underline decoration-dotted underline-offset-2" style="color:var(--teal-700);">www.umitozguler.com.tr</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GİZLİLİK POLİTİKASI -->
+  <div id="privacyModal" class="hidden fixed inset-0 z-50 flex flex-col" style="background:var(--paper);">
+    <div class="hero-panel relative px-4 pt-4 pb-3 flex-shrink-0 safe-padding-top">
+      <div class="relative flex items-start justify-between">
+        <div class="space-y-1">
+          <h3 class="font-display font-bold text-base leading-snug flex items-center gap-2" style="color:#fff;">
+            <i class="fa-solid fa-shield-halved" style="color:var(--gold-soft);"></i><span>Gizlilik Politikası</span>
+          </h3>
+          <p class="text-[10.5px]" style="color:rgba(255,255,255,0.75);">Son güncelleme: 2 Ağustos 2026</p>
+        </div>
+        <button onclick="closePrivacyModal()" class="icon-btn flex-shrink-0" style="background:rgba(255,255,255,0.14); color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl mt-3" style="background:rgba(255,255,255,0.1);">
+        <button id="privacyLangTrBtn" onclick="switchPrivacyLang('tr')" class="segment-tab active text-[11px] font-bold py-2 rounded-xl">Türkçe</button>
+        <button id="privacyLangEnBtn" onclick="switchPrivacyLang('en')" class="segment-tab text-[11px] font-bold py-2 rounded-xl" style="color:rgba(255,255,255,0.8);">English</button>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-4 py-4 safe-padding-bottom">
+      <!-- TÜRKÇE İÇERİK (esas metin) -->
+      <div id="privacyContentTr" class="space-y-4">
+        <div class="paper-card rounded-2xl p-3.5">
+          <p class="text-[10px]" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>Bu metin, Bursa Manevi Atlası uygulamasını kullanan herkes için geçerlidir ve hangi verilerin nasıl işlendiğini açıklar. Anlaşmazlık halinde bu Türkçe metin esas alınır.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">1. Genel Bilgi</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Bursa Manevi Atlası ("Uygulama"), fikir, konsept ve proje sahibi Ümit Özgüler ("Hak Sahibi") tarafından geliştirilmiştir. Bu Gizlilik Politikası, Uygulamayı kullanırken hangi verilerin toplandığını, nasıl işlendiğini ve nasıl korunduğunu açıklar.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">2. Topladığımız Veriler</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama herhangi bir hesap/üyelik sistemi kullanmaz ve kişisel verilerinizi hiçbir sunucuya göndermez. Namaz kayıtlarınız, favori camileriniz, notlarınız, hatıra fotoğraflarınız ve tercihleriniz yalnızca kullandığınız cihazın tarayıcısında (IndexedDB/localStorage) saklanır. Hak Sahibi bu verilere erişemez, göremez ya da merkezi bir yerde toplayamaz.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">3. Konum Verileri</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulamanın Profil bölümünde bulunan "Akıllı Konum Asistanı" özelliği varsayılan olarak kapalıdır. Siz açtığınızda, size en yakın camiyi göstermek veya yakınınızdaki bir mabet hakkında bildirim göndermek amacıyla cihazınızın konum bilgisine erişilir. Bu bilgi yalnızca cihazınızda işlenir; Hak Sahibine ait bir sunucuya gönderilmez veya kaydedilmez. Özelliği istediğiniz zaman Profil ekranından kapatabilirsiniz.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">4. Üçüncü Taraf Servisler</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama, belirli işlevleri yerine getirebilmek için şu üçüncü taraf servislere bağlanır: namaz vakitleri için <span class="font-semibold" style="color:var(--ink);">Aladhan API</span>, hava durumu için <span class="font-semibold" style="color:var(--ink);">Open-Meteo</span>, adres/konum arama için <span class="font-semibold" style="color:var(--ink);">OpenStreetMap Nominatim</span> ve yol tarifi/harita görüntüleme için <span class="font-semibold" style="color:var(--ink);">Google Haritalar</span>. Bu servislere yapılan isteklerde IP adresiniz ve/veya konumunuz gibi teknik bilgiler ilgili servis sağlayıcıya iletilebilir. Bu verilerin nasıl işlendiği tamamen ilgili servisin kendi gizlilik politikasına tabidir; Hak Sahibinin bu servisler üzerinde herhangi bir kontrolü yoktur.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">5. Çerezler ve İzleme</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama; reklam, kullanıcı profili çıkarma veya izleme amaçlı çerez ya da üçüncü taraf analiz/reklam SDK'sı kullanmaz. Uygulamanın çevrimdışı çalışabilmesi ve hızlı açılabilmesi için yalnızca teknik amaçlı bir Service Worker önbelleği kullanılır.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">6. Veri Güvenliği ve Saklama Süresi</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Verileriniz yalnızca cihazınızda, siz silene veya Uygulamayı kaldırana kadar saklanır. Profil &gt; Tüm Verileri Sıfırla seçeneğiyle tüm kayıtlarınızı istediğiniz an tamamen silebilirsiniz. Verilerinizi yedeklemek veya başka bir cihaza taşımak isterseniz Profil &gt; Yedekle ve Geri Yükle bölümündeki dışa aktarma (JSON) özelliğini kullanabilirsiniz.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">7. Çocukların Gizliliği</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Uygulama, özellikle çocuklara yönelik olarak tasarlanmamıştır ve bilerek çocuklardan veri toplamaz.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">8. Haklarınız</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Verileriniz yalnızca cihazınızda tutulduğu için görüntüleme, düzeltme ve silme işlemleri tamamen sizin kontrolünüzdedir; bunları doğrudan Uygulama arayüzü üzerinden yapabilirsiniz. Üçüncü taraf servislerle ilgili haklarınız için ilgili servisin kendi gizlilik politikasına başvurmanız gerekir.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">9. Değişiklikler</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Hak Sahibi, bu Gizlilik Politikasını önceden bildirimde bulunmaksızın güncelleyebilir. Güncel sürüm her zaman Uygulama içinde bu ekranda yer alır; Uygulamayı kullanmaya devam etmeniz güncel politikayı kabul ettiğiniz anlamına gelir.</p>
+        </div>
+
+        <div class="space-y-1.5 pb-2">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">10. İletişim</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Sorularınız, veri talepleriniz veya bildirimleriniz için: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener" class="font-semibold underline decoration-dotted underline-offset-2" style="color:var(--teal-700);">www.umitozguler.com.tr</a></p>
+        </div>
+      </div>
+
+      <!-- ENGLISH CONTENT (informal translation) -->
+      <div id="privacyContentEn" class="space-y-4 hidden">
+        <div class="paper-card rounded-2xl p-3.5">
+          <p class="text-[10px]" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>This is an informal English translation for convenience. It applies to everyone using Bursa Manevi Atlası. In case of any conflict, the Turkish text is authoritative.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">1. General Information</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Bursa Manevi Atlası (the "App") was developed by its concept and project owner, Ümit Özgüler (the "Rights Holder"). This Privacy Policy explains what data is collected while using the App, how it is processed, and how it is protected.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">2. Data We Collect</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App does not use any account/membership system and does not send your personal data to any server. Your prayer records, favorite mosques, notes, memory photos, and preferences are stored only in your device's browser (IndexedDB/localStorage). The Rights Holder cannot access, view, or centrally collect this data.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">3. Location Data</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The "Smart Location Assistant" feature in the Profile section is off by default. When you turn it on, your device's location is accessed to show you the nearest mosque or notify you about a nearby place of worship. This information is processed only on your device; it is not sent to or stored on any server belonging to the Rights Holder. You can turn the feature off at any time from the Profile screen.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">4. Third-Party Services</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App connects to the following third-party services to provide certain features: <span class="font-semibold" style="color:var(--ink);">Aladhan API</span> for prayer times, <span class="font-semibold" style="color:var(--ink);">Open-Meteo</span> for weather, <span class="font-semibold" style="color:var(--ink);">OpenStreetMap Nominatim</span> for address/location search, and <span class="font-semibold" style="color:var(--ink);">Google Maps</span> for directions and map display. Requests to these services may transmit technical information such as your IP address and/or location to the relevant provider. How this data is processed is governed entirely by that service's own privacy policy; the Rights Holder has no control over these services.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">5. Cookies and Tracking</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App does not use cookies or third-party analytics/advertising SDKs for advertising, profiling, or tracking purposes. Only a technical Service Worker cache is used so the App can work offline and load quickly.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">6. Data Security and Retention</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Your data is stored only on your device until you delete it or uninstall the App. You can permanently delete all your records at any time via Profile &gt; Reset All Data. If you want to back up or move your data to another device, you can use the export (JSON) feature under Profile &gt; Backup and Restore.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">7. Children's Privacy</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The App is not specifically designed for children and does not knowingly collect data from children.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">8. Your Rights</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">Since your data is kept only on your device, viewing, correcting, and deleting it is entirely under your control and can be done directly through the App interface. For rights related to third-party services, please refer to that service's own privacy policy.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">9. Changes</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">The Rights Holder may update this Privacy Policy without prior notice. The current version is always available on this screen within the App; continuing to use the App means you accept the current policy.</p>
+        </div>
+
+        <div class="space-y-1.5 pb-2">
+          <h4 class="font-bold text-xs font-display" style="color:var(--ink);">10. Contact</h4>
+          <p class="text-[11px] leading-relaxed" style="color:var(--ink-soft);">For questions, data requests, or notices: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener" class="font-semibold underline decoration-dotted underline-offset-2" style="color:var(--teal-700);">www.umitozguler.com.tr</a></p>
         </div>
       </div>
     </div>

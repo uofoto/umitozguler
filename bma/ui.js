@@ -825,6 +825,28 @@
       enBtn.style.color = isTr ? 'rgba(255,255,255,0.8)' : '';
       window.haptic(6);
     };
+    // === GİZLİLİK POLİTİKASI MODALI ===
+    window.openPrivacyModal = function() {
+      document.getElementById('privacyModal').classList.remove('hidden');
+      document.getElementById('privacyModal').querySelector('.overflow-y-auto').scrollTop = 0;
+    };
+    window.closePrivacyModal = function() {
+      document.getElementById('privacyModal').classList.add('hidden');
+    };
+    window.switchPrivacyLang = function(lang) {
+      const trBtn = document.getElementById('privacyLangTrBtn');
+      const enBtn = document.getElementById('privacyLangEnBtn');
+      const trContent = document.getElementById('privacyContentTr');
+      const enContent = document.getElementById('privacyContentEn');
+      const isTr = lang === 'tr';
+      trContent.classList.toggle('hidden', !isTr);
+      enContent.classList.toggle('hidden', isTr);
+      trBtn.classList.toggle('active', isTr);
+      enBtn.classList.toggle('active', !isTr);
+      trBtn.style.color = isTr ? '' : 'rgba(255,255,255,0.8)';
+      enBtn.style.color = isTr ? 'rgba(255,255,255,0.8)' : '';
+      window.haptic(6);
+    };
     function renderDeletedMosquesList() {
       const list = getDeletedPresetMosques();
       const container = document.getElementById('deletedMosquesList');
