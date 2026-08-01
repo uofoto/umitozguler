@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gizlilik Politikası — Bursa Manevi Atlası</title>
+<meta name="description" content="Bursa Manevi Atlası uygulaması Gizlilik Politikası — hangi verilerin toplandığı, nasıl işlendiği ve korunduğu.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF7EF; --paper-deep:#F2ECDD; --paper-card:#FFFFFF;
+    --ink:#241F17; --ink-soft:#5B5445; --ink-faint:#A7A08E;
+    --teal-950:#082B25; --teal-900:#0C3A32; --teal-800:#124A3E; --teal-700:#155A4C;
+    --gold:#C39A45; --gold-soft:#E7D4A0; --gold-deep:#8C6A22;
+    --line: rgba(36,31,23,0.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0E1613; --paper-deep:#152420; --paper-card:#16211D;
+      --ink:#F2EDE1; --ink-soft:#C9C2AE; --ink-faint:#7C8580;
+      --teal-950:#050D0B; --teal-900:#2FA184; --teal-800:#134734; --teal-700:#22876D;
+      --gold:#D9B667; --gold-soft:#E7D4A0; --gold-deep:#C39A45;
+      --line: rgba(242,237,225,0.10);
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Manrope', sans-serif; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .font-display{ font-family:'Playfair Display', serif; }
+  a{ color:var(--teal-700); text-decoration:underline; text-decoration-style:dotted; text-underline-offset:2px; }
+  header.hero{
+    background:linear-gradient(160deg, var(--teal-950) 0%, var(--teal-900) 55%, var(--teal-800) 130%);
+    color:#fff; padding:38px 20px 28px; position:relative; overflow:hidden;
+  }
+  header.hero .wrap{ max-width:720px; margin:0 auto; position:relative; z-index:2; }
+  .badge{
+    width:52px; height:52px; border-radius:50% 50% 6px 6px; overflow:hidden;
+    background:var(--gold); border:2.5px solid var(--gold-soft);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .badge img{ width:100%; height:100%; object-fit:cover; }
+  header.hero h1{ font-size:22px; margin:0 0 4px; letter-spacing:.01em; color:var(--gold-soft); }
+  header.hero p.sub{ margin:0; font-size:12.5px; color:rgba(255,255,255,0.72); }
+  .top-row{ display:flex; align-items:center; gap:12px; }
+  .lang-toggle{
+    display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:18px;
+    background:rgba(255,255,255,0.10); padding:4px; border-radius:14px; max-width:280px;
+  }
+  .lang-toggle button{
+    border:none; cursor:pointer; padding:9px 0; border-radius:10px; font-weight:700; font-size:12px;
+    background:transparent; color:rgba(255,255,255,0.75); font-family:'Manrope',sans-serif;
+    transition:background-color .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{ background:var(--teal-900); color:#fff; box-shadow:0 4px 10px -4px rgba(12,58,50,0.5); }
+  main{ max-width:720px; margin:0 auto; padding:26px 20px 60px; }
+  .notice{
+    background:var(--paper-card); border:1px solid var(--line); border-radius:16px;
+    padding:14px 16px; font-size:12px; color:var(--ink-faint); margin-bottom:22px;
+  }
+  section{ margin-bottom:22px; }
+  section h2{
+    font-family:'Playfair Display', serif; font-size:16px; margin:0 0 8px; color:var(--ink);
+  }
+  section p{ margin:0; font-size:13.5px; color:var(--ink-soft); }
+  section p b, section p strong{ color:var(--ink); }
+  footer{
+    border-top:1px solid var(--line); padding:22px 20px 40px; text-align:center;
+    font-size:11px; color:var(--ink-faint);
+  }
+  footer a{ color:var(--ink-soft); font-weight:600; }
+  .hidden{ display:none !important; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700;
+    color:rgba(255,255,255,0.8); text-decoration:none; margin-bottom:14px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back-link" href="./index.html">&larr; Bursa Manevi Atlası'na dön</a>
+    <div class="top-row">
+      <div class="badge"><img src="icons/icon-192.png" alt="Bursa Manevi Atlası logosu"></div>
+      <div>
+        <h1 class="font-display">Gizlilik Politikası</h1>
+        <p class="sub">Son güncelleme: 2 Ağustos 2026 · Bursa Manevi Atlası</p>
+      </div>
+    </div>
+    <div class="lang-toggle">
+      <button id="langTrBtn" class="active" onclick="switchLang('tr')">Türkçe</button>
+      <button id="langEnBtn" onclick="switchLang('en')">English</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- TÜRKÇE -->
+  <div id="contentTr">
+    <div class="notice">Bu metin, Bursa Manevi Atlası uygulamasını (web/PWA ve Google Play sürümü) kullanan herkes için geçerlidir ve hangi verilerin nasıl işlendiğini açıklar. Anlaşmazlık halinde bu Türkçe metin esas alınır. Aynı metne uygulama içinden Profil &gt; Uygulama Hakkında bölümünden de ulaşabilirsiniz.</div>
+
+    <section>
+      <h2 class="font-display">1. Genel Bilgi</h2>
+      <p>Bursa Manevi Atlası ("Uygulama"), fikir, konsept ve proje sahibi Ümit Özgüler ("Hak Sahibi") tarafından geliştirilmiştir. Bu Gizlilik Politikası, Uygulamayı kullanırken hangi verilerin toplandığını, nasıl işlendiğini ve nasıl korunduğunu açıklar.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">2. Topladığımız Veriler</h2>
+      <p>Uygulama herhangi bir hesap/üyelik sistemi kullanmaz ve kişisel verilerinizi hiçbir sunucuya göndermez. Namaz kayıtlarınız, favori camileriniz, notlarınız, hatıra fotoğraflarınız ve tercihleriniz yalnızca kullandığınız cihazın tarayıcısında (IndexedDB/localStorage) saklanır. Hak Sahibi bu verilere erişemez, göremez ya da merkezi bir yerde toplayamaz.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">3. Konum Verileri</h2>
+      <p>Uygulamanın Profil bölümünde bulunan "Akıllı Konum Asistanı" özelliği varsayılan olarak kapalıdır. Siz açtığınızda, size en yakın camiyi göstermek veya yakınınızdaki bir mabet hakkında bildirim göndermek amacıyla cihazınızın konum bilgisine erişilir. Bu bilgi yalnızca cihazınızda işlenir; Hak Sahibine ait bir sunucuya gönderilmez veya kaydedilmez. Özelliği istediğiniz zaman Profil ekranından kapatabilirsiniz.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">4. Üçüncü Taraf Servisler</h2>
+      <p>Uygulama, belirli işlevleri yerine getirebilmek için şu üçüncü taraf servislere bağlanır: namaz vakitleri için <b>Aladhan API</b>, hava durumu için <b>Open-Meteo</b>, adres/konum arama için <b>OpenStreetMap Nominatim</b> ve yol tarifi/harita görüntüleme için <b>Google Haritalar</b>. Bu servislere yapılan isteklerde IP adresiniz ve/veya konumunuz gibi teknik bilgiler ilgili servis sağlayıcıya iletilebilir. Bu verilerin nasıl işlendiği tamamen ilgili servisin kendi gizlilik politikasına tabidir; Hak Sahibinin bu servisler üzerinde herhangi bir kontrolü yoktur.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">5. Çerezler ve Analiz</h2>
+      <p>Uygulama, ne kadar kullanıldığını ve hangi özelliklerin ilgi gördüğünü anlayabilmek için <b>Google Analytics (GA4)</b> kullanır. Bu servis; sayfa görüntülemeleri, uygulamayı yükleme adımları gibi etkileşim olaylarını, cihaz/tarayıcı türü gibi teknik bilgileri ve yaklaşık konumu (IP adresinizden türetilen) toplayabilir; bunun için çerez veya benzeri tanımlayıcılar kullanılabilir. Bu veriler isim, e-posta gibi bir kimlikle eşleştirilmez; namaz kayıtlarınız, notlarınız veya fotoğraflarınız Google Analytics'e asla gönderilmez. Google'ın bu verileri nasıl işlediği hakkında bilgi için <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Gizlilik Politikası'na</a> bakabilirsiniz.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">6. Veri Güvenliği ve Saklama Süresi</h2>
+      <p>Cihazınızda tutulan verileriniz (namaz kayıtları, favoriler, notlar, fotoğraflar) siz silene veya Uygulamayı kaldırana kadar saklanır. Profil &gt; Tüm Verileri Sıfırla seçeneğiyle tüm kayıtlarınızı istediğiniz an tamamen silebilirsiniz. Verilerinizi yedeklemek veya başka bir cihaza taşımak isterseniz Profil &gt; Yedekle ve Geri Yükle bölümündeki dışa aktarma (JSON) özelliğini kullanabilirsiniz.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">7. Çocukların Gizliliği</h2>
+      <p>Uygulama, özellikle çocuklara yönelik olarak tasarlanmamıştır ve bilerek çocuklardan veri toplamaz.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">8. Haklarınız</h2>
+      <p>Cihazınızda tutulan verileriniz üzerinde görüntüleme, düzeltme ve silme işlemleri tamamen sizin kontrolünüzdedir; bunları doğrudan Uygulama arayüzü üzerinden yapabilirsiniz. Google Analytics tarafından işlenen veriler için Google'a, diğer üçüncü taraf servisler için ise ilgili servisin kendi gizlilik politikasına başvurmanız gerekir. 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamındaki talepleriniz için aşağıdaki iletişim kanalını kullanabilirsiniz.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">9. Değişiklikler</h2>
+      <p>Hak Sahibi, bu Gizlilik Politikasını önceden bildirimde bulunmaksızın güncelleyebilir. Güncel sürüm her zaman bu sayfada ve Uygulama içinde Profil &gt; Uygulama Hakkında bölümünde yer alır; Uygulamayı kullanmaya devam etmeniz güncel politikayı kabul ettiğiniz anlamına gelir.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">10. İletişim</h2>
+      <p>Sorularınız, veri talepleriniz veya bildirimleriniz için: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener">www.umitozguler.com.tr</a></p>
+    </section>
+  </div>
+
+  <!-- ENGLISH -->
+  <div id="contentEn" class="hidden">
+    <div class="notice">This is an informal English translation for convenience. It applies to everyone using Bursa Manevi Atlası (web/PWA and Google Play version). In case of any conflict, the Turkish text is authoritative. The same text is also available inside the App under Profile &gt; About the App.</div>
+
+    <section>
+      <h2 class="font-display">1. General Information</h2>
+      <p>Bursa Manevi Atlası (the "App") was developed by its concept and project owner, Ümit Özgüler (the "Rights Holder"). This Privacy Policy explains what data is collected while using the App, how it is processed, and how it is protected.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">2. Data We Collect</h2>
+      <p>The App does not use any account/membership system and does not send your personal data to any server. Your prayer records, favorite mosques, notes, memory photos, and preferences are stored only in your device's browser (IndexedDB/localStorage). The Rights Holder cannot access, view, or centrally collect this data.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">3. Location Data</h2>
+      <p>The "Smart Location Assistant" feature in the Profile section is off by default. When you turn it on, your device's location is accessed to show you the nearest mosque or notify you about a nearby place of worship. This information is processed only on your device; it is not sent to or stored on any server belonging to the Rights Holder. You can turn the feature off at any time from the Profile screen.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">4. Third-Party Services</h2>
+      <p>The App connects to the following third-party services to provide certain features: <b>Aladhan API</b> for prayer times, <b>Open-Meteo</b> for weather, <b>OpenStreetMap Nominatim</b> for address/location search, and <b>Google Maps</b> for directions and map display. Requests to these services may transmit technical information such as your IP address and/or location to the relevant provider. How this data is processed is governed entirely by that service's own privacy policy; the Rights Holder has no control over these services.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">5. Cookies and Analytics</h2>
+      <p>The App uses <b>Google Analytics (GA4)</b> to understand how the App is used and which features are popular. This service may collect interaction events (such as page views and install-flow steps), technical information like device/browser type, and an approximate location derived from your IP address; it may use cookies or similar identifiers for this purpose. This data is not matched to an identity such as your name or email, and your prayer records, notes, or photos are never sent to Google Analytics. For details on how Google processes this data, see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">6. Data Security and Retention</h2>
+      <p>Data stored on your device (prayer records, favorites, notes, photos) is kept until you delete it or uninstall the App. You can permanently delete all your records at any time via Profile &gt; Reset All Data. If you want to back up or move your data to another device, you can use the export (JSON) feature under Profile &gt; Backup and Restore.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">7. Children's Privacy</h2>
+      <p>The App is not specifically designed for children and does not knowingly collect data from children.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">8. Your Rights</h2>
+      <p>Viewing, correcting, and deleting the data stored on your device is entirely under your control and can be done directly through the App interface. For data processed by Google Analytics, please contact Google; for other third-party services, please refer to that service's own privacy policy. For requests under applicable data protection law, you can use the contact channel below.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">9. Changes</h2>
+      <p>The Rights Holder may update this Privacy Policy without prior notice. The current version is always available on this page and inside the App under Profile &gt; About the App; continuing to use the App means you accept the current policy.</p>
+    </section>
+
+    <section>
+      <h2 class="font-display">10. Contact</h2>
+      <p>For questions, data requests, or notices: <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener">www.umitozguler.com.tr</a></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  © 2026 <a href="https://www.umitozguler.com.tr" target="_blank" rel="noopener">Ümit Özgüler</a>. Tüm Hakları Saklıdır. · Bursa Manevi Atlası
+</footer>
+
+<script>
+  function switchLang(lang){
+    var isTr = lang === 'tr';
+    document.getElementById('contentTr').classList.toggle('hidden', !isTr);
+    document.getElementById('contentEn').classList.toggle('hidden', isTr);
+    document.getElementById('langTrBtn').classList.toggle('active', isTr);
+    document.getElementById('langEnBtn').classList.toggle('active', !isTr);
+  }
+</script>
+
+</body>
+</html>
