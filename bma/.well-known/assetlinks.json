@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "tr.com.umitozguler.maneviatlasi",
+        "sha256_cert_fingerprints": ["48:0C:89:D6:59:66:41:04:A8:73:FF:3F:E0:79:AB:4C:77:3B:61:E9:5D:64:20:83:9B:63:CD:40:2F:63:19:3D"]
+      }
+    }]
