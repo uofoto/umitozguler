@@ -1,8 +1,11 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "tr.com.umitozguler.maneviatlasi",
-        "sha256_cert_fingerprints": ["48:0C:89:D6:59:66:41:04:A8:73:FF:3F:E0:79:AB:4C:77:3B:61:E9:5D:64:20:83:9B:63:CD:40:2F:63:19:3D"]
-      }
-    }]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "tr.com.umitozguler.maneviatlasi",
+      "sha256_cert_fingerprints":
+        ["BB:A2:A4:F2:7C:8C:3F:14:8D:B7:F0:BD:1A:CA:A1:56:BE:1B:45:06:DB:5E:24:47:D6:09:92:0B:87:60:8D:C0"]
+    }
+  }
+]
