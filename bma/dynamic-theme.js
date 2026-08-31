@@ -1,25 +1,9 @@
 // dynamic-theme.js — Mevsim ve Vakitlere Göre Dinamik Tema
-//
-// Mevcut Dark/Light temaya (theme.js) EK OLARAK: sabah namazı vaktinde
-// uygulama şafak renklerine (mavi/pembe tonları), akşam namazında gün
-// batımı tonlarına bürünür. Ayrıca Ramazan ayı, kandil geceleri ve cuma
-// günlerinde arayüzde ince, sıcak altın tonlu özel bir motif otomatik
-// devreye girer. Bu katman kullanıcının seçtiği Dark/Light temayı DEĞİŞTİRMEZ,
-// yalnızca hero panellerin üzerine ince bir "ruh hali" (mood) katmanı ekler.
-//
-// Namaz vakitleri, ui.js'teki namaz vakti geri sayımıyla aynı kaynaktan
-// (Aladhan API, Bursa koordinatları, Diyanet hesaplama metodu) alınır;
-// burada ayrıca Hicri tarih bilgisi de okunup Ramazan/Kandil tespiti için
-// kullanılır. Sonuçlar günlük olarak yerelde önbelleklenir.
+// Görsel katman: sinematik ışık geçişleri, aurora, ambient glow ve occasion motifleri.
 
 const DYN_THEME_LAT = 40.1826, DYN_THEME_LON = 29.0665;
 const DYN_THEME_CACHE_KEY = 'manevi-atlas-dyntheme-cache';
 const DYN_THEME_OCCASION_SEEN_KEY = 'manevi-atlas-dyntheme-occasion-seen';
-
-// Sabit Hicri gün/ay eşleşen kandiller (gece, ilgili Hicri günün akşamında idrak edilir):
-// Mevlid (Rebiülevvel 12), Miraç (Recep 27), Berat (Şaban 15), Kadir (Ramazan 27).
-// Regaib Kandili sabit bir Hicri güne denk gelmediği (Recep ayının ilk cuma gecesi)
-// için bu basit eşleşme listesine dahil edilmemiştir.
 const DYN_THEME_KANDIL_DAYS = [
   { month: 3, day: 12, name: 'Mevlid Kandili' },
   { month: 7, day: 27, name: 'Miraç Kandili' },
@@ -27,12 +11,8 @@ const DYN_THEME_KANDIL_DAYS = [
   { month: 9, day: 27, name: 'Kadir Gecesi' }
 ];
 
-function dynThemeDateKey(d) {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-function dynThemeFormatForApi(d) {
-  return `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
-}
+function dynThemeDateKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function dynThemeFormatForApi(d) { return `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`; }
 
 async function dynThemeFetchDay(dateObj) {
   const url = `https://api.aladhan.com/v1/timings/${dynThemeFormatForApi(dateObj)}?latitude=${DYN_THEME_LAT}&longitude=${DYN_THEME_LON}&method=13`;
@@ -40,10 +20,7 @@ async function dynThemeFetchDay(dateObj) {
   if (!res.ok) throw new Error('Namaz vakti servisi yanıt vermedi');
   const json = await res.json();
   if (!json || !json.data) throw new Error('Namaz vakti verisi hatalı');
-  return {
-    timings: json.data.timings,
-    hijri: (json.data.date && json.data.date.hijri) || null
-  };
+  return { timings: json.data.timings, hijri: (json.data.date && json.data.date.hijri) || null };
 }
 
 async function dynThemeGetDayCached(dateObj) {
@@ -51,26 +28,19 @@ async function dynThemeGetDayCached(dateObj) {
   let cache = {};
   try { cache = JSON.parse(localStorage.getItem(DYN_THEME_CACHE_KEY) || '{}'); } catch (e) { cache = {}; }
   if (cache[key]) return cache[key];
-
   const dayData = await dynThemeFetchDay(dateObj);
   cache[key] = dayData;
   const keys = Object.keys(cache).sort();
-  while (keys.length > 4) { delete cache[keys.shift()]; }
+  while (keys.length > 4) delete cache[keys.shift()];
   try { localStorage.setItem(DYN_THEME_CACHE_KEY, JSON.stringify(cache)); } catch (e) {}
   return dayData;
 }
 
 function dynThemeParseTimeOnDate(dateObj, hhmmRaw) {
-  const hhmm = (hhmmRaw || '00:00').split(' ')[0];
-  const [h, m] = hhmm.split(':').map(Number);
-  const d = new Date(dateObj);
-  d.setHours(h || 0, m || 0, 0, 0);
-  return d;
+  const [h, m] = (hhmmRaw || '00:00').split(' ')[0].split(':').map(Number);
+  const d = new Date(dateObj); d.setHours(h || 0, m || 0, 0, 0); return d;
 }
 
-// Ekranda ışıltıyı fark ettirmek için gündüzün ortasında sürekli açık
-// kalmasını istemiyoruz; bu yüzden şafak/gün batımı sadece dar bir zaman
-// penceresinde aktif olur.
 const DYN_THEME_DAWN_BEFORE_MIN = 25, DYN_THEME_DAWN_AFTER_MIN = 65;
 const DYN_THEME_SUNSET_BEFORE_MIN = 25, DYN_THEME_SUNSET_AFTER_MIN = 55;
 
@@ -78,129 +48,90 @@ function dynThemeComputeMood(now, todayBase, timings) {
   if (!timings) return 'normal';
   const fajr = dynThemeParseTimeOnDate(todayBase, timings.Fajr);
   const maghrib = dynThemeParseTimeOnDate(todayBase, timings.Maghrib);
-  const minutesBetween = (a, b) => (a.getTime() - b.getTime()) / 60000;
-
-  const sinceFajr = minutesBetween(now, fajr);
+  const delta = (a, b) => (a.getTime() - b.getTime()) / 60000;
+  const sinceFajr = delta(now, fajr);
   if (sinceFajr >= -DYN_THEME_DAWN_BEFORE_MIN && sinceFajr <= DYN_THEME_DAWN_AFTER_MIN) return 'dawn';
-
-  const sinceMaghrib = minutesBetween(now, maghrib);
+  const sinceMaghrib = delta(now, maghrib);
   if (sinceMaghrib >= -DYN_THEME_SUNSET_BEFORE_MIN && sinceMaghrib <= DYN_THEME_SUNSET_AFTER_MIN) return 'sunset';
-
   return 'normal';
 }
 
-function dynThemeComputeOccasion(now, hijri) {
-  const isFriday = now.getDay() === 5;
-  let isRamadan = false, kandilName = null;
-
-  if (hijri && hijri.month && hijri.day) {
-    const hMonth = Number(hijri.month.number);
-    const hDay = Number(hijri.day);
-    isRamadan = hMonth === 9;
-    const kandil = DYN_THEME_KANDIL_DAYS.find(k => k.month === hMonth && k.day === hDay);
-    if (kandil) kandilName = kandil.name;
-  }
-
-  if (kandilName) return { key: 'kandil', label: kandilName };
-  if (isRamadan) return { key: 'ramadan', label: 'Ramazan Ayı' };
-  if (isFriday) return { key: 'friday', label: 'Cuma Günü' };
-  return { key: 'normal', label: null };
+function dynThemeComputeOccasion(now) {
+  return now.getDay() === 5 ? { key: 'friday', label: 'Cuma Günü' } : { key: 'normal', label: null };
 }
 
-// Vakit (mood) ve özel gün (occasion) katmanlarını tek bir gradyanda birleştirip
-// :root üzerinde CSS değişkeni olarak uygular (bkz. styles.css .hero-panel::after).
+function dynThemeInstallVisualLayer() {
+  if (document.getElementById('dyn-theme-visual-layer')) return;
+  const style = document.createElement('style'); style.id = 'dyn-theme-visual-layer';
+  style.textContent = `
+    :root { --mood-overlay-bg:none; --mood-overlay-opacity:0; --mood-overlay-blend:normal; --mood-accent:#8faeff; --mood-accent-2:#e5edff; --mood-glow:rgba(157,184,255,.28); --mood-canvas:#101a31; --mood-surface:rgba(30,43,72,.72); --mood-duration:1400ms; }
+    body { --dyn-transition: color var(--mood-duration) ease, background-color var(--mood-duration) ease; transition:var(--dyn-transition); }
+    body::before, body::after { content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:var(--mood-overlay-opacity); transition:opacity var(--mood-duration) ease, background var(--mood-duration) ease, transform 2s ease; }
+    body::before { background:var(--mood-overlay-bg), radial-gradient(ellipse at 18% 8%, rgba(255,255,255,.16), transparent 26%), conic-gradient(from 215deg at 72% 32%, transparent 0deg, rgba(255,255,255,.08) 38deg, transparent 78deg); background-size:180% 180%, 140% 140%, 170% 170%; background-position:0% 50%, 0% 0%, 100% 100%; mix-blend-mode:var(--mood-overlay-blend); animation:dyn-aurora 24s cubic-bezier(.37,0,.18,1) infinite alternate; }
+    body::after { inset:-22%; background:radial-gradient(ellipse at 16% 18%, var(--mood-glow), transparent 22%), radial-gradient(ellipse at 84% 78%, var(--mood-glow), transparent 25%), radial-gradient(ellipse at 58% 4%, rgba(255,255,255,.10), transparent 18%); filter:blur(42px); opacity:calc(var(--mood-overlay-opacity) * .8); animation:dyn-orbit 17s cubic-bezier(.45,0,.2,1) infinite alternate; }
+    body > * { position:relative; z-index:1; }
+    .mood-dawn { --mood-accent:#ffc86e; --mood-accent-2:#dff4ff; --mood-glow:rgba(255,194,107,.38); --mood-canvas:#8fc8e8; --mood-surface:rgba(39,78,120,.78); }
+    .mood-sunset { --mood-accent:#ffd27f; --mood-accent-2:#ffe4c4; --mood-glow:rgba(255,166,101,.38); --mood-canvas:#bd817e; --mood-surface:rgba(106,61,76,.76); }
+    .mood-normal { --mood-accent:#a9c1ff; --mood-accent-2:#edf2ff; --mood-canvas:#101a31; --mood-surface:rgba(30,43,72,.72); }
+    .occasion-friday { --mood-accent:#c99545; --mood-accent-2:#fff3cf; --mood-glow:rgba(255,215,126,.48); --mood-canvas:#b8e7df; --mood-surface:rgba(39,105,108,.78); }
+    .occasion-friday::after { opacity:calc(var(--mood-overlay-opacity) * .82); background:radial-gradient(circle at 78% 10%, rgba(255,247,205,.56), transparent 28%), radial-gradient(circle at 22% 88%, rgba(255,219,149,.28), transparent 30%); }
+    @media (prefers-reduced-motion: reduce) { body::after { animation:none; } body::before, body::after { animation:none; transition:none; } }
+    @keyframes dyn-breathe { from { transform:translate3d(-1%, -1%, 0) scale(1); } to { transform:translate3d(1%, 1%, 0) scale(1.04); } }
+    @keyframes dyn-aurora { 0% { background-position:0% 50%, 0% 0%, 100% 100%; transform:scale(1) rotate(0deg); } 45% { background-position:48% 42%, 72% 18%, 54% 72%; transform:scale(1.035) rotate(.35deg); } 100% { background-position:100% 50%, 18% 76%, 0% 18%; transform:scale(1.06) rotate(-.35deg); } }
+    @keyframes dyn-orbit { 0% { transform:translate3d(-1.5%, 1%, 0) scale(1); } 50% { transform:translate3d(1%, -1.5%, 0) scale(1.035); } 100% { transform:translate3d(2%, 1%, 0) scale(1.07); } }
+    @media (prefers-reduced-motion: reduce) { body::after { animation:none; } body::before, body::after { animation:none; transition:none; } }
+  `;
+  document.head.appendChild(style);
+
+}
+
 function dynThemeApply(mood, occasion) {
-  const body = document.body;
-  const root = document.documentElement;
-
-  body.classList.remove('mood-dawn', 'mood-sunset', 'mood-normal');
+  const body = document.body, root = document.documentElement;
+  if (!body || !root) return;
+  dynThemeInstallVisualLayer();
+  body.classList.remove('mood-dawn', 'mood-sunset', 'mood-normal', 'occasion-friday');
   body.classList.add(`mood-${mood}`);
-
-  body.classList.remove('occasion-ramadan', 'occasion-kandil', 'occasion-friday');
   if (occasion && occasion.key !== 'normal') body.classList.add(`occasion-${occasion.key}`);
-
   const layers = [];
-  if (mood === 'dawn') {
-    layers.push('linear-gradient(160deg, rgba(255,178,153,0.55) 0%, rgba(159,178,255,0.4) 55%, transparent 100%)');
-  } else if (mood === 'sunset') {
-    layers.push('linear-gradient(160deg, rgba(255,140,66,0.55) 0%, rgba(158,42,92,0.4) 60%, transparent 100%)');
-  }
-  if (occasion && occasion.key === 'ramadan') {
-    layers.push('radial-gradient(circle at 85% 10%, rgba(231,212,160,0.5), transparent 60%)');
-  } else if (occasion && occasion.key === 'kandil') {
-    layers.push('radial-gradient(circle at 50% 0%, rgba(231,212,160,0.6), transparent 65%)');
-  } else if (occasion && occasion.key === 'friday') {
-    // Dosya başındaki açıklamada cuma günleri için de ince, sıcak altın tonlu
-    // bir motif vaat ediliyordu; bu kural eksikti ve cuma günleri sadece
-    // fark edilmesi zor bir başlık text-shadow'u ile geçiştiriliyordu.
-    layers.push('radial-gradient(circle at 50% 0%, rgba(231,212,160,0.32), transparent 65%)');
-  }
-
-  if (layers.length) {
-    root.style.setProperty('--mood-overlay-bg', layers.join(', '));
-    root.style.setProperty('--mood-overlay-opacity', '0.9');
-    root.style.setProperty('--mood-overlay-blend', mood === 'normal' ? 'overlay' : 'soft-light');
-  } else {
-    root.style.setProperty('--mood-overlay-opacity', '0');
-  }
+  if (mood === 'dawn') layers.push('linear-gradient(135deg, rgba(255,215,164,.76) 0%, rgba(159,211,255,.42) 48%, rgba(177,184,255,.2) 76%, transparent 100%)');
+  if (mood === 'sunset') layers.push('linear-gradient(145deg, rgba(255,188,104,.66) 0%, rgba(236,123,99,.5) 42%, rgba(166,90,147,.4) 76%, transparent 100%)');
+  if (occasion?.key === 'friday') layers.push('radial-gradient(circle at 78% 8%, rgba(255,241,190,.72), transparent 32%), radial-gradient(circle at 12% 88%, rgba(255,215,151,.38), transparent 36%)');
+  root.style.setProperty('--mood-overlay-bg', layers.length ? layers.join(', ') : 'none');
+  root.style.setProperty('--mood-overlay-opacity', layers.length ? '1' : '0');
+  root.style.setProperty('--mood-overlay-blend', mood === 'normal' ? 'soft-light' : 'screen');
+  const isSpecial = mood !== 'normal' || occasion?.key === 'friday';
+  root.style.setProperty('--mood-canvas', mood === 'dawn' ? '#8fc8e8' : mood === 'sunset' ? '#bd817e' : occasion?.key === 'friday' ? '#b8e7df' : '#101a31');
+  body.style.background = isSpecial ? 'var(--mood-canvas)' : '';
+  window.dispatchEvent(new CustomEvent('dynamic-theme-change', { detail: { mood, occasion } }));
 }
 
 function dynThemeMaybeNotify(occasion) {
   if (!occasion || occasion.key === 'normal' || typeof showToast !== 'function') return;
-  const todayKey = dynThemeDateKey(new Date());
-  let seen = {};
+  const todayKey = dynThemeDateKey(new Date()); let seen = {};
   try { seen = JSON.parse(localStorage.getItem(DYN_THEME_OCCASION_SEEN_KEY) || '{}'); } catch (e) {}
-  const seenKey = `${todayKey}:${occasion.key}`;
-  if (seen[seenKey]) return;
-  seen[seenKey] = true;
-  // Depoyu şişirmemek için sadece bugüne ait kayıtları tut
-  seen = Object.fromEntries(Object.entries(seen).filter(([k]) => k.startsWith(todayKey)));
-  try { localStorage.setItem(DYN_THEME_OCCASION_SEEN_KEY, JSON.stringify(seen)); } catch (e) {}
+  const seenKey = `${todayKey}:${occasion.key}`; if (seen[seenKey]) return;
+  const filteredSeen = {}; Object.keys(seen).forEach(k => { if (k.startsWith(todayKey)) filteredSeen[k] = seen[k]; });
+  filteredSeen[seenKey] = true;
+  try { localStorage.setItem(DYN_THEME_OCCASION_SEEN_KEY, JSON.stringify(filteredSeen)); } catch (e) {}
   showToast(`${occasion.label} mübarek olsun. Uygulama bugüne özel bir motifle karşınızda.`, 'success');
 }
 
-let dynThemeDayCache = null;
-let dynThemeDayCacheKey = null;
-
+let dynThemeDayCache = null, dynThemeDayCacheKey = null;
 async function dynThemeTick() {
-  const now = new Date();
-
-  // Namaz vakti / Hicri tarih verisi Aladhan API'sinden gelir ve ağa bağımlıdır.
-  // Bu istek başarısız olursa (ağ hatası, geçici kesinti vb.) SADECE şafak/gün
-  // batımı (mood) efekti devre dışı kalmalı; cuma/Ramazan/kandil tespiti buna
-  // bağlı DEĞİLDİR ve API çağrısından bağımsız olarak her zaman çalışmalıdır.
-  // Önceden ikisi tek bir try/catch içindeydi, bu yüzden API isteği her
-  // başarısız olduğunda (ör. cuma günü boyunca) cuma motifi de hiç
-  // tetiklenmiyordu.
-  let hijri = null;
-  let mood = 'normal';
+  const now = new Date(); let hijri = null, mood = 'normal';
   try {
     const todayKey = dynThemeDateKey(now);
-    if (dynThemeDayCacheKey !== todayKey || !dynThemeDayCache) {
-      dynThemeDayCache = await dynThemeGetDayCached(now);
-      dynThemeDayCacheKey = todayKey;
-    }
-    const todayBase = new Date(now); todayBase.setHours(0, 0, 0, 0);
-    mood = dynThemeComputeMood(now, todayBase, dynThemeDayCache.timings);
-    hijri = dynThemeDayCache.hijri;
-  } catch (e) {
-    // Ağ hatası vb. durumlarda sadece şafak/gün batımı rengi devre dışı kalır;
-    // uygulamanın geri kalanı (Dark/Light tema) ve cuma/Ramazan/kandil motifi
-    // normal çalışmaya devam eder.
-    console.error('[dynamic-theme] namaz vakti verisi alınamadı, sadece vakit (mood) rengi bu turda pasif:', e);
-  }
-
-  // Cuma/Ramazan/kandil tespiti yerel tarihe (ve varsa Hicri veriye) dayanır,
-  // yukarıdaki API isteğinden bağımsız olarak her zaman hesaplanır.
-  const occasion = dynThemeComputeOccasion(now, hijri);
-  dynThemeApply(mood, occasion);
-  dynThemeMaybeNotify(occasion);
+    if (!dynThemeDayCache) { try { const c = JSON.parse(localStorage.getItem(DYN_THEME_CACHE_KEY) || '{}'); if (c[todayKey]) { dynThemeDayCache = c[todayKey]; dynThemeDayCacheKey = todayKey; } } catch (e) {} }
+    if (dynThemeDayCacheKey !== todayKey || !dynThemeDayCache) { dynThemeDayCache = await dynThemeGetDayCached(now); dynThemeDayCacheKey = todayKey; }
+    if (dynThemeDayCache) { const base = new Date(now); base.setHours(0, 0, 0, 0); mood = dynThemeComputeMood(now, base, dynThemeDayCache.timings); hijri = dynThemeDayCache.hijri; }
+  } catch (e) { console.error('[dynamic-theme] Veri alınamadı:', e); if (dynThemeDayCache) hijri = dynThemeDayCache.hijri; }
+  const occasion = dynThemeComputeOccasion(now); dynThemeApply(mood, occasion); dynThemeMaybeNotify(occasion);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  dynThemeTick();
-  setInterval(dynThemeTick, 5 * 60 * 1000); // 5 dakikada bir tazele
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') dynThemeTick();
-  });
-});
+function dynThemeInit() { dynThemeInstallVisualLayer(); dynThemeTick(); setInterval(dynThemeTick, 5 * 60 * 1000); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') dynThemeTick(); }); }
+
+// Ön izleme sayfası veya test ortamı için güvenli kontrol noktası.
+window.dynThemePreview = { apply: dynThemeApply, install: dynThemeInstallVisualLayer };
+if (!new URLSearchParams(location.search).has('preview')) {
+  if (document.readyState === 'loading') window.addEventListener('DOMContentLoaded', dynThemeInit); else dynThemeInit();
+}
