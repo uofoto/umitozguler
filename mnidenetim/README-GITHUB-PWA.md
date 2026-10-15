@@ -21,5 +21,7 @@ Bu paket, verilen yazılımın içeriğini ve mevcut işlevlerini değiştirmede
 - Değerlendirme ekranındaki **PDF / Yazdır** düğmesi telefonun yazdırma ekranını açar. Buradan **PDF olarak kaydet** seçilerek dosya oluşturulabilir.
 - Değerlendirme ekranındaki **E-posta hazırla** düğmesi telefonun e-posta uygulamasında konu ve açıklaması hazır bir taslak açar. Kaydedilen PDF dosyası e-postaya eklenir. GitHub Pages tek başına e-postaya dosya ekleyip otomatik gönderim yapamaz; bunun için ayrıca sunucu veya e-posta servisi gerekir.
 - Mobil görünümde uzun tablolar yatay kaydırmalı, değerlendirme maddeleri dokunmatik büyük düğmeli ve üst menü telefon ekranına uyumlu olacak şekilde düzenlenmiştir.
+- Mobil eylem sırası: **Taslak kaydet**, **Tamamla ve onayla**, **PDF / Yazdır + E-posta**, ardından **Önceki + Sonraki** ve en altta daha az görünür **Kaydı sil** şeklindedir.
+- Mobil renk paleti kurumsal lacivert, kırmızı vurgu, açık gri-mavi zemin ve yeşil onay rengi olarak düzenlenmiştir.
 - Öğretmen verileri kişisel bilgi içerebileceği için JSON yedeklerini güvenli bir yerde saklayın ve herkese açık GitHub repository’sine yüklemeyin.
 - Güncelleme yaptıktan sonra service worker yeni önbellek sürümünü alır; gerekirse uygulamayı bir kez kapatıp açın.

@@ -58,7 +58,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:12.5px}.tb th,.tb td{bord
 #yr,#yr option{background:#fff;color:#111827}#yr option:checked{background:#dbeafe;color:#111827}
 
 /* ---------- Gelişmiş profesyonel katman ---------- */
-:root{--gold:#b78628;--soft:#f7f4ec;--shadow:0 10px 28px rgba(15,39,70,.08)}
+:root{--gold:#b78628;--soft:#f7f4ec;--shadow:0 10px 28px rgba(15,39,70,.08);--mobile-navy:#17365d;--mobile-red:#b4233c;--mobile-bg:#f4f7fb}
 .card{box-shadow:var(--shadow)}
 .top{position:sticky;top:0;z-index:20;box-shadow:0 3px 18px rgba(0,0,0,.12)}
 .insight{border-left:4px solid var(--pri);background:linear-gradient(135deg,var(--pri2),var(--card));padding:12px 14px;border-radius:8px;margin:10px 0}
@@ -86,6 +86,31 @@ html,body{max-width:100%;overflow-x:hidden}button,input,select,textarea{min-heig
  #v-panel .g2>*,#v-rap .card,#v-takip .card{width:100%}
 }
 @media(min-width:701px){#installPwa{display:none}}
+/* ---------- Kurumsal mobil tema ve eylem hiyerarşisi ---------- */
+@media(max-width:700px){
+ :root{--bg:var(--mobile-bg);--pb:var(--mobile-navy);--acc:var(--mobile-red);--pri2:#eaf0f8;--line:#d8e1ed}
+ .card{box-shadow:0 5px 16px rgba(23,54,93,.08);border-color:#d8e1ed}
+ button{border-radius:9px;font-weight:600;box-shadow:0 1px 2px rgba(15,39,70,.06);transition:transform .12s ease,box-shadow .12s ease}
+ button:active{transform:translateY(1px);box-shadow:none}
+ button.p{background:var(--mobile-navy);border-color:var(--mobile-navy)}button.ok{background:#198754;border-color:#198754}
+ button.dg{background:#fff5f5;border-color:#e4a5ad;color:#a61b31}
+ .top{background:linear-gradient(135deg,#17365d,#12294a);box-shadow:0 4px 16px rgba(18,41,74,.22)}
+ nav button{box-shadow:none;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08)}nav button.on{background:#fff;color:var(--mobile-navy)}
+ #installPwa{width:100%;margin-top:0;background:#fff;color:var(--mobile-navy);border-color:#fff;box-shadow:none}
+ #form>.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+ #form>.acts span{display:none}
+ #form>.acts button{min-width:0;width:100%;margin:0}
+ #form>.acts #save,#form>.acts #fin{grid-column:1/-1}
+ #form>.acts #save{order:1;background:#fff;color:var(--mobile-navy);border-color:var(--mobile-navy)}
+ #form>.acts #fin{order:2;min-height:48px;font-size:15px}
+ #form>.acts #pri,#form>.acts #mail{order:3}
+ #form>.acts #prev,#form>.acts #next{order:4;margin-top:3px}
+ #form>.acts #del{order:5;grid-column:1/-1;font-size:12px;min-height:36px;background:transparent;box-shadow:none}
+ #v-rap .acts,#v-takip .acts{display:grid;grid-template-columns:1fr 1fr}
+ #v-rap .acts input,#v-rap .acts select{grid-column:1/-1;max-width:none!important}
+ #v-rap .acts button{min-width:0}
+ .msg{line-height:1.35}
+}
 @media print{.top,.acts,nav,#app{display:none!important}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">

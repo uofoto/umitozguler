@@ -1,4 +1,4 @@
-const CACHE_NAME = "mni-ogretmen-pwa-v3-mobile-pdf";
+const CACHE_NAME = "mni-ogretmen-pwa-v4-mobile-theme";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png"];
 
 self.addEventListener("install", event => {
