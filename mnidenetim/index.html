@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mustafa Necati İlkokulu · Öğretmen İzleme ve Değerlendirme</title>
+<style>
+:root{--bg:#eceff5;--card:#fff;--ink:#14213d;--mut:#5b6678;--line:#d9dfe9;--pri:#12294a;--pb:#12294a;--pri2:#e6ecf6;--acc:#c8102e;--ok:#1e7f4f;--mid:#b9770e;--bad:#c0392b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1423;--card:#152036;--ink:#e8edf7;--mut:#9aa8c0;--line:#27364f;--pri:#8db4f5;--pb:#2f5fb3;--pri2:#1b2b47;--ok:#4cc17e;--mid:#e0b04f;--bad:#f08072}}
+:root[data-theme="dark"]{--bg:#0c1423;--card:#152036;--ink:#e8edf7;--mut:#9aa8c0;--line:#27364f;--pri:#8db4f5;--pb:#2f5fb3;--pri2:#1b2b47;--ok:#4cc17e;--mid:#e0b04f;--bad:#f08072}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 "Segoe UI",Roboto,Arial,sans-serif}
+h2,h3{font-family:Georgia,"Times New Roman",serif;margin:0 0 10px}h2{font-size:19px}h3{font-size:15.5px;margin-top:16px}
+.top{background:var(--pb);color:#fff;display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:12px 20px;border-bottom:4px solid var(--acc)}
+.brand{flex:1;min-width:230px}.brand b{font:600 21px Georgia,serif;display:block}.brand span{font-size:12.5px;opacity:.8}
+nav{display:flex;gap:4px}nav button{background:none;color:#fff;border:0;border-radius:6px;padding:8px 14px}nav button.on{background:rgba(255,255,255,.18);font-weight:600}
+.who{font-size:12px;text-align:right;opacity:.9}.who b{font-size:14px}
+.wrap{max-width:1420px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px}
+input,select,textarea,button{font:inherit;color:inherit}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+textarea{resize:vertical;min-height:60px}button{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:7px 12px}
+button.p{background:var(--pb);color:#fff;border-color:var(--pb)}button.ok{background:var(--ok);color:#fff;border-color:var(--ok)}button.dg{color:var(--bad)}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:12px}
+.kpi b{display:block;font:700 30px/1.1 Georgia,serif}.kpi span{color:var(--mut);font-size:12.5px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}@media(max-width:900px){.g2{grid-template-columns:1fr}}
+.bar{height:9px;background:var(--line);border-radius:5px;overflow:hidden;display:flex}.bar i{display:block;height:100%}
+.ar{display:grid;grid-template-columns:150px 1fr 48px;gap:8px;align-items:center;margin:6px 0;font-size:13px}.ar b{text-align:right}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{border-radius:14px;padding:3px 10px;font-size:12.5px}
+.chip.on{background:var(--pb);color:#fff;border-color:var(--pb)}
+.lay{display:grid;grid-template-columns:300px 1fr;gap:14px}@media(max-width:900px){.lay{grid-template-columns:1fr}}
+.side{position:sticky;top:8px;align-self:start}.list{max-height:56vh;overflow:auto;margin-top:8px}
+.grp{font-weight:600;font-size:12px;color:var(--mut);margin:10px 0 3px}
+.t{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;border:0;background:none;padding:6px 8px;border-radius:6px}
+.t:hover{background:var(--pri2)}.t.on{background:var(--pb);color:#fff}.t small{opacity:.7;margin-left:6px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+.bd{font-size:11.5px;border-radius:10px;padding:2px 9px;border:1px solid var(--line)}.b1{color:var(--mid);border-color:var(--mid)}.b2{color:var(--ok);border-color:var(--ok)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}label.f{font-size:12px;color:var(--mut);display:block}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:12px 0 10px;padding-bottom:4px}.tabs button{white-space:nowrap;font-size:13px}.tabs button.on{background:var(--pb);color:#fff;border-color:var(--pb)}
+.std{background:var(--pri2);border-left:4px solid var(--acc);padding:9px 12px;border-radius:4px;font-size:13.5px;margin-bottom:10px}
+.ind{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}.ind>b{color:var(--mut)}
+.lv{display:flex;gap:5px}.lv label{cursor:pointer}.lv input{position:absolute;opacity:0;width:0}
+.lv span{display:block;border:1px solid var(--line);border-radius:6px;padding:4px 9px;font-size:12px;white-space:nowrap}
+.lv input:focus-visible+span{outline:2px solid var(--pri)}
+.lv input:checked+span.y{background:var(--ok);color:#fff;border-color:var(--ok)}.lv input:checked+span.k{background:var(--mid);color:#fff;border-color:var(--mid)}.lv input:checked+span.g{background:var(--bad);color:#fff;border-color:var(--bad)}
+@media(max-width:700px){.ind{grid-template-columns:24px 1fr}.lv{grid-column:1/-1;flex-wrap:wrap}.ar{grid-template-columns:110px 1fr 44px}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}@media(max-width:700px){.two{grid-template-columns:1fr}}
+.rgrid{display:grid;grid-template-columns:260px 1fr;gap:14px;align-items:center}@media(max-width:700px){.rgrid{grid-template-columns:1fr}}
+table.tb{width:100%;border-collapse:collapse;font-size:12.5px}.tb th,.tb td{border-bottom:1px solid var(--line);padding:6px;text-align:center}.tb th{position:sticky;top:0;background:var(--card)}.tb td:nth-child(2),.tb th:nth-child(2){text-align:left}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}.msg{font-size:13px;color:var(--ok)}.msg.err{color:var(--bad)}
+.sm{font-size:12px;color:var(--mut)}
+#pr{display:none}
+@page{size:A4;margin:0}
+@media print{body{background:#fff}#app{display:none!important}#pr{display:block!important;padding:14mm;color:#000;background:#fff;font:11px/1.35 Arial,sans-serif}
+#pr h1{font-size:14px;text-align:center;margin:0}#pr .c{text-align:center;margin:0}#pr table{width:100%;border-collapse:collapse;margin:6px 0;page-break-inside:auto}
+#pr td,#pr th{border:1px solid #000;padding:3px 5px;vertical-align:top}#pr th{background:#eee}#pr tr{page-break-inside:avoid}#pr .x{text-align:center;font-weight:700;width:60px}
+#pr .sg{display:flex;justify-content:space-around;margin-top:38px;text-align:center}#pr h4{margin:10px 0 2px;font-size:11.5px}}
+#yr,#yr option{background:#fff;color:#111827}#yr option:checked{background:#dbeafe;color:#111827}
+
+/* ---------- Gelişmiş profesyonel katman ---------- */
+:root{--gold:#b78628;--soft:#f7f4ec;--shadow:0 10px 28px rgba(15,39,70,.08)}
+.card{box-shadow:var(--shadow)}
+.top{position:sticky;top:0;z-index:20;box-shadow:0 3px 18px rgba(0,0,0,.12)}
+.insight{border-left:4px solid var(--pri);background:linear-gradient(135deg,var(--pri2),var(--card));padding:12px 14px;border-radius:8px;margin:10px 0}
+.insight.warn{border-left-color:var(--mid)}.insight.good{border-left-color:var(--ok)}.insight.bad{border-left-color:var(--bad)}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}.metric{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}.metric b{font:700 24px Georgia,serif;display:block}.metric span{font-size:12px;color:var(--mut)}
+.timeline{border-left:2px solid var(--line);padding-left:16px;margin:10px 0}.timeline-item{position:relative;margin:0 0 14px}.timeline-item:before{content:"";position:absolute;left:-22px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--pri)}
+.flag{display:inline-flex;align-items:center;gap:5px;border-radius:12px;padding:3px 9px;font-size:11px;border:1px solid var(--line);background:var(--card)}
+.flag.priority{color:var(--bad);border-color:var(--bad)}.flag.follow{color:var(--mid);border-color:var(--mid)}.flag.ok{color:var(--ok);border-color:var(--ok)}
+.help{font-size:11.5px;color:var(--mut);margin-top:4px}.autosave{font-size:12px;color:var(--ok);min-height:18px}
+@media(max-width:700px){.top{position:static}.metric-grid{grid-template-columns:repeat(2,1fr)}}
+@media print{.top,.acts,nav,#app{display:none!important}}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#12294a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+</head>
+<body>
+<div id="app">
+<header class="top"><div class="brand"><b>Mustafa Necati İlkokulu</b><span>Öğretmen İzleme ve Değerlendirme Sistemi</span></div>
+<label style="display:flex;flex-direction:column;font-size:11px;opacity:.85;gap:2px">Eğitim Öğretim Yılı<select id="yr" aria-label="Eğitim öğretim yılı (arşiv)" style="padding:5px 8px;border-radius:6px;font-size:13px;min-width:120px;background:#fff;color:#111827;border:1px solid #cbd5e1"></select></label>
+<nav id="nav"><button data-v="panel">Genel Panel</button><button data-v="form">Değerlendirme</button><button data-v="rap">Raporlar</button><button data-v="takip">Takip Merkezi</button></nav>
+<div class="who">Okul Müdürü<br><b>Ümit Özgüler</b></div></header>
+<main class="wrap">
+<section id="v-panel"></section>
+<section id="v-form" hidden><div class="lay">
+<aside class="side card"><div class="chips" id="chips"></div><input id="q" type="search" placeholder="Öğretmen ara…" aria-label="Öğretmen ara" style="margin-top:8px"><div class="list" id="list"></div></aside>
+<div id="fm"><div class="card" id="empty">Soldaki listeden bir öğretmen seçerek EK-1 formunu doldurmaya başlayın. Genel Panel'deki “Bekleyenler” listesinden de seçebilirsiniz.</div>
+<div id="form" hidden>
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px"><h2 id="tt" style="margin:0"></h2><span id="bdg"></span></div><div class="grid" id="head"></div>
+<div style="margin-top:10px"><div class="bar"><i id="pg" style="background:var(--ok);width:0"></i></div><div class="sm" id="pgt"></div></div></div>
+<div class="tabs" id="tabs"></div><div id="areas"></div>
+<div class="acts"><button id="prev">← Önceki</button><button id="next">Sonraki →</button><span style="flex:1"></span><button id="save">Taslak kaydet</button><button class="ok" id="fin">Tamamla ve onayla</button><button class="p" id="pri">Yazdır / PDF</button><button class="dg" id="del">Kaydı sil</button></div>
+<div class="msg" id="msg" role="status"></div>
+</div></div></div></section>
+<section id="v-rap" hidden></section><section id="v-takip" hidden></section>
+</main></div>
+<div id="pr"></div>
+<script>
+const T=[["Ümit Özgüler","Müdür","Yönetim"],["Mücahit Pala","Müdür Yardımcısı","Yönetim"],["Selahattin Kocaman","Müdür Yardımcısı","Yönetim"],["İbrahim Ethem Kaya","Rehberlik","Branş / Rehberlik"],["Esra Kaya","Rehberlik","Branş / Rehberlik"],["Rıdvan Yağımlı","İngilizce Öğretmeni","Branş / Rehberlik"],["Kadriye Doğrul","İngilizce Öğretmeni","Branş / Rehberlik"],["Gülişe Gündüz","Din Kül. ve A.B. Öğretmeni","Branş / Rehberlik"],
+["Gülhan Aksu Baraş","Sınıf Öğretmeni","1-A"],["Beytullah Kaçmaz","Sınıf Öğretmeni","1-B"],["Esra Akpınar","Sınıf Öğretmeni","1-C"],["Nurcan Karataş","Sınıf Öğretmeni","1-D"],["Başak Çiçek","Sınıf Öğretmeni","1-E"],["Zehra Şimşek","Sınıf Öğretmeni","1-F"],
+["Rıdvan Koç","Sınıf Öğretmeni","2-A"],["Gülay Budak","Sınıf Öğretmeni","2-B"],["Dilek Tayfur","Sınıf Öğretmeni","2-C"],["Mehmet Öztürk","Sınıf Öğretmeni","2-D"],["Banu Peker","Sınıf Öğretmeni","2-E"],["Seren Selçuk Cihan","Sınıf Öğretmeni","2-F"],
+["Serap Yılmaz","Sınıf Öğretmeni","3-A"],["İsmail Doğan","Sınıf Öğretmeni","3-B"],["Serap Işık","Sınıf Öğretmeni","3-C"],["Resul Öz","Sınıf Öğretmeni","3-D"],["Nefise Ayhan","Sınıf Öğretmeni","3-E"],["Candan Demir","Sınıf Öğretmeni","3-F"],
+["Ayşe Ülker","Sınıf Öğretmeni","4-A"],["Mehmet Tırnaksız","Sınıf Öğretmeni","4-B"],["Onur Çelikkaya","Sınıf Öğretmeni","4-C"],["Erkan Şeşen","Sınıf Öğretmeni","4-D"],["Fatma Özdemir","Sınıf Öğretmeni","4-E"],["Hakan Alkılınç","Sınıf Öğretmeni","4-F"],["Mahmut Pirihan","Türkçe Öğretici (PİKTES+)","Uyum Sınıfı"]];
+const NOTE={"Gülişe Gündüz":"İl MEM görevlendirme","Mahmut Pirihan":"PİKTES+ · Ücretli · Tam gün"};
+const A=[
+["1. PLANLAMA","Öğretmen; öğretim programına uygun olarak eğitim-öğretim süreçlerini etkili bir şekilde planladığını gösterir.",[
+"Talim ve Terbiye Kurulu Başkanlığıncanca kabul edilen öğretim programlarına uygun yıllık ve aylık (okul öncesi için) planlarını zümre öğretmenleri ile birlikte hazırlar.",
+"Plan hazırlarken; üniteye/temaya/öğrenme alanına ait içerik çerçevesine, öğrenme çıktıları ve süreç bileşenlerine, programlar arası bileşenlere (değerler, sosyal-duygusal beceriler, okuryazarlık becerileri vb.), öğrenme kanıtlarına, öğrenme-öğretme yaşantılarına ve farklılaştırma çalışmalarına ve okul temelli planlamaya yer verir.",
+"Planları hazırlarken konuyla ilgili program dışı etkinliklere yer verir.",
+"Yıllık ve aylık planlarla uyumlu ders planı/günlük plan/eğitim akışı planı (okul öncesi için) hazırlar.",
+"Planları çevresel imkânları, maliyeti ve zamanı dikkate alarak, sürdürülebilir ve uygulanabilir şekilde hazırlar.",
+"Planları, öğrencilerin hazırbulunuşluk düzeylerine, bireysel farklılıklarına ve ihtiyaçlarına göre hazırlar.",
+"Planlarını öğrencilerin zihinsel, sosyal-duygusal, fiziksel ve ahlaki gelişimini destekleyecek bütüncül yaklaşımla hazırlar.",
+"Planlarda, konuların işlenişinde kullanılacak öğrenme-öğretme yaklaşımları, araç gereç, kaynaklar, öğrenci etkinlikleri, gezi, gözlem ve deneyleri göz önünde bulundurur.",
+"Planlarda, konuların işlenişinde kullanılacak öğrenme-öğretme yaklaşımları, araç gereç, kaynaklar, öğrenci etkinlikleri, gezi, gözlem ve deneyleri göz önünde bulundurur."]],
+["2. KONU ALAN VE ALAN EĞİTİMİ BİLGİSİ","Öğretmen; disipline uygun öğrenme imkânları sağlayarak; öğretim programında yer alan konu alanı bilgisine, alan becerisine ve bu bilgilerin ve becerilerin öğrenciye kazandırılmasında etkili öğrenme-öğretme süreci bilgi ve becerisine sahip olduğunu gösterir.",[
+"Alanıyla ilgili öğretim programının temel yaklaşımını bilir.",
+"Öğretim programında yer verilen becerilere (alan, kavramsal, okur-yazarlık, dijital bilgi vb. becerilere) hâkimdir.",
+"Konuda geçen anahtar kavramları, genellemeleri ve ilkeleri mantıksal bir tutarlılıkla ilişkilendirir.",
+"Alanı ile ilgili öğretim programında yer alan konu, içerik, anahtar kavram, genelleme ve ilkelere hâkimdir.",
+"Konu ile alanın diğer konularının yatay ve dikey ilişkilerini bilir.",
+"Alanının öğretiminde kullanılacak farklı strateji, yöntem ve teknikleri, öğrenme sürecine yansıtma bilgi ve becerisine hâkimdir.",
+"Alanın konularını, diğer disiplinlerle/alanlarla ilişkilendirme bilgisine sahiptir."]],
+["3. ÖĞRENCİYİ TANIMA","Öğretmen; öğretim programında Yetkin ve Erdemli İnsan olarak tanımlanan öğrenci profilini, öğrencilerin gelişim özelliklerini ve bireysel farklılıklarını bilir; buna ilişkin anlayışını ve farkındalığını öğrencilerin öğrenmesini desteklemek ve geliştirmek için kullanır.",[
+"Öğrencilerin mevcut bilgi, beceri ve ilgi düzeylerini belirlemek amacıyla ön değerlendirme sürecini yürütür.",
+"Öğrencilerin gelişim özelliklerini ve gelişim alanlarını (zihinsel, sosyal, duygusal, fiziksel, ahlaki) bilir ve uygulamalarına yansıtır.",
+"Öğrencilerin bireysel farklılıklarını ve ihtiyaçlarını çeşitli yöntem ve tekniklerle (gözlem, görüşme, bireysel ve grup projeleri, envanterler vb.) belirler.",
+"Öğrencilerin ilgi ve ihtiyaçları ile farklı öğrenme biçimlerine ait bilgileri öğrenme ve öğretme sürecini planlama, uygulama ve değerlendirmede kullanır.",
+"Öğrencilerin ilgi, ihtiyaç ve gelişimini izlemek ve desteklemek için aile/rehber öğretmen/sınıf rehber öğretmeni/okul idaresi ile iş birliği yapar.",
+"Öğrenci özelliklerine uygun olarak farklılaştırma (zenginleştirme-destekleme) etkinlikleri düzenler."]],
+["4. ÖĞRENME ORTAMLARINI DÜZENLEME VE ÖĞRETİM MATERYALİNİ KULLANMA","Öğretmen; öğrenciler için etkili öğrenmenin gerçekleşebileceği, öğrencilerin bireysel farklılıkları, hazır bulunuşlukları ve öğrenme çıktılarına uygun, sağlıklı, güvenli ve düzenli öğrenme ortamları oluşturur.",[
+"Öğrenme ortamlarını, çevre bilincini arttıracak ve ahlaki değerlerin içselleştirilmesini sağlayacak etkinliklerle zenginleştirir.",
+"Öğrenme ortamlarını öğrencilerin bireysel farklılıklarına ve öğrenme ihtiyaçlarına uygun öğretim materyalleri ile zenginleştirir.",
+"Öğrenme ortamlarını, dersin öğrenme çıktılarının/kazanımlarının edinilmesini sağlayacak biçimde düzenler.",
+"Çevresel imkânları öğrenme ortamlarını düzenlemede destekleyici unsurlar olarak kullanır.",
+"Sınıfta istenmeyen davranış ve durumlarla etkin ve yapıcı bir şekilde baş eder.",
+"Öğretim programlarının gerektirdiği dijital teknolojilerin bulunduğu öğrenme ortamları oluşturur.",
+"Araştırma, sorgulama, iş birliği ve etkileşimi temel alan, öğrencilere etkileşim ve öğrenme fırsatları sunan öğrenme ortamları düzenler.",
+"Öğrenme ortamlarını öğrencilerin katılım ve motivasyonunu arttıracak şekilde düzenler.",
+"Öğrenme sürecinde gerektiğinde okul dışı öğrenme ortamlarına (kütüphane, müze, bilim sanat merkezleri vb.) yer verir.",
+"Öğrencilerin kendi fikir ve ilgilerini keşfetmelerine imkân tanıyan, öğrenci odaklı öğrenme ortamları oluşturur."]],
+["5. ÖĞRENME VE ÖĞRETME SÜRECİ","Öğretmen; öğrencilerin bireysel öğrenme farklılıklarını ve hazır bulunuşluk düzeylerini dikkate alarak, öğrencilerin öğrenme çıktılarına ulaşmalarını sağlamak için uygun öğretim strateji, yöntem ve tekniklerini kullanarak öğrenme-öğretme sürecini etkili bir şekilde yürütür.",[
+"Öğrencileri öğrenme çıktılarından/kazanımlardan haberdar eder.",
+"Öğrencilerin mevcut bilgi ve becerileriyle edinecekleri bilgi ve beceriler arasında köprü kurar.",
+"Öğrencilerin edinecekleri/edindikleri bilgi ve beceriler ile günlük yaşam arasında bağlantı kurar.",
+"Öğrenme ve öğretme sürecini yürütürken planlarında yer verdiği öğretim programlarına uygun program dışı etkinlikleri gerçekleştirir.",
+"Öğrencinin derse aktif katılımını sağlar.",
+"Öğrencilerin; mevcut bilgi, beceri ve öğrenme ihtiyaçlarını belirlemeye yönelik ön değerlendirme süreçlerini uygular ve öğrenme sürecini bu doğrultuda planlar.",
+"Konuyla bağlantılı olabilecek farklı disiplinlere ait bilgi ve becerileri ilişkilendirir.",
+"Öğrenme-öğretme sürecinde, öğrencinin bütünsel gelişimine odaklı öğrenme yaklaşımları ile bu yaklaşımları besleyen öğretim yöntem ve tekniklerini kullanır.",
+"Öğrenme-öğretme sürecini yürütürken, öğrencilerin gelişim ve hazırbulunuşluk düzeyi ile bireysel farklılıklarının dikkate alındığı, esnek ve farklılaştırılmış öğrenme yaşantıları sunar.",
+"Öğrenme-öğretme sürecinde zamanı etkin ve verimli kullanır.",
+"Program öğelerini (öğrenme çıktısı, beceriler, eğilimler, değerler vb.) öğrenme-öğretme yaşantılarının doğal akışı içerisinde hayata geçirir.",
+"Öğrenme-öğretme sürecinde uygun araç, gereç ve materyalleri etkin kullanır.",
+"Öğrenme-öğretme sürecinde bilgi-iletişim ve dijital teknolojilerini etkin olarak kullanır."]],
+["6. ÖĞRENME-ÖĞRETME SÜRECİNİ ÖLÇME VE DEĞERLENDİRME","Öğretmen; öğrenme çıktılarının düzeyini belirlemek, öğrencilerin öğrenme ihtiyaçlarını anlamak, öğretim strateji, yöntem ve tekniklerini değerlendirmek ve geliştirmek, öğrencilere ve velilere zamanında ve yapıcı geri bildirim sağlamak için alanına ve öğrenci özelliklerine uygun olan çeşitli değerlendirme stratejilerini ve araçlarını seçerek ilgili verileri sistematik olarak toplar, analiz eder ve kullanır.",[
+"Öğrenme kanıtlarını öğrenme-öğretme sürecinin doğal bir parçası olarak kullanır.",
+"Öğrenmeyi destekleyici, geliştirici değerlendirme yöntem ve tekniklerini etkin bir şekilde kullanır.",
+"Ölçme ve değerlendirme sürecini adil, şeffaf ve öğrencilerin bireysel farklılıklarını dikkate alacak şekilde yürütür.",
+"Ölçme ve değerlendirme sürecinin amacı, yöntemleri ve beklentileri konusunda öğrencileri bilgilendirir ve sürece aktif katılımlarını (öz/akran/grup değerlendirme) teşvik eder.",
+"Öğrencilere yargılayıcı tutumdan uzak, motive edici ve zamanında geribildirimler sağlar.",
+"Değerlendirme sonuçlarına ilişkin paydaşlara düzenli bir şekilde yapıcı geribildirimler verir.",
+"Alanına ve öğrencilerin gelişimsel özelliklerine uygun geçerli, güvenilir ve kullanışlı ölçme değerlendirme araçları geliştirir, uygular ve gerektiğinde günceller.",
+"Ölçme değerlendirme yöntemlerini öğrencilerin yeteneklerine, ihtiyaçlarına ve özel gereksinimlerine göre çeşitlendirir.",
+"Günlük yaşamla ilgili, öğrenci için anlamlı, okulun bulunduğu çevresel koşullara uyum gösteren, öğrenme çıktılarına yönelik performans görevi hazırlar.",
+"Öğrenci özelliklerine uygun, problem çözmeye dayalı; durum, süreç ve sonuç temelli, çok boyutlu değerlendirme stratejilerini ve araçlarını kullanır.",
+"Dijital teknolojileri ölçme ve değerlendirme amacıyla kullanır."]],
+["7. İLETİŞİM VE İŞBİRLİĞİ","Öğretmen; öğrencinin öğrenmesini geliştirmek için okul yönetimi, meslektaşları, öğrenci ve veliler ile ilgili kişi, kurum ve kuruluşlarla etkili bir şekilde iletişim kurar, iş birliğinde bulunur.",[
+"Eğitim-öğretim kalitesinin artırılması için okul yönetimi, meslektaş, veli ve öğrencilerle etkili iletişim kurar.",
+"Paydaşlarla, nezaket ve saygıya dayalı etkili iletişim kurmaya özen gösterir.",
+"Eğitim-öğretim sürecinde okul yönetimi, meslektaş, veli ve öğrencilerle iş birliği yapar.",
+"Eğitim-öğretim faaliyetlerini yürütürken uygulama birliği sağlamak için alınan kararlara uyar.",
+"Kararların uygulama süreçlerini izler ve gerektiğinde uyarlamalar yapar.",
+"Eğitim-öğretim kalitesinin artırılması konusunda ilgili kişi, kurum ve kuruluşlar ile iş birliği yapar."]],
+["8. MESLEKİ GELİŞİM","Öğretmen; bilgi, yetenek, yeterlik ve potansiyelini geliştirebilmek için mesleki gelişim ihtiyaçlarını belirler, bu ihtiyaçları karşılamaya yönelik mesleki gelişim faaliyetlerinde bulunur.",[
+"Yansıtma yoluyla (görüşme ve öz değerlendirme formları, anekdot kayıtları, zümre ve şube öğretmenler kurulu raporları, öğretmenler kurulu raporları, gelişim dosyaları vb.) mesleki gelişim ihtiyaçlarını belirler.",
+"Mesleki gelişim ihtiyaçlarına yönelik çalışmalara katılır.",
+"Mesleki gelişiminde edindiği bilgi ve tecrübeleri, eğitim-öğretim sürecinde kullanır.",
+"Mesleki gelişimini desteklemek için dijital öğrenme platformları ve kaynakları kullanmaya özen gösterir.",
+"Mesleki gelişimine ilişkin paydaşlardan geribildirim alır ve mesleki gelişim süreçlerine yansıtır.",
+"Genel ve eğitim-öğretimle ilgili özel mevzuatı bilir, uygulamalarına yansıtır.",
+"Eğitim-öğretime ilişkin bilgi ve deneyimlerini meslektaşlarıyla paylaşır.",
+"Eğitim-öğretimi geliştirmek için meslektaşlarının bilgi, beceri ve deneyimlerinden faydalanır.",
+"Eğitim-öğretim alanında yaşanan değişim ve gelişimlere uyum sağlamak için mesleki gelişimini sürekli ve aktif bir şekilde sürdürür."]]];
+const L=0;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const SCH="Mustafa Necati İlkokulu",PRI="Ümit Özgüler",TOT=A.reduce((s,a)=>s+a[2].length,0);
+const SH=["Planlama","Konu Alan Bilgisi","Öğrenciyi Tanıma","Öğrenme Ortamı","Öğrenme-Öğretme","Ölçme-Değerlendirme","İletişim ve İşbirliği","Mesleki Gelişim"];
+const LV=[["y","YETERLİ",3],["k","KABUL EDİLEBİLİR",2],["g","GELİŞTİRİLMESİ GEREK",1]];
+const LN={y:"Yeterli",k:"Kabul Edilebilir",g:"Geliştirilmesi Gerek"};
+const TL={"2026-2027":T.slice(1),"2019-2020":[["Ayşe Ülker","Sınıf Öğretmeni","1-A"],["Onur Çelikkaya","Sınıf Öğretmeni","1-B"],["Raşit Yalçınkaya","Sınıf Öğretmeni","1-C"],["Erkan Şeşen","Sınıf Öğretmeni","1-D"],["Suna Yeni","Sınıf Öğretmeni (Ücretli)","1-E"],["Nurcan Karataş","Sınıf Öğretmeni","2-A"],["Ayşegül Sönmez","Sınıf Öğretmeni","2-B"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","2-C"],["Gülşen Meşe","Sınıf Öğretmeni (Ücretli)","2-D"],["Gülay Budak","Sınıf Öğretmeni","3-A"],["Mehmet Öztürk","Sınıf Öğretmeni","3-B"],["Banu Peker","Sınıf Öğretmeni","3-C"],["Yılmaz Özmen","Sınıf Öğretmeni","3-D"],["Serap Yılmaz","Sınıf Öğretmeni","4-A"],["Resül Öz","Sınıf Öğretmeni","4-B"],["Begüm Kolaç","Sınıf Öğretmeni","4-C"],["Hakan Alkılınç","Sınıf Öğretmeni","4-D"],["Nesrin Ersal","Sınıf Öğretmeni","4-E"]],"2025-2026":[["Mücahit Pala","Müdür Yardımcısı","Yönetim"],["Selahattin Kocaman","Müdür Yardımcısı","Yönetim"],["Rıdvan Yağımlı","İngilizce Öğretmeni","Branş / Rehberlik"],["Kadriye Doğrul","İngilizce Öğretmeni","Branş / Rehberlik"],["İbrahim Ethem Kaya","Rehber Öğretmen","Branş / Rehberlik"],["Esra Kaya","Rehber Öğretmen","Branş / Rehberlik"],["Gülişe Gündüz","Din K. ve A.B. Öğretmeni","Branş / Rehberlik"],["Serap Yılmaz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["İsmail Doğan","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Serap Işık","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Resul Öz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nesrin Ersal","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Candan Demir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Ayşe Ülker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Tırnaksız","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Onur Çelikkaya","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Erkan Şeşen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Fatma Özdemir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Zeynep Sayılgan","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nurcan Karataş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Başak Çiçek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Zehra Şimşek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Hakan Alkılınç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Banu Peker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Dilek Tayfur","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Öztürk","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülay Budak","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Seren Selçuk Cihan","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Rıdvan Koç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mahmut Pirihan","PİKTES+ Türkçe Öğretici","Uyum Sınıfı"],["Sibel Gür","Okul Öncesi Öğretmeni","Okul Öncesi"],["Tuğba Hancı","Okul Öncesi Öğretmeni","Okul Öncesi"],["Ceyda Kurt Sarı","Okul Öncesi Öğretmeni","Okul Öncesi"],["Ayşe Tokoy","Okul Öncesi Öğretmeni","Okul Öncesi"]],"2024-2025":[["Mücahit Pala","Müdür Yardımcısı","Yönetim"],["Selahattin Kocaman","Müdür Yardımcısı","Yönetim"],["Esra Kaya","Psikolojik Danışman","Branş / Rehberlik"],["İbrahim Kaya","Psikolojik Danışman","Branş / Rehberlik"],["Kadriye Doğrul","İngilizce Öğretmeni","Branş / Rehberlik"],["Rıdvan Yağımlı","İngilizce Öğretmeni","Branş / Rehberlik"],["Serap Yılmaz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Resul Öz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Serap Işık","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Candan Demir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nesrin Ersal","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Ayşe Ülker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Tırnaksız","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Onur Çelikkaya","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Erkan Şeşen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Fatma Özdemir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nurcan Karataş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Başak Çiçek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Zehra Şimşek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Hakan Alkılınç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Banu Peker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Dilek Tayfur","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Öztürk","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülay Budak","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Seren Selçuk Cihan","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Rıdvan Koç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Yılmaz Özmen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Ceyda Kurt Sarı","Okul Öncesi Öğretmeni","Okul Öncesi"],["Tuğba Hancı","Okul Öncesi Öğretmeni","Okul Öncesi"],["Ayşe Toksoy","Okul Öncesi Öğretmeni","Okul Öncesi"],["Sibel Gür","Okul Öncesi Öğretmeni","Okul Öncesi"],["Mahmut Pirihan","Türkçe Öğretici","Uyum Sınıfı"]],"2023-2024":[["Begüm Kolaç","Müdür Yardımcısı","Yönetim"],["Fatih Yiğit","Müdür Yardımcısı","Yönetim"],["Tuğba Bulut","Müdür Yardımcısı","Yönetim"],["Hatice Arslan","Psikolojik Danışman","Branş / Rehberlik"],["Rabia Bardakçı","Psikolojik Danışman","Branş / Rehberlik"],["Kadriye Doğrul","İngilizce Öğretmeni","Branş / Rehberlik"],["Ayşe Ülker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Onur Çelikkaya","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Erkan Şeşen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Fatma Özdemir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Tırnaksız","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nurcan Karataş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Başak Çiçek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Zehra Şimşek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Hakan Alkılınç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Banu Peker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Dilek Tayfur","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Öztürk","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülay Budak","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Rıdvan Koç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Yılmaz Özmen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Seren Selçuk Cihan","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Serap Yılmaz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Resul Öz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Serap Işık","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Candan Demir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nesrin Ersal","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Ceyda Kurt Sarı","Okul Öncesi Öğretmeni","Okul Öncesi"],["Sibel Gür","Okul Öncesi Öğretmeni","Okul Öncesi"],["Mahmut Pirihan","Türkçe Öğretici","Uyum Sınıfı"]],"2022-2023":[["Fatih Yiğit","Müdür Yardımcısı","Yönetim"],["Hakan Alkılınç","Müdür Yardımcısı","Yönetim"],["Begüm Kolaç","Müdür Yardımcısı","Yönetim"],["Hatice Arslan","Psikolojik Danışman","Branş / Rehberlik"],["Kadriye Doğrul","İngilizce Öğretmeni","Branş / Rehberlik"],["Banu Peker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Mehmet Öztürk","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülay Budak","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Rıdvan Koç","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Yılmaz Özmen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Serap Yılmaz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Resul Öz","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Serap Işık","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Candan Demir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nesrin Ersal","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Ayşe Ülker","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Onur Çelikkaya","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Raşit Yalçınkaya","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Erkan Şeşen","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Fatma Özdemir","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Nurcan Karataş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Fehmi Gültekin","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Başak Çiçek","Sınıf Öğretmeni","Sınıf Öğretmenleri"],["Zehra Şimşek","Sınıf Öğretmeni","Sınıf Öğretmenleri"]],"2021-2022":[["Mehmet Öztürk","Sınıf Öğretmeni","1-C"],["Gülay Budak","Sınıf Öğretmeni","1-D"],["Serap Yılmaz","Sınıf Öğretmeni","2-A"],["Resul Öz","Sınıf Öğretmeni","2-B"],["Serap Işık","Sınıf Öğretmeni","2-C"],["Candan Demir","Sınıf Öğretmeni","2-D"],["Nesrin Ersal","Sınıf Öğretmeni","2-E"],["Ayşe Ülker","Sınıf Öğretmeni","3-A"],["Onur Çelikkaya","Sınıf Öğretmeni","3-B"],["Raşit Yalçınkaya","Sınıf Öğretmeni","3-C"],["Erkan Şeşen","Sınıf Öğretmeni","3-D"],["Fatma Özdemir","Sınıf Öğretmeni","3-E"],["Nurcan Karataş","Sınıf Öğretmeni","4-A"],["Fehmi Gültekin","Sınıf Öğretmeni","4-B"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","4-C"]],"2020-2021":[["Serap Yılmaz","Sınıf Öğretmeni","1-A"],["Resul Öz","Sınıf Öğretmeni","1-B"],["Serap Işık","Sınıf Öğretmeni","1-C"],["Candan Demir","Sınıf Öğretmeni","1-D"],["Nesrin Ersal","Sınıf Öğretmeni","1-E"],["Ayşe Ülker","Sınıf Öğretmeni","2-A"],["Onur Çelikkaya","Sınıf Öğretmeni","2-B"],["Raşit Yalçınkaya","Sınıf Öğretmeni","2-C"],["Erkan Şeşen","Sınıf Öğretmeni","2-D"],["Fatma Özdemir","Sınıf Öğretmeni","2-E"],["Nurcan Karakaş","Sınıf Öğretmeni","3-A"],["Ayşegül Sönmez","Sınıf Öğretmeni","3-B"],["Gülhan Aksu Baraş","Sınıf Öğretmeni","3-C"],["Gülay Budak","Sınıf Öğretmeni","4-A"],["Mehmet Özdemir","Sınıf Öğretmeni","4-B"],["Banu Peker","Sınıf Öğretmeni","4-C"],["Yılmaz Özmen","Sınıf Öğretmeni","4-D"]]};let P=[];const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const grp=t=>/^\d-/.test(t[2])?t[2][0]+". Sınıflar":t[2];
+const YRS=[];for(let y=2019;y<=2027;y++)YRS.push(y+"-"+(y+1));
+let YR=(()=>{try{const v=localStorage.getItem("mni:yil");if(YRS.includes(v))return v}catch(e){}return "2026-2027"})();
+const KEY=n=>"mni:"+YR+":"+n;let DB={},cur=null,D=null,tab=0,flt="all",armed=false;
+function loadDB(){P=TL[YR]||[];DB={};P.forEach(t=>{try{let v=localStorage.getItem(KEY(t[0]));if(!v&&YR=="2026-2027"){const o=localStorage.getItem("mni:"+t[0]);if(o){localStorage.setItem(KEY(t[0]),o);localStorage.removeItem("mni:"+t[0]);v=o}}if(v)DB[t[0]]=JSON.parse(v)}catch(e){}})}
+loadDB();
+function persist(n){try{DB[n]?localStorage.setItem(KEY(n),JSON.stringify(DB[n])):localStorage.removeItem(KEY(n))}catch(e){}}
+const st=n=>!DB[n]?0:DB[n].st=="c"?2:1;
+const blank=()=>({h:{},r:{},g:{},s:{},z:{},o:"",m:"",p:"",n:"",st:""});
+const sc=v=>v=="y"?3:v=="k"?2:v=="g"?1:0;
+function cnt(d,i){const c={y:0,k:0,g:0,n:A[i][2].length};A[i][2].forEach((_,j)=>{const v=d.r[i+"_"+j];if(v)c[v]++});c.d=c.y+c.k+c.g;return c}
+function ap(d,i){const c=cnt(d,i);return c.d?(c.y*3+c.k*2+c.g)/(c.d*3)*100:0}
+function avg(d){const v=A.map((_,i)=>ap(d,i)).filter(x=>x>0);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0}
+const lvOf=p=>p>=83.3?"y":p>=58.3?"k":"g",col=p=>p?`var(--${{y:"ok",k:"mid",g:"bad"}[lvOf(p)]})`:"var(--line)";
+const bar=(p,c)=>`<div class="bar"><i style="width:${p}%;background:${c||col(p)}"></i></div>`;
+const badge=s=>["<span class='bd'>Başlanmadı</span>","<span class='bd b1'>Taslak</span>","<span class='bd b2'>Tamamlandı</span>"][s];
+const fmt=d=>d?d.split("-").reverse().join("."):"…… / …… / ………";
+function donut(parts,tot,label){const R=42,C=2*Math.PI*R;let o=0;return `<svg viewBox="0 0 110 110" width="140" height="140" role="img" aria-label="${label}">`+parts.map(p=>{const l=tot?p[0]/tot*C:0,s=`<circle cx="55" cy="55" r="${R}" fill="none" stroke="${p[1]}" stroke-width="14" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-o}" transform="rotate(-90 55 55)"/>`;o+=l;return s}).join("")+`<text x="55" y="61" text-anchor="middle" font-size="20" font-weight="700" fill="currentColor">${label}</text></svg>`}
+function radar(v){const cx=110,cy=110,R=80,pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/8;return [cx+R*r*Math.cos(a),cy+R*r*Math.sin(a)]};
+let s=`<svg viewBox="0 0 220 220" width="240" height="240" role="img" aria-label="Alan bazlı yeterlik grafiği">`;
+[.33,.66,1].forEach(r=>s+=`<polygon points="${A.map((_,i)=>pt(i,r).join(",")).join(" ")}" fill="none" stroke="var(--line)"/>`);
+A.forEach((_,i)=>{const [x,y]=pt(i,1),[a,b]=pt(i,1.16);s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/><text x="${a}" y="${b+4}" text-anchor="middle" font-size="12" fill="currentColor">${i+1}</text>`});
+return s+`<polygon points="${v.map((p,i)=>pt(i,p/100).join(",")).join(" ")}" fill="var(--pb)" fill-opacity=".28" stroke="var(--pri)" stroke-width="2"/></svg>`}
+/* ---------- gezinme ---------- */
+function go(v){["panel","form","rap"].forEach(k=>$("#v-"+k).hidden=k!=v);$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.v==v));
+if(v=="panel")renderPanel();if(v=="rap")renderRap();if(v=="form")renderList();scrollTo(0,0)}
+$("#nav").onclick=e=>{const b=e.target.closest("button");if(b)go(b.dataset.v)};
+$("#yr").innerHTML=YRS.map(y=>`<option value="${y}" ${y==YR?"selected":""}>${y} Eğitim Öğretim Yılı</option>`).join("");
+$("#yr").onchange=e=>{YR=e.target.value;try{localStorage.setItem("mni:yil",YR)}catch(x){}loadDB();cur=null;D=null;flt="all";$("#form").hidden=true;$("#empty").hidden=false;const b=$("#nav button.on");go(b?b.dataset.v:"panel")};
+/* ---------- panel ---------- */
+function renderPanel(){const N=P.length,c=P.filter(t=>st(t[0])==2),d=P.filter(t=>st(t[0])==1),b=N-c.length-d.length,pc=N?Math.round(c.length/(N||1)*100):0;
+const done=c.map(t=>DB[t[0]]),lv={y:0,k:0,g:0};done.forEach(x=>lv[lvOf(avg(x))]++);
+const am=A.map((_,i)=>done.length?done.reduce((s,x)=>s+ap(x,i),0)/done.length:0);
+const ord=am.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]);
+const gs={};P.forEach(t=>{const k=grp(t);(gs[k]=gs[k]||[0,0]);gs[k][1]++;if(st(t[0])==2)gs[k][0]++});
+const wk={};done.forEach(x=>A.forEach((ar,i)=>ar[2].forEach((tx,j)=>{if(x.r[i+"_"+j]=="g"){const k=i+"_"+j;wk[k]=(wk[k]||0)+1}})));
+const top=Object.entries(wk).sort((a,b)=>b[1]-a[1]).slice(0,5);
+const ind=(a,i)=>[...Array(a)].map(()=>0);
+$("#v-panel").innerHTML=`<div class="kpis">
+<div class="card kpi"><b>${N}</b><span>Toplam öğretmen</span></div>
+<div class="card kpi"><b style="color:var(--ok)">${c.length}</b><span>Değerlendirilen · %${pc}</span></div>
+<div class="card kpi"><b style="color:var(--mid)">${d.length}</b><span>Taslak (devam eden)</span></div>
+<div class="card kpi"><b style="color:var(--bad)">${b}</b><span>Başlanmayan · %${Math.round(b/(N||1)*100)}</span></div>
+<div class="card kpi"><b>${done.length?"%"+Math.round(done.reduce((s,x)=>s+avg(x),0)/done.length):"—"}</b><span>Okul geneli yeterlik oranı</span></div></div>
+<div class="g2"><div class="card"><h2>Değerlendirme oranı</h2><div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">${donut([[c.length,"var(--ok)"],[d.length,"var(--mid)"],[b,"var(--line)"]],N,"%"+pc)}
+<div>Değerlendirilen: <b>${c.length}</b> (%${pc})<br>Taslak: <b>${d.length}</b> (%${Math.round(d.length/(N||1)*100)})<br>Değerlendirilmeyen: <b>${b}</b> (%${Math.round(b/(N||1)*100)})<p class="sm">Oran: ${c.length} / ${N} öğretmen tamamlandı.</p></div></div>
+<h3>Sınıf / grup bazında tamamlanma</h3>${Object.entries(gs).map(([k,v])=>`<div class="ar"><span>${esc(k)}</span>${bar(v[0]/v[1]*100,"var(--ok)")}<b>${v[0]}/${v[1]}</b></div>`).join("")}</div>
+<div class="card"><h2>Okul geneli düzey dağılımı</h2>${done.length?`<div class="bar" style="height:16px"><i style="width:${lv.y/done.length*100}%;background:var(--ok)"></i><i style="width:${lv.k/done.length*100}%;background:var(--mid)"></i><i style="width:${lv.g/done.length*100}%;background:var(--bad)"></i></div>
+<p>Yeterli <b>${lv.y}</b> · Kabul edilebilir <b>${lv.k}</b> · Geliştirilmesi gerek <b>${lv.g}</b></p>
+<h3>İzleme alanlarına göre okul ortalaması</h3>${A.map((_,i)=>`<div class="ar"><span>${i+1}. ${SH[i]}</span>${bar(am[i])}<b>%${Math.round(am[i])}</b></div>`).join("")}
+<p class="sm">En güçlü alan: <b>${SH[ord[0][1]]}</b> · Öncelikli gelişim alanı: <b>${SH[ord[7][1]]}</b></p>`:`<p class="sm">İstatistikler, en az bir form “Tamamla ve onayla” ile tamamlandığında oluşur.</p>`}</div></div>
+<div class="g2"><div class="card"><h2>En çok “Geliştirilmesi gerek” işaretlenen göstergeler</h2>${top.length?top.map(([k,n])=>{const [i,j]=k.split("_");return `<div style="margin:8px 0"><span class="bd">Alan ${+i+1}</span> <b>${n} öğretmen</b><div class="sm">${esc(A[i][2][j])}</div></div>`}).join(""):`<p class="sm">Henüz işaretlenen gösterge yok.</p>`}</div>
+<div class="card"><h2>Bekleyenler (${N-c.length})</h2><div class="chips" style="max-height:260px;overflow:auto">${P.filter(t=>st(t[0])!=2).map(t=>`<button class="chip" data-n="${esc(t[0])}">${esc(t[0])}${st(t[0])==1?" ·taslak":""}</button>`).join("")||"<span class='sm'>Tüm öğretmenler değerlendirildi.</span>"}</div></div></div>`;
+$$("#v-panel .chip").forEach(b=>b.onclick=()=>{go("form");pick(b.dataset.n)})}
+/* ---------- liste ---------- */
+function renderList(){const q=$("#q").value.toLocaleLowerCase("tr"),g={};
+const cn=[P.length,...[0,1,2].map(s=>P.filter(t=>st(t[0])==s).length)];
+$("#chips").innerHTML=[["all","Tümü"],[0,"Bekleyen"],[1,"Taslak"],[2,"Tamamlanan"]].map((f,i)=>`<button class="chip ${flt==f[0]?"on":""}" data-f="${f[0]}">${f[1]} ${cn[i]}</button>`).join("");
+P.forEach(t=>{if(flt!="all"&&st(t[0])!=flt)return;if(q&&!(t[0]+t[1]+t[2]).toLocaleLowerCase("tr").includes(q))return;(g[grp(t)]=g[grp(t)]||[]).push(t)});
+$("#list").innerHTML=Object.keys(g).map(k=>`<div class="grp">${esc(k)}</div>`+g[k].map(t=>`<button class="t ${cur==t[0]?"on":""}" data-n="${esc(t[0])}"><span>${esc(t[0])}<small>${/^\d-/.test(t[2])?t[2]:""}</small></span>${st(t[0])?`<i class="dot" style="background:${st(t[0])==2?"var(--ok)":"var(--mid)"}"></i>`:""}</button>`).join("")).join("")||"<p class='sm'>Sonuç yok.</p>"}
+$("#list").onclick=e=>{const b=e.target.closest(".t");if(b)pick(b.dataset.n)};$("#q").oninput=renderList;
+$("#chips").onclick=e=>{const b=e.target.closest("button");if(b){flt=b.dataset.f=="all"?"all":+b.dataset.f;renderList()}};
+/* ---------- form ---------- */
+function pick(n){cur=n;const t=P.find(x=>x[0]==n);D=JSON.parse(JSON.stringify(DB[n]||blank()));tab=0;armed=false;$("#del").textContent="Kaydı sil";
+const h=D.h;if(h.sinif===undefined)h.sinif=/^\d-/.test(t[2])?t[2]:"";
+const F=[["Adı ve Soyadı","ad",t[0],1],["T.C. Kimlik No","tc","",0],["Görevi - Alanı","gorev",t[1],0],["İl - İlçe","ilce","",0],["Okul Adı","okul",SCH,1],["Kariyer Basamağı / Mesleki Kıdemi","kariyer","",0],["Okuldaki Hizmet Süresi","hizmet","",0],["Haftalık Ders Saati Toplamı","saat","",0],["Dersin Adı / Konusu","ders","",0],["İzleme Yapılan Sınıf / Şube","sinif","",0],["İzleme Tarihi (isteğe bağlı, elle girilir)","tarih","",0]];
+$("#tt").textContent=n;
+$("#head").innerHTML=F.map(f=>{const v=h[f[1]]??f[2];return `<label class="f">${f[0]}${f[1]=="kariyer"?`<select data-h="kariyer">${["","Öğretmen","Uzman Öğretmen","Başöğretmen"].map(o=>`<option ${o==v?"selected":""}>${o}</option>`).join("")}</select>`:`<input data-h="${f[1]}" type="${f[1]=="tarih"?"date":"text"}" ${f[1]=="tc"?'inputmode="numeric" maxlength="11"':""} value="${esc(v)}" ${f[3]?"readonly":""}>`}</label>`}).join("");
+$("#tabs").innerHTML=A.map((a,i)=>`<button data-i="${i}">${i+1}. ${SH[i]}<span></span></button>`).join("")+`<button data-i="8">Sonuç ve Onay</button>`;
+$("#areas").innerHTML=A.map((a,i)=>`<div class="card area" data-a="${i}"><h2>İZLEME ALANI ${esc(a[0])}</h2><div class="std"><b>Standart:</b> ${esc(a[1])}</div><div class="sm">GÖSTERGELER · DEĞERLENDİRME DÜZEYİ</div>`+a[2].map((x,j)=>`<div class="ind"><b>${j+1}</b><div>${esc(x)}</div><div class="lv" role="radiogroup">${LV.map(l=>`<label><input type="radio" name="r${i}_${j}" data-k="${i}_${j}" value="${l[0]}" ${D.r[i+"_"+j]==l[0]?"checked":""}><span class="${l[0]}">${l[1]}</span></label>`).join("")}</div></div>`).join("")+`<div class="two"><label class="f">Güçlü yönler<textarea data-t="g${i}">${esc(D.g[i]||"")}</textarea></label><label class="f">Zayıf yönler<textarea data-t="s${i}">${esc(D.s[i]||"")}</textarea></label></div><label class="f" style="margin-top:10px">Gerekçe<textarea data-t="z${i}">${esc(D.z[i]||"")}</textarea></label></div>`).join("")+`<div class="card area" data-a="8" id="res"></div>`;
+$("#empty").hidden=true;$("#form").hidden=false;$("#msg").textContent="";show();renderList()}
+function show(){$$(".area").forEach(e=>e.style.display=e.dataset.a==tab?"block":"none");
+$$("#tabs button").forEach((b,i)=>{b.classList.toggle("on",i==tab);if(i<8){const c=cnt(D,i);b.lastChild.textContent=` ${c.d}/${c.n}`}});
+const a=Object.keys(D.r).length;$("#pg").style.width=a/TOT*100+"%";$("#pgt").textContent=`İlerleme: ${a} / ${TOT} gösterge`;$("#bdg").innerHTML=badge(D.st=="c"?2:DB[cur]?1:0);
+if(tab==8)renderRes()}
+$("#tabs").onclick=e=>{const b=e.target.closest("button");if(b){tab=+b.dataset.i;show()}};
+$("#prev").onclick=()=>{tab=Math.max(0,tab-1);show()};$("#next").onclick=()=>{tab=Math.min(8,tab+1);show()};
+$("#fm").addEventListener("input",e=>{const t=e.target;if(D.st=="c"&&(t.dataset.k||t.dataset.t||t.dataset.f||t.dataset.h)){}
+if(t.dataset.h)D.h[t.dataset.h]=t.value;else if(t.dataset.k){D.r[t.dataset.k]=t.value;show()}else if(t.dataset.t)({g:D.g,s:D.s,z:D.z})[t.dataset.t[0]][t.dataset.t.slice(1)]=t.value;else if(t.dataset.f)D[t.dataset.f]=t.value});
+function renderRes(){const v=A.map((_,i)=>ap(D,i)),av=avg(D),w=[];A.forEach((a,i)=>a[2].forEach((x,j)=>{if(D.r[i+"_"+j]=="g")w.push([i,j,x])}));
+$("#res").innerHTML=`<h2>Sonuç ve Onay</h2><div class="rgrid"><div>${radar(v)}</div><div>${A.map((_,i)=>`<div class="ar"><span>${i+1}. ${SH[i]}</span>${bar(v[i])}<b>%${Math.round(v[i])}</b></div>`).join("")}
+<p><b>Genel yeterlik oranı: %${Math.round(av)}</b> · Düzey: <b>${av?LN[lvOf(av)]:"—"}</b></p><p class="sm">Hesap: Yeterli=3, Kabul edilebilir=2, Geliştirilmesi gerek=1 puan; oran = alınan puan / en yüksek puan. Yönetici karar desteğidir, resmî puan değildir.</p></div></div>
+<h3>Geliştirilmesi gereken göstergeler (${w.length})</h3>${w.map(x=>`<div style="margin:5px 0"><span class="bd">Alan ${x[0]+1}</span> ${esc(x[2])}</div>`).join("")||"<p class='sm'>İşaretlenen gösterge yok.</p>"}
+<div class="two"><label class="f">Öğretmenin görüşü<textarea data-f="o">${esc(D.o)}</textarea></label><label class="f">Müdürün genel değerlendirmesi<textarea data-f="m">${esc(D.m)}</textarea></label></div>
+<div class="two"><label class="f">Önerilen mesleki gelişim faaliyetleri / eylem planı<textarea data-f="p">${esc(D.p)}</textarea></label><label class="f">Sonraki izleme tarihi (isteğe bağlı)<input type="date" data-f="n" value="${esc(D.n)}"></label></div>
+<p class="sm">İzleme yapan: Okul Müdürü ${PRI}. Formda otomatik tarih yazılmaz; tarih yalnızca “İzleme Tarihi” alanına elle girilirse basılır.</p>`}
+function say(m,e){$("#msg").textContent=m;$("#msg").className="msg"+(e?" err":"")}
+function commit(){D.h.ad=cur;DB[cur]=JSON.parse(JSON.stringify(D));persist(cur);renderList();show()}
+$("#save").onclick=()=>{if(D.st!="c")D.st="d";commit();say("Taslak kaydedildi.")};
+$("#fin").onclick=()=>{for(let i=0;i<8;i++)for(let j=0;j<A[i][2].length;j++)if(!D.r[i+"_"+j]){tab=i;show();say(`Eksik gösterge var: Alan ${i+1}, madde ${j+1}. Tamamlanmadan onaylanamaz.`,1);return}
+D.st="c";commit();say("Form tamamlandı ve onaylandı.")};
+$("#del").onclick=()=>{if(!armed){armed=true;$("#del").textContent="Emin misiniz? Tekrar tıklayın";return}delete DB[cur];persist(cur);pick(cur);renderList();say("Kayıt silindi.")};
+/* ---------- yazdırma ---------- */
+const PH=(t)=>`<p class="c"><b>T.C.</b></p><h1>${SCH.toUpperCase()} MÜDÜRLÜĞÜ</h1><h1>${YR} EĞİTİM ÖĞRETİM YILI</h1><h1>${t}</h1>`;
+function doPrint(html){$("#pr").innerHTML=html;window.print()}
+$("#pri").onclick=()=>{const h=D.h,t=P.find(x=>x[0]==cur),v=A.map((_,i)=>ap(D,i)),av=avg(D);
+let s=PH("EK-1 İZLEME VE DEĞERLENDİRME FORMU")+`<table><tr><td>Adı ve Soyadı / T.C. Kimlik No: <b>${esc(cur)}${h.tc?" / "+esc(h.tc):""}</b></td><td>İl-İlçe-Okul Adı: <b>${esc(h.ilce?h.ilce+" / ":"")}${SCH}</b></td></tr><tr><td>Görevi-Alanı: ${esc(h.gorev??t[1])}</td><td>Kariyer Basamağı/Mesleki Kıdemi: ${esc(h.kariyer)}</td></tr><tr><td>Okuldaki Hizmet Süresi: ${esc(h.hizmet)}</td><td>Haftalık Ders Saati Toplamı: ${esc(h.saat)}</td></tr><tr><td>Dersin Adı/Konusu: ${esc(h.ders)}</td><td>İzleme Yapılan Sınıf/Şube: ${esc(h.sinif)}</td></tr><tr><td colspan="2">İzleme Tarihi: ${fmt(h.tarih)}</td></tr></table>`;
+A.forEach((a,i)=>{s+=`<h4>İZLEME ALANI ${esc(a[0])}</h4><div><b>Standart:</b> ${esc(a[1])}</div><table><tr><th style="width:24px">No</th><th>GÖSTERGELER</th><th class="x">YETERLİ</th><th class="x">KABUL EDİLEBİLİR</th><th class="x">GELİŞTİRİLMESİ GEREK</th></tr>`+a[2].map((x,j)=>{const r=D.r[i+"_"+j];return `<tr><td>${j+1}</td><td>${esc(x)}</td>${["y","k","g"].map(k=>`<td class="x">${r==k?"X":""}</td>`).join("")}</tr>`}).join("")+`<tr><td colspan="5"><b>GÜÇLÜ YÖNLER:</b> ${esc(D.g[i])}<br><b>ZAYIF YÖNLER:</b> ${esc(D.s[i])}<br><b>GEREKÇE:</b> ${esc(D.z[i])}</td></tr></table>`});
+s+=`<h4>GENEL DEĞERLENDİRME</h4><table><tr>${A.map((_,i)=>`<th>${i+1}</th>`).join("")}<th>Genel</th></tr><tr>${v.map(x=>`<td>%${Math.round(x)}</td>`).join("")}<td><b>%${Math.round(av)} · ${av?LN[lvOf(av)]:""}</b></td></tr></table><table><tr><td><b>Öğretmenin görüşü:</b> ${esc(D.o)}</td></tr><tr><td><b>Müdürün genel değerlendirmesi:</b> ${esc(D.m)}</td></tr><tr><td><b>Önerilen gelişim faaliyetleri:</b> ${esc(D.p)}</td></tr>${D.n?`<tr><td><b>Sonraki izleme tarihi:</b> ${fmt(D.n)}</td></tr>`:""}</table>
+<div class="sg"><div>Öğretmen<br><b>${esc(cur)}</b><br><br>İmza</div><div>Okul Müdürü<br><b>${PRI}</b><br><br>İmza</div></div>`;doPrint(s)};
+/* ---------- raporlar ---------- */
+let rq="",rs="all";
+function rows(){return P.filter(t=>(rs=="all"||st(t[0])==rs)&&(t[0]+t[1]+t[2]).toLocaleLowerCase("tr").includes(rq.toLocaleLowerCase("tr"))).map((t,i)=>{const d=DB[t[0]],s=st(t[0]);return {t,s,d,v:d?A.map((_,k)=>ap(d,k)):null,a:d?avg(d):0}})}
+function tbl(R,plain){return `<table class="tb"><tr><th>#</th><th>Öğretmen</th><th>Görev/Sınıf</th><th>Durum</th>${A.map((_,i)=>`<th title="${SH[i]}">${i+1}</th>`).join("")}<th>Genel</th><th>Düzey</th></tr>`+R.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.t[0])}</td><td>${esc(r.t[1])}${/^\d-/.test(r.t[2])?" · "+r.t[2]:""}</td><td>${["Başlanmadı","Taslak","Tamamlandı"][r.s]}</td>${A.map((_,k)=>{const x=r.v?r.v[k]:0;return `<td ${!plain&&x?`style="color:${col(x)};font-weight:600"`:""}>${x?Math.round(x):"–"}</td>`}).join("")}<td><b>${r.a?Math.round(r.a):"–"}</b></td><td>${r.s==2?LN[lvOf(r.a)]:"–"}</td></tr>`).join("")+`</table>`}
+function renderRap(){const R=rows();$("#v-rap").innerHTML=`<div class="card"><h2>Öğretmen bazlı rapor</h2><div class="acts" style="margin:0 0 10px"><input id="rq" placeholder="Ara…" value="${esc(rq)}" style="max-width:220px"><select id="rs" style="max-width:190px">${[["all","Tüm durumlar"],[0,"Başlanmadı"],[1,"Taslak"],[2,"Tamamlandı"]].map(o=>`<option value="${o[0]}" ${o[0]==rs?"selected":""}>${o[1]}</option>`).join("")}</select><button class="p" id="rp">Raporu yazdır</button></div>
+<div style="overflow-x:auto;max-height:60vh">${tbl(R)}</div><p class="sm">Sütunlar 1-8: izleme alanlarının yeterlik oranı (%). Genel: alan oranlarının ortalaması.</p>
+<h3>Veri aktarımı ve yedek</h3><p class="sm">Kayıtlar bu tarayıcıda, seçili eğitim öğretim yılına ait olarak saklanır (yedek de yalnızca seçili yılı kapsar). Yedek için aşağıdaki metni kopyalayıp güvenli bir yere saklayın; geri yüklemek için yapıştırıp “Yedeği yükle”ye basın.</p>
+<textarea id="bx" style="min-height:90px" aria-label="Yedek alanı"></textarea><div class="acts"><button id="bx1">Excel tablosu oluştur</button><button id="bx2">Yedek oluştur</button><button id="bx3">Yedeği yükle</button><button id="bx4">JSON dosyası indir</button><button id="bx5">JSON dosyası seç</button><input id="jsonFile" type="file" accept=".json,application/json" hidden><span class="msg" id="bm"></span></div></div>`;
+$("#rq").oninput=e=>{rq=e.target.value;const p=e.target.selectionStart;renderRap();$("#rq").focus();$("#rq").setSelectionRange(p,p)};$("#rs").onchange=e=>{rs=e.target.value=="all"?"all":+e.target.value;renderRap()};
+$("#rp").onclick=()=>doPrint(PH("ÖĞRETMEN İZLEME VE DEĞERLENDİRME ÖZET RAPORU")+tbl(rows(),1)+`<div class="sg"><div>Okul Müdürü<br><b>${PRI}</b><br><br>İmza</div></div>`);
+const cp=m=>{const b=$("#bx");b.select();try{navigator.clipboard.writeText(b.value)}catch(e){}$("#bm").textContent=m};
+$("#bx1").onclick=()=>{$("#bx").value=["Sıra","Ad Soyad","Görev","Sınıf","Durum",...SH,"Genel","Düzey"].join("\t")+"\n"+rows().map((r,i)=>[i+1,r.t[0],r.t[1],r.t[2],["Başlanmadı","Taslak","Tamamlandı"][r.s],...A.map((_,k)=>r.v?Math.round(r.v[k]):""),r.a?Math.round(r.a):"",r.s==2?LN[lvOf(r.a)]:""].join("\t")).join("\n");cp("Tablo hazır; Excel'e yapıştırabilirsiniz.")};
+$("#bx2").onclick=()=>{$("#bx").value=JSON.stringify(DB);cp("Yedek hazır ve kopyalandı.")};
+$("#bx3").onclick=()=>{try{const o=JSON.parse($("#bx").value);Object.keys(o).forEach(k=>{if(P.some(t=>t[0]==k)){DB[k]=o[k];persist(k)}});$("#bm").textContent="Yedek yüklendi.";renderRap()}catch(e){$("#bm").textContent="Geçersiz yedek metni."}}}
+go("panel");
+
+/* ---------- Gelişmiş profesyonel sürüm ---------- */
+const META=()=>D.meta||(D.meta={priority:"normal",followDate:"",owner:"",evidence:"",meeting:"",statusNote:""});
+const esc2=esc;
+function metaOf(n){const d=DB[n];return d&&d.meta?d.meta:{};}
+function overdue(n){const m=metaOf(n);return m.followDate&&new Date(m.followDate+"T23:59:59")<new Date()&&st(n)!=0}
+function dueLabel(n){const m=metaOf(n);return m.followDate?fmt(m.followDate):"Tarih belirlenmedi"}
+function renderEnhancedRes(){
+ const m=META(),v=A.map((_,i)=>ap(D,i)),av=avg(D),w=[];A.forEach((a,i)=>a[2].forEach((x,j)=>{if(D.r[i+"_"+j]=="g")w.push([i,j,x])}));
+ const completed=Object.keys(D.r).length, total=TOT, ready=completed==total;
+ $("#res").innerHTML=`<h2>Sonuç, kanıt ve gelişim planı</h2>
+ <div class="metric-grid"><div class="metric"><b>%${Math.round(av)}</b><span>Genel yeterlik oranı</span></div><div class="metric"><b>${completed}/${total}</b><span>Doldurulan gösterge</span></div><div class="metric"><b>${w.length}</b><span>Gelişim önceliği</span></div><div class="metric"><b>${ready?"Hazır":"Eksik"}</b><span>Onay durumu</span></div></div>
+ <div class="rgrid"><div>${radar(v)}</div><div>${A.map((_,i)=>`<div class="ar"><span>${i+1}. ${SH[i]}</span>${bar(v[i])}<b>%${Math.round(v[i])}</b></div>`).join("")}<p><b>Genel düzey: ${av?LN[lvOf(av)]:"—"}</b></p><p class="help">Yeterlik oranı karar destek amaçlıdır; tek başına resmî performans puanı olarak kullanılmamalıdır.</p></div></div>
+ <div class="g2"><div class="card" style="padding:10px"><h3>Gelişim öncelikleri (${w.length})</h3>${w.map(x=>`<div class="insight bad"><span class="flag priority">Alan ${x[0]+1}</span> ${esc2(x[2])}</div>`).join("")||"<p class='sm'>Gelişim önceliği işaretlenmedi.</p>"}</div><div class="card" style="padding:10px"><h3>İzleme kaydı</h3><label class="f">Öncelik düzeyi<select data-m="priority"><option value="normal" ${m.priority=="normal"?"selected":""}>Normal</option><option value="oncelikli" ${m.priority=="oncelikli"?"selected":""}>Öncelikli takip</option><option value="kritik" ${m.priority=="kritik"?"selected":""}>Acil gelişim desteği</option></select></label><label class="f">Sonraki izleme tarihi<input type="date" data-m="followDate" value="${esc2(m.followDate)}"></label><label class="f">Takipten sorumlu kişi<input data-m="owner" value="${esc2(m.owner)}" placeholder="Ad soyad / kurul"></label></div></div>
+ <div class="two"><label class="f">Öğretmenin görüşü<textarea data-f="o" placeholder="Öğretmenin kendi değerlendirmesi, ihtiyaçları ve önerileri…">${esc2(D.o)}</textarea></label><label class="f">Müdürün genel değerlendirmesi<textarea data-f="m" placeholder="Gözleme dayalı güçlü yönler ve somut geri bildirim…">${esc2(D.m)}</textarea></label></div>
+ <div class="two"><label class="f">Önerilen gelişim faaliyetleri / eylem planı<textarea data-f="p" placeholder="Faaliyet · sorumlu · hedef tarih · başarı ölçütü…">${esc2(D.p)}</textarea></label><label class="f">Gözlem kanıtları / belge referansları<textarea data-m="evidence" placeholder="Ders planı, öğrenci ürünü, gözlem notu, toplantı tutanağı vb. referanslar…">${esc2(m.evidence)}</textarea></label></div>
+ <div class="two"><label class="f">Geri bildirim / görüşme notu<textarea data-m="meeting" placeholder="Görüşmede ele alınan başlıklar ve mutabakat…">${esc2(m.meeting)}</textarea></label><label class="f">Durum notu<textarea data-m="statusNote" placeholder="Takip sürecinin mevcut durumu…">${esc2(m.statusNote)}</textarea></label></div>
+ <div class="insight ${ready?"good":"warn"}">${ready?"Form onaya hazır. Gelişim planı ve takip tarihini kontrol ederek tamamlayabilirsiniz.":"Onaydan önce tüm göstergelerin değerlendirilmesi gerekir."}</div>`;
+}
+function renderTakip(){
+ const items=P.map(t=>{const d=DB[t[0]],m=metaOf(t[0]);return {t,d,m,s:st(t[0]),a:d?avg(d):0}}).filter(x=>x.s||x.m.followDate);
+ const priority=items.filter(x=>x.m.priority&&x.m.priority!="normal").sort((a,b)=>({kritik:0,oncelikli:1}[a.m.priority]??2)-({kritik:0,oncelikli:1}[b.m.priority]??2));
+ const upcoming=items.filter(x=>x.m.followDate).sort((a,b)=>a.m.followDate.localeCompare(b.m.followDate));
+ $("#v-takip").innerHTML=`<div class="card"><h2>Takip ve gelişim merkezi</h2><p class="sm">Tamamlanan değerlendirmelerden sonra belirlenen gelişim önceliklerini, takip tarihlerini ve sorumluları tek ekranda izleyin.</p><div class="metric-grid"><div class="metric"><b>${priority.length}</b><span>Öncelikli takip</span></div><div class="metric"><b>${upcoming.length}</b><span>Takip tarihi tanımlı</span></div><div class="metric"><b>${items.filter(x=>overdue(x.t[0])).length}</b><span>Takip tarihi geçen</span></div><div class="metric"><b>${items.filter(x=>x.m.evidence).length}</b><span>Kanıt kaydı bulunan</span></div></div><h3>Öncelikli takip listesi</h3>${priority.length?`<div class="timeline">${priority.map(x=>`<div class="timeline-item"><b>${esc2(x.t[0])}</b> <span class="flag ${x.m.priority=="kritik"?"priority":"follow"}">${x.m.priority=="kritik"?"Acil":"Öncelikli"}</span><div class="sm">${esc2(x.t[1])} · Genel oran: %${Math.round(x.a)} · Sorumlu: ${esc2(x.m.owner||"Belirlenmedi")}</div><div class="sm">İzleme: ${esc2(dueLabel(x.t[0]))}${overdue(x.t[0])?" · <b style='color:var(--bad)'>Tarih geçti</b>":""}</div><button class="chip" data-open="${esc2(x.t[0])}">Kaydı aç</button></div>`).join("")}</div>`:"<p class='sm'>Öncelikli takip kaydı bulunmuyor.</p>"}<h3>Yaklaşan / planlanan izlemeler</h3>${upcoming.length?`<div style="overflow-x:auto"><table class="tb"><tr><th>Öğretmen</th><th>Takip tarihi</th><th>Sorumlu</th><th>Durum</th><th></th></tr>${upcoming.map(x=>`<tr><td style="text-align:left">${esc2(x.t[0])}</td><td>${esc2(dueLabel(x.t[0]))}</td><td>${esc2(x.m.owner||"—")}</td><td>${overdue(x.t[0])?"Tarihi geçti":x.s==2?"Tamamlandı":"Devam ediyor"}</td><td><button class="chip" data-open="${esc2(x.t[0])}">Aç</button></td></tr>`).join("")}</table></div>`:"<p class='sm'>Takip tarihi tanımlanmamış.</p>"}<h3>Profesyonel kullanım ilkeleri</h3><div class="insight"><b>Kanıta dayalı değerlendirme:</b> Her gelişim notu gözlem, ürün, plan veya görüşme gibi bir kanıtla ilişkilendirilebilir.</div><div class="insight"><b>Gelişim odaklı yaklaşım:</b> Değerlendirme sonucu yalnızca puan değil; hedef, sorumlu, tarih ve başarı ölçütü içeren eylem planına dönüştürülür.</div><div class="insight"><b>Gizlilik:</b> Veriler yalnızca bu tarayıcıda saklanır. Ortak bilgisayarlarda işlem bitince yedekleri ve tarayıcı verilerini güvenli biçimde yönetin.</div></div>`;
+ $("#v-takip").onclick=e=>{const b=e.target.closest("[data-open]");if(b){go("form");pick(b.dataset.open);tab=8;show()}};
+}
+/* Sonuç görünümünü ve navigasyonu gelişmiş sürümle değiştir */
+renderRes=renderEnhancedRes;
+const originalGo=go;
+go=function(v){["panel","form","rap","takip"].forEach(k=>{const el=$("#v-"+k);if(el)el.hidden=k!=v});$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.v==v));if(v=="panel")renderPanel();if(v=="rap")renderRap();if(v=="form")renderList();if(v=="takip")renderTakip();scrollTo(0,0)};
+/* Metadata ve otomatik kaydetme */
+$("#fm").addEventListener("change",e=>{const t=e.target;if(t.dataset.m){META()[t.dataset.m]=t.value;commit();say("İzleme kaydı güncellendi.")}});
+let autosaveTimer;$("#fm").addEventListener("input",e=>{if(e.target.dataset.m||e.target.dataset.f){clearTimeout(autosaveTimer);autosaveTimer=setTimeout(()=>{if(cur&&D){commit();say("Otomatik kaydedildi.")}},700)}});
+/* Yedek paketine sürüm bilgisi ve son değişiklik zamanını ekle */
+const makeBackup=()=>({schema:"mni-ogretmen-v2",year:YR,exportedAt:new Date().toISOString(),records:DB});
+const oldBx2=$("#bx2");if(oldBx2)oldBx2.onclick=()=>{$("#bx").value=JSON.stringify(makeBackup());cp("Sürüm bilgili yedek hazır ve kopyalandı.")};
+const oldBx3=$("#bx3");if(oldBx3)oldBx3.onclick=()=>{try{const raw=JSON.parse($("#bx").value),o=raw.records||raw;Object.keys(o).forEach(k=>{if(P.some(t=>t[0]==k)){DB[k]=o[k];persist(k)}});$("#bm").textContent="Yedek yüklendi.";renderRap()}catch(e){$("#bm").textContent="Geçersiz yedek metni."}};
+$("#bx4").onclick=()=>{const blob=new Blob([JSON.stringify(makeBackup(),null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`ogretmen-izleme-yedek-${YR}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$("#bm").textContent="JSON yedeği indirildi."};
+$("#bx5").onclick=()=>$("#jsonFile").click();
+$("#jsonFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const raw=JSON.parse(await file.text()),o=raw.records||raw;if(!o||typeof o!=="object"||Array.isArray(o))throw new Error("bad backup");let count=0;Object.keys(o).forEach(k=>{if(P.some(t=>t[0]==k)){DB[k]=o[k];persist(k);count++}});$("#bm").textContent=count?`${count} kayıt JSON dosyasından yüklendi.`:"Bu yedekte tanınan kayıt bulunamadı.";renderRap()}catch(e){$("#bm").textContent="Geçersiz JSON yedek dosyası."}e.target.value=""};
+/* İlk açılışta yeni takip merkeziyle birlikte çalış */
+go("panel");
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+}
+</script>
+</body></html>
