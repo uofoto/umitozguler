@@ -69,6 +69,23 @@ table.tb{width:100%;border-collapse:collapse;font-size:12.5px}.tb th,.tb td{bord
 .flag.priority{color:var(--bad);border-color:var(--bad)}.flag.follow{color:var(--mid);border-color:var(--mid)}.flag.ok{color:var(--ok);border-color:var(--ok)}
 .help{font-size:11.5px;color:var(--mut);margin-top:4px}.autosave{font-size:12px;color:var(--ok);min-height:18px}
 @media(max-width:700px){.top{position:static}.metric-grid{grid-template-columns:repeat(2,1fr)}}
+/* ---------- Mobil uygulama görünümü ---------- */
+html,body{max-width:100%;overflow-x:hidden}button,input,select,textarea{min-height:42px}
+@media(max-width:700px){
+ body{font-size:15px;padding-bottom:env(safe-area-inset-bottom,0px)}
+ .top{padding:12px 12px 10px;gap:10px;border-bottom-width:3px}
+ .brand{min-width:0;width:100%}.brand b{font-size:18px;line-height:1.2}.brand span{font-size:11px}
+ .who{display:none}nav{width:100%;gap:5px;overflow-x:auto;padding-bottom:2px}nav button{flex:1;min-width:max-content;padding:10px 8px;font-size:12px}
+ .wrap{padding:10px}.card{padding:11px;border-radius:10px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi b{font-size:25px}
+ .g2,.two,.lay,.rgrid{gap:9px}.side{position:static}.list{max-height:none}.grid{grid-template-columns:1fr 1fr;gap:8px}
+ .grid label:last-child{grid-column:1/-1}.tabs{margin:9px 0 8px}.tabs button{padding:9px 11px}
+ .ind{grid-template-columns:22px 1fr;gap:7px;padding:10px 0}.lv{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.lv span{text-align:center;padding:8px 3px}
+ .acts{gap:6px}.acts button{flex:1;min-width:calc(50% - 6px);padding:10px 7px}.acts .msg{flex-basis:100%}
+ table.tb{font-size:12px;min-width:760px}.tb th,.tb td{padding:8px 6px}.rgrid{grid-template-columns:1fr}.ar{grid-template-columns:100px 1fr 42px}
+ #v-rap .card,#v-takip .card{overflow:hidden}.metric-grid{gap:7px}.metric{padding:10px}.metric b{font-size:21px}
+ #v-panel .g2>*,#v-rap .card,#v-takip .card{width:100%}
+}
+@media(min-width:701px){#installPwa{display:none}}
 @media print{.top,.acts,nav,#app{display:none!important}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
@@ -82,7 +99,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:12.5px}.tb th,.tb td{bord
 <div id="app">
 <header class="top"><div class="brand"><b>Mustafa Necati İlkokulu</b><span>Öğretmen İzleme ve Değerlendirme Sistemi</span></div>
 <label style="display:flex;flex-direction:column;font-size:11px;opacity:.85;gap:2px">Eğitim Öğretim Yılı<select id="yr" aria-label="Eğitim öğretim yılı (arşiv)" style="padding:5px 8px;border-radius:6px;font-size:13px;min-width:120px;background:#fff;color:#111827;border:1px solid #cbd5e1"></select></label>
-<nav id="nav"><button data-v="panel">Genel Panel</button><button data-v="form">Değerlendirme</button><button data-v="rap">Raporlar</button><button data-v="takip">Takip Merkezi</button></nav>
+<nav id="nav"><button data-v="panel">Genel Panel</button><button data-v="form">Değerlendirme</button><button data-v="rap">Raporlar</button><button data-v="takip">Takip Merkezi</button></nav><button id="installPwa" class="p" hidden>Uygulamayı kur</button>
 <div class="who">Okul Müdürü<br><b>Ümit Özgüler</b></div></header>
 <main class="wrap">
 <section id="v-panel"></section>
@@ -93,7 +110,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:12.5px}.tb th,.tb td{bord
 <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px"><h2 id="tt" style="margin:0"></h2><span id="bdg"></span></div><div class="grid" id="head"></div>
 <div style="margin-top:10px"><div class="bar"><i id="pg" style="background:var(--ok);width:0"></i></div><div class="sm" id="pgt"></div></div></div>
 <div class="tabs" id="tabs"></div><div id="areas"></div>
-<div class="acts"><button id="prev">← Önceki</button><button id="next">Sonraki →</button><span style="flex:1"></span><button id="save">Taslak kaydet</button><button class="ok" id="fin">Tamamla ve onayla</button><button class="p" id="pri">Yazdır / PDF</button><button class="dg" id="del">Kaydı sil</button></div>
+<div class="acts"><button id="prev">← Önceki</button><button id="next">Sonraki →</button><span style="flex:1"></span><button id="save">Taslak kaydet</button><button class="ok" id="fin">Tamamla ve onayla</button><button class="p" id="pri">PDF / Yazdır</button><button id="mail">E-posta hazırla</button><button class="dg" id="del">Kaydı sil</button></div>
 <div class="msg" id="msg" role="status"></div>
 </div></div></div></section>
 <section id="v-rap" hidden></section><section id="v-takip" hidden></section>
@@ -293,16 +310,18 @@ let s=PH("EK-1 İZLEME VE DEĞERLENDİRME FORMU")+`<table><tr><td>Adı ve Soyad�
 A.forEach((a,i)=>{s+=`<h4>İZLEME ALANI ${esc(a[0])}</h4><div><b>Standart:</b> ${esc(a[1])}</div><table><tr><th style="width:24px">No</th><th>GÖSTERGELER</th><th class="x">YETERLİ</th><th class="x">KABUL EDİLEBİLİR</th><th class="x">GELİŞTİRİLMESİ GEREK</th></tr>`+a[2].map((x,j)=>{const r=D.r[i+"_"+j];return `<tr><td>${j+1}</td><td>${esc(x)}</td>${["y","k","g"].map(k=>`<td class="x">${r==k?"X":""}</td>`).join("")}</tr>`}).join("")+`<tr><td colspan="5"><b>GÜÇLÜ YÖNLER:</b> ${esc(D.g[i])}<br><b>ZAYIF YÖNLER:</b> ${esc(D.s[i])}<br><b>GEREKÇE:</b> ${esc(D.z[i])}</td></tr></table>`});
 s+=`<h4>GENEL DEĞERLENDİRME</h4><table><tr>${A.map((_,i)=>`<th>${i+1}</th>`).join("")}<th>Genel</th></tr><tr>${v.map(x=>`<td>%${Math.round(x)}</td>`).join("")}<td><b>%${Math.round(av)} · ${av?LN[lvOf(av)]:""}</b></td></tr></table><table><tr><td><b>Öğretmenin görüşü:</b> ${esc(D.o)}</td></tr><tr><td><b>Müdürün genel değerlendirmesi:</b> ${esc(D.m)}</td></tr><tr><td><b>Önerilen gelişim faaliyetleri:</b> ${esc(D.p)}</td></tr>${D.n?`<tr><td><b>Sonraki izleme tarihi:</b> ${fmt(D.n)}</td></tr>`:""}</table>
 <div class="sg"><div>Öğretmen<br><b>${esc(cur)}</b><br><br>İmza</div><div>Okul Müdürü<br><b>${PRI}</b><br><br>İmza</div></div>`;doPrint(s)};
+$("#mail").onclick=()=>{const subject=`${SCH} · ${cur} · EK-1 değerlendirme · ${YR}`,body=`Merhaba,\n\n${cur} için hazırlanan ${YR} eğitim öğretim yılı EK-1 değerlendirme formu ektedir.\n\nPDF eklemek için önce “PDF / Yazdır” düğmesiyle PDF olarak kaydedin, ardından bu e-postaya ekleyin.`;location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`};
 /* ---------- raporlar ---------- */
 let rq="",rs="all";
 function rows(){return P.filter(t=>(rs=="all"||st(t[0])==rs)&&(t[0]+t[1]+t[2]).toLocaleLowerCase("tr").includes(rq.toLocaleLowerCase("tr"))).map((t,i)=>{const d=DB[t[0]],s=st(t[0]);return {t,s,d,v:d?A.map((_,k)=>ap(d,k)):null,a:d?avg(d):0}})}
 function tbl(R,plain){return `<table class="tb"><tr><th>#</th><th>Öğretmen</th><th>Görev/Sınıf</th><th>Durum</th>${A.map((_,i)=>`<th title="${SH[i]}">${i+1}</th>`).join("")}<th>Genel</th><th>Düzey</th></tr>`+R.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.t[0])}</td><td>${esc(r.t[1])}${/^\d-/.test(r.t[2])?" · "+r.t[2]:""}</td><td>${["Başlanmadı","Taslak","Tamamlandı"][r.s]}</td>${A.map((_,k)=>{const x=r.v?r.v[k]:0;return `<td ${!plain&&x?`style="color:${col(x)};font-weight:600"`:""}>${x?Math.round(x):"–"}</td>`}).join("")}<td><b>${r.a?Math.round(r.a):"–"}</b></td><td>${r.s==2?LN[lvOf(r.a)]:"–"}</td></tr>`).join("")+`</table>`}
-function renderRap(){const R=rows();$("#v-rap").innerHTML=`<div class="card"><h2>Öğretmen bazlı rapor</h2><div class="acts" style="margin:0 0 10px"><input id="rq" placeholder="Ara…" value="${esc(rq)}" style="max-width:220px"><select id="rs" style="max-width:190px">${[["all","Tüm durumlar"],[0,"Başlanmadı"],[1,"Taslak"],[2,"Tamamlandı"]].map(o=>`<option value="${o[0]}" ${o[0]==rs?"selected":""}>${o[1]}</option>`).join("")}</select><button class="p" id="rp">Raporu yazdır</button></div>
+function renderRap(){const R=rows();$("#v-rap").innerHTML=`<div class="card"><h2>Öğretmen bazlı rapor</h2><div class="acts" style="margin:0 0 10px"><input id="rq" placeholder="Ara…" value="${esc(rq)}" style="max-width:220px"><select id="rs" style="max-width:190px">${[["all","Tüm durumlar"],[0,"Başlanmadı"],[1,"Taslak"],[2,"Tamamlandı"]].map(o=>`<option value="${o[0]}" ${o[0]==rs?"selected":""}>${o[1]}</option>`).join("")}</select><button class="p" id="rp">Raporu PDF / yazdır</button><button id="rpMail">Özet e-postası hazırla</button></div>
 <div style="overflow-x:auto;max-height:60vh">${tbl(R)}</div><p class="sm">Sütunlar 1-8: izleme alanlarının yeterlik oranı (%). Genel: alan oranlarının ortalaması.</p>
 <h3>Veri aktarımı ve yedek</h3><p class="sm">Kayıtlar bu tarayıcıda, seçili eğitim öğretim yılına ait olarak saklanır (yedek de yalnızca seçili yılı kapsar). Yedek için aşağıdaki metni kopyalayıp güvenli bir yere saklayın; geri yüklemek için yapıştırıp “Yedeği yükle”ye basın.</p>
 <textarea id="bx" style="min-height:90px" aria-label="Yedek alanı"></textarea><div class="acts"><button id="bx1">Excel tablosu oluştur</button><button id="bx2">Yedek oluştur</button><button id="bx3">Yedeği yükle</button><button id="bx4">JSON dosyası indir</button><button id="bx5">JSON dosyası seç</button><input id="jsonFile" type="file" accept=".json,application/json" hidden><span class="msg" id="bm"></span></div></div>`;
 $("#rq").oninput=e=>{rq=e.target.value;const p=e.target.selectionStart;renderRap();$("#rq").focus();$("#rq").setSelectionRange(p,p)};$("#rs").onchange=e=>{rs=e.target.value=="all"?"all":+e.target.value;renderRap()};
 $("#rp").onclick=()=>doPrint(PH("ÖĞRETMEN İZLEME VE DEĞERLENDİRME ÖZET RAPORU")+tbl(rows(),1)+`<div class="sg"><div>Okul Müdürü<br><b>${PRI}</b><br><br>İmza</div></div>`);
+$("#rpMail").onclick=()=>{const subject=`${SCH} öğretmen izleme özet raporu · ${YR}`,body=`Merhaba,\n\n${YR} eğitim öğretim yılına ait öğretmen izleme özet raporu ektedir.\n\nNot: Önce “Raporu PDF / yazdır” düğmesiyle PDF olarak kaydedin, sonra bu e-posta taslağına ekleyin.`;location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`};
 const cp=m=>{const b=$("#bx");b.select();try{navigator.clipboard.writeText(b.value)}catch(e){}$("#bm").textContent=m};
 $("#bx1").onclick=()=>{$("#bx").value=["Sıra","Ad Soyad","Görev","Sınıf","Durum",...SH,"Genel","Düzey"].join("\t")+"\n"+rows().map((r,i)=>[i+1,r.t[0],r.t[1],r.t[2],["Başlanmadı","Taslak","Tamamlandı"][r.s],...A.map((_,k)=>r.v?Math.round(r.v[k]):""),r.a?Math.round(r.a):"",r.s==2?LN[lvOf(r.a)]:""].join("\t")).join("\n");cp("Tablo hazır; Excel'e yapıştırabilirsiniz.")};
 $("#bx2").onclick=()=>{$("#bx").value=JSON.stringify(DB);cp("Yedek hazır ve kopyalandı.")};
@@ -355,5 +374,11 @@ go("panel");
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
 }
+</script>
+<script>
+let deferredInstallPrompt;
+window.addEventListener("beforeinstallprompt", event => {event.preventDefault();deferredInstallPrompt=event;const b=document.querySelector("#installPwa");if(b)b.hidden=false});
+document.querySelector("#installPwa")?.addEventListener("click", async () => {if(!deferredInstallPrompt)return;deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;document.querySelector("#installPwa").hidden=true});
+window.addEventListener("appinstalled", () => {const b=document.querySelector("#installPwa");if(b)b.hidden=true});
 </script>
 </body></html>
