@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>İzsiz Foto</title>
+<meta name="description" content="Fotoğraflardan EXIF, XMP, C2PA ve diğer üst verileri, görüntüyü yeniden sıkıştırmadan siler.">
+<meta name="theme-color" content="#e8edef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1318" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="İzsiz">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+/* Yerleşim: tek sütun, aydınlık masa (light table) hissi. Seçme alanı baskı kesim işaretleriyle çerçeveli;
+   temizlenen veriler gerçek işaretçi adlarıyla (APP1, iTXt, EXIF...) mono yazı tipinde listelenir. */
+:root {
+  --bg: #e8edef;
+  --surface: #f7f9fa;
+  --ink: #101a1f;
+  --ink-2: #4b5d66;
+  --line: #c6d1d6;
+  --accent: #0a6b86;
+  --on-accent: #ffffff;
+  --cut: #b42318;
+  --cut-bg: #fbe9e7;
+  --ok: #17794a;
+  --f-display: 'Avenir Next', 'SF Pro Rounded', 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  --f-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Roboto Mono', monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0c1318;
+    --surface: #131c22;
+    --ink: #e7eef1;
+    --ink-2: #8fa2ab;
+    --line: #25343c;
+    --accent: #62d2ea;
+    --on-accent: #04222b;
+    --cut: #ff9a8f;
+    --cut-bg: #2a1715;
+    --ok: #6edc9a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0c1318;
+  --surface: #131c22;
+  --ink: #e7eef1;
+  --ink-2: #8fa2ab;
+  --line: #25343c;
+  --accent: #62d2ea;
+  --on-accent: #04222b;
+  --cut: #ff9a8f;
+  --cut-bg: #2a1715;
+  --ok: #6edc9a;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.5 var(--f-body);
+  -webkit-text-size-adjust: 100%;
+}
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.shell {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 22px 56px;
+}
+.app { max-width: 34rem; margin: 0 auto; display: grid; gap: 26px; }
+
+/* Başlık */
+.brand { display: flex; align-items: center; gap: 10px; font: 700 1.05rem/1 var(--f-display); letter-spacing: 0.01em; }
+.brand svg { width: 26px; height: 26px; flex: none; }
+.hero h1 {
+  margin: 0 0 10px;
+  font: 800 clamp(1.9rem, 8.2vw, 2.6rem)/1.05 var(--f-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.hero p { margin: 0; color: var(--ink-2); max-width: 36ch; text-wrap: pretty; }
+
+/* Seçme alanı: kesim işaretleri */
+.pick {
+  position: relative;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  justify-items: center;
+  min-height: 10.5rem;
+  padding: 28px 22px;
+  background: var(--surface);
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.pick::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--accent), var(--accent)) top left / 24px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top left / 2px 24px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top right / 24px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top right / 2px 24px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 24px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 2px 24px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 24px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 2px 24px no-repeat;
+}
+.pick.drag { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+.pick:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pick input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.pick .big { font: 700 1.35rem/1.2 var(--f-display); }
+.pick .sub { font: 400 0.8rem/1.4 var(--f-mono); color: var(--ink-2); }
+
+/* Seçenekler */
+.opts { display: grid; border-top: 1px solid var(--line); }
+.opt {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.opt b { display: block; font-weight: 600; }
+.opt small { display: block; color: var(--ink-2); font-size: 0.85rem; line-height: 1.4; margin-top: 2px; text-wrap: pretty; }
+.opt input { appearance: none; -webkit-appearance: none; margin: 0; width: 46px; height: 28px; border-radius: 99px; background: var(--line); position: relative; transition: background 0.15s; flex: none; }
+.opt input::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); transition: transform 0.15s; }
+.opt input:checked { background: var(--accent); }
+.opt input:checked::after { transform: translateX(18px); background: var(--on-accent); }
+
+/* Sonuçlar */
+.results { display: grid; gap: 14px; }
+.results[hidden] { display: none; }
+.summary { display: grid; gap: 10px; }
+.summary p { margin: 0; font: 600 0.95rem/1.4 var(--f-display); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-weight: 600;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 12px; min-width: 0; }
+.head { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; align-items: center; }
+.thumb { width: 72px; height: 72px; border-radius: 8px; overflow: hidden; background: var(--bg); display: grid; place-items: center; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.name { margin: 0; font-weight: 600; overflow-wrap: anywhere; line-height: 1.3; }
+.nums { margin: 4px 0 0; font: 400 0.78rem/1.5 var(--f-mono); color: var(--ink-2); display: grid; gap: 1px; }
+.nums .keep { color: var(--ok); }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 0.74rem/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--cut-bg); color: var(--cut); }
+.chip.none { background: var(--bg); color: var(--ink-2); }
+.state { margin: 0; font: 500 0.85rem/1.4 var(--f-mono); color: var(--ink-2); }
+.state.err { color: var(--cut); }
+.verify { margin: 0; font: 500 0.82rem/1.4 var(--f-mono); }
+.verify.good { color: var(--ok); }
+.verify.bad { color: var(--cut); }
+.item.big-preview .head { grid-template-columns: minmax(0, 1fr); }
+.item.big-preview .thumb { width: 100%; height: auto; max-height: 22rem; }
+.item.big-preview .thumb img { height: auto; max-height: 22rem; object-fit: contain; }
+
+.found { border-top: 1px solid var(--line); padding-top: 10px; }
+.found summary { cursor: pointer; font: 600 0.85rem/1.4 var(--f-display); color: var(--ink-2); min-height: 28px; }
+.found dl { margin: 8px 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; font: 400 0.78rem/1.4 var(--f-mono); }
+.found dt { color: var(--ink-2); }
+.found dd { margin: 0; overflow-wrap: anywhere; }
+.found dd.warn { color: var(--cut); font-weight: 500; }
+.note { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--surface); border: 1px dashed var(--line); font-size: 0.88rem; color: var(--ink-2); }
+.note b { color: var(--ink); }
+.foot { display: grid; gap: 10px; color: var(--ink-2); font-size: 0.85rem; }
+.foot p { margin: 0; text-wrap: pretty; }
+.foot code { font-family: var(--f-mono); font-size: 0.8rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{background:var(--bg)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <main class="app">
+    <header class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="var(--accent)"/><rect x="8" y="9" width="16" height="14" rx="2.5" fill="none" stroke="var(--on-accent)" stroke-width="2"/><circle cx="16" cy="16" r="3.2" fill="var(--on-accent)"/></svg>
+      İzsiz Foto
+    </header>
+
+    <section class="hero">
+      <h1>Fotoğraftaki gizli verileri sil. Pikselleri olduğu gibi bırak.</h1>
+      <p>EXIF, XMP, C2PA, IPTC ve yorumlar çıkarılır. Görüntü yeniden sıkıştırılmaz, çözünürlük ve kalite değişmez. Her şey cihazında çalışır, fotoğraf hiçbir yere gönderilmez.</p>
+    </section>
+
+    <label class="pick" id="pick" for="file">
+      <input id="file" type="file" accept="image/*" multiple>
+      <span class="big">Fotoğraf seç</span>
+      <span class="sub">JPEG · PNG · WebP — birden fazla seçebilirsin</span>
+    </label>
+
+    <section class="opts" aria-label="Seçenekler">
+      <label class="opt" for="o-orient">
+        <span><b>Yönü koru</b><small>Dik çekilmiş fotoğraf yan dönmesin. Dosyada yalnızca tek bir yön değeri kalır, başka hiçbir EXIF alanı kalmaz.</small></span>
+        <input id="o-orient" type="checkbox" checked>
+      </label>
+      <label class="opt" for="o-icc">
+        <span><b>Renk profilini koru (ICC)</b><small>Renklerin aynı görünmesi için önerilir. Kapatırsan profil de silinir.</small></span>
+        <input id="o-icc" type="checkbox" checked>
+      </label>
+      <label class="opt" for="o-date">
+        <span><b>Çekim tarihini koru</b><small>Galeriye kaydedince fotoğraf doğru güne düşsün. Dosyada yalnızca tarih kalır, konum ve cihaz bilgisi yine silinir.</small></span>
+        <input id="o-date" type="checkbox">
+      </label>
+      <label class="opt" for="o-auto">
+        <span><b>Her dosyayı otomatik doğrula</b><small>Temizledikten sonra orijinal ile sonucun her pikselini karşılaştırır. Büyük fotoğrafta birkaç saniye sürer.</small></span>
+        <input id="o-auto" type="checkbox" checked>
+      </label>
+      <label class="opt" for="o-trail">
+        <span><b>Dosya sonu eklerini sil</b><small>JPEG'in arkasına eklenen HDR haritası ve hareketli foto videosu çıkarılır. Ana görüntü değişmez.</small></span>
+        <input id="o-trail" type="checkbox" checked>
+      </label>
+    </section>
+
+    <section class="results" id="results" hidden>
+      <div class="summary">
+        <p id="summary" aria-live="polite"></p>
+        <div class="row">
+          <button class="btn primary" id="save-all" type="button">Hepsini kaydet</button>
+          <button class="btn" id="zip" type="button">ZIP indir</button>
+          <button class="btn" id="clear" type="button">Listeyi temizle</button>
+        </div>
+      </div>
+      <ol class="list" id="list"></ol>
+    </section>
+
+    <p class="note" id="preview-note" hidden><b>Deneme sürümü.</b> Bu önizlemede kaydet ve indir düğmeleri çalışmaz. Temiz fotoğrafı basılı tutup kaydedebilirsin. Telefona kurulan sürümde düğmeler çalışır.</p>
+    <p class="note" id="install" hidden></p>
+
+    <footer class="foot">
+      <p><b>Kayıpsız yükleme (iPhone):</b> "Fotoğraf Kitaplığı" HEIC dosyalarını JPEG'e çevirebilir ve konumu kendisi silebilir. Dosyayı olduğu gibi almak için "Dosya Seç"i kullan. Android'de galeriden Paylaş ile doğrudan bu uygulamaya gönderebilirsin.</p>
+      <p><b>Kayıpsız kaydetme:</b> Paylaşım menüsünde "Dosyalara Kaydet" dosyayı birebir saklar. "Görseli Kaydet" Fotoğraflar'a ekler. ZIP sıkıştırmaz, dosyalar bayt bayt aynı kalır.</p>
+      <p>Desteklenen biçimler: JPEG, PNG, WebP. HEIC ve AVIF desteklenmiyor.</p>
+    </footer>
+  </main>
+</div>
+
+<script>/* İzsiz çekirdeği: kapsayıcı (container) düzeyinde üst veri temizleme.
+   Görüntü verisi hiç çözülmez ve yeniden sıkıştırılmaz; yalnızca üst veri
+   segmentleri/parçaları atlanır, geri kalan baytlar olduğu gibi kopyalanır. */
+(function (root) {
+  'use strict';
+
+  function ascii(u8, s, e) {
+    let r = '';
+    for (let i = s; i < e && i < u8.length; i++) r += String.fromCharCode(u8[i]);
+    return r;
+  }
+  function starts(u8, pos, str) {
+    if (pos + str.length > u8.length) return false;
+    for (let i = 0; i < str.length; i++) if (u8[pos + i] !== str.charCodeAt(i)) return false;
+    return true;
+  }
+  const u16be = (u, p) => (u[p] << 8) | u[p + 1];
+  const u16le = (u, p) => u[p] | (u[p + 1] << 8);
+  const u32be = (u, p) => ((u[p] << 24) | (u[p + 1] << 16) | (u[p + 2] << 8) | u[p + 3]) >>> 0;
+  const u32le = (u, p) => (u[p] | (u[p + 1] << 8) | (u[p + 2] << 16) | (u[p + 3] << 24)) >>> 0;
+
+  // ---- EXIF okuma (yalnızca okunur, dosyaya yazılmaz) ----
+  const TYPE_SIZE = { 1: 1, 2: 1, 3: 2, 4: 4, 5: 8, 7: 1, 9: 4, 10: 8 };
+  function readTiff(u, s, e) {
+    const info = {};
+    if (e - s < 8 || e > u.length) return info;
+    const le = u[s] === 0x49 && u[s + 1] === 0x49;
+    if (!le && !(u[s] === 0x4d && u[s + 1] === 0x4d)) return info;
+    const r16 = (p) => (le ? u[p] | (u[p + 1] << 8) : (u[p] << 8) | u[p + 1]);
+    const r32 = (p) =>
+      le
+        ? (u[p] | (u[p + 1] << 8) | (u[p + 2] << 16) | (u[p + 3] << 24)) >>> 0
+        : ((u[p] << 24) | (u[p + 1] << 16) | (u[p + 2] << 8) | u[p + 3]) >>> 0;
+    if (r16(s + 2) !== 42) return info;
+    const str = (vp, count) => {
+      let t = '';
+      for (let i = 0; i < count && vp + i < e; i++) {
+        const c = u[vp + i];
+        if (c === 0) break;
+        t += String.fromCharCode(c);
+      }
+      return t.trim();
+    };
+    const rat = (vp, i) => {
+      const d = r32(vp + 8 * i + 4);
+      return d ? r32(vp + 8 * i) / d : 0;
+    };
+    const walk = (off, cb) => {
+      const p0 = s + off;
+      if (p0 + 2 > e) return;
+      const cnt = Math.min(r16(p0), 512);
+      for (let k = 0; k < cnt; k++) {
+        const p = p0 + 2 + k * 12;
+        if (p + 12 > e) break;
+        const type = r16(p + 2), count = r32(p + 4);
+        const size = (TYPE_SIZE[type] || 1) * count;
+        const vp = size <= 4 ? p + 8 : s + r32(p + 8);
+        if (vp < s || vp + Math.min(size, 1) > e) continue;
+        cb(r16(p), type, count, vp, p);
+      }
+    };
+    const gps = {};
+    walk(r32(s + 4), (tag, type, count, vp, p) => {
+      if (tag === 0x0112) {
+        const v = r16(p + 8);
+        if (v >= 1 && v <= 8) info.orientation = v;
+      } else if (tag === 0x010f) info.make = str(vp, count);
+      else if (tag === 0x0110) info.model = str(vp, count);
+      else if (tag === 0x0131) info.software = str(vp, count);
+      else if (tag === 0x0132) info.dateTime = str(vp, count);
+      else if (tag === 0x013b) info.artist = str(vp, count);
+      else if (tag === 0x8298) info.copyright = str(vp, count);
+      else if (tag === 0x8769) {
+        walk(r32(p + 8), (t2, ty2, c2, vp2) => {
+          if (t2 === 0x9003) info.dateOriginal = str(vp2, c2);
+          else if (t2 === 0xa434) info.lens = str(vp2, c2);
+          else if (t2 === 0xa431) info.bodySerial = str(vp2, c2);
+        });
+      } else if (tag === 0x8825) {
+        walk(r32(p + 8), (t2, ty2, c2, vp2, p2) => {
+          if (t2 === 1) gps.latRef = str(vp2, c2);
+          else if (t2 === 2 && c2 === 3) gps.lat = rat(vp2, 0) + rat(vp2, 1) / 60 + rat(vp2, 2) / 3600;
+          else if (t2 === 3) gps.lonRef = str(vp2, c2);
+          else if (t2 === 4 && c2 === 3) gps.lon = rat(vp2, 0) + rat(vp2, 1) / 60 + rat(vp2, 2) / 3600;
+          else if (t2 === 6) gps.alt = rat(vp2, 0);
+        });
+      }
+    });
+    if (gps.lat != null && gps.lon != null && (gps.lat || gps.lon)) {
+      info.lat = gps.latRef === 'S' ? -gps.lat : gps.lat;
+      info.lon = gps.lonRef === 'W' ? -gps.lon : gps.lon;
+      if (gps.alt != null) info.alt = gps.alt;
+    }
+    return info;
+  }
+  function tiffOrientation(u, s, e) {
+    return readTiff(u, s, e).orientation || 1;
+  }
+  function mergeInfo(meta, t) {
+    for (const k in t) if (t[k] != null && t[k] !== '' && meta[k] == null) meta[k] = t[k];
+  }
+  const DATE_RE = /^\d{4}:\d\d:\d\d \d\d:\d\d:\d\d$/;
+  // Yalnızca yön ve/veya çekim tarihi içeren en küçük TIFF bloğu; hiçbiri yoksa null.
+  function buildTiff(o, date) {
+    const hasO = o > 1, hasD = !!date && DATE_RE.test(date);
+    const n = (hasO ? 1 : 0) + (hasD ? 1 : 0);
+    if (!n) return null;
+    const ifd0 = 2 + n * 12 + 4;
+    const exifOff = 8 + ifd0;
+    const dataOff = exifOff + 2 + 12 + 4;
+    const buf = new Uint8Array(hasD ? dataOff + 20 : 8 + ifd0);
+    const dv = new DataView(buf.buffer);
+    buf[0] = 0x4d; buf[1] = 0x4d;
+    dv.setUint16(2, 42); dv.setUint32(4, 8);
+    dv.setUint16(8, n);
+    let p = 10;
+    if (hasO) {
+      dv.setUint16(p, 0x0112); dv.setUint16(p + 2, 3); dv.setUint32(p + 4, 1); dv.setUint16(p + 8, o);
+      p += 12;
+    }
+    if (hasD) {
+      dv.setUint16(p, 0x8769); dv.setUint16(p + 2, 4); dv.setUint32(p + 4, 1); dv.setUint32(p + 8, exifOff);
+      p += 12;
+      dv.setUint16(exifOff, 1);
+      dv.setUint16(exifOff + 2, 0x9003); dv.setUint16(exifOff + 4, 2); dv.setUint32(exifOff + 6, 20); dv.setUint32(exifOff + 10, dataOff);
+      for (let i = 0; i < 19; i++) buf[dataOff + i] = date.charCodeAt(i);
+    }
+    return buf;
+  }
+  // Arayüzde gösterilecek, insan okuyabilir özet
+  function foundList(meta, removed) {
+    const f = [];
+    const dev = [meta.make, meta.model].filter(Boolean).join(' ');
+    if (meta.lat != null) f.push({ k: 'Konum', v: meta.lat.toFixed(5) + ', ' + meta.lon.toFixed(5) + (meta.alt != null ? ' · ' + Math.round(meta.alt) + ' m' : ''), warn: true });
+    if (dev) f.push({ k: 'Cihaz', v: dev });
+    if (meta.lens) f.push({ k: 'Lens', v: meta.lens });
+    if (meta.software) f.push({ k: 'Yazılım', v: meta.software });
+    const d = meta.dateOriginal || meta.dateTime;
+    if (d) f.push({ k: 'Çekim tarihi', v: d });
+    if (meta.artist) f.push({ k: 'Sanatçı', v: meta.artist });
+    if (meta.copyright) f.push({ k: 'Telif', v: meta.copyright });
+    if (meta.bodySerial) f.push({ k: 'Seri no', v: meta.bodySerial, warn: true });
+    for (const r of removed) if (/C2PA/.test(r.label)) { f.push({ k: 'İçerik kimliği', v: 'C2PA bildirimi var (yapay zekâ / düzenleme kaydı)' }); break; }
+    return f;
+  }
+
+  function Removed() {
+    const m = new Map();
+    return {
+      add(label, bytes) {
+        const x = m.get(label) || { label, bytes: 0, count: 0 };
+        x.bytes += bytes;
+        x.count++;
+        m.set(label, x);
+      },
+      list() {
+        return [...m.values()];
+      },
+    };
+  }
+
+  function sum(parts) {
+    let t = 0;
+    for (const p of parts) t += p.length;
+    return t;
+  }
+
+  // ---------------- JPEG ----------------
+  function stripJPEG(u8, opts) {
+    const n = u8.length;
+    const rem = Removed();
+    const parts = [u8.subarray(0, 2)];
+    let insertAt = 1;
+    const meta = {};
+    let width = 0, height = 0;
+    let i = 2;
+    let sawEOI = false;
+    let first = true;
+
+    while (i < n) {
+      if (u8[i] !== 0xff) throw new Error('Bozuk JPEG (işaretçi bulunamadı)');
+      let j = i;
+      while (j < n && u8[j] === 0xff) j++;
+      if (j >= n) break;
+      const m = u8[j];
+      const segStart = j - 1;
+
+      if (m === 0xd9) {
+        parts.push(u8.subarray(segStart, j + 1));
+        i = j + 1;
+        sawEOI = true;
+        break;
+      }
+      if (m === 0x00 || m === 0x01 || (m >= 0xd0 && m <= 0xd8)) {
+        parts.push(u8.subarray(segStart, j + 1));
+        i = j + 1;
+        continue;
+      }
+      if (j + 2 >= n) throw new Error('Bozuk JPEG (kesik segment)');
+      const len = u16be(u8, j + 1);
+      const segEnd = j + 1 + len;
+      if (len < 2 || segEnd > n) throw new Error('Bozuk JPEG (segment uzunluğu)');
+      const p = j + 3; // veri başlangıcı
+      const size = segEnd - segStart;
+      let keep = true;
+
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+        height = u16be(u8, j + 4);
+        width = u16be(u8, j + 6);
+      }
+
+      if (m === 0xe0) {
+        if (starts(u8, p, 'JFIF\0')) {
+          if (len > 16) {
+            // küçük resim (thumbnail) içeriyor: başlığı küçük resimsiz yaz
+            const fixed = new Uint8Array(18);
+            fixed.set(u8.subarray(segStart, segStart + 18));
+            fixed[3] = 16;
+            fixed[16] = 0;
+            fixed[17] = 0;
+            parts.push(fixed);
+            rem.add('JFIF küçük resmi', size - 18);
+            if (first) insertAt = parts.length;
+            keep = false;
+          } else if (first) {
+            // JFIF başlığının hemen arkasına yön bilgisi eklenebilsin
+            parts.push(u8.subarray(segStart, segEnd));
+            insertAt = parts.length;
+            keep = false;
+          }
+        } else {
+          keep = false;
+          rem.add(starts(u8, p, 'JFXX') ? 'JFXX küçük resmi' : 'APP0 (diğer)', size);
+        }
+      } else if (m === 0xe1) {
+        keep = false;
+        if (starts(u8, p, 'Exif\0\0')) {
+          mergeInfo(meta, readTiff(u8, p + 6, segEnd));
+          rem.add('EXIF', size);
+        } else if (starts(u8, p, 'http://ns.adobe.com/xap/1.0/')) rem.add('XMP', size);
+        else if (starts(u8, p, 'http://ns.adobe.com/xmp/extension/')) rem.add('XMP (uzantı)', size);
+        else rem.add('APP1 (diğer)', size);
+      } else if (m === 0xe2) {
+        if (starts(u8, p, 'ICC_PROFILE\0') && opts.keepICC) keep = true;
+        else {
+          keep = false;
+          if (starts(u8, p, 'ICC_PROFILE\0')) rem.add('ICC profili', size);
+          else if (starts(u8, p, 'MPF\0')) rem.add('MPF (çoklu resim)', size);
+          else rem.add('APP2 (diğer)', size);
+        }
+      } else if (m === 0xee) {
+        // Adobe APP14: renk dönüşüm bayrağı, çözme için gerekli
+        keep = starts(u8, p, 'Adobe');
+        if (!keep) rem.add('APP14 (diğer)', size);
+      } else if (m === 0xeb) {
+        keep = false;
+        rem.add('C2PA / JUMBF', size);
+      } else if (m === 0xed) {
+        keep = false;
+        rem.add(starts(u8, p, 'Photoshop 3.0') ? 'IPTC / Photoshop' : 'APP13 (diğer)', size);
+      } else if (m === 0xfe) {
+        keep = false;
+        rem.add('Yorum (COM)', size);
+      } else if (m >= 0xe3 && m <= 0xef) {
+        keep = false;
+        rem.add('APP' + (m - 0xe0) + ' (diğer)', size);
+      }
+
+      if (keep) parts.push(u8.subarray(segStart, segEnd));
+      first = false;
+
+      if (m === 0xda) {
+        // Tarama verisi: bayt bayt kopyalanır
+        let k = segEnd;
+        while (k < n) {
+          if (u8[k] === 0xff) {
+            const nx = u8[k + 1];
+            if (nx === 0x00 || (nx >= 0xd0 && nx <= 0xd7)) k += 2;
+            else if (nx === 0xff) k++;
+            else break;
+          } else k++;
+        }
+        parts.push(u8.subarray(segEnd, k));
+        i = k;
+        continue;
+      }
+      i = segEnd;
+    }
+
+    if (!sawEOI) throw new Error('JPEG sonu (EOI) bulunamadı; dosya kesik olabilir');
+    if (i < n) {
+      if (opts.dropTrailing) rem.add('Dosya sonu eki (HDR / hareketli foto)', n - i);
+      else parts.push(u8.subarray(i, n));
+    }
+
+    const orientation = meta.orientation || 1;
+    let orientationKept = false, dateKept = false;
+    const tiff = buildTiff(opts.keepOrientation ? orientation : 1, opts.keepDate ? meta.dateOriginal || meta.dateTime : null);
+    if (tiff) {
+      const seg = new Uint8Array(4 + 6 + tiff.length);
+      seg[0] = 0xff; seg[1] = 0xe1;
+      seg[2] = 0; seg[3] = 2 + 6 + tiff.length;
+      seg.set([0x45, 0x78, 0x69, 0x66, 0, 0], 4);
+      seg.set(tiff, 10);
+      parts.splice(insertAt, 0, seg);
+      orientationKept = opts.keepOrientation && orientation > 1;
+      dateKept = !!(opts.keepDate && (meta.dateOriginal || meta.dateTime));
+    }
+    return { mime: 'image/jpeg', ext: '.jpg', width, height, parts, removed: rem.list(), orientation, orientationKept, dateKept, found: foundList(meta, rem.list()) };
+  }
+
+  // ---------------- PNG ----------------
+  const CRC_T = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  function crc32update(c, u8) {
+    for (let i = 0; i < u8.length; i++) c = CRC_T[(c ^ u8[i]) & 0xff] ^ (c >>> 8);
+    return c;
+  }
+  function crc32(u8) {
+    return (crc32update(0xffffffff, u8) ^ 0xffffffff) >>> 0;
+  }
+  function pngChunk(type, data) {
+    const out = new Uint8Array(12 + data.length);
+    const dv = new DataView(out.buffer);
+    dv.setUint32(0, data.length);
+    for (let i = 0; i < 4; i++) out[4 + i] = type.charCodeAt(i);
+    out.set(data, 8);
+    dv.setUint32(8 + data.length, crc32(out.subarray(4, 8 + data.length)));
+    return out;
+  }
+  const PNG_KEEP = new Set([
+    'tRNS', 'gAMA', 'cHRM', 'sRGB', 'sBIT', 'bKGD', 'pHYs', 'hIST', 'sPLT',
+    'cICP', 'mDCV', 'cLLI', 'acTL', 'fcTL', 'fdAT',
+  ]);
+  function pngKeyword(u8, s, e) {
+    let k = s;
+    while (k < e && u8[k] !== 0 && k - s < 80) k++;
+    return ascii(u8, s, k);
+  }
+
+  function stripPNG(u8, opts) {
+    const n = u8.length;
+    const rem = Removed();
+    const parts = [u8.subarray(0, 8)];
+    let i = 8;
+    const meta = {};
+    let width = 0, height = 0, firstIdat = -1, sawIend = false;
+
+    while (i + 12 <= n) {
+      const len = u32be(u8, i);
+      const type = ascii(u8, i + 4, i + 8);
+      const end = i + 12 + len;
+      if (end > n) throw new Error('Bozuk PNG (kesik parça)');
+      const critical = type.charCodeAt(0) >= 65 && type.charCodeAt(0) <= 90;
+      let keep = critical || PNG_KEEP.has(type);
+
+      if (type === 'IHDR') {
+        width = u32be(u8, i + 8);
+        height = u32be(u8, i + 12);
+      }
+      if (type === 'IDAT' && firstIdat < 0) firstIdat = parts.length;
+
+      if (!keep) {
+        if (type === 'iCCP') {
+          if (opts.keepICC) keep = true;
+          else rem.add('ICC profili', end - i);
+        } else if (type === 'eXIf') {
+          mergeInfo(meta, readTiff(u8, i + 8, i + 8 + len));
+          rem.add('EXIF', end - i);
+        } else if (type === 'caBX') rem.add('C2PA (caBX)', end - i);
+        else if (type === 'tIME') rem.add('Değiştirilme zamanı (tIME)', end - i);
+        else if (type === 'iTXt') {
+          const kw = pngKeyword(u8, i + 8, i + 8 + len);
+          rem.add(kw.indexOf('xmp') >= 0 ? 'XMP (iTXt)' : 'Metin (iTXt)', end - i);
+        } else if (type === 'tEXt' || type === 'zTXt') {
+          const kw = pngKeyword(u8, i + 8, i + 8 + len).toLowerCase();
+          if (kw.indexOf('exif') >= 0) rem.add('EXIF (metin)', end - i);
+          else if (kw.indexOf('xmp') >= 0) rem.add('XMP (metin)', end - i);
+          else rem.add('Metin (' + type + ')', end - i);
+        } else rem.add('Diğer parça (' + type + ')', end - i);
+      }
+      if (keep) parts.push(u8.subarray(i, end));
+      i = end;
+      if (type === 'IEND') {
+        sawIend = true;
+        break;
+      }
+    }
+    if (!sawIend) throw new Error('PNG sonu (IEND) bulunamadı; dosya kesik olabilir');
+    if (i < n) {
+      if (opts.dropTrailing) rem.add('Dosya sonu eki', n - i);
+      else parts.push(u8.subarray(i, n));
+    }
+
+    const orientation = meta.orientation || 1;
+    let orientationKept = false, dateKept = false;
+    const tiff = buildTiff(opts.keepOrientation ? orientation : 1, opts.keepDate ? meta.dateOriginal || meta.dateTime : null);
+    if (tiff && firstIdat > 0) {
+      parts.splice(firstIdat, 0, pngChunk('eXIf', tiff));
+      orientationKept = opts.keepOrientation && orientation > 1;
+      dateKept = !!(opts.keepDate && (meta.dateOriginal || meta.dateTime));
+    }
+    return { mime: 'image/png', ext: '.png', width, height, parts, removed: rem.list(), orientation, orientationKept, dateKept, found: foundList(meta, rem.list()) };
+  }
+
+  // ---------------- WebP ----------------
+  function stripWebP(u8, opts) {
+    const n = u8.length;
+    const rem = Removed();
+    const end = Math.min(n, 8 + u32le(u8, 4));
+    let i = 12;
+    const kept = [];
+    const meta = {};
+    let width = 0, height = 0, hasVP8X = false, imgType = '', vp8lAlpha = false;
+    let iccDropped = false;
+
+    while (i + 8 <= end) {
+      const type = ascii(u8, i, i + 4);
+      const size = u32le(u8, i + 4);
+      const ds = i + 8;
+      const de = ds + size;
+      const next = de + (size & 1);
+      if (de > n) throw new Error('Bozuk WebP (kesik parça)');
+      const total = 8 + size + (size & 1);
+      let keep = true;
+
+      if (type === 'VP8X') {
+        hasVP8X = true;
+        width = 1 + (u8[ds + 4] | (u8[ds + 5] << 8) | (u8[ds + 6] << 16));
+        height = 1 + (u8[ds + 7] | (u8[ds + 8] << 8) | (u8[ds + 9] << 16));
+      } else if (type === 'VP8 ') {
+        imgType = type;
+        if (!hasVP8X) {
+          width = u16le(u8, ds + 6) & 0x3fff;
+          height = u16le(u8, ds + 8) & 0x3fff;
+        }
+      } else if (type === 'VP8L') {
+        imgType = type;
+        const b = u32le(u8, ds + 1);
+        vp8lAlpha = ((b >>> 28) & 1) === 1;
+        if (!hasVP8X) {
+          width = 1 + (b & 0x3fff);
+          height = 1 + ((b >>> 14) & 0x3fff);
+        }
+      } else if (type === 'ICCP') {
+        if (!opts.keepICC) {
+          keep = false;
+          iccDropped = true;
+          rem.add('ICC profili', total);
+        }
+      } else if (type === 'EXIF') {
+        keep = false;
+        const s = starts(u8, ds, 'Exif\0\0') ? ds + 6 : ds;
+        mergeInfo(meta, readTiff(u8, s, de));
+        rem.add('EXIF', total);
+      } else if (type === 'XMP ') {
+        keep = false;
+        rem.add('XMP', total);
+      } else if (type === 'C2PA') {
+        keep = false;
+        rem.add('C2PA', total);
+      } else if (type !== 'ALPH' && type !== 'ANIM' && type !== 'ANMF') {
+        keep = false;
+        rem.add('Diğer parça (' + type.trim() + ')', total);
+      }
+      if (keep) kept.push({ type, ds, de, size });
+      i = next;
+    }
+    if (!imgType && !kept.some((c) => c.type === 'ANMF')) throw new Error('Bozuk WebP (görüntü verisi yok)');
+
+    const orientation = meta.orientation || 1;
+    const tiff = buildTiff(opts.keepOrientation ? orientation : 1, opts.keepDate ? meta.dateOriginal || meta.dateTime : null);
+    const wantExif = !!tiff;
+    const out = [];
+    let total = 4; // 'WEBP'
+    const hdr = (type, size) => {
+      const h = new Uint8Array(8);
+      for (let k = 0; k < 4; k++) h[k] = type.charCodeAt(k);
+      h[4] = size & 255; h[5] = (size >>> 8) & 255; h[6] = (size >>> 16) & 255; h[7] = (size >>> 24) & 255;
+      return h;
+    };
+    const push = (type, payload) => {
+      out.push(hdr(type, payload.length), payload);
+      total += 8 + payload.length;
+      if (payload.length & 1) {
+        out.push(new Uint8Array(1));
+        total += 1;
+      }
+    };
+
+    if (!hasVP8X && wantExif) {
+      const v = new Uint8Array(10);
+      v[0] = 0x08 | (vp8lAlpha ? 0x10 : 0);
+      const w = width - 1, h = height - 1;
+      v[4] = w & 255; v[5] = (w >>> 8) & 255; v[6] = (w >>> 16) & 255;
+      v[7] = h & 255; v[8] = (h >>> 8) & 255; v[9] = (h >>> 16) & 255;
+      push('VP8X', v);
+    }
+    for (const c of kept) {
+      if (c.type === 'VP8X') {
+        const v = new Uint8Array(u8.subarray(c.ds, c.de)); // kopya: bayrakları değiştireceğiz
+        v[0] &= ~0x0c; // EXIF + XMP bayrakları
+        if (iccDropped) v[0] &= ~0x20;
+        if (wantExif) v[0] |= 0x08;
+        push('VP8X', v);
+      } else {
+        out.push(hdr(c.type, c.size), u8.subarray(c.ds, c.de));
+        total += 8 + c.size;
+        if (c.size & 1) {
+          out.push(new Uint8Array(1));
+          total += 1;
+        }
+      }
+    }
+    if (wantExif) push('EXIF', tiff);
+
+    const head = new Uint8Array(12);
+    head.set([0x52, 0x49, 0x46, 0x46]);
+    head[4] = total & 255; head[5] = (total >>> 8) & 255; head[6] = (total >>> 16) & 255; head[7] = (total >>> 24) & 255;
+    head.set([0x57, 0x45, 0x42, 0x50], 8);
+    if (end < n) {
+      if (opts.dropTrailing) rem.add('Dosya sonu eki', n - end);
+    }
+    return {
+      mime: 'image/webp', ext: '.webp', width, height,
+      parts: [head, ...out], removed: rem.list(), orientation,
+      orientationKept: wantExif && opts.keepOrientation && orientation > 1,
+      dateKept: wantExif && !!(opts.keepDate && (meta.dateOriginal || meta.dateTime)),
+      found: foundList(meta, rem.list()),
+    };
+  }
+
+  // ---------------- Giriş ----------------
+  function strip(u8, o) {
+    const opts = Object.assign({ keepOrientation: true, keepICC: true, dropTrailing: true, keepDate: false }, o || {});
+    let r;
+    if (u8.length > 3 && u8[0] === 0xff && u8[1] === 0xd8 && u8[2] === 0xff) r = stripJPEG(u8, opts);
+    else if (u8.length > 8 && starts(u8, 0, '\x89PNG\r\n\x1a\n')) r = stripPNG(u8, opts);
+    else if (u8.length > 12 && starts(u8, 0, 'RIFF') && starts(u8, 8, 'WEBP')) r = stripWebP(u8, opts);
+    else if (u8.length > 12 && starts(u8, 4, 'ftyp')) {
+      const brand = ascii(u8, 8, 12);
+      throw new Error((brand.indexOf('avif') >= 0 || brand.indexOf('avis') >= 0 ? 'AVIF' : 'HEIC/HEIF') + ' biçimi henüz desteklenmiyor');
+    } else throw new Error('Desteklenmeyen biçim (JPEG, PNG ve WebP desteklenir)');
+    r.inSize = u8.length;
+    r.outSize = sum(r.parts);
+    return r;
+  }
+
+
+  // ---------------- ZIP (sıkıştırmasız) ----------------
+  // files: [{name, parts:[Uint8Array...]}]  ->  Blob parçaları
+  function makeZip(files) {
+    const enc = new TextEncoder();
+    const out = [];
+    const central = [];
+    let offset = 0;
+    const now = new Date();
+    const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+    const dosDate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+    for (const f of files) {
+      const name = enc.encode(f.name);
+      let c = 0xffffffff, size = 0;
+      for (const p of f.parts) { c = crc32update(c, p); size += p.length; }
+      c = (c ^ 0xffffffff) >>> 0;
+      const lh = new Uint8Array(30 + name.length);
+      const d = new DataView(lh.buffer);
+      d.setUint32(0, 0x04034b50, true); d.setUint16(4, 20, true); d.setUint16(6, 0x0800, true); d.setUint16(8, 0, true);
+      d.setUint16(10, dosTime, true); d.setUint16(12, dosDate, true); d.setUint32(14, c, true);
+      d.setUint32(18, size, true); d.setUint32(22, size, true); d.setUint16(26, name.length, true); d.setUint16(28, 0, true);
+      lh.set(name, 30);
+      out.push(lh, ...f.parts);
+      const ch = new Uint8Array(46 + name.length);
+      const e = new DataView(ch.buffer);
+      e.setUint32(0, 0x02014b50, true); e.setUint16(4, 20, true); e.setUint16(6, 20, true); e.setUint16(8, 0x0800, true); e.setUint16(10, 0, true);
+      e.setUint16(12, dosTime, true); e.setUint16(14, dosDate, true); e.setUint32(16, c, true);
+      e.setUint32(20, size, true); e.setUint32(24, size, true); e.setUint16(28, name.length, true);
+      e.setUint32(42, offset, true);
+      ch.set(name, 46);
+      central.push(ch);
+      offset += lh.length + size;
+    }
+    let csize = 0;
+    for (const c of central) csize += c.length;
+    const end = new Uint8Array(22);
+    const x = new DataView(end.buffer);
+    x.setUint32(0, 0x06054b50, true); x.setUint16(8, files.length, true); x.setUint16(10, files.length, true);
+    x.setUint32(12, csize, true); x.setUint32(16, offset, true);
+    return [...out, ...central, end];
+  }
+
+  const api = { strip, readTiff, tiffOrientation, buildTiff, crc32, crc32update, makeZip };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.IzsizCore = api;
+})(typeof self !== 'undefined' ? self : this);
+</script>
+<script>window.__IZSIZ_PWA__=true;</script>
+<script>(function () {
+  'use strict';
+  // PWA: build betiği tarafından enjekte edilir (true: kurulabilir sürüm, false: önizleme)
+  var IS_PWA = window.__IZSIZ_PWA__ === true;
+  var $ = function (s) { return document.querySelector(s); };
+  var items = [];
+  var seq = 0;
+
+  // ---- ayarlar ----
+  var toggles = { 'o-orient': true, 'o-icc': true, 'o-trail': true, 'o-date': false, 'o-auto': true };
+  try {
+    var saved = JSON.parse(localStorage.getItem('izsiz-opts') || '{}');
+    Object.keys(toggles).forEach(function (k) { if (typeof saved[k] === 'boolean') $('#' + k).checked = saved[k]; });
+  } catch (e) {}
+  Object.keys(toggles).forEach(function (k) {
+    $('#' + k).addEventListener('change', function () {
+      try {
+        var o = {};
+        Object.keys(toggles).forEach(function (q) { o[q] = $('#' + q).checked; });
+        localStorage.setItem('izsiz-opts', JSON.stringify(o));
+      } catch (e) {}
+    });
+  });
+  function opts() {
+    return { keepOrientation: $('#o-orient').checked, keepICC: $('#o-icc').checked, dropTrailing: $('#o-trail').checked, keepDate: $('#o-date').checked };
+  }
+
+  // ---- biçimlendirme ----
+  var nf = new Intl.NumberFormat('tr-TR');
+  function fmtSize(b) {
+    if (b < 1024) return nf.format(b) + ' B';
+    if (b < 1048576) return (b / 1024).toLocaleString('tr-TR', { maximumFractionDigits: 1 }) + ' KB';
+    return (b / 1048576).toLocaleString('tr-TR', { maximumFractionDigits: 2 }) + ' MB';
+  }
+  function cleanName(name, ext) {
+    var base = name.replace(/\.[^.\/]+$/, '') || 'foto';
+    return base + '-izsiz' + ext;
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  // ---- kart ----
+  function makeCard(it) {
+    var li = el('li', 'item' + (IS_PWA ? '' : ' big-preview'));
+    var head = el('div', 'head');
+    var thumb = el('div', 'thumb');
+    var meta = el('div');
+    it.nameEl = el('p', 'name', it.file.name);
+    it.stateEl = el('p', 'state', 'İşleniyor…');
+    meta.appendChild(it.nameEl);
+    meta.appendChild(it.stateEl);
+    head.appendChild(thumb);
+    head.appendChild(meta);
+    li.appendChild(head);
+    it.li = li; it.thumbEl = thumb; it.metaEl = meta;
+    return li;
+  }
+
+  function fillCard(it, r) {
+    it.stateEl.remove();
+    var img = el('img');
+    img.alt = '';
+    img.src = it.url;
+    it.thumbEl.appendChild(img);
+
+    var nums = el('p', 'nums');
+    var saved = r.inSize - r.outSize;
+    nums.appendChild(el('span', '', fmtSize(r.inSize) + ' → ' + fmtSize(r.outSize) + (saved > 0 ? '  (−' + fmtSize(saved) + ')' : '')));
+    nums.appendChild(el('span', 'keep', (r.width ? nf.format(r.width) + ' × ' + nf.format(r.height) + ' px · ' : '') + 'piksel verisi aynı'));
+    it.metaEl.appendChild(nums);
+
+    var chips = el('ul', 'chips');
+    if (!r.removed.length) chips.appendChild(el('li', 'chip none', 'Silinecek veri bulunamadı'));
+    r.removed.forEach(function (x) {
+      chips.appendChild(el('li', 'chip', '− ' + x.label + ' · ' + fmtSize(x.bytes)));
+    });
+    if (r.orientationKept) chips.appendChild(el('li', 'chip none', 'Yön değeri korundu: ' + r.orientation));
+    if (r.dateKept) chips.appendChild(el('li', 'chip none', 'Çekim tarihi korundu'));
+    it.li.appendChild(chips);
+
+    if (r.found && r.found.length) {
+      var det = el('details', 'found');
+      det.appendChild(el('summary', '', 'Dosyada bulunanlar (' + r.found.length + ')'));
+      var dl = el('dl');
+      r.found.forEach(function (f) {
+        dl.appendChild(el('dt', '', f.k));
+        dl.appendChild(el('dd', f.warn ? 'warn' : '', f.v));
+      });
+      det.appendChild(dl);
+      it.li.appendChild(det);
+    }
+
+    var row = el('div', 'row');
+    if (IS_PWA) {
+      var s = el('button', 'btn primary', 'Kaydet');
+      s.type = 'button';
+      s.addEventListener('click', function () { saveFiles([it.out], it); });
+      var d = el('button', 'btn', 'İndir');
+      d.type = 'button';
+      d.addEventListener('click', function () { download(it); });
+      row.appendChild(s);
+      row.appendChild(d);
+    }
+    var v = el('button', 'btn', 'Pikselleri doğrula');
+    v.type = 'button';
+    it.verifyBtn = v;
+    row.appendChild(v);
+    it.li.appendChild(row);
+    it.verifyEl = el('p', 'verify');
+    it.verifyEl.setAttribute('aria-live', 'polite');
+    it.li.appendChild(it.verifyEl);
+    v.addEventListener('click', function () { verify(it); });
+  }
+
+  function summarize() {
+    var done = items.filter(function (i) { return i.out; });
+    $('#results').hidden = items.length === 0;
+    if (!items.length) return;
+    var bytes = 0;
+    done.forEach(function (i) { bytes += i.removedBytes; });
+    $('#summary').textContent = done.length + ' fotoğraf temizlendi' + (bytes ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '');
+    $('#save-all').hidden = !IS_PWA || done.length < 2;
+    $('#zip').hidden = !IS_PWA || done.length < 2;
+    $('#preview-note').hidden = IS_PWA || items.length === 0;
+  }
+
+  // ---- işleme ----
+  async function processOne(file) {
+    var it = { id: ++seq, file: file };
+    items.push(it);
+    $('#list').prepend(makeCard(it));
+    summarize();
+    try {
+      var buf = new Uint8Array(await file.arrayBuffer());
+      var r = IzsizCore.strip(buf, opts());
+      var blob = new Blob(r.parts, { type: r.mime });
+      it.out = new File([blob], cleanName(file.name, r.ext), { type: r.mime, lastModified: Date.now() });
+      it.url = URL.createObjectURL(it.out);
+      it.result = r;
+      it.removedBytes = r.inSize - r.outSize;
+      fillCard(it, r);
+      summarize();
+      if ($('#o-auto').checked) await verify(it);
+    } catch (err) {
+      it.stateEl.textContent = (err && err.message) || 'İşlenemedi';
+      it.stateEl.classList.add('err');
+    }
+    summarize();
+  }
+
+  async function handleFiles(list) {
+    var arr = Array.prototype.slice.call(list);
+    for (var i = 0; i < arr.length; i++) await processOne(arr[i]);
+  }
+
+  // ---- kaydetme ----
+  function download(it) {
+    var a = document.createElement('a');
+    a.href = it.url;
+    a.download = it.out.name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+  async function saveFiles(files, single) {
+    try {
+      if (navigator.canShare && navigator.canShare({ files: files })) {
+        await navigator.share({ files: files });
+        return;
+      }
+    } catch (e) {
+      if (e && e.name === 'AbortError') return;
+    }
+    files.forEach(function (f, i) {
+      var it = single || items.filter(function (x) { return x.out === f; })[0];
+      setTimeout(function () { download(it); }, i * 300);
+    });
+  }
+
+  // ---- piksel doğrulama ----
+  async function decode(blob) {
+    try { return await createImageBitmap(blob, { imageOrientation: 'from-image' }); }
+    catch (e) { return await createImageBitmap(blob); }
+  }
+  async function verify(it) {
+    var out = it.verifyEl;
+    out.className = 'verify';
+    it.verifyBtn.disabled = true;
+    var a, b;
+    try {
+      out.textContent = 'Çözülüyor…';
+      a = await decode(it.file);
+      b = await decode(it.out);
+      var W = a.width, H = a.height;
+      if (W * H > 32e6) { out.textContent = 'Görüntü çok büyük (' + Math.round(W * H / 1e6) + ' MP); karşılaştırma atlandı.'; return; }
+      if (W !== b.width || H !== b.height) {
+        out.className = 'verify bad';
+        out.textContent = 'Boyut farklı: ' + W + '×' + H + ' ve ' + b.width + '×' + b.height + '. Yön bilgisi çıkarıldığı için görüntü dönmüş olabilir.';
+        return;
+      }
+      var rows = Math.max(1, Math.floor(2e6 / W));
+      var ca = document.createElement('canvas'), cb = document.createElement('canvas');
+      var diff = 0;
+      for (var y = 0; y < H; y += rows) {
+        var h = Math.min(rows, H - y);
+        ca.width = cb.width = W; ca.height = cb.height = h;
+        var xa = ca.getContext('2d', { willReadFrequently: true }), xb = cb.getContext('2d', { willReadFrequently: true });
+        xa.drawImage(a, 0, y, W, h, 0, 0, W, h);
+        xb.drawImage(b, 0, y, W, h, 0, 0, W, h);
+        var da = new Uint32Array(xa.getImageData(0, 0, W, h).data.buffer);
+        var db = new Uint32Array(xb.getImageData(0, 0, W, h).data.buffer);
+        for (var k = 0; k < da.length; k++) if (da[k] !== db[k]) diff++;
+        out.textContent = 'Karşılaştırılıyor… %' + Math.round(((y + h) / H) * 100);
+        await new Promise(function (r) { setTimeout(r, 0); });
+      }
+      if (diff === 0) {
+        out.className = 'verify good';
+        out.textContent = 'Doğrulandı: ' + nf.format(W * H) + ' pikselin hepsi birebir aynı.';
+      } else {
+        out.className = 'verify bad';
+        out.textContent = nf.format(diff) + ' piksel farklı. Renk profilini sildiysen renkler değişmiş olabilir.';
+      }
+    } catch (e) {
+      out.className = 'verify bad';
+      out.textContent = 'Karşılaştırma yapılamadı: ' + ((e && e.message) || 'tarayıcı bu dosyayı çözemedi');
+    } finally {
+      if (a && a.close) a.close();
+      if (b && b.close) b.close();
+      it.verifyBtn.disabled = false;
+    }
+  }
+
+  // ---- olaylar ----
+  var input = $('#file'), pick = $('#pick');
+  input.addEventListener('change', function () {
+    var files = input.files;
+    if (files && files.length) handleFiles(files).then(function () { input.value = ''; });
+  });
+  ['dragenter', 'dragover'].forEach(function (t) {
+    pick.addEventListener(t, function (e) { e.preventDefault(); pick.classList.add('drag'); });
+  });
+  ['dragleave', 'drop'].forEach(function (t) {
+    pick.addEventListener(t, function (e) { e.preventDefault(); pick.classList.remove('drag'); });
+  });
+  pick.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+  });
+  $('#save-all').addEventListener('click', function () {
+    saveFiles(items.filter(function (i) { return i.out; }).map(function (i) { return i.out; }));
+  });
+  $('#zip').addEventListener('click', function () {
+    var done = items.filter(function (i) { return i.out; });
+    if (!done.length) return;
+    var used = {};
+    var files = done.map(function (i) {
+      var n = i.out.name, k = 0;
+      while (used[n]) { k++; n = i.out.name.replace(/(\.[^.]+)$/, '-' + k + '$1'); }
+      used[n] = 1;
+      return { name: n, parts: i.result.parts };
+    });
+    var blob = new Blob(IzsizCore.makeZip(files), { type: 'application/zip' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'izsiz-foto.zip';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 60000);
+  });
+  $('#clear').addEventListener('click', function () {
+    items.forEach(function (i) { if (i.url) URL.revokeObjectURL(i.url); });
+    items = [];
+    $('#list').textContent = '';
+    summarize();
+  });
+
+  // ---- kurulum (yalnızca PWA sürümü) ----
+  if (IS_PWA) {
+    var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+    var box = $('#install');
+    if (!standalone) {
+      var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (ios) {
+        box.textContent = 'Uygulama gibi kullanmak için Safari\'de Paylaş düğmesine, ardından "Ana Ekrana Ekle"ye dokun.';
+        box.hidden = false;
+      }
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        var deferred = e;
+        box.textContent = '';
+        var t = el('span', '', 'Ana ekrana ekleyip uygulama gibi, çevrimdışı kullanabilirsin. ');
+        var b = el('button', 'btn primary', 'Kur');
+        b.type = 'button';
+        b.style.marginLeft = '4px';
+        b.addEventListener('click', function () { deferred.prompt(); box.hidden = true; });
+        box.appendChild(t);
+        box.appendChild(b);
+        box.hidden = false;
+      });
+    }
+    // Android: galeriden "Paylaş > İzsiz Foto" ile gelen orijinal dosyalar
+    if (/[?&]shared=/.test(location.search) && window.caches) {
+      (async function () {
+        try {
+          var c = await caches.open('izsiz-share');
+          var keys = await c.keys();
+          var files = [];
+          for (var q = 0; q < keys.length; q++) {
+            var res = await c.match(keys[q]);
+            var b = await res.blob();
+            files.push(new File([b], decodeURIComponent(res.headers.get('x-name') || 'foto'), { type: b.type, lastModified: Number(res.headers.get('x-mod')) || Date.now() }));
+            await c.delete(keys[q]);
+          }
+          history.replaceState(null, '', location.pathname);
+          if (files.length) handleFiles(files);
+        } catch (e) {}
+      })();
+    }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js').catch(function () {}); });
+    }
+  } else {
+    $('#preview-note').hidden = true;
+  }
+})();
+</script>
+</body>
+</html>

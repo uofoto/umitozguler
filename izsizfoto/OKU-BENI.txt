@@ -1,0 +1,29 @@
+IZSIZ FOTO - KISISEL KULLANIM
+
+Hicbir dis siteye istek atmaz (yazi tipi, analitik, CDN yok). Fotograflar
+cihazindan cikmaz. Tek dosya: index.html. Kodda sana ait hicbir veri yok.
+
+A) Yayinlamadan kullanmak
+   - Android: index.html'i telefona kopyala, Dosyalar uygulamasindan Chrome ile ac.
+     Calisir (Kaydet/Indir dahil). Ana ekrana kurulum olmaz.
+   - Bilgisayar: index.html'e cift tikla.
+   - Ayni Wi-Fi'da telefondan: bilgisayarda bu klasorde "python3 -m http.server 8080",
+     telefonda http://BILGISAYAR-IP:8080 . HTTPS olmadigi icin kurulum ve
+     paylasim menusu calismaz, Indir calisir.
+
+B) Telefona uygulama gibi kurmak (kurulum icin HTTPS adres gerekir)
+   Klasoru kimseye duyurmadigin, sadece senin bildigin bir adrese yukle
+   (ornegin Netlify Drop, rastgele adli). Sonra:
+   - iPhone: Safari > Paylas > Ana Ekrana Ekle.
+   - Android: Chrome menusu > Uygulamayi yukle. Galeriden "Paylas > Izsiz Foto"
+     ile orijinal dosyayi dogrudan gonderebilirsin.
+   Ilk acilistan sonra internetsiz de calisir.
+
+KAYIPSIZLIK
+   - Gorsel cozulup yeniden sikistirilmaz; sadece ust veri bloklari atlanir.
+   - Her sonuc, "Pikselleri dogrula" ile orijinalle piksel piksel karsilastirilir
+     (varsayilan olarak otomatik).
+   - iPhone'da dosyayi "Dosya Sec" ile al (Fotograf Kitapligi HEIC'i JPEG'e cevirebilir).
+   - Kaydederken "Dosyalara Kaydet" birebir saklar. ZIP sikistirmaz.
+
+Guncelleme: index.html degisirse sw.js icindeki V degerini artir.
