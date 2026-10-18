@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>İzsiz Foto</title>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'none'">
-<meta name="description" content="Fotoğraflardan EXIF, XMP, C2PA ve diğer üst verileri, görüntüyü yeniden sıkıştırmadan siler.">
+<meta name="description" content="JPEG, PNG ve WebP fotoğraflardaki tanınan üst verileri, görüntüyü yeniden kodlamadan temizler.">
 <meta name="theme-color" content="#e8edef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c1318" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
@@ -220,14 +220,14 @@ html{background:var(--bg)}
     </header>
 
     <section class="hero">
-      <h1>Fotoğraftaki gizli verileri sil. Pikselleri olduğu gibi bırak.</h1>
-      <p>EXIF, XMP, C2PA, IPTC ve yorumlar çıkarılır. Görüntü yeniden sıkıştırılmaz, çözünürlük ve kalite değişmez. Her şey cihazında çalışır, fotoğraf hiçbir yere gönderilmez.</p>
+      <h1>Fotoğraftaki gizli verileri sil. Görüntüyü yeniden kodlama.</h1>
+  <p>JPEG, PNG ve WebP içindeki tanınan üst verileri seçimine göre temizler. Görüntü yeniden kodlanmaz. Fotoğraflar cihazında işlenir; çevrimiçiyken uygulama sürümünü denetlemek için kendi yayın adresine istek atabilir.</p>
     </section>
 
     <label class="pick" id="pick" for="file">
       <input id="file" type="file" accept="image/*" multiple>
       <span class="big">Fotoğraf seç</span>
-      <span class="sub">JPEG · PNG · WebP — birden fazla seçebilirsin</span>
+      <span class="sub">JPEG · PNG · WebP · en fazla 100 MiB/dosya</span>
     </label>
 
     <section class="opts" aria-label="Seçenekler">
@@ -251,12 +251,17 @@ html{background:var(--bg)}
         <span><b>Dosya sonu eklerini sil</b><small>JPEG'in arkasına eklenen HDR haritası ve hareketli foto videosu çıkarılır. Ana görüntü değişmez.</small></span>
         <input id="o-trail" type="checkbox" checked>
       </label>
+      <label class="opt" for="o-c2pa">
+        <span><b>C2PA içerik kökeni bilgisini koru</b><small>Açıksa içerik kimliği/köken kaydı tutulur. Kapalıysa temizlenir; imza ve köken doğrulaması etkilenebilir.</small></span>
+        <input id="o-c2pa" type="checkbox">
+      </label>
       <label class="opt" for="o-rename">
         <span><b>Dosya adını rastgele yap</b><small>Dosya adları da kişisel bilgi taşıyabilir (isim, yer, tarih). Açıksa sonuç "foto-a1b2c3.jpg" gibi adlandırılır.</small></span>
         <input id="o-rename" type="checkbox">
       </label>
     </section>
 
+    <p class="note" id="limit-note" hidden aria-live="polite"></p>
     <section class="results" id="results" hidden>
       <div class="summary">
         <p id="summary" aria-live="polite"></p>
@@ -281,13 +286,17 @@ html{background:var(--bg)}
           <dt>Yayın tarihi</dt><dd id="a-date"></dd>
           <dt>Yapımcı</dt><dd id="a-author"></dd>
           <dt>Lisans</dt><dd>Kişisel kullanım</dd>
-          <dt>Gizlilik</dt><dd>Fotoğraflar cihazdan çıkmaz. Analitik, CDN ve dış yazı tipi yok.</dd>
+          <dt>Gizlilik</dt><dd>Fotoğraflar bu uygulama tarafından yüklenmez; çevrimiçiyken sürüm denetimi kendi yayın adresine istek atar ve sunucu erişim günlüğü tutabilir. Analitik, CDN ve dış yazı tipi yok.</dd>
           <dt>Durum</dt><dd id="a-state"></dd>
         </dl>
         <div class="row">
           <button class="btn primary" id="up-check" type="button">Güncellemeleri denetle ve indir</button>
           <button class="btn" id="theme" type="button">Tema: otomatik</button>
         </div>
+        <label class="opt" for="auto-update">
+          <span><b>Açılışta güncellemeyi denetle</b><small>Yalnızca kendi yayın adresindeki sürüm bilgisini ister. Kapalıysa otomatik istek gönderilmez; elle denetleyebilirsin.</small></span>
+          <input id="auto-update" type="checkbox" checked>
+        </label>
         <p class="up" id="up-msg" aria-live="polite"></p>
       </details>
     </section>
@@ -443,7 +452,7 @@ html{background:var(--bg)}
     if (meta.artist) f.push({ k: 'Sanatçı', v: meta.artist });
     if (meta.copyright) f.push({ k: 'Telif', v: meta.copyright });
     if (meta.bodySerial) f.push({ k: 'Seri no', v: meta.bodySerial, warn: true });
-    for (const r of removed) if (/C2PA/.test(r.label)) { f.push({ k: 'İçerik kimliği', v: 'C2PA bildirimi var (yapay zekâ / düzenleme kaydı)' }); break; }
+    for (const r of removed) if (/C2PA/.test(r.label)) { f.push({ k: 'İçerik kökeni', v: 'C2PA/JUMBF içerik kimliği veya köken kaydı bulundu ve temizlendi' }); break; }
     return f;
   }
 
@@ -475,7 +484,7 @@ html{background:var(--bg)}
     const parts = [u8.subarray(0, 2)];
     let insertAt = 1;
     const meta = {};
-    let width = 0, height = 0;
+    let width = 0, height = 0, c2paKept = false;
     let i = 2;
     let sawEOI = false;
     let first = true;
@@ -556,8 +565,9 @@ html{background:var(--bg)}
         keep = starts(u8, p, 'Adobe');
         if (!keep) rem.add('APP14 (diğer)', size);
       } else if (m === 0xeb) {
-        keep = false;
-        rem.add('C2PA / JUMBF', size);
+        keep = !!opts.keepC2PA;
+        if (keep) c2paKept = true;
+        if (!keep) rem.add(starts(u8, p, 'JP') ? 'C2PA / JUMBF' : 'APP11 (diğer)', size);
       } else if (m === 0xed) {
         keep = false;
         rem.add(starts(u8, p, 'Photoshop 3.0') ? 'IPTC / Photoshop' : 'APP13 (diğer)', size);
@@ -609,7 +619,7 @@ html{background:var(--bg)}
       orientationKept = opts.keepOrientation && orientation > 1;
       dateKept = !!(opts.keepDate && (meta.dateOriginal || meta.dateTime));
     }
-    return { mime: 'image/jpeg', ext: '.jpg', width, height, parts, removed: rem.list(), orientation, orientationKept, dateKept, found: foundList(meta, rem.list()) };
+    return { mime: 'image/jpeg', ext: '.jpg', width, height, parts, removed: rem.list(), orientation, orientationKept, dateKept, c2paKept, found: foundList(meta, rem.list()) };
   }
 
   // ---------------- PNG ----------------
@@ -654,7 +664,7 @@ html{background:var(--bg)}
     const parts = [u8.subarray(0, 8)];
     let i = 8;
     const meta = {};
-    let width = 0, height = 0, firstIdat = -1, sawIend = false;
+    let width = 0, height = 0, firstIdat = -1, sawIend = false, c2paKept = false;
 
     while (i + 12 <= n) {
       const len = u32be(u8, i);
@@ -677,7 +687,10 @@ html{background:var(--bg)}
         } else if (type === 'eXIf') {
           mergeInfo(meta, readTiff(u8, i + 8, i + 8 + len));
           rem.add('EXIF', end - i);
-        } else if (type === 'caBX') rem.add('C2PA (caBX)', end - i);
+        } else if (type === 'caBX') {
+          if (opts.keepC2PA) { keep = true; c2paKept = true; }
+          else rem.add('C2PA (caBX)', end - i);
+        }
         else if (type === 'tIME') rem.add('Değiştirilme zamanı (tIME)', end - i);
         else if (type === 'iTXt') {
           const kw = pngKeyword(u8, i + 8, i + 8 + len);
@@ -710,19 +723,21 @@ html{background:var(--bg)}
       orientationKept = opts.keepOrientation && orientation > 1;
       dateKept = !!(opts.keepDate && (meta.dateOriginal || meta.dateTime));
     }
-    return { mime: 'image/png', ext: '.png', width, height, parts, removed: rem.list(), orientation, orientationKept, dateKept, found: foundList(meta, rem.list()) };
+    return { mime: 'image/png', ext: '.png', width, height, parts, removed: rem.list(), orientation, orientationKept, dateKept, c2paKept, found: foundList(meta, rem.list()) };
   }
 
   // ---------------- WebP ----------------
   function stripWebP(u8, opts) {
     const n = u8.length;
     const rem = Removed();
-    const end = Math.min(n, 8 + u32le(u8, 4));
+    const declaredEnd = 8 + u32le(u8, 4);
+    if (declaredEnd < 12 || declaredEnd > n) throw new Error('Bozuk WebP (RIFF boyutu geçersiz veya dosya kesik)');
+    const end = declaredEnd;
     let i = 12;
     const kept = [];
     const meta = {};
     let width = 0, height = 0, hasVP8X = false, imgType = '', vp8lAlpha = false;
-    let iccDropped = false;
+    let iccDropped = false, c2paKept = false;
 
     while (i + 8 <= end) {
       const type = ascii(u8, i, i + 4);
@@ -730,7 +745,7 @@ html{background:var(--bg)}
       const ds = i + 8;
       const de = ds + size;
       const next = de + (size & 1);
-      if (de > n) throw new Error('Bozuk WebP (kesik parça)');
+      if (de > end || next > end) throw new Error('Bozuk WebP (parça RIFF sınırını aşıyor veya kesik)');
       const total = 8 + size + (size & 1);
       let keep = true;
 
@@ -767,8 +782,9 @@ html{background:var(--bg)}
         keep = false;
         rem.add('XMP', total);
       } else if (type === 'C2PA') {
-        keep = false;
-        rem.add('C2PA', total);
+        keep = !!opts.keepC2PA;
+        c2paKept = keep;
+        if (!keep) rem.add('C2PA', total);
       } else if (type !== 'ALPH' && type !== 'ANIM' && type !== 'ANMF') {
         keep = false;
         rem.add('Diğer parça (' + type.trim() + ')', total);
@@ -776,6 +792,7 @@ html{background:var(--bg)}
       if (keep) kept.push({ type, ds, de, size });
       i = next;
     }
+    if (i !== end) throw new Error('Bozuk WebP (kesik parça başlığı)');
     if (!imgType && !kept.some((c) => c.type === 'ANMF')) throw new Error('Bozuk WebP (görüntü verisi yok)');
 
     const orientation = meta.orientation || 1;
@@ -828,21 +845,21 @@ html{background:var(--bg)}
     head.set([0x52, 0x49, 0x46, 0x46]);
     head[4] = total & 255; head[5] = (total >>> 8) & 255; head[6] = (total >>> 16) & 255; head[7] = (total >>> 24) & 255;
     head.set([0x57, 0x45, 0x42, 0x50], 8);
-    if (end < n) {
-      if (opts.dropTrailing) rem.add('Dosya sonu eki', n - end);
-    }
+    const trailing = end < n ? u8.subarray(end, n) : null;
+    if (trailing && opts.dropTrailing) rem.add('Dosya sonu eki', trailing.length);
     return {
       mime: 'image/webp', ext: '.webp', width, height,
-      parts: [head, ...out], removed: rem.list(), orientation,
+      parts: trailing && !opts.dropTrailing ? [head, ...out, trailing] : [head, ...out], removed: rem.list(), orientation,
       orientationKept: wantExif && opts.keepOrientation && orientation > 1,
       dateKept: wantExif && !!(opts.keepDate && (meta.dateOriginal || meta.dateTime)),
+      c2paKept,
       found: foundList(meta, rem.list()),
     };
   }
 
   // ---------------- Giriş ----------------
   function strip(u8, o) {
-    const opts = Object.assign({ keepOrientation: true, keepICC: true, dropTrailing: true, keepDate: false }, o || {});
+    const opts = Object.assign({ keepOrientation: true, keepICC: true, dropTrailing: true, keepDate: false, keepC2PA: false }, o || {});
     let r;
     if (u8.length > 3 && u8[0] === 0xff && u8[1] === 0xd8 && u8[2] === 0xff) r = stripJPEG(u8, opts);
     else if (u8.length > 8 && starts(u8, 0, '\x89PNG\r\n\x1a\n')) r = stripPNG(u8, opts);
@@ -914,7 +931,7 @@ html{background:var(--bg)}
   var seq = 0;
 
   // ---- ayarlar ----
-  var toggles = { 'o-orient': true, 'o-icc': true, 'o-trail': true, 'o-date': false, 'o-auto': true, 'o-rename': false };
+  var toggles = { 'o-orient': true, 'o-icc': true, 'o-trail': true, 'o-date': false, 'o-auto': true, 'o-rename': false, 'o-c2pa': false };
   try {
     var saved = JSON.parse(localStorage.getItem('izsiz-opts') || '{}');
     Object.keys(toggles).forEach(function (k) { if (typeof saved[k] === 'boolean') $('#' + k).checked = saved[k]; });
@@ -929,7 +946,7 @@ html{background:var(--bg)}
     });
   });
   function opts() {
-    return { keepOrientation: $('#o-orient').checked, keepICC: $('#o-icc').checked, dropTrailing: $('#o-trail').checked, keepDate: $('#o-date').checked };
+    return { keepOrientation: $('#o-orient').checked, keepICC: $('#o-icc').checked, dropTrailing: $('#o-trail').checked, keepDate: $('#o-date').checked, keepC2PA: $('#o-c2pa').checked };
   }
 
   // ---- biçimlendirme ----
@@ -978,7 +995,7 @@ html{background:var(--bg)}
     var nums = el('p', 'nums');
     var saved = r.inSize - r.outSize;
     nums.appendChild(el('span', '', fmtSize(r.inSize) + ' → ' + fmtSize(r.outSize) + (saved > 0 ? '  (−' + fmtSize(saved) + ')' : '')));
-    nums.appendChild(el('span', 'keep', (r.width ? nf.format(r.width) + ' × ' + nf.format(r.height) + ' px · ' : '') + 'piksel verisi aynı'));
+    nums.appendChild(el('span', 'keep', (r.width ? nf.format(r.width) + ' × ' + nf.format(r.height) + ' px · ' : '') + 'görüntü yeniden kodlanmadı'));
     it.metaEl.appendChild(nums);
 
     var chips = el('ul', 'chips');
@@ -988,6 +1005,7 @@ html{background:var(--bg)}
     });
     if (r.orientationKept) chips.appendChild(el('li', 'chip none', 'Yön değeri korundu: ' + r.orientation));
     if (r.dateKept) chips.appendChild(el('li', 'chip none', 'Çekim tarihi korundu'));
+    if (r.c2paKept) chips.appendChild(el('li', 'chip none', 'C2PA köken bilgisi korundu'));
     it.li.appendChild(chips);
 
     if (r.found && r.found.length) {
@@ -1037,12 +1055,14 @@ html{background:var(--bg)}
   }
 
   // ---- işleme ----
+  var MAX_FILE_BYTES = 100 * 1024 * 1024;
   async function processOne(file) {
     var it = { id: ++seq, file: file };
     items.push(it);
     $('#list').prepend(makeCard(it));
     summarize();
     try {
+      if (file.size > MAX_FILE_BYTES) throw new Error('Dosya 100 MiB sınırını aşıyor. Daha küçük bir dosya seç.');
       var buf = new Uint8Array(await file.arrayBuffer());
       var r = IzsizCore.strip(buf, opts());
       var blob = new Blob(r.parts, { type: r.mime });
@@ -1101,11 +1121,12 @@ html{background:var(--bg)}
     it.verifyBtn.disabled = true;
     var a, b;
     try {
+      var sourcePixels = it.result && it.result.width * it.result.height;
+      if (sourcePixels > 32e6) { out.textContent = 'Görüntü çok büyük (' + Math.round(sourcePixels / 1e6) + ' MP); bellek güvenliği için karşılaştırma atlandı.'; return; }
       out.textContent = 'Çözülüyor…';
       a = await decode(it.file);
       b = await decode(it.out);
       var W = a.width, H = a.height;
-      if (W * H > 32e6) { out.textContent = 'Görüntü çok büyük (' + Math.round(W * H / 1e6) + ' MP); karşılaştırma atlandı.'; return; }
       if (W !== b.width || H !== b.height) {
         out.className = 'verify bad';
         out.textContent = 'Boyut farklı: ' + W + '×' + H + ' ve ' + b.width + '×' + b.height + '. Yön bilgisi çıkarıldığı için görüntü dönmüş olabilir.';
@@ -1184,11 +1205,13 @@ html{background:var(--bg)}
     items.forEach(function (i) { if (i.url) URL.revokeObjectURL(i.url); });
     items = [];
     $('#list').textContent = '';
+    $('#limit-note').textContent = '';
+    $('#limit-note').hidden = true;
     summarize();
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.2.0', date: '18.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.3.0', date: '18.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
@@ -1201,6 +1224,11 @@ html{background:var(--bg)}
     return false;
   }
   var canUpdate = IS_PWA && 'serviceWorker' in navigator && location.protocol !== 'file:';
+  var autoUpdateCheck = $('#auto-update');
+  try { autoUpdateCheck.checked = localStorage.getItem('izsiz-auto-update') !== 'false'; } catch (e) {}
+  autoUpdateCheck.addEventListener('change', function () {
+    try { localStorage.setItem('izsiz-auto-update', String(autoUpdateCheck.checked)); } catch (e) {}
+  });
   $('#a-state').textContent = canUpdate ? (navigator.serviceWorker.controller ? 'Çevrimdışı hazır' : 'İlk kurulum tamamlanıyor') : 'Yerel dosya (güncelleme elle yapılır)';
   async function checkUpdate(silent) {
     if (!canUpdate) { if (!silent) say('Bu kopya yerel dosya olarak çalışıyor. Güncellemek için yeni index.html dosyasını eskisinin yerine koy.'); return; }
@@ -1223,7 +1251,7 @@ html{background:var(--bg)}
   upBtn.addEventListener('click', function () { checkUpdate(false); });
   if (canUpdate) {
     navigator.serviceWorker.addEventListener('controllerchange', function () { if (manualUpdate) { manualUpdate = false; location.reload(); } });
-    window.addEventListener('load', function () { setTimeout(function () { checkUpdate(true); }, 2500); });
+    window.addEventListener('load', function () { setTimeout(function () { if (autoUpdateCheck.checked) checkUpdate(true); }, 2500); });
   }
   var themes = ['auto', 'light', 'dark'], tn = { auto: 'otomatik', light: 'açık', dark: 'koyu' }, ti = 0;
   try { ti = Math.max(0, themes.indexOf(localStorage.getItem('izsiz-theme'))); } catch (e) {}
@@ -1266,21 +1294,35 @@ html{background:var(--bg)}
       });
     }
     // Android: galeriden "Paylaş > İzsiz Foto" ile gelen orijinal dosyalar
-    if (/[?&]shared=/.test(location.search) && window.caches) {
+    if (window.caches) {
+      caches.open('izsiz-share').then(async function (c) {
+        var now = Date.now(), keys = await c.keys();
+        for (var k = 0; k < keys.length; k++) {
+          var old = await c.match(keys[k]);
+          var created = Number(old && old.headers.get('x-created')) || 0;
+          if (!created || now - created > 60 * 60 * 1000) await c.delete(keys[k]);
+        }
+      }).catch(function () {});
+    }
+    var sharedId = new URLSearchParams(location.search).get('shared');
+    if (sharedId && window.caches) {
       (async function () {
         try {
           var c = await caches.open('izsiz-share');
           var keys = await c.keys();
           var files = [];
+          var prefix = new URL('./shared/' + encodeURIComponent(sharedId) + '/', location.href).pathname;
           for (var q = 0; q < keys.length; q++) {
+            if (new URL(keys[q].url).pathname.indexOf(prefix) !== 0) continue;
             var res = await c.match(keys[q]);
+            if (!res) continue;
             var b = await res.blob();
             files.push(new File([b], decodeURIComponent(res.headers.get('x-name') || 'foto'), { type: b.type, lastModified: Number(res.headers.get('x-mod')) || Date.now() }));
             await c.delete(keys[q]);
           }
           history.replaceState(null, '', location.pathname);
           if (files.length) handleFiles(files);
-        } catch (e) {}
+        } catch (e) { var n = $('#limit-note'); if (n) { n.textContent = 'Paylaşılan dosyalar alınamadı. Yeniden paylaşmayı dene; geçici dosyalar bir süre sonra temizlenir.'; n.hidden = false; } }
       })();
     }
     if ('serviceWorker' in navigator) {

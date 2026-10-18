@@ -1,7 +1,7 @@
 {
   "name": "İzsiz Foto",
   "short_name": "İzsiz",
-  "description": "Fotoğraflardan EXIF, XMP, C2PA ve diğer üst verileri, görüntüyü yeniden sıkıştırmadan siler.",
+  "description": "JPEG, PNG ve WebP fotoğraflardaki tanınan üst verileri, görüntüyü yeniden kodlamadan temizler.",
   "lang": "tr",
   "start_url": "./",
   "scope": "./",

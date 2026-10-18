@@ -1,6 +1,6 @@
 // İzsiz Foto servis çalışanı: uygulama kabuğunu önbelleğe alır, çevrimdışı çalışır.
 // Yeni sürümde V, index.html içindeki APP.version ve version.json birlikte güncellenir.
-const V = 'izsiz-v2.2.0';
+const V = 'izsiz-v2.3.0';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
@@ -14,19 +14,26 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const r = e.request;
   const u = new URL(r.url);
-  // Android paylaşım hedefi: dosyaları geçici olarak sakla, uygulamaya yönlendir
+  // Android paylaşım hedefi: dosyaları kısa süreli sakla, bu paylaşıma özgü kimlikle yönlendir.
   if (r.method === 'POST' && u.pathname.endsWith('/share-target')) {
     e.respondWith(
       (async () => {
         const fd = await r.formData();
         const files = fd.getAll('photos').filter((f) => f && f.name !== undefined);
         const c = await caches.open('izsiz-share');
+        const now = Date.now();
+        for (const key of await c.keys()) {
+          const old = await c.match(key);
+          const created = Number(old && old.headers.get('x-created')) || 0;
+          if (!created || now - created > 60 * 60 * 1000) await c.delete(key);
+        }
+        const id = self.crypto && crypto.randomUUID ? crypto.randomUUID() : now.toString(36) + '-' + Math.random().toString(36).slice(2);
         await Promise.all(
           files.map((f, i) =>
-            c.put('./shared/' + Date.now() + '-' + i, new Response(f, { headers: { 'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name), 'x-mod': String(f.lastModified || '') } }))
+            c.put('./shared/' + id + '/' + i, new Response(f, { headers: { 'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name), 'x-mod': String(f.lastModified || ''), 'x-created': String(now) } }))
           )
         );
-        return Response.redirect(new URL('./?shared=' + files.length, self.registration.scope).href, 303);
+        return Response.redirect(new URL('./?shared=' + encodeURIComponent(id), self.registration.scope).href, 303);
       })()
     );
     return;
