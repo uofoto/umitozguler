@@ -191,6 +191,16 @@ button { cursor: pointer; }
 .found dt { color: var(--ink-2); }
 .found dd { margin: 0; overflow-wrap: anywhere; }
 .found dd.warn { color: var(--cut); font-weight: 500; }
+.report { border-top: 1px solid var(--line); padding-top: 10px; }
+.report summary { cursor: pointer; font: 700 0.88rem/1.4 var(--f-display); min-height: 28px; }
+.report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.report-box { min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); }
+.report-box h4 { margin: 0 0 7px; font: 700 0.78rem/1.2 var(--f-display); }
+.report-box ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font: 400 0.72rem/1.35 var(--f-mono); color: var(--ink-2); }
+.report-box li { overflow-wrap: anywhere; }
+.report-box .good { color: var(--ok); }
+.report-box .warn { color: var(--cut); }
+.report-box .neutral { color: var(--ink-2); }
 .note { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--surface); border: 1px dashed var(--line); font-size: 0.88rem; color: var(--ink-2); }
 .note b { color: var(--ink); }
 .privacy-note { border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line)); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
@@ -211,6 +221,7 @@ button { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+@media (max-width: 430px) { .report-grid { grid-template-columns: 1fr; } }
 
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{background:var(--bg)}
@@ -1021,6 +1032,46 @@ html{background:var(--bg)}
     return li;
   }
 
+  function reportRow(list, text, cls) { list.appendChild(el('li', cls || 'neutral', text)); }
+  function addReport(it, r) {
+    var report = el('details', 'report');
+    var title = r.video ? 'Gizlilik ve video uyumluluk raporu' : 'Gizlilik ve görüntü uyumluluk raporu';
+    report.appendChild(el('summary', '', title));
+    var grid = el('div', 'report-grid');
+    var privacy = el('div', 'report-box'), privacyList = el('ul');
+    privacy.appendChild(el('h4', '', 'Gizlilik')); 
+    if (r.video) {
+      reportRow(privacyList, r.metadataBytes ? '✓ ' + fmtSize(r.metadataBytes) + ' metadata alanı temizlendi' : '○ Tanınan metadata alanı bulunamadı', r.metadataBytes ? 'good' : 'neutral');
+      reportRow(privacyList, '✓ Video ve ses akışları değiştirilmedi', 'good');
+    } else if (r.converted) {
+      reportRow(privacyList, '✓ Kaynak metadata çıktıya taşınmadı', 'good');
+      reportRow(privacyList, '✓ Yeni dosya cihazda oluşturuldu', 'good');
+    } else {
+      reportRow(privacyList, r.removed.length ? '✓ ' + r.removed.length + ' metadata alanı temizlendi' : '○ Temizlenecek metadata bulunamadı', r.removed.length ? 'good' : 'neutral');
+      if (r.orientationKept) reportRow(privacyList, '! Yön bilgisi korundu', 'warn');
+      if (r.dateKept) reportRow(privacyList, '! Çekim tarihi korundu', 'warn');
+      if (r.c2paKept) reportRow(privacyList, '! C2PA köken bilgisi korundu', 'warn');
+    }
+    reportRow(privacyList, '✓ Orijinal dosya silinmedi', 'good');
+    privacy.appendChild(privacyList);
+    var compat = el('div', 'report-box'), compatList = el('ul');
+    compat.appendChild(el('h4', '', 'Uyumluluk')); 
+    if (r.video) {
+      reportRow(compatList, '✓ Kapsayıcı: ' + r.videoFormat, 'good');
+      reportRow(compatList, '✓ Yeniden kodlama yapılmadı', 'good');
+      reportRow(compatList, '✓ Çıktı: ' + r.mime, 'good');
+      reportRow(compatList, 'Boyut: ' + fmtSize(r.inSize) + ' → ' + fmtSize(r.outSize), 'neutral');
+    } else {
+      reportRow(compatList, r.converted ? 'Çıktı: ' + r.format.toUpperCase() : 'Görüntü akışı yeniden kodlanmadı', 'good');
+      reportRow(compatList, 'Boyut: ' + fmtSize(r.inSize) + ' → ' + fmtSize(r.outSize), 'neutral');
+      it.reportVerify = el('li', 'neutral', 'Doğrulama: bekleniyor');
+      compatList.appendChild(it.reportVerify);
+    }
+    compat.appendChild(compatList);
+    grid.appendChild(privacy); grid.appendChild(compat); report.appendChild(grid);
+    it.report = report; it.li.appendChild(report);
+  }
+
   function fillCard(it, r) {
     it.stateEl.remove();
     var media = r.video ? el('video') : el('img');
@@ -1061,6 +1112,7 @@ html{background:var(--bg)}
       det.appendChild(dl);
       it.li.appendChild(det);
     }
+    addReport(it, r);
 
     var row = el('div', 'row');
     if (IS_PWA) {
@@ -1202,12 +1254,14 @@ html{background:var(--bg)}
     var out = it.verifyEl;
     out.className = 'verify';
     it.verifyBtn.disabled = true;
+    if (it.reportVerify) { it.reportVerify.className = 'neutral'; it.reportVerify.textContent = 'Doğrulama: çalışıyor…'; }
     var a, b, sourceData;
     try {
       var sourcePixels = it.result && it.result.width * it.result.height;
-      if (sourcePixels > 32e6) { out.textContent = 'Görüntü çok büyük (' + Math.round(sourcePixels / 1e6) + ' MP); bellek güvenliği için karşılaştırma atlandı.'; return; }
+      if (sourcePixels > 32e6) { out.textContent = 'Görüntü çok büyük (' + Math.round(sourcePixels / 1e6) + ' MP); bellek güvenliği için karşılaştırma atlandı.'; if (it.reportVerify) { it.reportVerify.textContent = 'Doğrulama: 32 MP sınırı nedeniyle atlandı'; } return; }
       if (it.result && it.result.converted && !it.result.lossless) {
         out.textContent = 'JPEG kodlaması kayıplıdır; birebir piksel doğrulaması yapılmadı.';
+        if (it.reportVerify) { it.reportVerify.textContent = 'Doğrulama: JPEG kayıplı olduğu için yapılmadı'; it.reportVerify.className = 'warn'; }
         return;
       }
       out.textContent = 'Çözülüyor…';
@@ -1220,6 +1274,7 @@ html{background:var(--bg)}
       if (W !== b.width || H !== b.height) {
         out.className = 'verify bad';
         out.textContent = 'Boyut farklı: ' + W + '×' + H + ' ve ' + b.width + '×' + b.height + '. Yön bilgisi çıkarıldığı için görüntü dönmüş olabilir.';
+        if (it.reportVerify) { it.reportVerify.textContent = 'Doğrulama: boyut uyuşmazlığı'; it.reportVerify.className = 'warn'; }
         return;
       }
       var rows = Math.max(1, Math.floor(2e6 / W));
@@ -1241,13 +1296,16 @@ html{background:var(--bg)}
       if (diff === 0) {
         out.className = 'verify good';
         out.textContent = 'Doğrulandı: ' + nf.format(W * H) + ' pikselin hepsi birebir aynı.';
+        if (it.reportVerify) { it.reportVerify.textContent = '✓ Pikseller birebir aynı'; it.reportVerify.className = 'good'; }
       } else {
         out.className = 'verify bad';
         out.textContent = nf.format(diff) + ' piksel farklı. Renk profilini sildiysen renkler değişmiş olabilir.';
+        if (it.reportVerify) { it.reportVerify.textContent = 'Doğrulama: ' + nf.format(diff) + ' piksel farklı'; it.reportVerify.className = 'warn'; }
       }
     } catch (e) {
       out.className = 'verify bad';
       out.textContent = 'Karşılaştırma yapılamadı: ' + ((e && e.message) || 'tarayıcı bu dosyayı çözemedi');
+      if (it.reportVerify) { it.reportVerify.textContent = 'Doğrulama: gerçekleştirilemedi'; it.reportVerify.className = 'warn'; }
     } finally {
       if (a && a.close) a.close();
       if (b && b.close) b.close();
@@ -1310,7 +1368,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.6.1', date: '19.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.6.2', date: '19.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
