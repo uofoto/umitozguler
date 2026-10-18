@@ -4,6 +4,7 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const core = html.match(/<script>(\/\* İzsiz çekirdeği[\s\S]*?)<\/script>/)[1];
 const m = { exports: {} }; new Function('module', 'self', core)(m, undefined);
 const C = m.exports;
+const V = require('../video-codec.js');
 const cat = (parts) => Buffer.concat(parts.map((p) => Buffer.from(p)));
 const seg = (mk, body) => Buffer.concat([Buffer.from([0xff, mk, (body.length + 2) >> 8, (body.length + 2) & 255]), Buffer.from(body)]);
 // --- JPEG: SOI, APP1 EXIF(GPS var), COM, APP13, DQT, SOF0, SOS+veri, EOI, dosya sonu eki
@@ -65,6 +66,33 @@ assert(!C.isHeif(new Uint8Array([0, 1, 2, 3, 4, 5])), 'Rastgele veri HEIF sayıl
 const zip = cat(C.makeZip([{ name: 'sample.png', parts: [Buffer.from([1, 2, 3, 4])] }]));
 assert.strictEqual(zip.readUInt32LE(0), 0x04034b50, 'ZIP yerel dosya başlığı eksik');
 assert.strictEqual(zip.subarray(30 + 'sample.png'.length, 30 + 'sample.png'.length + 4).toString('hex'), '01020304', 'ZIP dosya verisi değişti');
+// --- MP4/MOV: metadata atomları boşaltılmalı, medya akışı byte-byte kalmalı
+const box = (type, body) => { const b = Buffer.alloc(8 + body.length); b.writeUInt32BE(b.length, 0); b.write(type, 4, 4, 'ascii'); body.copy(b, 8); return b; };
+const ftypMp4 = Buffer.alloc(20); ftypMp4.writeUInt32BE(20, 0); ftypMp4.write('ftypisom\0\0\0\0mp41', 4, 'ascii');
+const mediaBytes = Buffer.from('VIDEO_AND_AUDIO_SAMPLE');
+const fakeMp4 = Buffer.concat([ftypMp4, box('moov', Buffer.concat([box('trak', Buffer.from('TRACK')), box('udta', Buffer.from('AI_GENERATOR=secret-xmp')), box('meta', Buffer.from('C2PA credential'))])), box('mdat', mediaBytes)]);
+assert(V.isMp4(new Uint8Array(fakeMp4)), 'MP4 tanınmalı');
+const vr = V.strip(new Uint8Array(fakeMp4));
+const vout = cat(vr.parts);
+assert.strictEqual(vout.length, fakeMp4.length, 'Video boyutu değişmemeli');
+assert(vout.includes(mediaBytes), 'MP4 medya akışı değişmemeli');
+assert(!vout.includes('AI_GENERATOR') && !vout.includes('C2PA credential'), 'MP4 metadata kalmamalı');
+assert(vr.metadataBytes > 0 && vr.video && vr.mime === 'video/mp4', 'MP4 temizleme sonucu hatalı');
+// --- WebM: Segment içindeki Tags alanı boşaltılmalı, Cluster akışı kalmalı
+const ebmlSize = (n) => Buffer.from([0x80 + n]);
+const ebml = (id, body) => Buffer.concat([Buffer.from(id), ebmlSize(body.length), body]);
+const webm = Buffer.concat([ebml([0x1a, 0x45, 0xdf, 0xa3], ebml([0x42, 0x82], Buffer.from('webm'))), ebml([0x18, 0x53, 0x80, 0x67], Buffer.concat([ebml([0x12, 0x54, 0xc3, 0x67], Buffer.from('AI metadata secret')), ebml([0x1f, 0x43, 0xb6, 0x75], Buffer.from('CLUSTER_MEDIA'))]))]);
+assert(V.isWebm(new Uint8Array(webm)), 'WebM tanınmalı');
+const wr = V.strip(new Uint8Array(webm)), wout = cat(wr.parts);
+assert(wr.metadataBytes > 0 && wout.includes('CLUSTER_MEDIA') && !wout.includes('AI metadata secret'), 'WebM metadata temizleme hatası');
+// --- AVI: LIST/INFO metadata'sı JUNK alanına çevrilmeli, movi akışı kalmalı
+const aviChunk = (type, body) => { const b = Buffer.alloc(8 + body.length + (body.length & 1)); b.write(type, 0, 4, 'ascii'); b.writeUInt32LE(body.length, 4); body.copy(b, 8); return b; };
+const aviInfo = aviChunk('LIST', Buffer.concat([Buffer.from('INFO'), aviChunk('INAM', Buffer.from('AI video secret'))]));
+const aviMovi = aviChunk('LIST', Buffer.concat([Buffer.from('movi'), Buffer.from('AVI_MEDIA') ]));
+const avi = Buffer.concat([Buffer.from('RIFF'), Buffer.alloc(4), Buffer.from('AVI '), aviInfo, aviMovi]); avi.writeUInt32LE(avi.length - 8, 4);
+assert(V.isAvi(new Uint8Array(avi)), 'AVI tanınmalı');
+const ar = V.strip(new Uint8Array(avi)), aout = cat(ar.parts);
+assert(ar.metadataBytes > 0 && aout.includes('AVI_MEDIA') && !aout.includes('AI video secret'), 'AVI metadata temizleme hatası');
 // --- Bozuk girişler hata vermeli
 assert.throws(() => C.strip(new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])), /Desteklenmeyen/);
 assert.throws(() => C.strip(new Uint8Array([0xff, 0xd8, 0xff, 0xe1, 0xff, 0xff, 0, 0])), /Bozuk|kesik/);
