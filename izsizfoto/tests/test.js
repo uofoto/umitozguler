@@ -77,6 +77,8 @@ const vout = cat(vr.parts);
 assert.strictEqual(vout.length, fakeMp4.length, 'Video boyutu değişmemeli');
 assert(vout.includes(mediaBytes), 'MP4 medya akışı değişmemeli');
 assert(!vout.includes('AI_GENERATOR') && !vout.includes('C2PA credential'), 'MP4 metadata kalmamalı');
+const freePos = vout.indexOf('free');
+assert(freePos >= 4 && vout.readUInt32BE(freePos - 4) > 0, 'MP4 free atom boyutu korunmalı');
 assert(vr.metadataBytes > 0 && vr.video && vr.mime === 'video/mp4', 'MP4 temizleme sonucu hatalı');
 // --- WebM: Segment içindeki Tags alanı boşaltılmalı, Cluster akışı kalmalı
 const ebmlSize = (n) => Buffer.from([0x80 + n]);
