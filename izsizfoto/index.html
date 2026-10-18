@@ -193,6 +193,9 @@ button { cursor: pointer; }
 .found dd.warn { color: var(--cut); font-weight: 500; }
 .note { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--surface); border: 1px dashed var(--line); font-size: 0.88rem; color: var(--ink-2); }
 .note b { color: var(--ink); }
+.privacy-note { border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line)); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.privacy-note strong { color: var(--accent); }
+.save-note { margin-top: 10px; }
 .foot { display: grid; gap: 10px; color: var(--ink-2); font-size: 0.85rem; }
 .foot p { margin: 0; text-wrap: pretty; }
 .foot code { font-family: var(--f-mono); font-size: 0.8rem; }
@@ -275,11 +278,13 @@ html{background:var(--bg)}
     <section class="results" id="results" hidden>
       <div class="summary">
         <p id="summary" aria-live="polite"></p>
+        <p class="note privacy-note" id="privacy-note"><strong>Fotoğraf silinmedi.</strong> Yalnızca fotoğrafın içine gömülü bilgiler temizlendi. Temizlenmiş kopyayı cihazına kaydetmek için aşağıdaki düğmeyi kullan.</p>
         <div class="row">
-          <button class="btn primary" id="save-all" type="button">Hepsini kaydet</button>
+          <button class="btn primary" id="save-all" type="button">Temiz kopyaları kaydet</button>
           <button class="btn" id="zip" type="button">ZIP indir</button>
           <button class="btn" id="clear" type="button">Listeyi temizle</button>
         </div>
+        <p class="note save-note" id="save-note" hidden aria-live="polite"></p>
       </div>
       <ol class="list" id="list"></ol>
     </section>
@@ -1055,7 +1060,7 @@ html{background:var(--bg)}
 
     var row = el('div', 'row');
     if (IS_PWA) {
-      var s = el('button', 'btn primary', 'Kaydet');
+      var s = el('button', 'btn primary', 'Temiz kopyayı kaydet');
       s.type = 'button';
       s.addEventListener('click', function () { saveFiles([it.out], it); });
       var d = el('button', 'btn', 'İndir');
@@ -1142,9 +1147,15 @@ html{background:var(--bg)}
     a.remove();
   }
   async function saveFiles(files, single) {
+    var saveNote = $('#save-note');
+    function savedMessage(count, mode) {
+      saveNote.hidden = false;
+      saveNote.textContent = (count === 1 ? 'Temizlenmiş kopya' : count + ' temizlenmiş kopya') + ' ' + mode + '. Orijinal fotoğraf cihazından silinmedi.';
+    }
     try {
       if (navigator.canShare && navigator.canShare({ files: files })) {
         await navigator.share({ files: files });
+        savedMessage(files.length, 'paylaşım ekranına gönderildi');
         return;
       }
     } catch (e) {
@@ -1154,6 +1165,7 @@ html{background:var(--bg)}
       var it = single || items.filter(function (x) { return x.out === f; })[0];
       setTimeout(function () { download(it); }, i * 300);
     });
+    savedMessage(files.length, 'indirme için hazırlandı');
   }
 
   // ---- piksel doğrulama ----
@@ -1289,7 +1301,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.4.0', date: '18.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.4.1', date: '18.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
