@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>İzsiz Foto</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'none'">
-<meta name="description" content="JPEG, PNG ve WebP fotoğraflardaki tanınan üst verileri, görüntüyü yeniden kodlamadan temizler.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'none'">
+<meta name="description" content="Fotoğraflardaki üst verileri temizle; HEIC ve HEIF fotoğrafları PNG, JPEG veya WebP'ye dönüştür.">
 <meta name="theme-color" content="#e8edef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c1318" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
@@ -146,6 +146,7 @@ button { cursor: pointer; }
 .opt input::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); transition: transform 0.15s; }
 .opt input:checked { background: var(--accent); }
 .opt input:checked::after { transform: translateX(18px); background: var(--on-accent); }
+.opt select { min-height: 44px; max-width: 180px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
 
 /* Sonuçlar */
 .results { display: grid; gap: 14px; }
@@ -171,6 +172,7 @@ button { cursor: pointer; }
 .name { margin: 0; font-weight: 600; overflow-wrap: anywhere; line-height: 1.3; }
 .nums { margin: 4px 0 0; font: 400 0.78rem/1.5 var(--f-mono); color: var(--ink-2); display: grid; gap: 1px; }
 .nums .keep { color: var(--ok); }
+.nums .lossy { color: var(--cut); }
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font: 500 0.74rem/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--cut-bg); color: var(--cut); }
 .chip.none { background: var(--bg); color: var(--ink-2); }
@@ -220,31 +222,39 @@ html{background:var(--bg)}
     </header>
 
     <section class="hero">
-      <h1>Fotoğraftaki gizli verileri sil. Görüntüyü yeniden kodlama.</h1>
-  <p>JPEG, PNG ve WebP içindeki tanınan üst verileri seçimine göre temizler. Görüntü yeniden kodlanmaz. Fotoğraflar cihazında işlenir; çevrimiçiyken uygulama sürümünü denetlemek için kendi yayın adresine istek atabilir.</p>
+      <h1>Fotoğraftaki gizli verileri sil. HEIC'i istediğin biçime çevir.</h1>
+      <p>JPEG, PNG ve WebP içindeki tanınan üst verileri görüntüyü yeniden kodlamadan temizler. HEIC/HEIF fotoğrafları PNG, JPEG veya WebP'ye cihazında dönüştürür. Fotoğraflar yüklenmez; uygulama çevrimiçiyken yalnızca kendi yayın adresinden sürüm bilgisini denetleyebilir.</p>
     </section>
 
     <label class="pick" id="pick" for="file">
-      <input id="file" type="file" accept="image/*" multiple>
+      <input id="file" type="file" accept="image/*,.heic,.heif" multiple>
       <span class="big">Fotoğraf seç</span>
-      <span class="sub">JPEG · PNG · WebP · en fazla 100 MiB/dosya</span>
+      <span class="sub">HEIC · HEIF · JPEG · PNG · WebP · en fazla 100 MiB/dosya</span>
     </label>
 
     <section class="opts" aria-label="Seçenekler">
+      <label class="opt" for="heic-format">
+        <span><b>HEIC/HEIF çıktı biçimi</b><small>PNG ve WebP, 8 bit çözülen pikselleri kayıpsız saklar. JPEG her zaman kayıplıdır; en yüksek kaliteyle kodlanır. Dönüşümde üstveriler taşınmaz.</small></span>
+        <select id="heic-format">
+          <option value="png">PNG · kayıpsız</option>
+          <option value="webp">WebP · kayıpsız</option>
+          <option value="jpg">JPEG · yüksek kalite</option>
+        </select>
+      </label>
       <label class="opt" for="o-orient">
-        <span><b>Yönü koru</b><small>Dik çekilmiş fotoğraf yan dönmesin. Dosyada yalnızca tek bir yön değeri kalır, başka hiçbir EXIF alanı kalmaz.</small></span>
+        <span><b>Yönü koru</b><small>Dik çekilmiş fotoğraf yan dönmesin. JPEG/PNG/WebP'de yalnızca yön alanı kalır. HEIC/HEIF'te yön görüntüye uygulanır; bu kutudan bağımsızdır ve yön üstverisi taşınmaz.</small></span>
         <input id="o-orient" type="checkbox" checked>
       </label>
       <label class="opt" for="o-icc">
-        <span><b>Renk profilini koru (ICC)</b><small>Renklerin aynı görünmesi için önerilir. Kapatırsan profil de silinir.</small></span>
+        <span><b>Renk profilini koru (ICC)</b><small>Desteklenen JPEG/PNG/WebP dosyalarında profil korunur. HEIC/HEIF dönüşümünde profil üstverisi taşınmaz; görüntü 8 bit RGB'ye çözülür.</small></span>
         <input id="o-icc" type="checkbox" checked>
       </label>
       <label class="opt" for="o-date">
-        <span><b>Çekim tarihini koru</b><small>Galeriye kaydedince fotoğraf doğru güne düşsün. Dosyada yalnızca tarih kalır, konum ve cihaz bilgisi yine silinir.</small></span>
+        <span><b>Çekim tarihini koru</b><small>JPEG/PNG/WebP'de dosyada yalnızca tarih kalır. HEIC/HEIF dönüşümünde çekim tarihi dâhil üstveriler taşınmaz.</small></span>
         <input id="o-date" type="checkbox">
       </label>
       <label class="opt" for="o-auto">
-        <span><b>Her dosyayı otomatik doğrula</b><small>Temizledikten sonra orijinal ile sonucun her pikselini karşılaştırır. Büyük fotoğrafta birkaç saniye sürer.</small></span>
+        <span><b>Her dosyayı otomatik doğrula</b><small>Temizlenen veya PNG/WebP'ye çevrilen fotoğrafın piksellerini karşılaştırır. Kayıplı JPEG çıktısı birebir doğrulanamaz.</small></span>
         <input id="o-auto" type="checkbox" checked>
       </label>
       <label class="opt" for="o-trail">
@@ -252,7 +262,7 @@ html{background:var(--bg)}
         <input id="o-trail" type="checkbox" checked>
       </label>
       <label class="opt" for="o-c2pa">
-        <span><b>C2PA içerik kökeni bilgisini koru</b><small>Açıksa içerik kimliği/köken kaydı tutulur. Kapalıysa temizlenir; imza ve köken doğrulaması etkilenebilir.</small></span>
+        <span><b>C2PA içerik kökeni bilgisini koru</b><small>JPEG/PNG/WebP'de açıksa içerik kimliği/köken kaydı tutulur. Kapalıysa temizlenir; imza ve köken doğrulaması etkilenebilir. HEIC/HEIF dönüşümünde bu bilgi taşınmaz.</small></span>
         <input id="o-c2pa" type="checkbox">
       </label>
       <label class="opt" for="o-rename">
@@ -304,7 +314,7 @@ html{background:var(--bg)}
     <footer class="foot">
       <p><b>Kayıpsız yükleme (iPhone):</b> "Fotoğraf Kitaplığı" HEIC dosyalarını JPEG'e çevirebilir ve konumu kendisi silebilir. Dosyayı olduğu gibi almak için "Dosya Seç"i kullan. Android'de galeriden Paylaş ile doğrudan bu uygulamaya gönderebilirsin.</p>
       <p><b>Kayıpsız kaydetme:</b> Paylaşım menüsünde "Dosyalara Kaydet" dosyayı birebir saklar. "Görseli Kaydet" Fotoğraflar'a ekler. ZIP sıkıştırmaz, dosyalar bayt bayt aynı kalır.</p>
-      <p>Desteklenen biçimler: JPEG, PNG, WebP. HEIC ve AVIF desteklenmiyor. Fotoğrafı panodan yapıştırarak da ekleyebilirsin.</p>
+      <p>JPEG, PNG ve WebP üstverileri görüntü yeniden kodlanmadan temizlenir. HEIC/HEIF, seçilen biçime cihazda çevrilir; PNG/WebP çözülmüş 8 bit pikseller için kayıpsız, JPEG ise kayıplıdır. HEIC dönüşümünde üstveriler taşınmaz. HEIC dönüştürme sınırı 32 MP'dir; AVIF desteklenmiyor. Fotoğrafı panodan yapıştırarak da ekleyebilirsin.</p>
       <p id="credit"></p>
     </footer>
   </main>
@@ -325,6 +335,15 @@ html{background:var(--bg)}
     if (pos + str.length > u8.length) return false;
     for (let i = 0; i < str.length; i++) if (u8[pos + i] !== str.charCodeAt(i)) return false;
     return true;
+  }
+  function isHeif(u8) {
+    if (!u8 || u8.length < 16 || !starts(u8, 4, 'ftyp')) return false;
+    const declared = u32be(u8, 0);
+    const end = Math.min(u8.length, declared >= 16 ? declared : u8.length);
+    const brands = [ascii(u8, 8, 12)];
+    for (let i = 16; i + 4 <= end; i += 4) brands.push(ascii(u8, i, i + 4));
+    if (brands.some((b) => b === 'avif' || b === 'avis')) return false;
+    return brands.some((b) => ['heic', 'heix', 'hevc', 'hevx', 'heim', 'heis', 'hevm', 'hevs', 'heif', 'mif1', 'msf1'].includes(b));
   }
   const u16be = (u, p) => (u[p] << 8) | u[p + 1];
   const u16le = (u, p) => u[p] | (u[p + 1] << 8);
@@ -865,8 +884,11 @@ html{background:var(--bg)}
     else if (u8.length > 8 && starts(u8, 0, '\x89PNG\r\n\x1a\n')) r = stripPNG(u8, opts);
     else if (u8.length > 12 && starts(u8, 0, 'RIFF') && starts(u8, 8, 'WEBP')) r = stripWebP(u8, opts);
     else if (u8.length > 12 && starts(u8, 4, 'ftyp')) {
-      const brand = ascii(u8, 8, 12);
-      throw new Error((brand.indexOf('avif') >= 0 || brand.indexOf('avis') >= 0 ? 'AVIF' : 'HEIC/HEIF') + ' biçimi henüz desteklenmiyor');
+      const end = Math.min(u8.length, u32be(u8, 0) || u8.length);
+      const brands = [ascii(u8, 8, 12)];
+      for (let i = 16; i + 4 <= end; i += 4) brands.push(ascii(u8, i, i + 4));
+      const avif = brands.some((b) => b === 'avif' || b === 'avis');
+      throw new Error((avif ? 'AVIF' : 'HEIC/HEIF') + ' biçimi henüz desteklenmiyor');
     } else throw new Error('Desteklenmeyen biçim (JPEG, PNG ve WebP desteklenir)');
     r.inSize = u8.length;
     r.outSize = sum(r.parts);
@@ -915,12 +937,13 @@ html{background:var(--bg)}
     return [...out, ...central, end];
   }
 
-  const api = { strip, readTiff, tiffOrientation, buildTiff, crc32, crc32update, makeZip };
+  const api = { strip, isHeif, readTiff, tiffOrientation, buildTiff, crc32, crc32update, makeZip };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.IzsizCore = api;
 })(typeof self !== 'undefined' ? self : this);
 </script>
 <script>window.__IZSIZ_PWA__=true;</script>
+<script src="./heic-codec.js"></script>
 <script>(function () {
   'use strict';
   // PWA: build betiği tarafından enjekte edilir (true: kurulabilir sürüm, false: önizleme)
@@ -944,6 +967,13 @@ html{background:var(--bg)}
         localStorage.setItem('izsiz-opts', JSON.stringify(o));
       } catch (e) {}
     });
+  });
+  try {
+    var savedFormat = localStorage.getItem('izsiz-heic-format');
+    if (savedFormat && ['png', 'webp', 'jpg'].indexOf(savedFormat) >= 0) $('#heic-format').value = savedFormat;
+  } catch (e) {}
+  $('#heic-format').addEventListener('change', function () {
+    try { localStorage.setItem('izsiz-heic-format', $('#heic-format').value); } catch (e) {}
   });
   function opts() {
     return { keepOrientation: $('#o-orient').checked, keepICC: $('#o-icc').checked, dropTrailing: $('#o-trail').checked, keepDate: $('#o-date').checked, keepC2PA: $('#o-c2pa').checked };
@@ -995,11 +1025,14 @@ html{background:var(--bg)}
     var nums = el('p', 'nums');
     var saved = r.inSize - r.outSize;
     nums.appendChild(el('span', '', fmtSize(r.inSize) + ' → ' + fmtSize(r.outSize) + (saved > 0 ? '  (−' + fmtSize(saved) + ')' : '')));
-    nums.appendChild(el('span', 'keep', (r.width ? nf.format(r.width) + ' × ' + nf.format(r.height) + ' px · ' : '') + 'görüntü yeniden kodlanmadı'));
+    var imageNote = r.converted
+      ? 'HEIC/HEIF → ' + r.format.toUpperCase() + (r.lossless ? ' · çözülen pikseller kayıpsız' : ' · JPEG yeniden kodlaması kayıplı')
+      : 'görüntü yeniden kodlanmadı';
+    nums.appendChild(el('span', r.converted && !r.lossless ? 'lossy' : 'keep', (r.width ? nf.format(r.width) + ' × ' + nf.format(r.height) + ' px · ' : '') + imageNote));
     it.metaEl.appendChild(nums);
 
     var chips = el('ul', 'chips');
-    if (!r.removed.length) chips.appendChild(el('li', 'chip none', 'Silinecek veri bulunamadı'));
+    if (!r.removed.length) chips.appendChild(el('li', 'chip none', r.converted ? 'Dönüşümde üstveri taşınmadı' : 'Silinecek veri bulunamadı'));
     r.removed.forEach(function (x) {
       chips.appendChild(el('li', 'chip', '− ' + x.label + ' · ' + fmtSize(x.bytes)));
     });
@@ -1048,7 +1081,7 @@ html{background:var(--bg)}
     if (!items.length) return;
     var bytes = 0;
     done.forEach(function (i) { bytes += i.removedBytes; });
-    $('#summary').textContent = done.length + ' fotoğraf temizlendi' + (bytes ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '') + (pending ? ' · işleniyor: ' + (batchTotal - pending + 1) + '/' + batchTotal : '');
+    $('#summary').textContent = done.length + ' fotoğraf işlendi' + (bytes > 0 ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '') + (pending ? ' · işleniyor: ' + (batchTotal - pending + 1) + '/' + batchTotal : '');
     $('#save-all').hidden = !IS_PWA || done.length < 2;
     $('#zip').hidden = !IS_PWA || done.length < 2;
     $('#preview-note').hidden = IS_PWA || items.length === 0;
@@ -1064,15 +1097,28 @@ html{background:var(--bg)}
     try {
       if (file.size > MAX_FILE_BYTES) throw new Error('Dosya 100 MiB sınırını aşıyor. Daha küçük bir dosya seç.');
       var buf = new Uint8Array(await file.arrayBuffer());
-      var r = IzsizCore.strip(buf, opts());
-      var blob = new Blob(r.parts, { type: r.mime });
+      var isHeif = IzsizCore.isHeif(buf) || /\.(heic|heif)$/i.test(file.name || '') || /^image\/(heic|heif)(-|$)/i.test(file.type || '');
+      var r;
+      if (isHeif) {
+        var target = $('#heic-format').value;
+        if (!window.IzsizHeif) throw new Error('HEIC dönüştürme modülü yüklenemedi. Uygulamayı yeniden açıp tekrar dene.');
+        var converted = await IzsizHeif.convert(buf, target);
+        r = {
+          mime: converted.mime, ext: converted.ext, width: converted.width, height: converted.height,
+          parts: [], outBlob: converted.blob, removed: [], inSize: buf.length, outSize: converted.blob.size,
+          converted: true, format: target, lossless: converted.lossless, found: []
+        };
+        it.sourceImageData = converted.imageData;
+      } else r = IzsizCore.strip(buf, opts());
+      var blob = r.converted ? r.outBlob : new Blob(r.parts, { type: r.mime });
       it.out = new File([blob], cleanName(file.name, r.ext), { type: r.mime, lastModified: Date.now() });
       it.url = URL.createObjectURL(it.out);
       it.result = r;
-      it.removedBytes = r.inSize - r.outSize;
+      it.removedBytes = r.converted ? 0 : r.inSize - r.outSize;
       fillCard(it, r);
       summarize();
       if ($('#o-auto').checked) await verify(it);
+      it.sourceImageData = null;
     } catch (err) {
       it.stateEl.textContent = (err && err.message) || 'İşlenemedi';
       it.stateEl.classList.add('err');
@@ -1111,22 +1157,45 @@ html{background:var(--bg)}
   }
 
   // ---- piksel doğrulama ----
+  function decodeWithImage(blob) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(blob), img = new Image();
+      img.onload = function () { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('Tarayıcı bu görüntüyü çözemedi.')); };
+      img.src = url;
+    });
+  }
   async function decode(blob) {
-    try { return await createImageBitmap(blob, { imageOrientation: 'from-image' }); }
-    catch (e) { return await createImageBitmap(blob); }
+    if (typeof createImageBitmap === 'function') {
+      var task = createImageBitmap(blob, { imageOrientation: 'from-image' });
+      var timer;
+      try {
+        return await Promise.race([task, new Promise(function (_, reject) { timer = setTimeout(function () { reject(new Error('Görüntü bitmap zaman aşımı')); }, 8000); })]);
+      } catch (e) {
+        task.then(function (late) { if (late && late.close) late.close(); }).catch(function () {});
+      } finally { clearTimeout(timer); }
+    }
+    return decodeWithImage(blob);
   }
   async function verify(it) {
     var out = it.verifyEl;
     out.className = 'verify';
     it.verifyBtn.disabled = true;
-    var a, b;
+    var a, b, sourceData;
     try {
       var sourcePixels = it.result && it.result.width * it.result.height;
       if (sourcePixels > 32e6) { out.textContent = 'Görüntü çok büyük (' + Math.round(sourcePixels / 1e6) + ' MP); bellek güvenliği için karşılaştırma atlandı.'; return; }
+      if (it.result && it.result.converted && !it.result.lossless) {
+        out.textContent = 'JPEG kodlaması kayıplıdır; birebir piksel doğrulaması yapılmadı.';
+        return;
+      }
       out.textContent = 'Çözülüyor…';
-      a = await decode(it.file);
+      if (it.result && it.result.converted) {
+        if (it.sourceImageData) sourceData = it.sourceImageData;
+        else sourceData = (await IzsizHeif.decode(new Uint8Array(await it.file.arrayBuffer()))).imageData;
+      } else a = await decode(it.file);
       b = await decode(it.out);
-      var W = a.width, H = a.height;
+      var W = sourceData ? sourceData.width : a.width, H = sourceData ? sourceData.height : a.height;
       if (W !== b.width || H !== b.height) {
         out.className = 'verify bad';
         out.textContent = 'Boyut farklı: ' + W + '×' + H + ' ve ' + b.width + '×' + b.height + '. Yön bilgisi çıkarıldığı için görüntü dönmüş olabilir.';
@@ -1139,7 +1208,8 @@ html{background:var(--bg)}
         var h = Math.min(rows, H - y);
         ca.width = cb.width = W; ca.height = cb.height = h;
         var xa = ca.getContext('2d', { willReadFrequently: true }), xb = cb.getContext('2d', { willReadFrequently: true });
-        xa.drawImage(a, 0, y, W, h, 0, 0, W, h);
+        if (sourceData) xa.putImageData(sourceData, 0, -y);
+        else xa.drawImage(a, 0, y, W, h, 0, 0, W, h);
         xb.drawImage(b, 0, y, W, h, 0, 0, W, h);
         var da = new Uint32Array(xa.getImageData(0, 0, W, h).data.buffer);
         var db = new Uint32Array(xb.getImageData(0, 0, W, h).data.buffer);
@@ -1182,24 +1252,32 @@ html{background:var(--bg)}
   $('#save-all').addEventListener('click', function () {
     saveFiles(items.filter(function (i) { return i.out; }).map(function (i) { return i.out; }));
   });
-  $('#zip').addEventListener('click', function () {
+  $('#zip').addEventListener('click', async function () {
     var done = items.filter(function (i) { return i.out; });
     if (!done.length) return;
-    var used = {};
-    var files = done.map(function (i) {
-      var n = i.out.name, k = 0;
-      while (used[n]) { k++; n = i.out.name.replace(/(\.[^.]+)$/, '-' + k + '$1'); }
-      used[n] = 1;
-      return { name: n, parts: i.result.parts };
-    });
-    var blob = new Blob(IzsizCore.makeZip(files), { type: 'application/zip' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'izsiz-foto.zip';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 60000);
+    var button = $('#zip');
+    button.disabled = true;
+    try {
+      var used = {}, files = [];
+      for (var j = 0; j < done.length; j++) {
+        var it = done[j], n = it.out.name, k = 0;
+        while (used[n]) { k++; n = it.out.name.replace(/(\.[^.]+)$/, '-' + k + '$1'); }
+        used[n] = 1;
+        var parts = it.result.converted ? [new Uint8Array(await it.out.arrayBuffer())] : it.result.parts;
+        files.push({ name: n, parts: parts });
+      }
+      var blob = new Blob(IzsizCore.makeZip(files), { type: 'application/zip' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'izsiz-foto.zip';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 60000);
+    } catch (err) {
+      $('#limit-note').textContent = 'ZIP oluşturulamadı: ' + ((err && err.message) || 'dosyalar okunamadı');
+      $('#limit-note').hidden = false;
+    } finally { button.disabled = false; }
   });
   $('#clear').addEventListener('click', function () {
     items.forEach(function (i) { if (i.url) URL.revokeObjectURL(i.url); });
@@ -1211,7 +1289,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.3.0', date: '18.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.4.0', date: '18.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;

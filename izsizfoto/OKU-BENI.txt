@@ -1,42 +1,56 @@
-IZSIZ FOTO - KISISEL KULLANIM
+İZSİZ FOTO — KİŞİSEL KULLANIM
 
-Analitik, CDN veya dis yazi tipi yok. Fotograflar uygulama tarafindan
-barindirma adresine yuklenmez; cevrimiciyken surum denetimi kendi yayin
-adresine istek atar ve barindirma sunucusu erisim gunlugu tutabilir. Isleme
-cihazindaki tarayicida yapilir.
+GİZLİLİK
+Analitik, CDN veya dış yazı tipi yoktur. Fotoğraflar uygulama tarafından
+sunucuya yüklenmez; bütün dönüştürme ve üstveri temizleme işlemleri cihazdaki
+tarayıcıda yapılır. Çevrimiçiyken sürüm denetimi uygulamanın kendi yayın
+adresindeki version.json dosyasına istek gönderir; barındırma sunucusu erişim
+günlüğü tutabilir.
 
-A) Yayinlamadan kullanmak
-   - Android: index.html'i telefona kopyala, Dosyalar uygulamasindan Chrome ile ac.
-     Calisir (Kaydet/Indir dahil). Ana ekrana kurulum olmaz.
-   - Bilgisayar: index.html'e cift tikla.
-   - Ayni Wi-Fi'da telefondan: bilgisayarda bu klasorde "python3 -m http.server 8080",
-     telefonda http://BILGISAYAR-IP:8080 . HTTPS olmadigi icin kurulum ve
-     paylasim menusu calismaz, Indir calisir.
+A) YAYINLAMADAN KULLANMA
+   - Android: index.html'i telefona kopyala, Dosyalar uygulamasından Chrome ile aç.
+     Kaydet/İndir çalışır; ana ekrana uygulama olarak kurulmaz.
+   - Bilgisayar: index.html'e çift tıkla.
+   - Aynı Wi-Fi'da telefondan: bu klasörde "python3 -m http.server 8080" çalıştır,
+     telefonda http://BILGISAYAR-IP:8080 adresini aç. HTTPS olmadığından kurulum ve
+     paylaşım menüsü çalışmaz; İndir çalışır.
 
-B) Telefona uygulama gibi kurmak (kurulum icin HTTPS adres gerekir)
-   Klasoru kimseye duyurmadigin, sadece senin bildigin bir adrese yukle
-   (ornegin Netlify Drop, rastgele adli). Sonra:
-   - iPhone: Safari > Paylas > Ana Ekrana Ekle.
-   - Android: Chrome menusu > Uygulamayi yukle. Galeriden "Paylas > Izsiz Foto"
-     ile orijinal dosyayi dogrudan gonderebilirsin.
-   Ilk acilistan sonra internetsiz de calisir.
+B) TELEFONA UYGULAMA GİBİ KURMA (HTTPS GEREKİR)
+   Klasörü yalnızca senin bildiğin bir adrese yükle. Sonra:
+   - iPhone: Safari > Paylaş > Ana Ekrana Ekle.
+   - Android: Chrome menüsü > Uygulamayı yükle. Galeriden Paylaş > İzsiz Foto
+     ile fotoğrafı doğrudan gönderebilirsin.
+   İlk kurulumdan sonra uygulama ve HEIC/HEIF dönüştürücüleri çevrimdışı çalışır.
 
-KAYIPSIZLIK VE SINIRLAR
-   - JPEG, PNG ve WebP desteklenir. HEIC/HEIF ve AVIF desteklenmez.
-   - Dosya yeniden kodlanmaz; taninan ust veri bloklari temizlenir.
-   - Dosya basina 100 MiB siniri vardir. 32 MP'den buyuk gorsellerde bellek
-     guvenligi icin piksel karsilastirmasi atlanir.
-   - EXIF yonu, ICC profili ve cekim tarihi tercihe gore korunabilir.
-   - C2PA icerik koken bilgisi secenek kapaliysa temizlenir; bu imza/koken
-     dogrulamasini etkileyebilir. Korumak icin secenegi ac.
-   - iPhone'da HEIC'i JPEG'e cevirme ihtimali oldugundan "Dosya Sec" kullan.
-   - ZIP sikistirmasizdir. Orijinal dosya uygulama tarafindan degistirilmez.
+BİÇİMLER VE KAYIPSIZLIK
+   - JPEG, PNG ve WebP'deki tanınan üstveri blokları görüntü yeniden kodlanmadan
+     temizlenir. HEIC/HEIF, seçilen PNG, JPEG veya WebP biçimine çevrilir.
+   - PNG ve kayıpsız WebP, HEIC/HEIF çözücüsünün ürettiği 8 bit RGBA piksellerini
+     ek sıkıştırma kaybı olmadan saklar. HEIC zaten kayıplı olabilir; kaynak
+     10 bit/HDR/renk profili bilgisi 8 bit RGB'ye çözümleme sırasında birebir
+     korunmaz. JPEG her zaman kayıplıdır; JPEG seçeneği en yüksek kaliteyi kullanır.
+   - HEIC/HEIF dönüşümünde üstveriler taşınmaz. Tarih ve ICC koruma seçenekleri
+     bu dönüşüm için uygulanmaz; yön dönüşüm sırasında görüntü piksellerine uygulanır.
+   - HEIC/HEIF dosyası başına üst sınır 100 MiB ve 32 MP'dir. Birden çok görüntü
+     içeriyorsa ana görüntü dönüştürülür. AVIF desteklenmez.
+   - JPEG, PNG ve WebP'de yön, ICC profili ve çekim tarihi mevcut seçeneklere göre
+     korunabilir. C2PA köken bilgisini koruma seçeneği kapalıysa kayıt temizlenir;
+     imza/köken doğrulaması etkilenebilir.
+   - iPhone'da HEIC'i JPEG'e otomatik çevirme ihtimali olduğundan HEIC'i olduğu gibi
+     almak için "Dosya Seç" kullan.
+   - ZIP sıkıştırmasızdır. Orijinal dosya değiştirilmez.
 
-GUNCELLEME (yapimci: Umit Ozguler)
-   Yeni surum yayinlarken UC yeri birlikte guncelle:
-   1) index.html icindeki APP.version
-   2) version.json icindeki version
-   3) sw.js icindeki V (ornegin 'izsiz-v2.4.0')
-   Kontrol: node tests/test.js (cekirdek regresyon testleri)
-   Kullanici Hakkinda > "Guncellemeleri denetle ve indir" ile yeni surumu alir.
-   Denetim yalnizca kendi adresindeki version.json'a istek atar; baska siteye baglanmaz.
+GÜNCELLEME (yapımcı: Ümit Özgüler)
+   Yeni sürümde şu üç değeri birlikte güncelle:
+   1) index.html içindeki APP.version
+   2) version.json içindeki version
+   3) sw.js içindeki V
+   Kontrol: node tests/test.js
+   Hakkında > "Güncellemeleri denetle ve indir" ile yeni sürümü alabilirsin.
+   Otomatik güncelleme denetimi yalnızca kendi yayın adresindeki version.json'a
+   istek gönderir.
+
+ÜÇÜNCÜ TARAF LİSANS BİLDİRİMLERİ
+   Dönüştürme desteği için libheif-js ve jSquash WebP kodlayıcısı paketlenmiştir.
+   İlgili lisans metinleri LICENSE-libheif-js.txt, LICENSE-libheif-wasm.txt,
+   LICENSE-jsquash-webp.txt ve LICENSE-webp-codec.txt dosyalarındadır.

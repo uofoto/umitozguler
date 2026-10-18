@@ -1,7 +1,7 @@
 {
   "name": "İzsiz Foto",
   "short_name": "İzsiz",
-  "description": "JPEG, PNG ve WebP fotoğraflardaki tanınan üst verileri, görüntüyü yeniden kodlamadan temizler.",
+  "description": "Fotoğraflardaki üst verileri temizle; HEIC ve HEIF fotoğrafları PNG, JPEG veya WebP'ye dönüştür.",
   "lang": "tr",
   "start_url": "./",
   "scope": "./",
