@@ -34,7 +34,10 @@
     return { pos: p, size: n, type: type, header: header, body: p + header, end: p + n };
   }
   function blankMp4(u, a, found) {
+    var header = new Uint8Array(a.header);
+    for (var h = 0; h < a.header; h++) header[h] = u[a.pos + h];
     for (var i = a.pos; i < a.end; i++) u[i] = 0;
+    for (var j = 0; j < a.header; j++) u[a.pos + j] = header[j];
     u[a.pos + 4] = 0x66; u[a.pos + 5] = 0x72; u[a.pos + 6] = 0x65; u[a.pos + 7] = 0x65;
     found.push(a.type);
     return a.size - a.header;

@@ -1,6 +1,6 @@
 // İzsiz Foto servis çalışanı: uygulama kabuğunu ve yerel dönüştürücüleri önbelleğe alır.
 // Yeni sürümde V, index.html içindeki APP.version ve version.json birlikte güncellenir.
-const V = 'izsiz-v2.6.0';
+const V = 'izsiz-v2.6.1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './heic-codec.js', './video-codec.js', './libheif-bundle.js', './webp-encoder.js', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
