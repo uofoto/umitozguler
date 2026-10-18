@@ -50,6 +50,21 @@ assert.throws(() => C.strip(new Uint8Array(brokenWebp), {}), /RIFF boyutu/);
 const shortChunkHeader = Buffer.concat([webpHeader, webpBody, Buffer.from([1, 2, 3, 4])]);
 shortChunkHeader.writeUInt32LE(webpBody.length + 4, 4);
 assert.throws(() => C.strip(new Uint8Array(shortChunkHeader), {}), /kesik parça başlığı/);
+// --- HEIC/HEIF imzaları AVIF'ten ayrılmalı
+const ftyp = (major, compatible = []) => {
+  const size = Buffer.alloc(4); size.writeUInt32BE(16 + compatible.length * 4);
+  const minor = Buffer.alloc(4);
+  return Buffer.concat([size, Buffer.from('ftyp' + major), minor, ...compatible.map((b) => Buffer.from(b))]);
+};
+assert(C.isHeif(new Uint8Array(ftyp('heic', ['mif1', 'heic']))), 'HEIC tanınmalı');
+assert(C.isHeif(new Uint8Array(ftyp('mif1', ['heif']))), 'HEIF uyumlu marka listesinden tanınmalı');
+assert(!C.isHeif(new Uint8Array(ftyp('avif', ['mif1']))), 'AVIF, HEIF olarak sınıflandırılmamalı');
+assert.throws(() => C.strip(new Uint8Array(ftyp('mif1', ['avif']))), /AVIF/);
+assert(!C.isHeif(new Uint8Array([0, 1, 2, 3, 4, 5])), 'Rastgele veri HEIF sayılmamalı');
+// --- Sıkıştırmasız ZIP: dönüştürülmüş dosyanın veri baytları aynen eklenmeli
+const zip = cat(C.makeZip([{ name: 'sample.png', parts: [Buffer.from([1, 2, 3, 4])] }]));
+assert.strictEqual(zip.readUInt32LE(0), 0x04034b50, 'ZIP yerel dosya başlığı eksik');
+assert.strictEqual(zip.subarray(30 + 'sample.png'.length, 30 + 'sample.png'.length + 4).toString('hex'), '01020304', 'ZIP dosya verisi değişti');
 // --- Bozuk girişler hata vermeli
 assert.throws(() => C.strip(new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])), /Desteklenmeyen/);
 assert.throws(() => C.strip(new Uint8Array([0xff, 0xd8, 0xff, 0xe1, 0xff, 0xff, 0, 0])), /Bozuk|kesik/);
