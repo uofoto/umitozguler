@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>İzsiz Foto</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'none'">
 <meta name="description" content="Fotoğraflardan EXIF, XMP, C2PA ve diğer üst verileri, görüntüyü yeniden sıkıştırmadan siler.">
 <meta name="theme-color" content="#e8edef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c1318" media="(prefers-color-scheme: dark)">
@@ -194,6 +195,14 @@ button { cursor: pointer; }
 .foot p { margin: 0; text-wrap: pretty; }
 .foot code { font-family: var(--f-mono); font-size: 0.8rem; }
 
+.about { border-top: 1px solid var(--line); padding-top: 12px; }
+.about summary { cursor: pointer; font: 700 0.95rem/1.4 var(--f-display); min-height: 32px; }
+.about dl { margin: 10px 0 12px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; font: 400 0.82rem/1.4 var(--f-mono); }
+.about dt { color: var(--ink-2); }
+.about dd { margin: 0; overflow-wrap: anywhere; }
+.about .up { margin: 10px 0 0; font: 500 0.82rem/1.4 var(--f-mono); color: var(--ink-2); }
+.about .up.good { color: var(--ok); }
+.about .up.bad { color: var(--cut); }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
@@ -242,6 +251,10 @@ html{background:var(--bg)}
         <span><b>Dosya sonu eklerini sil</b><small>JPEG'in arkasına eklenen HDR haritası ve hareketli foto videosu çıkarılır. Ana görüntü değişmez.</small></span>
         <input id="o-trail" type="checkbox" checked>
       </label>
+      <label class="opt" for="o-rename">
+        <span><b>Dosya adını rastgele yap</b><small>Dosya adları da kişisel bilgi taşıyabilir (isim, yer, tarih). Açıksa sonuç "foto-a1b2c3.jpg" gibi adlandırılır.</small></span>
+        <input id="o-rename" type="checkbox">
+      </label>
     </section>
 
     <section class="results" id="results" hidden>
@@ -259,10 +272,31 @@ html{background:var(--bg)}
     <p class="note" id="preview-note" hidden><b>Deneme sürümü.</b> Bu önizlemede kaydet ve indir düğmeleri çalışmaz. Temiz fotoğrafı basılı tutup kaydedebilirsin. Telefona kurulan sürümde düğmeler çalışır.</p>
     <p class="note" id="install" hidden></p>
 
+    <section class="about" aria-label="Hakkında">
+      <details id="about">
+        <summary>Hakkında ve güncelleme</summary>
+        <dl>
+          <dt>Uygulama</dt><dd>İzsiz Foto</dd>
+          <dt>Sürüm</dt><dd id="a-ver"></dd>
+          <dt>Yayın tarihi</dt><dd id="a-date"></dd>
+          <dt>Yapımcı</dt><dd id="a-author"></dd>
+          <dt>Lisans</dt><dd>Kişisel kullanım</dd>
+          <dt>Gizlilik</dt><dd>Fotoğraflar cihazdan çıkmaz. Analitik, CDN ve dış yazı tipi yok.</dd>
+          <dt>Durum</dt><dd id="a-state"></dd>
+        </dl>
+        <div class="row">
+          <button class="btn primary" id="up-check" type="button">Güncellemeleri denetle ve indir</button>
+          <button class="btn" id="theme" type="button">Tema: otomatik</button>
+        </div>
+        <p class="up" id="up-msg" aria-live="polite"></p>
+      </details>
+    </section>
+
     <footer class="foot">
       <p><b>Kayıpsız yükleme (iPhone):</b> "Fotoğraf Kitaplığı" HEIC dosyalarını JPEG'e çevirebilir ve konumu kendisi silebilir. Dosyayı olduğu gibi almak için "Dosya Seç"i kullan. Android'de galeriden Paylaş ile doğrudan bu uygulamaya gönderebilirsin.</p>
       <p><b>Kayıpsız kaydetme:</b> Paylaşım menüsünde "Dosyalara Kaydet" dosyayı birebir saklar. "Görseli Kaydet" Fotoğraflar'a ekler. ZIP sıkıştırmaz, dosyalar bayt bayt aynı kalır.</p>
-      <p>Desteklenen biçimler: JPEG, PNG, WebP. HEIC ve AVIF desteklenmiyor.</p>
+      <p>Desteklenen biçimler: JPEG, PNG, WebP. HEIC ve AVIF desteklenmiyor. Fotoğrafı panodan yapıştırarak da ekleyebilirsin.</p>
+      <p id="credit"></p>
     </footer>
   </main>
 </div>
@@ -876,10 +910,11 @@ html{background:var(--bg)}
   var IS_PWA = window.__IZSIZ_PWA__ === true;
   var $ = function (s) { return document.querySelector(s); };
   var items = [];
+  var pending = 0, batchTotal = 0;
   var seq = 0;
 
   // ---- ayarlar ----
-  var toggles = { 'o-orient': true, 'o-icc': true, 'o-trail': true, 'o-date': false, 'o-auto': true };
+  var toggles = { 'o-orient': true, 'o-icc': true, 'o-trail': true, 'o-date': false, 'o-auto': true, 'o-rename': false };
   try {
     var saved = JSON.parse(localStorage.getItem('izsiz-opts') || '{}');
     Object.keys(toggles).forEach(function (k) { if (typeof saved[k] === 'boolean') $('#' + k).checked = saved[k]; });
@@ -905,6 +940,7 @@ html{background:var(--bg)}
     return (b / 1048576).toLocaleString('tr-TR', { maximumFractionDigits: 2 }) + ' MB';
   }
   function cleanName(name, ext) {
+    if ($('#o-rename').checked) { var rb = new Uint8Array(3); crypto.getRandomValues(rb); return 'foto-' + Array.prototype.map.call(rb, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('') + ext; }
     var base = name.replace(/\.[^.\/]+$/, '') || 'foto';
     return base + '-izsiz' + ext;
   }
@@ -994,7 +1030,7 @@ html{background:var(--bg)}
     if (!items.length) return;
     var bytes = 0;
     done.forEach(function (i) { bytes += i.removedBytes; });
-    $('#summary').textContent = done.length + ' fotoğraf temizlendi' + (bytes ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '');
+    $('#summary').textContent = done.length + ' fotoğraf temizlendi' + (bytes ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '') + (pending ? ' · işleniyor: ' + (batchTotal - pending + 1) + '/' + batchTotal : '');
     $('#save-all').hidden = !IS_PWA || done.length < 2;
     $('#zip').hidden = !IS_PWA || done.length < 2;
     $('#preview-note').hidden = IS_PWA || items.length === 0;
@@ -1026,7 +1062,8 @@ html{background:var(--bg)}
 
   async function handleFiles(list) {
     var arr = Array.prototype.slice.call(list);
-    for (var i = 0; i < arr.length; i++) await processOne(arr[i]);
+    pending += arr.length; batchTotal = pending;
+    for (var i = 0; i < arr.length; i++) { await processOne(arr[i]); pending--; summarize(); }
   }
 
   // ---- kaydetme ----
@@ -1148,6 +1185,60 @@ html{background:var(--bg)}
     items = [];
     $('#list').textContent = '';
     summarize();
+  });
+
+  // ---- künye ve güncelleme ----
+  var APP = { version: '2.2.0', date: '18.10.2026', author: 'Ümit Özgüler' };
+  $('#a-ver').textContent = APP.version;
+  $('#a-date').textContent = APP.date;
+  $('#a-author').textContent = APP.author;
+  $('#credit').textContent = 'İzsiz Foto v' + APP.version + ' · © 2026 ' + APP.author;
+  var upMsg = $('#up-msg'), upBtn = $('#up-check'), manualUpdate = false;
+  function say(t, c) { upMsg.className = 'up' + (c ? ' ' + c : ''); upMsg.textContent = t; }
+  function newer(a, b) {
+    var x = String(a).split('.'), y = String(b).split('.');
+    for (var i = 0; i < 3; i++) { var d = (+x[i] || 0) - (+y[i] || 0); if (d) return d > 0; }
+    return false;
+  }
+  var canUpdate = IS_PWA && 'serviceWorker' in navigator && location.protocol !== 'file:';
+  $('#a-state').textContent = canUpdate ? (navigator.serviceWorker.controller ? 'Çevrimdışı hazır' : 'İlk kurulum tamamlanıyor') : 'Yerel dosya (güncelleme elle yapılır)';
+  async function checkUpdate(silent) {
+    if (!canUpdate) { if (!silent) say('Bu kopya yerel dosya olarak çalışıyor. Güncellemek için yeni index.html dosyasını eskisinin yerine koy.'); return; }
+    if (!navigator.onLine) { if (!silent) say('İnternet yok. Güncelleme denetlenemedi.', 'bad'); return; }
+    upBtn.disabled = true;
+    if (!silent) say('Denetleniyor…');
+    try {
+      var res = await fetch('./version.json', { cache: 'no-store' });
+      var v = await res.json();
+      if (!newer(v.version, APP.version)) { if (!silent) say('Güncelsin. v' + APP.version + ' en yeni sürüm.', 'good'); return; }
+      if (silent) { say('Yeni sürüm var: v' + v.version + '. "Güncellemeleri denetle ve indir"e dokun.'); $('#about').open = true; return; }
+      say('Yeni sürüm v' + v.version + ' indiriliyor…');
+      manualUpdate = true;
+      var reg = await navigator.serviceWorker.getRegistration();
+      await reg.update();
+      setTimeout(function () { if (manualUpdate) { manualUpdate = false; location.reload(); } }, 4000);
+    } catch (e) { if (!silent) say('Denetlenemedi: ' + ((e && e.message) || 'sunucuya ulaşılamadı'), 'bad'); }
+    finally { upBtn.disabled = false; }
+  }
+  upBtn.addEventListener('click', function () { checkUpdate(false); });
+  if (canUpdate) {
+    navigator.serviceWorker.addEventListener('controllerchange', function () { if (manualUpdate) { manualUpdate = false; location.reload(); } });
+    window.addEventListener('load', function () { setTimeout(function () { checkUpdate(true); }, 2500); });
+  }
+  var themes = ['auto', 'light', 'dark'], tn = { auto: 'otomatik', light: 'açık', dark: 'koyu' }, ti = 0;
+  try { ti = Math.max(0, themes.indexOf(localStorage.getItem('izsiz-theme'))); } catch (e) {}
+  function applyTheme() {
+    var t = themes[ti];
+    if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+    $('#theme').textContent = 'Tema: ' + tn[t];
+    try { localStorage.setItem('izsiz-theme', t); } catch (e) {}
+  }
+  $('#theme').addEventListener('click', function () { ti = (ti + 1) % 3; applyTheme(); });
+  applyTheme();
+  // Panodan yapıştır
+  document.addEventListener('paste', function (e) {
+    var f = e.clipboardData && e.clipboardData.files;
+    if (f && f.length) { e.preventDefault(); handleFiles(f); }
   });
 
   // ---- kurulum (yalnızca PWA sürümü) ----

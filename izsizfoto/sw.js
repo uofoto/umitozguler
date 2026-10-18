@@ -1,10 +1,10 @@
 // İzsiz Foto servis çalışanı: uygulama kabuğunu önbelleğe alır, çevrimdışı çalışır.
-// index.html değiştiğinde V sürümünü artır.
-const V = 'izsiz-v2';
+// Yeni sürümde V, index.html içindeki APP.version ve version.json birlikte güncellenir.
+const V = 'izsiz-v2.2.0';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(V).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(V).then((c) => c.addAll(SHELL.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil(
@@ -32,6 +32,8 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   if (r.method !== 'GET' || u.origin !== location.origin) return;
+  // Sürüm bilgisi her zaman ağdan okunur (önbelleğe alınmaz)
+  if (u.pathname.endsWith('/version.json')) { e.respondWith(fetch(r, { cache: 'no-store' })); return; }
   e.respondWith(
     caches.match(r, { ignoreSearch: true }).then(
       (hit) =>

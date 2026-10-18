@@ -26,4 +26,11 @@ KAYIPSIZLIK
    - iPhone'da dosyayi "Dosya Sec" ile al (Fotograf Kitapligi HEIC'i JPEG'e cevirebilir).
    - Kaydederken "Dosyalara Kaydet" birebir saklar. ZIP sikistirmaz.
 
-Guncelleme: index.html degisirse sw.js icindeki V degerini artir.
+GUNCELLEME (yapimci: Umit Ozguler)
+   Yeni surum yayinlarken UC yeri birlikte guncelle:
+   1) index.html icindeki APP.version
+   2) version.json icindeki version
+   3) sw.js icindeki V (ornegin 'izsiz-v2.3.0')
+   Kontrol: node tests/test.js (temizleme cekirdegi testleri)
+   Kullanici Hakkinda > "Guncellemeleri denetle ve indir" ile yeni surumu alir.
+   Denetim yalnizca kendi adresindeki version.json'a istek atar; baska siteye baglanmaz.
