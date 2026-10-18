@@ -225,14 +225,14 @@ html{background:var(--bg)}
     </header>
 
     <section class="hero">
-      <h1>Fotoğraftaki gizli verileri sil. HEIC'i istediğin biçime çevir.</h1>
-      <p>JPEG, PNG ve WebP içindeki tanınan üst verileri görüntüyü yeniden kodlamadan temizler. HEIC/HEIF fotoğrafları PNG, JPEG veya WebP'ye cihazında dönüştürür. Fotoğraflar yüklenmez; uygulama çevrimiçiyken yalnızca kendi yayın adresinden sürüm bilgisini denetleyebilir.</p>
+      <h1>Fotoğraf ve videodaki gizli verileri sil. HEIC'i istediğin biçime çevir.</h1>
+      <p>JPEG, PNG, WebP ve MP4/MOV/WebM/AVI içindeki tanınan gömülü verileri cihazında temizler. HEIC/HEIF fotoğrafları PNG, JPEG veya WebP'ye dönüştürür. Videolar yeniden kodlanmaz; görüntü ve ses akışları korunur. Dosyalar yüklenmez; uygulama çevrimiçiyken yalnızca kendi yayın adresinden sürüm bilgisini denetleyebilir.</p>
     </section>
 
     <label class="pick" id="pick" for="file">
-      <input id="file" type="file" accept="image/*,.heic,.heif" multiple>
+      <input id="file" type="file" accept="image/*,video/mp4,video/quicktime,video/webm,video/x-msvideo,.heic,.heif,.mp4,.mov,.webm,.avi" multiple>
       <span class="big">Fotoğraf seç</span>
-      <span class="sub">HEIC · HEIF · JPEG · PNG · WebP · en fazla 100 MiB/dosya</span>
+      <span class="sub">HEIC · HEIF · JPEG · PNG · WebP · MP4 · MOV · WebM · AVI · en fazla 100 MiB/dosya</span>
     </label>
 
     <section class="opts" aria-label="Seçenekler">
@@ -319,7 +319,7 @@ html{background:var(--bg)}
     <footer class="foot">
       <p><b>Kayıpsız yükleme (iPhone):</b> "Fotoğraf Kitaplığı" HEIC dosyalarını JPEG'e çevirebilir ve konumu kendisi silebilir. Dosyayı olduğu gibi almak için "Dosya Seç"i kullan. Android'de galeriden Paylaş ile doğrudan bu uygulamaya gönderebilirsin.</p>
       <p><b>Kayıpsız kaydetme:</b> Paylaşım menüsünde "Dosyalara Kaydet" dosyayı birebir saklar. "Görseli Kaydet" Fotoğraflar'a ekler. ZIP sıkıştırmaz, dosyalar bayt bayt aynı kalır.</p>
-      <p>JPEG, PNG ve WebP üstverileri görüntü yeniden kodlanmadan temizlenir. HEIC/HEIF, seçilen biçime cihazda çevrilir; PNG/WebP çözülmüş 8 bit pikseller için kayıpsız, JPEG ise kayıplıdır. HEIC dönüşümünde üstveriler taşınmaz. HEIC dönüştürme sınırı 32 MP'dir; AVIF desteklenmiyor. Fotoğrafı panodan yapıştırarak da ekleyebilirsin.</p>
+      <p>JPEG, PNG ve WebP üstverileri görüntü yeniden kodlanmadan temizlenir. MP4/MOV/WebM/AVI videolarda tanınan kapsayıcı metadata alanları temizlenir; video ve ses akışları yeniden kodlanmaz. HEIC/HEIF, seçilen biçime cihazda çevrilir; PNG/WebP çözülmüş 8 bit pikseller için kayıpsız, JPEG ise kayıplıdır. HEIC dönüşümünde üstveriler taşınmaz. HEIC dönüştürme sınırı 32 MP'dir; AVIF desteklenmiyor. Fotoğrafı veya videoyu panodan yapıştırarak da ekleyebilirsin.</p>
       <p id="credit"></p>
     </footer>
   </main>
@@ -949,6 +949,7 @@ html{background:var(--bg)}
 </script>
 <script>window.__IZSIZ_PWA__=true;</script>
 <script src="./heic-codec.js"></script>
+<script src="./video-codec.js"></script>
 <script>(function () {
   'use strict';
   // PWA: build betiği tarafından enjekte edilir (true: kurulabilir sürüm, false: önizleme)
@@ -1022,22 +1023,25 @@ html{background:var(--bg)}
 
   function fillCard(it, r) {
     it.stateEl.remove();
-    var img = el('img');
-    img.alt = '';
-    img.src = it.url;
-    it.thumbEl.appendChild(img);
+    var media = r.video ? el('video') : el('img');
+    if (r.video) { media.controls = true; media.preload = 'metadata'; }
+    else media.alt = '';
+    media.src = it.url;
+    it.thumbEl.appendChild(media);
 
     var nums = el('p', 'nums');
     var saved = r.inSize - r.outSize;
     nums.appendChild(el('span', '', fmtSize(r.inSize) + ' → ' + fmtSize(r.outSize) + (saved > 0 ? '  (−' + fmtSize(saved) + ')' : '')));
-    var imageNote = r.converted
+    var imageNote = r.video
+      ? r.videoFormat + ' · video ve ses akışları yeniden kodlanmadı'
+      : r.converted
       ? 'HEIC/HEIF → ' + r.format.toUpperCase() + (r.lossless ? ' · çözülen pikseller kayıpsız' : ' · JPEG yeniden kodlaması kayıplı')
       : 'görüntü yeniden kodlanmadı';
     nums.appendChild(el('span', r.converted && !r.lossless ? 'lossy' : 'keep', (r.width ? nf.format(r.width) + ' × ' + nf.format(r.height) + ' px · ' : '') + imageNote));
     it.metaEl.appendChild(nums);
 
     var chips = el('ul', 'chips');
-    if (!r.removed.length) chips.appendChild(el('li', 'chip none', r.converted ? 'Dönüşümde üstveri taşınmadı' : 'Silinecek veri bulunamadı'));
+    if (!r.removed.length) chips.appendChild(el('li', 'chip none', r.video ? (r.metadataBytes ? 'Video metadata alanları temizlendi' : 'Silinecek metadata bulunamadı') : (r.converted ? 'Dönüşümde üstveri taşınmadı' : 'Silinecek veri bulunamadı')));
     r.removed.forEach(function (x) {
       chips.appendChild(el('li', 'chip', '− ' + x.label + ' · ' + fmtSize(x.bytes)));
     });
@@ -1051,8 +1055,8 @@ html{background:var(--bg)}
       det.appendChild(el('summary', '', 'Dosyada bulunanlar (' + r.found.length + ')'));
       var dl = el('dl');
       r.found.forEach(function (f) {
-        dl.appendChild(el('dt', '', f.k));
-        dl.appendChild(el('dd', f.warn ? 'warn' : '', f.v));
+        dl.appendChild(el('dt', '', r.video ? 'Atom' : f.k));
+        dl.appendChild(el('dd', f.warn ? 'warn' : '', r.video ? f : f.v));
       });
       det.appendChild(dl);
       it.li.appendChild(det);
@@ -1069,10 +1073,10 @@ html{background:var(--bg)}
       row.appendChild(s);
       row.appendChild(d);
     }
-    var v = el('button', 'btn', 'Pikselleri doğrula');
+    var v = el('button', 'btn', r.video ? 'Video akışlarını doğrula' : 'Pikselleri doğrula');
     v.type = 'button';
     it.verifyBtn = v;
-    row.appendChild(v);
+    if (!r.video) row.appendChild(v);
     it.li.appendChild(row);
     it.verifyEl = el('p', 'verify');
     it.verifyEl.setAttribute('aria-live', 'polite');
@@ -1086,7 +1090,8 @@ html{background:var(--bg)}
     if (!items.length) return;
     var bytes = 0;
     done.forEach(function (i) { bytes += i.removedBytes; });
-    $('#summary').textContent = done.length + ' fotoğraf işlendi' + (bytes > 0 ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '') + (pending ? ' · işleniyor: ' + (batchTotal - pending + 1) + '/' + batchTotal : '');
+    var videoCount = done.filter(function (i) { return i.result && i.result.video; }).length;
+    $('#summary').textContent = done.length + (videoCount ? ' dosya işlendi' : ' fotoğraf işlendi') + (bytes > 0 ? ' · ' + fmtSize(bytes) + ' veri kaldırıldı' : '') + (videoCount ? ' · video metadata temizlendi' : '') + (pending ? ' · işleniyor: ' + (batchTotal - pending + 1) + '/' + batchTotal : '');
     $('#save-all').hidden = !IS_PWA || done.length < 2;
     $('#zip').hidden = !IS_PWA || done.length < 2;
     $('#preview-note').hidden = IS_PWA || items.length === 0;
@@ -1102,9 +1107,13 @@ html{background:var(--bg)}
     try {
       if (file.size > MAX_FILE_BYTES) throw new Error('Dosya 100 MiB sınırını aşıyor. Daha küçük bir dosya seç.');
       var buf = new Uint8Array(await file.arrayBuffer());
-      var isHeif = IzsizCore.isHeif(buf) || /\.(heic|heif)$/i.test(file.name || '') || /^image\/(heic|heif)(-|$)/i.test(file.type || '');
+      var isVideo = /\.(mp4|mov|webm|avi)$/i.test(file.name || '') || /^(video\/mp4|video\/quicktime|video\/webm|video\/x-msvideo)/i.test(file.type || '') || IzsizVideo.isSupported(buf);
+      var isHeif = !isVideo && (IzsizCore.isHeif(buf) || /\.(heic|heif)$/i.test(file.name || '') || /^image\/(heic|heif)(-|$)/i.test(file.type || ''));
       var r;
-      if (isHeif) {
+      if (isVideo) {
+        if (!window.IzsizVideo) throw new Error('Video dönüştürme modülü yüklenemedi. Uygulamayı yeniden açıp tekrar dene.');
+        r = IzsizVideo.strip(buf);
+      } else if (isHeif) {
         var target = $('#heic-format').value;
         if (!window.IzsizHeif) throw new Error('HEIC dönüştürme modülü yüklenemedi. Uygulamayı yeniden açıp tekrar dene.');
         var converted = await IzsizHeif.convert(buf, target);
@@ -1119,10 +1128,10 @@ html{background:var(--bg)}
       it.out = new File([blob], cleanName(file.name, r.ext), { type: r.mime, lastModified: Date.now() });
       it.url = URL.createObjectURL(it.out);
       it.result = r;
-      it.removedBytes = r.converted ? 0 : r.inSize - r.outSize;
+      it.removedBytes = r.video ? r.metadataBytes : (r.converted ? 0 : r.inSize - r.outSize);
       fillCard(it, r);
       summarize();
-      if ($('#o-auto').checked) await verify(it);
+      if ($('#o-auto').checked && !r.video) await verify(it);
       it.sourceImageData = null;
     } catch (err) {
       it.stateEl.textContent = (err && err.message) || 'İşlenemedi';
@@ -1301,7 +1310,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.4.1', date: '18.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.6.0', date: '18.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
