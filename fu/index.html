@@ -41,6 +41,7 @@
 
     <main class="workspace">
       <aside class="left-rail" aria-label="Fotoğraf ve akıllı araçlar">
+        <div class="mobile-drawer-heading"><strong>AI ve hızlı araçlar</strong><button class="icon-button" type="button" data-mobile-close aria-label="Paneli kapat">×</button></div>
         <section class="rail-section source-section">
           <div class="section-heading"><span class="eyebrow">KAYNAK</span><span class="step-number">01</span></div>
           <button class="dropzone" id="dropzone" type="button" aria-label="Fotoğraf seç veya buraya sürükle">
@@ -139,38 +140,56 @@
       </section>
 
       <aside class="right-rail" aria-label="Düzenleme ve dışa aktarma kontrolleri">
+        <div class="mobile-drawer-heading"><strong id="mobilePanelTitle">Düzenleme araçları</strong><button class="icon-button" type="button" data-mobile-close aria-label="Paneli kapat">×</button></div>
         <div class="panel-heading"><div><span class="eyebrow">İNCE AYAR</span><h2>Işık ve renk</h2></div><button class="text-button reset-button" id="resetBtn" type="button" disabled>Sıfırla</button></div>
+        <div class="mobile-adjust-tabs" id="mobileAdjustTabs" role="tablist" aria-label="Düzenleme ayar grubu">
+          <button class="mobile-adjust-tab" type="button" role="tab" data-adjust-tab="light" aria-selected="true">Işık</button>
+          <button class="mobile-adjust-tab" type="button" role="tab" data-adjust-tab="color" aria-selected="false">Renk</button>
+          <button class="mobile-adjust-tab" type="button" role="tab" data-adjust-tab="detail" aria-selected="false">Detay</button>
+          <button class="mobile-adjust-tab" type="button" role="tab" data-adjust-tab="atmosphere" aria-selected="false">Atmosfer</button>
+          <button class="mobile-adjust-tab" type="button" role="tab" data-adjust-tab="water" aria-selected="false">Su</button>
+          <button class="mobile-adjust-tab" type="button" role="tab" data-adjust-tab="lightfx" aria-selected="false">Işık fx</button>
+        </div>
         <fieldset class="adjust-fieldset" id="adjustFieldset" disabled>
-          <div class="control-group">
+          <div class="control-group" data-mobile-group="light">
             <div class="control-group-title"><span>Temel ışık</span><span class="control-index">01</span></div>
             <label class="slider-row" for="exposure"><span>Pozlama</span><output id="value-exposure">0</output></label><input class="pro-slider" id="exposure" data-setting="exposure" type="range" min="-100" max="100" value="0" step="1">
             <label class="slider-row" for="contrast"><span>Kontrast</span><output id="value-contrast">0</output></label><input class="pro-slider" id="contrast" data-setting="contrast" type="range" min="-50" max="50" value="0" step="1">
             <label class="slider-row" for="highlights"><span>Parlak alanlar</span><output id="value-highlights">0</output></label><input class="pro-slider" id="highlights" data-setting="highlights" type="range" min="-100" max="100" value="0" step="1">
             <label class="slider-row" for="shadows"><span>Gölgeler</span><output id="value-shadows">0</output></label><input class="pro-slider" id="shadows" data-setting="shadows" type="range" min="-100" max="100" value="0" step="1">
           </div>
-          <div class="control-group">
+          <div class="control-group" data-mobile-group="color">
             <div class="control-group-title"><span>Renk dengesi</span><span class="control-index">02</span></div>
             <label class="slider-row" for="temperature"><span>Sıcaklık</span><output id="value-temperature">0</output></label><input class="pro-slider" id="temperature" data-setting="temperature" type="range" min="-50" max="50" value="0" step="1">
             <label class="slider-row" for="saturation"><span>Doygunluk</span><output id="value-saturation">0</output></label><input class="pro-slider" id="saturation" data-setting="saturation" type="range" min="-100" max="50" value="0" step="1">
             <label class="slider-row" for="vibrance"><span>Canlılık</span><output id="value-vibrance">0</output></label><input class="pro-slider" id="vibrance" data-setting="vibrance" type="range" min="0" max="100" value="0" step="1">
           </div>
-          <div class="control-group">
+          <div class="control-group" data-mobile-group="detail">
             <div class="control-group-title"><span>Detay</span><span class="control-index">03</span></div>
             <label class="slider-row" for="sharpness"><span>Keskinlik</span><output id="value-sharpness">0</output></label><input class="pro-slider" id="sharpness" data-setting="sharpness" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="denoise"><span>Gürültü azaltma</span><output id="value-denoise">0</output></label><input class="pro-slider" id="denoise" data-setting="denoise" type="range" min="0" max="100" value="0" step="1">
           </div>
-          <div class="control-group control-group-last">
-            <div class="control-group-title"><span>Görünüm</span><span class="control-index">04</span></div>
+          <div class="control-group control-group-last" data-mobile-group="atmosphere">
+            <div class="control-group-title"><span>Atmosfer</span><span class="control-index">04</span></div>
             <label class="slider-row" for="fog"><span>Atmosfer / sis</span><output id="value-fog">0</output></label><input class="pro-slider" id="fog" data-setting="fog" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="vignette"><span>Kenar gölgesi</span><output id="value-vignette">0</output></label><input class="pro-slider" id="vignette" data-setting="vignette" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="fade"><span>Soluk ton</span><output id="value-fade">0</output></label><input class="pro-slider" id="fade" data-setting="fade" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="effectStrength"><span>Efekt gücü</span><output id="value-effectStrength">100</output></label><input class="pro-slider" id="effectStrength" data-setting="effectStrength" type="range" min="50" max="200" value="100" step="1">
+
+          </div>
+          <div class="control-group" data-mobile-group="water">
+            <div class="control-group-title"><span>Su akışı</span><span class="control-index">05</span></div>
             <label class="slider-row" for="water"><span>Suya tül</span><output id="value-water">0</output></label><input class="pro-slider" id="water" data-setting="water" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="waterDirection"><span>Akış yönü</span><output id="value-waterDirection">90°</output></label><input class="pro-slider" id="waterDirection" data-setting="waterDirection" type="range" min="0" max="180" value="90" step="1">
             <div class="water-mask-tools"><div class="water-mask-heading"><strong>Su alanını seç</strong><small>Otomatik seçime fırçayla ekle veya sil</small></div><div class="water-mask-actions"><button id="waterBrushBtn" class="water-tool-button" type="button" aria-pressed="false" disabled>Fotoğrafı boyayarak seç</button><button id="waterEraserBtn" class="water-tool-button" type="button" aria-pressed="false" disabled>Seçimden sil</button></div><label class="slider-row" for="waterBrushSize"><span>Fırça boyutu</span><output id="value-waterBrushSize">16</output></label><input class="pro-slider" id="waterBrushSize" type="range" min="4" max="40" value="16" step="1"><button id="waterMaskClear" class="text-button water-clear-button" type="button" disabled>Fırça işaretlerini temizle · otomatiğe dön</button><p class="water-mask-hint" id="waterMaskHint" aria-live="polite">Renk tabanlı seçim yaklaşık sonuç verir. Fırçayla alan ekleyip silebilirsin.</p></div>
+
+          </div>
+          <div class="control-group" data-mobile-group="lightfx">
+            <div class="control-group-title"><span>Işık efektleri</span><span class="control-index">06</span></div>
             <label class="slider-row" for="sunGlow"><span>Gün ışığı parıltısı</span><output id="value-sunGlow">0</output></label><input class="pro-slider" id="sunGlow" data-setting="sunGlow" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="glow"><span>Yumuşak parlama</span><output id="value-glow">0</output></label><input class="pro-slider" id="glow" data-setting="glow" type="range" min="0" max="100" value="0" step="1">
             <label class="slider-row" for="grain"><span>Film greni</span><output id="value-grain">0</output></label><input class="pro-slider" id="grain" data-setting="grain" type="range" min="0" max="100" value="0" step="1">
+
           </div>
         </fieldset>
 
@@ -186,9 +205,18 @@
           <button class="original-download" id="originalDownload" type="button" disabled>Orijinal dosyayı aynen indir</button>
         </section>
       </aside>
+      <button class="mobile-panel-backdrop" id="mobilePanelBackdrop" type="button" aria-label="Paneli kapat" hidden></button>
+      <nav class="mobile-dock" id="mobileDock" aria-label="Mobil düzenleme araçları">
+        <button type="button" class="mobile-dock-button" data-mobile-action="photo" aria-label="Fotoğraf aç"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14"/></svg><span>Fotoğraf</span></button>
+        <button type="button" class="mobile-dock-button" data-mobile-action="filters" aria-label="Filtre seç"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M5 10h10m-7 5h4"/><circle cx="7" cy="5" r="1.5"/><circle cx="12" cy="10" r="1.5"/><circle cx="9" cy="15" r="1.5"/></svg><span>Filtre</span></button>
+        <button type="button" class="mobile-dock-button" data-mobile-action="ai" aria-label="Yapay zekâ araçları" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.7 5.3L17 9l-5.3 1.7L10 16l-1.7-5.3L3 9l5.3-1.7L10 2Z"/></svg><span>AI</span></button>
+        <button type="button" class="mobile-dock-button" data-mobile-action="adjust" aria-label="Düzenleme ayarları" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 5h12M4 10h12M4 15h12"/><circle cx="8" cy="5" r="1.5"/><circle cx="12" cy="10" r="1.5"/><circle cx="7" cy="15" r="1.5"/></svg><span>Ayarla</span></button>
+        <button type="button" class="mobile-dock-button" data-mobile-action="export" aria-label="Dışa aktarma seçenekleri" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12"/></svg><span>İndir</span></button>
+        <button type="button" class="mobile-dock-button" data-mobile-action="about" aria-label="Uygulama bilgileri"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5m0-8h.01"/></svg><span>Bilgi</span></button>
+      </nav>
     </main>
 
-    <footer class="statusbar"><div class="status-left"><span class="status-light" id="statusLight"></span><span id="statusText" role="status" aria-live="polite">Hazır. Başlamak için bir fotoğraf aç.</span></div><div class="progress-track" id="progressTrack" hidden><div class="progress-fill" id="progressFill"></div></div><span class="status-right">FOTOĞRAFIN ÖNCE GELİR</span></footer>
+    <footer class="statusbar"><div class="status-left"><span class="status-light" id="statusLight"></span><span id="statusText" role="status" aria-live="polite">Hazır. Başlamak için bir fotoğraf aç.</span></div><div class="progress-track" id="progressTrack" hidden><div class="progress-fill" id="progressFill"></div></div><div class="status-right"><span>FOTOĞRAFIN ÖNCE GELİR</span><button id="aboutBtn" class="about-link" type="button" aria-haspopup="dialog">v<span class="app-version-short">1.0.0</span> · Ümit Özgüler</button></div></footer>
   </div>
 
   <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp,image/avif" hidden>
@@ -216,6 +244,14 @@
       <p class="privacy-note dialog-note">API anahtarını Google AI Studio'dan alabilirsin. Anahtarı paylaşmak istemiyorsan tüm yerel düzenleme araçları anahtarsız ve çevrimdışı çalışır.</p>
       <div class="dialog-actions"><button class="button button-quiet" id="clearKey" type="button">Anahtarı sil</button><button class="button button-dark" type="submit" value="save">Ayarları kaydet</button></div>
     </form>
+  </dialog>
+  <dialog class="about-dialog" id="aboutDialog" aria-labelledby="aboutDialogTitle">
+    <div class="about-dialog-shell">
+      <header class="about-dialog-header"><div><span class="eyebrow">UYGULAMA BİLGİSİ</span><h2 id="aboutDialogTitle">Fotoğraf Ustası</h2></div><button class="icon-button" id="aboutDialogClose" type="button" aria-label="Uygulama bilgisini kapat">×</button></header>
+      <dl class="about-details"><div><dt>Sürüm</dt><dd>v<span id="appVersion">1.0.0</span></dd></div><div><dt>Yapımcı</dt><dd>Ümit Özgüler</dd></div></dl>
+      <p class="copyright-line">© <span id="copyrightYear">2026</span> Ümit Özgüler. Tüm hakları saklıdır.</p>
+      <p class="about-note">Fotoğraflar, dışa aktarılana kadar cihazında kalır. AI düzenlemesi yalnızca açıkça başlatıldığında Google hizmetine gönderilir.</p>
+    </div>
   </dialog>
   <dialog class="install-dialog" id="installDialog" aria-labelledby="installDialogTitle">
     <div class="install-dialog-shell">

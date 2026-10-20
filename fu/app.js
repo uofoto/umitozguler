@@ -21,9 +21,13 @@
     installButton: $('#installAppBtn'), installButtonLabel: $('#installButtonLabel'),
     installDialog: $('#installDialog'), installDialogClose: $('#installDialogClose'), installSecurityNote: $('#installSecurityNote'),
     installIOSGuide: $('#installIOSGuide'), installAndroidGuide: $('#installAndroidGuide'), installDesktopGuide: $('#installDesktopGuide'),
+    workspace: $('.workspace'), mobilePanelBackdrop: $('#mobilePanelBackdrop'), mobilePanelTitle: $('#mobilePanelTitle'),
+    aboutButton: $('#aboutBtn'), aboutDialog: $('#aboutDialog'), aboutDialogClose: $('#aboutDialogClose'), appVersion: $('#appVersion'), copyrightYear: $('#copyrightYear'),
   };
   const DEFAULTS = Object.freeze({ exposure: 0, contrast: 0, highlights: 0, shadows: 0, temperature: 0, saturation: 0, vibrance: 0, sharpness: 0, denoise: 0, fog: 0, vignette: 0, fade: 0, water: 0, waterDirection: 90, effectStrength: 100, sunGlow: 0, glow: 0, grain: 0 });
   const SETTING_NAMES = Object.keys(DEFAULTS);
+  const APP_VERSION = '1.0.0';
+  const mobileLayoutQuery = window.matchMedia?.('(max-width: 700px), (max-height: 560px)');
   const MAX_HISTORY = 40;
   let originalBitmap = null;
   let originalFile = null;
@@ -54,6 +58,72 @@
   };
   const isAppleMobile = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const isAndroidMobile = () => /android/i.test(navigator.userAgent);
+
+  function setMobileAdjustmentTab(tab) {
+    for (const group of document.querySelectorAll('.right-rail .control-group[data-mobile-group]')) {
+      group.hidden = !!mobileLayoutQuery?.matches && group.dataset.mobileGroup !== tab;
+    }
+    for (const button of document.querySelectorAll('[data-adjust-tab]')) {
+      const active = button.dataset.adjustTab === tab;
+      button.setAttribute('aria-selected', String(active));
+      button.classList.toggle('active', active);
+    }
+  }
+
+  function setMobilePanel(panel) {
+    const panelNames = ['ai', 'adjust', 'export'];
+    for (const name of panelNames) els.workspace.classList.remove(`mobile-panel-${name}`);
+    els.workspace.classList.remove('mobile-panel-open');
+    if (panel) {
+      els.workspace.classList.add(`mobile-panel-${panel}`, 'mobile-panel-open');
+      const titles = { ai: 'AI ve hızlı araçlar', adjust: 'Düzenleme araçları', export: 'Dışa aktar' };
+      els.mobilePanelTitle.textContent = titles[panel] || 'Düzenleme araçları';
+    }
+    els.mobilePanelBackdrop.hidden = !panel;
+    for (const button of document.querySelectorAll('[data-mobile-action][aria-pressed]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.mobileAction === panel));
+    }
+  }
+
+  function setupMobileNavigation() {
+    if (mobileLayoutQuery?.matches) setMobileAdjustmentTab('light');
+    mobileLayoutQuery?.addEventListener?.('change', (event) => {
+      setMobilePanel(null);
+      for (const group of document.querySelectorAll('.right-rail .control-group[data-mobile-group]')) group.hidden = event.matches && group.dataset.mobileGroup !== 'light';
+      if (event.matches) setMobileAdjustmentTab('light');
+    });
+    for (const button of document.querySelectorAll('[data-mobile-action]')) {
+      button.addEventListener('click', () => {
+        const action = button.dataset.mobileAction;
+        if (action === 'photo') {
+          setMobilePanel(null);
+          if (!isBusy) els.fileInput.click();
+        } else if (action === 'filters') {
+          setMobilePanel(null);
+          if (originalBitmap) els.filterLibraryBtn.click(); else setMessage('Filtre seçmek için önce bir fotoğraf aç.');
+        } else if (action === 'about') {
+          setMobilePanel(null);
+          try { els.aboutDialog.showModal(); } catch (_) { setMessage(`Fotoğraf Ustası v${APP_VERSION} · Yapımcı: Ümit Özgüler · © ${new Date().getFullYear()} Ümit Özgüler.`); }
+        } else {
+          const next = els.workspace.classList.contains(`mobile-panel-${action}`) ? null : action;
+          setMobilePanel(next);
+        }
+      });
+    }
+    for (const button of document.querySelectorAll('[data-mobile-close]')) button.addEventListener('click', () => setMobilePanel(null));
+    els.mobilePanelBackdrop.addEventListener('click', () => setMobilePanel(null));
+    for (const button of document.querySelectorAll('[data-adjust-tab]')) button.addEventListener('click', () => setMobileAdjustmentTab(button.dataset.adjustTab));
+  }
+
+  function setupApplicationInfo() {
+    els.appVersion.textContent = APP_VERSION;
+    for (const label of document.querySelectorAll('.app-version-short')) label.textContent = APP_VERSION;
+    els.copyrightYear.textContent = String(new Date().getFullYear());
+    const closeAbout = () => els.aboutDialog.close();
+    els.aboutButton.addEventListener('click', () => els.aboutDialog.showModal());
+    els.aboutDialogClose.addEventListener('click', closeAbout);
+    els.aboutDialog.addEventListener('click', (event) => { if (event.target === els.aboutDialog) closeAbout(); });
+  }
 
   function updateInstallButton() {
     const standalone = appWasInstalled || navigator.standalone === true || !!window.matchMedia?.('(display-mode: standalone)').matches;
@@ -1081,6 +1151,8 @@
     els.filterDialogClose.addEventListener('click', () => els.filterDialog.close());
     els.filterDialog.addEventListener('click', (event) => { if (event.target === els.filterDialog) els.filterDialog.close(); });
     els.filterSearch.addEventListener('input', renderFilterCards);
+    setupMobileNavigation();
+    setupApplicationInfo();
     els.autoBtn.addEventListener('click', analyzeAndImprove);
     els.aiApply.addEventListener('click', applyGeminiEdit);
     els.localApply.addEventListener('click', applyLocalCommand);
