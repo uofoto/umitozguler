@@ -1,4 +1,4 @@
-const CACHE = 'foto-ustasi-v9';
+const CACHE = 'foto-ustasi-v11';
 const SHELL = ['./', './index.html', './styles.css', './filters.js', './effects.js', './app.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './manus-routes.json'];
 
 self.addEventListener('install', (event) => {

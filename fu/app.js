@@ -18,6 +18,9 @@
     filterCategories: $('#filterCategories'), filterSearch: $('#filterSearch'), filterGrid: $('#filterGrid'), filterResultsCount: $('#filterResultsCount'),
     waterMaskCanvas: $('#waterMaskCanvas'), waterBrushBtn: $('#waterBrushBtn'), waterEraserBtn: $('#waterEraserBtn'),
     waterMaskClear: $('#waterMaskClear'), waterMaskHint: $('#waterMaskHint'), waterBrushSize: $('#waterBrushSize'),
+    installButton: $('#installAppBtn'), installButtonLabel: $('#installButtonLabel'),
+    installDialog: $('#installDialog'), installDialogClose: $('#installDialogClose'), installSecurityNote: $('#installSecurityNote'),
+    installIOSGuide: $('#installIOSGuide'), installAndroidGuide: $('#installAndroidGuide'), installDesktopGuide: $('#installDesktopGuide'),
   };
   const DEFAULTS = Object.freeze({ exposure: 0, contrast: 0, highlights: 0, shadows: 0, temperature: 0, saturation: 0, vibrance: 0, sharpness: 0, denoise: 0, fog: 0, vignette: 0, fade: 0, water: 0, waterDirection: 90, effectStrength: 100, sunGlow: 0, glow: 0, grain: 0 });
   const SETTING_NAMES = Object.keys(DEFAULTS);
@@ -40,6 +43,8 @@
   let waterBrushErase = false;
   let activeWaterStroke = null;
   let waterMaskPreviewCache = null;
+  let deferredInstallPrompt = null;
+  let appWasInstalled = false;
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const normalizeSearchText = (text) => String(text).toLocaleLowerCase('tr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll('ı', 'i');
@@ -47,6 +52,66 @@
     els.statusText.textContent = text;
     els.statusLight.className = `status-light${type === 'error' ? ' error' : type === 'busy' ? ' busy' : ''}`;
   };
+  const isAppleMobile = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroidMobile = () => /android/i.test(navigator.userAgent);
+
+  function updateInstallButton() {
+    const standalone = appWasInstalled || navigator.standalone === true || !!window.matchMedia?.('(display-mode: standalone)').matches;
+    els.installButton.hidden = standalone;
+    const label = isAppleMobile() ? 'Ana ekrana ekle' : isAndroidMobile() ? 'Uygulamayı yükle' : 'Telefona kur';
+    els.installButtonLabel.textContent = label;
+    els.installButton.setAttribute('aria-label', label);
+    els.installButton.title = label;
+  }
+
+  function showInstallInstructions() {
+    const ios = isAppleMobile();
+    const android = isAndroidMobile();
+    const localHost = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+    const secure = location.protocol === 'https:' || (location.protocol === 'http:' && localHost);
+    els.installIOSGuide.hidden = !ios;
+    els.installAndroidGuide.hidden = !android;
+    els.installDesktopGuide.hidden = ios || android;
+    els.installSecurityNote.textContent = location.protocol === 'https:'
+      ? 'Bu site HTTPS üzerinden sunuluyor. Kurulum için aynı adresi telefonda tarayıcıda aç. İndirilmiş index.html dosyasını tek başına açmak uygulama kurmaz.'
+      : secure
+        ? 'Bu yerel test adresi yükleme denemesi için kullanılabilir. Telefonunda kullanmak için sitenin HTTPS adresini aç; indirilen index.html tek başına kurulamaz.'
+      : 'Önce siteni HTTPS adresinden aç. file:// ile açılan indirilen index.html sayfası uygulama olarak kurulamaz.';
+    try { els.installDialog.showModal(); }
+    catch (_) { setMessage('Kurulum yönergeleri bu tarayıcıda açılamadı. HTTPS site adresini telefonda Safari veya Chrome ile aç.'); }
+  }
+
+  function setupInstallSupport() {
+    updateInstallButton();
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      updateInstallButton();
+    });
+    window.addEventListener('appinstalled', () => {
+      appWasInstalled = true;
+      deferredInstallPrompt = null;
+      updateInstallButton();
+      setMessage('Fotoğraf Ustası telefona kuruldu. Uygulamayı ana ekrandan açabilirsin.');
+    });
+    els.installButton.addEventListener('click', async () => {
+      if (!deferredInstallPrompt) { showInstallInstructions(); return; }
+      const prompt = deferredInstallPrompt;
+      deferredInstallPrompt = null;
+      try {
+        await prompt.prompt();
+        const choice = await prompt.userChoice;
+        setMessage(choice.outcome === 'accepted' ? 'Kurulum başlatıldı; uygulama telefona eklendiğinde ana ekrandan açabilirsin.' : 'Kurulum iptal edildi. İstediğinde yeniden deneyebilirsin.');
+      } catch (_) {
+        setMessage('Tarayıcı kurulum penceresini açamadı. Menüden “Uygulamayı yükle” veya “Ana ekrana ekle” seçeneğini kullan.');
+      } finally { updateInstallButton(); }
+    });
+    els.installDialogClose.addEventListener('click', () => els.installDialog.close());
+    els.installDialog.addEventListener('click', (event) => { if (event.target === els.installDialog) els.installDialog.close(); });
+    const standaloneQuery = window.matchMedia?.('(display-mode: standalone)');
+    if (standaloneQuery?.addEventListener) standaloneQuery.addEventListener('change', updateInstallButton);
+    else standaloneQuery?.addListener?.(updateInstallButton);
+  }
   const setProgress = (value, visible = true) => {
     els.progressTrack.hidden = !visible;
     els.progressFill.style.width = `${clamp(value, 0, 100)}%`;
@@ -1118,6 +1183,7 @@
   renderFilterLibrary();
   drawMaskOverlay();
   setupEvents();
+  setupInstallSupport();
   syncControls();
   if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
 })();

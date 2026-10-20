@@ -1,6 +1,7 @@
 {
   "name": "Fotoğraf Ustası — Görsel Düzenleme Stüdyosu",
   "short_name": "Foto Ustası",
+  "id": "./",
   "description": "Fotoğraflarını cihazında, özgün boyutunu koruyarak iyileştir ve düzenle.",
   "lang": "tr",
   "start_url": "./",

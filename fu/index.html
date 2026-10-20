@@ -6,6 +6,9 @@
   <meta name="theme-color" content="#f3f0e8">
   <meta name="description" content="Fotoğraf Ustası ile fotoğraflarını özgün boyutunda, tahribatsız biçimde iyileştir ve düzenle.">
   <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Foto Ustası">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Fotoğraf Ustası — Görsel düzenleme stüdyosu</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon-192.png" type="image/png">
@@ -24,11 +27,14 @@
       </a>
       <div class="topbar-right">
         <span class="privacy-pill"><span class="privacy-dot"></span> Fotoğrafın cihazında kalır</span>
+        <button class="button button-outline install-button" id="installAppBtn" type="button" aria-haspopup="dialog" aria-label="Telefona kur">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m-4-4 4 4 4-4M4 13.5v2A1.5 1.5 0 0 0 5.5 17h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg><span class="install-button-label" id="installButtonLabel">Telefona kur</span>
+        </button>
         <button class="button button-quiet top-open" id="openBtn" type="button" aria-label="Fotoğraf aç">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg><span>Fotoğraf aç</span>
         </button>
-        <button class="button button-dark top-export" id="headerExport" type="button" disabled>
-          Dışa aktar <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12"/></svg>
+        <button class="button button-dark top-export" id="headerExport" type="button" aria-label="Dışa aktar" disabled>
+          <span class="top-export-label">Dışa aktar</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12"/></svg>
         </button>
       </div>
     </header>
@@ -210,6 +216,28 @@
       <p class="privacy-note dialog-note">API anahtarını Google AI Studio'dan alabilirsin. Anahtarı paylaşmak istemiyorsan tüm yerel düzenleme araçları anahtarsız ve çevrimdışı çalışır.</p>
       <div class="dialog-actions"><button class="button button-quiet" id="clearKey" type="button">Anahtarı sil</button><button class="button button-dark" type="submit" value="save">Ayarları kaydet</button></div>
     </form>
+  </dialog>
+  <dialog class="install-dialog" id="installDialog" aria-labelledby="installDialogTitle">
+    <div class="install-dialog-shell">
+      <header class="install-dialog-header">
+        <div><span class="eyebrow">TELEFONUNDA UYGULAMA GİBİ</span><h2 id="installDialogTitle">Fotoğraf Ustası'nı ekle</h2></div>
+        <button class="icon-button dialog-close" id="installDialogClose" type="button" aria-label="Kurulum yönergelerini kapat">×</button>
+      </header>
+      <p class="install-security-note" id="installSecurityNote" role="note"></p>
+      <section class="install-guide" id="installAndroidGuide" hidden>
+        <h3>Android · Chrome</h3>
+        <ol><li>Bu sitenin HTTPS adresini Chrome'da aç.</li><li>“Uygulamayı yükle” penceresi çıkarsa onayla. Çıkmazsa ⋮ menüsünden “Uygulamayı yükle” veya “Ana ekrana ekle” seç.</li></ol>
+      </section>
+      <section class="install-guide" id="installIOSGuide" hidden>
+        <h3>iPhone / iPad · Safari</h3>
+        <ol><li>Bu sitenin HTTPS adresini Safari'de aç. Başka bir uygulama içinden açtıysan Safari'de aç.</li><li>Paylaş düğmesine dokun; menüde “Ana Ekrana Ekle”yi seç. Gerekirse listede aşağı kaydır.</li><li>“Ekle”ye dokun. Fotoğraf Ustası ana ekranda bir uygulama simgesi olarak görünür.</li></ol>
+      </section>
+      <section class="install-guide" id="installDesktopGuide" hidden>
+        <h3>Telefonunda kur</h3>
+        <p>Bu sitenin HTTPS bağlantısını telefonda Safari (iPhone/iPad) veya Chrome (Android) ile aç. iPhone'da Paylaş → Ana Ekrana Ekle; Android'de Chrome ⋮ → Uygulamayı yükle / Ana ekrana ekle adımlarını izle.</p>
+      </section>
+      <p class="install-apk-note">Bu bir web uygulamasıdır (PWA), APK dosyası değildir. İndirilmiş <code>index.html</code> tek başına kurulamaz; manifest, simgeler ve çevrimdışı dosyalar sitenin HTTPS adresinden birlikte sunulmalıdır.</p>
+    </div>
   </dialog>
 </body>
 </html>

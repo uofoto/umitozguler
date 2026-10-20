@@ -371,3 +371,39 @@ textarea::placeholder, input::placeholder { color: #aaa99f; }
   .water-mask-tools { padding: 9px 8px 7px; }
   .water-tool-button { min-height: 34px; font-size: 8px; }
 }
+
+
+/* Mobile PWA installation */
+.install-button { white-space: nowrap; }
+.install-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.install-dialog { width: min(470px, calc(100vw - 24px)); max-height: min(90dvh, 720px); overflow: auto; padding: 0; border: 1px solid #d9ddd3; border-radius: 13px; color: var(--ink); background: #fbfaf6; box-shadow: 0 22px 80px #17211c45; }
+.install-dialog::backdrop { background: #17231fa8; backdrop-filter: blur(4px); }
+.install-dialog-shell { padding: 21px 23px 19px; }
+.install-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.install-dialog-header h2 { margin: 5px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 500; }
+.install-security-note { margin: 14px 0 10px; padding: 10px 11px; border: 1px solid #d9e2dc; border-radius: 7px; color: #4f6856; background: #f2f6f0; font-size: 11px; line-height: 1.6; }
+.install-guide { margin-top: 10px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fffefa; }
+.install-guide h3 { margin: 0 0 6px; font-size: 12px; }
+.install-guide p, .install-guide ol { margin: 0; color: #69706e; font-size: 10px; line-height: 1.65; }
+.install-guide ol { padding-left: 18px; }
+.install-guide li + li { margin-top: 4px; }
+.install-apk-note { margin: 11px 1px 0; color: #858981; font-size: 9px; line-height: 1.55; }
+.install-apk-note code { color: #4d5d52; font-size: .95em; }
+@media (max-width: 480px) {
+  .brand-copy small { display: none; }
+  .topbar-right { gap: 5px; }
+  .topbar .button { padding-inline: 8px; }
+  .install-button-label, .top-open span, .top-export-label { display: none; }
+  #installAppBtn, .top-open, .top-export { width: 34px; min-width: 34px; padding: 0; }
+  .topbar .button svg { width: 15px; height: 15px; }
+  .install-dialog-shell { padding: 16px 14px 14px; }
+  .install-dialog-header h2 { font-size: 19px; }
+}
+@media (max-width: 360px) {
+  .topbar { padding-inline: 8px; }
+  .brand { gap: 6px; }
+  .brand-mark { width: 31px; height: 31px; }
+  .brand-copy strong { font-size: 13px; }
+  .topbar-right { gap: 3px; }
+  #installAppBtn, .top-open, .top-export { width: 32px; min-width: 32px; }
+}
