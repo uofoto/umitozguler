@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="Fotoğraf Ustası ile fotoğraflarını özgün boyutunda, tahribatsız biçimde iyileştir ve düzenle.">
+  <meta name="color-scheme" content="light">
+  <title>Fotoğraf Ustası — Görsel düzenleme stüdyosu</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="filters.js" defer></script>
+  <script src="effects.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Fotoğraf Ustası ana sayfa">
+        <img class="brand-mark" src="icon-192.png" width="38" height="38" alt="">
+        <span class="brand-copy"><strong>Fotoğraf Ustası</strong><small>GÖRSEL DÜZENLEME STÜDYOSU</small></span>
+      </a>
+      <div class="topbar-right">
+        <span class="privacy-pill"><span class="privacy-dot"></span> Fotoğrafın cihazında kalır</span>
+        <button class="button button-quiet top-open" id="openBtn" type="button" aria-label="Fotoğraf aç">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg><span>Fotoğraf aç</span>
+        </button>
+        <button class="button button-dark top-export" id="headerExport" type="button" disabled>
+          Dışa aktar <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="left-rail" aria-label="Fotoğraf ve akıllı araçlar">
+        <section class="rail-section source-section">
+          <div class="section-heading"><span class="eyebrow">KAYNAK</span><span class="step-number">01</span></div>
+          <button class="dropzone" id="dropzone" type="button" aria-label="Fotoğraf seç veya buraya sürükle">
+            <span class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-5 5 5-5 5 5M4 16.5v2A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg></span>
+            <span class="dropzone-title" id="dropTitle">Fotoğrafını ekle</span>
+            <span class="dropzone-hint" id="dropHint">Sürükle bırak veya göz at<br>JPG · PNG · WebP · AVIF</span>
+          </button>
+          <div class="file-card" id="fileCard" hidden>
+            <div class="file-card-top"><span class="file-mini-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3" width="15" height="14" rx="2"/><circle cx="7" cy="8" r="1.5"/><path d="m4 15 4.5-4 2.5 2 2-2 3 4"/></svg></span><button class="text-button" id="replaceBtn" type="button">Değiştir</button></div>
+            <strong class="file-name" id="fileName">—</strong>
+            <span class="file-meta" id="fileMeta">—</span>
+            <div class="scene-badge" id="sceneBadge"><span class="scene-sparkle">✳</span><span id="sceneLabel">Sahne analizi bekleniyor</span></div>
+            <p class="scene-note" id="sceneNote">Fotoğrafın ışığı ve ton dağılımı analiz edilir.</p>
+          </div>
+        </section>
+
+        <section class="rail-section smart-section">
+          <div class="section-heading"><span class="eyebrow">AKILLI ARAÇLAR</span><span class="step-number">02</span></div>
+          <div class="smart-card">
+            <div class="smart-card-heading"><span class="smart-spark">✳</span><div><strong>Akıllı iyileştirme</strong><small>Fotoğrafına göre dengeli dokunuşlar</small></div></div>
+            <button class="button button-accent button-wide" id="autoBtn" type="button" disabled><span>Doğal görünümü iyileştir</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.7 5.3L17 9l-5.3 1.7L10 16l-1.7-5.3L3 9l5.3-1.7L10 2Z"/><path d="m16 13 .8 2.2L19 16l-2.2.8L16 19l-.8-2.2L13 16l2.2-.8L16 13Z"/></svg></button>
+            <p class="microcopy">Orijinale dokunmaz. İstediğin an geri alabilirsin.</p>
+          </div>
+          <div class="looks-block" aria-label="Hızlı görünümler">
+            <span class="looks-title">ÇEVRİMDIŞI HIZLI GÖRÜNÜMLER</span>
+            <div class="looks-grid">
+              <button class="look-chip" data-look="warm" type="button" disabled>Sıcak ışık</button>
+              <button class="look-chip" data-look="fog" type="button" disabled>Hafif sis</button>
+              <button class="look-chip" data-look="vintage" type="button" disabled>Nostalji</button>
+              <button class="look-chip" data-look="mono" type="button" disabled>Siyah-beyaz</button>
+              <button class="look-chip" data-look="vivid" type="button" disabled>Canlı renk</button>
+            </div>
+            <button class="filter-library-trigger" id="filterLibraryBtn" type="button" disabled><span>Hazır filtre kütüphanesi</span><b>40</b></button>
+          </div>
+        </section>
+
+        <section class="rail-section prompt-section">
+          <div class="section-heading"><span class="eyebrow">YAPAY ZEKÂ DÜZENLEME</span><span class="ai-badge">GEMINI</span></div>
+          <label class="prompt-label" for="aiPrompt">Nasıl bir değişiklik istiyorsun?</label>
+          <textarea id="aiPrompt" rows="3" placeholder="Örn. arka planı sıcak gün batımı tonlarına getir…" disabled></textarea>
+          <button class="button button-outline button-wide" id="aiApply" type="button" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.7 5.3L17 9l-5.3 1.7L10 16l-1.7-5.3L3 9l5.3-1.7L10 2Z"/></svg> Yapay zekâyla güçlü düzenle</button>
+          <button class="button button-quiet button-wide local-command-button" id="localApply" type="button" disabled>Basit komutu cihazda uygula</button>
+          <button class="text-button key-button" id="keyBtn" type="button">Yapay zekâ bağlantı ayarları</button>
+          <p class="privacy-note">AI düzenleme için kendi Gemini anahtarın gerekir. Yalnızca “Yapay zekâyla güçlü düzenle”ye bastığında çalışma kopyası Google'a gider; orijinal fotoğrafın değişmez. Cihazda komut sınırlı ve çevrimdışı çalışır.</p>
+        </section>
+
+        <div class="rail-bottom"><span class="local-indicator"></span><span>Yerel düzenleme · İnternet gerekmez</span></div>
+      </aside>
+
+      <section class="studio" aria-label="Fotoğraf önizleme alanı">
+        <div class="studio-toolbar">
+          <div class="studio-title"><span class="eyebrow">ÇALIŞMA ALANI</span><strong id="workspaceTitle">Yeni çalışma</strong></div>
+          <div class="view-tools">
+            <button class="icon-button" id="zoomOut" type="button" aria-label="Uzaklaştır" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12"/></svg></button>
+            <span class="zoom-label" id="zoomLabel">Sığdır</span>
+            <button class="icon-button" id="zoomIn" type="button" aria-label="Yakınlaştır" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
+            <span class="tool-divider"></span>
+            <button class="icon-button fit-button" id="fitBtn" type="button" aria-label="Çalışma alanına sığdır" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/><path d="M7 7h6v6H7z"/></svg></button>
+          </div>
+        </div>
+
+        <div class="stage" id="stage">
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="empty-state" id="emptyState">
+            <div class="empty-art"><svg viewBox="0 0 88 72" aria-hidden="true"><rect x="9" y="10" width="70" height="52" rx="9"/><circle cx="31" cy="28" r="6"/><path d="m16 55 21-19 12 10 9-8 14 17"/><path class="empty-spark" d="m69 8 2.5-5 2.5 5 5 2.5-5 2.5-2.5 5-2.5-5-5-2.5L69 8Z"/></svg></div>
+            <h1>İyi fotoğraf, doğru ışıkla başlar.</h1>
+            <p>Bir fotoğraf seç. Orijinalin güvende kalırken, en iyi hâlini birlikte bulalım.</p>
+            <button class="button button-dark" id="emptyOpen" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12m-6-6h12"/></svg> Fotoğrafını aç</button>
+            <span class="empty-support">JPG, PNG, WebP veya AVIF · En fazla çözünürlük korunur</span>
+          </div>
+          <div class="preview-wrap" id="previewWrap" hidden>
+            <canvas id="originalCanvas" aria-label="Orijinal fotoğraf"></canvas>
+            <canvas id="editedCanvas" aria-label="Düzenlenmiş fotoğraf"></canvas>
+            <canvas id="waterMaskCanvas" class="water-mask-canvas" aria-label="Su efekti için seçilen bölge" aria-hidden="true"></canvas>
+            <div class="compare-divider" id="compareDivider" aria-hidden="true"><span class="compare-handle"><svg viewBox="0 0 20 20"><path d="m7 5-4 5 4 5m6-10 4 5-4 5"/></svg></span></div>
+            <span class="image-tag tag-before">ORİJİNAL</span><span class="image-tag tag-after">DÜZENLENMİŞ</span>
+          </div>
+          <div class="drop-overlay" id="dropOverlay">Fotoğrafı bırak</div>
+          <div class="stage-corner stage-corner-left" id="stageResolution">—</div>
+          <div class="stage-corner stage-corner-right" id="stageFormat">—</div>
+        </div>
+
+        <div class="compare-bar">
+          <div class="compare-actions">
+            <button class="compare-button" id="compareHold" type="button" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 9V5.5a1.5 1.5 0 0 1 3 0V9m0-1a1.5 1.5 0 0 1 3 0v1m0 0a1.5 1.5 0 0 1 3 0v5a3 3 0 0 1-3 3H9a3 3 0 0 1-2.5-1.3L4 12a1.5 1.5 0 0 1 2.5-1.8L9 13"/></svg> Basılı tut: orijinal</button>
+            <button class="compare-button" id="splitBtn" type="button" aria-pressed="false" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M10 4v12"/></svg> Bölünmüş görünüm</button>
+          </div>
+          <label class="split-control" id="splitControl" for="splitRange" hidden><span>Önce / sonra</span><input id="splitRange" type="range" min="8" max="92" value="50" aria-label="Karşılaştırma bölme noktası"><output id="splitOutput">50%</output></label>
+          <div class="history-actions">
+            <button class="icon-button" id="undoBtn" type="button" aria-label="Geri al" title="Geri al (Ctrl+Z)" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 6 4 10l4 4M4 10h7a5 5 0 0 1 5 5"/></svg></button>
+            <button class="icon-button" id="redoBtn" type="button" aria-label="Yinele" title="Yinele (Ctrl+Shift+Z)" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 6 4 4-4 4m4-4H9a5 5 0 0 0-5 5"/></svg></button>
+            <span class="tool-divider"></span>
+            <span class="history-count" id="historyCount">Henüz düzenleme yok</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right-rail" aria-label="Düzenleme ve dışa aktarma kontrolleri">
+        <div class="panel-heading"><div><span class="eyebrow">İNCE AYAR</span><h2>Işık ve renk</h2></div><button class="text-button reset-button" id="resetBtn" type="button" disabled>Sıfırla</button></div>
+        <fieldset class="adjust-fieldset" id="adjustFieldset" disabled>
+          <div class="control-group">
+            <div class="control-group-title"><span>Temel ışık</span><span class="control-index">01</span></div>
+            <label class="slider-row" for="exposure"><span>Pozlama</span><output id="value-exposure">0</output></label><input class="pro-slider" id="exposure" data-setting="exposure" type="range" min="-100" max="100" value="0" step="1">
+            <label class="slider-row" for="contrast"><span>Kontrast</span><output id="value-contrast">0</output></label><input class="pro-slider" id="contrast" data-setting="contrast" type="range" min="-50" max="50" value="0" step="1">
+            <label class="slider-row" for="highlights"><span>Parlak alanlar</span><output id="value-highlights">0</output></label><input class="pro-slider" id="highlights" data-setting="highlights" type="range" min="-100" max="100" value="0" step="1">
+            <label class="slider-row" for="shadows"><span>Gölgeler</span><output id="value-shadows">0</output></label><input class="pro-slider" id="shadows" data-setting="shadows" type="range" min="-100" max="100" value="0" step="1">
+          </div>
+          <div class="control-group">
+            <div class="control-group-title"><span>Renk dengesi</span><span class="control-index">02</span></div>
+            <label class="slider-row" for="temperature"><span>Sıcaklık</span><output id="value-temperature">0</output></label><input class="pro-slider" id="temperature" data-setting="temperature" type="range" min="-50" max="50" value="0" step="1">
+            <label class="slider-row" for="saturation"><span>Doygunluk</span><output id="value-saturation">0</output></label><input class="pro-slider" id="saturation" data-setting="saturation" type="range" min="-100" max="50" value="0" step="1">
+            <label class="slider-row" for="vibrance"><span>Canlılık</span><output id="value-vibrance">0</output></label><input class="pro-slider" id="vibrance" data-setting="vibrance" type="range" min="0" max="100" value="0" step="1">
+          </div>
+          <div class="control-group">
+            <div class="control-group-title"><span>Detay</span><span class="control-index">03</span></div>
+            <label class="slider-row" for="sharpness"><span>Keskinlik</span><output id="value-sharpness">0</output></label><input class="pro-slider" id="sharpness" data-setting="sharpness" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="denoise"><span>Gürültü azaltma</span><output id="value-denoise">0</output></label><input class="pro-slider" id="denoise" data-setting="denoise" type="range" min="0" max="100" value="0" step="1">
+          </div>
+          <div class="control-group control-group-last">
+            <div class="control-group-title"><span>Görünüm</span><span class="control-index">04</span></div>
+            <label class="slider-row" for="fog"><span>Atmosfer / sis</span><output id="value-fog">0</output></label><input class="pro-slider" id="fog" data-setting="fog" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="vignette"><span>Kenar gölgesi</span><output id="value-vignette">0</output></label><input class="pro-slider" id="vignette" data-setting="vignette" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="fade"><span>Soluk ton</span><output id="value-fade">0</output></label><input class="pro-slider" id="fade" data-setting="fade" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="effectStrength"><span>Efekt gücü</span><output id="value-effectStrength">100</output></label><input class="pro-slider" id="effectStrength" data-setting="effectStrength" type="range" min="50" max="200" value="100" step="1">
+            <label class="slider-row" for="water"><span>Suya tül</span><output id="value-water">0</output></label><input class="pro-slider" id="water" data-setting="water" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="waterDirection"><span>Akış yönü</span><output id="value-waterDirection">90°</output></label><input class="pro-slider" id="waterDirection" data-setting="waterDirection" type="range" min="0" max="180" value="90" step="1">
+            <div class="water-mask-tools"><div class="water-mask-heading"><strong>Su alanını seç</strong><small>Otomatik seçime fırçayla ekle veya sil</small></div><div class="water-mask-actions"><button id="waterBrushBtn" class="water-tool-button" type="button" aria-pressed="false" disabled>Fotoğrafı boyayarak seç</button><button id="waterEraserBtn" class="water-tool-button" type="button" aria-pressed="false" disabled>Seçimden sil</button></div><label class="slider-row" for="waterBrushSize"><span>Fırça boyutu</span><output id="value-waterBrushSize">16</output></label><input class="pro-slider" id="waterBrushSize" type="range" min="4" max="40" value="16" step="1"><button id="waterMaskClear" class="text-button water-clear-button" type="button" disabled>Fırça işaretlerini temizle · otomatiğe dön</button><p class="water-mask-hint" id="waterMaskHint" aria-live="polite">Renk tabanlı seçim yaklaşık sonuç verir. Fırçayla alan ekleyip silebilirsin.</p></div>
+            <label class="slider-row" for="sunGlow"><span>Gün ışığı parıltısı</span><output id="value-sunGlow">0</output></label><input class="pro-slider" id="sunGlow" data-setting="sunGlow" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="glow"><span>Yumuşak parlama</span><output id="value-glow">0</output></label><input class="pro-slider" id="glow" data-setting="glow" type="range" min="0" max="100" value="0" step="1">
+            <label class="slider-row" for="grain"><span>Film greni</span><output id="value-grain">0</output></label><input class="pro-slider" id="grain" data-setting="grain" type="range" min="0" max="100" value="0" step="1">
+          </div>
+        </fieldset>
+
+        <section class="export-panel">
+          <div class="export-heading"><span class="eyebrow">SONUÇ</span><span class="export-lock"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="8" width="12" height="9" rx="2"/><path d="M7 8V5a3 3 0 0 1 6 0v3"/></svg> Cihazında</span></div>
+          <h3>Dışa aktar</h3>
+          <label class="field-label" for="formatSelect">Dosya biçimi</label>
+          <select id="formatSelect" disabled><option value="source">Orijinal biçim</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select>
+          <div class="quality-row" id="qualityRow"><label class="field-label" for="quality">Kalite</label><output id="qualityOutput">%100</output></div>
+          <input class="pro-slider quality-slider" id="quality" type="range" min="70" max="100" value="100" step="1" disabled>
+          <p class="export-note" id="exportNote">Yerel düzenlemeler özgün piksel boyutunda kaydedilir. AI sonucu modelin ürettiği çözünürlükte dışa aktarılır. İşlenmemiş orijinal dosyayı meta verisiyle aynen indirebilirsin.</p>
+          <button class="button button-dark button-wide download-button" id="downloadBtn" type="button" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12"/></svg> Düzenlenmiş fotoğrafı indir</button>
+          <button class="original-download" id="originalDownload" type="button" disabled>Orijinal dosyayı aynen indir</button>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="statusbar"><div class="status-left"><span class="status-light" id="statusLight"></span><span id="statusText" role="status" aria-live="polite">Hazır. Başlamak için bir fotoğraf aç.</span></div><div class="progress-track" id="progressTrack" hidden><div class="progress-fill" id="progressFill"></div></div><span class="status-right">FOTOĞRAFIN ÖNCE GELİR</span></footer>
+  </div>
+
+  <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp,image/avif" hidden>
+  <dialog class="filter-dialog" id="filterDialog" aria-labelledby="filterDialogTitle">
+    <div class="filter-dialog-shell">
+      <header class="filter-dialog-header">
+        <div><span class="eyebrow">FOTOĞRAFINA GÖRE SEÇ</span><h2 id="filterDialogTitle">Hazır görünüm kütüphanesi</h2></div>
+        <button class="icon-button dialog-close" id="filterDialogClose" type="button" aria-label="Filtre kütüphanesini kapat">×</button>
+      </header>
+      <p class="filter-dialog-intro">40 görünümden birini seç; ayarlar fotoğrafının özgün kopyası üzerinde yeniden oluşturulur. Sonucu kaydırıcılardan ince ayarlayabilirsin.</p>
+      <div class="filter-categories" id="filterCategories" role="tablist" aria-label="Filtre kategorileri"></div>
+      <label class="filter-search-label" for="filterSearch">Filtre ara</label>
+      <input class="filter-search" id="filterSearch" type="search" placeholder="Gün batımı, sis, film…" autocomplete="off">
+      <div class="filter-results-count" id="filterResultsCount" aria-live="polite">40 / 40 filtre</div>
+      <div class="filter-grid" id="filterGrid" aria-label="Hazır fotoğraf filtreleri"></div>
+      <p class="filter-footnote">Yerel su seçimi yaklaşık algılanır; istersen fırçayla maskeleyip Gemini AI ile daha güçlü, uzun pozlamalı sonuç isteyebilirsin.</p>
+    </div>
+  </dialog>
+  <dialog class="settings-dialog" id="settingsDialog">
+    <form method="dialog" id="settingsForm">
+      <div class="dialog-heading"><div><span class="eyebrow">BAĞLANTI</span><h2>Yapay zekâ ayarları</h2></div><button class="icon-button dialog-close" type="submit" value="cancel" aria-label="Kapat">×</button></div>
+      <p class="dialog-intro">İsteğe bağlı Gemini görsel düzenleme. Bu uygulama anahtarını sunucusuna göndermez; anahtar yalnızca bu tarayıcıda saklanır ve doğrudan Google'a kullanılırken iletilir.</p>
+      <label class="field-label" for="apiKey">Gemini API anahtarı</label><input id="apiKey" type="password" autocomplete="off" placeholder="AIza…">
+      <label class="field-label" for="modelName">Görsel modeli</label><input id="modelName" type="text" value="gemini-2.5-flash-image" spellcheck="false">
+      <p class="privacy-note dialog-note">API anahtarını Google AI Studio'dan alabilirsin. Anahtarı paylaşmak istemiyorsan tüm yerel düzenleme araçları anahtarsız ve çevrimdışı çalışır.</p>
+      <div class="dialog-actions"><button class="button button-quiet" id="clearKey" type="button">Anahtarı sil</button><button class="button button-dark" type="submit" value="save">Ayarları kaydet</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
