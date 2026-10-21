@@ -44,9 +44,17 @@ BİÇİMLER VE KAYIPSIZLIK
    - Köken denetimi, dosyadaki açık C2PA/XMP/IPTC kayıtlarını okur ve kaba piksel
      testleri çalıştırır. SynthID gibi görünmez filigranlar bu yöntemle tespit edilemez.
    - ZIP sıkıştırmasızdır. Orijinal dosya değiştirilmez.
+   - Hakkında bölümündeki "Uygulamadan çık" düğmesi pencereyi kapatmayı dener.
+     Tarayıcı güvenliği izin vermezse sekmeyi veya uygulama penceresini elle kapatmak
+     gerekir; web uygulamaları her sekmeyi programla kapatamaz.
    - Salt-okunur köken denetimi her kaynak dosya için SHA-256 özeti, biçim/kapsayıcı,
      tanınan C2PA/JUMBF kaydı durumu köken kayıtlarını ve kaba piksel testi sonucunu
      raporlar. "Bulgu yok" sonucu filigranın yokluğu anlamına gelmez.
+   - Köken raporundaki "Google Gemini'de SynthID kontrolünü aç" bağlantısı resmi
+     Gemini sayfasını yeni sekmede açar. Dosya Google'a ancak kullanıcı tarafından
+     yüklenir; uygulama sonucu otomatik okuyamaz. Kullanıcı, aldığı sonucu ve notunu
+     yalnızca bu tarayıcıdaki localStorage alanına SHA-256 özetiyle ilişkilendirerek
+     ayrıca kaydedebilir.
 
 GÜNCELLEME (yapımcı: Ümit Özgüler)
    Yeni sürümde şu üç değeri birlikte güncelle:

@@ -201,6 +201,12 @@ button { cursor: pointer; }
 .report-box .good { color: var(--ok); }
 .report-box .warn { color: var(--cut); }
 .report-box .neutral { color: var(--ink-2); }
+.audit-actions { margin-top: 9px; display: grid; gap: 7px; }
+.audit-actions p { margin: 0; font-size: 0.75rem; line-height: 1.4; color: var(--ink-2); }
+.audit-actions select, .audit-actions input { width: 100%; min-height: 38px; box-sizing: border-box; border: 1px solid var(--line); border-radius: 7px; padding: 7px 9px; background: var(--surface); color: var(--ink); }
+.audit-actions .btn { min-height: 38px; padding: 0 11px; font-size: 0.78rem; }
+.audit-actions .external { text-align: center; text-decoration: none; }
+.audit-saved { margin: 0; font: 500 0.72rem/1.35 var(--f-mono); color: var(--ok); }
 .note { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--surface); border: 1px dashed var(--line); font-size: 0.88rem; color: var(--ink-2); }
 .note b { color: var(--ink); }
 .privacy-note { border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line)); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
@@ -320,12 +326,14 @@ html{background:var(--bg)}
         <div class="row">
           <button class="btn primary" id="up-check" type="button">Güncellemeleri denetle ve indir</button>
           <button class="btn" id="theme" type="button">Tema: otomatik</button>
+          <button class="btn" id="exit-app" type="button">Uygulamadan çık</button>
         </div>
         <label class="opt" for="auto-update">
           <span><b>Açılışta güncellemeyi denetle</b><small>Yalnızca kendi yayın adresindeki sürüm bilgisini ister. Kapalıysa otomatik istek gönderilmez; elle denetleyebilirsin.</small></span>
           <input id="auto-update" type="checkbox" checked>
         </label>
         <p class="up" id="up-msg" aria-live="polite"></p>
+        <p class="up" id="exit-msg" aria-live="polite"></p>
       </details>
     </section>
 
@@ -1024,6 +1032,19 @@ html{background:var(--bg)}
     return Array.prototype.map.call(new Uint8Array(digest), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
   }
 
+  var GOOGLE_SYNTHID_VERIFY_URL = 'https://gemini.google.com/';
+  function readSynthNote(hash) {
+    try { return JSON.parse(localStorage.getItem('izsiz-synthid-results') || '{}')[hash] || null; } catch (e) { return null; }
+  }
+  function writeSynthNote(hash, status, note) {
+    try {
+      var all = JSON.parse(localStorage.getItem('izsiz-synthid-results') || '{}');
+      all[hash] = { status: status, note: note, savedAt: new Date().toISOString() };
+      localStorage.setItem('izsiz-synthid-results', JSON.stringify(all));
+      return true;
+    } catch (e) { return false; }
+  }
+
   function makeOriginAudit(buf, file, r, isHeif) {
     var c2pa = (r.removed || []).some(function (x) { return /C2PA|JUMBF/i.test(x.label); }) || !!r.c2paKept;
     return {
@@ -1104,7 +1125,29 @@ html{background:var(--bg)}
     originList.appendChild(pxRow);
     it.pixelAuditRows.push(pxRow);
     it.originList = originList;
+    var actions = el('div', 'audit-actions');
+    actions.appendChild(el('p', '', 'Google Gemini’de dosyayı kendiniz yükleyip “SynthID bulundu mu?” diye sorun. Uygulama Google sonucunu otomatik okuyamaz; bu bağlantı tek başına doğrulama sonucu değildir.'));
+    var link = el('a', 'btn external', 'Google Gemini’de SynthID kontrolünü aç');
+    link.href = GOOGLE_SYNTHID_VERIFY_URL;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    actions.appendChild(link);
+    var status = document.createElement('select');
+    status.setAttribute('aria-label', 'Google SynthID kullanıcı sonucu');
+    [['', 'Henüz kontrol edilmedi'], ['detected', 'Google sonucum: SynthID bulundu'], ['not-detected', 'Google sonucum: SynthID bulunamadı'], ['uncertain', 'Google sonucu: belirsiz / sonuç alınamadı']].forEach(function (x) { var o = document.createElement('option'); o.value = x[0]; o.textContent = x[1]; status.appendChild(o); });
+    var note = document.createElement('input');
+    note.type = 'text'; note.placeholder = 'İsteğe bağlı not (yalnızca bu tarayıcıda saklanır)';
+    var save = el('button', 'btn', 'Kullanıcı sonucunu yerelde kaydet'); save.type = 'button';
+    var saved = el('p', 'audit-saved', '');
+    var previous = readSynthNote(r.audit.hash);
+    if (previous) { status.value = previous.status || ''; note.value = previous.note || ''; saved.textContent = 'Yerel kayıt: ' + (previous.savedAt ? new Date(previous.savedAt).toLocaleString('tr-TR') : 'mevcut'); }
+    save.addEventListener('click', function () {
+      if (writeSynthNote(r.audit.hash, status.value, note.value.trim())) saved.textContent = 'Kullanıcı sonucu bu tarayıcıya kaydedildi; otomatik doğrulama değildir.';
+      else saved.textContent = 'Yerel kayıt yapılamadı.';
+    });
+    actions.appendChild(status); actions.appendChild(note); actions.appendChild(save); actions.appendChild(saved);
     origin.appendChild(originList);
+    origin.appendChild(actions);
     grid.appendChild(privacy); grid.appendChild(compat); grid.appendChild(origin); report.appendChild(grid);
     it.report = report; it.li.appendChild(report);
   }
@@ -1436,7 +1479,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.8.0', date: '21.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.8.2', date: '21.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
@@ -1487,6 +1530,18 @@ html{background:var(--bg)}
     try { localStorage.setItem('izsiz-theme', t); } catch (e) {}
   }
   $('#theme').addEventListener('click', function () { ti = (ti + 1) % 3; applyTheme(); });
+  $('#exit-app').addEventListener('click', function () {
+    var msg = $('#exit-msg');
+    msg.className = 'up';
+    msg.textContent = 'Uygulama kapatılıyor…';
+    window.close();
+    setTimeout(function () {
+      if (document.visibilityState === 'visible') {
+        msg.textContent = 'Tarayıcı bu sekmeyi otomatik kapatmaya izin vermedi. Lütfen sekmeyi veya uygulama penceresini elle kapat.';
+        msg.className = 'up bad';
+      }
+    }, 350);
+  });
   applyTheme();
   // Panodan yapıştır
   document.addEventListener('paste', function (e) {
