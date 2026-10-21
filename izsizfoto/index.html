@@ -1032,7 +1032,7 @@ html{background:var(--bg)}
     return Array.prototype.map.call(new Uint8Array(digest), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
   }
 
-  var GOOGLE_SYNTHID_VERIFY_URL = 'https://gemini.google.com/';
+  var SYNTHID_VERIFY_URL = 'https://synthid.com/image-detection';
   function readSynthNote(hash) {
     try { return JSON.parse(localStorage.getItem('izsiz-synthid-results') || '{}')[hash] || null; } catch (e) { return null; }
   }
@@ -1126,9 +1126,9 @@ html{background:var(--bg)}
     it.pixelAuditRows.push(pxRow);
     it.originList = originList;
     var actions = el('div', 'audit-actions');
-    actions.appendChild(el('p', '', 'Google Gemini’de dosyayı kendiniz yükleyip “SynthID bulundu mu?” diye sorun. Uygulama Google sonucunu otomatik okuyamaz; bu bağlantı tek başına doğrulama sonucu değildir.'));
-    var link = el('a', 'btn external', 'Google Gemini’de SynthID kontrolünü aç');
-    link.href = GOOGLE_SYNTHID_VERIFY_URL;
+    actions.appendChild(el('p', '', 'SynthID Detector sayfasında dosyayı kendiniz yükleyin. Uygulama sonucu otomatik okuyamaz veya siteye otomatik gönderim yapmaz; bu bağlantı tek başına doğrulama sonucu değildir.'));
+    var link = el('a', 'btn external', 'SynthID Detector’da kontrol et');
+    link.href = SYNTHID_VERIFY_URL;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
     actions.appendChild(link);
@@ -1479,7 +1479,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.8.2', date: '21.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.8.3', date: '21.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;

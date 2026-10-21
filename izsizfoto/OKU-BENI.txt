@@ -50,11 +50,11 @@ BİÇİMLER VE KAYIPSIZLIK
    - Salt-okunur köken denetimi her kaynak dosya için SHA-256 özeti, biçim/kapsayıcı,
      tanınan C2PA/JUMBF kaydı durumu köken kayıtlarını ve kaba piksel testi sonucunu
      raporlar. "Bulgu yok" sonucu filigranın yokluğu anlamına gelmez.
-   - Köken raporundaki "Google Gemini'de SynthID kontrolünü aç" bağlantısı resmi
-     Gemini sayfasını yeni sekmede açar. Dosya Google'a ancak kullanıcı tarafından
-     yüklenir; uygulama sonucu otomatik okuyamaz. Kullanıcı, aldığı sonucu ve notunu
-     yalnızca bu tarayıcıdaki localStorage alanına SHA-256 özetiyle ilişkilendirerek
-     ayrıca kaydedebilir.
+   - Köken raporundaki "SynthID Detector'da kontrol et" bağlantısı
+     https://synthid.com/image-detection adresini yeni sekmede açar. Dosya bu siteye
+     ancak kullanıcı tarafından yüklenir; uygulama otomatik gönderim veya sonuç okuma
+     yapmaz. Kullanıcı, aldığı sonucu ve notunu yalnızca bu tarayıcıdaki localStorage
+     alanına SHA-256 özetiyle ilişkilendirerek ayrıca kaydedebilir.
 
 GÜNCELLEME (yapımcı: Ümit Özgüler)
    Yeni sürümde şu üç değeri birlikte güncelle:
