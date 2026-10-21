@@ -41,10 +41,12 @@ BİÇİMLER VE KAYIPSIZLIK
      imza/köken doğrulaması etkilenebilir.
    - iPhone'da HEIC'i JPEG'e otomatik çevirme ihtimali olduğundan HEIC'i olduğu gibi
      almak için "Dosya Seç" kullan.
+   - Köken denetimi, dosyadaki açık C2PA/XMP/IPTC kayıtlarını okur ve kaba piksel
+     testleri çalıştırır. SynthID gibi görünmez filigranlar bu yöntemle tespit edilemez.
    - ZIP sıkıştırmasızdır. Orijinal dosya değiştirilmez.
    - Salt-okunur köken denetimi her kaynak dosya için SHA-256 özeti, biçim/kapsayıcı,
-     tanınan C2PA/JUMBF kaydı durumu ve piksel filigranı analizinin yapılmadığını
-     raporlar. Piksel filigranı sonucu "analiz edilmedi", filigranın yokluğu değildir.
+     tanınan C2PA/JUMBF kaydı durumu köken kayıtlarını ve kaba piksel testi sonucunu
+     raporlar. "Bulgu yok" sonucu filigranın yokluğu anlamına gelmez.
 
 GÜNCELLEME (yapımcı: Ümit Özgüler)
    Yeni sürümde şu üç değeri birlikte güncelle:

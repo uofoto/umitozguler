@@ -240,7 +240,7 @@ html{background:var(--bg)}
       <p>JPEG, PNG, WebP ve MP4/MOV/WebM/AVI içindeki tanınan gömülü verileri cihazında temizler. HEIC/HEIF fotoğrafları PNG, JPEG veya WebP'ye dönüştürür. Videolar yeniden kodlanmaz; görüntü ve ses akışları korunur. Dosyalar yüklenmez; uygulama çevrimiçiyken yalnızca kendi yayın adresinden sürüm bilgisini denetleyebilir.</p>
     </section>
 
-    <p class="note privacy-note"><strong>Önemli kapsam sınırı:</strong> Bu uygulama yalnızca dosya içindeki tanınan metadata ve içerik kökeni kayıtlarını işler. Piksellere veya video karelerine gömülmüş görünmez filigranları temizlemez ve bunların algılanmasını garanti etmez.</p>
+    <p class="note privacy-note"><strong>Önemli kapsam sınırı:</strong> Bu uygulama yalnızca dosya içindeki tanınan metadata ve içerik kökeni kayıtlarını işler. Piksellere veya video karelerine gömülmüş görünmez filigranları (ör. SynthID) temizlemez; bunları güvenilir biçimde tespit de edemez. Raporlanan köken kayıtları ve piksel testleri yalnızca bilgi amaçlıdır.</p>
 
     <label class="pick" id="pick" for="file">
       <input id="file" type="file" accept="image/*,video/mp4,video/quicktime,video/webm,video/x-msvideo,.heic,.heif,.mp4,.mov,.webm,.avi" multiple>
@@ -963,6 +963,7 @@ html{background:var(--bg)}
 <script>window.__IZSIZ_PWA__=true;</script>
 <script src="./heic-codec.js"></script>
 <script src="./video-codec.js"></script>
+<script src="./provenance-audit.js"></script>
 <script>(function () {
   'use strict';
   // PWA: build betiği tarafından enjekte edilir (true: kurulabilir sürüm, false: önizleme)
@@ -1031,7 +1032,8 @@ html{background:var(--bg)}
       fileSize: buf.length,
       container: r.video ? r.videoFormat : (isHeif ? 'HEIC/HEIF' : (r.mime || 'Bilinmiyor')),
       c2pa: c2pa ? 'Tanınan C2PA/JUMBF kaydı bulundu; kaynak dosya değiştirilmedi' : 'Tanınan C2PA/JUMBF kaydı bulunmadı',
-      pixel: 'Piksel tabanlı filigran analizi yapılmadı; sonuç “yok” anlamına gelmez',
+      pixel: 'Piksel analizi bekleniyor; SynthID gibi görünmez filigranlar bu yöntemle tespit edilemez',
+      provenance: (!r.video && !isHeif && window.IzsizAudit) ? IzsizAudit.describeProvenance(IzsizAudit.readProvenance(buf)) : null,
       readOnly: true
     };
   }
@@ -1096,7 +1098,12 @@ html{background:var(--bg)}
     reportRow(originList, 'SHA-256: ' + r.audit.hash, 'neutral');
     reportRow(originList, 'Kapsayıcı/biçim: ' + r.audit.container, 'neutral');
     reportRow(originList, r.audit.c2pa, /bulundu/i.test(r.audit.c2pa) ? 'warn' : 'neutral');
-    reportRow(originList, 'Piksel filigranı: ' + r.audit.pixel, 'warn');
+    (r.audit.provenance || []).forEach(function (row) { reportRow(originList, 'Köken kaydı: ' + row.text, row.level); });
+    it.pixelAuditRows = [];
+    var pxRow = el('li', 'warn', 'Piksel filigranı: ' + r.audit.pixel);
+    originList.appendChild(pxRow);
+    it.pixelAuditRows.push(pxRow);
+    it.originList = originList;
     origin.appendChild(originList);
     grid.appendChild(privacy); grid.appendChild(compat); grid.appendChild(origin); report.appendChild(grid);
     it.report = report; it.li.appendChild(report);
@@ -1215,6 +1222,7 @@ html{background:var(--bg)}
       it.removedBytes = r.video ? r.metadataBytes : (r.converted ? 0 : r.inSize - r.outSize);
       fillCard(it, r);
       summarize();
+      if (!r.video) { try { await pixelAudit(it); } catch (e) {} }
       if ($('#o-auto').checked && !r.video) await verify(it);
       it.sourceImageData = null;
     } catch (err) {
@@ -1282,6 +1290,34 @@ html{background:var(--bg)}
     }
     return decodeWithImage(blob);
   }
+  // ---- salt-okunur piksel denetimi (kaynak dosyaya ve çıktıya dokunmaz) ----
+  async function pixelAudit(it) {
+    if (!window.IzsizAudit || !it.originList || !it.result || it.result.video) return;
+    var r = it.result, rows = it.pixelAuditRows || [];
+    function show(list) {
+      rows.forEach(function (x) { if (x.parentNode) x.remove(); });
+      rows.length = 0;
+      list.forEach(function (row) { var li = el('li', row.level, 'Piksel denetimi: ' + row.text); it.originList.appendChild(li); rows.push(li); });
+    }
+    try {
+      if (r.width * r.height > 32e6) { show([{ text: '32 MP sınırı nedeniyle atlandı; sonuç “yok” anlamına gelmez', level: 'warn' }]); return; }
+      var W, H, data;
+      if (it.sourceImageData) { W = it.sourceImageData.width; H = it.sourceImageData.height; data = it.sourceImageData.data; }
+      else {
+        var bmp = await decode(it.file);
+        W = bmp.width; H = bmp.height;
+        var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+        var cx = cv.getContext('2d', { willReadFrequently: true });
+        cx.drawImage(bmp, 0, 0);
+        data = cx.getImageData(0, 0, W, H).data;
+        if (bmp.close) bmp.close();
+      }
+      show(IzsizAudit.describePixels(IzsizAudit.analyzePixels(data, W, H)));
+    } catch (e) {
+      show([{ text: 'analiz yapılamadı; sonuç “yok” anlamına gelmez', level: 'warn' }]);
+    }
+  }
+
   async function verify(it) {
     var out = it.verifyEl;
     out.className = 'verify';
@@ -1400,7 +1436,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.7.0', date: '21.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.8.0', date: '21.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
