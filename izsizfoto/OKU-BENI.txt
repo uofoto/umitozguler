@@ -23,6 +23,9 @@ B) TELEFONA UYGULAMA GİBİ KURMA (HTTPS GEREKİR)
    İlk kurulumdan sonra uygulama ve HEIC/HEIF dönüştürücüleri çevrimdışı çalışır.
 
 BİÇİMLER VE KAYIPSIZLIK
+   - Önemli kapsam sınırı: Uygulama dosya içindeki tanınan metadata ve içerik
+     kökeni kayıtlarını işler. Piksellere veya video karelerine gömülmüş görünmez
+     filigranları temizlemez ve bunların algılanmasını garanti etmez.
    - JPEG, PNG ve WebP'deki tanınan üstveri blokları görüntü yeniden kodlanmadan
      temizlenir. HEIC/HEIF, seçilen PNG, JPEG veya WebP biçimine çevrilir.
    - PNG ve kayıpsız WebP, HEIC/HEIF çözücüsünün ürettiği 8 bit RGBA piksellerini
