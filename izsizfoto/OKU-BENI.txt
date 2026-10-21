@@ -42,6 +42,9 @@ BİÇİMLER VE KAYIPSIZLIK
    - iPhone'da HEIC'i JPEG'e otomatik çevirme ihtimali olduğundan HEIC'i olduğu gibi
      almak için "Dosya Seç" kullan.
    - ZIP sıkıştırmasızdır. Orijinal dosya değiştirilmez.
+   - Salt-okunur köken denetimi her kaynak dosya için SHA-256 özeti, biçim/kapsayıcı,
+     tanınan C2PA/JUMBF kaydı durumu ve piksel filigranı analizinin yapılmadığını
+     raporlar. Piksel filigranı sonucu "analiz edilmedi", filigranın yokluğu değildir.
 
 GÜNCELLEME (yapımcı: Ümit Özgüler)
    Yeni sürümde şu üç değeri birlikte güncelle:

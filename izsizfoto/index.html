@@ -1017,6 +1017,25 @@ html{background:var(--bg)}
     return e;
   }
 
+  async function sha256Hex(bytes) {
+    if (!window.crypto || !crypto.subtle) return 'Tarayıcı SHA-256 desteği yok';
+    var digest = await crypto.subtle.digest('SHA-256', bytes);
+    return Array.prototype.map.call(new Uint8Array(digest), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
+
+  function makeOriginAudit(buf, file, r, isHeif) {
+    var c2pa = (r.removed || []).some(function (x) { return /C2PA|JUMBF/i.test(x.label); }) || !!r.c2paKept;
+    return {
+      hash: null,
+      fileName: file.name,
+      fileSize: buf.length,
+      container: r.video ? r.videoFormat : (isHeif ? 'HEIC/HEIF' : (r.mime || 'Bilinmiyor')),
+      c2pa: c2pa ? 'Tanınan C2PA/JUMBF kaydı bulundu; kaynak dosya değiştirilmedi' : 'Tanınan C2PA/JUMBF kaydı bulunmadı',
+      pixel: 'Piksel tabanlı filigran analizi yapılmadı; sonuç “yok” anlamına gelmez',
+      readOnly: true
+    };
+  }
+
   // ---- kart ----
   function makeCard(it) {
     var li = el('li', 'item' + (IS_PWA ? '' : ' big-preview'));
@@ -1070,7 +1089,16 @@ html{background:var(--bg)}
       compatList.appendChild(it.reportVerify);
     }
     compat.appendChild(compatList);
-    grid.appendChild(privacy); grid.appendChild(compat); report.appendChild(grid);
+    var origin = el('div', 'report-box'), originList = el('ul');
+    origin.appendChild(el('h4', '', 'Köken denetimi (salt-okunur)'));
+    reportRow(originList, '✓ Kaynak dosya değiştirilmedi', 'good');
+    reportRow(originList, 'Dosya: ' + r.audit.fileName, 'neutral');
+    reportRow(originList, 'SHA-256: ' + r.audit.hash, 'neutral');
+    reportRow(originList, 'Kapsayıcı/biçim: ' + r.audit.container, 'neutral');
+    reportRow(originList, r.audit.c2pa, /bulundu/i.test(r.audit.c2pa) ? 'warn' : 'neutral');
+    reportRow(originList, 'Piksel filigranı: ' + r.audit.pixel, 'warn');
+    origin.appendChild(originList);
+    grid.appendChild(privacy); grid.appendChild(compat); grid.appendChild(origin); report.appendChild(grid);
     it.report = report; it.li.appendChild(report);
   }
 
@@ -1178,6 +1206,8 @@ html{background:var(--bg)}
         };
         it.sourceImageData = converted.imageData;
       } else r = IzsizCore.strip(buf, opts());
+      r.audit = makeOriginAudit(buf, file, r, isHeif);
+      r.audit.hash = await sha256Hex(buf);
       var blob = r.converted ? r.outBlob : new Blob(r.parts, { type: r.mime });
       it.out = new File([blob], cleanName(file.name, r.ext), { type: r.mime, lastModified: Date.now() });
       it.url = URL.createObjectURL(it.out);
@@ -1370,7 +1400,7 @@ html{background:var(--bg)}
   });
 
   // ---- künye ve güncelleme ----
-  var APP = { version: '2.6.2', date: '19.10.2026', author: 'Ümit Özgüler' };
+  var APP = { version: '2.7.0', date: '21.10.2026', author: 'Ümit Özgüler' };
   $('#a-ver').textContent = APP.version;
   $('#a-date').textContent = APP.date;
   $('#a-author').textContent = APP.author;
