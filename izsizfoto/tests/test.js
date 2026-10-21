@@ -98,4 +98,28 @@ assert(ar.metadataBytes > 0 && aout.includes('AVI_MEDIA') && !aout.includes('AI 
 // --- Bozuk girişler hata vermeli
 assert.throws(() => C.strip(new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])), /Desteklenmeyen/);
 assert.throws(() => C.strip(new Uint8Array([0xff, 0xd8, 0xff, 0xe1, 0xff, 0xff, 0, 0])), /Bozuk|kesik/);
+// --- Salt-okunur köken/piksel denetimi (provenance-audit.js)
+const A = require('../provenance-audit.js');
+const xmpTxt = '<x:xmpmeta><rdf:Description xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/" Iptc4xmpExt:DigitalSourceType="http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia" xmp:CreatorTool="TestGen 1.0"/></x:xmpmeta>';
+const xmpSeg = seg(0xe1, Buffer.concat([Buffer.from('http://ns.adobe.com/xap/1.0/\0'), Buffer.from(xmpTxt)]));
+const c2paSeg = seg(0xeb, Buffer.from('JP\0\1jumb c2pa.created claim_generator TestGen'));
+const jpgProv = Buffer.concat([Buffer.from([0xff, 0xd8]), xmpSeg, c2paSeg, seg(0xdb, Buffer.alloc(65, 1)), seg(0xc0, Buffer.from([8, 0, 2, 0, 2, 1, 1, 0x11, 0])), scan]);
+const before = Buffer.from(jpgProv);
+const pv = A.readProvenance(new Uint8Array(jpgProv));
+assert(pv.c2pa && pv.xmp, 'C2PA ve XMP okunmalı');
+assert(pv.sourceTypes.some((x) => /trainedAlgorithmicMedia/.test(x)), 'DigitalSourceType okunmalı');
+assert(pv.tools.includes('TestGen 1.0'), 'CreatorTool okunmalı');
+assert(pv.c2paActions.includes('c2pa.created'), 'C2PA eylemi okunmalı');
+assert(Buffer.compare(before, jpgProv) === 0, 'Denetim girdiyi değiştirmemeli');
+const pvEmpty = A.readProvenance(new Uint8Array(jpg.subarray(0, 2)));
+assert(!pvEmpty.c2pa && A.describeProvenance(pvEmpty).length >= 1, 'Boş dosya hatasız raporlanmalı');
+assert(A.readProvenance(new Uint8Array([1, 2, 3])).format === 'bilinmiyor', 'Bilinmeyen biçim çökmemeli');
+// Piksel testi: SynthID iddiası olmamalı; düz doğal-benzeri veri çökmeden analiz edilmeli
+const W = 300, H = 40, px = new Uint8ClampedArray(W * H * 4);
+for (let i = 0; i < W * H; i++) { px[i * 4] = (i * 7) & 255; px[i * 4 + 1] = (i * 3) & 255; px[i * 4 + 2] = 120; px[i * 4 + 3] = 255; }
+const pa = A.analyzePixels(px, W, H);
+assert(pa.ok, 'Piksel analizi çalışmalı');
+assert(A.describePixels(pa).some((x) => /SynthID/.test(x.text)), 'Piksel raporu SynthID sınırını belirtmeli');
+assert(!A.analyzePixels(new Uint8ClampedArray(0), 0, 0).ok, 'Boş piksel verisi reddedilmeli');
+console.log('Köken denetimi testleri geçti');
 console.log('Tüm testler geçti');
