@@ -234,6 +234,117 @@ html{background:var(--bg)}
 </style>
 </head>
 <body>
+   <!DOCTYPE html>
+<html lang="tr">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>FFT Gürültü Temizleyici</title>
+ <!-- Math.js Kütüphanesi (FFT işlemleri için şart) -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+ <style>
+ body {
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+ background-color: #121212;
+ color: #ffffff;
+ text-align: center;
+ padding: 20px;
+ margin: 0;
+ }
+ h2 { margin-bottom: 20px; }
+ 
+ /* Canvas stilleri */
+ canvas {
+ max-width: 100%; /* Mobilde taşmayı önler */
+ height: auto;
+ border: 2px solid #333;
+ border-radius: 8px;
+ margin: 10px 0;
+ background-color: #1e1e1e;
+ display: none; /* Başlangıçta gizli, resim yüklenince görünür olacak */
+ }
+ 
+ /* Butonlar */
+ button {
+ padding: 12px 24px;
+ font-size: 16px;
+ background-color: #007bff;
+ color: white;
+ border: none;
+ border-radius: 6px;
+ cursor: pointer;
+ margin-top: 15px;
+ transition: background 0.3s;
+ }
+ button:disabled {
+ background-color: #444;
+ cursor: not-allowed;
+ opacity: 0.7;
+ }
+ button:hover:not(:disabled) {
+ background-color: #0056b3;
+ }
+ button.download-btn {
+ background-color: #28a745;
+ }
+ button.download-btn:hover {
+ background-color: #218838;
+ }
+
+ /* Durum mesajı */
+ #status {
+ margin-top: 10px;
+ color: #aaa;
+ font-size: 0.9rem;
+ min-height: 20px;
+ }
+ 
+ /* Dosya yükleme alanı */
+ .file-input-wrapper {
+ margin-bottom: 20px;
+ }
+ input[type="file"] {
+ padding: 10px;
+ background: #2c2c2c;
+ border-radius: 5px;
+ color: white;
+ }
+ </style>
+</head>
+<body>
+
+ <h2>Görsel Gürültü Temizleyici (FFT)</h2>
+ <p>Periyodik gürültüyü kaldırmak için Fourier Dönüşümü kullanılacak.</p>
+
+ <!-- Dosya Yükleme -->
+ <div class="file-input-wrapper">
+ <input type="file" id="imageInput" accept="image/*">
+ </div>
+
+ <!-- Durum Mesajı -->
+ <div id="status">Lütfen bir resim seçin.</div>
+
+ <!-- İşlem Butonu -->
+ <button id="processBtn" disabled>İşlemi Başlat</button>
+
+ <!-- CANVAS 1: Orijinal Görsel (Yüklenen Resim Burada Görünecek) -->
+ <!-- 'id' özelliği JavaScript kodundan bu elementi bulmak için kritiktir -->
+ <canvas id="inputCanvas"></canvas>
+
+ <!-- CANVAS 2: Temizlenmiş Görsel (İşlem Sonucu Burada Görünecek) -->
+ <canvas id="outputCanvas"></canvas>
+
+ <!-- İndirme Butonu (İşlem bitince görünür olacak) -->
+ <a id="downloadLink" style="display:none;">
+ <button class="download-btn">İndir</button>
+ </a>
+
+ <!-- Ana JavaScript Kodu (app.js içeriği buraya da yazılabilir veya ayrı dosyadan çekilebilir) -->
+ <script src="app.js"></script>
+
+</body>
+</html>
+
 <div class="shell">
   <main class="app">
     <header class="brand">
