@@ -1,6 +1,6 @@
-// app.js
-
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Sayfa yüklendi. Script çalışıyor.");
+    
     const imageInput = document.getElementById('imageInput');
     const inputCanvas = document.getElementById('inputCanvas');
     const outputCanvas = document.getElementById('outputCanvas');
@@ -8,21 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusDiv = document.getElementById('status');
     const downloadLink = document.getElementById('downloadLink');
 
+    // Elementlerin bulunduğunu kontrol et
+    if (!imageInput || !inputCanvas || !outputCanvas || !processBtn) {
+        console.error("HTML Elementlerinden biri bulunamadı! ID'leri kontrol et.");
+        return;
+    }
+
     const ctxInput = inputCanvas.getContext('2d');
     const ctxOutput = outputCanvas.getContext('2d');
 
     let originalImage = null;
 
-    // Resim Yükleme İşlemi
+    console.log("Resim yükleme dinleyicisi kuruldu.");
+
     imageInput.addEventListener('change', (e) => {
         const file = e.target.files;
         if (!file) return;
 
+        statusDiv.innerText = "Resim yükleniyor...";
         const reader = new FileReader();
+        
         reader.onload = (event) => {
             const img = new Image();
             img.onload = () => {
-                // Canvas boyutlarını ayarla
+                console.log("Resim yüklendi ve canvas'a çiziliyor.", img.width, "x", img.height);
+                
                 inputCanvas.width = img.width;
                 inputCanvas.height = img.height;
                 ctxInput.drawImage(img, 0, 0);
@@ -31,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusDiv.innerText = "Resim yüklendi. İşlemeye hazır.";
                 processBtn.disabled = false;
                 
-                // Output canvas'ı gizle
                 outputCanvas.style.display = 'none';
                 downloadLink.style.display = 'none';
             };
@@ -40,45 +49,48 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsDataURL(file);
     });
 
-    // İşlem Butonu
     processBtn.addEventListener('click', async () => {
-        if (!originalImage) return;
+        if (!originalImage) {
+            alert("Lütfen önce bir resim seçin!");
+            return;
+        }
 
+        console.log("İşlem butonuna basıldı. Başlatılıyor...");
         processBtn.disabled = true;
-        statusDiv.innerText = "FFT işlemi başlatılıyor... Lütfen bekleyin.";
+        statusDiv.innerText = "FFT işlemi başlatılıyor... Lütfen bekleyin (bu biraz sürebilir).";
         
         try {
             await cleanImageWithFFT(inputCanvas, outputCanvas);
             
+            console.log("İşlem tamamlandı. Görseller gösteriliyor.");
             outputCanvas.style.display = 'block';
             
-            // İndirme linkini hazırla
             const dataURL = outputCanvas.toDataURL('image/png');
             downloadLink.href = dataURL;
             downloadLink.download = 'temizlenmis_gorsel.png';
             downloadLink.style.display = 'inline-block';
             
-            statusDiv.innerText = "İşlem tamamlandı!";
+            statusDiv.innerText = "İşlem tamamlandı! Sonucu indirebilirsiniz.";
         } catch (error) {
-            console.error(error);
+            console.error("İşlem sırasında kritik hata oluştu:", error);
             statusDiv.innerText = "Hata oluştu: " + error.message;
+            alert("Bir hata oluştu. Konsolu (F12 -> Console) kontrol et.");
         } finally {
             processBtn.disabled = false;
         }
     });
 
-    // FFT Fonksiyonu (Daha önceki mesajdaki kodun burada olması gerekiyor)
+    // FFT Fonksiyonu
     async function cleanImageWithFFT(canvasElementId, outputCanvasId) {
         const inputCanvas = document.getElementById(canvasElementId);
         const outputCanvas = document.getElementById(outputCanvasId);
         const ctx = inputCanvas.getContext('2d');
         const outCtx = outputCanvas.getContext('2d');
 
-        outputCanvas.width = inputCanvas.width;
-        outputCanvas.height = inputCanvas.height;
-
         const width = inputCanvas.width;
         const height = inputCanvas.height;
+
+        console.log(`Görsel boyutu: \${width}x\${height}`);
 
         // 1. Piksel Verilerini Al
         const imageData = ctx.getImageData(0, 0, width, height);
@@ -92,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
             matrix[i / 4] = 0.299 * r + 0.587 * g + 0.114 * b;
         }
 
+        console.log("Piksel verileri alındı. FFT işlemine geçiliyor...");
+
         // Matrisi 2D'ye çevir
         let rows = ;
         for (let y = 0; y < height; y++) {
@@ -103,7 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Satır bazlı FFT
+        console.log("Satır FFT'si hesaplanıyor...");
         for (let y = 0; y < height; y++) {
+            if (typeof math === 'undefined') throw new Error("Math.js kütüphanesi yüklenmedi!");
             rows[y] = math.fft(rows[y]);
         }
 
@@ -118,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Sütun bazlı FFT
+        console.log("Sütun FFT'si hesaplanıyor...");
         for (let x = 0; x < width; x++) {
             cols[x] = math.fft(cols[x]);
         }
@@ -132,7 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
             spectrum.push(row);
         }
 
-        // Filtreleme (Gaussian Low-pass)
+        // Filtreleme
+        console.log("Filtreleme uygulanıyor...");
         const cx = width / 2;
         const cy = height / 2;
         const sigma = Math.min(width, height) / 8;
@@ -152,7 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Ters FFT (IFFT) - Sütun
+        // Ters FFT - Sütun
+        console.log("Ters FFT (Sütun) hesaplanıyor...");
         let iCols = ;
         for (let x = 0; x < width; x++) {
             iCols[x] = math.ifft(spectrum.map(row => row[x]));
@@ -168,13 +187,15 @@ document.addEventListener('DOMContentLoaded', () => {
             iRows.push(row);
         }
 
-        // Ters FFT (IFFT) - Satır
+        // Ters FFT - Satır
+        console.log("Ters FFT (Satır) hesaplanıyor...");
         let resultMatrix = ;
         for (let y = 0; y < height; y++) {
             resultMatrix.push(math.ifft(iRows[y]));
         }
 
         // Sonuç Görseli
+        console.log("Sonuç görseli oluşturuluyor...");
         const outputData = outCtx.createImageData(width, height);
         let maxVal = 0;
 
@@ -201,5 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         outCtx.putImageData(outputData, 0, 0);
+        console.log("Tüm işlemler başarıyla tamamlandı.");
     }
 });
