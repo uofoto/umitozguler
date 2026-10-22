@@ -5,6 +5,7 @@ const core = html.match(/<script>(\/\* İzsiz çekirdeği[\s\S]*?)<\/script>/)[1
 const m = { exports: {} }; new Function('module', 'self', core)(m, undefined);
 const C = m.exports;
 const V = require('../video-codec.js');
+const P = require('../pixel-rewrite.js');
 const cat = (parts) => Buffer.concat(parts.map((p) => Buffer.from(p)));
 const seg = (mk, body) => Buffer.concat([Buffer.from([0xff, mk, (body.length + 2) >> 8, (body.length + 2) & 255]), Buffer.from(body)]);
 // --- JPEG: SOI, APP1 EXIF(GPS var), COM, APP13, DQT, SOF0, SOS+veri, EOI, dosya sonu eki
@@ -122,4 +123,11 @@ assert(pa.ok, 'Piksel analizi çalışmalı');
 assert(A.describePixels(pa).some((x) => /SynthID/.test(x.text)), 'Piksel raporu SynthID sınırını belirtmeli');
 assert(!A.analyzePixels(new Uint8ClampedArray(0), 0, 0).ok, 'Boş piksel verisi reddedilmeli');
 console.log('Köken denetimi testleri geçti');
+// --- Deneysel RGB düşük-bit dönüşümü: RGB LSB sıfırlanmalı, alfa korunmalı
+const rgba = new Uint8ClampedArray([1, 2, 3, 4, 254, 255, 0, 128]);
+const pixelStats = P.clearRgbLsb(rgba, 2, 1);
+assert.deepStrictEqual(Array.from(rgba), [0, 2, 2, 4, 254, 254, 0, 128], 'RGB düşük bitleri doğru temizlenmeli; alfa değişmemeli');
+assert.strictEqual(pixelStats.changedChannels, 3, 'değişen RGB kanalları sayılmalı');
+assert.strictEqual(pixelStats.totalChannels, 6, 'toplam RGB kanalları sayılmalı');
+assert.throws(() => P.clearRgbLsb(new Uint8ClampedArray(0), 0, 0), /geçersiz/, 'boş piksel verisi reddedilmeli');
 console.log('Tüm testler geçti');
