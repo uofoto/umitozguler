@@ -23,9 +23,12 @@ B) TELEFONA UYGULAMA GİBİ KURMA (HTTPS GEREKİR)
    İlk kurulumdan sonra uygulama ve HEIC/HEIF dönüştürücüleri çevrimdışı çalışır.
 
 BİÇİMLER VE KAYIPSIZLIK
-   - Önemli kapsam sınırı: Uygulama dosya içindeki tanınan metadata ve içerik
-     kökeni kayıtlarını işler. Piksellere veya video karelerine gömülmüş görünmez
-     filigranları temizlemez ve bunların algılanmasını garanti etmez.
+    - İsteğe bağlı deneysel piksel işlemi RGB kanallarının en düşük bitini sıfırlar
+      ve yeni PNG oluşturur. Yalnızca basit LSB gömmelerini etkileyebilir; SynthID
+      gibi anahtarlı/dağıtılmış filigranları algılamaz veya kaldırmayı garanti etmez.
+      Bazı renk değerleri değişir; EXIF tarihi, ICC profili ve C2PA imzası/köken
+      kaydı çıktıya taşınmaz. İşlem 32 MP üzerindeki görsellerde çalışmaz.
+      Video karelerine uygulanmaz. Orijinal dosya değiştirilmez.
    - JPEG, PNG ve WebP'deki tanınan üstveri blokları görüntü yeniden kodlanmadan
      temizlenir. HEIC/HEIF, seçilen PNG, JPEG veya WebP biçimine çevrilir.
    - PNG ve kayıpsız WebP, HEIC/HEIF çözücüsünün ürettiği 8 bit RGBA piksellerini
@@ -41,8 +44,9 @@ BİÇİMLER VE KAYIPSIZLIK
      imza/köken doğrulaması etkilenebilir.
    - iPhone'da HEIC'i JPEG'e otomatik çevirme ihtimali olduğundan HEIC'i olduğu gibi
      almak için "Dosya Seç" kullan.
-   - Köken denetimi, dosyadaki açık C2PA/XMP/IPTC kayıtlarını okur ve kaba piksel
-     testleri çalıştırır. SynthID gibi görünmez filigranlar bu yöntemle tespit edilemez.
+    - Köken denetimi, dosyadaki açık C2PA/XMP/IPTC kayıtlarını okur ve kaba piksel
+      testleri çalıştırır. SynthID gibi görünmez filigranlar bu yöntemle tespit
+      edilemez; LSB işlemi de filigran kaldırma sonucunu doğrulamaz.
    - ZIP sıkıştırmasızdır. Orijinal dosya değiştirilmez.
    - Hakkında bölümündeki "Uygulamadan çık" düğmesi pencereyi kapatmayı dener.
      Tarayıcı güvenliği izin vermezse sekmeyi veya uygulama penceresini elle kapatmak
