@@ -32,7 +32,7 @@ Uygulama mevcut haliyle sunulur. Kesintisiz çalışma, her cihazda uyumluluk ve
 
 7. Değişiklikler ve iletişim
 
-Bu şartları gerektiğinde güncelleyebiliriz. Sorularınız için iletisim@filigran.app adresinden bize ulaşabilirsiniz.
+Bu şartları gerektiğinde güncelleyebiliriz. Sorularınız için filigram7@gmail.com adresinden bize ulaşabilirsiniz.
 
 English
 
