@@ -1,0 +1,9 @@
+GitHub Pages kurulumu
+
+1. GitHub deposunda Settings > Pages bölümünü açın.
+2. Build and deployment > Source alanında GitHub Actions seçin.
+3. Bu projedeki .github/workflows/deploy-pages.yml dosyası main branch'e gönderildiğinde otomatik çalışır.
+4. Actions sekmesindeki Deploy Filigran to GitHub Pages işlemi yeşil olduktan sonra Pages bölümünde verilen bağlantıyı açın.
+
+Önemli: GitHub'da index.html dosyasını doğrudan source olarak açmayın. Bu proje Vite ile derlenir; workflow dist klasörünü yayınlar. Ana uygulama bağlantısı genellikle şu formdadır:
+https://KULLANICI_ADI.github.io/DEPO_ADI/
