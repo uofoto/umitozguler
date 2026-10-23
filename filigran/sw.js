@@ -1,16 +1,16 @@
-const CACHE_NAME = 'filigran-shell-v1';
+const CACHE_NAME = 'filigran-shell-v3';
 const ROOT = new URL('./', self.registration.scope).toString();
-const APP_SHELL = [ROOT, `${ROOT}manifest.webmanifest`, `${ROOT}filigran-mark.svg`];
+const PRECACHE = [".","manifest.webmanifest","filigran-mark.svg","assets/index-D-xOdL1F.css","assets/index-D9O0TtSx.js"].map((file) => file === '.' ? ROOT : new URL(file, ROOT).toString());
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE)));
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
-  );
+  event.waitUntil(caches.keys().then((keys) => Promise.all(
+    keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)),
+  )));
   self.clients.claim();
 });
 
@@ -25,6 +25,6 @@ self.addEventListener('fetch', (event) => {
       return response;
     }).catch(() => event.request.mode === 'navigate'
       ? caches.match(ROOT)
-      : new Response('', { status: 504, statusText: 'Offline' }))
-  ));
+      : new Response('', { status: 504, statusText: 'Offline' })))
+  );
 });
