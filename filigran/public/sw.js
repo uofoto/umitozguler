@@ -1,5 +1,6 @@
 const CACHE_NAME = 'filigran-shell-v1';
-const APP_SHELL = ['/', '/manifest.webmanifest', '/filigran-mark.svg'];
+const ROOT = new URL('./', self.registration.scope).toString();
+const APP_SHELL = [ROOT, `${ROOT}manifest.webmanifest`, `${ROOT}filigran-mark.svg`];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
@@ -23,7 +24,7 @@ self.addEventListener('fetch', (event) => {
       }
       return response;
     }).catch(() => event.request.mode === 'navigate'
-      ? caches.match('/')
+      ? caches.match(ROOT)
       : new Response('', { status: 504, statusText: 'Offline' }))
   ));
 });
