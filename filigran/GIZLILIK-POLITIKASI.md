@@ -32,7 +32,7 @@ Uygulama çocuklara özel olarak tasarlanmamıştır ve bilerek çocuklardan ki�
 
 7. Haklarınız ve iletişim
 
-Gizlilikle ilgili sorularınız veya talepleriniz için iletisim@filigran.app adresine yazabilirsiniz. Yasal başvuru haklarınız, bulunduğunuz ülkenin mevzuatına göre saklıdır.
+Gizlilikle ilgili sorularınız veya talepleriniz için filigram7@gmail.com adresine yazabilirsiniz. Yasal başvuru haklarınız, bulunduğunuz ülkenin mevzuatına göre saklıdır.
 
 8. Politika değişiklikleri
 
