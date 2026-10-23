@@ -66,7 +66,7 @@ The application is not directed at children and does not knowingly collect perso
 
 7. Your rights and contact
 
-For privacy questions or requests, contact iletisim@filigran.app. Your statutory rights under the laws applicable to you remain unaffected.
+For privacy questions or requests, contact filigram7@gmail.com Your statutory rights under the laws applicable to you remain unaffected.
 
 8. Policy changes
 
