@@ -1,0 +1,25 @@
+{
+  "name": "filigran",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.15.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "build:offline": "vite --config vite.singlefile.config.ts build && cp offline-dist/index.html filigran-offline.html",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "vite-plugin-singlefile": "^2.3.4"
+  }
+}

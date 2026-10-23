@@ -1,0 +1,8 @@
+Filigran'ı açmak için:
+
+1. filigran-offline.html dosyasına çift tıklayın.
+2. Tarayıcı uyarı verirse Chrome, Edge veya Firefox ile açın.
+3. Bu tek dosyalık sürümde fotoğraf işleme cihazınızda gerçekleşir.
+4. PWA kurulumu ve çevrimdışı servis çalışanı için uygulamayı HTTPS üzerinden yayınlamak gerekir.
+
+Not: index.html geliştirme sunucusu içindir; doğrudan çift tıklanarak açılmaz. Çift tıklama için filigran-offline.html dosyasını kullanın.
