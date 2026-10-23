@@ -111,9 +111,11 @@ function fileIsImage(file: File | undefined): file is File {
 }
 
 function App() {
+  const appBasePath = () => new URL(import.meta.env.BASE_URL, document.baseURI).pathname.replace(/\/$/, '') + '/';
   const viewFromPath = (): View => {
-    if (window.location.pathname === '/verify') return 'verify';
-    if (window.location.pathname === '/how-it-works') return 'how';
+    const base = appBasePath();
+    if (window.location.pathname === `${base}verify`) return 'verify';
+    if (window.location.pathname === `${base}how-it-works`) return 'how';
     return 'embed';
   };
   const [view, setView] = useState<View>(viewFromPath);
@@ -149,7 +151,8 @@ function App() {
   }, [selectedFile]);
 
   const navigate = (nextView: View) => {
-    const paths: Record<View, string> = { embed: '/', verify: '/verify', how: '/how-it-works' };
+    const base = appBasePath();
+    const paths: Record<View, string> = { embed: base, verify: `${base}verify`, how: `${base}how-it-works` };
     window.history.pushState({}, '', paths[nextView]);
     setView(nextView);
     setError('');
