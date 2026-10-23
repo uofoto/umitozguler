@@ -32,6 +32,7 @@ type ImageDataResult = {
 };
 
 const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const ACCEPTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
 
 function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
   const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
@@ -64,30 +65,61 @@ function formatDate(value: string): string {
 function loadImageData(file: File, maxEdge = 2200): Promise<ImageDataResult> {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    const url = URL.createObjectURL(file);
-    image.onload = () => {
-      const scale = Math.min(1, maxEdge / Math.max(image.naturalWidth, image.naturalHeight));
-      const width = Math.max(1, Math.round(image.naturalWidth * scale));
-      const height = Math.max(1, Math.round(image.naturalHeight * scale));
+    let objectUrl = '';
+    let fallbackStarted = false;
+    let settled = false;
+
+    const finish = (callback: () => void) => {
+      if (settled) return;
+      settled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      callback();
+    };
+
+    const draw = () => {
+      const sourceWidth = image.naturalWidth;
+      const sourceHeight = image.naturalHeight;
+      if (!sourceWidth || !sourceHeight) {
+        finish(() => reject(new Error('Görselin boyutları okunamadı.')));
+        return;
+      }
+      const scale = Math.min(1, maxEdge / Math.max(sourceWidth, sourceHeight));
+      const width = Math.max(1, Math.round(sourceWidth * scale));
+      const height = Math.max(1, Math.round(sourceHeight * scale));
       const canvas = document.createElement('canvas');
       canvas.width = width;
       canvas.height = height;
       const context = canvas.getContext('2d', { willReadFrequently: true });
       if (!context) {
-        URL.revokeObjectURL(url);
-        reject(new Error('Bu tarayıcıda görsel alanı başlatılamadı.'));
+        finish(() => reject(new Error('Bu tarayıcıda görsel alanı başlatılamadı.')));
         return;
       }
-      context.drawImage(image, 0, 0, width, height);
-      const imageData = context.getImageData(0, 0, width, height);
-      URL.revokeObjectURL(url);
-      resolve({ imageData, width, height });
+      try {
+        context.drawImage(image, 0, 0, width, height);
+        const imageData = context.getImageData(0, 0, width, height);
+        finish(() => resolve({ imageData, width, height }));
+      } catch {
+        finish(() => reject(new Error('Görsel pikselleri okunamadı. Lütfen fotoğrafı JPEG, PNG veya WebP olarak yeniden seçin.')));
+      }
     };
+
+    image.onload = draw;
     image.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error('Görsel okunamadı. Lütfen JPEG, PNG veya WebP bir dosya seçin.'));
+      // Mobile Safari/WebView can fail to decode a local object URL from Photos.
+      // Retry with a data URL before reporting a format error.
+      if (fallbackStarted) {
+        finish(() => reject(new Error('Görsel okunamadı. Lütfen fotoğrafı JPEG, PNG veya WebP olarak yeniden seçin.')));
+        return;
+      }
+      fallbackStarted = true;
+      const reader = new FileReader();
+      reader.onload = () => { image.src = String(reader.result); };
+      reader.onerror = () => finish(() => reject(new Error('Görsel okunamadı. Lütfen fotoğrafı JPEG, PNG veya WebP olarak yeniden seçin.')));
+      reader.readAsDataURL(file);
     };
-    image.src = url;
+
+    objectUrl = URL.createObjectURL(file);
+    image.src = objectUrl;
   });
 }
 
@@ -107,7 +139,11 @@ function imageDataToBlob(imageData: ImageData): Promise<Blob> {
 }
 
 function fileIsImage(file: File | undefined): file is File {
-  return Boolean(file && ACCEPTED_TYPES.includes(file.type));
+  if (!file) return false;
+  const type = file.type.toLowerCase();
+  const name = file.name.toLowerCase();
+  // Some mobile browsers leave File.type empty or report it inconsistently.
+  return ACCEPTED_TYPES.includes(type) || (type === '' && ACCEPTED_EXTENSIONS.some((extension) => name.endsWith(extension)));
 }
 
 function App() {
@@ -285,7 +321,7 @@ function App() {
         <input
           ref={isVerify ? verifyInputRef : fileInputRef}
           type="file"
-          accept={ACCEPTED_TYPES.join(',')}
+          accept={`${ACCEPTED_TYPES.join(',')},${ACCEPTED_EXTENSIONS.join(',')}`}
           onChange={(event) => (isVerify ? chooseVerifyFile(event.target.files?.[0]) : chooseEmbedFile(event.target.files?.[0]))}
           hidden
         />
