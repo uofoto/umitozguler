@@ -1,6 +1,6 @@
-const CACHE_NAME = 'filigran-shell-v3';
+const CACHE_NAME = 'filigran-shell-v4';
 const ROOT = new URL('./', self.registration.scope).toString();
-const PRECACHE = [".","manifest.webmanifest","filigran-mark.svg","assets/index-D-xOdL1F.css","assets/index-D9O0TtSx.js"].map((file) => file === '.' ? ROOT : new URL(file, ROOT).toString());
+const PRECACHE = [".","manifest.webmanifest","filigran-mark.svg","assets/filigran-mark-DuLIEn-j.svg","assets/index-BcGaDT6K.css","assets/index-Duhhd7Uj.js","assets/manifest-Bdg3cvLR.webmanifest"].map((file) => file === '.' ? ROOT : new URL(file, ROOT).toString());
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE)));
