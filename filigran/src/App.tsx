@@ -7,8 +7,9 @@ import {
   type DecodedWatermark,
   type EmbedStrength,
 } from './lib/watermark';
+import { APP_VERSION, LEGAL_COPY, PLAY_STORE_URL, type LegalLanguage } from './legal';
 
-type View = 'embed' | 'verify' | 'how';
+type View = 'embed' | 'verify' | 'how' | 'terms' | 'privacy';
 type IconName = 'arrow' | 'check' | 'chevron' | 'download' | 'file' | 'image' | 'lock' | 'plus' | 'refresh' | 'shield' | 'spark' | 'upload' | 'zoom';
 
 type BeforeInstallPromptEvent = Event & {
@@ -152,6 +153,8 @@ function App() {
     const base = appBasePath();
     if (window.location.pathname === `${base}verify`) return 'verify';
     if (window.location.pathname === `${base}how-it-works`) return 'how';
+    if (window.location.pathname === `${base}terms`) return 'terms';
+    if (window.location.pathname === `${base}privacy`) return 'privacy';
     return 'embed';
   };
   const [view, setView] = useState<View>(viewFromPath);
@@ -168,6 +171,7 @@ function App() {
   const [error, setError] = useState('');
   const [zoom, setZoom] = useState(100);
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [legalLanguage, setLegalLanguage] = useState<LegalLanguage>('tr');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const verifyInputRef = useRef<HTMLInputElement>(null);
 
@@ -188,7 +192,7 @@ function App() {
 
   const navigate = (nextView: View) => {
     const base = appBasePath();
-    const paths: Record<View, string> = { embed: base, verify: `${base}verify`, how: `${base}how-it-works` };
+    const paths: Record<View, string> = { embed: base, verify: `${base}verify`, how: `${base}how-it-works`, terms: `${base}terms`, privacy: `${base}privacy` };
     window.history.pushState({}, '', paths[nextView]);
     setView(nextView);
     setError('');
@@ -296,6 +300,16 @@ function App() {
     setInstallPrompt(null);
   };
 
+  const updateApp = () => {
+    if (PLAY_STORE_URL) {
+      window.location.href = PLAY_STORE_URL;
+      return;
+    }
+    const url = new URL(window.location.href);
+    url.searchParams.set('updated', String(Date.now()));
+    window.location.replace(url.toString());
+  };
+
   const downloadResult = () => {
     if (!embedResult) return;
     const link = document.createElement('a');
@@ -341,6 +355,10 @@ function App() {
     );
   };
 
+  const legalCopy = LEGAL_COPY[legalLanguage];
+  const legalSections = view === 'terms' ? legalCopy.terms : legalCopy.privacy;
+  const legalTitle = view === 'terms' ? legalCopy.termsTitle : legalCopy.privacyTitle;
+
   return (
     <div className="app-shell">
       <div className="ambient ambient-one" />
@@ -357,6 +375,7 @@ function App() {
         </nav>
         <div className="topbar-actions">
           <span className="privacy-mini"><Icon name="lock" size={14} /> cihazında</span>
+          <button className="install-button update-button" onClick={updateApp}><Icon name="refresh" size={14} /> Güncelle</button>
           {installPrompt && <button className="install-button" onClick={installApp}><Icon name="plus" size={15} /> Yükle</button>}
         </div>
       </header>
@@ -428,9 +447,17 @@ function App() {
         {view === 'how' && (
           <section className="how-page"><div className="page-heading"><div className="eyebrow"><span className="eyebrow-dot" /> perde arkasında</div><h1>Görünmezliğin <em>mekaniği.</em></h1><p>Filigran, fotoğrafın üzerine bir yazı basmaz. Sahiplik bilgisini, renk kanalının görünmeyen en düşük bitlerine dağıtarak işler.</p></div><div className="how-steps"><article><span className="how-number">01</span><div className="how-icon"><Icon name="upload" size={22} /></div><h3>Fotoğrafını seç</h3><p>JPEG, PNG veya WebP görselini sürükleyip bırak. Görselin boyutu ve formatı cihazında okunur.</p></article><article><span className="how-number">02</span><div className="how-icon coral"><Icon name="spark" size={22} /></div><h3>İmzayı piksellere yay</h3><p>Kısa sahiplik bilgisi, renk kanalındaki görünmeyen bitlere tekrarlarla dağıtılır; çıktı PNG olarak korunur.</p></article><article><span className="how-number">03</span><div className="how-icon green"><Icon name="shield" size={22} /></div><h3>Dilediğinde doğrula</h3><p>İmzalı dosyayı tekrar yüklediğinde Filigran, sinyali tarar ve eşleşen sahiplik bilgisini gösterir.</p></article></div><div className="method-note"><div className="note-mark"><Icon name="lock" size={19} /></div><div><b>Gizlilik bir özellik değil, mimarinin kendisi.</b><p>Bu ilk sürümde yükleme, işleme ve doğrulama tamamen tarayıcı içinde gerçekleşir. Fotoğrafların bir sunucuya gönderilmez. Yine de görünmez filigran, telif ihlaline karşı tek başına hukuki kanıt ya da kopyalamayı engelleyen bir DRM değildir; ağır kırpma, yeniden boyutlandırma veya kayıplı sıkıştırma sinyali zayıflatabilir.</p></div></div></section>
         )}
+
+        {(view === 'terms' || view === 'privacy') && (
+          <section className="legal-page">
+            <div className="page-heading"><div className="eyebrow"><span className="eyebrow-dot" /> filigran · v{APP_VERSION}</div><h1>{legalTitle}</h1><p>{legalCopy.updated}</p></div>
+            <div className="legal-toolbar"><span>Filigran v{APP_VERSION}</span><div><button className={legalLanguage === 'tr' ? 'selected' : ''} onClick={() => setLegalLanguage('tr')}>Türkçe</button><button className={legalLanguage === 'en' ? 'selected' : ''} onClick={() => setLegalLanguage('en')}>English</button></div></div>
+            <article className="legal-card">{legalSections.map(([heading, body]) => <section key={heading}><h2>{heading}</h2><p>{body}</p></section>)}</article>
+          </section>
+        )}
       </main>
       {error && <div className="toast-error" role="alert"><span>!</span>{error}<button onClick={() => setError('')}>×</button></div>}
-      <footer><span>© 2026 filigran</span><span><Icon name="lock" size={13} /> fotoğrafların cihazında kalır</span><span className="footer-method">FGR1 · channel-bit spread</span></footer>
+      <footer><span>© 2026 filigran · v{APP_VERSION}</span><span><Icon name="lock" size={13} /> fotoğrafların cihazında kalır</span><span className="footer-links"><button onClick={() => navigate('terms')}>Kullanım şartları</button><button onClick={() => navigate('privacy')}>Gizlilik politikası</button></span><span className="footer-method">FGR1 · channel-bit spread</span></footer>
     </div>
   );
 }
