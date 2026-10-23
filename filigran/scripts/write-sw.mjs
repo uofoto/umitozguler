@@ -4,7 +4,7 @@ import path from 'node:path';
 const dist = path.resolve('dist');
 const assets = (await readdir(path.join(dist, 'assets'))).map((file) => `assets/${file}`);
 const precache = ['.', 'manifest.webmanifest', 'filigran-mark.svg', ...assets];
-const source = `const CACHE_NAME = 'filigran-shell-v3';
+const source = `const CACHE_NAME = 'filigran-shell-v4';
 const ROOT = new URL('./', self.registration.scope).toString();
 const PRECACHE = ${JSON.stringify(precache)}.map((file) => file === '.' ? ROOT : new URL(file, ROOT).toString());
 
