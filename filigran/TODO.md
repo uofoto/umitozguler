@@ -11,6 +11,10 @@
 - [x] İşlem öncesi ve sonrası görsel yakınlaştırılarak karşılaştırılabilmeli ve işlem durumu gösterilmeli.
 - [x] Filigranlı görsel uygun kalite ve dosya biçimiyle cihaza indirilebilmeli.
 
+## JPEG ve kırpma dayanıklılığı
+- [x] Filigran, 8×8 blokların orta frekans DCT katsayılarına QIM ile işlenmeli; imza farklı katsayı çiftlerinde tekrarlanmalı.
+- [x] Çıktı JPEG olarak indirilebilmeli ve doğrulama, JPEG yeniden sıkıştırması ile makul kırpma ofsetlerini tarayabilmeli.
+
 ## Doğrulama
 - [x] Ayrı doğrulama akışında görsel yüklenebilmeli.
 - [x] Uygulama gömülü imzayı arayabilmeli ve bulunan sahiplik bilgisini sonuç ekranında gösterebilmeli.
