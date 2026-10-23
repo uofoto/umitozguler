@@ -12,8 +12,8 @@
 - [x] Filigranlı görsel uygun kalite ve dosya biçimiyle cihaza indirilebilmeli.
 
 ## JPEG ve kırpma dayanıklılığı
-- [x] Filigran, 8×8 blokların orta frekans DCT katsayılarına QIM ile işlenmeli; imza farklı katsayı çiftlerinde tekrarlanmalı.
-- [x] Çıktı JPEG olarak indirilebilmeli ve doğrulama, JPEG yeniden sıkıştırması ile makul kırpma ofsetlerini tarayabilmeli.
+- [x] Filigran, 8×8 blokların orta frekans DCT katsayılarına QIM ile düşük etkili olarak işlenmeli; imza farklı katsayı çiftlerinde tekrarlanmalı.
+- [x] Çıktı kayıpsız PNG olarak indirilebilmeli; böylece filigran ekleme sırasında fotoğraf yeniden JPEG sıkıştırmasıyla bozulmamalı.
 
 ## Doğrulama
 - [x] Ayrı doğrulama akışında görsel yüklenebilmeli.
