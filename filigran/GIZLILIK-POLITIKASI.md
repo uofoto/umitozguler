@@ -2,7 +2,7 @@ Filigran Gizlilik Politikası / Privacy Policy
 
 Uygulama sürümü / App version: 1.0.0
 Son güncelleme / Last updated: 23 Ekim 2026 / October 23, 2026
-İletişim / Contact: iletisim@filigran.app
+İletişim / Contact: filigram7@gmail.com
 
 Türkçe
 
