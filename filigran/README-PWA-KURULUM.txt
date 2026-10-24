@@ -1,12 +1,19 @@
-FILIGRAN PWA - GITHUB YAYIN DOSYALARI
+FİLİGRAN MOBİL PWA — GITHUB YAYIN DOSYALARI
 
-Bu arşiv APK veya HTML indirme paketi değildir. PWA, HTTPS sitesinden tarayıcının kurulum işleviyle kurulur.
+Bu paket APK veya indirilecek bir HTML uygulaması değildir. HTTPS sitenizde yayımlanır ve tarayıcıdan PWA olarak ana ekrana/masaüstüne kurulur.
 
-Yükleme:
+GITHUB'A YÜKLEME
 1. ZIP'i açın.
-2. İçindeki index.html, assets klasörü, manifest.webmanifest, filigran-mark.svg, filigran-mark-192.png, filigran-mark-512.png, sw.js ve manus-routes.json dosyalarını GitHub deposundaki mevcut filigran/ klasörünün doğrudan içine yükleyin.
-3. Dosyaları yeni bir alt klasöre koymayın; mevcut aynı adlı dosyaları yenileriyle değiştirin.
-4. GitHub Pages yayımladıktan sonra ana ekrana yüklenmiş Filigran PWA'yı açın ve üst menüdeki Güncelle düğmesine bir kez basın. Bu sürüm eski Filigran önbelleğini temizleyip yeni dosyaları yükler.
-5. Ardından JPEG/PNG fotoğrafı yeniden seçin.
+2. ZIP içindeki index.html, 404.html, assets klasörü, manifest.webmanifest, filigran-mark.svg, filigran-mark-192.png, filigran-mark-512.png, manus-routes.json, sw.js ve .nojekyll dosyalarını GitHub deponuzdaki mevcut filigran/ klasörünün doğrudan içine kopyalayın.
+3. Dosyaları yeni bir alt klasöre koymayın; aynı adlı mevcut dosyaları yenileriyle değiştirin. assets klasörünün içindeki worker dosyası da yüklenmelidir.
+4. GitHub Pages dağıtımının tamamlanmasını bekleyin.
+5. Kurulu Filigran PWA'yı açıp üst çubuktaki Güncelle düğmesine bir kez basın. Bu yayın v10 service worker kullanır; Güncelle eski Filigran uygulama önbelleğini bırakıp güncel dosyaları etkinleştirir ve uygulama kökünü açar.
 
-Uygulama MIME etiketine değil dosyanın içerik imzasına bakar. Örneğin .png adlı dosyanın içeriği JPEG ise JPEG olarak tanınır ve kabul edilir.
+KULLANIM NOTLARI
+Uygulama JPEG, PNG ve WebP biçimlerini dosyanın gerçek içerik imzasından tanır; örneğin .png adlı bir dosyanın gerçek içeriği JPEG ise JPEG olarak işlenir. HEIC/HEIF de seçilebilir: cihaz tarayıcısı bu biçimi açabiliyorsa uygulama cihaz üzerinde işler, açamıyorsa JPEG olarak dışa aktarma yönergesi gösterir.
+
+Büyük mobil fotoğraflar cihaz belleğine göre küçültülür; imza ekleme ve doğrulama Web Worker'da çalışır. Fotoğraflar sunucuya yüklenmez. Çıktı, indirme düğmesiyle PNG olarak kaydedilir.
+
+PWA kurulum ipuçları: iPhone/iPad'de Safari > Paylaş > Ana Ekrana Ekle; Android'de Chrome menüsü > Uygulamayı yükle/Ana ekrana ekle; masaüstünde Chrome/Edge adres çubuğundaki kurulum simgesi veya tarayıcı menüsü.
+
+Canlı siteye yeni dosyaları bu oturumdan otomatik yüklemedim; GitHub'a kopyalayıp yayımlamanız gerekir. Yayımdan sonra kurulu uygulamada Güncelle'ye basın.
