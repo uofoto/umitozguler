@@ -864,7 +864,8 @@ if ("serviceWorker" in navigator && window.isSecureContext) {
     if (state.updateRequested) window.location.reload();
   });
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").then((registration) => {
+    const serviceWorkerUrl = new URL("./sw.js", window.location.href);
+    navigator.serviceWorker.register(serviceWorkerUrl).then((registration) => {
       state.serviceWorkerRegistration = registration;
       if (registration.waiting) $("update-button").dataset.updateReady = "true";
       registration.addEventListener("updatefound", () => {
