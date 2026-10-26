@@ -2,12 +2,12 @@ const APP_BASE = new URL("./", self.registration.scope);
 const scopePath = new URL(self.registration.scope).pathname;
 const scopeKey = scopePath.split("/").filter(Boolean).join("-") || "root";
 const CACHE_PREFIX = `cep-bakimi-shell-${scopeKey}-`;
-const CACHE_NAME = `${CACHE_PREFIX}v3`;
+const CACHE_NAME = `${CACHE_PREFIX}v4`;
 const APP_SHELL_PATHS = [
   "",
   "index.html",
-  "styles.css?v=1.1.1",
-  "app.js?v=1.1.1",
+  "styles.css?v=1.1.2",
+  "app.js?v=1.1.2",
   "legal.js?v=1.0.0",
   "privacy.html",
   "terms.html",

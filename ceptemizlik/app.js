@@ -13,6 +13,8 @@ const ALLOWED_EXTENSIONS = new Set([
   "mp4", "mov", "m4v", "webm", "3gp", "mkv", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
   "txt", "csv", "odt", "ods", "odp", "rtf", "pages", "numbers", "key",
 ]);
+const TEMP_CANDIDATE_EXTENSIONS = new Set(["tmp", "temp", "bak", "old", "cache", "log", "part", "crdownload", "download", "dmp", "swp", "swo"]);
+const TEMP_CANDIDATE_NAMES = new Set(["thumbs.db", "desktop.ini", ".ds_store"]);
 
 const state = {
   records: [],
@@ -66,8 +68,17 @@ function typeLabel(file) {
   return "Belge";
 }
 
+function isTemporaryCandidate(file) {
+  const name = file.name.toLocaleLowerCase("en-US");
+  return TEMP_CANDIDATE_EXTENSIONS.has(extensionOf(name)) || TEMP_CANDIDATE_NAMES.has(name) || name.startsWith("~$");
+}
+
+function isCleanupCandidate(record) {
+  return record.temporaryCandidate || record.size >= LARGE_FILE_BYTES || Boolean(record.duplicate);
+}
+
 function isEligible(file) {
-  return kindOf(file) !== "document" || ALLOWED_EXTENSIONS.has(extensionOf(file.name)) || file.type === "application/pdf";
+  return kindOf(file) !== "document" || ALLOWED_EXTENSIONS.has(extensionOf(file.name)) || file.type === "application/pdf" || isTemporaryCandidate(file);
 }
 
 function announce(message) {
@@ -122,6 +133,7 @@ function makeRecord(file, options = {}) {
     size: file.size,
     type: file.type || "",
     kind: kindOf(file),
+    temporaryCandidate: isTemporaryCandidate(file),
     lastModified: file.lastModified || 0,
     source: options.source || "picker",
     folderId: options.folderId ?? null,
@@ -242,6 +254,7 @@ function getSortedVisibleRecords() {
   let records = [...state.records];
   if (state.currentFilter === "large") records = records.filter((record) => record.size >= LARGE_FILE_BYTES);
   if (state.currentFilter === "duplicates") records = records.filter((record) => record.duplicate);
+  if (state.currentFilter === "candidates") records = records.filter(isCleanupCandidate);
   if (state.currentFilter === "selected") records = records.filter((record) => record.selected);
   if (state.sort === "size") records.sort((a, b) => b.size - a.size || a.name.localeCompare(b.name, "tr"));
   if (state.sort === "newest") records.sort((a, b) => b.lastModified - a.lastModified || b.size - a.size);
@@ -309,6 +322,13 @@ function createFileRow(record) {
 
   const badges = document.createElement("span");
   badges.className = "file-badges";
+  if (record.temporaryCandidate) {
+    const temporary = document.createElement("span");
+    temporary.className = "badge badge-possible";
+    temporary.textContent = "Geçici dosya adayı";
+    temporary.title = "Dosya adı veya uzantısı geçici dosyaya benziyor; bunun gereksiz olduğunu doğrulamaz. Silmeden önce kontrol et.";
+    badges.append(temporary);
+  }
   if (record.size >= LARGE_FILE_BYTES) {
     const large = document.createElement("span");
     large.className = "badge badge-large";
@@ -375,11 +395,13 @@ function render() {
   const selected = records.filter((record) => record.selected);
   const duplicateGroups = new Set(records.filter((record) => record.duplicate).map((record) => record.duplicate.id));
   const largeCount = records.filter((record) => record.size >= LARGE_FILE_BYTES).length;
+  const candidateCount = records.filter(isCleanupCandidate).length;
   $("file-count").textContent = String(records.length);
   $("duplicate-count").textContent = String(duplicateGroups.size);
   $("selected-size").textContent = formatBytes(selected.reduce((total, record) => total + record.size, 0));
   $("selected-count").textContent = `${selected.length} öğe seçili`;
   $("filter-all-count").textContent = String(records.length);
+  $("filter-candidate-count").textContent = String(candidateCount);
   $("filter-large-count").textContent = String(largeCount);
   $("filter-duplicate-count").textContent = String(records.filter((record) => record.duplicate).length);
   $("filter-selected-count").textContent = String(selected.length);
@@ -442,6 +464,10 @@ async function scanDirectory(directory, parent = directory, prefix = "", counter
       if (counter.truncated) return counter;
     } else if (entry.kind === "file") {
       counter.scanned += 1;
+      if (counter.scanned % 25 === 0) {
+        $("list-footer").hidden = false;
+        $("list-status").textContent = `${counter.scanned.toLocaleString("tr-TR")} dosya tarandı…`;
+      }
       try {
         const file = await entry.getFile();
         if (isEligible(file)) makeRecord(file, { source: "folder", folderId, rootName, handle: entry, parentHandle: parent, relativePath });
@@ -455,16 +481,17 @@ async function scanDirectory(directory, parent = directory, prefix = "", counter
 
 async function chooseFolder() {
   if (typeof window.showDirectoryPicker !== "function") {
-    announce("Bu tarayıcı klasör erişimini desteklemiyor. Dosyaları analiz edebilirsin; silme işlemini telefonunun Dosyalar uygulamasından yap.");
+    announce("Bu tarayıcı klasör taramasını desteklemiyor. Dosya seçicisinden incelemek istediklerini seç; yalnızca seçtiklerin taranacak.");
+    fileInput.click();
     return;
   }
   let busyStarted = false;
   try {
-    const folder = await window.showDirectoryPicker({ id: "cep-bakimi-folder", mode: "readwrite" });
-    let permission = await folder.queryPermission({ mode: "readwrite" });
-    if (permission !== "granted") permission = await folder.requestPermission({ mode: "readwrite" });
+    const folder = await window.showDirectoryPicker({ id: "cep-bakimi-folder", mode: "read" });
+    let permission = await folder.queryPermission({ mode: "read" });
+    if (permission !== "granted") permission = await folder.requestPermission({ mode: "read" });
     if (permission !== "granted") {
-      announce("Klasör için okuma ve yazma izni verilmedi; hiçbir dosya değiştirilmedi.");
+      announce("Klasör için okuma izni verilmedi; hiçbir dosya değiştirilmedi.");
       return;
     }
     let folderId;
@@ -484,6 +511,7 @@ async function chooseFolder() {
     const before = state.records.length;
     setBusy(true);
     busyStarted = true;
+    $("list-footer").hidden = false;
     $("list-status").textContent = "Seçtiğin klasör gözden geçiriliyor…";
     announce("Klasör taranıyor. Yalnızca bu klasör ve alt klasörleri incelenir.");
     const result = await scanDirectory(folder, folder, "", { scanned: 0, truncated: false }, folderId, rootName);
@@ -724,7 +752,7 @@ function clearAnalysis() {
 }
 
 $("choose-files").addEventListener("click", () => fileInput.click());
-$("empty-choose").addEventListener("click", () => fileInput.click());
+$("empty-choose").addEventListener("click", chooseFolder);
 $("choose-folder").addEventListener("click", chooseFolder);
 fileInput.addEventListener("change", () => {
   void addSelectedFiles(fileInput.files, { source: "picker" });
@@ -758,10 +786,9 @@ $("preview-dialog").addEventListener("close", () => {
 $("clear-analysis").addEventListener("click", clearAnalysis);
 
 if (typeof window.showDirectoryPicker === "function") {
-  $("choose-folder").hidden = false;
-  $("folder-support-note").textContent = "Klasör seçimi destekleniyorsa, izin verdiğin klasörde seçili dosyaları uygulama içinden silebilirsin.";
+  $("folder-support-note").textContent = "Tara'ya basıp bir klasör seç. Önce yalnızca seçtiğin klasör okunur; dosya silmek istersen ayrıca izin istenir.";
 } else {
-  $("folder-support-note").textContent = "Bu tarayıcıda klasör erişimi kullanılamıyor olabilir. Dosya analizi yine çalışır; silme işlemini telefonunun Dosyalar uygulamasından yap.";
+  $("folder-support-note").textContent = "Bu tarayıcı klasör seçemiyor olabilir. Tara düğmesi dosya seçiciyi açar; yalnızca seçtiğin dosyalar incelenir, tüm telefon değil.";
 }
 
 function waitForWaitingWorker(registration, timeoutMs = 12000) {
