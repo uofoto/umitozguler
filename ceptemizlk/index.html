@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f8f7" />
+    <meta name="description" content="Fotoğraf ve belgelerini cihazında incele, yer açma kararını güvenle kendin ver." />
+    <meta name="color-scheme" content="light" />
+    <title>Cep Bakımı — Telefonunda ferahlık</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="/styles.css?v=1.1.0" />
+    <script src="/app.js?v=1.1.0" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Cep Bakımı ana sayfa">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M14 5h4v9h9v4h-9v9h-4v-9H5v-4h9z" /></svg>
+        </span>
+        <span class="brand-copy"><strong>Cep Bakımı</strong><small>Dosyaların, senin kararın</small></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="privacy-pill"><span class="privacy-dot"></span> Cihazında işlenir</span>
+        <button class="button button-quiet update-button" id="update-button" type="button">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 7a6 6 0 0 0-10-3L4 6m0-3v3h3m-3 5a6 6 0 0 0 10 3l2-2m0 3v-3h-3" /></svg>
+          Güncelle
+        </button>
+        <button class="button button-quiet install-button" id="install-button" type="button">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m0 0 4-4m-4 4L6 8M4 13v3h12v-3" /></svg>
+          Yükle
+        </button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="welcome-band" aria-labelledby="page-title">
+        <div class="welcome-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> KÜÇÜK BİR DİJİTAL BAKIM</p>
+          <h1 id="page-title">Telefonunda<br /><span>ferahlık.</span></h1>
+          <p class="welcome-description">Dosyalarına göz at, gerçekten yer kaplayanları fark et. Temizlik kararını her zaman sen ver.</p>
+          <div class="welcome-actions">
+            <button class="button button-primary" id="choose-files" type="button">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13V3m0 0L6 7m4-4 4 4M4 12v4h12v-4" /></svg>
+              Fotoğraf ve belge seç
+            </button>
+            <button class="button button-secondary" id="choose-folder" type="button" hidden>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 6.5h6l1.5 1.7h7.5v7.3h-15zM2.5 6.5V4.8h5l1.2 1.7" /></svg>
+              Klasör seç
+            </button>
+          </div>
+          <p class="microcopy" id="folder-support-note">Klasör seçimi, tarayıcı destekliyorsa doğrudan ve kontrollü silme olanağı verir.</p>
+        </div>
+        <aside class="welcome-card" aria-label="Gizlilik bilgisi">
+          <div class="welcome-card-top"><span class="card-icon shield-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 19 6v5c0 4.8-3.2 8.1-7 10-3.8-1.9-7-5.2-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span><span class="small-status"><span class="status-dot"></span> ÖZEL ALANIN</span></div>
+          <h2>Dosyaların dışarı çıkmaz.</h2>
+          <p>Analiz bu tarayıcıda yapılır. Dosyaların bir sunucuya yüklenmez; uygulama yalnızca senin seçtiklerini görür.</p>
+          <div class="card-divider"></div>
+          <div class="privacy-facts"><span><b>01</b> Sen seçersin</span><span><b>02</b> Sen incelersin</span><span><b>03</b> Sen karar verirsin</span></div>
+        </aside>
+      </section>
+
+      <section class="summary-strip" aria-label="Dosya özeti">
+        <article class="summary-cell"><span class="summary-label">İNCELENEN DOSYA</span><strong id="file-count">0</strong><span class="summary-caption">seçtiğin öğe</span></article>
+        <article class="summary-cell"><span class="summary-label">OLASI YİNELENEN</span><strong id="duplicate-count">0</strong><span class="summary-caption">kararını bekliyor</span></article>
+        <article class="summary-cell summary-cell-emphasis"><span class="summary-label">TEMİZLİK İÇİN SEÇİLEN</span><strong id="selected-size">0 B</strong><span class="summary-caption" id="selected-count">0 öğe seçili</span></article>
+        <div class="summary-note"><span class="note-check" aria-hidden="true">✓</span><span><strong>Otomatik silme yok.</strong><br />İstediğin an seçimini değiştirebilirsin.</span></div>
+      </section>
+
+      <section class="workspace" aria-labelledby="files-title">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> DOSYA İNCELEME</p><h2 id="files-title">Seçtiklerin</h2></div>
+          <div class="list-controls">
+            <label class="select-wrap" for="sort-select"><span class="visually-hidden">Dosyaları sırala</span>
+              <select id="sort-select"><option value="size">En büyük önce</option><option value="newest">En yeni önce</option><option value="name">Ada göre</option></select>
+            </label>
+            <button class="button button-quiet button-small" id="select-large" type="button" disabled>Büyükleri seç</button>
+          </div>
+        </div>
+        <div class="filter-bar" role="group" aria-label="Dosya listesini filtrele">
+          <button class="filter-button is-active" data-filter="all" type="button" aria-pressed="true">Tümü <span id="filter-all-count">0</span></button>
+          <button class="filter-button" data-filter="large" type="button" aria-pressed="false">Büyük dosyalar <span id="filter-large-count">0</span></button>
+          <button class="filter-button" data-filter="duplicates" type="button" aria-pressed="false">Olası yinelenenler <span id="filter-duplicate-count">0</span></button>
+          <button class="filter-button" data-filter="selected" type="button" aria-pressed="false">Seçtiklerim <span id="filter-selected-count">0</span></button>
+        </div>
+        <div class="file-list" id="file-list" aria-live="polite" aria-relevant="additions text">
+          <div class="empty-state" id="empty-state">
+            <span class="empty-art" aria-hidden="true"><svg viewBox="0 0 60 60"><path d="M17 11h17l10 10v26H17z"/><path d="M34 11v11h10M23 31h15M23 37h11"/><circle cx="17" cy="17" r="8"/><path d="m14 17 2 2 4-5"/></svg></span>
+            <h3>İncelemeye hazır</h3><p>Fotoğraf ve belgelerini seçince boyut, tür ve olası yinelenenleri burada görebilirsin.</p>
+            <button class="button button-secondary" id="empty-choose" type="button">Dosya seç</button>
+          </div>
+        </div>
+        <div class="list-footer" id="list-footer" hidden>
+          <span id="list-status">Analiz tamamlandı</span>
+          <button class="button button-danger" id="cleanup-button" type="button" disabled>Seçilenleri sil</button>
+        </div>
+        <input id="file-input" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.odt,.ods,.odp,.rtf" hidden />
+      </section>
+
+      <section class="lower-grid" aria-label="Depolama ve bakım bilgileri">
+        <article class="storage-card">
+          <div class="card-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span> TARAYICI ALANI</p><h2>Uygulama depolaması</h2></div><span class="storage-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h8v8H8zM8 2v2m8-2v2M8 20v2m8-2v2M2 8h2m-2 8h2m16-8h2m-2 8h2"/></svg></span></div>
+          <div class="storage-values"><strong id="storage-used">Bilgi alınıyor…</strong><span id="storage-quota">Bu uygulamanın alanı</span></div>
+          <div class="storage-meter" role="progressbar" aria-label="Tarayıcı depolama kullanımı" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="storage-meter-fill"></span></div>
+          <p class="storage-caption" id="storage-caption">Bu değer yalnızca tarayıcının bu siteye ayırdığı alanı gösterir; telefonun toplam depolaması değildir.</p>
+        </article>
+        <article class="tips-card">
+          <div class="card-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span> SAKİN BİR BAKIM</p><h2>İşe yarayan küçük adımlar</h2></div><span class="sparkle-icon" aria-hidden="true">✳</span></div>
+          <ul class="tips-list"><li><span class="tip-number">01</span><span><strong>Önce büyükleri gözden geçir.</strong> Birkaç uzun video, çok sayıda küçük dosyadan daha fazla yer kaplayabilir.</span></li><li><span class="tip-number">02</span><span><strong>Yinelenenleri açıp karşılaştır.</strong> Benzer görünen fotoğraflardan hangisini tutacağına sen karar ver.</span></li><li><span class="tip-number">03</span><span><strong>Uygulama önbelleğini telefon ayarlarından yönet.</strong> Bu PWA başka uygulamaların verilerini temizleyemez.</span></li></ul>
+        </article>
+      </section>
+
+      <section class="boundary-note" aria-label="Tarayıcı erişimi hakkında önemli bilgi"><span class="boundary-icon" aria-hidden="true">i</span><p><strong>Kontrol sende.</strong> Dosya seçiciden eklenen dosyalar yalnızca okunur; tarayıcı bunları silmeye izin vermez. Desteklenen tarayıcılarda bir klasörü kendin seçip izin verdiğinde, yalnızca seçtiğin dosyaları silebilirsin. Telefonun genel depolaması bu web uygulamasına açık değildir.</p></section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-left">
+        <a class="footer-brand" href="/">Cep Bakımı</a>
+        <nav class="footer-links" aria-label="Yasal belgeler">
+          <a href="/privacy.html">Gizlilik Politikası</a>
+          <a href="/terms.html">Kullanım Şartları</a>
+        </nav>
+      </div>
+      <div class="footer-actions">
+        <span id="app-version">Sürüm v1.1.0</span>
+        <button id="clear-analysis" type="button">Seçimleri temizle</button>
+      </div>
+    </footer>
+
+    <dialog class="app-dialog" id="delete-dialog" aria-labelledby="delete-title">
+      <form method="dialog" class="dialog-shell" id="delete-form">
+        <button class="dialog-close" value="cancel" aria-label="Kapat" type="submit">×</button>
+        <span class="dialog-icon danger-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg></span>
+        <p class="eyebrow"><span class="eyebrow-line"></span> SON BİR KONTROL</p>
+        <h2 id="delete-title">Bu dosyaları silmek istiyor musun?</h2>
+        <p class="dialog-copy" id="delete-copy"></p>
+        <div class="dialog-file-summary" id="delete-summary"></div>
+        <label class="confirm-line"><input type="checkbox" id="confirm-delete" /><span>Seçtiğim dosyaların kalıcı olarak silineceğini anlıyorum.</span></label>
+        <div class="dialog-actions"><button class="button button-secondary" value="cancel" type="submit">Vazgeç</button><button class="button button-danger" id="confirm-delete-button" type="button" disabled>Dosyaları sil</button></div>
+      </form>
+    </dialog>
+
+    <dialog class="app-dialog preview-dialog" id="preview-dialog" aria-labelledby="preview-title">
+      <div class="dialog-shell preview-shell"><button class="dialog-close" id="close-preview" type="button" aria-label="Kapat">×</button><p class="eyebrow"><span class="eyebrow-line"></span> DOSYA ÖNİZLEMESİ</p><h2 id="preview-title"></h2><div class="preview-content" id="preview-content"></div><p class="preview-meta" id="preview-meta"></p></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>
