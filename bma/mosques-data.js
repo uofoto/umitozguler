@@ -1581,13 +1581,6 @@ let PRESET_MOSQUES = [{
     mapsSearch: "Şemaki Camii Yenişehir",
     addedAt: "2026-07-21"
   }, {
-    id: "baba-sultan-camii-yenisehir",
-    name: "Baba Sultan Camii",
-    district: "Yenişehir",
-    address: "Yenigün Mah., Sağır Osman Cad., Yenişehir/Bursa",
-    mapsSearch: "Baba Sultan Camii Yenişehir",
-    addedAt: "2026-07-21"
-  }, {
     id: "cayir-tatarlar-mescidi",
     name: "Çayır (Tatarlar) Mescidi",
     district: "Yenişehir",
@@ -1752,6 +1745,13 @@ let PRESET_MOSQUES = [{
     district: "Kestel",
     address: "Kestel Mah., Beşevler Mevkii, Kestel/Bursa",
     mapsSearch: "Vani Mehmet Efendi Camii Kestel",
+    addedAt: "2026-07-21"
+  }, {
+    id: "baba-sultan-camii-yenisehir",
+    name: "Baba Sultan Camii",
+    district: "Kestel",
+    address: "Babasultan Mah., Kestel/Bursa",
+    mapsSearch: "Babasultan Camii Kestel",
     addedAt: "2026-07-21"
   },
 
