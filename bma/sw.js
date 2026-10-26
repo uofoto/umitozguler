@@ -25,7 +25,7 @@
 // veritabanında saklanır; bu servis çalışanı yalnızca uygulamanın açılış
 // hızını ve çevrimdışı erişimini yönetir.
 
-const CACHE_VERSION = "v47"; // Baba Sultan Camii ilçe düzeltmesi (Yenişehir -> Kestel) - v47
+const CACHE_VERSION = "v48"; // Not alanı genişletildi + kelime önerileri - v48
 const STATIC_CACHE = `bursa-manevi-atlas-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `bursa-manevi-atlas-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `bursa-manevi-atlas-tiles-${CACHE_VERSION}`;
@@ -54,6 +54,7 @@ const APP_SHELL = [
   "./backup.js",
   "./ui.js",
   "./mosque-select-search.js",
+  "./notes-autocomplete.js",
   "./out-of-bursa-visit.js",
   "./storage-health.js",
   "./bursa-historical-zones.json",

@@ -351,3 +351,27 @@
     #mapModal:not(.hidden), #nearbyModal:not(.hidden), #routeModal:not(.hidden), #journeyModal:not(.hidden), #termsModal:not(.hidden){
       animation:modal-panel-in .32s ease both;
     }
+
+
+/* === Seyyah Notları alanı: geniş yazım alanı + kelime önerileri === */
+#formNotes{
+  font-size:16px;            /* iOS'un odaklanınca sayfayı yakınlaştırmasını önler */
+  line-height:1.55;
+  min-height:9rem;
+  resize:vertical;
+  -webkit-overflow-scrolling:touch;
+}
+.notes-suggest-bar{
+  display:flex; gap:6px; margin-top:6px; padding:2px 0 4px;
+  overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.notes-suggest-bar::-webkit-scrollbar{ display:none; }
+.notes-suggest-bar.hidden{ display:none; }
+.notes-suggest-chip{
+  flex:0 0 auto; padding:7px 12px; border-radius:999px;
+  font-size:13px; font-weight:600; line-height:1;
+  color:var(--teal-900); background:var(--paper-deep);
+  border:1px solid var(--line); touch-action:manipulation;
+}
+.notes-suggest-chip:active{ background:var(--gold-deep); color:#fff; border-color:var(--gold-deep); }
