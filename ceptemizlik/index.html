@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
+<title>Temizlik</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--txt:#e2e8f0;--mut:#94a3b8;--acc:#22c55e;--red:#ef4444;--bd:#334155}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px system-ui,sans-serif;padding:16px;padding-bottom:40px}
+header{display:flex;align-items:center;justify-content:space-between;margin:4px 0 14px}
+h1{font-size:22px;margin:0}
+.lang{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.lang button{width:auto;margin:0;padding:6px 12px;border-radius:0;background:transparent;color:var(--mut);font-size:14px}
+.lang button.on{background:var(--acc);color:#052e16}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 10px;color:var(--mut);font-weight:600}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden;margin:8px 0}
+.bar>i{display:block;height:100%;background:var(--acc);width:0}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}
+.row label{flex:1}
+.row small{display:block;color:var(--mut);font-size:12px}
+.row b{color:var(--acc);white-space:nowrap}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--acc)}
+button{width:100%;padding:14px;border:0;border-radius:12px;font-size:16px;font-weight:600;background:var(--acc);color:#052e16;margin-top:8px}
+button.sec{background:var(--bd);color:var(--txt)}
+button.danger{background:var(--red);color:#fff}
+button:disabled{opacity:.4}
+#log{font:12px ui-monospace,monospace;color:var(--mut);white-space:pre-wrap;max-height:160px;overflow:auto}
+.file{font-size:13px;word-break:break-all}
+.hide{display:none!important}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.links{display:flex;justify-content:center;gap:18px;margin-top:6px}
+.links a{color:var(--acc);font-size:14px;text-decoration:underline;cursor:pointer}
+.ver{text-align:center;color:var(--mut);font-size:12px;margin-top:10px}
+#hint{color:var(--mut);font-size:13px;margin-top:8px}
+dialog{background:var(--card);color:var(--txt);border:1px solid var(--bd);border-radius:14px;max-width:560px;width:calc(100% - 32px);max-height:80vh;padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h3{margin:0 0 10px}
+dialog p,dialog li{font-size:14px;line-height:1.5;color:var(--txt)}
+dialog .meta{color:var(--mut);font-size:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧹 <span data-i="title">Temizlik</span></h1>
+  <div class="lang"><button id="lTR">TR</button><button id="lEN">EN</button></div>
+</header>
+
+<div class="card">
+  <h2 data-i="storage">Depolama</h2>
+  <div id="usage"></div>
+  <div class="bar"><i id="usebar"></i></div>
+</div>
+
+<div class="card">
+  <h2 data-i="siteData">Uygulama / site verileri</h2>
+  <div id="cats"></div>
+  <label class="row"><input type="checkbox" id="keepApp" checked>
+    <span style="flex:1"><span data-i="keepApp">Uygulama dosyalarını koru</span><small data-i="keepAppSub">Çevrimdışı çalışması için gerekli önbellek silinmez</small></span></label>
+  <button id="scanBtn" class="sec" data-i="rescan">Yeniden tara</button>
+  <button id="cleanBtn" data-i="cleanSel">Seçilenleri temizle</button>
+</div>
+
+<div class="card">
+  <h2 data-i="folderCleaner">Klasör temizleyici</h2>
+  <p style="margin:0 0 6px;color:var(--mut);font-size:14px" data-i="folderDesc">Bir klasör seçin (ör. İndirilenler). Geçici, log, yedek, yarım indirilen ve boş dosyalar/klasörler bulunur.</p>
+  <button id="pickBtn" class="sec" data-i="pickScan">Klasör seç ve tara</button>
+  <div id="fsMsg" class="hide" style="color:var(--red);font-size:14px;margin-top:8px"></div>
+  <div id="results"></div>
+  <button id="delBtn" class="danger hide" data-i="delSel">Seçilen dosyaları sil</button>
+</div>
+
+<div class="card">
+  <h2 data-i="app">Uygulama</h2>
+  <div class="two">
+    <button id="installBtn" data-i="install">Yükle</button>
+    <button id="updateBtn" class="sec" data-i="checkUpdate">Güncelle</button>
+  </div>
+  <div id="hint"></div>
+  <div class="ver"><span data-i="version">Sürüm</span> <span id="ver"></span></div>
+  <div class="links">
+    <a id="privLink" data-i="privacy">Gizlilik Politikası</a>
+    <a id="termsLink" data-i="terms">Kullanım Şartları</a>
+  </div>
+</div>
+
+<div class="card"><h2 data-i="logTitle">Günlük</h2><div id="log"></div></div>
+
+<dialog id="privDlg"><h3 data-i="privacy"></h3><div id="privBody"></div><button class="sec" data-close data-i="close">Kapat</button></dialog>
+<dialog id="termsDlg"><h3 data-i="terms"></h3><div id="termsBody"></div><button class="sec" data-close data-i="close">Kapat</button></dialog>
+
+<script>
+const APP_VERSION = '1.1.0';
+const APP_CACHE = 'temizlik-v' + APP_VERSION;
+const $ = s => document.querySelector(s);
+
+/* ---------- Diller ---------- */
+const I18N = {
+tr:{
+ title:'Temizlik', storage:'Depolama', siteData:'Uygulama / site verileri',
+ keepApp:'Uygulama dosyalarını koru', keepAppSub:'Çevrimdışı çalışması için gerekli önbellek silinmez',
+ rescan:'Yeniden tara', cleanSel:'Seçilenleri temizle', folderCleaner:'Klasör temizleyici',
+ folderDesc:'Bir klasör seçin (ör. İndirilenler). Geçici, log, yedek, yarım indirilen ve boş dosyalar/klasörler bulunur.',
+ pickScan:'Klasör seç ve tara', delSel:'Seçilen dosyaları sil', app:'Uygulama',
+ install:'Yükle', checkUpdate:'Güncelle', version:'Sürüm', privacy:'Gizlilik Politikası', terms:'Kullanım Şartları',
+ logTitle:'Günlük', close:'Kapat',
+ scanning:'Taranıyor…', usedOf:(u,q)=>`${u} kullanılıyor / ${q} kota`,
+ scanDone:'Tarama tamamlandı.',
+ cCache:'Önbellek (Cache Storage)', cLs:'localStorage', cSs:'sessionStorage', cIdb:'IndexedDB veritabanları', cCookie:'Çerezler', cSw:'Service Worker kayıtları',
+ nCache:n=>`${n} önbellek`, nRec:n=>`${n} kayıt`, nDb:n=>`${n} veritabanı`, nCookie:n=>`${n} çerez`,
+ confirmClean:'Seçili veriler silinsin mi?',
+ cacheDel:n=>'Önbellek silindi: '+n, lsDel:'localStorage temizlendi', ssDel:'sessionStorage temizlendi',
+ idbDel:n=>'IndexedDB silindi: '+n, cookieDel:'Çerezler temizlendi', swDel:'Service Worker kayıtları kaldırıldı',
+ noFs:"Bu tarayıcı klasör erişimini (File System Access API) desteklemiyor. Android'de güncel Chrome ile deneyin; iOS desteklemez.",
+ scanFolder:n=>'Taranıyor: '+n, cancelled:m=>'İptal/hata: '+m,
+ junk:'Gereksiz dosya', empty:'Boş dosya', emptyDir:'Boş klasör', junkDir:'Önizleme/çöp klasörü',
+ items:(n,s)=>`${n} öğe, ${s}`, nothing:'Temizlenecek bir şey bulunamadı 🎉',
+ confirmDel:n=>`${n} öğe kalıcı olarak silinecek. Emin misiniz?`,
+ failDel:(p,m)=>`Silinemedi: ${p} (${m})`, deleted:(n,s)=>`${n} öğe silindi, ${s} boşaltıldı.`,
+ installed:'Uygulama zaten yüklü.', installHintIos:'iPhone/iPad: Paylaş → "Ana Ekrana Ekle" seçeneğini kullanın.',
+ installHint:'Tarayıcı menüsünden "Uygulamayı yükle" / "Ana ekrana ekle" seçeneğini kullanın.',
+ installOk:'Yükleme başlatıldı.', installNo:'Yükleme iptal edildi.',
+ upChecking:'Güncelleme denetleniyor…', upNew:'Yeni sürüm bulundu, uygulanıyor…', upLatest:'En güncel sürümü kullanıyorsunuz.', upNoSw:'Güncelleme bu tarayıcıda desteklenmiyor.', upErr:'Güncelleme denetlenemedi (çevrimdışı olabilirsiniz).',
+ privTitle:'Gizlilik Politikası',
+ priv:`<p class="meta">Son güncelleme: 27.10.2026</p>
+ <p><b>Veri toplamıyoruz.</b> Bu uygulama tamamen cihazınızda çalışır. Dosya adları, dosya içerikleri, depolama bilgileri veya başka kişisel veriler hiçbir sunucuya gönderilmez.</p>
+ <ul>
+  <li><b>Analitik/izleme yok:</b> Reklam, analitik veya üçüncü taraf izleyici kullanılmaz.</li>
+  <li><b>Yerel saklama:</b> Yalnızca dil tercihiniz tarayıcıda (localStorage) tutulur. Uygulama dosyaları çevrimdışı çalışma için önbelleğe alınır.</li>
+  <li><b>Dosya erişimi:</b> Klasör temizleyici yalnızca sizin seçtiğiniz klasöre ve yalnızca siz izin verdiğiniz sürece erişir. Tarama sonuçları cihazdan çıkmaz.</li>
+  <li><b>Yayın ortamı:</b> Uygulama GitHub Pages gibi bir barındırma hizmetinden sunulabilir; bu hizmet sayfa isteklerine ilişkin teknik kayıtları (ör. IP adresi) kendi politikasına göre tutabilir.</li>
+ </ul>
+ <p>Verilerinizi dilediğiniz zaman, uygulamadaki temizleme seçenekleriyle veya tarayıcı ayarlarından silebilirsiniz.</p>`,
+ termsTitle:'Kullanım Şartları',
+ termsBody:`<p class="meta">Son güncelleme: 27.10.2026</p>
+ <ul>
+  <li><b>Kalıcı silme:</b> Klasör temizleyici ile silinen dosyalar çöp kutusuna gitmez ve geri getirilemez. Silmeden önce listeyi kontrol etmek sizin sorumluluğunuzdadır.</li>
+  <li><b>Garanti yok:</b> Uygulama "olduğu gibi" sunulur. Veri kaybı dahil, kullanımdan doğabilecek zararlardan geliştirici sorumlu tutulamaz.</li>
+  <li><b>Kapsam:</b> Uygulama yalnızca kendi site verilerini ve sizin seçtiğiniz klasörü temizleyebilir. Diğer uygulamaların verilerine veya sistem dosyalarına erişemez.</li>
+  <li><b>Kullanım:</b> Yalnızca kendi cihazınızdaki ve silme yetkiniz olan dosyalar için kullanın.</li>
+  <li><b>Değişiklikler:</b> Bu şartlar güncellenebilir; güncel sürüm uygulama içinde yer alır.</li>
+ </ul>`
+},
+en:{
+ title:'Cleaner', storage:'Storage', siteData:'App / site data',
+ keepApp:'Keep app files', keepAppSub:'The cache needed for offline use will not be deleted',
+ rescan:'Rescan', cleanSel:'Clean selected', folderCleaner:'Folder cleaner',
+ folderDesc:'Pick a folder (e.g. Downloads). Temporary, log, backup, partial-download and empty files/folders will be found.',
+ pickScan:'Pick folder & scan', delSel:'Delete selected files', app:'App',
+ install:'Install', checkUpdate:'Update', version:'Version', privacy:'Privacy Policy', terms:'Terms of Use',
+ logTitle:'Log', close:'Close',
+ scanning:'Scanning…', usedOf:(u,q)=>`${u} used / ${q} quota`,
+ scanDone:'Scan complete.',
+ cCache:'Cache (Cache Storage)', cLs:'localStorage', cSs:'sessionStorage', cIdb:'IndexedDB databases', cCookie:'Cookies', cSw:'Service Worker registrations',
+ nCache:n=>`${n} cache(s)`, nRec:n=>`${n} item(s)`, nDb:n=>`${n} database(s)`, nCookie:n=>`${n} cookie(s)`,
+ confirmClean:'Delete the selected data?',
+ cacheDel:n=>'Cache deleted: '+n, lsDel:'localStorage cleared', ssDel:'sessionStorage cleared',
+ idbDel:n=>'IndexedDB deleted: '+n, cookieDel:'Cookies cleared', swDel:'Service Worker registrations removed',
+ noFs:'This browser does not support folder access (File System Access API). Try current Chrome on Android; iOS is not supported.',
+ scanFolder:n=>'Scanning: '+n, cancelled:m=>'Cancelled/error: '+m,
+ junk:'Junk file', empty:'Empty file', emptyDir:'Empty folder', junkDir:'Thumbnail/trash folder',
+ items:(n,s)=>`${n} item(s), ${s}`, nothing:'Nothing to clean 🎉',
+ confirmDel:n=>`${n} item(s) will be permanently deleted. Are you sure?`,
+ failDel:(p,m)=>`Could not delete: ${p} (${m})`, deleted:(n,s)=>`${n} item(s) deleted, ${s} freed.`,
+ installed:'The app is already installed.', installHintIos:'iPhone/iPad: use Share → "Add to Home Screen".',
+ installHint:'Use "Install app" / "Add to Home screen" from your browser menu.',
+ installOk:'Installation started.', installNo:'Installation dismissed.',
+ upChecking:'Checking for updates…', upNew:'New version found, applying…', upLatest:'You are on the latest version.', upNoSw:'Updates are not supported in this browser.', upErr:'Could not check for updates (you may be offline).',
+ privTitle:'Privacy Policy',
+ priv:`<p class="meta">Last updated: 27 Oct 2026</p>
+ <p><b>We do not collect data.</b> This app runs entirely on your device. File names, file contents, storage information or any other personal data are never sent to any server.</p>
+ <ul>
+  <li><b>No analytics/tracking:</b> No ads, analytics or third-party trackers are used.</li>
+  <li><b>Local storage:</b> Only your language preference is kept in the browser (localStorage). App files are cached for offline use.</li>
+  <li><b>File access:</b> The folder cleaner only accesses the folder you choose, and only while you allow it. Scan results never leave your device.</li>
+  <li><b>Hosting:</b> The app may be served from a host such as GitHub Pages; that service may keep technical request logs (e.g. IP address) under its own policy.</li>
+ </ul>
+ <p>You can delete your data at any time using the app's clean options or your browser settings.</p>`,
+ termsTitle:'Terms of Use',
+ termsBody:`<p class="meta">Last updated: 27 Oct 2026</p>
+ <ul>
+  <li><b>Permanent deletion:</b> Files deleted with the folder cleaner do not go to a recycle bin and cannot be recovered. Checking the list before deleting is your responsibility.</li>
+  <li><b>No warranty:</b> The app is provided "as is". The developer is not liable for any damage arising from its use, including data loss.</li>
+  <li><b>Scope:</b> The app can only clean its own site data and the folder you choose. It cannot access other apps' data or system files.</li>
+  <li><b>Use:</b> Use it only for files on your own device that you are authorized to delete.</li>
+  <li><b>Changes:</b> These terms may be updated; the current version is always shown in the app.</li>
+ </ul>`
+}};
+
+let lang = 'tr';
+lang = (navigator.language||'tr').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+try{ const s = localStorage.getItem('lang'); if(s==='tr'||s==='en') lang = s; }catch{}
+const t = (k,...a) => { const v = I18N[lang][k]; return typeof v==='function' ? v(...a) : v; };
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i]').forEach(el=>{ const v=I18N[lang][el.dataset.i]; if(typeof v==='string') el.textContent = v; });
+  $('#privBody').innerHTML = I18N[lang].priv;
+  $('#termsBody').innerHTML = I18N[lang].termsBody;
+  $('#lTR').classList.toggle('on', lang==='tr'); $('#lEN').classList.toggle('on', lang==='en');
+  $('#ver').textContent = 'v' + APP_VERSION;
+  if(results.length) renderResults();
+  renderCats();
+  updateInstallUi();
+}
+function setLang(l){ lang=l; try{localStorage.setItem('lang',l)}catch{} applyLang(); }
+
+/* ---------- Yardımcılar ---------- */
+const log = m => { const l=$('#log'); l.textContent += new Date().toLocaleTimeString(lang==='tr'?'tr':'en')+'  '+m+'\n'; l.scrollTop=l.scrollHeight; };
+const fmt = b => { if(!b) return '0 B'; const u=['B','KB','MB','GB']; let i=Math.min(3,Math.floor(Math.log(b)/Math.log(1024))); return (b/Math.pow(1024,i)).toFixed(i?1:0)+' '+u[i]; };
+
+/* ---------- Veri taraması ---------- */
+let info = {};
+function renderCats(){
+  if(!info.cacheNames) { $('#cats').innerHTML=''; return; }
+  const prev = {}; document.querySelectorAll('#cats input').forEach(c=>prev[c.id]=c.checked);
+  const {cacheNames,cacheSize,ls,ss,dbs,cookies,regs} = info;
+  const cats = [
+    ['cache',t('cCache'),t('nCache',cacheNames.length),cacheSize,true],
+    ['ls',t('cLs'),t('nRec',localStorage.length),ls,false],
+    ['ss',t('cSs'),t('nRec',sessionStorage.length),ss,true],
+    ['idb',t('cIdb'),t('nDb',dbs.length),null,false],
+    ['cookie',t('cCookie'),t('nCookie',cookies),null,true],
+    ['sw',t('cSw'),t('nRec',regs.length),null,false],
+  ];
+  $('#cats').innerHTML = cats.map(([id,ti,s,size,chk])=>{
+    const on = ('c_'+id) in prev ? prev['c_'+id] : chk;
+    return `<div class="row"><input type="checkbox" id="c_${id}" ${on?'checked':''}>
+    <label for="c_${id}">${ti}<small>${s}</small></label><b>${size==null?'':fmt(size)}</b></div>`;}).join('');
+}
+async function scan(){
+  $('#usage').textContent = t('scanning');
+  const est = navigator.storage?.estimate ? await navigator.storage.estimate() : {usage:0,quota:0};
+  $('#usage').textContent = t('usedOf', fmt(est.usage), fmt(est.quota));
+  $('#usebar').style.width = est.quota ? Math.min(100, est.usage/est.quota*100)+'%' : '0';
+
+  let cacheSize=0, cacheNames=[];
+  if('caches' in window){
+    cacheNames = await caches.keys();
+    for(const n of cacheNames){
+      const c = await caches.open(n);
+      for(const req of await c.keys()){
+        try{ const r = await c.match(req); cacheSize += (await r.clone().blob()).size; }catch{}
+      }
+    }
+  }
+  const sz = st => { let tot=0; for(let i=0;i<st.length;i++){const k=st.key(i); tot+=(k.length+(st.getItem(k)||'').length)*2;} return tot; };
+  let dbs=[]; try{ dbs = indexedDB.databases ? await indexedDB.databases() : []; }catch{}
+  const cookies = document.cookie ? document.cookie.split(';').length : 0;
+  const regs = 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistrations() : [];
+  info = {cacheNames, cacheSize, ls:sz(localStorage), ss:sz(sessionStorage), dbs, cookies, regs};
+  renderCats();
+  log(t('scanDone'));
+}
+
+async function clean(){
+  const on = id => $('#c_'+id)?.checked;
+  const keep = $('#keepApp').checked;
+  if(on('cache')){
+    for(const n of await caches.keys()){
+      if(keep && n.startsWith('temizlik-')) continue;
+      await caches.delete(n); log(t('cacheDel',n));
+    }
+  }
+  if(on('ls')){ const l=lang; localStorage.clear(); try{localStorage.setItem('lang',l)}catch{} log(t('lsDel')); }
+  if(on('ss')){ sessionStorage.clear(); log(t('ssDel')); }
+  if(on('idb')){
+    for(const d of (indexedDB.databases ? await indexedDB.databases() : [])){
+      await new Promise(r=>{const q=indexedDB.deleteDatabase(d.name); q.onsuccess=q.onerror=q.onblocked=()=>r();});
+      log(t('idbDel',d.name));
+    }
+  }
+  if(on('cookie')){
+    document.cookie.split(';').forEach(c=>{
+      const n=c.split('=')[0].trim();
+      if(n) document.cookie = n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+    });
+    log(t('cookieDel'));
+  }
+  if(on('sw')){
+    for(const r of await navigator.serviceWorker.getRegistrations()){ await r.unregister(); }
+    log(t('swDel'));
+  }
+  await scan();
+}
+
+/* ---------- Klasör temizleyici ---------- */
+const JUNK = /(\.(tmp|temp|log|bak|old|chk|dmp|crdownload|part|gid|swp)$)|(^thumbs\.db$)|(^desktop\.ini$)|(^\.ds_store$)|(~$)/i;
+let results = [];
+
+async function walk(dir, path, out){
+  let count = 0;
+  for await (const [name, h] of dir.entries()){
+    count++;
+    if(h.kind==='file'){
+      const f = await h.getFile();
+      if(JUNK.test(name)) out.push({parent:dir, name, path:path+name, size:f.size, why:'junk'});
+      else if(f.size===0) out.push({parent:dir, name, path:path+name, size:0, why:'empty'});
+    } else {
+      const sub = await walk(h, path+name+'/', out);
+      if(sub===0) out.push({parent:dir, name, path:path+name+'/', size:0, why:'emptyDir', dir:true});
+      else if(['.thumbnails','.trash'].includes(name.toLowerCase())) out.push({parent:dir, name, path:path+name+'/', size:0, why:'junkDir', dir:true});
+    }
+  }
+  return count;
+}
+
+async function pickAndScan(){
+  const msg = $('#fsMsg'); msg.classList.add('hide');
+  if(!window.showDirectoryPicker){ msg.textContent = t('noFs'); msg.classList.remove('hide'); return; }
+  try{
+    const root = await showDirectoryPicker({mode:'readwrite'});
+    log(t('scanFolder',root.name));
+    results = []; await walk(root, '', results);
+    renderResults();
+  }catch(e){ log(t('cancelled',e.message)); }
+}
+
+function renderResults(){
+  const total = results.reduce((a,f)=>a+f.size,0);
+  const checked = new Set([...document.querySelectorAll('#results input:not(:checked)')].map(c=>+c.dataset.i));
+  $('#results').innerHTML = results.length
+    ? `<p style="color:var(--mut)">${t('items',results.length,fmt(total))}</p>` + results.map((f,i)=>`
+      <div class="row"><input type="checkbox" data-i="${i}" ${checked.has(i)?'':'checked'}>
+      <label class="file">${f.dir?'📁':'📄'} ${f.path.replace(/</g,'&lt;')}<small>${t(f.why)}</small></label><b>${fmt(f.size)}</b></div>`).join('')
+    : `<p style="color:var(--mut)">${t('nothing')}</p>`;
+  $('#delBtn').classList.toggle('hide', !results.length);
+}
+
+async function deleteSelected(){
+  const sel = [...document.querySelectorAll('#results input:checked')].map(c=>results[+c.dataset.i]);
+  if(!sel.length) return;
+  if(!confirm(t('confirmDel',sel.length))) return;
+  let ok=0, freed=0;
+  for(const f of sel){
+    try{ await f.parent.removeEntry(f.name,{recursive:!!f.dir}); ok++; freed+=f.size; }
+    catch(e){ log(t('failDel',f.path,e.message)); }
+  }
+  log(t('deleted',ok,fmt(freed)));
+  results = []; renderResults();
+}
+
+/* ---------- Yükle ---------- */
+let deferredPrompt = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+function updateInstallUi(){
+  $('#installBtn').disabled = isStandalone();
+  $('#hint').textContent = isStandalone() ? t('installed') : (deferredPrompt ? '' : (isIos() ? t('installHintIos') : ''));
+}
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; updateInstallUi(); });
+window.addEventListener('appinstalled', () => { deferredPrompt = null; updateInstallUi(); });
+$('#installBtn').onclick = async () => {
+  if(isStandalone()){ $('#hint').textContent = t('installed'); return; }
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const r = await deferredPrompt.userChoice; deferredPrompt = null;
+    $('#hint').textContent = r.outcome==='accepted' ? t('installOk') : t('installNo');
+  } else {
+    $('#hint').textContent = isIos() ? t('installHintIos') : t('installHint');
+  }
+};
+
+/* ---------- Güncelle ---------- */
+let reloading = false;
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if(reloading) return; reloading = true; location.reload(); });
+}
+$('#updateBtn').onclick = async () => {
+  const h = $('#hint');
+  if(!('serviceWorker' in navigator)){ h.textContent = t('upNoSw'); return; }
+  h.textContent = t('upChecking');
+  try{
+    const reg = await navigator.serviceWorker.getRegistration() || await navigator.serviceWorker.register('sw.js');
+    await reg.update();
+    const waiting = reg.waiting || (reg.installing && await new Promise(res=>{
+      reg.installing.addEventListener('statechange', function(){ if(this.state==='installed') res(reg.waiting); if(this.state==='redundant') res(null); });
+    }));
+    if(waiting){ h.textContent = t('upNew'); waiting.postMessage({type:'SKIP_WAITING'}); }
+    else h.textContent = t('upLatest');
+  }catch(e){ h.textContent = t('upErr'); }
+};
+
+/* ---------- Diyaloglar ---------- */
+$('#privLink').onclick = () => $('#privDlg').showModal();
+$('#termsLink').onclick = () => $('#termsDlg').showModal();
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => b.closest('dialog').close());
+document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e => { if(e.target===d) d.close(); }));
+
+/* ---------- Başlat ---------- */
+$('#lTR').onclick = () => setLang('tr');
+$('#lEN').onclick = () => setLang('en');
+$('#scanBtn').onclick = scan;
+$('#cleanBtn').onclick = () => { if(confirm(t('confirmClean'))) clean(); };
+$('#pickBtn').onclick = pickAndScan;
+$('#delBtn').onclick = deleteSelected;
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+applyLang();
+scan();
+</script>
+</body>
+</html>
