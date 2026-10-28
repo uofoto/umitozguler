@@ -793,7 +793,7 @@
     };
     // === PAYLAŞIM (Uygulamayı Tanıt ve İndirme Linkini Paylaş) ===
     window.shareProgress = async function() {
-      const appUrl = "https://www.umitozguler.com.tr/bma/index.html";
+      const appUrl = "https://play.google.com/store/apps/details?id=tr.com.umitozguler.maneviatlasi&pcampaignid=web_share";
       const shareTitle = "Bursa Manevi Atlası";
       const shareText = "Bursa Manevi Atlası ile Bursa'nın manevi noktalarına huzur dolu bir yolculuğa çık. Uygulamayı hemen telefonuna indir:";
 
